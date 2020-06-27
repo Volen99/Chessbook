@@ -11,8 +11,8 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
-    using Models;
     using Services.Identity;
+    using WorldFeed.Models;
 
     public static class ServiceCollectionExtensions
     {
@@ -89,9 +89,7 @@
             return services;
         }
 
-        public static IServiceCollection AddAutoMapperProfile(
-            this IServiceCollection services,
-            Assembly assembly)
+        public static IServiceCollection AddAutoMapperProfile(this IServiceCollection services, Assembly assembly)
             => services
                 .AddAutoMapper(
                     (_, config) => config

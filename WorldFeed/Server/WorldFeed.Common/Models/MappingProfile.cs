@@ -4,8 +4,9 @@
     using System.Linq;
     using System.Reflection;
     using AutoMapper;
+    using WorldFeed.Common.Services.Mapping;
 
-    public class MappingProfile : Profile
+    public class MappingProfile : Profile // ot kenov
     {
         public MappingProfile(Assembly assembly)
             => this.ApplyMappingsFromAssembly(assembly);

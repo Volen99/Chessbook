@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarRentalSystem\WorldFeed.Common.csproj" />
     <ProjectReference Include="..\WorldFeed.Common\WorldFeed.Common.csproj" />
   </ItemGroup>
 

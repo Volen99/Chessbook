@@ -1,102 +1,161 @@
-﻿namespace WorldFeed.Dealers.Services.CarAds
-{
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using AutoMapper;
-    using WorldFeed.Services;
-    using Data;
-    using Data.Models;
-    using Microsoft.EntityFrameworkCore;
-    using Models.CarAds;
+﻿//namespace WorldFeed.Dealers.Services.CarAds
+//{
+//    using System.Collections.Generic;
+//    using System.Linq;
+//    using System.Threading.Tasks;
+//    using AutoMapper;
+//    using WorldFeed.Services;
+//    using Data;
+//    using Data.Models;
+//    using Microsoft.EntityFrameworkCore;
+//    using Models.CarAds;
+//    using WorldFeed.Data.Common.Repositories;
+//    using WorldFeed.Common.Services.Mapping;
+//    using WorldFeed.Dealers.Services.Dealers;
+//    using WorldFeed.Dealers.Services.Categories;
+//    using WorldFeed.Dealers.Services.Manufacturers;
+//    using WorldFeed.Services.Identity;
 
-    public class CarAdService : DataService<CarAd>, ICarAdService
-    {
-        private const int CarAdsPerPage = 10;
+//    public class CarAdService : ICarAdService
+//    {
+//        private const int CarAdsPerPage = 10;
 
-        private readonly IMapper mapper;
+//        private readonly IMapper mapper;
+//        private readonly IDeletableEntityRepository<CarAd> carAdsRepository;
 
-        public CarAdService(DealersDbContext db, IMapper mapper)
-            : base(db)
-            => this.mapper = mapper;
+//        private readonly IDealerService dealersService;
+//        private readonly ICategoryService categoriesService;
+//        private readonly IManufacturerService manufacturersService;
+//        private readonly ICurrentUserService currentUser;
 
-        public async Task<CarAd> Find(int id)
-            => await this
-                .All()
-                .Include(c => c.Manufacturer)
-                .FirstOrDefaultAsync(c => c.Id == id);
+//        //public CarAdService(DealersDbContext db, IMapper mapper)
+//        //    : base(db)
+//        //    => this.mapper = mapper;
 
-        public async Task<bool> Delete(int id)
-        {
-            var carAd = await this.Data.FindAsync<CarAd>(id);
+//        public CarAdService(IDealerService dealers, ICategoryService categories, IManufacturerService manufacturers)
+//        {
+//            this.dealersService = dealers;
+//            this.categoriesService = categories;
+//            this.manufacturersService = manufacturers;
+//        }
 
-            if (carAd == null)
-            {
-                return false;
-            }
+//        public async Task<CarAd> Find(int id)
+//        {
+//            var carAdCurrent = await this.carAdsRepository.All()
+//                .Include(c => c.Manufacturer)
+//                .FirstOrDefaultAsync(c => c.Id == id);
 
-            this.Data.Remove(carAd);
+//            return carAdCurrent;
+//        }
 
-            await this.Data.SaveChangesAsync();
+//        public async Task<bool> Delete(int id)
+//        {
+//            var carAd = await this.carAdsRepository.FindAsync<CarAd>(id);
 
-            return true;
-        }
+//            if (carAd == null)
+//            {
+//                return false;
+//            }
 
-        public async Task<IEnumerable<CarAdOutputModel>> GetListings(CarAdsQuery query)
-            => (await this.mapper
-                .ProjectTo<CarAdOutputModel>(this
-                    .GetCarAdsQuery(query))
-                .ToListAsync())
-                .Skip((query.Page - 1) * CarAdsPerPage)
-                .Take(CarAdsPerPage); // SQL Server is old and forces me to execute paging on the client.
+//            this.carAdsRepository.Remove(carAd);
 
-        public async Task<IEnumerable<MineCarAdOutputModel>> Mine(int dealerId, CarAdsQuery query)
-            => (await this.mapper
-                .ProjectTo<MineCarAdOutputModel>(this
-                    .GetCarAdsQuery(query, dealerId))
-                .ToListAsync())
-                .Skip((query.Page - 1) * CarAdsPerPage)
-                .Take(CarAdsPerPage); // SQL Server is old and forces me to execute paging on the client.
+//            await this.carAdsRepository.SaveChangesAsync();
 
-        public async Task<CarAdDetailsOutputModel> GetDetails(int id)
-            => await this.mapper
-                .ProjectTo<CarAdDetailsOutputModel>(this
-                    .AllAvailable()
-                    .Where(c => c.Id == id))
-                .FirstOrDefaultAsync();
+//            return true;
+//        }
 
-        public async Task<int> Total(CarAdsQuery query)
-            => await this
-                .GetCarAdsQuery(query)
-                .CountAsync();
+//        public async Task<IEnumerable<CarAdOutputModel>> GetListings(CarAdsQuery query)
+//            => (await this.mapper
+//                .ProjectTo<CarAdOutputModel>(this
+//                    .GetCarAdsQuery(query))
+//                .ToListAsync())
+//                .Skip((query.Page - 1) * CarAdsPerPage)
+//                .Take(CarAdsPerPage); // SQL Server is old and forces me to execute paging on the client.
 
-        private IQueryable<CarAd> AllAvailable()
-            => this
-                .All()
-                .Where(car => car.IsAvailable);
+//        public async Task<IEnumerable<MineCarAdOutputModel>> Mine(int dealerId, CarAdsQuery query)
+//            => (await this.mapper
+//                .ProjectTo<MineCarAdOutputModel>(this
+//                    .GetCarAdsQuery(query, dealerId))
+//                .ToListAsync())
+//                .Skip((query.Page - 1) * CarAdsPerPage)
+//                .Take(CarAdsPerPage); // SQL Server is old and forces me to execute paging on the client.
 
-        private IQueryable<CarAd> GetCarAdsQuery(
-            CarAdsQuery query, int? dealerId = null)
-        {
-            var dataQuery = this.All();
+//        public async Task<CarAdDetailsOutputModel> GetDetails(int id)
+//            => await this.mapper
+//                .ProjectTo<CarAdDetailsOutputModel>(this
+//                    .AllAvailable()
+//                    .Where(c => c.Id == id))
+//                .FirstOrDefaultAsync();
 
-            if (dealerId.HasValue)
-            {
-                dataQuery = dataQuery.Where(c => c.DealerId == dealerId);
-            }
+//        public async Task<int> Total(CarAdsQuery query)
+//            => await this
+//                .GetCarAdsQuery(query)
+//                .CountAsync();
 
-            if (query.Category.HasValue)
-            {
-                dataQuery = dataQuery.Where(c => c.CategoryId == query.Category);
-            }
+//        private IQueryable<CarAd> AllAvailable()
+//            => carAdsRepository.All()
+//                .Where(car => car.IsAvailable);
 
-            if (!string.IsNullOrWhiteSpace(query.Manufacturer))
-            {
-                dataQuery = dataQuery.Where(c => c
-                    .Manufacturer.Name.ToLower().Contains(query.Manufacturer.ToLower()));
-            }
+//        private IQueryable<CarAd> GetCarAdsQuery(
+//            CarAdsQuery query, int? dealerId = null)
+//        {
+//            var dataQuery = carAdsRepository.All();
 
-            return dataQuery;
-        }
-    }
-}
+//            if (dealerId.HasValue)
+//            {
+//                dataQuery = dataQuery.Where(c => c.DealerId == dealerId);
+//            }
+
+//            if (query.Category.HasValue)
+//            {
+//                dataQuery = dataQuery.Where(c => c.CategoryId == query.Category);
+//            }
+
+//            if (!string.IsNullOrWhiteSpace(query.Manufacturer))
+//            {
+//                dataQuery = dataQuery.Where(c => c
+//                    .Manufacturer.Name.ToLower().Contains(query.Manufacturer.ToLower()));
+//            }
+
+//            return dataQuery;
+//        }
+
+//        public async Task Edit<T>(int id, string manufacturer, string model, int category, string imageUrl, decimal pricePerDay, bool hasClimateControl, int numberOfSeats, TransmissionType transmissionType)
+//        {
+//            var dealer = await this.dealersService.FindByUser(this.currentUser.UserId);
+
+//            var categoryCurrent = await this.categoriesService.Find(category);
+
+//            if (categoryCurrent == null)
+//            {
+//                //return BadRequest(Result.Failure("Category does not exist."));
+//            }
+
+//            var manufacturerCurrent = await this.manufacturersService.FindByName(manufacturer);
+
+//            manufacturerCurrent ??= new Manufacturer
+//            {
+//                Name = manufacturer
+//            };
+
+
+//            var carAdCurrent = this.carAdsRepository.All()
+//                 .Where(ca => ca.Id == id)
+//                 .FirstOrDefault();
+
+//            carAdCurrent.Manufacturer = manufacturerCurrent;
+//            carAdCurrent.Model = model;
+//            carAdCurrent.Category = categoryCurrent;
+//            carAdCurrent.ImageUrl = imageUrl;
+//            carAdCurrent.PricePerDay = pricePerDay;
+//            carAdCurrent.Options = new Options
+//            {
+//                HasClimateControl = hasClimateControl,
+//                NumberOfSeats = numberOfSeats,
+//                TransmissionType = transmissionType
+//            };
+
+//            await this.carAdsRepository.SaveChangesAsync();
+//        }
+//    }
+//}

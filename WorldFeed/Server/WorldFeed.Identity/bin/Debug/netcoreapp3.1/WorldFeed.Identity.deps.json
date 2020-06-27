@@ -2070,6 +2070,7 @@
           "MassTransit.AspNetCore": "6.3.2",
           "MassTransit.RabbitMQ": "6.3.2",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.5",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.5",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.5"
         },
         "runtime": {

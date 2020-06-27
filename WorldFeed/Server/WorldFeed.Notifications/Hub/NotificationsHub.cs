@@ -12,9 +12,7 @@
         {
             if (this.Context.User.Identity.IsAuthenticated)
             {
-                await this.Groups.AddToGroupAsync(
-                    this.Context.ConnectionId, 
-                    AuthenticatedUsersGroup);
+                await this.Groups.AddToGroupAsync(this.Context.ConnectionId, AuthenticatedUsersGroup);
             }
         }
 
@@ -22,9 +20,7 @@
         {
             if (this.Context.User.Identity.IsAuthenticated)
             {
-                await this.Groups.RemoveFromGroupAsync(
-                    this.Context.ConnectionId,
-                    AuthenticatedUsersGroup);
+                await this.Groups.RemoveFromGroupAsync(this.Context.ConnectionId, AuthenticatedUsersGroup);
             }
         }
     }

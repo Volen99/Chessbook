@@ -1,8 +1,8 @@
 ﻿namespace WorldFeed.Dealers.Models.CarAds
 {
     using AutoMapper;
-    using WorldFeed.Models;
     using Data.Models;
+    using WorldFeed.Common.Services.Mapping;
 
     public class CarAdOutputModel : IMapFrom<CarAd>
     {

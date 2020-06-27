@@ -2606,6 +2606,7 @@
           "MassTransit.AspNetCore": "6.3.2",
           "MassTransit.RabbitMQ": "6.3.2",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.5",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.5",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.5"
         },
         "compile": {
@@ -8426,9 +8427,6 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\CarRentalSystem\\WorldFeed.Common.csproj": {
-              "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\CarRentalSystem\\WorldFeed.Common.csproj"
-            },
             "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\WorldFeed.Common\\WorldFeed.Common.csproj": {
               "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\WorldFeed.Common\\WorldFeed.Common.csproj"
             }

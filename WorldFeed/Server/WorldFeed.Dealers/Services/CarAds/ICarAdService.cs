@@ -6,17 +6,20 @@
     using Data.Models;
     using Models.CarAds;
 
-    public interface ICarAdService : IDataService<CarAd>
+    public interface ICarAdService
     {
-        Task<CarAd> Find(int id);
+        Task Find<T>(int id);
 
         Task<bool> Delete(int id);
 
-        Task<IEnumerable<CarAdOutputModel>> GetListings(CarAdsQuery query);
+        Task<IEnumerable<T>> GetListings<T>(CarAdsQuery query);
 
-        Task<IEnumerable<MineCarAdOutputModel>> Mine(int dealerId, CarAdsQuery query);
+        Task<IEnumerable<T>> Mine<T>(int dealerId, CarAdsQuery query);
 
-        Task<CarAdDetailsOutputModel> GetDetails(int id);
+        Task<T> GetDetails<T>(int id);
+
+        Task<T> Edit<T>(int id, string manufacturer, string model, int category, string imageUrl, decimal pricePerDay,
+            bool hasClimateControl, int numberOfSeats, TransmissionType transmissionType);
 
         Task<int> Total(CarAdsQuery query);
     }
