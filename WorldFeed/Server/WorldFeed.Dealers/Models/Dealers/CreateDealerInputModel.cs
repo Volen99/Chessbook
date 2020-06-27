@@ -1,0 +1,21 @@
+﻿namespace WorldFeed.Dealers.Models.Dealers
+{
+    using System.ComponentModel.DataAnnotations;
+
+    using static Data.DataConstants.Dealers;
+    using static WorldFeed.Data.DataConstants.Common;
+
+    public class CreateDealerInputModel
+    {
+        [Required]
+        [MinLength(MinNameLength)]
+        [MaxLength(MaxNameLength)]
+        public string Name { get; set; }
+
+        [Required]
+        [MinLength(MinPhoneNumberLength)]
+        [MaxLength(MaxPhoneNumberLength)]
+        [RegularExpression(PhoneNumberRegularExpression)]
+        public string PhoneNumber { get; set; }
+    }
+}
