@@ -12,7 +12,6 @@ namespace WorldFeed.Admin
     using Microsoft.Extensions.Hosting;
     using Refit;
     using Services;
-    using Services.Dealers;
     using Services.Identity;
     using Services.Statistics;
 
@@ -44,9 +43,9 @@ namespace WorldFeed.Admin
                 .AddRefitClient<IStatisticsService>()
                 .WithConfiguration(serviceEndpoints.Statistics);
 
-            services
-                .AddRefitClient<IDealersService>()
-                .WithConfiguration(serviceEndpoints.Dealers);
+            //services
+            //    //.AddRefitClient<IDealersService>()
+            //    .WithConfiguration(serviceEndpoints.Dealers);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

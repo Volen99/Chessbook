@@ -1,4 +1,4 @@
-﻿namespace WorldFeed.Common.Dealers.Controllers
+﻿namespace WorldFeed.Common.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
 

@@ -1,9 +1,9 @@
 ﻿namespace WorldFeed.Statistics.Data.Models
 {
-    public class Statistics
-    {
-        public int Id { get; set; }
+    using WorldFeed.Common.Models;
 
+    public class Statistics : BaseDeletableModel<int>
+    {
         public int TotalCarAds { get; set; }
 
         public int TotalRentedCars { get; set; }

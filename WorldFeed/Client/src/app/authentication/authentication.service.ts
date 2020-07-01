@@ -9,8 +9,6 @@ import { Observable } from 'rxjs';
 export class AuthenticationService {
   registerPath: string = environment.identityApiUrl + "identity/register"
   loginPath: string = environment.identityApiUrl + "identity/login";
-  createDealerPath: string = environment.dealersApiUrl + "dealers"
-  dealerIdPath: string = environment.dealersApiUrl + "dealers/id";
 
   constructor(private http: HttpClient) { }
 
@@ -18,16 +16,8 @@ export class AuthenticationService {
       return this.http.post(this.registerPath, payload);
   }
 
-  createDealer(payload) : Observable<any> {
-      return this.http.post(this.createDealerPath, payload);
-  }
-
-  login(payload) : Observable<any> {
+  login(payload): Observable<any> {
       return this.http.post(this.loginPath, payload);
-  }
-
-  getDealerId() : Observable<any> {
-      return this.http.get(this.dealerIdPath);
   }
 
   setToken(token) {

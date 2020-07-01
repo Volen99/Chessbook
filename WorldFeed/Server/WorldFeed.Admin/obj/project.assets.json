@@ -8695,9 +8695,6 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\CarRentalSystem\\WorldFeed.Common.csproj": {
-              "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\CarRentalSystem\\WorldFeed.Common.csproj"
-            },
             "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\WorldFeed.Common\\WorldFeed.Common.csproj": {
               "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\WorldFeed.Common\\WorldFeed.Common.csproj"
             }

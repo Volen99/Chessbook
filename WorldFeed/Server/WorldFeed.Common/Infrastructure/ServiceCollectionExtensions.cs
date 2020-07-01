@@ -3,7 +3,6 @@
     using System;
     using System.Reflection;
     using System.Text;
-    using System.Threading.Tasks;
     using AutoMapper;
     using MassTransit;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,7 +11,8 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
     using Services.Identity;
-    using WorldFeed.Models;
+
+    using WorldFeed.Common.Models;
 
     public static class ServiceCollectionExtensions
     {

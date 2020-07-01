@@ -12,10 +12,6 @@
 
         public int DriverId { get; set; }
 
-        public Driver Driver { get; set; }
-
         public int RentedCarId { get; set; }
-
-        public RentedCar RentedCar { get; set; }
     }
 }

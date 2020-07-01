@@ -17,6 +17,6 @@ export class AuthGuardService implements CanActivate {
   }
 
   isAuthenticated() {
-    return localStorage.getItem('token')
+    return localStorage.getItem('token');
   }
 }

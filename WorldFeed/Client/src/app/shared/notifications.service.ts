@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as signalR from "@aspnet/signalr";
+import * as signalR from '@aspnet/signalr';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class NotificationsService {
     private hubConnection: signalR.HubConnection;
-    
+
     constructor(private toastr: ToastrService) { }
 
     public subscribe = () => {

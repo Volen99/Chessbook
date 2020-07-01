@@ -11,11 +11,7 @@
         {
         }
 
-        public DbSet<Driver> Drivers { get; set; }
-
         public DbSet<Feedback> Feedback { get; set; }
-
-        public DbSet<RentedCar> RentedCars { get; set; }
 
         public DbSet<Reservation> Reservations { get; set; }
 

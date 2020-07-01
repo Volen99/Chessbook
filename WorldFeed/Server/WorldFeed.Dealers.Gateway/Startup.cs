@@ -1,4 +1,4 @@
-namespace WorldFeed.Dealers.Gateway
+namespace WorldFeed.History.BC.Science.Upload.Gateway
 {
     using System.Reflection;
     using WorldFeed.Services.Identity;
@@ -10,8 +10,6 @@ namespace WorldFeed.Dealers.Gateway
     using Microsoft.Extensions.Hosting;
     using Refit;
     using Services;
-    using Services.CarAds;
-    using Services.CarAdViews;
 
     public class Startup
     {
@@ -21,9 +19,9 @@ namespace WorldFeed.Dealers.Gateway
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var serviceEndpoints = this.Configuration
-                .GetSection(nameof(ServiceEndpoints))
-                .Get<ServiceEndpoints>(config => config.BindNonPublicProperties = true);
+            //var serviceEndpoints = this.Configuration
+            //    .GetSection(nameof(ServiceEndpoints))
+            //    .Get<ServiceEndpoints>(config => config.BindNonPublicProperties = true);
 
             services
                 .AddAutoMapperProfile(Assembly.GetExecutingAssembly())
@@ -32,13 +30,13 @@ namespace WorldFeed.Dealers.Gateway
                 .AddTransient<JwtHeaderAuthenticationMiddleware>()
                 .AddControllers();
 
-            services
-                .AddRefitClient<ICarAdService>()
-                .WithConfiguration(serviceEndpoints.Dealers);
+            //services
+            //    .AddRefitClient<ICarAdService>()
+            //    .WithConfiguration(serviceEndpoints.Dealers);
 
-            services
-                .AddRefitClient<ICarAdViewService>()
-                .WithConfiguration(serviceEndpoints.Statistics);
+            //services
+            //    .AddRefitClient<ICarAdViewService>()
+            //    .WithConfiguration(serviceEndpoints.Statistics);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

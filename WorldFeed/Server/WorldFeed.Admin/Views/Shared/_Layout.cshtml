@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Car Rental System Administration</title>
+    <title>@ViewData["Title"] - World Feed Administration</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -14,13 +14,12 @@
             <div class="container">
                 @if (this.User.IsAdministrator())
                 {
-                    <a class="navbar-brand" asp-area="" asp-controller="Statistics" asp-action="Index">Car Rental System Administration</a>
-                    <a class="float-left" asp-area="" asp-controller="Dealers" asp-action="Index">Dealers</a>
+                    <a class="navbar-brand" asp-area="" asp-controller="Statistics" asp-action="Index">World Feed Administration</a>
                     <a class="float-right" asp-area="" asp-controller="Identity" asp-action="Logout">Logout</a>
                 }
                 else
                 {
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Car Rental System Administration</a>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">World Feed Administration</a>
                 }
 
                 <button class="navbar-toggler"
@@ -43,7 +42,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - Car Rental System
+            &copy; 2020 - World Feed
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

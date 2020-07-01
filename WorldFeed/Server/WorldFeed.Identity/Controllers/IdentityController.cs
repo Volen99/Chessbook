@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Models.Identity;
     using Services.Identity;
-    using WorldFeed.Common.Dealers.Controllers;
+    using WorldFeed.Common.Controllers;
 
     public class IdentityController : ApiController
     {

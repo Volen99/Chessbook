@@ -1,7 +1,7 @@
 ﻿namespace WorldFeed.Statistics.Models.Statistics
 {
-    using WorldFeed.Models;
     using Data.Models;
+    using WorldFeed.Common.Models;
 
     public class StatisticsOutputModel : IMapFrom<Statistics>
     {

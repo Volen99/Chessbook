@@ -1,6 +1,6 @@
 ﻿namespace WorldFeed.Admin.Models.Identity
 {
-    using WorldFeed.Models;
+    using WorldFeed.Common.Models;
 
     public class UserInputModel : IMapFrom<LoginFormModel>
     {

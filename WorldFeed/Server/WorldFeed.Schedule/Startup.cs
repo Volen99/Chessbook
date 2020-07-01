@@ -2,7 +2,6 @@ namespace WorldFeed.Schedule
 {
     using Data;
     using Infrastructure;
-    using Messages;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -18,10 +17,7 @@ namespace WorldFeed.Schedule
 
         public void ConfigureServices(IServiceCollection services)
             => services
-                .AddWebService<ScheduleDbContext>(this.Configuration)
-                .AddTransient<IRentedCarService, RentedCarService>()
-                .AddMessaging(typeof(CarAdUpdatedConsumer));
-
+                .AddWebService<ScheduleDbContext>(this.Configuration);
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
             => app
                 .UseWebService(env)

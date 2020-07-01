@@ -178,8 +178,6 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\D
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\obj\Debug\netcoreapp3.1\WorldFeed.Admin.TagHelpers.input.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\obj\Debug\netcoreapp3.1\WorldFeed.Admin.TagHelpers.output.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\obj\Debug\netcoreapp3.1\WorldFeed.Admin.RazorCoreGenerate.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\obj\Debug\netcoreapp3.1\Razor\Views\Dealers\Edit.cshtml.g.cs
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\obj\Debug\netcoreapp3.1\Razor\Views\Dealers\Index.cshtml.g.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs

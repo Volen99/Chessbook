@@ -8672,9 +8672,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\WorldFeed.Dealers.Gateway\\WorldFeed.Dealers.Gateway.csproj",
-      "projectName": "WorldFeed.Dealers.Gateway",
-      "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\WorldFeed.Dealers.Gateway\\WorldFeed.Dealers.Gateway.csproj",
+      "projectUniqueName": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\WorldFeed.Dealers.Gateway\\WorldFeed.History.BC.Science.Upload.Gateway.csproj",
+      "projectName": "WorldFeed.History.BC.Science.Upload.Gateway",
+      "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\WorldFeed.Dealers.Gateway\\WorldFeed.History.BC.Science.Upload.Gateway.csproj",
       "packagesPath": "C:\\Users\\volen\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\WorldFeed.Dealers.Gateway\\obj\\",
       "projectStyle": "PackageReference",

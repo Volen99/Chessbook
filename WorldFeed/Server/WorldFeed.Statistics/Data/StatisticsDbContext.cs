@@ -11,8 +11,6 @@
         {
         }
 
-        public DbSet<CarAdView> CarAdViews { get; set; }
-
         public DbSet<Statistics> Statistics { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

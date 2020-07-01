@@ -3,7 +3,6 @@ namespace WorldFeed.Notifications
     using WorldFeed.Infrastructure;
     using Hub;
     using Infrastructure;
-    using Messages;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -23,7 +22,7 @@ namespace WorldFeed.Notifications
                 .AddTokenAuthentication(
                     this.Configuration, 
                     JwtConfiguration.BearerEvents)
-                .AddMessaging(typeof(CarAdCreatedConsumer))
+                //.AddMessaging(typeof(CarAdCreatedConsumer))
                 .AddSignalR();
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

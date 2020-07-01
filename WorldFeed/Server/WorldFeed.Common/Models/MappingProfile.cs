@@ -1,4 +1,4 @@
-﻿namespace WorldFeed.Models
+﻿namespace WorldFeed.Common.Models
 {
     using System;
     using System.Linq;

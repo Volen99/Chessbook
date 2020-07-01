@@ -2,34 +2,35 @@
 {
     using System.Threading.Tasks;
     using AutoMapper;
-    using WorldFeed.Services;
-    using Data;
     using Data.Models;
     using Microsoft.EntityFrameworkCore;
     using Models.Statistics;
+    using WorldFeed.Common.Models.Repositories;
 
-    public class StatisticsService : DataService<Statistics>, IStatisticsService
+
+    public class StatisticsService : IStatisticsService
     {
+        private IDeletableEntityRepository<Statistics> statisticsRepository;
+
         private readonly IMapper mapper;
 
-        public StatisticsService(StatisticsDbContext db, IMapper mapper) 
-            : base(db)
+        public StatisticsService(IMapper mapper)
         {
             this.mapper = mapper;
         }
 
         public async Task<StatisticsOutputModel> Full()
             => await this.mapper
-                .ProjectTo<StatisticsOutputModel>(this.All())
+                .ProjectTo<StatisticsOutputModel>(this.statisticsRepository.All())
                 .SingleOrDefaultAsync();
 
         public async Task AddCarAd()
         {
-            var statistics = await this.All().SingleOrDefaultAsync();
+            var statistics = await this.statisticsRepository.All().SingleOrDefaultAsync();
 
             statistics.TotalCarAds++;
 
-            await this.Data.SaveChangesAsync();
+            await this.statisticsRepository.SaveChangesAsync();
         }
     }
 }

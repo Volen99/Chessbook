@@ -4,19 +4,19 @@
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using Models;
 
-    public class CarAdViewConfiguration : IEntityTypeConfiguration<CarAdView>
-    {
-        public void Configure(EntityTypeBuilder<CarAdView> builder)
-        {
-            builder
-                .HasKey(v => v.Id);
+    //public class CarAdViewConfiguration : IEntityTypeConfiguration<CarAdView>
+    //{
+    //    public void Configure(EntityTypeBuilder<CarAdView> builder)
+    //    {
+    //        builder
+    //            .HasKey(v => v.Id);
 
-            builder
-                .HasIndex(v => v.CarAdId);
+    //        builder
+    //            .HasIndex(v => v.CarAdId);
 
-            builder
-                .Property(v => v.UserId)
-                .IsRequired();
-        }
-    }
+    //        builder
+    //            .Property(v => v.UserId)
+    //            .IsRequired();
+    //    }
+    //}
 }

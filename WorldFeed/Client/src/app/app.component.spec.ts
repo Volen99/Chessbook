@@ -1,3 +1,5 @@
+// This is for tests
+
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
@@ -20,16 +22,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'car-rental-system'`, () => {
+  it(`should have as title 'world-feed'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('car-rental-system');
+    expect(app.title).toEqual('world-feed');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('car-rental-system app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('world-feed app is running!');
   });
 });

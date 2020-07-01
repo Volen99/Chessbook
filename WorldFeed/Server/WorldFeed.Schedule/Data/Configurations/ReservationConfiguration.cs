@@ -8,18 +8,18 @@
     {
         public void Configure(EntityTypeBuilder<Reservation> builder)
         {
-            builder
-                .HasKey(c => c.Id);
+            //builder
+            //    .HasKey(c => c.Id);
 
-            builder
-                .HasOne(r => r.Driver)
-                .WithMany(d => d.Reservations)
-                .HasForeignKey(r => r.DriverId);
+            //builder
+            //    .HasOne(r => r.Driver)
+            //    .WithMany(d => d.Reservations)
+            //    .HasForeignKey(r => r.DriverId);
 
-            builder
-                .HasOne(r => r.RentedCar)
-                .WithMany(rc => rc.Reservations)
-                .HasForeignKey(r => r.RentedCarId);
+            //builder
+            //    .HasOne(r => r.RentedCar)
+            //    .WithMany(rc => rc.Reservations)
+            //    .HasForeignKey(r => r.RentedCarId);
         }
     }
 }

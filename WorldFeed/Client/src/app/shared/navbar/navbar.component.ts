@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CarsService } from 'src/app/cars/cars.service';
-import { Category } from 'src/app/cars/category.model';
 import { NotificationsService } from '../notifications.service';
 
 @Component({

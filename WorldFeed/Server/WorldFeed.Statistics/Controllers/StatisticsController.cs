@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Models.Statistics;
     using Services.Statistics;
-    using WorldFeed.Common.Dealers.Controllers;
+    using WorldFeed.Common.Controllers;
 
     public class StatisticsController : ApiController
     {

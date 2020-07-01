@@ -19,5 +19,9 @@
     <ProjectReference Include="..\WorldFeed.Common\WorldFeed.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Messages\" />
+  </ItemGroup>
+
  
 </Project>

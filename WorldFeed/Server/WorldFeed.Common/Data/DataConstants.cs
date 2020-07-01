@@ -1,4 +1,4 @@
-﻿namespace WorldFeed.Data
+﻿namespace WorldFeed.Common.Data
 {
     public class DataConstants
     {

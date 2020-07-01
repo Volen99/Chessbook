@@ -34,14 +34,6 @@ export class RegisterComponent implements OnInit {
 
     this.authenticationService.register(userData).subscribe(res => {
       this.authenticationService.setToken(res['token']);
-
-      this.authenticationService.createDealer(dealerData).subscribe(res => {
-        this.authenticationService.setId(res);
-
-        this.router.navigate(['']).then(() => {
-          window.location.reload();
-        });
-      })
     })
   }
 }

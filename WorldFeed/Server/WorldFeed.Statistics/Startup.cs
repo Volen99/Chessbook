@@ -4,12 +4,10 @@ namespace WorldFeed.Statistics
     using WorldFeed.Services;
     using Data;
     using MassTransit;
-    using Messages;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Services.CarAdViews;
     using Services.Statistics;
 
     public class Startup
@@ -24,8 +22,7 @@ namespace WorldFeed.Statistics
                 .AddWebService<StatisticsDbContext>(this.Configuration)
                 .AddTransient<IDataSeeder, StatisticsDataSeeder>()
                 .AddTransient<IStatisticsService, StatisticsService>()
-                .AddTransient<ICarAdViewService, CarAdViewService>()
-                .AddMessaging(typeof(CarAdCreatedConsumer));
+                /*.AddMessaging(typeof(CarAdCreatedConsumer))*/;
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
             => app
