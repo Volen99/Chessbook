@@ -2118,13 +2118,22 @@
           "MassTransit.RabbitMQ": "6.3.2",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.5",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.5",
-          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.5"
+          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.5",
+          "WorldFeed.Web.Shared": "1.0.0"
         },
         "runtime": {
           "WorldFeed.Common.dll": {}
         },
         "compile": {
           "WorldFeed.Common.dll": {}
+        }
+      },
+      "WorldFeed.Web.Shared/1.0.0": {
+        "runtime": {
+          "WorldFeed.Web.Shared.dll": {}
+        },
+        "compile": {
+          "WorldFeed.Web.Shared.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
@@ -4913,6 +4922,11 @@
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
     },
     "WorldFeed.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WorldFeed.Web.Shared/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

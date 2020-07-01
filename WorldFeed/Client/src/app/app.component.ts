@@ -30,7 +30,7 @@ export class AppComponent {
 
   public onCreate = () => {
     this.user = {
-      imgPath: this.response[0].dbPath,
+      imgPath: this.response.data[0].dbPath,
     };
 
     this.isCreate = false;

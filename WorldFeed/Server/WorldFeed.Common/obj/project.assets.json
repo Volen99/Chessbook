@@ -2585,6 +2585,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "WorldFeed.Web.Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/WorldFeed.Web.Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.Web.Shared.dll": {}
+        }
       }
     }
   },
@@ -8323,6 +8333,11 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "WorldFeed.Web.Shared/1.0.0": {
+      "type": "project",
+      "path": "../Web/WorldFeed.Web.Shared/WorldFeed.Web.Shared.csproj",
+      "msbuildProject": "../Web/WorldFeed.Web.Shared/WorldFeed.Web.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -8333,7 +8348,8 @@
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 3.1.5",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 3.1.5",
       "Microsoft.EntityFrameworkCore.Design >= 3.1.5",
-      "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.5"
+      "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.5",
+      "WorldFeed.Web.Shared >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -8365,7 +8381,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Shared.csproj": {
+              "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Shared.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

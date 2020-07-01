@@ -35,6 +35,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.History.Common", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.History.BC.Science.Upload", "History\BC\Science\WorldFeed.History.BC.Science.Upload\WorldFeed.History.BC.Science.Upload.csproj", "{F9ECA69B-68C7-4AD4-A20B-30941F5C2AE7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{1267170A-8DF8-4957-8779-8C836F5FEA31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldFeed.Web.Shared", "Web\WorldFeed.Web.Shared\WorldFeed.Web.Shared.csproj", "{E2184C75-2E38-44CB-A63F-167407D7B5FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +81,10 @@ Global
 		{F9ECA69B-68C7-4AD4-A20B-30941F5C2AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9ECA69B-68C7-4AD4-A20B-30941F5C2AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9ECA69B-68C7-4AD4-A20B-30941F5C2AE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2184C75-2E38-44CB-A63F-167407D7B5FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2184C75-2E38-44CB-A63F-167407D7B5FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2184C75-2E38-44CB-A63F-167407D7B5FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2184C75-2E38-44CB-A63F-167407D7B5FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +99,7 @@ Global
 		{9294AA2F-AFAA-4945-8976-2436FBE12614} = {DFB55D5B-F394-4AEB-8684-AFC07A6CBE21}
 		{BE665E78-2245-445C-A322-F2684970F84F} = {EB129BD3-25F4-48BF-838A-4A921019E4A2}
 		{F9ECA69B-68C7-4AD4-A20B-30941F5C2AE7} = {43216E23-EBB0-4EA0-B0BA-9CCC19AF2613}
+		{E2184C75-2E38-44CB-A63F-167407D7B5FF} = {1267170A-8DF8-4957-8779-8C836F5FEA31}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58A386E4-E7C7-49B8-8E30-D8DD2154B7D5}

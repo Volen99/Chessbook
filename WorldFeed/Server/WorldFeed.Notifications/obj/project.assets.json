@@ -2595,7 +2595,8 @@
           "MassTransit.RabbitMQ": "6.3.2",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.5",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.5",
-          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.5"
+          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.5",
+          "WorldFeed.Web.Shared": "1.0.0"
         },
         "compile": {
           "bin/placeholder/WorldFeed.Common.dll": {}
@@ -2606,6 +2607,16 @@
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
         ]
+      },
+      "WorldFeed.Web.Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/WorldFeed.Web.Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.Web.Shared.dll": {}
+        }
       }
     }
   },
@@ -8349,6 +8360,11 @@
       "type": "project",
       "path": "../WorldFeed.Common/WorldFeed.Common.csproj",
       "msbuildProject": "../WorldFeed.Common/WorldFeed.Common.csproj"
+    },
+    "WorldFeed.Web.Shared/1.0.0": {
+      "type": "project",
+      "path": "../Web/WorldFeed.Web.Shared/WorldFeed.Web.Shared.csproj",
+      "msbuildProject": "../Web/WorldFeed.Web.Shared/WorldFeed.Web.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {

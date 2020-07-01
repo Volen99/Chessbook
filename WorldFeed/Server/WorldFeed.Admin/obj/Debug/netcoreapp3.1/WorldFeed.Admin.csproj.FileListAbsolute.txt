@@ -202,3 +202,5 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\D
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Core.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\WorldFeed.Web.Shared.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\WorldFeed.Web.Shared.pdb

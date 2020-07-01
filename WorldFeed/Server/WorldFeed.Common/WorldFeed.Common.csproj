@@ -26,4 +26,8 @@
     <Folder Include="Services\Mapping\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Web\WorldFeed.Web.Shared\WorldFeed.Web.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
