@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {HttpEventType, HttpClient, HttpHeaders} from '@angular/common/http';
-import {environment} from '../../../../environments/environment';
+import {environment} from '../../../../../environments/environment';
+
 
 class ImageSnippet {
   public src: string;
@@ -14,13 +15,12 @@ class ImageSnippet {
   }
 }
 
-
 @Component({
-  selector: 'app-image-upload',
-  templateUrl: './image-upload.component.html',
-  styleUrls: ['./image-upload.component.css']
+  selector: 'app-history-BC-science-upload',
+  templateUrl: './upload.component.html',
+  styleUrls: ['./upload.component.css']
 })
-export class ImageUploadComponent implements OnInit {
+export class UploadComponent implements OnInit {
 
   private uploadPath: string = environment.historyBCScienceUpload + 'media' + '/upload';
 

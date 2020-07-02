@@ -1,7 +1,5 @@
 ﻿namespace WorldFeed.Common.Controllers
 {
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
     using WorldFeed.Web.Shared;

@@ -3,7 +3,6 @@
     overflow: hidden;
 }
 
-
 .box {
     border: 1px solid grey;
     margin: 2%;
@@ -15,7 +14,7 @@
 .action {
     position: absolute;
     bottom: 0;
-    left: 0;   
+    left: 0;
     margin: 5%;
 }
 
