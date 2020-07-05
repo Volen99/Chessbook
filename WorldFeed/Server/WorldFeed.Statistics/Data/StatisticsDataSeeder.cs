@@ -19,8 +19,7 @@
 
             this.db.Statistics.Add(new Statistics
             {
-                TotalCarAds = 0,
-                TotalRentedCars = 0
+                TotalUploads = 0,
             });
 
             this.db.SaveChanges();

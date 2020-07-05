@@ -1,4 +1,4 @@
-namespace WorldFeed.History.BC.Science.Upload.Gateway
+namespace WorldFeed.History.BC.Science.Post.Gateway
 {
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Hosting;

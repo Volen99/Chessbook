@@ -20,6 +20,7 @@
         {
             if (this.Context.User.Identity.IsAuthenticated)
             {
+                // this.Context.ConnectionId is a unique browser Id that is connected
                 await this.Groups.RemoveFromGroupAsync(this.Context.ConnectionId, AuthenticatedUsersGroup);
             }
         }

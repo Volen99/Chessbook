@@ -1,34 +1,36 @@
 ﻿namespace WorldFeed.Statistics.Services.Statistics
 {
+    using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
     using Data.Models;
     using Microsoft.EntityFrameworkCore;
     using Models.Statistics;
     using WorldFeed.Common.Models.Repositories;
-
+    using WorldFeed.Common.Services.Mapping;
 
     public class StatisticsService : IStatisticsService
     {
         private IDeletableEntityRepository<Statistics> statisticsRepository;
 
-        private readonly IMapper mapper;
-
-        public StatisticsService(IMapper mapper)
+        public StatisticsService(IDeletableEntityRepository<Statistics> statisticsRepository)
         {
-            this.mapper = mapper;
+            this.statisticsRepository = statisticsRepository;
         }
 
         public async Task<StatisticsOutputModel> Full()
-            => await this.mapper
-                .ProjectTo<StatisticsOutputModel>(this.statisticsRepository.All())
+        {
+            return await this.statisticsRepository.All()
+                 .To<StatisticsOutputModel>()
+                 .SingleOrDefaultAsync();
+        }
+
+        public async Task UploadMedia()
+        {
+            var statistics = await this.statisticsRepository.All()
                 .SingleOrDefaultAsync();
 
-        public async Task AddCarAd()
-        {
-            var statistics = await this.statisticsRepository.All().SingleOrDefaultAsync();
-
-            statistics.TotalCarAds++;
+            statistics.TotalUploads++;
 
             await this.statisticsRepository.SaveChangesAsync();
         }

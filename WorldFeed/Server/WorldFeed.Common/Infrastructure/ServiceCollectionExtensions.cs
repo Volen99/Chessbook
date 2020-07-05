@@ -16,9 +16,7 @@
 
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddWebService<TDbContext>(
-            this IServiceCollection services,
-            IConfiguration configuration)
+        public static IServiceCollection AddWebService<TDbContext>(this IServiceCollection services, IConfiguration configuration)
             where TDbContext : DbContext
         {
             services
@@ -31,26 +29,20 @@
             return services;
         }
 
-        public static IServiceCollection AddDatabase<TDbContext>(
-            this IServiceCollection services,
-            IConfiguration configuration)
+        public static IServiceCollection AddDatabase<TDbContext>(this IServiceCollection services, IConfiguration configuration)
             where TDbContext : DbContext
             => services
                 .AddScoped<DbContext, TDbContext>()
                 .AddDbContext<TDbContext>(options => options
                     .UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-        public static IServiceCollection AddApplicationSettings(
-            this IServiceCollection services,
-            IConfiguration configuration)
+        public static IServiceCollection AddApplicationSettings(this IServiceCollection services, IConfiguration configuration)
             => services
                 .Configure<ApplicationSettings>(
                     configuration.GetSection(nameof(ApplicationSettings)), 
                     config => config.BindNonPublicProperties = true);
 
-        public static IServiceCollection AddTokenAuthentication(
-            this IServiceCollection services,
-            IConfiguration configuration,
+        public static IServiceCollection AddTokenAuthentication(this IServiceCollection services, IConfiguration configuration,
             JwtBearerEvents events = null)
         {
             var secret = configuration
@@ -96,26 +88,24 @@
                         .AddProfile(new MappingProfile(assembly)),
                     Array.Empty<Assembly>());
 
-        public static IServiceCollection AddMessaging(
-            this IServiceCollection services,
-            params Type[] consumers)
+        public static IServiceCollection AddMessaging(this IServiceCollection services, params Type[] consumers)
         {
             services
                 .AddMassTransit(mt =>
                 {
-                    consumers.ForEach(consumer => mt.AddConsumer(consumer));
+                    consumers.ForEach(consumer => mt.AddConsumer(consumer)); // Every single consumer works though different queue
 
                     mt.AddBus(bus => Bus.Factory.CreateUsingRabbitMq(rmq =>
                     {
                         rmq.Host("localhost");
 
-                        consumers.ForEach(consumer => rmq.ReceiveEndpoint(consumer.FullName, endpoint =>
+                        consumers.ForEach(consumer => rmq.ReceiveEndpoint(consumer.FullName, endpoint => // plz note 'FullName'
                         {
                             endpoint.ConfigureConsumer(bus, consumer);
                         }));
                     }));
                 })
-                .AddMassTransitHostedService();
+                .AddMassTransitHostedService(); // Starts Message broker listening
 
             return services;
         }

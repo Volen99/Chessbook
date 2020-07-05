@@ -1,13 +1,15 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {HttpEventType, HttpClient, HttpHeaders} from '@angular/common/http';
+import {ScienceService} from '../science.service';
 import {environment} from '../../../../../environments/environment';
+import {UserToCreate} from '../../../../_interfaces/userToCreate.model';
 
 
 class ImageSnippet {
   public src: string;
   public file: File;
-  public pending: boolean = false;
-  public status: string = 'init';
+  public pending = false;
+  public status = 'init';
 
   constructor(src: string, file: File) {
     this.src = src;
@@ -16,23 +18,27 @@ class ImageSnippet {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-history-BC-science-upload',
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.css']
+  styleUrls: ['./upload.component.css'],
 })
 export class UploadComponent implements OnInit {
+  @Output() public onUploadFinished = new EventEmitter();
 
-  private uploadPath: string = environment.historyBCScienceUpload + 'media' + '/upload';
+  private http: HttpClient;
+  private scienceService: ScienceService;
 
   public progress: number;
   public message: string;
-  @Output() public onUploadFinished = new EventEmitter();
 
-  constructor(private http: HttpClient) {
-
+  constructor(http: HttpClient, scienceService: ScienceService) {
+    this.http = http;
+    this.scienceService = scienceService;
   }
 
   ngOnInit() {
+
   }
 
   public uploadFile = (files) => {
@@ -40,7 +46,7 @@ export class UploadComponent implements OnInit {
       return;
     }
 
-    let filesToUpload: File[] = files;
+    const filesToUpload: File[] = files;
     const formData = new FormData();
 
     // One interesting thing to pay attention to is the use of the Array.from() function. Even though the
@@ -51,10 +57,7 @@ export class UploadComponent implements OnInit {
       return formData.append('file' + index, file, file.name);
     });
 
-    this.http.post(this.uploadPath, formData, {
-      reportProgress: true,
-      observe: 'events',
-    })
+    this.scienceService.upload(formData)
       .subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
           this.progress = Math.round(100 * event.loaded / event.total);

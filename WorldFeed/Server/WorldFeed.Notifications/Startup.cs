@@ -8,6 +8,8 @@ namespace WorldFeed.Notifications
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using WorldFeed.Common.Messages.Uploads;
+    using WorldFeed.Notifications.Messages;
 
     public class Startup
     {
@@ -19,10 +21,8 @@ namespace WorldFeed.Notifications
         public void ConfigureServices(IServiceCollection services) 
             => services
                 .AddCors()
-                .AddTokenAuthentication(
-                    this.Configuration, 
-                    JwtConfiguration.BearerEvents)
-                //.AddMessaging(typeof(CarAdCreatedConsumer))
+                .AddTokenAuthentication(this.Configuration, JwtConfiguration.BearerEvents)
+                .AddMessaging(typeof(UplodedMediaConsumer))
                 .AddSignalR();
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

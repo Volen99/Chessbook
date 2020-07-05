@@ -1,4 +1,4 @@
-namespace WorldFeed.History.BC.Science.Upload.Gateway
+namespace WorldFeed.History.BC.Science.Post.Gateway
 {
     using System.Reflection;
     using WorldFeed.Services.Identity;

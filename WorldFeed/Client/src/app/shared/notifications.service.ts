@@ -11,24 +11,23 @@ export class NotificationsService {
     constructor(private toastr: ToastrService) { }
 
     public subscribe = () => {
-        const options = {
+      console.log(localStorage.getItem('token'));
+      const options = {
             accessTokenFactory: () => {
                 return localStorage.getItem('token');
             }
         };
 
-        this.hubConnection = new signalR.HubConnectionBuilder()
+      this.hubConnection = new signalR.HubConnectionBuilder()
                                 .withUrl('https://localhost:5011/notifications', options)
                                 .build();
 
-        this.hubConnection
-            .start()
+      this.hubConnection.start()
             .then(() => console.log('Connection started'))
             .catch(err => console.log('Error while starting connection: ' + err));
 
-        this.hubConnection.on('ReceiveNotification', (data) => {
-            console.log(data);
-            this.toastr.success(`A new car - ${data.manufacturer} ${data.model} for just ${data.pricePerDay}!!!`, "New Car!");
+      this.hubConnection.on('ReceiveNotification', (data) => {
+            this.toastr.success(`A new ${data.type} was uploaded!`,"New Media!");
         });
     }
 }

@@ -4,8 +4,6 @@
 
     public class Statistics : BaseDeletableModel<int>
     {
-        public int TotalCarAds { get; set; }
-
-        public int TotalRentedCars { get; set; }
+        public int TotalUploads { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 using System;
 using System.Net.Http;
 using System.Collections.Generic;
-using WorldFeed.History.BC.Science.Upload.Gateway.RefitInternalGenerated;
+using WorldFeed.History.BC.Science.Post.Gateway.RefitInternalGenerated;
 
 /* ******** Hey You! *********
  *
@@ -11,7 +11,7 @@ using WorldFeed.History.BC.Science.Upload.Gateway.RefitInternalGenerated;
  * in the Refit package */
 
 #pragma warning disable
-namespace WorldFeed.History.BC.Science.Upload.Gateway.RefitInternalGenerated
+namespace WorldFeed.History.BC.Science.Post.Gateway.RefitInternalGenerated
 {
     [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [AttributeUsage (AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Enum | AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Event | AttributeTargets.Interface | AttributeTargets.Delegate)]

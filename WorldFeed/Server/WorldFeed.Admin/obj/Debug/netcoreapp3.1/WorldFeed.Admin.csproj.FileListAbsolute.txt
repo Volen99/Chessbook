@@ -144,7 +144,6 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\D
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\Microsoft.Extensions.PlatformAbstractions.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
@@ -204,3 +203,8 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\D
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\WorldFeed.Web.Shared.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\WorldFeed.Web.Shared.pdb
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Diagnostics.HealthChecks.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Admin\bin\Debug\netcoreapp3.1\System.Threading.Channels.dll

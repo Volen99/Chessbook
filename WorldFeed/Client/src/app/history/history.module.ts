@@ -6,12 +6,14 @@ import {HistoryRoutingModule} from './history-routing.module';
 import {BCRoutingModule} from './BC/BC-routing.module';
 import {BCViewComponent} from './BC/view/BC-view.component';
 import {ScienceModule} from './BC/science/science-module';
+import { PostComponent } from './BC/science/post/post.component';
 
 
 @NgModule({
   declarations: [
     ViewComponent,
     BCViewComponent,
+    // PostComponent,
   ],
   imports: [
     CommonModule,
