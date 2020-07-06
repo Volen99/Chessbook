@@ -5,20 +5,20 @@
     using System.Linq;
     using System.Threading.Tasks;
     using MassTransit;
-
+    using Microsoft.EntityFrameworkCore;
     using WorldFeed.Common.Messages.Uploads;
     using WorldFeed.Common.Models.Repositories;
-    using WorldFeed.Common.Services.Mapping;
     using WorldFeed.History.BC.Science.Post.Data.Models;
+    using WorldFeed.History.BC.Science.Post.Data.Models.Enums;
 
     public class MediaService : IMediaService
     {
-        private IDeletableEntityRepository<Media> photosRepository;
+        private IDeletableEntityRepository<Media> mediaRepository;
         private readonly IBus publisher;
 
         public MediaService(IDeletableEntityRepository<Media> photosRepository, IBus publisher)
         {
-            this.photosRepository = photosRepository;
+            this.mediaRepository = photosRepository;
             this.publisher = publisher;
         }
         public async Task<Media> CreateMediaAsync(string directory, string path, string fileExtension, string postId, long size, int? width = null, int? height = null)
@@ -32,12 +32,11 @@
                 PostId = postId,
                 Width = width,
                 Height = height,
+                Status = Status.Inserted,
             };
 
-            mediaNew.IsDeleted = true;
-
-            await this.photosRepository.AddAsync(mediaNew);
-            await this.photosRepository.SaveChangesAsync();
+            await this.mediaRepository.AddAsync(mediaNew);
+            await this.mediaRepository.SaveChangesAsync();
 
             await this.publisher.Publish(new UploadMediaCreatedMessage
             {
@@ -50,27 +49,28 @@
 
         public IEnumerable<T> GetAll<T>(int? count = null)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Media GetById(string id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Media GetByPostId(string postId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Task<T> Update<T>(string imageUrl, long size, string postId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public async Task SetIsDeleted(string postId)
+        public async Task ChangeAllStatus(string postId, Status status)
         {
-            var medias = this.GetAllByPostId(postId); // TODO: change Media
+            var medias = this.GetAllByPostId(postId)
+                .Where(m => m.Status == Status.Inserted); // TODO: change Media
 
             if (medias.Count() > 4)
             {
@@ -79,15 +79,15 @@
 
             foreach (var media in medias)
             {
-                media.IsDeleted = false;
+                media.Status = Status.Uploaded;
             }
 
-            await this.photosRepository.SaveChangesAsync();
+            await this.mediaRepository.SaveChangesAsync();
         }
 
         public IEnumerable<Media> GetAllByPostId(string postId, int? count = null)
         {
-            var medias = this.photosRepository.AllWithDeleted()
+            var medias = this.mediaRepository.AllWithDeleted()
                 .Where(m => m.PostId == postId);
 
             if (count.HasValue)
@@ -96,6 +96,17 @@
             }
 
             return medias.ToList();
+        }
+
+        public async Task RemoveMedia(string mediaId)
+        {
+            var mediaCurrent = await this.mediaRepository.All()
+                .Where(x => x.Id == mediaId)
+                .FirstOrDefaultAsync();
+
+            mediaCurrent.Status = Status.Removed;
+
+            await this.mediaRepository.SaveChangesAsync();
         }
     }
 }

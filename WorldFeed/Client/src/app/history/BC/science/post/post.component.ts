@@ -61,7 +61,6 @@ export class PostComponent implements OnInit {
 
   public uploadFinished = (event) => {
     this.response = event;
-    alert();
   }
 
   public createImgPath = (serverPath: string) => {

@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using WorldFeed.History.BC.Science.Post.Data.Models;
+    using WorldFeed.History.BC.Science.Post.Data.Models.Enums;
 
     public interface IMediaService
     {
@@ -19,6 +20,8 @@
 
         Task<T> Update<T>(string imageUrl, long size, string postId);
 
-        Task SetIsDeleted(string postId);
+        Task ChangeAllStatus(string postId, Status status);
+
+        Task RemoveMedia(string mediaId);
     }
 }

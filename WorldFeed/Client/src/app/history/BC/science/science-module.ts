@@ -6,6 +6,7 @@ import {ScienceRoutingModule} from './science-routing.module';
 import {UploadComponent} from './upload/upload.component';
 import {PostComponent} from './post/post.component';
 import {ScienceService} from './science.service';
+import {HistoryModule} from '../../history.module';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import {ScienceService} from './science.service';
     CommonModule,
     SharedModule,
     ScienceRoutingModule,
+    HistoryModule,
   ],
   exports: [
     ScienceViewComponent,

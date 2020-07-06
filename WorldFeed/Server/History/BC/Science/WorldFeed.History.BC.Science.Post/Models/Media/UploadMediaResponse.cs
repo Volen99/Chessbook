@@ -2,7 +2,7 @@
 {
     public class UploadMediaResponse
     {
-        public string Id { get; set; }
+        public string MediaId { get; set; }
 
         public long Size { get; set; }
 

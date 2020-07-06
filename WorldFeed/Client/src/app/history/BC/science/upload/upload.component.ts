@@ -1,15 +1,11 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {HttpEventType, HttpClient, HttpHeaders} from '@angular/common/http';
+import {Component, OnInit, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {ScienceService} from '../science.service';
 import {environment} from '../../../../../environments/environment';
-import {UserToCreate} from '../../../../_interfaces/userToCreate.model';
-
 
 class ImageSnippet {
   public src: string;
   public file: File;
-  public pending = false;
-  public status = 'init';
 
   constructor(src: string, file: File) {
     this.src = src;
@@ -24,11 +20,14 @@ class ImageSnippet {
   styleUrls: ['./upload.component.css'],
 })
 export class UploadComponent implements OnInit {
+  @ViewChild('fileDropRef', { static: false }) fileDropEl: ElementRef;
   @Output() public onUploadFinished = new EventEmitter();
 
   private http: HttpClient;
   private scienceService: ScienceService;
+  private microservicePath: string = environment.historyBCSciencePost;
 
+  public files: any[] = [];
   public progress: number;
   public message: string;
 
@@ -39,6 +38,37 @@ export class UploadComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  /**
+   * on file drop handler
+   */
+  onFileDropped($event) {
+     this.uploadFile($event);
+  }
+
+  /**
+   * handle file from browsing
+   */
+  fileBrowseHandler(files) {
+     this.uploadFile(files);
+  }
+
+  /**
+   * format bytes
+   * @param bytes (File size in bytes)
+   * @param decimals (Decimals point)
+   */
+
+  formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) {
+      return '0 Bytes';
+    }
+    const k = 1024;
+    const dm = decimals <= 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 
   public uploadFile = (files) => {
@@ -57,14 +87,43 @@ export class UploadComponent implements OnInit {
       return formData.append('file' + index, file, file.name);
     });
 
+    const filesArray = Array.from(filesToUpload);
+
+    if (filesArray.length > 1 && (filesArray.some(f => f.type.startsWith('video') || f.type.endsWith('gif')))) {
+      alert('Please upload video or gif alone');
+      return;
+    }
+
+
     this.scienceService.upload(formData)
       .subscribe(event => {
-        if (event.type === HttpEventType.UploadProgress) {
-          this.progress = Math.round(100 * event.loaded / event.total);
-        } else if (event.type === HttpEventType.Response) {
-          this.message = 'Upload success.';
-          this.onUploadFinished.emit(event.body);
-        }
+        this.files = event.data;
+
+        // if (event.type === HttpEventType.UploadProgress) {
+        //   this.progress = Math.round(100 * event.loaded / event.total);
+        // } else if (event.type === HttpEventType.Response) {
+        //   this.message = 'Upload success.';
+        // }
+        this.onUploadFinished.emit(event);
       });
+  }
+
+  /**
+   * Delete file from files list
+   * @param index (File index)
+   * @param mediaId (Media id)
+   */
+  deleteFile(index: number, mediaId: string) {
+    // if (this.files[index].progress < 100) {
+    //   console.log('Upload in progress.');
+    //   return;
+    // }
+
+    this.scienceService.removeMedia(mediaId).subscribe();
+    this.files.splice(index, 1);
+  }
+
+  public createImgPath = (serverPath: string) => {
+    return `${this.microservicePath}${serverPath}`;
   }
 }

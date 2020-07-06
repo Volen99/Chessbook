@@ -1,7 +1,9 @@
 ﻿namespace WorldFeed.History.BC.Science.Post.Data.Models
 {
     using System;
+
     using WorldFeed.Common.Models;
+    using WorldFeed.History.BC.Science.Post.Data.Models.Enums;
 
     public class Media : IAuditInfo, IDeletableEntity
     {
@@ -25,6 +27,8 @@
         public int? Height { get; set; }
 
         public string PostId { get; set; }
+
+        public Status Status { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

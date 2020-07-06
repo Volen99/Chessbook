@@ -289,6 +289,9 @@ namespace WorldFeed.History.BC.Science.Post.Migrations
                     b.Property<long>("Size")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<int?>("Width")
                         .HasColumnType("int");
 
