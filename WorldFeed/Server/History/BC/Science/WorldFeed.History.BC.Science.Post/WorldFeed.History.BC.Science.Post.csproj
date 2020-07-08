@@ -21,13 +21,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Configurations\" />
     <Folder Include="Resources\Media\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Web\WorldFeed.Web.Shared\WorldFeed.Web.Shared.csproj" />
     <ProjectReference Include="..\..\..\..\WorldFeed.Common\WorldFeed.Common.csproj" />
+    <ProjectReference Include="..\..\..\WorldFeed.History.Common\WorldFeed.History.Common.csproj" />
   </ItemGroup>
 
  

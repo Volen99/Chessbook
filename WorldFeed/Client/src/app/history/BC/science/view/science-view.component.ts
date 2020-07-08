@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./science-view.component.css'],
 })
 export class ScienceViewComponent implements OnInit {
-
   // So you should use constructor() to setup Dependency Injection and not much else.
   // ngOnInit() is better place to "start" - it's where/when components' bindings are resolved
   constructor() {

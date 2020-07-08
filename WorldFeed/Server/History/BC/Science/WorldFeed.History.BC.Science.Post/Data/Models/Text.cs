@@ -15,6 +15,7 @@
         public string Content { get; set; }
 
         public string PostId { get; set; }
+        public Post Post { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
@@ -23,5 +24,7 @@
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+
     }
 }

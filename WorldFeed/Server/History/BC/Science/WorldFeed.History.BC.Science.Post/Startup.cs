@@ -19,7 +19,7 @@ namespace WorldFeed.History.BC.Science.Post
     using WorldFeed.History.BC.Science.Post.Services.Text;
     using WorldFeed.History.BC.Science.Post.Services.Posts;
     using WorldFeed.Common.Services.Mapping;
-    using WorldFeed.Web.Shared;
+    using WorldFeed.History.BC.Science.Post.Models;
     using System.Reflection;
 
     public class Startup
@@ -57,11 +57,11 @@ namespace WorldFeed.History.BC.Science.Post
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //AutoMapperConfig.RegisterMappings(typeof(typeof(ApiResponse)).GetTypeInfo());
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly); // Why does He help me?
 
             // Usually, all the files in the wwwroot folder are servable for the client applications. We provide that by adding app.UseStaticFiles()
             // in the Startup class in the Configure method. Of course, our uploaded images will be stored in the Resources folder, and due to
-            // that, we need to make it servable as well.To do that, let’s modify the Configure method in the Startup.cs class
+            // that, we need to make it servable as well. To do that, let’s modify the Configure method in the Startup.cs class
             //
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions()
@@ -70,8 +70,7 @@ namespace WorldFeed.History.BC.Science.Post
                 RequestPath = new PathString("/Resources")
             });
 
-            app.UseWebService(env)
-                .Initialize();
+            app.UseWebService(env).Initialize();
         }
     }
 }

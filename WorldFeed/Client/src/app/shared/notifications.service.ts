@@ -11,7 +11,6 @@ export class NotificationsService {
     constructor(private toastr: ToastrService) { }
 
     public subscribe = () => {
-      console.log(localStorage.getItem('token'));
       const options = {
             accessTokenFactory: () => {
                 return localStorage.getItem('token');

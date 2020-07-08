@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {UserToCreate} from '../../../../_interfaces/userToCreate.model';
 import {HttpClient} from '@angular/common/http';
 import {ScienceService} from '../science.service';
 import {environment} from '../../../../../environments/environment';
+import {SignalRScienceService} from '../signalR/signalR-science-service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -13,6 +14,7 @@ import {environment} from '../../../../../environments/environment';
 export class PostComponent implements OnInit {
   private http: HttpClient;
   private scienceService: ScienceService;
+  private signalRScienceService: SignalRScienceService;
   private microservicePath: string = environment.historyBCSciencePost;
 
   public isCreate: boolean;
@@ -25,13 +27,14 @@ export class PostComponent implements OnInit {
       dbPaths: string,
     }],
   };
-  constructor(http: HttpClient, scienceService: ScienceService) {
+  constructor(http: HttpClient, scienceService: ScienceService, signalRScienceService: SignalRScienceService) {
     this.http = http;
     this.scienceService = scienceService;
+    this.signalRScienceService = signalRScienceService;
   }
 
   ngOnInit(): void {
-    this.isCreate = true;
+    // this.isCreate = true;
   }
 
   public onCreate = (text: string) => {
@@ -51,13 +54,13 @@ export class PostComponent implements OnInit {
     this.isCreate = false;
     this.scienceService.createText(text, this.user.post.medias[0]?.postId || null)
       .subscribe();
-
+    // I am so fucking dumb!!!!!! 08.07.2020, Wednesday
     this.user.post.medias[0]?.postId = undefined;
   }
 
-  public returnToCreate = () => {
-    this.isCreate = true;
-  }
+  // public returnToCreate = () => {
+  //   this.isCreate = true;
+  // }
 
   public uploadFinished = (event) => {
     this.response = event;
@@ -66,5 +69,4 @@ export class PostComponent implements OnInit {
   public createImgPath = (serverPath: string) => {
     return `${this.microservicePath}${serverPath}`;
   }
-
 }

@@ -21,6 +21,8 @@ class ImageSnippet {
 })
 export class UploadComponent implements OnInit {
   @ViewChild('fileDropRef', { static: false }) fileDropEl: ElementRef;
+  // Use EventEmitter only for event binding between a child and parent component.
+  // Do not subscribe to it. Do not call any of those methods. Only call .emit()
   @Output() public onUploadFinished = new EventEmitter();
 
   private http: HttpClient;
@@ -104,7 +106,9 @@ export class UploadComponent implements OnInit {
         // } else if (event.type === HttpEventType.Response) {
         //   this.message = 'Upload success.';
         // }
-        this.onUploadFinished.emit(event);
+        console.log(event);
+        debugger;
+        this.onUploadFinished.emit(event); // Emits an event containing a given value.
       });
   }
 

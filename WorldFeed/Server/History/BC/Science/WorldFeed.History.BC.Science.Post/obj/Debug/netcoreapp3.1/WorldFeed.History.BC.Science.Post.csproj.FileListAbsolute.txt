@@ -88,3 +88,5 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\Wo
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\obj\Debug\netcoreapp3.1\WorldFeed.History.BC.Science.Post.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\obj\Debug\netcoreapp3.1\WorldFeed.History.BC.Science.Post.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\obj\Debug\netcoreapp3.1\WorldFeed.History.BC.Science.Post.genruntimeconfig.cache
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\bin\Debug\netcoreapp3.1\WorldFeed.History.Common.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\bin\Debug\netcoreapp3.1\WorldFeed.History.Common.pdb

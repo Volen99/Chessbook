@@ -14,9 +14,7 @@
         private readonly UserManager<User> userManager;
         private readonly ITokenGeneratorService jwtTokenGenerator;
 
-        public IdentityService(
-            UserManager<User> userManager, 
-            ITokenGeneratorService jwtTokenGenerator)
+        public IdentityService(UserManager<User> userManager, ITokenGeneratorService jwtTokenGenerator)
         {
             this.userManager = userManager;
             this.jwtTokenGenerator = jwtTokenGenerator;

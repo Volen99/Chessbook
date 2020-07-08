@@ -35,6 +35,7 @@
           "Microsoft.EntityFrameworkCore.Tools": "3.1.5",
           "System.Drawing.Common": "4.7.0",
           "WorldFeed.Common": "1.0.0",
+          "WorldFeed.History.Common": "1.0.0",
           "WorldFeed.Web.Shared": "1.0.0",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
@@ -2048,6 +2049,14 @@
         },
         "compile": {
           "WorldFeed.Common.dll": {}
+        }
+      },
+      "WorldFeed.History.Common/1.0.0": {
+        "runtime": {
+          "WorldFeed.History.Common.dll": {}
+        },
+        "compile": {
+          "WorldFeed.History.Common.dll": {}
         }
       },
       "WorldFeed.Web.Shared/1.0.0": {
@@ -4693,6 +4702,11 @@
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
     },
     "WorldFeed.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WorldFeed.History.Common/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

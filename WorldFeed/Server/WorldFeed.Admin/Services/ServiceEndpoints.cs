@@ -9,7 +9,9 @@
 
         public string Statistics { get; private set; }
 
-        public string Dealers { get; private set; }
+        public string HistoryBCSciencePost { get; private set; }
+
+        //public string Dealers { get; private set; }
 
         public string this[string service] 
             => this.GetType()

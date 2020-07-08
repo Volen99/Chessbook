@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Admin", "WorldFee
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Common", "WorldFeed.Common\WorldFeed.Common.csproj", "{94B89F70-D398-4D4B-8D10-935EC46EDBC9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.History.BC.Science.Upload.Gateway", "WorldFeed.Dealers.Gateway\WorldFeed.History.BC.Science.Upload.Gateway.csproj", "{5689836B-49E4-4C98-830F-7237D741122D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.History.BC.Science.Gateway", "WorldFeed.Dealers.Gateway\WorldFeed.History.BC.Science.Gateway.csproj", "{5689836B-49E4-4C98-830F-7237D741122D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Identity", "WorldFeed.Identity\WorldFeed.Identity.csproj", "{3BC5DC8B-9F86-40C3-8E88-66A446F9C634}"
 EndProject
@@ -38,6 +38,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Web.Shared", "Web\WorldFeed.Web.Shared\WorldFeed.Web.Shared.csproj", "{E2184C75-2E38-44CB-A63F-167407D7B5FF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.History.BC.Science.Post", "History\BC\Science\WorldFeed.History.BC.Science.Post\WorldFeed.History.BC.Science.Post.csproj", "{ACC5345C-5C7E-4576-8E7C-86FA8ED11EBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldFeed.History.BC.Science", "History\BC\Science\WorldFeed.History.BC.Science\WorldFeed.History.BC.Science.csproj", "{0C0FDDF9-A5D0-4FEA-8427-57CF53EA00FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +87,10 @@ Global
 		{ACC5345C-5C7E-4576-8E7C-86FA8ED11EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACC5345C-5C7E-4576-8E7C-86FA8ED11EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACC5345C-5C7E-4576-8E7C-86FA8ED11EBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C0FDDF9-A5D0-4FEA-8427-57CF53EA00FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C0FDDF9-A5D0-4FEA-8427-57CF53EA00FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C0FDDF9-A5D0-4FEA-8427-57CF53EA00FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C0FDDF9-A5D0-4FEA-8427-57CF53EA00FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +106,7 @@ Global
 		{BE665E78-2245-445C-A322-F2684970F84F} = {EB129BD3-25F4-48BF-838A-4A921019E4A2}
 		{E2184C75-2E38-44CB-A63F-167407D7B5FF} = {1267170A-8DF8-4957-8779-8C836F5FEA31}
 		{ACC5345C-5C7E-4576-8E7C-86FA8ED11EBB} = {43216E23-EBB0-4EA0-B0BA-9CCC19AF2613}
+		{0C0FDDF9-A5D0-4FEA-8427-57CF53EA00FD} = {43216E23-EBB0-4EA0-B0BA-9CCC19AF2613}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58A386E4-E7C7-49B8-8E30-D8DD2154B7D5}

@@ -284,7 +284,7 @@ namespace WorldFeed.History.BC.Science.Post.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<long>("Size")
                         .HasColumnType("bigint");
@@ -296,6 +296,8 @@ namespace WorldFeed.History.BC.Science.Post.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PostId");
 
                     b.ToTable("Media");
                 });
@@ -316,6 +318,9 @@ namespace WorldFeed.History.BC.Science.Post.Migrations
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("TextId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -346,9 +351,13 @@ namespace WorldFeed.History.BC.Science.Post.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PostId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PostId")
+                        .IsUnique()
+                        .HasFilter("[PostId] IS NOT NULL");
 
                     b.ToTable("Texts");
                 });
@@ -414,6 +423,20 @@ namespace WorldFeed.History.BC.Science.Post.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WorldFeed.History.BC.Science.Post.Data.Models.Media", b =>
+                {
+                    b.HasOne("WorldFeed.History.BC.Science.Post.Data.Models.Post", "Post")
+                        .WithMany("Media")
+                        .HasForeignKey("PostId");
+                });
+
+            modelBuilder.Entity("WorldFeed.History.BC.Science.Post.Data.Models.Text", b =>
+                {
+                    b.HasOne("WorldFeed.History.BC.Science.Post.Data.Models.Post", "Post")
+                        .WithOne("Text")
+                        .HasForeignKey("WorldFeed.History.BC.Science.Post.Data.Models.Text", "PostId");
                 });
 #pragma warning restore 612, 618
         }

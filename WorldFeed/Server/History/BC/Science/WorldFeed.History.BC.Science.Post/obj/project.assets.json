@@ -2428,6 +2428,16 @@
           "Microsoft.AspNetCore.App"
         ]
       },
+      "WorldFeed.History.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/WorldFeed.History.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.History.Common.dll": {}
+        }
+      },
       "WorldFeed.Web.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
@@ -8009,6 +8019,11 @@
       "path": "../../../../WorldFeed.Common/WorldFeed.Common.csproj",
       "msbuildProject": "../../../../WorldFeed.Common/WorldFeed.Common.csproj"
     },
+    "WorldFeed.History.Common/1.0.0": {
+      "type": "project",
+      "path": "../../../WorldFeed.History.Common/WorldFeed.History.Common.csproj",
+      "msbuildProject": "../../../WorldFeed.History.Common/WorldFeed.History.Common.csproj"
+    },
     "WorldFeed.Web.Shared/1.0.0": {
       "type": "project",
       "path": "../../../../Web/WorldFeed.Web.Shared/WorldFeed.Web.Shared.csproj",
@@ -8028,6 +8043,7 @@
       "Microsoft.EntityFrameworkCore.Tools >= 3.1.5",
       "System.Drawing.Common >= 4.7.0",
       "WorldFeed.Common >= 1.0.0",
+      "WorldFeed.History.Common >= 1.0.0",
       "WorldFeed.Web.Shared >= 1.0.0"
     ]
   },
@@ -8061,6 +8077,9 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
+            "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\History\\WorldFeed.History.Common\\WorldFeed.History.Common.csproj": {
+              "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\History\\WorldFeed.History.Common\\WorldFeed.History.Common.csproj"
+            },
             "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Shared.csproj": {
               "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Shared.csproj"
             },

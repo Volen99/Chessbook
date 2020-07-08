@@ -5,11 +5,10 @@ import {ViewComponent} from './view/view.component';
 import {HistoryRoutingModule} from './history-routing.module';
 import {BCRoutingModule} from './BC/BC-routing.module';
 import {BCViewComponent} from './BC/view/BC-view.component';
-import {ScienceModule} from './BC/science/science-module';
-import { PostComponent } from './BC/science/post/post.component';
 import {DndDirective} from './direcitives/dnd.directive';
 import {ScienceService} from './BC/science/science.service';
-
+import {SignalRScienceService} from './BC/science/signalR/signalR-science-service';
+import {ScienceModule} from './BC/science/science.module';
 
 @NgModule({
   declarations: [
@@ -22,14 +21,14 @@ import {ScienceService} from './BC/science/science.service';
     SharedModule,
     HistoryRoutingModule,
     BCRoutingModule,
-    // ScienceModule,
+    ScienceModule,
   ],
   exports: [
     ViewComponent,
     BCViewComponent,
     DndDirective,
   ],
-  providers: [ScienceService] // TODO: wtf should not be here!!?
+  providers: [] // TODO: wtf should not be here!!?
 })
 
 export class HistoryModule {}

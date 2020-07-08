@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, resolveForwardRef } from '@angular/core';
+  import { Component, OnInit, Output, EventEmitter, resolveForwardRef } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { FormGroup, FormBuilder } from 'ngx-strongly-typed-forms';
 import { AuthenticationService } from '../authentication.service';

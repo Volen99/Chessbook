@@ -10,6 +10,7 @@
     using WorldFeed.Common.Models.Repositories;
     using WorldFeed.History.BC.Science.Post.Data.Models;
     using WorldFeed.History.BC.Science.Post.Data.Models.Enums;
+    using WorldFeed.History.Common.Messages.Media;
 
     public class MediaService : IMediaService
     {
@@ -42,6 +43,19 @@
             {
                 UploadId = mediaNew.Id,
                 Type = fileExtension.Split('/')[0], // TODO: use automapper
+            });
+
+            await this.publisher.Publish(new MediaCreatedMessage
+            {
+                Id = mediaNew.Id,
+                Directory = mediaNew.Directory,
+                Path = mediaNew.Path,
+                FileExtension = mediaNew.FileExtension,
+                Size = mediaNew.Size,
+                PostId = mediaNew.PostId,
+                Width = mediaNew.Width,
+                Height = mediaNew.Height,
+                CreatedOn = mediaNew.CreatedOn,
             });
 
             return mediaNew;
