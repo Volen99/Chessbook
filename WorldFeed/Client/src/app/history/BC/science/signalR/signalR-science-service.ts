@@ -7,15 +7,10 @@ import {PostModel} from '../interfaces/post.model';
 export class SignalRScienceService {
   private hubConnection: signalR.HubConnection;
 
-  private data: PostModel;
-
   constructor() {
-
   }
 
-  public getData() {
-    return this.data;
-  }
+  public data: PostModel;
 
   public subscribe = () => {
     const options = {
@@ -33,6 +28,7 @@ export class SignalRScienceService {
       .catch(err => console.log('Error while starting connection: ' + err));
 
     this.hubConnection.on('ReceivePost', (data) => {
+      debugger;
       this.data = data.result;
     });
   }

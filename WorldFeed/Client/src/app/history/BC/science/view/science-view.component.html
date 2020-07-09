@@ -4,7 +4,7 @@
     </div>
     <div class="col-lg-6">
       <app-history-BC-science-post></app-history-BC-science-post>
-      <app-history-BC-science-list-posts></app-history-BC-science-list-posts>
+      <app-history-BC-science-list-posts (OnPostCreated)="assignLastPost($event)"></app-history-BC-science-list-posts>
     </div>
     <div class="col-lg-3">
     </div>

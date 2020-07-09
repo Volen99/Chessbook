@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {ScienceService} from '../science.service';
 import {SignalRScienceService} from '../signalR/signalR-science-service';
 import {environment} from '../../../../../environments/environment';
@@ -8,7 +8,7 @@ import {PostModel} from '../interfaces/post.model';
   // tslint:disable-next-line:component-selector
   selector: 'app-history-BC-science-list-posts',
   templateUrl: './list-posts.component.html',
-  styleUrls: ['./list-posts.component.css']
+  styleUrls: ['./list-posts.component.css'],
 })
 export class ListPostsComponent implements OnInit {
   private scienceService: ScienceService;
@@ -17,7 +17,6 @@ export class ListPostsComponent implements OnInit {
 
   public token: string;
   public posts: Array<PostModel>;
-  public lastPost: PostModel;
 
   constructor(scienceService: ScienceService, signalRService: SignalRScienceService) {
     this.scienceService = scienceService;
@@ -39,13 +38,8 @@ export class ListPostsComponent implements OnInit {
       });
   }
 
-  public postCreated = (event) => {
-    alert('Inside postCreated()');
-    this.getToken();
-    this.signalRScienceService.subscribe();
-    console.log(event);
-    debugger;
-    this.lastPost = event;
+  getLastPost(event) {
+
   }
 
   public createImgPath = (serverPath: string) => {

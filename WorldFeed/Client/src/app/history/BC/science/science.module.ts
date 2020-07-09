@@ -8,6 +8,7 @@ import {PostComponent} from './post/post.component';
 import {ScienceService} from './science.service';
 import {ListPostsComponent} from './list-posts/list-posts.component';
 import {SignalRScienceService} from './signalR/signalR-science-service';
+import {DndDirective} from './direcitives/dnd.directive';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import {SignalRScienceService} from './signalR/signalR-science-service';
     UploadComponent,
     PostComponent,
     ListPostsComponent,
+    DndDirective,
   ],
   imports: [
     CommonModule,
@@ -27,6 +29,7 @@ import {SignalRScienceService} from './signalR/signalR-science-service';
     UploadComponent,
     PostComponent,
     ListPostsComponent,
+    DndDirective,
   ],
   providers: [ScienceService, SignalRScienceService]
 })

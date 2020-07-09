@@ -17,12 +17,15 @@ namespace WorldFeed.Identity
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-            => services
+        {
+            services
                 .AddWebService<IdentityDbContext>(this.Configuration)
                 .AddUserStorage()
                 .AddTransient<IDataSeeder, IdentityDataSeeder>()
                 .AddTransient<IIdentityService, IdentityService>()
-                .AddTransient<ITokenGeneratorService, TokenGeneratorService>();
+                .AddTransient<ITokenGeneratorService, TokenGeneratorService>()
+                .AddControllers().AddNewtonsoftJson(); // by me
+        }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
             => app

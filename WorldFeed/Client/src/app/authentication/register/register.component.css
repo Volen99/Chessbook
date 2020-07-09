@@ -3,3 +3,23 @@ p a :hover {
     border-bottom: 1px solid blue;
     cursor: pointer;
 }
+
+div {
+  color: wheat;
+}
+
+._5k_2 {
+  border-radius: 4px;
+  border-width: 1px;
+  display: inline-block;
+  padding: 5px 0 5px 4px;
+}
+
+._5k_2:first-child {
+  margin-right: 4px;
+}
+
+.gender-label {
+  padding-left: 6px;
+  color: burlywood !important;
+}

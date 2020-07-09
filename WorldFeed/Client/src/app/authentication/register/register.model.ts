@@ -1,6 +1,10 @@
 export interface RegisterModelForm {
+    firstName: string;
+    lastName: string;
     email: string;
     password: string;
-    name: string;
-    phoneNumber: string;
+    birthdayMonth: number;
+    birthdayDay: number;
+    birthdayYear: number;
+    gender: number;
 }

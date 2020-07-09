@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {ScienceService} from '../science.service';
 import {environment} from '../../../../../environments/environment';
 import {SignalRScienceService} from '../signalR/signalR-science-service';
+import {PostModel} from '../interfaces/post.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -12,6 +13,8 @@ import {SignalRScienceService} from '../signalR/signalR-science-service';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
+  @Output() public OnPostCreated = new EventEmitter<Array<PostModel>>();
+
   private http: HttpClient;
   private scienceService: ScienceService;
   private signalRScienceService: SignalRScienceService;
@@ -51,10 +54,10 @@ export class PostComponent implements OnInit {
       }
     }
 
+
     this.isCreate = false;
     this.scienceService.createText(text, this.user.post.medias[0]?.postId || null)
       .subscribe();
-    // I am so fucking dumb!!!!!! 08.07.2020, Wednesday
     this.user.post.medias[0]?.postId = undefined;
   }
 
@@ -70,3 +73,5 @@ export class PostComponent implements OnInit {
     return `${this.microservicePath}${serverPath}`;
   }
 }
+
+// I am so fucking dumb!!!!!! 08.07.2020, Wednesday

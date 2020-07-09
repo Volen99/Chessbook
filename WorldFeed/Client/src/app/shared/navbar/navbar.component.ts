@@ -9,9 +9,9 @@ import { NotificationsService } from '../notifications.service';
 })
 export class NavbarComponent implements OnInit {
   token: string;
-  constructor(
-    private router: Router,
-    private notificationsService: NotificationsService) { }
+  constructor(private router: Router, private notificationsService: NotificationsService) {
+
+  }
 
   ngOnInit(): void {
     this.getToken();
@@ -23,12 +23,12 @@ export class NavbarComponent implements OnInit {
   }
 
   route(param) {
-    console.log(param)
+    console.log(param);
     this.router.navigate([param])
   }
 
-  chanheNav(event) {
-    console.log(event)
+  changeNav(event) {
+    console.log(event);
   }
 
   logout() {

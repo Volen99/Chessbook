@@ -13,6 +13,7 @@ export class ScienceService {
   private removeMediaPath: string = environment.historyBCSciencePost + 'media' + '/remove';
   private createTextPath: string = environment.historyBCSciencePost + 'text' + '/create';
   private getPostsPath: string = environment.historyBCScience + 'post' + '/getAll';
+  private getLastPostPath: string = environment.historyBCScience + 'post' + '/getLast';
 
   constructor(http: HttpClient) {
     this.http = http;
@@ -20,6 +21,10 @@ export class ScienceService {
 
   getPosts(): Observable<Array<PostModel>> {
     return this.http.get<Array<PostModel>>(this.getPostsPath);
+  }
+
+  getLastPost(): Observable<PostModel> {
+    return this.http.get<PostModel>(this.getLastPostPath);
   }
 
   upload(formData): Observable<Array<File>> {

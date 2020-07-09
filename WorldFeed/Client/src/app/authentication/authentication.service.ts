@@ -7,10 +7,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  registerPath: string = environment.identityApiUrl + "identity/register"
-  loginPath: string = environment.identityApiUrl + "identity/login";
+  private registerPath: string = environment.identityApiUrl + "identity/register";
+  private loginPath: string = environment.identityApiUrl + "identity/login";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+
+  }
 
   register(payload): Observable<any> {
       return this.http.post(this.registerPath, payload);

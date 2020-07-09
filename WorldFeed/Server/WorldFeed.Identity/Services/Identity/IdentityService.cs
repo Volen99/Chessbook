@@ -6,6 +6,9 @@
     using Data.Models;
     using Microsoft.AspNetCore.Identity;
     using Models.Identity;
+    using System;
+    using System.Globalization;
+    using WorldFeed.Common.Models.Enums;
 
     public class IdentityService : IIdentityService
     {
@@ -20,15 +23,22 @@
             this.jwtTokenGenerator = jwtTokenGenerator;
         }
 
-        public async Task<Result<User>> Register(UserInputModel userInput)
+        public async Task<Result<User>> Register(UserInputModel input)
         {
+            var date = input.BirthdayMonth + "/" + input.BirthdayDay + "/" + input.BirthdayYear;
+            var birthday = DateTime.Parse(date, CultureInfo.InvariantCulture);
             var user = new User
             {
-                Email = userInput.Email,
-                UserName = userInput.Email
+                UserName = input.FirstName,
+                FirstName = input.FirstName,
+                LastName = input.LastName,
+                Email = input.Email,
+                Birthday = birthday,
+                Age = DateTime.UtcNow.Year - birthday.Year,
+                Gender = (Gender)input.Gender,
             };
 
-            var identityResult = await this.userManager.CreateAsync(user, userInput.Password);
+            var identityResult = await this.userManager.CreateAsync(user, input.Password);
 
             var errors = identityResult.Errors.Select(e => e.Description);
 

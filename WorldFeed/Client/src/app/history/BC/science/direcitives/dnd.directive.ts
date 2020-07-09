@@ -20,7 +20,7 @@ export class DndDirective {
   // Dragover listener
   @HostListener('dragover', ['$event']) onDragOver(evt) {
     evt.preventDefault();
-    evt.stopPropagation();
+    evt.stopPropagation(); // lol
 
     this.fileOver = true;
   }

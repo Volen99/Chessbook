@@ -1,3 +1,15 @@
-enum Month {
-  
+export enum Month {
+  Month = 0,
+  Jan = 1,
+  Feb = 2,
+  Mar,
+  Apr,
+  May,
+  Jun,
+  Jul,
+  Aug,
+  Sep,
+  Oct,
+  Nov,
+  Dec,
 }
