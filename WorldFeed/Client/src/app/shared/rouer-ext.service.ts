@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, RouterEvent, NavigationEnd } from '@angular/router';
 
 @Injectable()
-export class RouterExtService { 
+export class RouterExtService {
   private previousUrl: string = undefined;
   private currentUrl: string = undefined;
 

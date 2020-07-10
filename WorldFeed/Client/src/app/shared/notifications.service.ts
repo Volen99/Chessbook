@@ -26,7 +26,7 @@ export class NotificationsService {
             .catch(err => console.log('Error while starting connection: ' + err));
 
       this.hubConnection.on('ReceiveNotification', (data) => {
-            this.toastr.success(`A new ${data.type} was uploaded!`,"New Media!");
+            this.toastr.success(`A new ${data.type} was uploaded!`, "New Media!");
         });
     }
 }

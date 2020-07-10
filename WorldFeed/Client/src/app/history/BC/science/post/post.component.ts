@@ -1,10 +1,13 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {UserToCreate} from '../../../../_interfaces/userToCreate.model';
 import {HttpClient} from '@angular/common/http';
 import {ScienceService} from '../science.service';
 import {environment} from '../../../../../environments/environment';
 import {SignalRScienceService} from '../signalR/signalR-science-service';
-import {PostModel} from '../interfaces/post.model';
+import {Post} from '../interfaces/post';
+import {AppState} from '../../../../store/app.state';
+import { Store } from '@ngrx/store';
+import {AddPost} from '../../../../store/posts/actions/posts.actions';
+import {MediaModel} from '../interfaces/media.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -13,7 +16,9 @@ import {PostModel} from '../interfaces/post.model';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
-  @Output() public OnPostCreated = new EventEmitter<Array<PostModel>>();
+  @Output() public OnPostCreated = new EventEmitter<Array<Post>>();
+
+  private store: Store<AppState>;
 
   private http: HttpClient;
   private scienceService: ScienceService;
@@ -22,44 +27,51 @@ export class PostComponent implements OnInit {
 
   public isCreate: boolean;
   public name: string;
-  public user: UserToCreate;
   public response: {
     data: [{
       text: string;
       length: number;
-      dbPaths: string,
+      paths: string,
     }],
   };
-  constructor(http: HttpClient, scienceService: ScienceService, signalRScienceService: SignalRScienceService) {
+
+  constructor(store: Store<AppState>, http: HttpClient, scienceService: ScienceService, signalRScienceService: SignalRScienceService) {
+    this.store = store;
     this.http = http;
     this.scienceService = scienceService;
     this.signalRScienceService = signalRScienceService;
   }
 
+  public post: Post;
+
   ngOnInit(): void {
-    // this.isCreate = true;
   }
 
-  public onCreate = (text: string) => {
-    this.user = {
-      post: {
-        text,
-        medias: [],
-      }
+  addPost(text: string) {
+    this.post = {
+      text,
+      media: [],
     };
 
     if (this.response) {
       for (const media of this.response.data) {
-        this.user.post.medias.push(media);
+        this.post.media.push(media);
       }
     }
 
 
     this.isCreate = false;
-    this.scienceService.createText(text, this.user.post.medias[0]?.postId || null)
-      .subscribe();
-    this.user.post.medias[0]?.postId = undefined;
+
+    this.scienceService.createText(text, this.post.media[0]?.postId || null).subscribe(); // TODO: image.postId bug
+
+    this.store.dispatch(new AddPost(this.post));
+
+    this.scienceService.getAllPosts().subscribe(); // TODO: this is just for test!!
+
+    //debugger;
+    // this.user.post.medias[0]?.postId = undefined;
   }
+
 
   // public returnToCreate = () => {
   //   this.isCreate = true;
@@ -67,11 +79,11 @@ export class PostComponent implements OnInit {
 
   public uploadFinished = (event) => {
     this.response = event;
-  }
+  };
 
   public createImgPath = (serverPath: string) => {
     return `${this.microservicePath}${serverPath}`;
-  }
+  };
 }
 
 // I am so fucking dumb!!!!!! 08.07.2020, Wednesday

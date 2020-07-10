@@ -1,37 +1,14 @@
 <article class="container container-fluid">
   <section class="create"> <!--*ngIf="isCreate-->
-    <h1 style="color: wheat;">Create Post</h1>
+    <h1 style="color: wheat;">Create PostModel</h1>
     <form>
       <textarea #text class="form-control" rows="1"></textarea>
       <app-history-BC-science-upload (onUploadFinished)="uploadFinished($event)"></app-history-BC-science-upload>
       <div class="row">
         <div class="offset-md-5 col-md-2">
-          <button type="button" class="btn btn-primary" (click)="onCreate(text.value)">Create Post</button>
+          <button type="button" class="btn btn-primary" (click)="addPost(text.value)">Create Post</button>
         </div>
       </div>
     </form>
   </section>
-
-<!--  <section class="users" *ngIf="isCreate === false">-->
-<!--    <table class="table table-striped">-->
-<!--      <thead>-->
-<!--      <tr>-->
-<!--        <th scope="col">Image</th>-->
-<!--        <th scope="col">Name</th>-->
-<!--        <th scope="col">Love</th>-->
-<!--      </tr>-->
-<!--      </thead>-->
-<!--      <tbody>-->
-<!--      <tr *ngIf="this.user.post">-->
-<!--        <p style="color: blue" *ngIf="this.user.post.text">{{this.user.post.text}}</p>-->
-<!--        <td *ngFor="let media of this.user.post.medias">-->
-<!--          <img *ngIf="media.video === null; else elseBlock" [src]="createImgPath(media.dbPath)" alt="image" style="width:160px; height:160px;">-->
-<!--          <ng-template #elseBlock>-->
-<!--            <video [src]="createImgPath(media.dbPath)" style="width:260px; height:260px;" controls> </video>-->
-<!--          </ng-template>-->
-<!--        </td>-->
-<!--      </tr>-->
-<!--      </tbody>-->
-<!--    </table>-->
-<!--  </section>-->
 </article>

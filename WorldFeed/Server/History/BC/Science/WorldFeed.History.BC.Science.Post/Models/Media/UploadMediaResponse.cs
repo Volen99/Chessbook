@@ -10,7 +10,9 @@
 
         public Video Video { get; set; }
 
-        public string DbPath { get; set; } // TODO: test property
+        public string FileExtension { get; set; }
+
+        public string Path { get; set; } // TODO: test property
 
         public string PostId { get; set; }
     }

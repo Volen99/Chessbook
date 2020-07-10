@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import * as signalR from '@aspnet/signalr';
-import {PostModel} from '../interfaces/post.model';
+import {Post} from '../interfaces/post';
 
 // DON'T use EventEmitter in services!!
 @Injectable()
@@ -10,7 +10,7 @@ export class SignalRScienceService {
   constructor() {
   }
 
-  public data: PostModel;
+  public data: Post;
 
   public subscribe = () => {
     const options = {
@@ -28,7 +28,6 @@ export class SignalRScienceService {
       .catch(err => console.log('Error while starting connection: ' + err));
 
     this.hubConnection.on('ReceivePost', (data) => {
-      debugger;
       this.data = data.result;
     });
   }

@@ -15,9 +15,9 @@
   </div>
   <div class="files-list">
     <div class="single-file" *ngFor="let file of files; let i = index">
-      <img *ngIf="file.video === null; else elseBlock" [src]="createImgPath(file.dbPath)" width="45px" alt="file">
+      <img *ngIf="file.video === null; else elseBlock" [src]="createImgPath(file.path)" width="45px" alt="file">
       <ng-template #elseBlock>
-        <video [src]="createImgPath(file.dbPath)" style="width:90px; height:90px;" controls> </video>
+        <video [src]="createImgPath(file.path)" style="width:90px; height:90px;" controls> </video>
       </ng-template>
       <div class="info">
         <p class="size" style="color: wheat">

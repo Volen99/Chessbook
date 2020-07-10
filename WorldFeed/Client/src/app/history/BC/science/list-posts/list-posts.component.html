@@ -1,6 +1,6 @@
 <div class="content">
   <ul *ngIf="this.posts">
-    <li *ngFor="let post of this.posts.data; let i = index">
+    <li *ngFor="let post of this.posts | async; let i = index">
       <p *ngIf="post.text">{{post.text}}</p>
       <table *ngIf="post.media">
         <tbody>

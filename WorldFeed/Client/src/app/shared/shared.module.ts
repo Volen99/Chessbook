@@ -14,11 +14,16 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { SharedRoutingModule } from './shared-routing.module';
 import { PaginationComponent } from './pagination/pagination.component';
+import {StoreModule} from '@ngrx/store';
+import { coursesReducer } from '../store/courses/reducers/courses.reducer';
+import { postsReducer } from '../store/posts/reducers/posts.reducer';
+import {sharedReducers} from './shared.reducers';
 
 @NgModule({
   declarations: [PopUpComponent, NavbarComponent, HomeComponent, PaginationComponent],
   imports: [
     CommonModule,
+    StoreModule.forRoot(sharedReducers),
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,

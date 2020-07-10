@@ -2,11 +2,17 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpEventType, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {Observable} from 'rxjs';
-import {PostModel} from './interfaces/post.model';
+import {Post} from './interfaces/post';
+import {AppState} from '../../../store/app.state';
+import {Store} from '@ngrx/store';
+import {GetAllPosts} from '../../../store/posts/actions/posts.actions';
+import {map} from 'rxjs/operators';
+import {PostModel} from './interfaces/postModel';
 
 @Injectable()
 export class ScienceService {
   private http: HttpClient;
+  private store: Store<AppState>;
 
   private uploadPath: string = environment.historyBCSciencePost + 'media' + '/upload';
   private uploadPathWithoutSlash = this.uploadPath.slice(0, -1);
@@ -15,16 +21,24 @@ export class ScienceService {
   private getPostsPath: string = environment.historyBCScience + 'post' + '/getAll';
   private getLastPostPath: string = environment.historyBCScience + 'post' + '/getLast';
 
-  constructor(http: HttpClient) {
+  constructor(store: Store<AppState>, http: HttpClient) {
+    this.store = store;
     this.http = http;
   }
 
-  getPosts(): Observable<Array<PostModel>> {
-    return this.http.get<Array<PostModel>>(this.getPostsPath);
+  getAllPosts() {
+    return this.http.get(this.getPostsPath)
+      .pipe(map((res: Response) => {
+        const posts: Post[] = [];
+        for (const post of res.data) {
+          posts.push(post);
+        }
+        this.store.dispatch(new GetAllPosts(posts));
+      }));
   }
 
-  getLastPost(): Observable<PostModel> {
-    return this.http.get<PostModel>(this.getLastPostPath);
+  getLastPost(): Observable<Post> {
+    return this.http.get<Post>(this.getLastPostPath);
   }
 
   upload(formData): Observable<Array<File>> {

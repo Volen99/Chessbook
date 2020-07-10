@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import {ScienceService} from '../science.service';
 import {SignalRScienceService} from '../signalR/signalR-science-service';
-import {PostModel} from '../interfaces/post.model';
+import {Post} from '../interfaces/post';
 import {environment} from '../../../../../environments/environment';
 
 @Component({
@@ -14,7 +14,7 @@ export class ScienceViewComponent implements OnInit {
   private microservicePath: string = environment.historyBCSciencePost;
 
   public signalRScienceService: SignalRScienceService;
-  public posts: Array<PostModel>;
+  public posts: Array<Post>;
 
   // So you should use constructor() to setup Dependency Injection and not much else.
   // ngOnInit() is better place to "start" - it's where/when components' bindings are resolved
