@@ -20,6 +20,10 @@
 
         public DbSet<Media> Media { get; set; }
 
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Vote> Votes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

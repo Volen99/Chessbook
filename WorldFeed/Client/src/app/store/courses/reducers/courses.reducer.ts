@@ -1,4 +1,4 @@
-import {Course} from '../../../models/course.model';
+import {Course} from '../../../core/interfaces/course.model';
 import * as CoursesActions from '../actions/courses.actions';
 
 const initialState: Course[] = [

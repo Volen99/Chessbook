@@ -1,4 +1,4 @@
-import {Post} from '../../../history/BC/science/interfaces/post';
+import {PostModel} from '../../../core/history/BC/science/interfaces/post.model.';
 import * as PostsActions from '../actions/posts.actions';
 import {PostsState} from '../state/posts.state';
 
@@ -23,11 +23,11 @@ export function postsReducer(state: PostsState, action: PostsActions.Types) {
   }
 }
 
-function addPost(state: Post[], post) {
+function addPost(state: PostModel[], post) {
   return [...state, post];
 }
 
-function removePost(state: Post[], id) {
+function removePost(state: PostModel[], id) {
   const postToBeRemoved = state[id];
   return [...state.filter(p => p !== postToBeRemoved)];
 }

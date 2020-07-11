@@ -2,7 +2,7 @@
 {
     public class UploadMediaResponse
     {
-        public string MediaId { get; set; }
+        public int MediaId { get; set; }
 
         public long Size { get; set; }
 
@@ -14,6 +14,6 @@
 
         public string Path { get; set; } // TODO: test property
 
-        public string PostId { get; set; }
+        public int PostId { get; set; }
     }
 }

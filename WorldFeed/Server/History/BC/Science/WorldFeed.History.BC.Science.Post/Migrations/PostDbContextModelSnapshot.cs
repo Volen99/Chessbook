@@ -185,6 +185,12 @@ namespace WorldFeed.History.BC.Science.Post.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -202,8 +208,17 @@ namespace WorldFeed.History.BC.Science.Post.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -254,10 +269,52 @@ namespace WorldFeed.History.BC.Science.Post.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("WorldFeed.History.BC.Science.Post.Data.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("WorldFeed.History.BC.Science.Post.Data.Models.Media", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -283,8 +340,8 @@ namespace WorldFeed.History.BC.Science.Post.Migrations
                     b.Property<string>("Path")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PostId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
 
                     b.Property<long>("Size")
                         .HasColumnType("bigint");
@@ -304,8 +361,10 @@ namespace WorldFeed.History.BC.Science.Post.Migrations
 
             modelBuilder.Entity("WorldFeed.History.BC.Science.Post.Data.Models.Post", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -332,8 +391,10 @@ namespace WorldFeed.History.BC.Science.Post.Migrations
 
             modelBuilder.Entity("WorldFeed.History.BC.Science.Post.Data.Models.Text", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
@@ -350,16 +411,50 @@ namespace WorldFeed.History.BC.Science.Post.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PostId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PostId")
-                        .IsUnique()
-                        .HasFilter("[PostId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Texts");
+                });
+
+            modelBuilder.Entity("WorldFeed.History.BC.Science.Post.Data.Models.Vote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Votes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -425,18 +520,48 @@ namespace WorldFeed.History.BC.Science.Post.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WorldFeed.History.BC.Science.Post.Data.Models.Comment", b =>
+                {
+                    b.HasOne("WorldFeed.History.BC.Science.Post.Data.Models.Comment", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
+                    b.HasOne("WorldFeed.History.BC.Science.Post.Data.Models.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("WorldFeed.History.BC.Science.Post.Data.Models.Media", b =>
                 {
                     b.HasOne("WorldFeed.History.BC.Science.Post.Data.Models.Post", "Post")
                         .WithMany("Media")
-                        .HasForeignKey("PostId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WorldFeed.History.BC.Science.Post.Data.Models.Text", b =>
                 {
                     b.HasOne("WorldFeed.History.BC.Science.Post.Data.Models.Post", "Post")
                         .WithOne("Text")
-                        .HasForeignKey("WorldFeed.History.BC.Science.Post.Data.Models.Text", "PostId");
+                        .HasForeignKey("WorldFeed.History.BC.Science.Post.Data.Models.Text", "PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WorldFeed.History.BC.Science.Post.Data.Models.Vote", b =>
+                {
+                    b.HasOne("WorldFeed.History.BC.Science.Post.Data.Models.Comment", "Comment")
+                        .WithMany()
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorldFeed.History.BC.Science.Post.Data.Models.Post", null)
+                        .WithMany("Votes")
+                        .HasForeignKey("PostId");
                 });
 #pragma warning restore 612, 618
         }

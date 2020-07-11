@@ -165,6 +165,89 @@ namespace WorldFeed.Identity.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("WorldFeed.Common.Models.Entities.Description", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Descriptions");
+                });
+
+            modelBuilder.Entity("WorldFeed.Common.Models.Entities.Entity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DescriptionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UrlId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DescriptionId");
+
+                    b.HasIndex("UrlId");
+
+                    b.ToTable("Entities");
+                });
+
+            modelBuilder.Entity("WorldFeed.Common.Models.Entities.Indices", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("IndexFirst")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IndexSecond")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Indices");
+                });
+
+            modelBuilder.Entity("WorldFeed.Common.Models.Urls.Url", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("DescriptionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DisplayUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExpandedUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IndicesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UrlPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DescriptionId");
+
+                    b.HasIndex("IndicesId");
+
+                    b.ToTable("Urls");
+                });
+
             modelBuilder.Entity("WorldFeed.Identity.Data.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -179,15 +262,30 @@ namespace WorldFeed.Identity.Migrations
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("Blocking")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("ContributorsEnabled")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("DefaultProfile")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("DefaultProfileImage")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
@@ -196,16 +294,55 @@ namespace WorldFeed.Identity.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("EntitiesId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("FavouritesCount")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FollowRequestSent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("FollowedBy")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("FollowersCount")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Following")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("FriendsCount")
+                        .HasColumnType("int");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
+                    b.Property<bool>("GeoEnabled")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsTranslationEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTranslator")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Lang")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ListedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -225,6 +362,9 @@ namespace WorldFeed.Identity.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
+                    b.Property<string>("Notifications")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -234,17 +374,76 @@ namespace WorldFeed.Identity.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ProfileBackgroundColor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileBackgroundImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileBackgroundImageUrlHttps")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ProfileBackgroundTile")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProfileBannerUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileImageUrlHttps")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileLinkColor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileSidebarBorderColor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileSidebarFillColor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileTextColor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ProfileUseBackgroundImage")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Protected")
+                        .HasColumnType("bit");
+
                     b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StatusesCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TimeZone")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TranslatorType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
+                    b.Property<string>("UtcOffset")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Verified")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("EntitiesId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -318,6 +517,41 @@ namespace WorldFeed.Identity.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WorldFeed.Common.Models.Entities.Entity", b =>
+                {
+                    b.HasOne("WorldFeed.Common.Models.Entities.Description", "Description")
+                        .WithMany()
+                        .HasForeignKey("DescriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorldFeed.Common.Models.Urls.Url", "Url")
+                        .WithMany()
+                        .HasForeignKey("UrlId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WorldFeed.Common.Models.Urls.Url", b =>
+                {
+                    b.HasOne("WorldFeed.Common.Models.Entities.Description", null)
+                        .WithMany("Urls")
+                        .HasForeignKey("DescriptionId");
+
+                    b.HasOne("WorldFeed.Common.Models.Entities.Indices", "Indices")
+                        .WithMany()
+                        .HasForeignKey("IndicesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WorldFeed.Identity.Data.Models.User", b =>
+                {
+                    b.HasOne("WorldFeed.Common.Models.Entities.Entity", "Entities")
+                        .WithMany()
+                        .HasForeignKey("EntitiesId");
                 });
 #pragma warning restore 612, 618
         }

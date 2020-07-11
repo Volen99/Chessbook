@@ -1,0 +1,48 @@
+import {Gender} from '../../authentication/enums/gender';
+import {Entities} from './user-entities/entities';
+
+export interface User {
+  firstName: string;
+  lastName: string;
+  gender: Gender;
+  age: number;
+  createdOn: Date;
+  location: string;
+  description: string;
+  url: string;
+  entities: Entities;
+  protected: boolean;
+  followersCount: number;
+  friendsCount: number;
+  listedCount: number;
+  favouritesCount: number;
+  utcOffset: string;
+  timeZone: Date;
+  geoEnabled: boolean;
+  verified: boolean;
+  statusesCount: number;
+  sang: string;
+  contributorsEnabled: boolean;
+  isTranslator: boolean;
+  isTranslationEnabled: boolean;
+  profileBackgroundColor: string;
+  profileBackgroundImageUrl: string;
+  profileBackgroundImageUrlHttps: string;
+  profileBackgroundTile: boolean;
+  profileImageUrl: string;
+  profileImageUrlHttps: string;
+  profileBannerUrl: string;
+  profileLinkColor: string;
+  profileSidebarBorderColor: string;
+  profileSidebarFillColor: string;
+  profileTextColor: string;
+  profileUseBackgroundImage: boolean;
+  defaultProfile: boolean;
+  defaultProfileImage: boolean;
+  following: boolean;
+  followRequestSent: string;
+  notifications: string;
+  blocking: boolean;
+  translatorType: string;
+  followedBy: boolean;
+}

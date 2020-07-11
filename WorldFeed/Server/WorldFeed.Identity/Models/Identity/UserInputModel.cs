@@ -6,7 +6,7 @@
 
     using static Data.DataConstants.Identity;
 
-    public class UserInputModel
+    public class UserLoginRequestModel
     {
         public string FirstName { get; set; }
 
@@ -19,6 +19,7 @@
         public string Email { get; set; }
 
         [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         public int BirthdayMonth { get; set; }

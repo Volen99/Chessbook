@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {Post} from '../../../history/BC/science/interfaces/post';
+import {PostModel} from '../../../core/history/BC/science/interfaces/post.model.';
 
 export const ADD_POST = '[POST] Add';
 export const REMOVE_POST = '[POST] Remove';
@@ -8,11 +8,11 @@ export const GET_ALL_POSTS = '[POST] Get All';
 export class AddPost implements Action {
   readonly type: string = ADD_POST;
 
-  constructor(payload: Post) {
+  constructor(payload: PostModel) {
     this.payload = payload;
   }
 
-  public payload: Post;
+  public payload: PostModel;
 }
 
 export class RemovePost implements Action {
@@ -27,11 +27,11 @@ export class RemovePost implements Action {
 
 export class GetAllPosts implements Action {
   readonly type: string = GET_ALL_POSTS;
-  constructor(payload: Post[]) {
+  constructor(payload: PostModel[]) {
     this.payload = payload;
   }
 
-  public payload: Post[];
+  public payload: PostModel[];
 
 }
 

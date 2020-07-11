@@ -9,6 +9,12 @@
     using System;
     using System.Globalization;
     using WorldFeed.Common.Models.Enums;
+    using WorldFeed.Common.Models;
+    using WorldFeed.Common.Models.Entities;
+    using System.Security.Cryptography;
+    using System.Collections.Generic;
+    using WorldFeed.Common.Models.Urls;
+    using WorldFeed.Admin.Models.Identity;
 
     public class IdentityService : IIdentityService
     {
@@ -23,7 +29,7 @@
             this.jwtTokenGenerator = jwtTokenGenerator;
         }
 
-        public async Task<Result<User>> Register(UserInputModel input)
+        public async Task<Result<User>> Register(UserLoginRequestModel input)
         {
             var date = input.BirthdayMonth + "/" + input.BirthdayDay + "/" + input.BirthdayYear;
             var birthday = DateTime.Parse(date, CultureInfo.InvariantCulture);
@@ -35,7 +41,7 @@
                 Email = input.Email,
                 Birthday = birthday,
                 Age = DateTime.UtcNow.Year - birthday.Year,
-                Gender = (Gender)input.Gender,
+                Gender = (Gender)input.Gender,  
             };
 
             var identityResult = await this.userManager.CreateAsync(user, input.Password);
@@ -47,7 +53,7 @@
                 : Result<User>.Failure(errors);
         }
 
-        public async Task<Result<UserOutputModel>> Login(UserInputModel userInput)
+        public async Task<Result<User>> Login(UserLoginRequestModel userInput)
         {
             var user = await this.userManager.FindByEmailAsync(userInput.Email);
             if (user == null)
@@ -61,16 +67,12 @@
                 return InvalidErrorMessage;
             }
 
-            var roles = await this.userManager.GetRolesAsync(user);
+            return user;
 
-            var token = this.jwtTokenGenerator.GenerateToken(user, roles);
-
-            return new UserOutputModel(token);
+            //return new UserOutputModel(token);
         }
 
-        public async Task<Result> ChangePassword(
-            string userId, 
-            ChangePasswordInputModel changePasswordInput)
+        public async Task<Result> ChangePassword(string userId, ChangePasswordInputModel changePasswordInput)
         {
             var user = await this.userManager.FindByIdAsync(userId);
             if (user == null)

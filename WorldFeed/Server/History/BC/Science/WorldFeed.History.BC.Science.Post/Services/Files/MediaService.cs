@@ -22,7 +22,7 @@
             this.mediaRepository = photosRepository;
             this.publisher = publisher;
         }
-        public async Task<Media> CreateMediaAsync(string directory, string path, string fileExtension, string postId, long size, int? width = null, int? height = null)
+        public async Task<Media> CreateMediaAsync(string directory, string path, string fileExtension, int postId, long size, int? width = null, int? height = null)
         {
             var mediaNew = new Media()
             {
@@ -66,22 +66,22 @@
             throw new NotImplementedException();
         }
 
-        public Media GetById(string id)
+        public Media GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Media GetByPostId(string postId)
+        public Media GetByPostId(int postId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<T> Update<T>(string imageUrl, long size, string postId)
+        public Task<T> Update<T>(string imageUrl, long size, int postId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task ChangeAllStatus(string postId, Status status)
+        public async Task ChangeAllStatus(int postId, Status status)
         {
             var medias = this.GetAllByPostId(postId)
                 .Where(m => m.Status == Status.Inserted); // TODO: change Media
@@ -99,7 +99,7 @@
             await this.mediaRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<Media> GetAllByPostId(string postId, int? count = null)
+        public IEnumerable<Media> GetAllByPostId(int postId, int? count = null)
         {
             var medias = this.mediaRepository.AllWithDeleted()
                 .Where(m => m.PostId == postId);
@@ -112,7 +112,7 @@
             return medias.ToList();
         }
 
-        public async Task RemoveMedia(string mediaId)
+        public async Task RemoveMedia(int mediaId)
         {
             var mediaCurrent = await this.mediaRepository.All()
                 .Where(x => x.Id == mediaId)

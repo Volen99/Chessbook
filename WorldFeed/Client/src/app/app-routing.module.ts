@@ -4,16 +4,21 @@ import { Routes, RouterModule } from '@angular/router';
 // It matters how routes are arranged!
 const routes: Routes = [
   {
+    // TODO import might bug
     path: 'auth',
-    loadChildren: () => import('./authentication/authentication-routing.module').then(m => m.AuthenticationRoutingModule)
+    loadChildren: () => import('./components/authentication/authentication-routing.module').then(m => m.AuthenticationRoutingModule)
   },
   {
     path: '',
-    loadChildren: () => import('./shared/shared-routing.module').then(m => m.SharedRoutingModule),
+    loadChildren: () => import('./core/shared/shared-routing.module').then(m => m.SharedRoutingModule),
   },
   {
     path: 'history',
-    loadChildren: () => import('./history/history-routing.module').then(m => m.HistoryRoutingModule),
+    loadChildren: () => import('./components/history/history-routing.module').then(m => m.HistoryRoutingModule),
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./core/profile/profile-routing.module').then(m => m.ProfileRoutingModule),
   },
 ];
 
