@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CurrentUserService} from '../../../core/shared/services/current-user.service';
-import {User} from '../../../core/shared/user/user.model';
+import {CurrentUserService} from '../../../core/shared-core/services/current-user.service';
+import {User} from '../../../core/shared-core/user/user.model';
 
 @Component({
   selector: 'app-profile-view',

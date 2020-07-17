@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('./core/shared/shared-routing.module').then(m => m.SharedRoutingModule),
+    loadChildren: () => import('./core/shared-core/shared-routing.module').then(m => m.SharedRoutingModule),
   },
   {
     path: 'history',

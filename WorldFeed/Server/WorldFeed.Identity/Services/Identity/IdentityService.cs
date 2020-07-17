@@ -3,7 +3,6 @@
     using System.Linq;
     using System.Threading.Tasks;
     using WorldFeed.Services;
-    using Data.Models;
     using Microsoft.AspNetCore.Identity;
     using Models.Identity;
     using System;
@@ -20,20 +19,20 @@
     {
         private const string InvalidErrorMessage = "Invalid credentials.";
 
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly ITokenGeneratorService jwtTokenGenerator;
 
-        public IdentityService(UserManager<User> userManager, ITokenGeneratorService jwtTokenGenerator)
+        public IdentityService(UserManager<ApplicationUser> userManager, ITokenGeneratorService jwtTokenGenerator)
         {
             this.userManager = userManager;
             this.jwtTokenGenerator = jwtTokenGenerator;
         }
 
-        public async Task<Result<User>> Register(UserLoginRequestModel input)
+        public async Task<Result<ApplicationUser>> Register(UserLoginRequestModel input)
         {
             var date = input.BirthdayMonth + "/" + input.BirthdayDay + "/" + input.BirthdayYear;
             var birthday = DateTime.Parse(date, CultureInfo.InvariantCulture);
-            var user = new User
+            var user = new ApplicationUser
             {
                 UserName = input.FirstName,
                 FirstName = input.FirstName,
@@ -49,11 +48,11 @@
             var errors = identityResult.Errors.Select(e => e.Description);
 
             return identityResult.Succeeded
-                ? Result<User>.SuccessWith(user)
-                : Result<User>.Failure(errors);
+                ? Result<ApplicationUser>.SuccessWith(user)
+                : Result<ApplicationUser>.Failure(errors);
         }
 
-        public async Task<Result<User>> Login(UserLoginRequestModel userInput)
+        public async Task<Result<ApplicationUser>> Login(UserLoginRequestModel userInput)
         {
             var user = await this.userManager.FindByEmailAsync(userInput.Email);
             if (user == null)

@@ -1,7 +1,7 @@
 ﻿namespace WorldFeed.Infrastructure
 {
     using Microsoft.AspNetCore.Authorization;
-    using static Constants;
+    using static GlobalConstants;
 
     public class AuthorizeAdministratorAttribute : AuthorizeAttribute
     {

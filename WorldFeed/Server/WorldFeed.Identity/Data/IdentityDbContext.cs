@@ -4,10 +4,11 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using Models;
+    using WorldFeed.Common.Models;
     using WorldFeed.Common.Models.Entities;
     using WorldFeed.Common.Models.Urls;
 
-    public class IdentityDbContext : IdentityDbContext<User>
+    public class IdentityDbContext : IdentityDbContext<ApplicationUser>
     {
         public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
             : base(options)

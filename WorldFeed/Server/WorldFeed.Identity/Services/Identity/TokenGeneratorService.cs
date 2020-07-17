@@ -6,9 +6,9 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Text;
-    using Data.Models;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
+    using WorldFeed.Common.Models;
 
     public class TokenGeneratorService : ITokenGeneratorService
     {
@@ -17,7 +17,7 @@
         public TokenGeneratorService(IOptions<ApplicationSettings> applicationSettings) 
             => this.applicationSettings = applicationSettings.Value;
 
-        public string GenerateToken(User user, IEnumerable<string> roles = null)
+        public string GenerateToken(ApplicationUser user, IEnumerable<string> roles = null)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(this.applicationSettings.Secret);

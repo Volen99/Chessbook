@@ -9,21 +9,21 @@
 
     using WorldFeed.Common.Controllers;
     using WorldFeed.Services.Identity;
-    using WorldFeed.Identity.Data.Models;
     using WorldFeed.Admin.Models.Identity;
     using System.Collections.Generic;
+    using WorldFeed.Common.Models;
 
     public class IdentityController : ApiController
     {
         private readonly IIdentityService identity;
         private readonly ICurrentUserService currentUser;
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly ITokenGeneratorService jwtTokenGenerator;
 
         public IdentityController(
             IIdentityService identity,
             ICurrentUserService currentUser,
-            UserManager<User> userManager,
+            UserManager<ApplicationUser> userManager,
             ITokenGeneratorService jwtTokenGenerator)
         {
             this.identity = identity;

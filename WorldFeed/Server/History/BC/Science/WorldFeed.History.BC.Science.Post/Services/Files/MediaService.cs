@@ -86,10 +86,6 @@
             var medias = this.GetAllByPostId(postId)
                 .Where(m => m.Status == Status.Inserted); // TODO: change Media
 
-            if (medias.Count() > 4)
-            {
-                throw new ArgumentException();
-            }
 
             foreach (var media in medias)
             {

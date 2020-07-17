@@ -1,9 +1,9 @@
-import {MediaModel} from './media.model';
+import { Media } from '../../../../shared-core/Feed/Entities/media/media.model';
 
 export interface PostModel {
   id?: number;
   text: string;
-  media: Array<MediaModel>;
+  media: Array<Media>;
   createdOn?: Date;
   modifiedOn?: Date;
 }

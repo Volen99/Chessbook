@@ -2,7 +2,7 @@
 {
     using System.Security.Claims;
 
-    using static Constants;
+    using static GlobalConstants;
 
     public static class ClaimsPrincipalExtensions
     {

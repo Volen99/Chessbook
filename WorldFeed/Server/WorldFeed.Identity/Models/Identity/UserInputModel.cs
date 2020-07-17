@@ -12,10 +12,11 @@
 
         public string LastName { get; set; }
 
-        [EmailAddress]
-        [Required]
-        [MinLength(MinEmailLength)]
-        [MaxLength(MaxEmailLength)]
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression(GlobalConstants.EmailRegEx, ErrorMessageResourceName = "Mail_invalid")]
+        [Required(ErrorMessageResourceName = "Mail_required")]
+        [StringLength(GlobalConstants.EmailMaxLength, ErrorMessageResourceName = "Mail_length")]
+        [UIHint("SingleLineText")] // TODO: Might not work, as you are using Angular
         public string Email { get; set; }
 
         [Required]

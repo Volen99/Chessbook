@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StatisticsService } from '../../../core/shared/statistics/statistics.service';
+import { StatisticsService } from '../../../core/shared-core/statistics/statistics.service';
 import { Statistics } from '../statistics/statistics.model';
 
 @Component({

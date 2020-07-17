@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Web\WorldFeed.Web.Shared\WorldFeed.Web.Shared.csproj" />
+    <ProjectReference Include="..\..\..\..\Web\WorldFeed.Web.Shared\WorldFeed.Web.Common.csproj" />
     <ProjectReference Include="..\..\..\..\WorldFeed.Common\WorldFeed.Common.csproj" />
     <ProjectReference Include="..\..\..\WorldFeed.History.Common\WorldFeed.History.Common.csproj" />
   </ItemGroup>

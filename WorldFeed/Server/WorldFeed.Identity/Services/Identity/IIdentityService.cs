@@ -2,15 +2,14 @@
 {
     using System.Threading.Tasks;
     using WorldFeed.Services;
-    using Data.Models;
     using Models.Identity;
     using WorldFeed.Common.Models;
 
     public interface IIdentityService
     {
-        Task<Result<User>> Register(UserLoginRequestModel userInput);
+        Task<Result<ApplicationUser>> Register(UserLoginRequestModel userInput);
 
-        Task<Result<User>> Login(UserLoginRequestModel userInput);
+        Task<Result<ApplicationUser>> Login(UserLoginRequestModel userInput);
 
         Task<Result> ChangePassword(string userId, ChangePasswordInputModel changePasswordInput);
     }

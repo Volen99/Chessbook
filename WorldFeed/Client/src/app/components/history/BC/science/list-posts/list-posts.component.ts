@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {SignalRScienceService} from '../../../../../core/history/BC/science/services/signalR-science-service';
 import {environment} from '../../../../../../environments/environment';
 import {PostModel} from '../../../../../core/history/BC/science/interfaces/post.model.';
 import {AppState} from '../../../../../store/app.state';
@@ -17,18 +16,15 @@ export class ListPostsComponent implements OnInit {
   private store: Store<AppState>;
 
   private scienceService: ScienceService;
-  private signalRScienceService: SignalRScienceService;
   private microservicePath: string = environment.historyBCSciencePost;
 
-  constructor(store: Store<AppState>, scienceService: ScienceService, signalRService: SignalRScienceService) {
+  constructor(store: Store<AppState>, scienceService: ScienceService) {
     this.store = store;
     this.scienceService = scienceService;
-    this.signalRScienceService = signalRService;
   }
 
   public token: string;
   public posts: Observable<PostModel[]>;
-  public console: Console;
 
   ngOnInit(): void {
     this.scienceService.getAllPosts().subscribe(() => {

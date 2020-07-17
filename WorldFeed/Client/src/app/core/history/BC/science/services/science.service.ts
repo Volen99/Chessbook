@@ -36,9 +36,8 @@ export class ScienceService {
   }
 
 
-  upload(formData): Observable<Array<File>> {
-    // @ts-ignore
-    return this.http.post(this.uploadPath, formData, {
+  upload(formData) {
+    return this.http.post<>(this.uploadPath, formData, {
       // reportProgress: true,
       // observe: 'events',
     });

@@ -3,7 +3,7 @@ import { RegisterModelForm } from '../../../core/authentication/register/registe
 import { FormGroup, FormBuilder } from 'ngx-strongly-typed-forms';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import {Month} from '../../../core/shared/enums/month';
+import {Month} from '../../../core/shared-core/enums/month';
 import {Gender} from '../../../core/authentication/enums/gender';
 import {AuthenticationService} from '../../../core/services/authentication/authentication.service';
 

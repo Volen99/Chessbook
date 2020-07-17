@@ -5,14 +5,15 @@
     using WorldFeed.Services;
     using Microsoft.AspNetCore.Identity;
     using Models;
+    using WorldFeed.Common.Models;
 
     public class IdentityDataSeeder : IDataSeeder
     {
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
         public IdentityDataSeeder(
-            UserManager<User> userManager, 
+            UserManager<ApplicationUser> userManager, 
             RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
@@ -29,11 +30,11 @@
             Task
                 .Run(async () =>
                 {
-                    var adminRole = new IdentityRole(Constants.AdministratorRoleName);
+                    var adminRole = new IdentityRole(GlobalConstants.AdministratorRoleName);
 
                     await this.roleManager.CreateAsync(adminRole);
 
-                    var adminUser = new User
+                    var adminUser = new ApplicationUser
                     {
                         UserName = "admin@crs.com",
                         Email = "admin@crs.com",
@@ -42,7 +43,7 @@
 
                     await userManager.CreateAsync(adminUser, "adminpass12");
 
-                    await userManager.AddToRoleAsync(adminUser, Constants.AdministratorRoleName);
+                    await userManager.AddToRoleAsync(adminUser, GlobalConstants.AdministratorRoleName);
                 })
                 .GetAwaiter()
                 .GetResult();

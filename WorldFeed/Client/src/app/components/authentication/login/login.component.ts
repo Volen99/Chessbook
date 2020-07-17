@@ -3,9 +3,9 @@ import {Validators} from '@angular/forms';
 import {FormGroup, FormBuilder} from 'ngx-strongly-typed-forms';
 import {LoginFormModel} from '../../../core/authentication/login/login.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {RouterExtService} from 'src/app/core/shared/services/rouer-ext.service';
+import {RouterExtService} from 'src/app/core/shared-core/services/rouer-ext.service';
 import {AuthenticationService} from '../../../core/services/authentication/authentication.service';
-import {CurrentUserService} from '../../../core/shared/services/current-user.service';
+import {CurrentUserService} from '../../../core/shared-core/services/current-user.service';
 
 @Component({
   selector: 'app-login',

@@ -1,9 +1,9 @@
 ﻿namespace WorldFeed.Identity.Infrastructure
 {
     using Data;
-    using Data.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+    using WorldFeed.Common.Models;
 
     public static class ServiceCollectionExtensions
     {
@@ -11,7 +11,7 @@
             this IServiceCollection services)
         {
             services
-                .AddIdentity<User, IdentityRole>(options =>
+                .AddIdentity<ApplicationUser, IdentityRole>(options =>
                     {
                         options.Password.RequiredLength = 6;
                         options.Password.RequireDigit = false;

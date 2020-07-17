@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import {AppComponent} from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { SharedModule } from './core/shared/shared.module';
+import { SharedModule } from './core/shared-core/shared.module';
 import {HistoryModule} from './components/history/history.module';
 import {CreateCourseComponent} from './components/courses/create-course/create-course.component';
 import {ListCoursesComponent} from './components/courses/list-courses/list-courses.component';

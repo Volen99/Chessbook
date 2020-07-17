@@ -1,4 +1,4 @@
-export const ApplicationName = 'AngularIdentity';
+export const ApplicationName = 'WorldFeed';
 
 export const ReturnUrlType = 'returnUrl';
 
@@ -23,7 +23,8 @@ export const LoginActions = {
 
 let applicationPaths: ApplicationPathsType = {
   DefaultLoginRedirectPath: '/',
-  ApiAuthorizationClientConfigurationUrl: `/_configuration/${ApplicationName}`,
+  // ApiAuthorizationClientConfigurationUrl: `/_configuration/${ApplicationName}`,
+  ApiAuthorizationClientConfigurationUrl: `https://localhost:5003/_configuration/${ApplicationName}`,
   Login: `authentication/${LoginActions.Login}`,
   LoginFailed: `authentication/${LoginActions.LoginFailed}`,
   LoginCallback: `authentication/${LoginActions.LoginCallback}`,

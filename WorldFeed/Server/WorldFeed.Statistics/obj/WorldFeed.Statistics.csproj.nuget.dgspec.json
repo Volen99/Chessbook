@@ -4,12 +4,12 @@
     "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\WorldFeed.Statistics\\WorldFeed.Statistics.csproj": {}
   },
   "projects": {
-    "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Shared.csproj": {
+    "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Shared.csproj",
-        "projectName": "WorldFeed.Web.Shared",
-        "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Shared.csproj",
+        "projectUniqueName": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj",
+        "projectName": "WorldFeed.Web.Common",
+        "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj",
         "packagesPath": "C:\\Users\\volen\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\Web\\WorldFeed.Web.Shared\\obj\\",
         "projectStyle": "PackageReference",
@@ -91,8 +91,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Shared.csproj": {
-                "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Shared.csproj"
+              "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj": {
+                "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj"
               }
             }
           }
@@ -117,6 +117,10 @@
             "MassTransit.RabbitMQ": {
               "target": "Package",
               "version": "[7.0.0, )"
+            },
+            "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": {
+              "target": "Package",
+              "version": "[3.1.5, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",

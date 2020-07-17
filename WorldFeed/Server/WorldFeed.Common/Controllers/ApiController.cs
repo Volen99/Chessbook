@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
-    using WorldFeed.Web.Shared;
+    using WorldFeed.Web.Common;
 
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]

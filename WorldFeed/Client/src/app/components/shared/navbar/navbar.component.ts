@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NotificationsService } from '../../../core/shared/services/notifications.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {NotificationsService} from '../../../core/shared-core/services/notifications.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +8,9 @@ import { NotificationsService } from '../../../core/shared/services/notification
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  isExpanded = false;
   token: string;
+
   constructor(private router: Router, private notificationsService: NotificationsService) {
 
   }
@@ -19,7 +21,7 @@ export class NavbarComponent implements OnInit {
   }
 
   getToken() {
-    this.token = localStorage.getItem('token')
+    this.token = localStorage.getItem('token');
   }
 
   route(param) {
@@ -31,9 +33,20 @@ export class NavbarComponent implements OnInit {
     console.log(event);
   }
 
+
   logout() {
-    localStorage.removeItem('token')
-    this.getToken()
-    this.router.navigate(['auth'])
+    localStorage.removeItem('token');
+    this.getToken();
+    this.router.navigate(['auth']);
+  }
+
+  // C#
+
+  collapse() {
+    this.isExpanded = false;
+  }
+
+  toggle() {
+    this.isExpanded = !this.isExpanded;
   }
 }
