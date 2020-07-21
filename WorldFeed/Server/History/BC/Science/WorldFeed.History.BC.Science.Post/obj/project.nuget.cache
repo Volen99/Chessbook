@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "0bOfyDJMGC4pwLpay0JMP1LI9amnosuGPZ6aTQPnBcJewQaBuYdSz99m41+SCXHgi92Kmp4k1z1w/s+cIkTF3g==",
+  "dgSpecHash": "ma3048lKfqmBXqJEO50j1Z1fYYrQd118TCQQO/Pqr054O9/skRcLIydXiKuI+4kwvQlrH4pJszrCKz7u2Fj8QQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\History\\BC\\Science\\WorldFeed.History.BC.Science.Post\\WorldFeed.History.BC.Science.Post.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\volen\\.nuget\\packages\\aspose.imaging\\20.6.0\\aspose.imaging.20.6.0.nupkg.sha512",
+    "C:\\Users\\volen\\.nuget\\packages\\autofac\\5.2.0\\autofac.5.2.0.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\automapper\\9.0.0\\automapper.9.0.0.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\7.0.0\\automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\automatonymous\\5.0.0\\automatonymous.5.0.0.nupkg.sha512",

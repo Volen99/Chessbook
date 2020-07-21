@@ -148,7 +148,6 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\ob
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\obj\Debug\netcoreapp3.1\staticwebassets\WorldFeed.Schedule.StaticWebAssets.xml
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\obj\Debug\netcoreapp3.1\WorldFeed.Schedule.genruntimeconfig.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\obj\Debug\netcoreapp3.1\WorldFeed.Schedule.csproj.CoreCompileInputs.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\obj\Debug\netcoreapp3.1\WorldFeed.Schedule.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\obj\Debug\netcoreapp3.1\WorldFeed.Schedule.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -160,8 +159,6 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bi
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Abstractions.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Hosting.Abstractions.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\System.Threading.Channels.dll
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\WorldFeed.Web.Shared.dll
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\WorldFeed.Web.Shared.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\NodaTime.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\IdentityModel.dll
@@ -179,3 +176,5 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bi
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Http.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\WorldFeed.Web.Common.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\WorldFeed.Web.Common.pdb
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\WorldFeed.Schedule.StaticWebAssets.xml
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\Autofac.dll

@@ -289,6 +289,10 @@
               "target": "Package",
               "version": "[7.0.0, )"
             },
+            "Autofac": {
+              "target": "Package",
+              "version": "[5.2.0, )"
+            },
             "MassTransit.AspNetCore": {
               "target": "Package",
               "version": "[7.0.0, )"

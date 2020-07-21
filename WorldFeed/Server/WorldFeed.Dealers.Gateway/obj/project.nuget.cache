@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "VEFn2hZrZEz6FG1m2vV7LL6LCIr5sUfiaTm9oDkIQ4O9vhP/X/Fbss8DFFV/bwTanIOVRagUZ5vYJQ7tziRTTA==",
+  "dgSpecHash": "CXuoLYHvkaLy02LaBgrt1PXVFeKZ+d0eIQqE8KwahP58VYHk3tQGNrUTGPeOVt/JzUhgpbA6cb9meYow6rcYvA==",
   "success": true,
   "projectFilePath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\WorldFeed.Dealers.Gateway\\WorldFeed.History.BC.Science.Gateway.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\volen\\.nuget\\packages\\autofac\\5.2.0\\autofac.5.2.0.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\automapper\\9.0.0\\automapper.9.0.0.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\7.0.0\\automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\automatonymous\\5.0.0\\automatonymous.5.0.0.nupkg.sha512",

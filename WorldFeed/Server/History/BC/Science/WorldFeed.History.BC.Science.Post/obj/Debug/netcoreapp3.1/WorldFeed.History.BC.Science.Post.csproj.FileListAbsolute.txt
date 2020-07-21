@@ -77,7 +77,6 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\Wo
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\obj\Debug\netcoreapp3.1\WorldFeed.History.BC.Science.Post.AssemblyInfoInputs.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\obj\Debug\netcoreapp3.1\WorldFeed.History.BC.Science.Post.AssemblyInfo.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\obj\Debug\netcoreapp3.1\WorldFeed.History.BC.Science.Post.csproj.CoreCompileInputs.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\obj\Debug\netcoreapp3.1\WorldFeed.History.BC.Science.Post.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\obj\Debug\netcoreapp3.1\WorldFeed.History.BC.Science.Post.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\obj\Debug\netcoreapp3.1\WorldFeed.History.BC.Science.Post.RazorTargetAssemblyInfo.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\obj\Debug\netcoreapp3.1\WorldFeed.History.BC.Science.Post.csproj.CopyComplete
@@ -106,3 +105,4 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\Wo
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Http.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\bin\Debug\netcoreapp3.1\WorldFeed.Web.Common.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\bin\Debug\netcoreapp3.1\WorldFeed.Web.Common.pdb
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\History\BC\Science\WorldFeed.History.BC.Science.Post\bin\Debug\netcoreapp3.1\Autofac.dll

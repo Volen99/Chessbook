@@ -11,7 +11,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
     using Services.Identity;
-
+    using WorldFeed.Common.Extensions;
     using WorldFeed.Common.Models;
 
     public static class ServiceCollectionExtensions
@@ -93,7 +93,7 @@
             services
                 .AddMassTransit(mt =>
                 {
-                    consumers.ForEach(consumer => mt.AddConsumer(consumer)); // Every single consumer works though different queue
+                    consumers.ForEach(consumer => mt.AddConsumer(consumer)); // Every single consumer works though different queue // might bug foreach?
 
                     mt.AddBus(bus => Bus.Factory.CreateUsingRabbitMq(rmq =>
                     {

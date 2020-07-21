@@ -308,6 +308,17 @@
           "lib/netstandard2.0/Aspose.Imaging.dll": {}
         }
       },
+      "Autofac/5.2.0": {
+        "runtime": {
+          "lib/netstandard2.1/Autofac.dll": {
+            "assemblyVersion": "5.2.0.0",
+            "fileVersion": "5.2.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.1/Autofac.dll": {}
+        }
+      },
       "AutoMapper/9.0.0": {
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
@@ -2243,6 +2254,7 @@
       "WorldFeed.Common/1.0.0": {
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0",
+          "Autofac": "5.2.0",
           "MassTransit.AspNetCore": "7.0.0",
           "MassTransit.RabbitMQ": "7.0.0",
           "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": "3.1.5",
@@ -3777,6 +3789,13 @@
       "sha512": "sha512-EfQ8VNa+XYRL0OIe86EvS7vZtykMxEwW2QheK0GjweG4vdhwI2tc+m4RcXpUZdE5wXH6Yz7EadtbjdiFgStc+w==",
       "path": "aspose.imaging/20.6.0",
       "hashPath": "aspose.imaging.20.6.0.nupkg.sha512"
+    },
+    "Autofac/5.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-V8dBH0dsv75uDzl7Sw+HkhKDPUw2eXnlMjcSVMH+tLo2s67MpTKGyDj1pDcpR+IF2u4YRs0s3/x7R88YJzIWvg==",
+      "path": "autofac/5.2.0",
+      "hashPath": "autofac.5.2.0.nupkg.sha512"
     },
     "AutoMapper/9.0.0": {
       "type": "package",
