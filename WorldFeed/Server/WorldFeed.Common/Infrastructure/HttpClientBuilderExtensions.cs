@@ -4,6 +4,7 @@
     using System.Net.Http.Headers;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
+
     using Services.Identity;
 
     using static InfrastructureConstants;

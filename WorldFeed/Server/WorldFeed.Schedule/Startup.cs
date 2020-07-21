@@ -1,12 +1,12 @@
 namespace WorldFeed.Schedule
 {
-    using Data;
-    using Infrastructure;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Services;
+
+    using Data;
+    using Infrastructure;
 
     public class Startup
     {

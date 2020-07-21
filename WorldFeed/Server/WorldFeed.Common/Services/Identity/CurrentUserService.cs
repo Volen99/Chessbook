@@ -2,8 +2,9 @@
 {
     using System;
     using System.Security.Claims;
-    using Infrastructure;
     using Microsoft.AspNetCore.Http;
+
+    using Infrastructure;
 
     public class CurrentUserService : ICurrentUserService
     {
