@@ -1,9 +1,10 @@
 ﻿namespace WorldFeed.Admin.Infrastructure
 {
     using System;
+    using Refit;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Refit;
+
     using Services;
 
     public static class ServiceCollectionExtensions

@@ -160,6 +160,7 @@ export class PostComponent implements OnInit {
     } else if (file.type.includes('video')) {
       this.uploadVideoService.INIT(queryStringInit, formData)
         .subscribe(responseINIT => {
+          debugger;
           const queryStringAppend = this.getQueryUrl(file, 'APPEND', responseINIT.mediaId, 0);
           this.uploadVideoService.APPEND(queryStringAppend, formData)
             .subscribe(responseAPPEND => {
@@ -191,7 +192,7 @@ export class PostComponent implements OnInit {
       mediaParameters.command = 'INIT';
       mediaParameters.totalBytes = file.size;
       mediaParameters.mediaType = file.type;
-      mediaParameters.mediaCategory = 'feed_' + file.type.split('/')[0];
+      mediaParameters.mediaCategory = 'tweet_' + file.type.split('/')[0];
 
       mediaQuery = mediaParameters;
     } else if (command === 'APPEND') {

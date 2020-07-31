@@ -2052,11 +2052,11 @@
                 }
               }, (function (e) {
                 if (e) {
-                  var t = e.entities,
-                    n = t.cards,
-                    r = t.entries,
-                    a = t.tweets,
-                    i = t.users,
+                  var entities = e.entities,
+                    cards = entities.cards,
+                    entries = entities.entries,
+                    tweets = entities.tweets,
+                    users = entities.users,
                     o = e.result.conversation_timeline,
                     s = function (e, t) {
                       return void 0 === e && (e = {}), Object.entries(e).reduce((function (e, n) {
@@ -2071,10 +2071,10 @@
                     });
                   return Object(f.b)({
                     conversations: s,
-                    entries: r,
-                    users: i,
-                    tweets: a,
-                    cards: n
+                    entries: entries,
+                    users: users,
+                    tweets: tweets,
+                    cards: cards
                   })
                 }
               }))

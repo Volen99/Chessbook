@@ -21,6 +21,8 @@ namespace WorldFeed.History.BC.Science.Post
     using WorldFeed.Common.Services.Mapping;
     using WorldFeed.History.BC.Science.Post.Models;
     using System.Reflection;
+    using WorldFeed.Controllers.Upload;
+    using WorldFeed.Common.InjectWorldFeed;
 
     public class Startup
     {
@@ -37,6 +39,17 @@ namespace WorldFeed.History.BC.Science.Post
                 options.MultipartBoundaryLengthLimit = int.MaxValue;
                 options.MemoryBufferThreshold = int.MaxValue;
             });
+
+            var q = new WorldFeed.Injectinvi.TweetinviContainer();
+
+             new Injectinvi.TweetinviContainer(q);
+
+            if (!TweetinviContainer.Container.IsInitialized)
+            {
+                TweetinviContainer.Container.Initialize();
+            }
+
+            // TweetinviContainer.Resolve<IUploadQueryExecutor>();
 
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
