@@ -40,9 +40,9 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" (click)="route('')">Home <span class="sr-only">(current)</span></a>
-            </li>
+<!--            <li class="nav-item active">-->
+<!--              <a class="nav-link" (click)="route('')">Home <span class="sr-only">(current)</span></a>-->
+<!--            </li>-->
             <li class="nav-item" *ngIf="token">
               <a class="nav-link" (click)="logout()">Logout</a>
             </li>
@@ -50,7 +50,49 @@
               <a class="nav-link" (click)="route('auth')">Login</a>
             </li>
             <li class="nav-item active">
+              <a class="nav-link" (click)="route('history')">Feed</a>
+            </li>
+            <li class="nav-item active">
               <a class="nav-link" (click)="route('history')">History</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" (click)="route('science')">Science</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" (click)="route('history')">Literature</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" (click)="route('history')">Math</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" (click)="route('history')">Sports</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" (click)="route('history')">Gaming</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" (click)="route('history')">Politics</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" (click)="route('history')">News</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" (click)="route('history')">Philosophy</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" (click)="route('history')">Religions</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" (click)="route('history')">Travel</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" (click)="route('history')">Fun</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" (click)="route('history')">Celebrities</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" (click)="route('kids')">Kids</a>
             </li>
             <li class="nav-item" *ngIf="token">
               <a class="nav-link text-dark" title="Profile">Hello {{User}}!</a>

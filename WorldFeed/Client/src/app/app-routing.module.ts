@@ -17,6 +17,14 @@ const routes: Routes = [
     loadChildren: () => import('./components/history/history-routing.module').then(m => m.HistoryRoutingModule),
   },
   {
+    path: 'science',
+    loadChildren: () => import('./components/science/science-routing.module').then(m => m.ScienceRoutingModule),
+  },
+  {
+    path: 'kids',
+    loadChildren: () => import('./components/kids/kids-routing.module').then(m => m.KidsRoutingModule),
+  },
+  {
     path: 'profile',
     loadChildren: () => import('./core/profile/profile-routing.module').then(m => m.ProfileRoutingModule),
   },

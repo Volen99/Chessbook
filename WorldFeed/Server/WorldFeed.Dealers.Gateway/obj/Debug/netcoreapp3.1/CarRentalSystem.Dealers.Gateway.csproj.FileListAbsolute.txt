@@ -1,7 +1,0 @@
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\CarRentalSystem.Dealers.Gateway\obj\Debug\netcoreapp3.1\CarRentalSystem.Dealers.Gateway.csprojAssemblyReference.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\CarRentalSystem.Dealers.Gateway\obj\Debug\netcoreapp3.1\RefitStubs.g.cs
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\CarRentalSystem.Dealers.Gateway\obj\Debug\netcoreapp3.1\CarRentalSystem.Dealers.Gateway.AssemblyInfoInputs.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\CarRentalSystem.Dealers.Gateway\obj\Debug\netcoreapp3.1\CarRentalSystem.Dealers.Gateway.AssemblyInfo.cs
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\CarRentalSystem.Dealers.Gateway\obj\Debug\netcoreapp3.1\CarRentalSystem.Dealers.Gateway.csproj.CoreCompileInputs.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\CarRentalSystem.Dealers.Gateway\obj\Debug\netcoreapp3.1\CarRentalSystem.Dealers.Gateway.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\CarRentalSystem.Dealers.Gateway\obj\Debug\netcoreapp3.1\CarRentalSystem.Dealers.Gateway.MvcApplicationPartsAssemblyInfo.cache

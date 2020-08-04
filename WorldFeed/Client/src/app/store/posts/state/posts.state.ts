@@ -1,4 +1,4 @@
-import {PostModel} from '../../../core/history/BC/science/interfaces/post.model.';
+import {PostModel} from '../../../core/science/interfaces/post.model.';
 
 export interface PostsState {
   readonly all: PostModel[];

@@ -1,6 +1,0 @@
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\CarRentalSystem.Identity\obj\Debug\netcoreapp3.1\CarRentalSystem.Identity.csprojAssemblyReference.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\CarRentalSystem.Identity\obj\Debug\netcoreapp3.1\CarRentalSystem.Identity.AssemblyInfoInputs.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\CarRentalSystem.Identity\obj\Debug\netcoreapp3.1\CarRentalSystem.Identity.AssemblyInfo.cs
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\CarRentalSystem.Identity\obj\Debug\netcoreapp3.1\CarRentalSystem.Identity.csproj.CoreCompileInputs.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\CarRentalSystem.Identity\obj\Debug\netcoreapp3.1\CarRentalSystem.Identity.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\CarRentalSystem.Identity\obj\Debug\netcoreapp3.1\CarRentalSystem.Identity.MvcApplicationPartsAssemblyInfo.cache

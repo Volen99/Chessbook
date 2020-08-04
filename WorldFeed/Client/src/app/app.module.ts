@@ -7,7 +7,8 @@ import {HistoryModule} from './components/history/history.module';
 import {CreateCourseComponent} from './components/courses/create-course/create-course.component';
 import {ListCoursesComponent} from './components/courses/list-courses/list-courses.component';
 import {AuthenticationModule} from './components/authentication/authentication.module';
-import { ProfileViewComponent } from './components/profile/view/profile-view.component';
+import {KidsModule} from './components/kids/kids.module';
+import {ScienceModule} from './components/science/science.module';
 
 // NgModuleS help organize an application into cohesive blocks of functionality.
 // The @NgModule tells Angular how to compile and launch the app
@@ -21,6 +22,8 @@ import { ProfileViewComponent } from './components/profile/view/profile-view.com
     SharedModule,
     AuthenticationModule,
     HistoryModule,
+    ScienceModule,
+    KidsModule
   ],
   providers: [], // Register service providers and inject them into components
   bootstrap: [AppComponent]

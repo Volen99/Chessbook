@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {PostModel} from '../../../core/history/BC/science/interfaces/post.model.';
+import {PostModel} from '../../../core/science/interfaces/post.model.';
 
 export const ADD_POST = '[POST] Add';
 export const REMOVE_POST = '[POST] Remove';

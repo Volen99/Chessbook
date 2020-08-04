@@ -6,8 +6,7 @@ export const environment = {
   production: false,
   identityApiUrl: 'https://localhost:5003/',
   statisticsApiUrl: 'https://localhost:5005/',
-  historyBCSciencePost: 'https://localhost:5000/',
-  historyBCScience: 'https://localhost:5012/',
+  scienceApiUrl: 'https://localhost:5012/',
 };
 
 /*
