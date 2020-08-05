@@ -14,11 +14,11 @@
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.OpenApi.Models;
+    using Microsoft.AspNetCore.Http;
 
     using Devspaces.Support;
     using Web.Science.HttpAggregator.Filters.WorldFeed.Science.API.Infrastructure.Filters;
     using Web.Science.HttpAggregator.Config;
-    using Microsoft.AspNetCore.Http;
     using Web.Science.HttpAggregator.Infrastructure;
 
     public class Startup

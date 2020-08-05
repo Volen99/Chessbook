@@ -119,7 +119,7 @@
                     }
                 }
 
-                var love = new TweetinviModule();
+                var init = new TweetinviModule();
                 var client = new TwitterClient("Jaja", "Haha");
 
                 var media = await client.Upload.UploadTweetVideoAsync(binary);
