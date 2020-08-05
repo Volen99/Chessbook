@@ -1,0 +1,15 @@
+services:
+  worldfeed.history.bc.science:
+    build:
+      context: C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server
+      dockerfile: History/BC/Science/WorldFeed.History.BC.Science/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+    image: worldfeedhistorybcscience
+    ports:
+    - target: 80
+    - target: 443
+    volumes:
+    - C:\Users\volen\AppData\Roaming\ASP.NET\Https:/root/.aspnet/https:ro
+version: '3.4'

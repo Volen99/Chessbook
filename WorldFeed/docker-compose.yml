@@ -1,0 +1,72 @@
+version: "3.8"
+
+services:
+
+    data:
+        container_name: sqlserver
+        image: mcr.microsoft.com/mssql/server:2019-latest # here we use image directly, as we don't have a dockerfile
+        ports: 
+            - "1433:1433"
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=yourStrongPassword12!@
+        volumes: 
+            - sqldata:/var/opt/mssql 
+        networks: 
+            - worldfeed-network
+            
+    messages:
+        container_name: rabbitmq
+        image: rabbitmq:3-management
+        ports:
+            - "15672:15672" # for UI
+            - "5672:5672"
+        hostname: "rabbitmq"
+        environment:
+            - RABBITMQ_ERLANG_COOKIE=Rand0mR4bbitMqCo0k1e
+            - RABBITMQ_DEFAULT_USER=rabbitmq
+            - RABBITMQ_DEFAULT_PASS=rabbitmq
+        networks: 
+            - worldfeed-network
+            
+    identity-api:
+        container_name: identity
+        build:
+            context: ./Server
+            dockerfile: ./src/WorldFeed.Identity/Dockerfile 
+        ports: 
+            - "5003:80"
+        env_file: Server\src\WorldFeed.Common\Common.anv
+        environment:
+            - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=WorldFeedIdentityDatabase;User Id=sa; Password=yourStrongPassword12!@;MultipleActiveResultSets=true
+        restart: on-failure
+        volumes:
+            - ./.aspnet/identity/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+        networks: 
+            - worldfeed-network
+        # depends_on:
+            # - data # it won't start this service, untill data is started
+            
+    # science:
+        # container_name: science
+        # build:
+            # context: ./Server
+            # dockerfile: ./History/BC/Science/WorldFeed.History.BC.Science/Dockerfile
+        # ports: 
+            # - "5012:80"
+        # env_file: Server\WorldFeed.Common\Common.anv
+        # environment:
+            # - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=WorldFeedHistoryBCScienceDatabase;User Id=sa; Password=yourStrongPassword12!@;MultipleActiveResultSets=true
+        # restart: on-failure
+        # volumes:
+            # - ./.aspnet/science/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+        # networks: 
+            # - worldfeed-network
+        # depends_on:
+            # - data
+
+networks:
+    worldfeed-network:
+
+volumes:
+    sqldata:

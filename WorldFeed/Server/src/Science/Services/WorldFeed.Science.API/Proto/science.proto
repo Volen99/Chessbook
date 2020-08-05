@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcScience";
+
+package ScienceApi;
+
+service Science {
+  rpc GetMediaById (MediaRequest) returns (MediaResponse) {
+   /* >>
+  	option (google.api.http) = {
+        get: "/api/v1/catalog/items/{id}"
+      };
+	<< */
+	}
+  rpc GetMediasByIds (MediasRequest) returns (PaginatedItemsResponse) {}
+}
+
+message MediaRequest {
+	int32 id = 1;
+}
+message MediasRequest {
+	string ids = 1;
+	int32 pageSize = 2;
+	int32 pageIndex = 3;
+}
+
+message MediaResponse {
+	int32 id = 1;
+	int64 size = 2;
+}
+
+
+
+message PaginatedItemsResponse {
+	int32 pageIndex = 1;
+	int32 pageSize = 2;
+	int64 count = 3;
+	repeated MediaResponse data = 4;
+}
