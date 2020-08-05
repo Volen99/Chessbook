@@ -1,4 +1,4 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Data.Models.Enums
+﻿namespace WorldFeed.History.API.Data.Models.Enums
 {
     public enum VoteType
     {

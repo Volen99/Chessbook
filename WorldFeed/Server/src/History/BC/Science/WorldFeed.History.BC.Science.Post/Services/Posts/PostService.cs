@@ -1,10 +1,10 @@
-﻿ namespace WorldFeed.History.BC.Science.Post.Services.Posts
+﻿ namespace WorldFeed.History.API.Services.Posts
 {
     using System.Threading.Tasks;
-
-    using WorldFeed.History.BC.Science.Post.Data.Models;
-    using WorldFeed.Common.Models.Repositories;
     using MassTransit;
+
+    using WorldFeed.History.API.Data.Models;
+    using WorldFeed.Common.Models.Repositories;
     using WorldFeed.History.Common.Messages.Posts;
 
     public class PostService : IPostService
@@ -27,6 +27,8 @@
 
             await this.postsRepository.AddAsync(postNew);
             await this.postsRepository.SaveChangesAsync();
+
+            // TODO: Add Outbox Pattern
 
             await this.publisher.Publish(new PostCreatedMessage
             {

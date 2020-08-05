@@ -2,6 +2,6 @@
 {
     public class Video
     {
-        public string video_type { get; set; }
+        public string VideoType { get; set; }
     }
 }

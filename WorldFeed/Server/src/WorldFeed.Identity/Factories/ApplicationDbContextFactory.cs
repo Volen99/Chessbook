@@ -5,6 +5,7 @@
     using Microsoft.EntityFrameworkCore.Design;
     using Microsoft.Extensions.Configuration;
 
+    using WorldFeed.Common.Infrastructure;
     using WorldFeed.Identity.API.Data;
 
     public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
@@ -19,7 +20,7 @@
 
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
-            optionsBuilder.UseSqlServer(config["ConnectionString"], sqlServerOptionsAction: o => o.MigrationsAssembly("Identity.API"));
+            optionsBuilder.UseSqlServer(config.GetLocalConnectionString(), sqlServerOptionsAction: o => o.MigrationsAssembly("Identity.API"));
 
             return new ApplicationDbContext(optionsBuilder.Options);
         }

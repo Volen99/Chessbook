@@ -1,13 +1,12 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using WorldFeed.Common.Services.Mapping;
-using WorldFeed.History.BC.Science.Post.Models.Media;
-
-namespace WorldFeed.History.BC.Science.Post.Models.Posts
+﻿namespace WorldFeed.History.API.Models.Posts
 {
+    using AutoMapper;
+    using System;
+    using System.Collections.Generic;
+
+    using WorldFeed.Common.Services.Mapping;
+    using WorldFeed.History.API.Models.Media;
+
     public class PostOutputModel : IMapFrom<Data.Models.Post>, IMapTo<Data.Models.Post>, IHaveCustomMappings
     {
         public string Id { get; set; }

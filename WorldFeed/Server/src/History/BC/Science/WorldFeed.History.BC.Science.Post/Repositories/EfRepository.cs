@@ -1,13 +1,13 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Repositories
+﻿namespace WorldFeed.History.API.Repositories
 {
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-
     using Microsoft.EntityFrameworkCore;
-    using WorldFeed.History.BC.Science.Post.Data;
+
     using WorldFeed.Common.Models.Repositories;
     using WorldFeed.Common.Data;
+    using WorldFeed.History.API.Data;
 
     public class EfRepository<TEntity> : IRepository<TEntity>
         where TEntity : class

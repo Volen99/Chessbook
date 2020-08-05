@@ -1,8 +1,9 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Data.Models
+﻿namespace WorldFeed.History.API.Data.Models
 {
     using System.Collections.Generic;
 
     using WorldFeed.Common.Models;
+    using WorldFeed.History.API.Data.Models.Comments;
 
     public class Post : BaseDeletableModel<int>, IAuditInfo
     {

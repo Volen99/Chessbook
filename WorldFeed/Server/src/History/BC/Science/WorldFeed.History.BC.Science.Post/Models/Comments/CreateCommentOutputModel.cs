@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-
-namespace WorldFeed.History.BC.Science.Post.Models.Comments
+﻿namespace WorldFeed.History.API.Models.Comments
 {
+    using System;
+
     public class CreateCommentOutputModel
     {
         public int Id { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public string FullText { get; set; }
@@ -14,6 +14,5 @@ namespace WorldFeed.History.BC.Science.Post.Models.Comments
 
         public int[] DisplayTextRange { get; set; }
 
-        public int MyProperty { get; set; }
     }
 }

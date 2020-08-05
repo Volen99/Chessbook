@@ -1,6 +1,5 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Data.Models
+﻿namespace WorldFeed.History.API.Data.Models
 {
-    using System;
     using WorldFeed.Common.Models;
 
     public class Text : BaseDeletableModel<int>, IAuditInfo

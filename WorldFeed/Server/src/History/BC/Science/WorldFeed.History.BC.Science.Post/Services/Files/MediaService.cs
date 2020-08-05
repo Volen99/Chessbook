@@ -1,4 +1,4 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Services.Photos
+﻿namespace WorldFeed.History.API.Services.Files
 {
     using System;
     using System.Collections.Generic;
@@ -6,11 +6,11 @@
     using System.Threading.Tasks;
     using MassTransit;
     using Microsoft.EntityFrameworkCore;
+
     using WorldFeed.Common.Data;
-    using WorldFeed.Common.Messages.Uploads;
     using WorldFeed.Common.Models.Repositories;
-    using WorldFeed.History.BC.Science.Post.Data.Models;
-    using WorldFeed.History.BC.Science.Post.Data.Models.Enums;
+    using WorldFeed.History.API.Data.Models;
+    using WorldFeed.History.API.Data.Models.Enums;
     using WorldFeed.History.Common.Messages.Media;
 
     public class MediaService : IMediaService

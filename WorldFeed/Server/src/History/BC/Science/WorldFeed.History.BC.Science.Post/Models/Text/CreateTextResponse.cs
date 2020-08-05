@@ -1,4 +1,4 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Models.Text
+﻿namespace WorldFeed.History.API.Models.Text
 {
     public class CreateTextResponse
     {

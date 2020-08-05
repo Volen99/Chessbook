@@ -6,7 +6,7 @@
     {
         public static byte? Age(DateTime? date)
         {
-            if (!date.HasValue)
+            if (date.HasValue == false)
             {
                 return null;
             }

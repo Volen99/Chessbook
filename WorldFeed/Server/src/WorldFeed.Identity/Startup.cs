@@ -5,7 +5,6 @@
     using StackExchange.Redis;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
-    using IdentityServer4.Services;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.DataProtection;
     using Microsoft.AspNetCore.Hosting;
@@ -16,6 +15,7 @@
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.AspNetCore.Http;
+    using IdentityServer4.Services;
 
     using WorldFeed.Identity.API.Models;
     using WorldFeed.Identity.API.Services;
@@ -24,15 +24,13 @@
     using WorldFeed.Infrastructure;
     using WorldFeed.Identity.API.Data;
     using WorldFeed.Identity.API.Devspaces;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using Microsoft.AspNetCore.Authentication.Cookies;
-    using System.Collections.Generic;
+    using WorldFeed.Common.Infrastructure;
 
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -44,7 +42,7 @@
 
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(Configuration["ConnectionString"],
+                    options.UseSqlServer(this.Configuration.GetLocalConnectionString(),
                     sqlServerOptionsAction: sqlOptions =>
                     {
                         sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
@@ -56,7 +54,7 @@
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.Configure<AppSettings>(Configuration);
+            services.Configure<AppSettings>(this.Configuration);
 
             //services.AddAuthorization(options =>
             //{
@@ -68,25 +66,25 @@
             //    });
             //});
 
-            if (Configuration.GetValue<string>("IsClusterEnv") == bool.TrueString)
+            if (this.Configuration.GetValue<string>("IsClusterEnv") == bool.TrueString)
             {
                 services.AddDataProtection(opts =>
                 {
-                    opts.ApplicationDiscriminator = "worldfeed.identity";   // "eshop.identity";
+                    opts.ApplicationDiscriminator = "worldfeed.identity";   // was "eshop.identity";
                 })
-                .PersistKeysToRedis(ConnectionMultiplexer.Connect(Configuration["DPConnectionString"]), "DataProtection-Keys");
+                .PersistKeysToRedis(ConnectionMultiplexer.Connect(this.Configuration["DPConnectionString"]), "DataProtection-Keys");
             }
 
             //services.AddHealthChecks()
             //    .AddCheck("self", () => HealthCheckResult.Healthy())
-            //    .AddSqlServer(Configuration["ConnectionString"],
+            //    .AddSqlServer(Configuration.GetConnectionStringLocal(),
             //        name: "IdentityDB-check",
             //        tags: new string[] { "IdentityDB" });
 
             services.AddTransient<ILoginService<ApplicationUser>, EFLoginService>();
             services.AddTransient<IRedirectService, RedirectService>();
 
-            var connectionString = Configuration["ConnectionString"];
+            var connectionString = this.Configuration["ConnectionString"];
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             // Adds IdentityServer
@@ -100,7 +98,7 @@
             .AddInMemoryApiResources(Config.GetApiResources())
             .AddInMemoryClients(Config.GetClients())
             .AddDeveloperSigningCredential()
-            .AddDevspacesIfNeeded(Configuration.GetValue("EnableDevspaces", false))
+            .AddDevspacesIfNeeded(this.Configuration.GetValue("EnableDevspaces", false))
             .AddSigningCredential(Certificate.Get())
             .AddAspNetIdentity<ApplicationUser>()
             .AddConfigurationStore(options =>
@@ -154,7 +152,7 @@
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            var pathBase = Configuration["PATH_BASE"];
+            var pathBase = this.Configuration["PATH_BASE"];
             if (!string.IsNullOrEmpty(pathBase))
             {
                 loggerFactory.CreateLogger<Startup>().LogDebug("Using PATH BASE '{pathBase}'", pathBase);
@@ -190,7 +188,7 @@
 
         private void RegisterAppInsights(IServiceCollection services)
         {
-            services.AddApplicationInsightsTelemetry(Configuration);
+            services.AddApplicationInsightsTelemetry(this.Configuration);
             services.AddApplicationInsightsKubernetesEnricher();
         }
     }

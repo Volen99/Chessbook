@@ -1,4 +1,4 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Data.Models
+﻿namespace WorldFeed.History.API.Data.Models.Comments
 {
     using WorldFeed.Common.Models;
 

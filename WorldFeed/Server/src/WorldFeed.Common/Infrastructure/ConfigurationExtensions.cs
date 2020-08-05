@@ -8,7 +8,7 @@
             => configuration.GetConnectionString("DefaultConnection");
 
         // by me
-        public static string GetConnectionString(this IConfiguration configuration)
+        public static string GetLocalConnectionString(this IConfiguration configuration)
         {
             return configuration.GetConnectionString("ConnectionString");
         }

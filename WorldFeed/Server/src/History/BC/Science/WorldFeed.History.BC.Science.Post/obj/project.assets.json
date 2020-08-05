@@ -9439,9 +9439,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\History\\BC\\Science\\WorldFeed.History.BC.Science.Post\\WorldFeed.History.Science.Post.csproj",
-      "projectName": "WorldFeed.History.Science.Post",
-      "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\History\\BC\\Science\\WorldFeed.History.BC.Science.Post\\WorldFeed.History.Science.Post.csproj",
+      "projectUniqueName": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\History\\BC\\Science\\WorldFeed.History.BC.Science.Post\\WorldFeed.History.API.csproj",
+      "projectName": "WorldFeed.History.API",
+      "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\History\\BC\\Science\\WorldFeed.History.BC.Science.Post\\WorldFeed.History.API.csproj",
       "packagesPath": "C:\\Users\\volen\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\History\\BC\\Science\\WorldFeed.History.BC.Science.Post\\obj\\",
       "projectStyle": "PackageReference",

@@ -9,7 +9,6 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Identit
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Identity\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Identity\bin\Debug\netcoreapp3.1\Setup\images.zip
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Identity\bin\Debug\netcoreapp3.1\Setup\Users.csv
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Identity\bin\Debug\netcoreapp3.1\libman.json
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Identity\bin\Debug\netcoreapp3.1\WorldFeed.Identity.API.StaticWebAssets.xml
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Identity\bin\Debug\netcoreapp3.1\WorldFeed.Identity.API.exe
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Identity\bin\Debug\netcoreapp3.1\HealthChecks.RabbitMQ.dll

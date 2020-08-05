@@ -19,6 +19,7 @@ namespace WorldFeed.History.BC.Science
     using WorldFeed.History.BC.Science.Models;
     using WorldFeed.Kids.API.Data;
     using WorldFeed.Kids.API.Repositories;
+    using WorldFeed.Kids.API.Infrastructure;
 
     public class Startup
     {
@@ -30,10 +31,10 @@ namespace WorldFeed.History.BC.Science
         public void ConfigureServices(IServiceCollection services)
         {
             services
-               .AddCors()
-              //.AddTokenAuthentication(this.Configuration, JwtConfiguration.BearerEvents)
-              .AddWebService<KidsDbContext>(this.Configuration)
-              .AddMessaging(this.Configuration);
+                .AddCors()
+                .AddTokenAuthentication(this.Configuration, JwtConfiguration.BearerEvents)
+                .AddWebService<KidsDbContext>(this.Configuration)
+                .AddMessaging(this.Configuration);
 
             services.Configure<FormOptions>(options =>
             {
@@ -95,8 +96,6 @@ namespace WorldFeed.History.BC.Science
                     .AllowCredentials())
                 .UseAuthentication()
                 .UseAuthorization();
-                //.UseEndpoints(endpoints => endpoints
-                //.MapHub<PostsHub>("/posts"));
 
             app.UseWebService(env).Initialize();
         }

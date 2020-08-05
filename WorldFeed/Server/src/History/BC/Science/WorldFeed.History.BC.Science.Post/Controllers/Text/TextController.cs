@@ -8,9 +8,9 @@
     using WorldFeed.Web.Common;
     using WorldFeed.Common.Controllers;
     using WorldFeed.Services.Identity;
-    using WorldFeed.History.BC.Science.Post.Models.Text;
-    using WorldFeed.History.BC.Science.Post.Services.Text;
-    using WorldFeed.History.BC.Science.Post.Services.Posts;
+    using WorldFeed.History.API.Services.Posts;
+    using WorldFeed.History.API.Services.Text;
+    using WorldFeed.History.API.Models.Text;
 
     public class TextController : ApiController
     {

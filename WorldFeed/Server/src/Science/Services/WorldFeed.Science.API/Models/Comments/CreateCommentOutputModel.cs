@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-
-namespace WorldFeed.Science.API.Models.Comments
+﻿namespace WorldFeed.Science.API.Models.Comments
 {
+    using System;
+
     public class CreateCommentOutputModel
     {
         public int Id { get; set; }

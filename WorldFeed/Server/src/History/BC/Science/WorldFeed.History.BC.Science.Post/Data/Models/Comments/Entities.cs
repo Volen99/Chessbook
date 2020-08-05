@@ -1,7 +1,7 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Data.Models.Comments
+﻿namespace WorldFeed.History.API.Data.Models.Comments
 {
     public class Entities
     {
-
+        // TODO: Implement
     }
 }

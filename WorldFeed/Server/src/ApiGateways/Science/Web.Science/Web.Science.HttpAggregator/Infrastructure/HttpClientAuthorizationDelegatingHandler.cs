@@ -1,29 +1,27 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Web.Science.HttpAggregator.Infrastructure
+﻿namespace Web.Science.HttpAggregator.Infrastructure
 {
-    public class HttpClientAuthorizationDelegatingHandler
-         : DelegatingHandler
+    using System.Collections.Generic;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Http;
+
+    public class HttpClientAuthorizationDelegatingHandler : DelegatingHandler
     {
-        private readonly IHttpContextAccessor _httpContextAccesor;
+        private readonly IHttpContextAccessor httpContextAccesor;
 
         public HttpClientAuthorizationDelegatingHandler(IHttpContextAccessor httpContextAccesor)
         {
-            _httpContextAccesor = httpContextAccesor;
+            this.httpContextAccesor = httpContextAccesor;
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var authorizationHeader = _httpContextAccesor.HttpContext
-                .Request.Headers["Authorization"];
+            var authorizationHeader = this.httpContextAccesor.HttpContext.Request.Headers["Authorization"];
 
-            if (!string.IsNullOrEmpty(authorizationHeader))
+            if (string.IsNullOrEmpty(authorizationHeader) == false)
             {
                 request.Headers.Add("Authorization", new List<string>() { authorizationHeader });
             }
@@ -42,8 +40,7 @@ namespace Web.Science.HttpAggregator.Infrastructure
         {
             const string ACCESS_TOKEN = "access_token";
 
-            return await _httpContextAccesor.HttpContext
-                .GetTokenAsync(ACCESS_TOKEN);
+            return await this.httpContextAccesor.HttpContext.GetTokenAsync(ACCESS_TOKEN);
         }
     }
 }

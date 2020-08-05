@@ -1,9 +1,10 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Data.Models
+﻿namespace WorldFeed.History.API.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
 
     using WorldFeed.Common.Models;
-    using WorldFeed.History.BC.Science.Post.Data.Models.Enums;
+    using WorldFeed.History.API.Data.Models.Comments;
+    using WorldFeed.History.API.Data.Models.Enums;
 
     public class Vote : BaseModel<int>
     {

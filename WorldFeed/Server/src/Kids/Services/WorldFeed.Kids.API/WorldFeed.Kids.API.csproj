@@ -30,7 +30,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="Data\Configurations\" />
     <Folder Include="Data\Models\Enums\" />
-    <Folder Include="Hubs\" />
     <Folder Include="Messages\" />
     <Folder Include="Services\" />
   </ItemGroup>

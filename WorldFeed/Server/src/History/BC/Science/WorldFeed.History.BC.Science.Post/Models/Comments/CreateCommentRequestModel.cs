@@ -1,4 +1,4 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Models.Comments
+﻿namespace WorldFeed.History.API.Models.Comments
 {
     using System.ComponentModel.DataAnnotations;
     

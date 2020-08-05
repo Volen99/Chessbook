@@ -1,4 +1,4 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Services.Text
+﻿namespace WorldFeed.History.API.Services.Text
 {
     using System.Threading.Tasks;
 

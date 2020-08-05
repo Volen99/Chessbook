@@ -13,19 +13,11 @@
             // Starting with v4, scopes have their own definition and can optionally be referenced by resources.
             // Before v4, scopes where always contained within a resource.
             
-            // Scope is what access the user has. In the token we say, scope-a on this user are his photos. That means when we call Facebook API
-            // and tell him, give me the posts of this user, he will say "sorry, but no". But if you tell him, give the photos, it will give them
+            // кенов: Scope is what access the user has. In the token we say, The scope on this user are his photos. That means when we call Facebook
+            // API and tell him, give me the posts of this user, he will say "sorry, but no". But if you tell him, give the photos, it will give them
             return new List<ApiScope>
             {
                 new ApiScope("science", "Science Service"),
-                // new ApiResource("orders", "Orders Service"), 
-                // new ApiResource("basket", "Basket Service"),
-                // new ApiResource("marketing", "Marketing Service"),
-                // new ApiResource("locations", "Locations Service"),
-                // new ApiResource("mobileshoppingagg", "Mobile Shopping Aggregator"),
-                // new ApiResource("webshoppingagg", "Web Shopping Aggregator"),
-                // new ApiResource("orders.signalrhub", "Ordering Signalr Hub"),
-                // new ApiResource("webhooks", "Webhooks registration Service"),
             };
         }
 

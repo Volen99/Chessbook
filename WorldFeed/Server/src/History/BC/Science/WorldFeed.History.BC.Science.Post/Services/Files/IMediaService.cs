@@ -1,10 +1,9 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Services.Photos
+﻿namespace WorldFeed.History.API.Services.Files
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
-    using WorldFeed.History.BC.Science.Post.Data.Models;
-    using WorldFeed.History.BC.Science.Post.Data.Models.Enums;
+    using WorldFeed.History.API.Data.Models;
+    using WorldFeed.History.API.Data.Models.Enums;
 
     public interface IMediaService
     {

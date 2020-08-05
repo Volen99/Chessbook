@@ -18,6 +18,8 @@
     using Devspaces.Support;
     using Web.Science.HttpAggregator.Filters.WorldFeed.Science.API.Infrastructure.Filters;
     using Web.Science.HttpAggregator.Config;
+    using Microsoft.AspNetCore.Http;
+    using Web.Science.HttpAggregator.Infrastructure;
 
     public class Startup
     {
@@ -33,13 +35,7 @@
         {
             services.AddHealthChecks()
                 .AddCheck("self", () => HealthCheckResult.Healthy())
-                .AddUrlGroup(new Uri(Configuration["CatalogUrlHC"]), name: "catalogapi-check", tags: new string[] { "catalogapi" })
-                .AddUrlGroup(new Uri(Configuration["OrderingUrlHC"]), name: "orderingapi-check", tags: new string[] { "orderingapi" })
-                .AddUrlGroup(new Uri(Configuration["BasketUrlHC"]), name: "basketapi-check", tags: new string[] { "basketapi" })
-                .AddUrlGroup(new Uri(Configuration["IdentityUrlHC"]), name: "identityapi-check", tags: new string[] { "identityapi" })
-                .AddUrlGroup(new Uri(Configuration["MarketingUrlHC"]), name: "marketingapi-check", tags: new string[] { "marketingapi" })
-                .AddUrlGroup(new Uri(Configuration["PaymentUrlHC"]), name: "paymentapi-check", tags: new string[] { "paymentapi" })
-                .AddUrlGroup(new Uri(Configuration["LocationUrlHC"]), name: "locationapi-check", tags: new string[] { "locationapi" });
+                .AddUrlGroup(new Uri(Configuration["IdentityUrlHC"]), name: "identityapi-check", tags: new string[] { "identityapi" });
 
             services.AddCustomMvc(Configuration)
                 .AddCustomAuthentication(Configuration)
@@ -173,9 +169,9 @@
         }
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            ////register delegating handlers
-            //services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            // register delegating handlers
+            services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             ////register http services
 
@@ -183,20 +179,7 @@
             //    .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
             //    .AddDevspacesSupport();
 
-            //services.AddHttpClient<ICatalogService, CatalogService>()
-            //    .AddDevspacesSupport();
-
-            //services.AddHttpClient<IOrderApiClient, OrderApiClient>()
-            //    .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
-            //    .AddDevspacesSupport();
-
-            //services.AddHttpClient<IOrderingService, OrderingService>()
-            //    .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
-            //    .AddDevspacesSupport();
-
             return services;
         }
-
-
     }
 }

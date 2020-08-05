@@ -1,7 +1,7 @@
 ﻿namespace WorldFeed.Kids.API.Infrastructure
 {
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
 
     public class JwtConfiguration
     {

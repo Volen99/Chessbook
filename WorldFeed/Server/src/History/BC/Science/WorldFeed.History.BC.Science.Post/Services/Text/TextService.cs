@@ -1,14 +1,14 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Services.Text
+﻿namespace WorldFeed.History.API.Services.Text
 {
     using MassTransit;
     using System.Threading.Tasks;
 
     using WorldFeed.Common.Models.Repositories;
-    using WorldFeed.History.BC.Science.Post.Data.Models;
-    using WorldFeed.History.BC.Science.Post.Data.Models.Enums;
-    using WorldFeed.History.BC.Science.Post.Services.Photos;
+    using WorldFeed.History.API.Data.Models.Enums;
+    using WorldFeed.History.API.Services.Files;
     using WorldFeed.History.Common.Messages.Posts;
     using WorldFeed.History.Common.Messages.Texts;
+    using WorldFeed.History.API.Data.Models;
 
     public class TextService : ITextService
     {
@@ -35,6 +35,8 @@
             await this.textRepository.SaveChangesAsync();
 
             await this.mediaService.ChangeAllStatus(postId, Status.Inserted);
+
+            // TODO: Add Outbox Pattern
 
             await this.publisher.Publish(new TextCreatedMessage
             {

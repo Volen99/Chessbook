@@ -1,7 +1,5 @@
 ﻿namespace Web.Science.HttpAggregator.Config
 {
-    using System.Collections.Generic;
-
     public class UrlsConfig
     {
         //public class CatalogOperations

@@ -47,9 +47,9 @@ namespace Microsoft.AspNetCore.Hosting // Don't change. It comes from eShop
                                     logger.LogWarning(exception, "[{prefix}] Exception {ExceptionType} with message {Message} detected on attempt {retry} of {retries}", nameof(TContext), exception.GetType().Name, exception.Message, retry, retries);
                                 });
 
-                        //if the sql server container is not created on run docker compose this
-                        //migration can't fail for network related exception. The retry options for DbContext only 
-                        //apply to transient exceptions
+                        // if the sql server container is not created on run docker compose this
+                        // migration can't fail for network related exception. The retry options for DbContext only 
+                        // apply to transient exceptions
                         // Note that this is NOT applied when running some orchestrators (let the orchestrator to recreate the failing service)
                         retry.Execute(() => InvokeSeeder(seeder, context, services));
                     }

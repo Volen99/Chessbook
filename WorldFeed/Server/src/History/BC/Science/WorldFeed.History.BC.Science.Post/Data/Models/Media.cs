@@ -1,9 +1,7 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Data.Models
+﻿namespace WorldFeed.History.API.Data.Models
 {
-    using System;
-
     using WorldFeed.Common.Models;
-    using WorldFeed.History.BC.Science.Post.Data.Models.Enums;
+    using WorldFeed.History.API.Data.Models.Enums;
 
     public class Media : BaseDeletableModel<int>, IAuditInfo
     {

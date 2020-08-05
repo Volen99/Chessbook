@@ -1,8 +1,6 @@
 namespace WorldFeed.Admin
 {
     using System.Reflection;
-    using WorldFeed.Infrastructure;
-    using WorldFeed.Services.Identity;
     using Infrastructure;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -11,9 +9,12 @@ namespace WorldFeed.Admin
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Refit;
+
     using Services;
     using Services.Identity;
     using Services.Statistics;
+    using WorldFeed.Infrastructure;
+    using WorldFeed.Services.Identity;
 
     public class Startup
     {

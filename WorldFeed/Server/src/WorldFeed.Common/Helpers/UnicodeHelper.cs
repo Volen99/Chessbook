@@ -1,7 +1,7 @@
 ﻿namespace WorldFeed.Common.Helpers
 {
-    using System.Globalization;
     using System.Text;
+    using System.Globalization;
 
     public static class UnicodeHelper
     {

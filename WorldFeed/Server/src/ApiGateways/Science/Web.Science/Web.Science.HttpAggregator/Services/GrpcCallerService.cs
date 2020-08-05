@@ -2,9 +2,9 @@
 {
     using System;
     using System.Threading.Tasks;
+    using Serilog;
     using Grpc.Core;
     using Grpc.Net.Client;
-    using Serilog;
 
     public static class GrpcCallerService
     {

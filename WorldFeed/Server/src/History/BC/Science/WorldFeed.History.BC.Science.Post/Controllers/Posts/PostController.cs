@@ -5,8 +5,8 @@
     using Microsoft.AspNetCore.Mvc;
 
     using WorldFeed.Common.Controllers;
-    using WorldFeed.History.BC.Science.Post.Models.Posts;
-    using WorldFeed.History.BC.Science.Post.Services.Posts;
+    using WorldFeed.History.API.Models.Posts;
+    using WorldFeed.History.API.Services.Posts;
     using WorldFeed.Web.Common;
 
     public class PostController : ApiController

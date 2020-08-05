@@ -8,7 +8,7 @@ namespace WorldFeed.Notifications
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using WorldFeed.Common.Messages.Uploads;
+
     using WorldFeed.Notifications.Messages;
 
     public class Startup

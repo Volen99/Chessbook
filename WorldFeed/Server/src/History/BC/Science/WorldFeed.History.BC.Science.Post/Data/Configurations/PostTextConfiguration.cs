@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WorldFeed.History.BC.Science.Post.Data.Models;
-
-namespace WorldFeed.History.BC.Science.Post.Data.Configurations
+﻿namespace WorldFeed.History.BC.Science.Post.Data.Configurations
 {
-    public class PostTextConfiguration : IEntityTypeConfiguration<Models.Post>
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    using WorldFeed.History.API.Data.Models;
+
+    public class PostTextConfiguration : IEntityTypeConfiguration<API.Data.Models.Post>
     {
-        public void Configure(EntityTypeBuilder<Models.Post> builder)
+        public void Configure(EntityTypeBuilder<API.Data.Models.Post> builder)
         {
             builder
                 .HasOne(p => p.Text)

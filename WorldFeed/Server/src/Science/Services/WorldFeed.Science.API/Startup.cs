@@ -64,7 +64,7 @@ namespace WorldFeed.Science.API
             // Add framework services.
             services.AddSwaggerGen(options =>
             {
-                options.DescribeAllEnumsAsStrings();
+                options.DescribeAllEnumsAsStrings();       // https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/1269
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "WorldFeed - Science HTTP API",
@@ -98,7 +98,7 @@ namespace WorldFeed.Science.API
             app
                 .UseRouting()
                 .UseCors(options => options
-                    .WithOrigins("http://localhost:4200") // TODO: 5012 instead?
+                    .WithOrigins("http://localhost:4200")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials())

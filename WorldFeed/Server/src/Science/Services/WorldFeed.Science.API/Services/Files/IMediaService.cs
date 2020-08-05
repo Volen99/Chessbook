@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-using WorldFeed.Science.API.Data.Models;
+    using WorldFeed.Science.API.Data.Models;
 
     public interface IMediaService
     {

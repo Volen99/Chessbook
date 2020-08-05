@@ -1,4 +1,4 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Models.Media
+﻿namespace WorldFeed.History.API.Models.Media
 {
     public class Image
     {

@@ -1,4 +1,4 @@
-namespace WorldFeed.History.BC.Science.Post
+namespace WorldFeed.History.API
 {
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Hosting;

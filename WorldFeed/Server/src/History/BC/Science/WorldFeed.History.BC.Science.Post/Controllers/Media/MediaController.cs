@@ -3,7 +3,6 @@
     using System;
     using System.IO;
     using System.Linq;
-    using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
@@ -15,13 +14,11 @@
 
     using WorldFeed.Common.Controllers;
     using WorldFeed.Common.Extensions;
-    using WorldFeed.History.BC.Science.Post.Models.Media;
-    using WorldFeed.History.BC.Science.Post.Services.Photos;
-    using WorldFeed.History.BC.Science.Post.Services.Posts;
     using WorldFeed.Services.Identity;
-    using WorldFeed.Common.Public.Models.Enums;
     using WorldFeed.Common.DTO;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO;
+    using WorldFeed.History.API.Services.Files;
+    using WorldFeed.History.API.Services.Posts;
+    using WorldFeed.History.API.Models.Media;
 
     public class MediaController : ApiController
     {
@@ -29,8 +26,6 @@
         private readonly IMediaService mediaService;
         private readonly ICurrentUserService currentUser;
         private readonly IPostService postService;
-
-        //private IUploadQueryExecutor uploadQueryExecutor;
 
         public MediaController(
             IWebHostEnvironment environment,
@@ -50,16 +45,8 @@
             ".MP4",
         };
 
-        public static string[] SupportedImageMediaTypes =
-        {
-             ".JPG", ".JPEG", ".PNG", ".GIF", ".WEBP",
-        };
 
-        public static string[] SupportedVideoMediaTypes =
-        {
-            ".MP4",
-        };
-
+        // Not the way to do it! Just testing kk
         [Route(nameof(Sendd))]
         [HttpGet]
         public UploadedMediaInfo Sendd([FromQuery] MediaUploadQuery query)
@@ -68,8 +55,8 @@
             {
                 return new UploadedMediaInfo
                 {
-                    MediaId = query.media_id,
-                    MediaIdStr = query.media_id.ToString(),
+                    MediaId = query.MediaId,
+                    MediaIdStr = query.MediaId.ToString(),
                     ProcessingInfo = new UploadProcessingInfo
                     {
                         State = "InProgress",
@@ -88,17 +75,19 @@
         //[HttpPost]
         //public IFeedUpload Send([FromQuery] MediaUploadQuery query)
         //{
+        //    The INIT command request is used to initiate a file upload session. It returns a media_id which
+        //    should be used to execute all subsequent requests
         //    if (query.Command == "INIT")
         //    {
-               
+
         //    }
         //    else if (query.Command == "APPEND")
         //    {
-               
+
         //    }
         //    else if (query.Command == "FINALIZE")
         //    {
-               
+
         //    }
 
         //    return default;
@@ -106,7 +95,7 @@
 
         [Route(nameof(Upload))]
         [HttpPost]
-        [RequestSizeLimit(1024 * 1024 * 19)] // TODO: for images it is 5MB
+        [RequestSizeLimit(1024 * 1024 * 19)] // TODO: Image size <= 5 MB, animated GIF size <= 15 MB https://developer.twitter.com/en/docs/media/upload-media/uploading-media/media-best-practices
         public async Task<HttpResponseMessage> Upload([FromQuery] MediaUploadQuery query)
         {
             // кенов: Buffer-a e място което запазваме текущите данни, които сме прочели.
@@ -146,16 +135,6 @@
 
                 await client.Upload.WaitForMediaProcessingToGetAllMetadataAsync(media);
 
-
-                //var request = uploadRequester.UploadBinaryAsync(new UploadBinaryParameters(binary));
-
-                if (query.Command == "INIT")
-                {
-                    // The INIT command request is used to initiate a file upload session. It returns a media_id which should be used to
-                    // execute all subsequent requests
-                   // return new MediaInitResponseModel { MediaId = 1283417155074175000 };
-                }
-
                 var folderName = Path.Combine("Resources", "Media");
                 var currentDirectory = Directory.GetCurrentDirectory();
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
@@ -179,7 +158,7 @@
                 }
 
                 var fileContentType = file.ContentType;
-                if (query.media_category.ToUpper().Contains("IMAGE")) // check if image
+                if (query.MediaCategory.ToUpper().Contains("IMAGE")) // check if image
                 {
                     if (file.Length >= 1024 * 1024 * 5)
                     {
@@ -219,11 +198,11 @@
                     response = new ImageResponseModel { MediaId = mediaNew.Id, Size = mediaNew.Size, Image = new Image { ImageType = fileContentType, W = mediaNew.Width.Value, H = mediaNew.Height.Value } };
                 }
 
-                if (query.media_category.ToUpper().Contains("VIDEO"))
+                if (query.MediaCategory.ToUpper().Contains("VIDEO"))
                 {
                     var mediaNew = await this.mediaService.CreateMediaAsync(this.environment.WebRootPath, dbPath, file.ContentType, postId, file.Length);
 
-                    response = new VideoResponseModel { MediaId = mediaNew.Id, Size = mediaNew.Size, Video = new Video { video_type = file.ContentType }, ProcessingInfo = new ProcessingInfo() };
+                    response = new VideoResponseModel { MediaId = mediaNew.Id, Size = mediaNew.Size, Video = new Video { VideoType = file.ContentType }, ProcessingInfo = new ProcessingInfo() };
                 }
 
             }
@@ -250,19 +229,19 @@
             return this.Ok();
         }
 
-        private bool IsMediaType(string fileName, string[] expectedFileExtensions)
-        {
-            return expectedFileExtensions.Any(x => fileName.ToUpper().EndsWith(x));
-        }
-
-        private bool IsImage(string fileName, string[] imageFileExtensions)
-        {
-            return imageFileExtensions.Any(x => fileName.ToUpper().EndsWith(x));
-        }
-
-        private bool IsVideo(string fileName, string[] videoFileExtensions)
-        {
-            return videoFileExtensions.Any(x => fileName.ToUpper().EndsWith(x));
-        }
+         private bool IsMediaType(string fileName, string[] expectedFileExtensions)
+         {
+             return expectedFileExtensions.Any(x => fileName.ToUpper().EndsWith(x));
+         }
+        
+        // private bool IsImage(string fileName, string[] imageFileExtensions)
+        // {
+        //     return imageFileExtensions.Any(x => fileName.ToUpper().EndsWith(x));
+        // }
+        // 
+        // private bool IsVideo(string fileName, string[] videoFileExtensions)
+        // {
+        //     return videoFileExtensions.Any(x => fileName.ToUpper().EndsWith(x));
+        // }
     }
 }

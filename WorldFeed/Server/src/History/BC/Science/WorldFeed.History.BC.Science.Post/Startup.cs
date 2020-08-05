@@ -1,7 +1,7 @@
-namespace WorldFeed.History.BC.Science.Post
+namespace WorldFeed.History.API
 {
     using System.IO;
-    using Infrastructure;
+    using System.Reflection;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -10,19 +10,17 @@ namespace WorldFeed.History.BC.Science.Post
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.FileProviders;
 
-    using WorldFeed.History.BC.Science.Post.Services.Photos;
+    using Infrastructure;
     using WorldFeed.Common.Models;
     using WorldFeed.Common.Models.Repositories;
-    using WorldFeed.History.BC.Science.Post.Repositories;
     using WorldFeed.Common.Data;
-    using WorldFeed.History.BC.Science.Post.Data;
-    using WorldFeed.History.BC.Science.Post.Services.Text;
-    using WorldFeed.History.BC.Science.Post.Services.Posts;
     using WorldFeed.Common.Services.Mapping;
     using WorldFeed.History.BC.Science.Post.Models;
-    using System.Reflection;
-    using WorldFeed.Controllers.Upload;
-    using WorldFeed.Common.InjectWorldFeed;
+    using WorldFeed.History.API.Services.Files;
+    using WorldFeed.History.API.Services.Text;
+    using WorldFeed.History.API.Services.Posts;
+    using WorldFeed.History.API.Data;
+    using WorldFeed.History.API.Repositories;
 
     public class Startup
     {
@@ -40,16 +38,14 @@ namespace WorldFeed.History.BC.Science.Post
                 options.MemoryBufferThreshold = int.MaxValue;
             });
 
-            var q = new WorldFeed.Injectinvi.TweetinviContainer();
+            var tweetInviContainerNew = new Injectinvi.TweetinviContainer();
 
-             new Injectinvi.TweetinviContainer(q);
+             new Injectinvi.TweetinviContainer(tweetInviContainerNew);
 
             if (!TweetinviContainer.Container.IsInitialized)
             {
                 TweetinviContainer.Container.Initialize();
             }
-
-            // TweetinviContainer.Resolve<IUploadQueryExecutor>();
 
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));

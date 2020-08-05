@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using WorldFeed.Common.Controllers;
-    using WorldFeed.History.BC.Science.Post.Models.Comments;
+    using WorldFeed.History.API.Models.Comments;
     using WorldFeed.Web.Common;
 
     public class CommentController : ApiController

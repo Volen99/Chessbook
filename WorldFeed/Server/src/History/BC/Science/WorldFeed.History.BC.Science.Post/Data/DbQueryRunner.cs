@@ -1,4 +1,4 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Data
+﻿namespace WorldFeed.History.API.Data
 {
     using System;
     using System.Threading.Tasks;

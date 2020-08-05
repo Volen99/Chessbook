@@ -1,8 +1,9 @@
 ﻿namespace WorldFeed.Admin.Services.Identity
 {
     using System.Threading.Tasks;
-    using Models.Identity;
     using Refit;
+
+    using Models.Identity;
 
     public interface IIdentityService
     {

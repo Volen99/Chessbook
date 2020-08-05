@@ -1,11 +1,12 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Data
+﻿namespace WorldFeed.History.API.Data
 {
     using System.Reflection;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
     using WorldFeed.Common.Models;
-    using WorldFeed.History.BC.Science.Post.Data.Models;
+    using WorldFeed.History.API.Data.Models;
+    using WorldFeed.History.API.Data.Models.Comments;
 
     public class PostDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string> // TODO: Do you really need to inherit IdentityDbContext?
     {
