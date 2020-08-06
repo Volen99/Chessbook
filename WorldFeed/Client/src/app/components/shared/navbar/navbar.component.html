@@ -49,6 +49,9 @@
             <li class="nav-item" *ngIf="!token">
               <a class="nav-link" (click)="route('auth')">Login</a>
             </li>
+            <li class="nav-link">
+              <app-identity></app-identity>
+            </li>
             <li class="nav-item active">
               <a class="nav-link" (click)="route('history')">Feed</a>
             </li>

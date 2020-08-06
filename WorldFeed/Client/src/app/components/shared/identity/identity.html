@@ -1,0 +1,21 @@
+<div class="esh-identity">
+  <section class="esh-identity-section" *ngIf="!authenticated">
+    <div class="esh-identity-item" (click)="login()">
+      <div class="esh-identity-name esh-identity-name--upper">Login</div>
+    </div>
+  </section>
+
+  <section class="esh-identity-section" *ngIf="authenticated">
+    <div class="esh-identity-name">{{userName}}</div>
+    <img class="esh-identity-image" src="./src/assets/images/kids-gaming-wallpaper.jpg">
+  </section>
+
+  <section class="esh-identity-drop" *ngIf="authenticated">
+    <div class="esh-identity-item"
+         (click)="logoutClicked($event)">
+
+      <div class="esh-identity-name esh-identity-name--upper">Log Out</div>
+      <img class="esh-identity-image" src="./src/assets/images/kids-gaming-wallpaper.jpg">
+    </div>
+  </section>
+</div>

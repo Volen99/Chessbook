@@ -28,6 +28,10 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('./core/profile/profile-routing.module').then(m => m.ProfileRoutingModule),
   },
+  {
+    path: 'identity',
+    loadChildren: () => import('./core/profile/profile-routing.module').then(m => m.ProfileRoutingModule),
+  },
 ];
 
 @NgModule({

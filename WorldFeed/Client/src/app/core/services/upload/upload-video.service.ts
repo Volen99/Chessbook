@@ -5,7 +5,7 @@ import {environment} from '../../../../environments/environment';
 
 @Injectable()
 export class UploadVideoService {
-  private uploadPath: string = environment.historyBCSciencePost + 'media' + '/upload/';
+  private uploadPath: string = environment.scienceApiUrl + 'media' + '/upload/';
   private uploadPathWithoutSlash = this.uploadPath.slice(0, -1);
 
   private http: HttpClient;

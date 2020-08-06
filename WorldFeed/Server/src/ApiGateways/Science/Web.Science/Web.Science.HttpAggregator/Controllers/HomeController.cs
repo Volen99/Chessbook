@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Web.Science.HttpAggregator.Controllers
+﻿namespace Web.Science.HttpAggregator.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+
     [Route("")]
     public class HomeController : Controller
     {

@@ -29,8 +29,10 @@
             this.redirectSvc = redirectSvc;
         }
 
-        [Authorize(AuthenticationSchemes = AuthSchemes)]
-        [Authorize(Policy = "Feeders")]                   // This action is accessible only by Identities with the "Feeders" Claim...
+       // just learning and testing..
+       // [Authorize(AuthenticationSchemes = AuthSchemes)]
+       // [Authorize(Policy = "Feeders")]                   // This action is accessible only by Identities with the "Feeders" Claim...
+       //
         public IActionResult Index(string returnUrl)
         {
             return View();

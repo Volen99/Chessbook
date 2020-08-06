@@ -29,16 +29,32 @@ services:
         networks: 
             - worldfeed-network
             
-    identity-api:
-        container_name: identity
+    # identity-api:
+        # container_name: identity
+        # build:
+            # context: ./Server
+            # dockerfile: ./src/WorldFeed.Identity/Dockerfile 
+        # ports: 
+            # - "5003:80"
+        # env_file: Server\src\WorldFeed.Common\Common.anv
+        # environment:
+            # - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=WorldFeedIdentityDatabase;User Id=sa; Password=yourStrongPassword12!@;MultipleActiveResultSets=true
+        # restart: on-failure
+        # volumes:
+            # - ./.aspnet/identity/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+        # networks: 
+            # - worldfeed-network
+        # depends_on:
+            # - data # it won't start this service, untill data is started
+            
+    web-spa:
+        container_name: WebSPA
         build:
             context: ./Server
-            dockerfile: ./src/WorldFeed.Identity/Dockerfile 
+            dockerfile: ./src/Web Apps/WebSPA/Dockerfile 
         ports: 
-            - "5003:80"
+            - "5000:80"
         env_file: Server\src\WorldFeed.Common\Common.anv
-        environment:
-            - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=WorldFeedIdentityDatabase;User Id=sa; Password=yourStrongPassword12!@;MultipleActiveResultSets=true
         restart: on-failure
         volumes:
             - ./.aspnet/identity/DataProtection-Keys:/root/.aspnet/DataProtection-Keys
