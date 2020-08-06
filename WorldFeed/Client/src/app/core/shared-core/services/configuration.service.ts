@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 
 import { Configuration } from '../../models/configuration.model';
 import {StorageService} from './storage.service';
+import { environment } from '../../../../environments/environment';
 
 @Injectable()
 export class ConfigurationService {
@@ -23,10 +24,12 @@ export class ConfigurationService {
 
   load() {
     const baseURI = document.baseURI.endsWith('/') ? document.baseURI : `${document.baseURI}/`;
-    const url = `${baseURI}Home/Configuration`;
-    debugger;
-    this.http.get(url).subscribe((response) => {
+    const url = environment.homeApiUrl;                                 // `${baseURI}Home/Configuration`;
+    this.http.get(url, {
+      headers: {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT'},
+    } ).subscribe((response) => {
       console.log('server settings loaded');
+      debugger;
       this.serverSettings = response as Configuration;
       console.log(this.serverSettings);
       this.storageService.store('identityUrl', this.serverSettings.identityUrl);

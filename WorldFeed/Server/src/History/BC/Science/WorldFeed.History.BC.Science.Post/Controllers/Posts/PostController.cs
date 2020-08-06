@@ -1,4 +1,4 @@
-﻿namespace WorldFeed.History.BC.Science.Post.Controllers.Posts
+﻿namespace WorldFeed.History.Controllers.Posts
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
