@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  webspa:
+    image: ${DOCKER_REGISTRY-}webspa
+    build:
+      context: .
+      dockerfile: Web/WebSPA/Dockerfile

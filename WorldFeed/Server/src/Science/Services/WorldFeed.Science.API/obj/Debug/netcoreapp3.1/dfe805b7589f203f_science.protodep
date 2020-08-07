@@ -1,2 +1,2 @@
-obj\Debug\netcoreapp3.1/Science.cs \
-obj\Debug\netcoreapp3.1/ScienceGrpc.cs: Proto/science.proto
+obj\Debug\netcoreapp3.1\Proto/Science.cs \
+obj\Debug\netcoreapp3.1\Proto/ScienceGrpc.cs: Proto/science.proto

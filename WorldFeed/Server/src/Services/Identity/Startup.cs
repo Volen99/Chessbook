@@ -1,0 +1,209 @@
+﻿namespace WorldFeed.Identity.API
+{
+    using System;
+    using System.Reflection;
+    using StackExchange.Redis;
+    using Autofac;
+    using Autofac.Extensions.DependencyInjection;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.DataProtection;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Diagnostics.HealthChecks;
+    using IdentityServer4.Services;
+
+    using WorldFeed.Identity.API.Models;
+    using WorldFeed.Identity.API.Services;
+    using WorldFeed.Identity.API.Certificates;
+    using WorldFeed.Infrastructure;
+    using WorldFeed.Identity.API.Data;
+    using WorldFeed.Identity.API.Devspaces;
+    using WorldFeed.Common.Infrastructure;
+    using HealthChecks.UI.Client;
+    using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+    using WorldFeed.Identity.API.Configuration;
+    using System.Collections.Generic;
+
+    public class Startup
+    {
+        public Startup(IConfiguration configuration)
+        {
+            this.Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public IServiceProvider ConfigureServices(IServiceCollection services)
+        {
+            RegisterAppInsights(services);
+
+            // Add framework services.
+            services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(this.Configuration.GetDefaultConnectionString(),
+                    sqlServerOptionsAction: sqlOptions =>
+                    {
+                        sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                        // Configuring Connection Resiliency: https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency Deprecated? => https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/
+                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                    }));
+
+            services.Configure<AppSettings>(this.Configuration);
+
+            // services.AddAuthorization(options =>
+            // {
+            //     options.AddPolicy("test", policy =>
+            //     {
+            //         policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+            //         policy.RequireAuthenticatedUser();
+            //         policy.RequireClaim("test");
+            //     });
+            // });
+
+            if (this.Configuration.GetValue<string>("IsClusterEnv") == bool.TrueString)
+            {
+                services.AddDataProtection(opts =>
+                {
+                    opts.ApplicationDiscriminator = "worldfeed.identity.api";
+                })
+                .PersistKeysToRedis(ConnectionMultiplexer.Connect(this.Configuration["DPConnectionString"]), "DataProtection-Keys");
+            }
+
+            services.AddHealthChecks()                                    // This operation is idempotent
+                .AddCheck("self", () => HealthCheckResult.Healthy())
+                .AddSqlServer(Configuration.GetDefaultConnectionString(),
+                    name: "IdentityDB-check",
+                    tags: new string[] { "IdentityDB" });
+
+            services.AddTransient<ILoginService<ApplicationUser>, EFLoginService>();
+            services.AddTransient<IRedirectService, RedirectService>();
+
+            var defaultConnectionString = this.Configuration.GetDefaultConnectionString();
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            // Adds IdentityServer http://docs.identityserver.io/en/latest/reference/ef.html
+            services.AddIdentityServer(x =>
+            {
+                x.IssuerUri = "null";
+                x.Authentication.CookieLifetime = TimeSpan.FromHours(2);
+            })
+            .AddDevspacesIfNeeded(this.Configuration.GetValue("EnableDevspaces", false))
+            .AddSigningCredential(Certificate.Get())
+            .AddAspNetIdentity<ApplicationUser>()                           // http://docs.identityserver.io/en/latest/reference/aspnet_identity.html
+            .AddConfigurationStore(options =>                               // this adds the config data from DB (clients, resources, CORS)
+            {
+                options.ConfigureDbContext = builder => builder.UseSqlServer(defaultConnectionString,
+                    sqlServerOptionsAction: sqlOptions =>
+                    {
+                        sqlOptions.MigrationsAssembly(migrationsAssembly);
+                        // Configuring Connection Resiliency: https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency 
+                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                    });
+            })
+            .AddOperationalStore(options =>                                 // this adds the operational data from DB (codes, tokens, consents)
+            {
+                options.ConfigureDbContext = builder => builder.UseSqlServer(defaultConnectionString,
+                    sqlServerOptionsAction: sqlOptions =>
+                    {
+                        sqlOptions.MigrationsAssembly(migrationsAssembly);
+                        // Configuring Connection Resiliency: https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency 
+                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                    });
+
+                //// this enables automatic token cleanup. this is optional
+                // options.EnableTokenCleanup = true;
+                // options.TokenCleanupInterval = 3600; // The token cleanup interval (in seconds). The default is 3600s
+            })
+            .Services.AddTransient<IProfileService, ProfileService>();
+
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddControllers();
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+
+            var container = new ContainerBuilder();
+            container.Populate(services);
+
+            return new AutofacServiceProvider(container.Build());
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        {
+            // loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            // loggerFactory.AddDebug();
+            // loggerFactory.AddAzureWebAppDiagnostics();
+            // loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Trace);
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+
+            var pathBase = this.Configuration["PATH_BASE"];
+            if (!string.IsNullOrEmpty(pathBase))
+            {
+                loggerFactory.CreateLogger<Startup>().LogDebug("Using PATH BASE '{pathBase}'", pathBase);
+                app.UsePathBase(pathBase);
+            }
+
+            app.UseStaticFiles();
+
+            // Make work identity server redirections in Edge and lastest versions of browers. WARN: Not valid in a production environment.
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("Content-Security-Policy", "script-src 'unsafe-inline'");
+                await next();
+            });
+
+            app.UseForwardedHeaders();
+            app.UseIdentityServer();   // Adds IdentityServer. We use Identity server as a middleware here.
+
+            // Fix a problem with chrome. Chrome enabled a new feature "Cookies without SameSite must be secure", 
+            // the coockies shold be expided from https, but in eShop, the internal comunicacion in aks and docker compose is !!!http!!!.
+            // To avoid this problem, the policy of cookies shold be in Lax mode.
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax }); // AspNetCore.Http.SameSite hmm
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+                // a stackoverflow dude: MapControllers is used to map any attributes that may exist on the controllers, like, [Route], [HttpGet], etc
+                endpoints.MapControllers();
+                endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+                endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
+                {
+                    Predicate = r => r.Name.Contains("self")
+                });
+
+                endpoints.MapDefaultControllerRoute();
+            });
+
+            // app.UseWebService(env).Initialize();
+        }
+
+        private void RegisterAppInsights(IServiceCollection services)
+        {
+            services.AddApplicationInsightsTelemetry(this.Configuration);
+            services.AddApplicationInsightsKubernetesEnricher();
+        }
+    }
+}

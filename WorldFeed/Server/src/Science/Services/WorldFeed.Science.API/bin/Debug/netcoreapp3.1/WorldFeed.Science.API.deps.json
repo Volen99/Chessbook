@@ -28,7 +28,7 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.0.1",
           "Google.Protobuf": "3.12.4",
           "Grpc.AspNetCore.Server": "2.30.0",
-          "Grpc.Tools": "2.30.0",
+          "Grpc.Tools": "2.31.0",
           "ImageProcessor": "2.9.1",
           "MassTransit.AspNetCore": "7.0.2",
           "MassTransit.RabbitMQ": "7.0.2",
@@ -299,15 +299,15 @@
           "WorldFeed.Science.API.dll": {}
         }
       },
-      "AspNetCore.HealthChecks.Rabbitmq/3.1.2": {
+      "AspNetCore.HealthChecks.Rabbitmq/3.1.4": {
         "dependencies": {
           "Microsoft.Extensions.Diagnostics.HealthChecks": "3.1.5",
           "RabbitMQ.Client": "6.1.0"
         },
         "runtime": {
           "lib/netstandard2.0/HealthChecks.RabbitMQ.dll": {
-            "assemblyVersion": "3.1.2.0",
-            "fileVersion": "3.1.2.0"
+            "assemblyVersion": "3.1.4.0",
+            "fileVersion": "3.1.4.0"
           }
         },
         "compile": {
@@ -502,7 +502,7 @@
           "lib/netstandard2.1/Grpc.Net.Common.dll": {}
         }
       },
-      "Grpc.Tools/2.30.0": {},
+      "Grpc.Tools/2.31.0": {},
       "Hangfire.AspNetCore/1.7.12": {
         "dependencies": {
           "Hangfire.Core": "1.7.12"
@@ -2599,7 +2599,7 @@
       },
       "WorldFeed.Common/1.0.0": {
         "dependencies": {
-          "AspNetCore.HealthChecks.Rabbitmq": "3.1.2",
+          "AspNetCore.HealthChecks.Rabbitmq": "3.1.4",
           "AspNetCore.HealthChecks.SqlServer": "3.1.1",
           "AspNetCore.HealthChecks.UI.Client": "3.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.0.1",
@@ -2686,6 +2686,17 @@
         },
         "compile": {
           "WorldFeed.Streams.dll": {}
+        }
+      },
+      "WorldFeed.Web.Common/1.0.0": {
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1"
+        },
+        "runtime": {
+          "WorldFeed.Web.Common.dll": {}
+        },
+        "compile": {
+          "WorldFeed.Web.Common.dll": {}
         }
       },
       "WorldFeed.WebLogic/1.0.0": {
@@ -4188,12 +4199,6 @@
           "WindowsBase.dll": {}
         },
         "compileOnly": true
-      },
-      "WorldFeed.Web.Common/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1"
-        },
-        "compileOnly": true
       }
     }
   },
@@ -4203,12 +4208,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "AspNetCore.HealthChecks.Rabbitmq/3.1.2": {
+    "AspNetCore.HealthChecks.Rabbitmq/3.1.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-EnKUl93QejmLOxx9vm8POm6mWGTPdUURUbQPYDuFXEdc9sFmG1irn0DLVoOt/XmmpcroRd0INFh42+MlyrQVfg==",
-      "path": "aspnetcore.healthchecks.rabbitmq/3.1.2",
-      "hashPath": "aspnetcore.healthchecks.rabbitmq.3.1.2.nupkg.sha512"
+      "sha512": "sha512-vvK4hMyD6q5YvsMOzjD3YujhsYodxXtIFZ1pe3WyVI/5u9OZ8VAC02wdUypb1UxIgXN9B0DwTc/5tIX7s9I/Sw==",
+      "path": "aspnetcore.healthchecks.rabbitmq/3.1.4",
+      "hashPath": "aspnetcore.healthchecks.rabbitmq.3.1.4.nupkg.sha512"
     },
     "AspNetCore.HealthChecks.SqlServer/3.1.1": {
       "type": "package",
@@ -4301,12 +4306,12 @@
       "path": "grpc.net.common/2.30.0",
       "hashPath": "grpc.net.common.2.30.0.nupkg.sha512"
     },
-    "Grpc.Tools/2.30.0": {
+    "Grpc.Tools/2.31.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ObXaZFLTH8Bhzy2Qu0OeLiAT7y0l1MVGzdMiRUGaeBMixtKTozVYdRMX2jozikt7H3ZsAadBnaelKba3sdJlKQ==",
-      "path": "grpc.tools/2.30.0",
-      "hashPath": "grpc.tools.2.30.0.nupkg.sha512"
+      "sha512": "sha512-WldXuoWSSWH+Q+tVDnKF5jHNiet07NQ/U6dFiCAzcj9TeR73se8hiFkxgaZloR0EvswwEbnswsuiT9MVk+jndQ==",
+      "path": "grpc.tools/2.31.0",
+      "hashPath": "grpc.tools.2.31.0.nupkg.sha512"
     },
     "Hangfire.AspNetCore/1.7.12": {
       "type": "package",
@@ -5624,6 +5629,11 @@
       "serviceable": false,
       "sha512": ""
     },
+    "WorldFeed.Web.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "WorldFeed.WebLogic/1.0.0": {
       "type": "project",
       "serviceable": false,
@@ -6866,11 +6876,6 @@
     },
     "WindowsBase/4.0.0.0": {
       "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "WorldFeed.Web.Common/1.0.0": {
-      "type": "project",
       "serviceable": false,
       "sha512": ""
     }

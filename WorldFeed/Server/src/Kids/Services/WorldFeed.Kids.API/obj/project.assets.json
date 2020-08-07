@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "AspNetCore.HealthChecks.Rabbitmq/3.1.2": {
+      "AspNetCore.HealthChecks.Rabbitmq/3.1.4": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Diagnostics.HealthChecks": "3.1.3",
@@ -2840,7 +2840,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
-          "AspNetCore.HealthChecks.Rabbitmq": "3.1.2",
+          "AspNetCore.HealthChecks.Rabbitmq": "3.1.4",
           "AspNetCore.HealthChecks.SqlServer": "3.1.1",
           "AspNetCore.HealthChecks.UI.Client": "3.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.0.1",
@@ -2888,14 +2888,14 @@
     }
   },
   "libraries": {
-    "AspNetCore.HealthChecks.Rabbitmq/3.1.2": {
-      "sha512": "EnKUl93QejmLOxx9vm8POm6mWGTPdUURUbQPYDuFXEdc9sFmG1irn0DLVoOt/XmmpcroRd0INFh42+MlyrQVfg==",
+    "AspNetCore.HealthChecks.Rabbitmq/3.1.4": {
+      "sha512": "vvK4hMyD6q5YvsMOzjD3YujhsYodxXtIFZ1pe3WyVI/5u9OZ8VAC02wdUypb1UxIgXN9B0DwTc/5tIX7s9I/Sw==",
       "type": "package",
-      "path": "aspnetcore.healthchecks.rabbitmq/3.1.2",
+      "path": "aspnetcore.healthchecks.rabbitmq/3.1.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "aspnetcore.healthchecks.rabbitmq.3.1.2.nupkg.sha512",
+        "aspnetcore.healthchecks.rabbitmq.3.1.4.nupkg.sha512",
         "aspnetcore.healthchecks.rabbitmq.nuspec",
         "lib/netstandard2.0/HealthChecks.RabbitMQ.dll"
       ]
@@ -9134,8 +9134,8 @@
     },
     "WorldFeed.Web.Common/1.0.0": {
       "type": "project",
-      "path": "../../../Web/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj",
-      "msbuildProject": "../../../Web/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj"
+      "path": "../../../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj",
+      "msbuildProject": "../../../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj"
     }
   },
   "projectFileDependencyGroups": {

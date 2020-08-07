@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "QpEdi/iRlRtFj6XngAZtzUkt/+jRoGWC7eWTZ/+uI1A0gIaVtvHOOnJ7GPmUl01GoE6w42YnxDw7FtYSNKVNGg==",
+  "dgSpecHash": "1yPWLzCwIAwG0KwEvEg2vAd8xjLIpkYdnEcGtdSvg4sYicJ8/h1sXcTGaaUfzwLael37FHtw4UWyQlSEMLIa7A==",
   "success": true,
   "projectFilePath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WorldFeed.Logic\\WorldFeed.Logic.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\volen\\.nuget\\packages\\aspnetcore.healthchecks.rabbitmq\\3.1.2\\aspnetcore.healthchecks.rabbitmq.3.1.2.nupkg.sha512",
+    "C:\\Users\\volen\\.nuget\\packages\\aspnetcore.healthchecks.rabbitmq\\3.1.4\\aspnetcore.healthchecks.rabbitmq.3.1.4.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\aspnetcore.healthchecks.sqlserver\\3.1.1\\aspnetcore.healthchecks.sqlserver.3.1.1.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\aspnetcore.healthchecks.ui.client\\3.1.1\\aspnetcore.healthchecks.ui.client.3.1.1.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\aspnetcore.healthchecks.ui.core\\3.1.1\\aspnetcore.healthchecks.ui.core.3.1.1.nupkg.sha512",

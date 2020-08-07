@@ -29,7 +29,6 @@ export class ConfigurationService {
       headers: {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT'},
     } ).subscribe((response) => {
       console.log('server settings loaded');
-      debugger;
       this.serverSettings = response as Configuration;
       console.log(this.serverSettings);
       this.storageService.store('identityUrl', this.serverSettings.identityUrl);

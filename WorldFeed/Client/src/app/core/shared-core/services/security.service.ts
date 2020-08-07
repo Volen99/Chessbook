@@ -38,7 +38,8 @@ export class SecurityService {
     this._storageService = _storageService;
 
     this._configurationService.settingsLoaded$.subscribe(x => {
-      this.authorityUrl = this._configurationService.serverSettings.identityUrl
+      debugger;
+      this.authorityUrl = this._configurationService.serverSettings.identityUrl;
       this.storage.store('IdentityUrl', this.authorityUrl);
     });
 
@@ -95,7 +96,7 @@ export class SecurityService {
     let client_id = 'js';
     let redirect_uri = location.origin + '/';
     let response_type = 'id_token token';
-    let scope = 'openid profile orders basket marketing locations webshoppingagg orders.signalrhub';
+    let scope = 'openid profile';
     let nonce = 'N' + Math.random() + '' + Date.now();
     let state = Date.now() + '' + Math.random();
 
@@ -110,7 +111,7 @@ export class SecurityService {
       'scope=' + encodeURI(scope) + '&' +
       'nonce=' + encodeURI(nonce) + '&' +
       'state=' + encodeURI(state);
-
+    debugger;
     window.location.href = url;
   }
 

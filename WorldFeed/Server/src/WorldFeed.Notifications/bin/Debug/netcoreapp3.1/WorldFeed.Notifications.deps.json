@@ -284,15 +284,15 @@
           "WorldFeed.Notifications.dll": {}
         }
       },
-      "AspNetCore.HealthChecks.Rabbitmq/3.1.2": {
+      "AspNetCore.HealthChecks.Rabbitmq/3.1.4": {
         "dependencies": {
           "Microsoft.Extensions.Diagnostics.HealthChecks": "3.1.5",
           "RabbitMQ.Client": "6.1.0"
         },
         "runtime": {
           "lib/netstandard2.0/HealthChecks.RabbitMQ.dll": {
-            "assemblyVersion": "3.1.2.0",
-            "fileVersion": "3.1.2.0"
+            "assemblyVersion": "3.1.4.0",
+            "fileVersion": "3.1.4.0"
           }
         },
         "compile": {
@@ -2464,7 +2464,7 @@
       },
       "WorldFeed.Common/1.0.0": {
         "dependencies": {
-          "AspNetCore.HealthChecks.Rabbitmq": "3.1.2",
+          "AspNetCore.HealthChecks.Rabbitmq": "3.1.4",
           "AspNetCore.HealthChecks.SqlServer": "3.1.1",
           "AspNetCore.HealthChecks.UI.Client": "3.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.0.1",
@@ -3997,12 +3997,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "AspNetCore.HealthChecks.Rabbitmq/3.1.2": {
+    "AspNetCore.HealthChecks.Rabbitmq/3.1.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-EnKUl93QejmLOxx9vm8POm6mWGTPdUURUbQPYDuFXEdc9sFmG1irn0DLVoOt/XmmpcroRd0INFh42+MlyrQVfg==",
-      "path": "aspnetcore.healthchecks.rabbitmq/3.1.2",
-      "hashPath": "aspnetcore.healthchecks.rabbitmq.3.1.2.nupkg.sha512"
+      "sha512": "sha512-vvK4hMyD6q5YvsMOzjD3YujhsYodxXtIFZ1pe3WyVI/5u9OZ8VAC02wdUypb1UxIgXN9B0DwTc/5tIX7s9I/Sw==",
+      "path": "aspnetcore.healthchecks.rabbitmq/3.1.4",
+      "hashPath": "aspnetcore.healthchecks.rabbitmq.3.1.4.nupkg.sha512"
     },
     "AspNetCore.HealthChecks.SqlServer/3.1.1": {
       "type": "package",

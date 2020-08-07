@@ -1,0 +1,9 @@
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\Web\WorldFeed.Web.Shared\bin\Debug\netcoreapp3.1\WorldFeed.Web.Shared.deps.json
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\Web\WorldFeed.Web.Shared\bin\Debug\netcoreapp3.1\WorldFeed.Web.Shared.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\Web\WorldFeed.Web.Shared\bin\Debug\netcoreapp3.1\WorldFeed.Web.Shared.pdb
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\Web\WorldFeed.Web.Shared\obj\Debug\netcoreapp3.1\WorldFeed.Web.Shared.csprojAssemblyReference.cache
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\Web\WorldFeed.Web.Shared\obj\Debug\netcoreapp3.1\WorldFeed.Web.Shared.AssemblyInfoInputs.cache
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\Web\WorldFeed.Web.Shared\obj\Debug\netcoreapp3.1\WorldFeed.Web.Shared.AssemblyInfo.cs
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\Web\WorldFeed.Web.Shared\obj\Debug\netcoreapp3.1\WorldFeed.Web.Shared.csproj.CoreCompileInputs.cache
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\Web\WorldFeed.Web.Shared\obj\Debug\netcoreapp3.1\WorldFeed.Web.Shared.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\Web\WorldFeed.Web.Shared\obj\Debug\netcoreapp3.1\WorldFeed.Web.Shared.pdb

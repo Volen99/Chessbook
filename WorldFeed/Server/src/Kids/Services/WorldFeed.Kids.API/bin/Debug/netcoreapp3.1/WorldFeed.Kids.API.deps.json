@@ -290,15 +290,15 @@
           "WorldFeed.Kids.API.dll": {}
         }
       },
-      "AspNetCore.HealthChecks.Rabbitmq/3.1.2": {
+      "AspNetCore.HealthChecks.Rabbitmq/3.1.4": {
         "dependencies": {
           "Microsoft.Extensions.Diagnostics.HealthChecks": "3.1.5",
           "RabbitMQ.Client": "6.1.0"
         },
         "runtime": {
           "lib/netstandard2.0/HealthChecks.RabbitMQ.dll": {
-            "assemblyVersion": "3.1.2.0",
-            "fileVersion": "3.1.2.0"
+            "assemblyVersion": "3.1.4.0",
+            "fileVersion": "3.1.4.0"
           }
         },
         "compile": {
@@ -2476,7 +2476,7 @@
       },
       "WorldFeed.Common/1.0.0": {
         "dependencies": {
-          "AspNetCore.HealthChecks.Rabbitmq": "3.1.2",
+          "AspNetCore.HealthChecks.Rabbitmq": "3.1.4",
           "AspNetCore.HealthChecks.SqlServer": "3.1.1",
           "AspNetCore.HealthChecks.UI.Client": "3.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.0.1",
@@ -2502,12 +2502,15 @@
           "WorldFeed.Common.dll": {}
         }
       },
-      "WorldFeed.Web.Common.Reference/1.0.0.0": {
+      "WorldFeed.Web.Common/1.0.0": {
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1"
+        },
         "runtime": {
-          "WorldFeed.Web.Common.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "WorldFeed.Web.Common.dll": {}
+        },
+        "compile": {
+          "WorldFeed.Web.Common.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
@@ -3997,12 +4000,6 @@
           "WindowsBase.dll": {}
         },
         "compileOnly": true
-      },
-      "WorldFeed.Web.Common/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1"
-        },
-        "compileOnly": true
       }
     }
   },
@@ -4012,12 +4009,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "AspNetCore.HealthChecks.Rabbitmq/3.1.2": {
+    "AspNetCore.HealthChecks.Rabbitmq/3.1.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-EnKUl93QejmLOxx9vm8POm6mWGTPdUURUbQPYDuFXEdc9sFmG1irn0DLVoOt/XmmpcroRd0INFh42+MlyrQVfg==",
-      "path": "aspnetcore.healthchecks.rabbitmq/3.1.2",
-      "hashPath": "aspnetcore.healthchecks.rabbitmq.3.1.2.nupkg.sha512"
+      "sha512": "sha512-vvK4hMyD6q5YvsMOzjD3YujhsYodxXtIFZ1pe3WyVI/5u9OZ8VAC02wdUypb1UxIgXN9B0DwTc/5tIX7s9I/Sw==",
+      "path": "aspnetcore.healthchecks.rabbitmq/3.1.4",
+      "hashPath": "aspnetcore.healthchecks.rabbitmq.3.1.4.nupkg.sha512"
     },
     "AspNetCore.HealthChecks.SqlServer/3.1.1": {
       "type": "package",
@@ -5340,8 +5337,8 @@
       "serviceable": false,
       "sha512": ""
     },
-    "WorldFeed.Web.Common.Reference/1.0.0.0": {
-      "type": "reference",
+    "WorldFeed.Web.Common/1.0.0": {
+      "type": "project",
       "serviceable": false,
       "sha512": ""
     },
@@ -6582,11 +6579,6 @@
     },
     "WindowsBase/4.0.0.0": {
       "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "WorldFeed.Web.Common/1.0.0": {
-      "type": "project",
       "serviceable": false,
       "sha512": ""
     }

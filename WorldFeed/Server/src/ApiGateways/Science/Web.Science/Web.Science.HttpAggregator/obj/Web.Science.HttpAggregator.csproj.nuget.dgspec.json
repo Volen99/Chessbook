@@ -62,7 +62,7 @@
             },
             "Grpc.AspNetCore": {
               "target": "Package",
-              "version": "[2.23.2, )"
+              "version": "[2.30.0, )"
             },
             "Grpc.AspNetCore.Server.ClientFactory": {
               "target": "Package",
@@ -70,7 +70,7 @@
             },
             "Grpc.Core": {
               "target": "Package",
-              "version": "[2.30.0, )"
+              "version": "[2.31.0, )"
             },
             "Grpc.Net.Client": {
               "target": "Package",
@@ -79,7 +79,7 @@
             "Grpc.Tools": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[2.30.0, )"
+              "version": "[2.31.0, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
@@ -217,6 +217,76 @@
         }
       }
     },
+    "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WebCommon\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WebCommon\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj",
+        "projectName": "WorldFeed.Web.Common",
+        "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WebCommon\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj",
+        "packagesPath": "C:\\Users\\volen\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WebCommon\\WorldFeed.Web.Shared\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\volen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.5.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.2, 3.1.2]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -313,6 +383,9 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
+              "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WebCommon\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj": {
+                "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WebCommon\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj"
+              },
               "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj": {
                 "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj"
               }
@@ -330,7 +403,7 @@
           "dependencies": {
             "AspNetCore.HealthChecks.Rabbitmq": {
               "target": "Package",
-              "version": "[3.1.2, )"
+              "version": "[3.1.4, )"
             },
             "AspNetCore.HealthChecks.SqlServer": {
               "target": "Package",

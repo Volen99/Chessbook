@@ -12,7 +12,7 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="Google.Protobuf" Version="3.12.4" /> <!--contains protobuf message APIs for C#-->
     <PackageReference Include="Grpc.AspNetCore.Server" Version="2.30.0" />
-    <PackageReference Include="Grpc.Tools" Version="2.30.0"> <!--contains C# tooling support for protobuf files. The tooling package isn't required at runtime, so the dependency is marked with PrivateAssets="All"-->
+    <PackageReference Include="Grpc.Tools" Version="2.31.0"> <!--contains C# tooling support for protobuf files. The tooling package isn't required at runtime, so the dependency is marked with PrivateAssets="All"-->
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

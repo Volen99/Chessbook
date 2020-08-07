@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "AspNetCore.HealthChecks.Rabbitmq/3.1.2": {
+      "AspNetCore.HealthChecks.Rabbitmq/3.1.4": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Diagnostics.HealthChecks": "3.1.3",
@@ -144,12 +144,18 @@
           "lib/netstandard2.0/GreenPipes.dll": {}
         }
       },
-      "Grpc.AspNetCore/2.23.2": {
+      "Grpc.AspNetCore/2.30.0": {
         "type": "package",
         "dependencies": {
-          "Google.Protobuf": "3.9.1",
-          "Grpc.AspNetCore.Server.ClientFactory": "2.23.2",
-          "Grpc.Tools": "2.23.0"
+          "Google.Protobuf": "3.12.2",
+          "Grpc.AspNetCore.Server.ClientFactory": "2.30.0",
+          "Grpc.Tools": "2.30.0-pre1"
+        },
+        "compile": {
+          "lib/netcoreapp3.0/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/_._": {}
         }
       },
       "Grpc.AspNetCore.Server/2.30.0": {
@@ -183,10 +189,10 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Grpc.Core/2.30.0": {
+      "Grpc.Core/2.31.0": {
         "type": "package",
         "dependencies": {
-          "Grpc.Core.Api": "2.30.0",
+          "Grpc.Core.Api": "2.31.0",
           "System.Memory": "4.5.3"
         },
         "compile": {
@@ -222,7 +228,7 @@
           }
         }
       },
-      "Grpc.Core.Api/2.30.0": {
+      "Grpc.Core.Api/2.31.0": {
         "type": "package",
         "dependencies": {
           "System.Memory": "4.5.3"
@@ -273,7 +279,7 @@
           "lib/netstandard2.1/Grpc.Net.Common.dll": {}
         }
       },
-      "Grpc.Tools/2.30.0": {
+      "Grpc.Tools/2.31.0": {
         "type": "package",
         "build": {
           "build/Grpc.Tools.props": {},
@@ -2743,7 +2749,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
-          "AspNetCore.HealthChecks.Rabbitmq": "3.1.2",
+          "AspNetCore.HealthChecks.Rabbitmq": "3.1.4",
           "AspNetCore.HealthChecks.SqlServer": "3.1.1",
           "AspNetCore.HealthChecks.UI.Client": "3.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.0.1",
@@ -2791,14 +2797,14 @@
     }
   },
   "libraries": {
-    "AspNetCore.HealthChecks.Rabbitmq/3.1.2": {
-      "sha512": "EnKUl93QejmLOxx9vm8POm6mWGTPdUURUbQPYDuFXEdc9sFmG1irn0DLVoOt/XmmpcroRd0INFh42+MlyrQVfg==",
+    "AspNetCore.HealthChecks.Rabbitmq/3.1.4": {
+      "sha512": "vvK4hMyD6q5YvsMOzjD3YujhsYodxXtIFZ1pe3WyVI/5u9OZ8VAC02wdUypb1UxIgXN9B0DwTc/5tIX7s9I/Sw==",
       "type": "package",
-      "path": "aspnetcore.healthchecks.rabbitmq/3.1.2",
+      "path": "aspnetcore.healthchecks.rabbitmq/3.1.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "aspnetcore.healthchecks.rabbitmq.3.1.2.nupkg.sha512",
+        "aspnetcore.healthchecks.rabbitmq.3.1.4.nupkg.sha512",
         "aspnetcore.healthchecks.rabbitmq.nuspec",
         "lib/netstandard2.0/HealthChecks.RabbitMQ.dll"
       ]
@@ -2947,15 +2953,17 @@
         "lib/netstandard2.0/GreenPipes.xml"
       ]
     },
-    "Grpc.AspNetCore/2.23.2": {
-      "sha512": "Ao6f/SLEayzsOKMNYwIZGGvY6HMy9j1TM3uobhtN8HnDdsjSOkVfmAf4CUA9vCGN1NVGR9OgDx12aSWaRWh9jg==",
+    "Grpc.AspNetCore/2.30.0": {
+      "sha512": "jomJsVMnYCCfeOSxi/0lfXr+iMKbZz9OlHTEB/QyHXW0RoBgUsJww7Yt+ZQ19Fdu2CW72/Y5hSOUeP3e1X4sZg==",
       "type": "package",
-      "path": "grpc.aspnetcore/2.23.2",
+      "path": "grpc.aspnetcore/2.30.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "grpc.aspnetcore.2.23.2.nupkg.sha512",
-        "grpc.aspnetcore.nuspec"
+        "grpc.aspnetcore.2.30.0.nupkg.sha512",
+        "grpc.aspnetcore.nuspec",
+        "lib/netcoreapp3.0/_._",
+        "packageIcon.png"
       ]
     },
     "Grpc.AspNetCore.Server/2.30.0": {
@@ -2988,17 +2996,17 @@
         "packageIcon.png"
       ]
     },
-    "Grpc.Core/2.30.0": {
-      "sha512": "wng69Wi893WmcSwK1cackh55QNaImVgM6gmTCvk+TM+raBHqVArZt5UYsS8M9w9P/v0HjeyHeFYNfeSZdjcPrQ==",
+    "Grpc.Core/2.31.0": {
+      "sha512": "OYkkF9nzI0a20D4RmE21wfIMiwNuMm9ep6iwSNapjg2xKIswchxDudB3M1o8QxRfht3v23vQNVnABuP28XKDfA==",
       "type": "package",
-      "path": "grpc.core/2.30.0",
+      "path": "grpc.core/2.31.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "build/MonoAndroid10/Grpc.Core.targets",
         "build/Xamarin.iOS10/Grpc.Core.targets",
         "build/net45/Grpc.Core.targets",
-        "grpc.core.2.30.0.nupkg.sha512",
+        "grpc.core.2.31.0.nupkg.sha512",
         "grpc.core.nuspec",
         "lib/net45/Grpc.Core.dll",
         "lib/net45/Grpc.Core.pdb",
@@ -3022,14 +3030,14 @@
         "runtimes/win/native/grpc_csharp_ext.x86.dll"
       ]
     },
-    "Grpc.Core.Api/2.30.0": {
-      "sha512": "olr6WVb/aNp/2cAKhHl/b5IGTDjc0lCnT2tk/IY43wHix3+NIrF9gQr4tgXVbt7wDbf55+xDE/yicqa6ao/l2Q==",
+    "Grpc.Core.Api/2.31.0": {
+      "sha512": "UbCva42tB1EMJTVzlectfHfz25HD9T04HBlm3PA+m93yK48FxyKi7lC72yiKt/Hi3dpESYxh8CksM8a8GJpFAA==",
       "type": "package",
-      "path": "grpc.core.api/2.30.0",
+      "path": "grpc.core.api/2.31.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "grpc.core.api.2.30.0.nupkg.sha512",
+        "grpc.core.api.2.31.0.nupkg.sha512",
         "grpc.core.api.nuspec",
         "lib/net45/Grpc.Core.Api.dll",
         "lib/net45/Grpc.Core.Api.pdb",
@@ -3087,10 +3095,10 @@
         "packageIcon.png"
       ]
     },
-    "Grpc.Tools/2.30.0": {
-      "sha512": "ObXaZFLTH8Bhzy2Qu0OeLiAT7y0l1MVGzdMiRUGaeBMixtKTozVYdRMX2jozikt7H3ZsAadBnaelKba3sdJlKQ==",
+    "Grpc.Tools/2.31.0": {
+      "sha512": "WldXuoWSSWH+Q+tVDnKF5jHNiet07NQ/U6dFiCAzcj9TeR73se8hiFkxgaZloR0EvswwEbnswsuiT9MVk+jndQ==",
       "type": "package",
-      "path": "grpc.tools/2.30.0",
+      "path": "grpc.tools/2.31.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -3104,7 +3112,9 @@
         "build/_protobuf/Google.Protobuf.Tools.targets",
         "build/_protobuf/Protobuf.CSharp.xml",
         "build/_protobuf/net45/Protobuf.MSBuild.dll",
+        "build/_protobuf/net45/Protobuf.MSBuild.pdb",
         "build/_protobuf/netstandard1.3/Protobuf.MSBuild.dll",
+        "build/_protobuf/netstandard1.3/Protobuf.MSBuild.pdb",
         "build/native/Grpc.Tools.props",
         "build/native/include/google/protobuf/any.proto",
         "build/native/include/google/protobuf/api.proto",
@@ -3117,7 +3127,7 @@
         "build/native/include/google/protobuf/timestamp.proto",
         "build/native/include/google/protobuf/type.proto",
         "build/native/include/google/protobuf/wrappers.proto",
-        "grpc.tools.2.30.0.nupkg.sha512",
+        "grpc.tools.2.31.0.nupkg.sha512",
         "grpc.tools.nuspec",
         "tools/linux_x64/grpc_csharp_plugin",
         "tools/linux_x64/protoc",
@@ -8845,8 +8855,8 @@
     },
     "WorldFeed.Web.Common/1.0.0": {
       "type": "project",
-      "path": "../../../../Web/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj",
-      "msbuildProject": "../../../../Web/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj"
+      "path": "../../../../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj",
+      "msbuildProject": "../../../../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -8855,11 +8865,11 @@
       "AspNetCore.HealthChecks.Uris >= 3.1.2",
       "Devspaces.Support >= 1.0.0",
       "Google.Protobuf >= 3.12.4",
-      "Grpc.AspNetCore >= 2.23.2",
+      "Grpc.AspNetCore >= 2.30.0",
       "Grpc.AspNetCore.Server.ClientFactory >= 2.30.0",
-      "Grpc.Core >= 2.30.0",
+      "Grpc.Core >= 2.31.0",
       "Grpc.Net.Client >= 2.30.0",
-      "Grpc.Tools >= 2.30.0",
+      "Grpc.Tools >= 2.31.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 3.1.6",
       "Microsoft.AspNetCore.Diagnostics.HealthChecks >= 2.2.0",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 3.1.6",
@@ -8933,7 +8943,7 @@
           },
           "Grpc.AspNetCore": {
             "target": "Package",
-            "version": "[2.23.2, )"
+            "version": "[2.30.0, )"
           },
           "Grpc.AspNetCore.Server.ClientFactory": {
             "target": "Package",
@@ -8941,7 +8951,7 @@
           },
           "Grpc.Core": {
             "target": "Package",
-            "version": "[2.30.0, )"
+            "version": "[2.31.0, )"
           },
           "Grpc.Net.Client": {
             "target": "Package",
@@ -8950,7 +8960,7 @@
           "Grpc.Tools": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "[2.30.0, )"
+            "version": "[2.31.0, )"
           },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",

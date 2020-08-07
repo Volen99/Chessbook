@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "AspNetCore.HealthChecks.Rabbitmq/3.1.2": {
+      "AspNetCore.HealthChecks.Rabbitmq/3.1.4": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Diagnostics.HealthChecks": "3.1.3",
@@ -183,7 +183,7 @@
           "lib/netstandard2.1/Grpc.Net.Common.dll": {}
         }
       },
-      "Grpc.Tools/2.30.0": {
+      "Grpc.Tools/2.31.0": {
         "type": "package",
         "build": {
           "build/Grpc.Tools.props": {},
@@ -2980,7 +2980,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
-          "AspNetCore.HealthChecks.Rabbitmq": "3.1.2",
+          "AspNetCore.HealthChecks.Rabbitmq": "3.1.4",
           "AspNetCore.HealthChecks.SqlServer": "3.1.1",
           "AspNetCore.HealthChecks.UI.Client": "3.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.0.1",
@@ -3134,14 +3134,14 @@
     }
   },
   "libraries": {
-    "AspNetCore.HealthChecks.Rabbitmq/3.1.2": {
-      "sha512": "EnKUl93QejmLOxx9vm8POm6mWGTPdUURUbQPYDuFXEdc9sFmG1irn0DLVoOt/XmmpcroRd0INFh42+MlyrQVfg==",
+    "AspNetCore.HealthChecks.Rabbitmq/3.1.4": {
+      "sha512": "vvK4hMyD6q5YvsMOzjD3YujhsYodxXtIFZ1pe3WyVI/5u9OZ8VAC02wdUypb1UxIgXN9B0DwTc/5tIX7s9I/Sw==",
       "type": "package",
-      "path": "aspnetcore.healthchecks.rabbitmq/3.1.2",
+      "path": "aspnetcore.healthchecks.rabbitmq/3.1.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "aspnetcore.healthchecks.rabbitmq.3.1.2.nupkg.sha512",
+        "aspnetcore.healthchecks.rabbitmq.3.1.4.nupkg.sha512",
         "aspnetcore.healthchecks.rabbitmq.nuspec",
         "lib/netstandard2.0/HealthChecks.RabbitMQ.dll"
       ]
@@ -3356,10 +3356,10 @@
         "packageIcon.png"
       ]
     },
-    "Grpc.Tools/2.30.0": {
-      "sha512": "ObXaZFLTH8Bhzy2Qu0OeLiAT7y0l1MVGzdMiRUGaeBMixtKTozVYdRMX2jozikt7H3ZsAadBnaelKba3sdJlKQ==",
+    "Grpc.Tools/2.31.0": {
+      "sha512": "WldXuoWSSWH+Q+tVDnKF5jHNiet07NQ/U6dFiCAzcj9TeR73se8hiFkxgaZloR0EvswwEbnswsuiT9MVk+jndQ==",
       "type": "package",
-      "path": "grpc.tools/2.30.0",
+      "path": "grpc.tools/2.31.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -3373,7 +3373,9 @@
         "build/_protobuf/Google.Protobuf.Tools.targets",
         "build/_protobuf/Protobuf.CSharp.xml",
         "build/_protobuf/net45/Protobuf.MSBuild.dll",
+        "build/_protobuf/net45/Protobuf.MSBuild.pdb",
         "build/_protobuf/netstandard1.3/Protobuf.MSBuild.dll",
+        "build/_protobuf/netstandard1.3/Protobuf.MSBuild.pdb",
         "build/native/Grpc.Tools.props",
         "build/native/include/google/protobuf/any.proto",
         "build/native/include/google/protobuf/api.proto",
@@ -3386,7 +3388,7 @@
         "build/native/include/google/protobuf/timestamp.proto",
         "build/native/include/google/protobuf/type.proto",
         "build/native/include/google/protobuf/wrappers.proto",
-        "grpc.tools.2.30.0.nupkg.sha512",
+        "grpc.tools.2.31.0.nupkg.sha512",
         "grpc.tools.nuspec",
         "tools/linux_x64/grpc_csharp_plugin",
         "tools/linux_x64/protoc",
@@ -9627,8 +9629,8 @@
     },
     "WorldFeed.Web.Common/1.0.0": {
       "type": "project",
-      "path": "../../../Web/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj",
-      "msbuildProject": "../../../Web/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj"
+      "path": "../../../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj",
+      "msbuildProject": "../../../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj"
     },
     "WorldFeed.WebLogic/1.0.0": {
       "type": "project",
@@ -9642,7 +9644,7 @@
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 8.0.1",
       "Google.Protobuf >= 3.12.4",
       "Grpc.AspNetCore.Server >= 2.30.0",
-      "Grpc.Tools >= 2.30.0",
+      "Grpc.Tools >= 2.31.0",
       "ImageProcessor >= 2.9.1",
       "MassTransit.AspNetCore >= 7.0.2",
       "MassTransit.RabbitMQ >= 7.0.2",
@@ -9689,6 +9691,9 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
+            "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WebCommon\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj": {
+              "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WebCommon\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj"
+            },
             "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj": {
               "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj"
             },
@@ -9733,7 +9738,7 @@
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[2.30.0, )"
+            "version": "[2.31.0, )"
           },
           "ImageProcessor": {
             "target": "Package",
