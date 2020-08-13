@@ -16,7 +16,7 @@ import {ScienceModule} from './components/science/science.module';
   declarations: [ // Only declarables – (components, directives and pipes)
     AppComponent,
     CreateCourseComponent,
-    ListCoursesComponent, // :D
+    ListCoursesComponent,
   ],
   imports: [     // Only @NgModule classes – integrated (HttpClientModule, BrowserModule) or custom made
     BrowserModule,

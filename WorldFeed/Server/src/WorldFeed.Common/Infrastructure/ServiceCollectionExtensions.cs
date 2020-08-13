@@ -29,7 +29,7 @@
         {
             services
                 .AddDatabase<TDbContext>(configuration)
-                .AddApplicationSettings(configuration)
+                .AddApplicationSettings(configuration)  // TODO: change?!
                 .AddTokenAuthentication(configuration)
                 .AddHealth(configuration)
                 .AddAutoMapperProfile(Assembly.GetCallingAssembly())
@@ -55,8 +55,8 @@
 
         public static IServiceCollection AddApplicationSettings(this IServiceCollection services, IConfiguration configuration)
             => services
-                .Configure<ApplicationSettings>(
-                    configuration.GetSection(nameof(ApplicationSettings)),
+                .Configure<AppSettings>(
+                    configuration.GetSection(nameof(AppSettings)),
                     config => config.BindNonPublicProperties = true);
 
         public static IServiceCollection AddTokenAuthentication(this IServiceCollection services, IConfiguration configuration,
@@ -71,14 +71,13 @@
             //         {
             //             context.Token = context.Request.Query["access_token"];
             //         }
-               
+
             //         return Task.CompletedTask;
             //     }
             // };
 
-            var secret = configuration
-                .GetSection(nameof(ApplicationSettings))
-                .GetValue<string>(nameof(ApplicationSettings.Secret));
+
+            var secret = configuration.GetSection(nameof(AppSettings)).GetValue<string>(nameof(AppSettings.Secret));
 
             var secretBytes = Encoding.ASCII.GetBytes(secret);
 

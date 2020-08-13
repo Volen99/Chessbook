@@ -6,7 +6,6 @@ import {Subscription} from 'rxjs';
 
 import {SecurityService} from './core/shared-core/services/security.service';
 import {ConfigurationService} from './core/shared-core/services/configuration.service';
-import {SignalrService} from './core/shared-core/services/signalr.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +19,6 @@ export class AppComponent implements OnInit {
   constructor(private titleService: Title,
               private securityService: SecurityService,
               private configurationService: ConfigurationService,
-              private signalrService: SignalrService,
               vcr: ViewContainerRef
   ) {
     // TODO: Set Taster Root (Overlay) container

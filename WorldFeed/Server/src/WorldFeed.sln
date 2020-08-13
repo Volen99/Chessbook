@@ -103,6 +103,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Admin", "Services
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Identity.API", "Services\Identity\WorldFeed.Identity.API.csproj", "{336F577B-B4E5-4431-AB50-8A6825037BDB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{C8A9B7F6-EC1E-403B-952E-4F29BEC1D39D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.HttpAggregator", "ApiGateways\Identity\Identity.HttpAggregator.csproj", "{B0CD3F27-D2BB-4D8D-AEFA-7058DC73E7C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -201,6 +205,10 @@ Global
 		{336F577B-B4E5-4431-AB50-8A6825037BDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{336F577B-B4E5-4431-AB50-8A6825037BDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{336F577B-B4E5-4431-AB50-8A6825037BDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0CD3F27-D2BB-4D8D-AEFA-7058DC73E7C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0CD3F27-D2BB-4D8D-AEFA-7058DC73E7C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0CD3F27-D2BB-4D8D-AEFA-7058DC73E7C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0CD3F27-D2BB-4D8D-AEFA-7058DC73E7C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -255,6 +263,8 @@ Global
 		{86C8EBBD-B9C7-4B6A-A719-041504F9D8E7} = {1267170A-8DF8-4957-8779-8C836F5FEA31}
 		{2294501F-65A5-4FB3-9301-2E66512F13A7} = {0C90D317-87AB-461D-8650-49CF3704EE05}
 		{336F577B-B4E5-4431-AB50-8A6825037BDB} = {C5ACE062-B912-4B88-A390-2B1D31EE3346}
+		{C8A9B7F6-EC1E-403B-952E-4F29BEC1D39D} = {93F69DAE-0CC5-473B-ABAC-F6DF1C7B2B6C}
+		{B0CD3F27-D2BB-4D8D-AEFA-7058DC73E7C5} = {C8A9B7F6-EC1E-403B-952E-4F29BEC1D39D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58A386E4-E7C7-49B8-8E30-D8DD2154B7D5}

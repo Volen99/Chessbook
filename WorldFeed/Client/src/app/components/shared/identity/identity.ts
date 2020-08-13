@@ -2,7 +2,11 @@ import {Component, OnInit, OnChanges, Output, Input, EventEmitter} from '@angula
 import {Subscription} from 'rxjs';
 
 import {SecurityService} from '../../../core/shared-core/services/security.service';
-import {SignalrService} from '../../../core/shared-core/services/signalr.service';
+
+import {User, UserManager, UserManagerSettings} from 'oidc-client';
+import * as Oidc from 'oidc-client';
+
+import axios from 'axios';
 
 @Component({
   selector: 'app-identity',
@@ -10,30 +14,32 @@ import {SignalrService} from '../../../core/shared-core/services/signalr.service
   styleUrls: ['./identity.scss']
 })
 export class Identity implements OnInit {
-  authenticated = false;
+  private userManager: UserManager;
   private subscription: Subscription;
+
+  isAuthenticated = false;
   public userName = ''; // was private
 
-  constructor(private service: SecurityService, private signalrService: SignalrService) {
+  constructor(private securityService: SecurityService) {
 
   }
 
   ngOnInit() {
-    this.subscription = this.service.authenticationChallenge$.subscribe(res => {
-      this.authenticated = res;
-      this.userName = this.service.UserData.email;
+    this.subscription = this.securityService.authenticationChallenge$.subscribe(res => {
+      this.isAuthenticated = res;
+      this.userName = this.securityService.UserData.email;
     });
 
     if (window.location.hash) {
-      this.service.AuthorizedCallback();
+      this.securityService.AuthorizedCallback();
     }
 
-    console.log('identity component, checking authorized' + this.service.IsAuthorized);
-    this.authenticated = this.service.IsAuthorized;
+    this.isAuthenticated = this.securityService.IsAuthorized;
+    console.log('identity component, checking authorized' + this.securityService.IsAuthorized);
 
-    if (this.authenticated) {
-      if (this.service.UserData) {
-        this.userName = this.service.UserData.email;
+    if (this.isAuthenticated) {
+      if (this.securityService.UserData) {
+        this.userName = this.securityService.UserData.email;
       }
     }
   }
@@ -45,11 +51,11 @@ export class Identity implements OnInit {
   }
 
   login() {
-    this.service.Authorize();
+    this.securityService.Authorize();
   }
 
   logout() {
-    this.signalrService.stop();
-    this.service.Logoff();
+    // this.signalrService.stop();
+    this.securityService.Logoff();
   }
 }

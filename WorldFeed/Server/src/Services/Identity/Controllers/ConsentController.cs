@@ -55,7 +55,7 @@
         /// Handles the consent screen postback
         /// </summary>
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(ConsentInputModel model)
         {
             // parse the return URL back to an AuthorizeRequest object

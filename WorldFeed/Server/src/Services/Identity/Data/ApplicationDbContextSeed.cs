@@ -12,7 +12,6 @@
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
-    using WorldFeed.Identity.API;
     using WorldFeed.Identity.API.Extensions;
     using WorldFeed.Identity.API.Models;
 

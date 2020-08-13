@@ -27,25 +27,25 @@
     public class AccountController : Controller
     {
         //private readonly InMemoryUserLoginService _loginService;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly ILoginService<ApplicationUser> loginService;
         private readonly IIdentityServerInteractionService interaction;
         private readonly IClientStore clientStore;
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IConfiguration configuration;
 
         public AccountController(
 
             //InMemoryUserLoginService loginService,
+            UserManager<ApplicationUser> userManager,
             ILoginService<ApplicationUser> loginService,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
-            UserManager<ApplicationUser> userManager,
             IConfiguration configuration)
         {
+            this.userManager = userManager;
             this.loginService = loginService;
             this.interaction = interaction;
             this.clientStore = clientStore;
-            this.userManager = userManager;
             this.configuration = configuration;
         }
 
@@ -71,7 +71,7 @@
         /// Handle postback from username/password login
         /// </summary>
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        // [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
@@ -183,7 +183,7 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout(LogoutViewModel model)
         {
-            var idp = User?.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;
+            var idp = this.User?.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;
 
             if (idp != null && idp != IdentityServerConstants.LocalIdentityProvider)
             {
@@ -208,7 +208,7 @@
                 }
                 catch (Exception ex)
                 {
-                    // _logger.LogError(ex, "LOGOUT ERROR: {ExceptionMessage}", ex.Message);
+                    //_logger.LogError(ex, "LOGOUT ERROR: {ExceptionMessage}", ex.Message);
                     Console.WriteLine("LOGOUT ERROR: {ExceptionMessage}", ex.Message);
                 }
             }
@@ -247,7 +247,7 @@
             return View();
         }
 
-        //
+        
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]

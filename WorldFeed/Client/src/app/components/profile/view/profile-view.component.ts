@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CurrentUserService} from '../../../core/shared-core/services/current-user.service';
 import {User} from '../../../core/shared-core/user/user.model';
+
+import {StorageService} from '../../../core/shared-core/services/storage.service';
 
 @Component({
   selector: 'app-profile-view',
@@ -8,16 +9,15 @@ import {User} from '../../../core/shared-core/user/user.model';
   styleUrls: ['./profile-view.component.css']
 })
 export class ProfileViewComponent implements OnInit {
-  private currentUserService: CurrentUserService;
+  private storage: StorageService;
 
-  constructor(currentUserService: CurrentUserService) {
-    this.currentUserService = currentUserService;
+  constructor(storage: StorageService ) {
+    this.storage = storage;
   }
 
   public user: User;
 
   ngOnInit(): void {
-    debugger
-    this.user = this.currentUserService.user;
+    this.user = this.storage.retrieve('userData');
   }
 }

@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+
 import {NotificationsService} from '../../../core/shared-core/services/notifications.service';
+import {User} from 'oidc-client';
 
 @Component({
   selector: 'app-navbar',
@@ -10,34 +12,23 @@ import {NotificationsService} from '../../../core/shared-core/services/notificat
 export class NavbarComponent implements OnInit {
   isExpanded = false;
   token: string;
+  isAuthorized: boolean;
+  user: User;
 
   constructor(private router: Router, private notificationsService: NotificationsService) {
-
   }
 
   ngOnInit(): void {
-    this.getToken();
     this.notificationsService.subscribe();
-  }
-
-  getToken() {
-    this.token = localStorage.getItem('token');
   }
 
   route(param) {
     console.log(param);
-    this.router.navigate([param])
+    this.router.navigate([param]);
   }
 
   changeNav(event) {
     console.log(event);
-  }
-
-
-  logout() {
-    localStorage.removeItem('token');
-    this.getToken();
-    this.router.navigate(['auth']);
   }
 
   // C#

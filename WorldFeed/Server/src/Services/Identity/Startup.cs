@@ -16,19 +16,16 @@
     using Microsoft.Extensions.Logging;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Diagnostics.HealthChecks;
+    using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+    using HealthChecks.UI.Client;
     using IdentityServer4.Services;
 
     using WorldFeed.Identity.API.Models;
     using WorldFeed.Identity.API.Services;
-    using WorldFeed.Identity.API.Certificates;
-    using WorldFeed.Infrastructure;
     using WorldFeed.Identity.API.Data;
     using WorldFeed.Identity.API.Devspaces;
     using WorldFeed.Common.Infrastructure;
-    using HealthChecks.UI.Client;
-    using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-    using WorldFeed.Identity.API.Configuration;
-    using System.Collections.Generic;
+    using WorldFeed.Infrastructure;
 
     public class Startup
     {
@@ -44,6 +41,10 @@
         {
             RegisterAppInsights(services);
 
+            services.Configure<AppSettings>(this.Configuration);
+
+            services.AddTokenAuthentication(this.Configuration);
+
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(this.Configuration.GetDefaultConnectionString(),
@@ -54,17 +55,6 @@
                         sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                     }));
 
-            services.Configure<AppSettings>(this.Configuration);
-
-            // services.AddAuthorization(options =>
-            // {
-            //     options.AddPolicy("test", policy =>
-            //     {
-            //         policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-            //         policy.RequireAuthenticatedUser();
-            //         policy.RequireClaim("test");
-            //     });
-            // });
 
             if (this.Configuration.GetValue<string>("IsClusterEnv") == bool.TrueString)
             {
@@ -91,6 +81,14 @@
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            // Configures the Identity cookie.
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.Cookie.Name = "WorldFeed.IdentityCookie";
+                config.LoginPath = "/Account/Login";
+                //config.LogoutPath = "/Account/Logout";
+            });
+
             // Adds IdentityServer http://docs.identityserver.io/en/latest/reference/ef.html
             services.AddIdentityServer(x =>
             {
@@ -98,7 +96,7 @@
                 x.Authentication.CookieLifetime = TimeSpan.FromHours(2);
             })
             .AddDevspacesIfNeeded(this.Configuration.GetValue("EnableDevspaces", false))
-            .AddSigningCredential(Certificate.Get())
+            .AddDeveloperSigningCredential()                                // .AddSigningCredential(Certificate.Get())
             .AddAspNetIdentity<ApplicationUser>()                           // http://docs.identityserver.io/en/latest/reference/aspnet_identity.html
             .AddConfigurationStore(options =>                               // this adds the config data from DB (clients, resources, CORS)
             {
@@ -120,7 +118,7 @@
                         sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                     });
 
-                //// this enables automatic token cleanup. this is optional
+                //// this enables automatic token cleanup. This is optional
                 // options.EnableTokenCleanup = true;
                 // options.TokenCleanupInterval = 3600; // The token cleanup interval (in seconds). The default is 3600s
             })
@@ -138,6 +136,7 @@
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // The Configure method is used to specify how the app responds to HTTP requests. 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             // loggerFactory.AddConsole(Configuration.GetSection("Logging"));
@@ -170,6 +169,13 @@
                 context.Response.Headers.Add("Content-Security-Policy", "script-src 'unsafe-inline'");
                 await next();
             });
+
+            // https://github.com/IdentityServer/IdentityServer4/issues/1372
+            app.UseCors(builder =>
+               builder.WithOrigins("http://localhost:4200"  /* et. al. */)
+                   .AllowAnyHeader() // allow 'Authentication' 
+                   .AllowAnyMethod() // allow GET, SET, OPTIONS
+               );
 
             app.UseForwardedHeaders();
             app.UseIdentityServer();   // Adds IdentityServer. We use Identity server as a middleware here.

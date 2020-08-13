@@ -40,9 +40,13 @@
         public IActionResult ReturnToOriginalApplication(string returnUrl)
         {
             if (returnUrl != null)
+            {
                 return Redirect(this.redirectSvc.ExtractRedirectUriFromReturnUrl(returnUrl));
+            }
             else
+            {
                 return RedirectToAction("Index", "Home");
+            }
         }
 
         /// <summary>

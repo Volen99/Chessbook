@@ -1,13 +1,17 @@
-// I wrote that! nope..
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
-import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable, Subject} from 'rxjs';
+import {Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 
 import {StorageService} from './storage.service';
 import {ConfigurationService} from './configuration.service';
+
+import {User, UserManager, UserManagerSettings} from 'oidc-client';
+import * as Oidc from 'oidc-client';
+
+import axios from 'axios';
 
 @Injectable()
 export class SecurityService {
@@ -15,6 +19,7 @@ export class SecurityService {
   private actionUrl: string;
   private headers: HttpHeaders;
   private storage: StorageService;
+  private userManager: UserManager;
   private authenticationSource = new Subject<boolean>();
   authenticationChallenge$ = this.authenticationSource.asObservable();
   private authorityUrl = '';
@@ -38,7 +43,6 @@ export class SecurityService {
     this._storageService = _storageService;
 
     this._configurationService.settingsLoaded$.subscribe(x => {
-      debugger;
       this.authorityUrl = this._configurationService.serverSettings.identityUrl;
       this.storage.store('IdentityUrl', this.authorityUrl);
     });
@@ -51,76 +55,85 @@ export class SecurityService {
   }
 
   public IsAuthorized: boolean;
-
-  public GetToken(): any {
-    return this.storage.retrieve('authorizationData');
-  }
-
-  public ResetAuthorizationData() {
-    this.storage.store('authorizationData', '');
-    this.storage.store('authorizationDataIdToken', '');
-
-    this.IsAuthorized = false;
-    this.storage.store('IsAuthorized', false);
-  }
-
   public UserData: any;
 
-  public SetAuthorizationData(token: any, id_token: any) {
-    if (this.storage.retrieve('authorizationData') !== '') {
-      this.storage.store('authorizationData', '');
-    }
+  public ResetAuthorizationData() {
+    this.IsAuthorized = false;
+    this.storage.store('IsAuthorized', false);
+    this.storage.store('authorizationDataIdToken', '');
+    this.storage.store('userData', '');
 
-    this.storage.store('authorizationData', token);
-    this.storage.store('authorizationDataIdToken', id_token);
-    this.IsAuthorized = true;
-    this.storage.store('IsAuthorized', true);
-
-    this.getUserData().subscribe(data => {
-        this.UserData = data ;
-        this.storage.store('userData', data);
-        // emit observable
-        this.authenticationSource.next(true);
-        window.location.href = location.origin;
-      },
-      error => this.HandleError(error),
-      () => {
-        console.log(this.UserData);
-      });
+    localStorage.removeItem('oidc.user:https://localhost:5001/:js');
   }
 
   public Authorize() {
-    this.ResetAuthorizationData();
+    const config = {
+      userStore: new Oidc.WebStorageStateStore({store: window.localStorage}),
+      authority: 'https://localhost:5001/',
+      client_id: 'js',
+      redirect_uri: location.origin + '/',
+      response_type: 'code',
+      scope: 'openid profile',
+    };
 
-    let authorizationUrl = this.authorityUrl + '/connect/authorize';
-    let client_id = 'js';
-    let redirect_uri = location.origin + '/';
-    let response_type = 'id_token token';
-    let scope = 'openid profile';
-    let nonce = 'N' + Math.random() + '' + Date.now();
-    let state = Date.now() + '' + Math.random();
+    this.userManager = new UserManager(config);                   // https://github.com/IdentityModel/oidc-client-js/wiki
 
-    this.storage.store('authStateControl', state);
-    this.storage.store('authNonce', nonce);
+    this.userManager.signinRedirect();
 
-    let url =
-      authorizationUrl + '?' +
-      'response_type=' + encodeURI(response_type) + '&' +
-      'client_id=' + encodeURI(client_id) + '&' +
-      'redirect_uri=' + encodeURI(redirect_uri) + '&' +
-      'scope=' + encodeURI(scope) + '&' +
-      'nonce=' + encodeURI(nonce) + '&' +
-      'state=' + encodeURI(state);
-    debugger;
-    window.location.href = url;
+    this.userManager.getUser().then(user => {
+      console.log('user:', user);
+      if (user) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
+
+        // emit observable
+        this.authenticationSource.next(true);
+        window.location.href = location.origin;
+      }
+    });
+
+    let refreshing = false;
+
+    axios.interceptors.response.use((response) => {
+        return response;
+      },
+      function(error) {
+        console.log('axios error:', error.response);
+
+        const axiosConfig = error.response.config;
+
+        // if error response is 401 try to refresh token
+        if (error.response.status === 401) {
+          console.log('axios error 401');
+
+          // if already refreshing don't make another request
+          if (!refreshing) {
+            console.log('starting token refresh');
+            refreshing = true;
+
+            // do the refresh
+            debugger
+            return this.userManager.signinSilent().then(user => {
+              console.log('new user:', user);
+              // update the http request and client
+              axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
+              axiosConfig.headers['Authorization'] = 'Bearer ' + user.access_token;
+              // retry the http request
+              return axios(axiosConfig);
+            });
+          }
+        }
+        return Promise.reject(error);
+      });
   }
 
+
+  // https://openid.net/specs/openid-connect-core-1_0.html#NonceNotes
   public AuthorizedCallback() {
     this.ResetAuthorizationData();
 
     let hash = window.location.hash.substr(1);
 
-    let result: any = hash.split('&').reduce(function (result: any, item: string) {
+    let result: any = hash.split('&').reduce(function(result: any, item: string) {
       let parts = item.split('=');
       result[parts[0]] = parts[1];
       return result;
@@ -182,8 +195,7 @@ export class SecurityService {
     console.log(error);
     if (error.status == 403) {
       this._router.navigate(['/Forbidden']);
-    }
-    else if (error.status == 401) {
+    } else if (error.status == 401) {
       // this.ResetAuthorizationData();
       this._router.navigate(['/Unauthorized']);
     }
@@ -201,7 +213,7 @@ export class SecurityService {
         output += '=';
         break;
       default:
-        throw 'Illegal base64url string!';
+        throw new Error('Illegal base64url string!');
     }
 
     return window.atob(output);
@@ -217,47 +229,5 @@ export class SecurityService {
     }
 
     return data;
-  }
-
-  //private retrieve(key: string): any {
-  //    let item = this.storage.getItem(key);
-
-  //    if (item && item !== 'undefined') {
-  //        return JSON.parse(this.storage.getItem(key));
-  //    }
-
-  //    return;
-  //}
-
-  //private store(key: string, value: any) {
-  //    this.storage.setItem(key, JSON.stringify(value));
-  //}
-
-  private getUserData = (): Observable<string[]> => {
-    if (this.authorityUrl === '') {
-      this.authorityUrl = this.storage.retrieve('IdentityUrl');
-    }
-
-    const options = this.setHeaders();
-
-    return this._http.get<string[]>(`${this.authorityUrl}/connect/userinfo`, options)
-      .pipe<string[]>((info: any) => info);
-  }
-
-  private setHeaders(): any {
-    const httpOptions = {
-      headers: new HttpHeaders()
-    };
-
-    httpOptions.headers = httpOptions.headers.set('Content-Type', 'application/json');
-    httpOptions.headers = httpOptions.headers.set('Accept', 'application/json');
-
-    const token = this.GetToken();
-
-    if (token !== '') {
-      httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${token}`);
-    }
-
-    return httpOptions;
   }
 }

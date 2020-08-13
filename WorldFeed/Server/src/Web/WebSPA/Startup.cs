@@ -16,6 +16,8 @@
     using HealthChecks.UI.Client;
 
     using global::WebSPA.Infrastructure;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Authentication;
 
     public class Startup
     {
@@ -36,6 +38,40 @@
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services
+               .AddAuthentication(config =>
+               {
+                   config.DefaultScheme = "WebClientCookie";    // the local cookie we set up to store the tokens
+
+                   // What scheme to use for authorization.
+                   config.DefaultChallengeScheme = "oidc";
+               })
+               .AddCookie("WebClientCookie")
+               .AddOpenIdConnect("oidc", config =>
+               {
+                   config.Authority = "https://localhost:5001";          // Gets or sets the Authority to use when making OpenIdConnect calls
+
+                   config.ClientId = "js";
+                   config.ClientSecret = "What did Apollo 11 discover during lost two minutes of SILENCE?";
+
+                    // Stores the tokens in the cookie after retrieval.
+                    config.SaveTokens = true;
+
+                   config.ResponseType = "code";
+
+                   //// Smaller ID token, two trips to Identity Server.
+                   config.GetClaimsFromUserInfoEndpoint = true;
+
+                   //// Maps the user information to claims. You can also delete claims.
+                   //config.ClaimActions.MapUniqueJsonKey("car", "WorldFeed.Car");
+
+                   //// Adds custom claim scope. You can also remove the default scopes (note that "openid" is required).
+                   //config.Scope.Add("worldfeed");
+
+                   //// Allows refresh tokens
+                   //config.Scope.Add("offline_access");
+               });
+
             RegisterAppInsights(services);
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
@@ -55,7 +91,7 @@
             {
                 services.AddDataProtection(opts =>
                 {
-                    opts.ApplicationDiscriminator = "eshop.webspa";
+                    opts.ApplicationDiscriminator = "worldfeed.webspa";
                 })
                 .PersistKeysToRedis(ConnectionMultiplexer.Connect(Configuration["DPConnectionString"]), "DataProtection-Keys");
             }
@@ -66,6 +102,8 @@
                 {
                     options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                 });
+
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,17 +118,17 @@
             
             // Configure XSRF middleware, This pattern is for SPA style applications where XSRF token is added on Index page 
             // load and passed back token on every subsequent async request            
-            // app.Use(async (context, next) =>
-            // {
-            //     if (string.Equals(context.Request.Path.Value, "/", StringComparison.OrdinalIgnoreCase))
-            //     {
-            //         var tokens = antiforgery.GetAndStoreTokens(context);
-            //         context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions() { HttpOnly = false });
-            //     }
-            //     await next.Invoke();
-            // });
+             app.Use(async (context, next) =>
+             {
+                 if (string.Equals(context.Request.Path.Value, "/", StringComparison.OrdinalIgnoreCase))
+                 {
+                     var tokens = antiforgery.GetAndStoreTokens(context);
+                     context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions() { HttpOnly = false });
+                 }
+                 await next.Invoke();
+             });
 
-            //Seed Data
+            // Seed Data
             WebContextSeed.Seed(app, env, loggerFactory);
 
             var pathBase = Configuration["PATH_BASE"];
@@ -118,6 +156,8 @@
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseCors();
             app.UseEndpoints(endpoints =>
             {

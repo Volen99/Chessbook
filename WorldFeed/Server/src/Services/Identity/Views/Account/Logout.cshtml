@@ -9,13 +9,16 @@
         <div class="col-sm-6">
             <p>Would you like to logout of IdentityServer?</p>
             <form asp-action="Logout">
-                <input type="hidden" name="logoutId" value="@Model.LogoutId"  />
+                <input type="hidden" name="logoutId" value="@Model.LogoutId" />
                 <fieldset>
                     <div class="form-group">
                         <button class="btn btn-primary">Yes</button>
                     </div>
                 </fieldset>
             </form>
+            <div class="form-group">
+                <button class="btn btn-primary" onclick="history.back()">Nope</button>
+            </div>
         </div>
     </div>
 </div>

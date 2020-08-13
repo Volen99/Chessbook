@@ -387,14 +387,14 @@
           "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
-      "Automatonymous/5.0.0": {
+      "Automatonymous/5.0.1": {
         "dependencies": {
           "GreenPipes": "4.0.0"
         },
         "runtime": {
           "lib/netstandard2.0/Automatonymous.dll": {
-            "assemblyVersion": "5.0.0.0",
-            "fileVersion": "5.0.0.0"
+            "assemblyVersion": "5.0.1.0",
+            "fileVersion": "5.0.1.0"
           }
         },
         "compile": {
@@ -579,9 +579,9 @@
           "lib/netstandard2.0/IdentityServer4.Storage.dll": {}
         }
       },
-      "MassTransit/7.0.2": {
+      "MassTransit/7.0.3": {
         "dependencies": {
-          "Automatonymous": "5.0.0",
+          "Automatonymous": "5.0.1",
           "Microsoft.Extensions.Logging.Abstractions": "3.1.6",
           "NewId": "3.0.2",
           "Newtonsoft.Json": "12.0.2",
@@ -598,56 +598,56 @@
         },
         "runtime": {
           "lib/netstandard2.0/MassTransit.dll": {
-            "assemblyVersion": "7.0.2.0",
-            "fileVersion": "7.0.2.0"
+            "assemblyVersion": "7.0.3.0",
+            "fileVersion": "7.0.3.0"
           }
         },
         "compile": {
           "lib/netstandard2.0/MassTransit.dll": {}
         }
       },
-      "MassTransit.AspNetCore/7.0.2": {
+      "MassTransit.AspNetCore/7.0.3": {
         "dependencies": {
-          "MassTransit": "7.0.2",
-          "MassTransit.Extensions.DependencyInjection": "7.0.2",
+          "MassTransit": "7.0.3",
+          "MassTransit.Extensions.DependencyInjection": "7.0.3",
           "Microsoft.Extensions.DependencyInjection": "3.1.6",
           "Microsoft.Extensions.Diagnostics.HealthChecks": "3.1.5",
           "Microsoft.Extensions.Hosting.Abstractions": "3.1.5"
         },
         "runtime": {
           "lib/netstandard2.0/MassTransit.AspNetCoreIntegration.dll": {
-            "assemblyVersion": "7.0.2.0",
-            "fileVersion": "7.0.2.0"
+            "assemblyVersion": "7.0.3.0",
+            "fileVersion": "7.0.3.0"
           }
         },
         "compile": {
           "lib/netstandard2.0/MassTransit.AspNetCoreIntegration.dll": {}
         }
       },
-      "MassTransit.Extensions.DependencyInjection/7.0.2": {
+      "MassTransit.Extensions.DependencyInjection/7.0.3": {
         "dependencies": {
-          "MassTransit": "7.0.2",
+          "MassTransit": "7.0.3",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.6"
         },
         "runtime": {
           "lib/netstandard2.0/MassTransit.ExtensionsDependencyInjectionIntegration.dll": {
-            "assemblyVersion": "7.0.2.0",
-            "fileVersion": "7.0.2.0"
+            "assemblyVersion": "7.0.3.0",
+            "fileVersion": "7.0.3.0"
           }
         },
         "compile": {
           "lib/netstandard2.0/MassTransit.ExtensionsDependencyInjectionIntegration.dll": {}
         }
       },
-      "MassTransit.RabbitMQ/7.0.2": {
+      "MassTransit.RabbitMQ/7.0.3": {
         "dependencies": {
-          "MassTransit": "7.0.2",
+          "MassTransit": "7.0.3",
           "RabbitMQ.Client": "6.1.0"
         },
         "runtime": {
           "lib/netstandard2.0/MassTransit.RabbitMqTransport.dll": {
-            "assemblyVersion": "7.0.2.0",
-            "fileVersion": "7.0.2.0"
+            "assemblyVersion": "7.0.3.0",
+            "fileVersion": "7.0.3.0"
           }
         },
         "compile": {
@@ -2472,8 +2472,8 @@
           "Hangfire.AspNetCore": "1.7.12",
           "Hangfire.Core": "1.7.12",
           "Hangfire.SqlServer": "1.7.12",
-          "MassTransit.AspNetCore": "7.0.2",
-          "MassTransit.RabbitMQ": "7.0.2",
+          "MassTransit.AspNetCore": "7.0.3",
+          "MassTransit.RabbitMQ": "7.0.3",
           "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": "3.1.6",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.6",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.6",
@@ -4046,12 +4046,12 @@
       "path": "automapper.extensions.microsoft.dependencyinjection/8.0.1",
       "hashPath": "automapper.extensions.microsoft.dependencyinjection.8.0.1.nupkg.sha512"
     },
-    "Automatonymous/5.0.0": {
+    "Automatonymous/5.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-v8CA1uk61Dy5ddti9h+jBBA0AndbxjXKKcCL6hXzqYqk/AmjyBdiYltOi6YDan7e7CD1R6T/C+Zi5gL6z1W5sw==",
-      "path": "automatonymous/5.0.0",
-      "hashPath": "automatonymous.5.0.0.nupkg.sha512"
+      "sha512": "sha512-OMe8VGc+4C+BCWxCeDyMEVjlhCsnNwMcrbK7aiLHXxIlBHUjwVP93eJ/mURc9e9D1pLZMfY1mB9C7w7wWHVxWw==",
+      "path": "automatonymous/5.0.1",
+      "hashPath": "automatonymous.5.0.1.nupkg.sha512"
     },
     "GreenPipes/4.0.0": {
       "type": "package",
@@ -4123,33 +4123,33 @@
       "path": "identityserver4.storage/3.0.0",
       "hashPath": "identityserver4.storage.3.0.0.nupkg.sha512"
     },
-    "MassTransit/7.0.2": {
+    "MassTransit/7.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-4iMnnKAf0jdQmZgYwQPlIiY2T/58bXknN0UzmG1HRGyOxcVM2VfL8mXwa7jtasT/WrkkHgmTBS1tZyqerxT7kQ==",
-      "path": "masstransit/7.0.2",
-      "hashPath": "masstransit.7.0.2.nupkg.sha512"
+      "sha512": "sha512-b0tMbRzpviJUV8xmDx2B3dxviqxDuH3m1hF7kyZlGcj1tLxBbuoWju2lSUk5ib23TiK0898ldnCVeZFZQEQxHQ==",
+      "path": "masstransit/7.0.3",
+      "hashPath": "masstransit.7.0.3.nupkg.sha512"
     },
-    "MassTransit.AspNetCore/7.0.2": {
+    "MassTransit.AspNetCore/7.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-EfaEtq2IKKNSb4iLFSd42QXa0ijJaPo0RTA1fUD85QFOWDh08Bhj5aAT2bGWWsdQl/URdnrdTcFPESaeBZeeYg==",
-      "path": "masstransit.aspnetcore/7.0.2",
-      "hashPath": "masstransit.aspnetcore.7.0.2.nupkg.sha512"
+      "sha512": "sha512-BA2dLOU7BGlEO54ozBCYhQ1ygo7aqiA+IgYIOltBJ2jFiGdKF63++KHhC08L7W7yCJopIO8/WsfVjVvMuQR7rQ==",
+      "path": "masstransit.aspnetcore/7.0.3",
+      "hashPath": "masstransit.aspnetcore.7.0.3.nupkg.sha512"
     },
-    "MassTransit.Extensions.DependencyInjection/7.0.2": {
+    "MassTransit.Extensions.DependencyInjection/7.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-/aeDR11qXeFOv2WhS/AwtDUp+iE4BKXnRSO9mTc/aFeQQWUpJRjgYv7cPIoQgdErrpXDB9b0PiOWr3JZ21+4IA==",
-      "path": "masstransit.extensions.dependencyinjection/7.0.2",
-      "hashPath": "masstransit.extensions.dependencyinjection.7.0.2.nupkg.sha512"
+      "sha512": "sha512-BybY/1n+J8GrPEtJA5toYamOW2zY5Xmn+juzCrND01Eg9yIlLbG8uBVLIrQXFh1y7DcTFoQN4sk3ecEQRzgo6A==",
+      "path": "masstransit.extensions.dependencyinjection/7.0.3",
+      "hashPath": "masstransit.extensions.dependencyinjection.7.0.3.nupkg.sha512"
     },
-    "MassTransit.RabbitMQ/7.0.2": {
+    "MassTransit.RabbitMQ/7.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-FDNi+853DtM17xL0vc0aGDDUkl5JOLMIIxDvhJVrdtXhUEmM6hAW4XEbA0OHmjoY+un2cY32JUms3/34wIMQbg==",
-      "path": "masstransit.rabbitmq/7.0.2",
-      "hashPath": "masstransit.rabbitmq.7.0.2.nupkg.sha512"
+      "sha512": "sha512-B6tBzRztKClc3rjmQysYZc3jxUIFiUwJIZ81z2WCq814xmy5RBdEH+DpLizgVVx07CwsgHo9g4cjLyEUoWdNzg==",
+      "path": "masstransit.rabbitmq/7.0.3",
+      "hashPath": "masstransit.rabbitmq.7.0.3.nupkg.sha512"
     },
     "Microsoft.AspNetCore.ApiAuthorization.IdentityServer/3.1.6": {
       "type": "package",

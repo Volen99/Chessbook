@@ -26,7 +26,7 @@ export class ConfigurationService {
     const baseURI = document.baseURI.endsWith('/') ? document.baseURI : `${document.baseURI}/`;
     const url = environment.homeApiUrl;                                 // `${baseURI}Home/Configuration`;
     this.http.get(url, {
-      headers: {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT'},
+      headers: {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT'}, // by me!!!
     } ).subscribe((response) => {
       console.log('server settings loaded');
       this.serverSettings = response as Configuration;

@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 // It matters how routes are arranged!
 const routes: Routes = [
   {
-    // TODO import might bug
+    // TODO: import might bug
     path: 'auth',
     loadChildren: () => import('./components/authentication/authentication-routing.module').then(m => m.AuthenticationRoutingModule)
   },

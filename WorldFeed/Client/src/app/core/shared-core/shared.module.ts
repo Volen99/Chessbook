@@ -24,7 +24,7 @@ import {Identity} from '../../components/shared/identity/identity';
 import {ConfigurationService} from './services/configuration.service';
 import {SecurityService} from './services/security.service';
 import {StorageService} from './services/storage.service';
-import {SignalrService} from './services/signalr.service';
+import {DataService} from './services/data.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import {SignalrService} from './services/signalr.service';
     NavbarComponent,
     HomeComponent,
     PaginationComponent,
-    //UpperCasePipe
+    // UpperCasePipe
   ],
   imports: [
     CommonModule,
@@ -59,12 +59,12 @@ import {SignalrService} from './services/signalr.service';
       useClass: ErrorInterceptorService,
       multi: true
     },
+    DataService,
     RouterExtService,
     CurrentUserService,
     SecurityService,
     ConfigurationService,
     StorageService,
-    SignalrService,
   ],
   exports: [
     ReactiveFormsModule,
@@ -75,7 +75,7 @@ import {SignalrService} from './services/signalr.service';
     LoginMenuComponent,
     NavbarComponent,
     PaginationComponent,
-    //UpperCasePipe,
+    // UpperCasePipe,
   ]
 })
 export class SharedModule {

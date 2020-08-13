@@ -1,13 +1,14 @@
 ﻿namespace WorldFeed.Identity.API.Configuration
 {
     using System.Collections.Generic;
+    using IdentityModel;
     using IdentityServer4;
     using IdentityServer4.Models;
+    using Microsoft.AspNetCore.Http;
 
     // Config.cs - IdentityServer resources and clients configuration file
     public class Config
     {
-        // ApiResources define the apis in your system
         public static IEnumerable<ApiScope> GetApiScopes()
         {
             // Starting with v4, scopes have their own definition and can optionally be referenced by resources.
@@ -17,29 +18,40 @@
             // API and tell him, give me the posts of this user, he will say "sorry, but no". But if you tell him, give the photos, it will give them
             return new List<ApiScope>
             {
-                new ApiScope("science", "Science Service"),
+                new ApiScope("webspa", "Web Spa"),
+                new ApiScope("webshoppingagg", "Web Shopping Aggregator"),
             };
         }
 
+        // ApiResources define the apis in your system
         // With ApiResource you can now create two logical APIs and their correponding scopes:
         public static IEnumerable<ApiResource> GetApiResources()
         {
             return new List<ApiResource>
             {
-                new ApiResource("science", "Science Service")
+                new ApiResource("webspa", "Web Spa")
                 {
-                    Scopes = { "science", "Science Service" }
+                    Scopes = {"webspa", "Web Spa" },
+                },
+                new ApiResource()
+                {
+                    Scopes = { "webshoppingagg", "Web Shopping Aggregator" },
                 }
             };
         }
 
-        // Identity resources are data like user ID, name, or email address of a user
+        // From OpenID Connect
+        // Identity resources are data like user ID, name, or email address of a user. They are absolutely like Api Scopes, but for the users
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new List<IdentityResource>
             {
-                new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.OpenId(),     // I want the ID to be provided
+                new IdentityResources.Profile(),    // I want the Profile Information to be provided
+                //new IdentityResource("worldfeed", new List<string>() 
+                //{
+                //    "WorldFeed.Car",
+                //})
             };
         }
 
@@ -52,25 +64,26 @@
             return new List<Client>
             {
                 // The Client class models an OpenID Connect or OAuth 2.0 client - e.g. a native application, a web application or a JS-based application
-                //
                 new Client
                 {
-                    ClientId = "js",                                       // JavaScript Client (SPA)
-                    ClientName = "WorldFeed SPA OpenId Client",
-                    AllowedGrantTypes = GrantTypes.Implicit,               // TODO: plz dont use this coz of security reasons kk..
-                    AllowAccessTokensViaBrowser = true,
-                    RedirectUris =           { $"{clientsUrl["Spa"]}/" },
-                    RequireConsent = false,
-                    PostLogoutRedirectUris = { $"{clientsUrl["Spa"]}/" },
-                    AllowedCorsOrigins =     { $"{clientsUrl["Spa"]}" },
-                    AllowedScopes =
-                    {
+                   ClientId = "js",
+
+                    // Configures PKCE for a client-only application.
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequirePkce = true,
+                    RequireClientSecret = false,
+
+                    RedirectUris = { "http://localhost:4200/" },
+                    PostLogoutRedirectUris = { "http://localhost:4200/" },
+                    AllowedCorsOrigins = { "http://localhost:4200" },
+
+                    AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "webshoppingagg",
-                        "orders.signalrhub",
-                        "webhooks"
                     },
+
+                    AllowAccessTokensViaBrowser = true,
+                    RequireConsent = false,
                 },
             };
         }

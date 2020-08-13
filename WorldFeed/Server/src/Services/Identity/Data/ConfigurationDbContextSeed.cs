@@ -19,10 +19,11 @@
             var clientUrls = new Dictionary<string, string>();
 
             clientUrls.Add("Spa", configuration.GetValue<string>("SpaClient"));
+            clientUrls.Add("WebShoppingAgg", configuration.GetValue<string>("WebShoppingAggClient"));
 
             if (context.Clients.Any() == false)
             {
-                foreach (var client in Config.GetClients(clientUrls))  // clientUrls
+                foreach (var client in Config.GetClients(clientUrls))
                 {
                     context.Clients.Add(client.ToEntity());
                 }
@@ -33,7 +34,7 @@
             // There should be no problem for new ones ref: https://github.com/dotnet-architecture/eShopOnContainers/issues/586
             else
             {
-                List<ClientRedirectUri> oldRedirects = (await context.Clients.Include(c => c.RedirectUris).ToListAsync())  // TODO: Refactor "Include"!
+                List<ClientRedirectUri> oldRedirects = (await context.Clients.Include(c => c.RedirectUris).ToListAsync())
                     .SelectMany(c => c.RedirectUris)
                     .Where(ru => ru.RedirectUri.EndsWith("/o2c.html"))
                     .ToList();

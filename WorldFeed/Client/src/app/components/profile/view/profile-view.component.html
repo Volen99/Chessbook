@@ -19,7 +19,7 @@
         <div class="profile-head">
 
           <h2>
-            {{this.user}}!
+            {{this.user.name}}!
           </h2>
           <h6>
             @Model.ProfileTokens.Wisdom
@@ -140,7 +140,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="about-content">
-                  <span role="heading" aria-level="5" style="color: #90949c">About @Model.User.UserName</span>
+                  <span role="heading" aria-level="5" style="color: #90949c">About {{this.user.name}}</span>
                   <h6 class="profile-line-break"></h6>
                   <p>@Model.ProfileTokens.About</p>
                 </div>

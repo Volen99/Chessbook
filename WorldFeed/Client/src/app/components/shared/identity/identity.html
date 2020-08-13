@@ -1,19 +1,11 @@
-<div class="esh-identity">
-  <section class="esh-identity-section" *ngIf="!authenticated">
-    <div class="esh-identity-item" (click)="login()">
-      <div class="esh-identity-name esh-identity-name--upper">Login</div>
-    </div>
-  </section>
+<li class="nav-link" *ngIf="!isAuthenticated">
+  <a class="nav-link" (click)="login()">Login</a>
+</li>
 
-  <section class="esh-identity-section" *ngIf="authenticated">
-    <div class="esh-identity-name">{{userName}}</div>
-    <img class="esh-identity-image" src="./src/assets/images/kids-gaming-wallpaper.jpg">
-  </section>
+<li class="nav-link" *ngIf="isAuthenticated">
+  <a class="nav-link" [routerLink]="['profile']">Hello {{userName}}!</a>
+</li>
 
-  <section class="esh-identity-drop" *ngIf="authenticated">
-    <div class="esh-identity-item" (click)="logoutClicked($event)">
-      <div class="esh-identity-name esh-identity-name--upper">Log Out</div>
-      <img class="esh-identity-image" src="./src/assets/images/kids-gaming-wallpaper.jpg">
-    </div>
-  </section>
-</div>
+<li class="nav-link" *ngIf="isAuthenticated">
+  <a class="nav-link" (click)="logoutClicked($event)">Logout</a>
+</li>

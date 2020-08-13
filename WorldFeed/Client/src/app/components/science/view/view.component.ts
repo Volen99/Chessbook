@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SignalRScienceService} from '../../../core/science/services/signalR-science-service';
 import {PostModel} from '../../../core/science/interfaces/post.model.';
 import {environment} from '../../../../environments/environment';
@@ -18,6 +18,7 @@ export class ViewComponent implements OnInit {
   // So you should use constructor() to setup Dependency Injection and not much else.
   // ngOnInit() is better place to "start" - it's where/when components' bindings are resolved
   constructor() {
+
   }
 
   // ngOnInit is a life cycle hook called by Angular to indicate that Angular is done creating the component.
@@ -28,5 +29,5 @@ export class ViewComponent implements OnInit {
 
   public createImgPath = (serverPath: string) => {
     return `${this.microservicePath}${serverPath}`;
-  }
+  };
 }
