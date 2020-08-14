@@ -78,7 +78,7 @@ namespace Microsoft.AspNetCore.Hosting
             // database that is created cannot be later updated using migrations
             // While it's great for apps with a local database, most applications will require more
             // robust deployment strategy like generating SQL scripts.
-            //
+
              //context.Database.Migrate();
              seeder(context, services);
         }

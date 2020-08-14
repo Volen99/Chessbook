@@ -9,15 +9,15 @@ import {StorageService} from '../../../core/shared-core/services/storage.service
   styleUrls: ['./profile-view.component.css']
 })
 export class ProfileViewComponent implements OnInit {
-  private storage: StorageService;
+  private storageService: StorageService;
 
-  constructor(storage: StorageService ) {
-    this.storage = storage;
+  constructor(storageService: StorageService ) {
+    this.storageService = storageService;
   }
 
-  public user: User;
+  public userCurrent: User;
 
   ngOnInit(): void {
-    this.user = this.storage.retrieve('userData');
+    this.userCurrent = this.storageService.retrieve('userData');
   }
 }

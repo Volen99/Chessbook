@@ -4,8 +4,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {SharedModule} from './core/shared-core/shared.module';
 import {HistoryModule} from './components/history/history.module';
-import {CreateCourseComponent} from './components/courses/create-course/create-course.component';
-import {ListCoursesComponent} from './components/courses/list-courses/list-courses.component';
 import {AuthenticationModule} from './components/authentication/authentication.module';
 import {KidsModule} from './components/kids/kids.module';
 import {ScienceModule} from './components/science/science.module';
@@ -15,8 +13,6 @@ import {ScienceModule} from './components/science/science.module';
 @NgModule({
   declarations: [ // Only declarables – (components, directives and pipes)
     AppComponent,
-    CreateCourseComponent,
-    ListCoursesComponent,
   ],
   imports: [     // Only @NgModule classes – integrated (HttpClientModule, BrowserModule) or custom made
     BrowserModule,

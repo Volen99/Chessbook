@@ -1,10 +1,8 @@
 ﻿namespace WorldFeed.Identity.API.Configuration
 {
     using System.Collections.Generic;
-    using IdentityModel;
     using IdentityServer4;
     using IdentityServer4.Models;
-    using Microsoft.AspNetCore.Http;
 
     // Config.cs - IdentityServer resources and clients configuration file
     public class Config
@@ -48,10 +46,10 @@
             {
                 new IdentityResources.OpenId(),     // I want the ID to be provided
                 new IdentityResources.Profile(),    // I want the Profile Information to be provided
-                //new IdentityResource("worldfeed", new List<string>() 
-                //{
-                //    "WorldFeed.Car",
-                //})
+                // new IdentityResource("worldfeed", new List<string>() 
+                // {
+                //     "WorldFeed.Car",
+                // })
             };
         }
 

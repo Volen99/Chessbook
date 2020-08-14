@@ -1,6 +1,8 @@
 ﻿namespace WorldFeed.Identity.API.Models.AccountViewModels
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Microsoft.AspNetCore.Authentication;
 
     public class LoginViewModel
     {
@@ -14,6 +16,9 @@
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
         public string ReturnUrl { get; set; }
+
+        public IEnumerable<AuthenticationScheme> ExternalProviders { get; set; }
     }
 }

@@ -86,8 +86,15 @@
             {
                 config.Cookie.Name = "WorldFeed.IdentityCookie";
                 config.LoginPath = "/Account/Login";
-                //config.LogoutPath = "/Account/Logout";
+                config.LogoutPath = "/Account/Logout";
             });
+
+            services.AddAuthentication()
+                .AddFacebook(config =>
+                {
+                    config.AppId = "302283381007627";
+                    config.AppSecret = "0ac7d83f351c6f1d9f25c887b6d58d78";
+                });
 
             // Adds IdentityServer http://docs.identityserver.io/en/latest/reference/ef.html
             services.AddIdentityServer(x =>

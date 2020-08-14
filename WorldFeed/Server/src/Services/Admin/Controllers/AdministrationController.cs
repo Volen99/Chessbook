@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using WorldFeed.Infrastructure;
-    using Infrastructure;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
     using Refit;
+
+    using WorldFeed.Infrastructure;
 
     [AuthorizeAdministrator]
     public abstract class AdministrationController : Controller

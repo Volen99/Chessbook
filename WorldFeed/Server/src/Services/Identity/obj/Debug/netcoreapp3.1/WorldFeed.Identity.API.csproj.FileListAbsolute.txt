@@ -434,13 +434,12 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\obj\Debug\netcoreapp3.1\staticwebassets\WorldFeed.Identity.API.StaticWebAssets.Manifest.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\obj\Debug\netcoreapp3.1\staticwebassets\WorldFeed.Identity.API.StaticWebAssets.xml
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\obj\Debug\netcoreapp3.1\WorldFeed.Identity.API.genruntimeconfig.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\bin\Debug\netcoreapp3.1\EntityFramework.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.Design.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.Design.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.Facebook.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\obj\Debug\netcoreapp3.1\Razor\Views\Account\ExternalRegister.cshtml.g.cs
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netstandard2.0\System.Data.SqlClient.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Data.SqlClient.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\obj\Debug\netcoreapp3.1\WorldFeed.Identity.API.csproj.CoreCompileInputs.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\obj\Debug\netcoreapp3.1\WorldFeed.Identity.API.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\obj\Debug\netcoreapp3.1\WorldFeed.Identity.API.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\bin\Debug\netcoreapp3.1\EntityFramework.SqlServer.dll
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\bin\Debug\netcoreapp3.1\System.CodeDom.dll
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Identity\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll

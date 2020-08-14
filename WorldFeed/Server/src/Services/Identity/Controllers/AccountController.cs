@@ -28,21 +28,23 @@
     {
         //private readonly InMemoryUserLoginService _loginService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ILoginService<ApplicationUser> loginService;
         private readonly IIdentityServerInteractionService interaction;
         private readonly IClientStore clientStore;
         private readonly IConfiguration configuration;
 
         public AccountController(
-
             //InMemoryUserLoginService loginService,
             UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             ILoginService<ApplicationUser> loginService,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IConfiguration configuration)
         {
             this.userManager = userManager;
+            this.signInManager = signInManager;
             this.loginService = loginService;
             this.interaction = interaction;
             this.clientStore = clientStore;
@@ -131,10 +133,13 @@
                 }
             }
 
+            var externalProviders = await this.signInManager.GetExternalAuthenticationSchemesAsync();
+
             return new LoginViewModel
             {
                 ReturnUrl = returnUrl,
                 Email = context?.LoginHint,
+                ExternalProviders = externalProviders,
             };
         }
 
@@ -290,6 +295,84 @@
             }
 
             return RedirectToAction("index", "home");
+        }
+
+
+        public IActionResult ExternalLogin(string provider, string returnUrl)
+        {
+            var redirectUri = this.Url
+                .Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
+
+            var properties = this.signInManager
+                .ConfigureExternalAuthenticationProperties(provider, redirectUri);
+
+            return Challenge(properties, provider);
+        }
+
+        public async Task<IActionResult> ExternalLoginCallback(string returnUrl)
+        {
+            var info = await this.signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var result = await this.signInManager
+                .ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
+
+            if (result.Succeeded)
+            {
+                return Redirect(returnUrl);
+            }
+
+            var username = info.Principal.FindFirst(ClaimTypes.Name.Replace(" ", "_")).Value;
+
+            var email = info.Principal.FindFirst(ClaimTypes.Email.Replace(" ", "_")).Value;
+
+            return View("ExternalRegister", new ExternalRegisterViewModel
+            {
+                UserName = username,
+                Email = email,
+                ReturnUrl = returnUrl
+            });
+        }
+
+        public async Task<IActionResult> ExternalRegister(ExternalRegisterViewModel model)
+        {
+            var info = await this.signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var user = new ApplicationUser
+            {
+                UserName = model.UserName,
+                Email = model.Email,
+                Country = "Earth",
+                City = "Sea",
+                LastName = "Last Name",
+                Name = "Name",
+                //PhoneNumber = model.Use,zr.PhoneNumber,
+            };
+
+            var result = await this.userManager.CreateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                return View(model);
+            }
+
+            result = await this.userManager.AddLoginAsync(user, info);
+
+            if (!result.Succeeded)
+            {
+                return View(model);
+            }
+
+            await this.signInManager.SignInAsync(user, false);
+
+            return Redirect(model.ReturnUrl);
         }
 
         [HttpGet]

@@ -8,6 +8,9 @@
       <app-science-list-posts></app-science-list-posts>
     </div>
     <div class="col-lg-3">
+      <div *ngIf="this.isAuthorized">
+        <h3 style="color: darkgreen; unicode-bidi: bidi-override; direction: rtl">Only aliens can see this kk 👽</h3>
+      </div>
     </div>
   </div>
 </div>

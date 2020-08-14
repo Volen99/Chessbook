@@ -13,6 +13,13 @@
 <div class="container account-login-container">
     <div class="row">
         <div class="col-md-12">
+            <h1>Sign In With</h1>
+            <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                @foreach (var provider in Model.ExternalProviders)
+                {
+                    <button style="background-color:#4267b2; border-bottom: 1px solid #29487d;" name="provider" type="submit" value="@provider.Name"> @provider.Name </button>
+                }
+            </form>
             <section>
                 <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
                     <input type="hidden" asp-for="ReturnUrl" />

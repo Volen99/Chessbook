@@ -3,13 +3,13 @@
     using System;
     using System.Threading.Tasks;
     using AutoMapper;
-    using WorldFeed.Infrastructure;
-    using Infrastructure;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+
     using Models.Identity;
     using Services.Identity;
+    using WorldFeed.Infrastructure;
 
     using static WorldFeed.Infrastructure.InfrastructureConstants;
 

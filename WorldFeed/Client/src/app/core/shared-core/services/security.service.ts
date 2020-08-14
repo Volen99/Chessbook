@@ -15,43 +15,42 @@ import axios from 'axios';
 
 @Injectable()
 export class SecurityService {
-
-  private actionUrl: string;
+  private http: HttpClient;
+  private router: Router;
+  private route: ActivatedRoute;
   private headers: HttpHeaders;
-  private storage: StorageService;
+
+  private storageService: StorageService;
   private userManager: UserManager;
   private authenticationSource = new Subject<boolean>();
   authenticationChallenge$ = this.authenticationSource.asObservable();
+  private configurationService: ConfigurationService;
+  private actionUrl: string;
   private authorityUrl = '';
 
-  private _http: HttpClient;
-  private _router: Router;
-  private route: ActivatedRoute;
-  private _configurationService: ConfigurationService;
-  private _storageService: StorageService;
 
-  constructor(_http: HttpClient, _router: Router, route: ActivatedRoute, _configurationService: ConfigurationService, _storageService: StorageService) {
+  constructor(http: HttpClient, router: Router, route: ActivatedRoute,
+              configurationService: ConfigurationService, storageService: StorageService) {
+    this.storageService = storageService;
+    this.http = http;
+    this.router = router;
+    this.route = route;
+    this.configurationService = configurationService;
+
+    this.configurationService.settingsLoaded$.subscribe(x => {
+      this.authorityUrl = this.configurationService.serverSettings.identityUrl;
+      this.storageService.store('IdentityUrl', this.authorityUrl);
+    });
+
+    if (this.storageService.retrieve('IsAuthorized') !== '') {
+      this.IsAuthorized = this.storageService.retrieve('IsAuthorized');
+      this.authenticationSource.next(true);
+      this.UserData = this.storageService.retrieve('userData');
+    }
+
     this.headers = new HttpHeaders();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
-    this.storage = _storageService;
-
-    this._http = _http;
-    this._router = _router;
-    this.route = route;
-    this._configurationService = _configurationService;
-    this._storageService = _storageService;
-
-    this._configurationService.settingsLoaded$.subscribe(x => {
-      this.authorityUrl = this._configurationService.serverSettings.identityUrl;
-      this.storage.store('IdentityUrl', this.authorityUrl);
-    });
-
-    if (this.storage.retrieve('IsAuthorized') !== '') {
-      this.IsAuthorized = this.storage.retrieve('IsAuthorized');
-      this.authenticationSource.next(true);
-      this.UserData = this.storage.retrieve('userData');
-    }
   }
 
   public IsAuthorized: boolean;
@@ -59,9 +58,9 @@ export class SecurityService {
 
   public ResetAuthorizationData() {
     this.IsAuthorized = false;
-    this.storage.store('IsAuthorized', false);
-    this.storage.store('authorizationDataIdToken', '');
-    this.storage.store('userData', '');
+    this.storageService.store('IsAuthorized', false);
+    this.storageService.store('authorizationDataIdToken', '');
+    this.storageService.store('userData', '');
 
     localStorage.removeItem('oidc.user:https://localhost:5001/:js');
   }
@@ -96,7 +95,7 @@ export class SecurityService {
     axios.interceptors.response.use((response) => {
         return response;
       },
-      function(error) {
+      (error) => {
         console.log('axios error:', error.response);
 
         const axiosConfig = error.response.config;
@@ -115,8 +114,8 @@ export class SecurityService {
             return this.userManager.signinSilent().then(user => {
               console.log('new user:', user);
               // update the http request and client
-              axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
-              axiosConfig.headers['Authorization'] = 'Bearer ' + user.access_token;
+              axios.defaults.headers.common.Authorization = 'Bearer ' + user.access_token;
+              axiosConfig.headers.Authorization = 'Bearer ' + user.access_token;
               // retry the http request
               return axios(axiosConfig);
             });
@@ -147,7 +146,7 @@ export class SecurityService {
 
     if (!result.error) {
 
-      if (result.state !== this.storage.retrieve('authStateControl')) {
+      if (result.state !== this.storageService.retrieve('authStateControl')) {
         console.log('AuthorizedCallback incorrect state');
       } else {
 
@@ -157,11 +156,11 @@ export class SecurityService {
         let dataIdToken: any = this.getDataFromToken(id_token);
 
         // validate nonce
-        if (dataIdToken.nonce !== this.storage.retrieve('authNonce')) {
+        if (dataIdToken.nonce !== this.storageService.retrieve('authNonce')) {
           console.log('AuthorizedCallback incorrect nonce');
         } else {
-          this.storage.store('authNonce', '');
-          this.storage.store('authStateControl', '');
+          this.storageService.store('authNonce', '');
+          this.storageService.store('authStateControl', '');
 
           authResponseIsValid = true;
           console.log('AuthorizedCallback state and nonce validated, returning access token');
@@ -176,7 +175,7 @@ export class SecurityService {
 
   public Logoff() {
     let authorizationUrl = this.authorityUrl + '/connect/endsession';
-    let id_token_hint = this.storage.retrieve('authorizationDataIdToken');
+    let id_token_hint = this.storageService.retrieve('authorizationDataIdToken');
     let post_logout_redirect_uri = location.origin + '/';
 
     let url =
@@ -193,11 +192,11 @@ export class SecurityService {
 
   public HandleError(error: any) {
     console.log(error);
-    if (error.status == 403) {
-      this._router.navigate(['/Forbidden']);
-    } else if (error.status == 401) {
+    if (error.status === 403) {
+      this.router.navigate(['/Forbidden']);
+    } else if (error.status === 401) {
       // this.ResetAuthorizationData();
-      this._router.navigate(['/Unauthorized']);
+      this.router.navigate(['/Unauthorized']);
     }
   }
 
