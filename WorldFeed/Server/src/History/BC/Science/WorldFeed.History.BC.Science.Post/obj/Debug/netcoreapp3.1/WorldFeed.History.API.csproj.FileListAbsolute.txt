@@ -146,3 +146,4 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\History\BC\Scienc
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\History\BC\Science\WorldFeed.History.BC.Science.Post\obj\Debug\netcoreapp3.1\WorldFeed.History.API.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\History\BC\Science\WorldFeed.History.BC.Science.Post\obj\Debug\netcoreapp3.1\WorldFeed.History.API.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\History\BC\Science\WorldFeed.History.BC.Science.Post\obj\Debug\netcoreapp3.1\WorldFeed.History.API.genruntimeconfig.cache
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\History\BC\Science\WorldFeed.History.BC.Science.Post\obj\Debug\netcoreapp3.1\WorldFeed.History.API.MvcApplicationPartsAssemblyInfo.cs

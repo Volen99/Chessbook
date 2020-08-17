@@ -1,0 +1,18 @@
+﻿@model WorldFeed.Identity.API.Models.AccountViewModels.ExternalRegisterViewModel
+
+
+<form asp-controller="Account" asp-action="ExternalRegister" method="post">
+    <input type="hidden" asp-for="ReturnUrl" />
+    <div>
+        <label>Username</label>
+        <input asp-for="UserName" />
+        <span asp-validation-for="UserName"></span>
+        
+        <label>Email</label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div>
+        <button type="submit">Sign Up</button>
+    </div>
+</form>

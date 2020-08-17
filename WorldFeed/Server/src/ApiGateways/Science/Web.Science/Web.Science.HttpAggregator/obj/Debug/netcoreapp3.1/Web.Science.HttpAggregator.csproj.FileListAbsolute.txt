@@ -8,7 +8,6 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Scien
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\obj\Debug\netcoreapp3.1\staticwebassets\Web.Science.HttpAggregator.StaticWebAssets.xml
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\obj\Debug\netcoreapp3.1\Web.Science.HttpAggregator.csprojAssemblyReference.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\obj\Debug\netcoreapp3.1\Web.Science.HttpAggregator.csproj.CoreCompileInputs.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\obj\Debug\netcoreapp3.1\Web.Science.HttpAggregator.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\obj\Debug\netcoreapp3.1\Web.Science.HttpAggregator.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\appsettings.localhost.json
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\Web.Science.HttpAggregator.exe

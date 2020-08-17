@@ -15,4 +15,3 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Securit
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Security\obj\Debug\netcoreapp3.1\WorldFeed.Security.csproj.CoreCompileInputs.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Security\obj\Debug\netcoreapp3.1\WorldFeed.Security.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Security\obj\Debug\netcoreapp3.1\WorldFeed.Security.pdb
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Security\obj\Debug\netcoreapp3.1\WorldFeed.Security.csprojAssemblyReference.cache
