@@ -6,14 +6,14 @@
     using WorldFeed.Common.Extensions;
     using WorldFeed.Common.Iterators;
     using WorldFeed.Common.Public;
+    using WorldFeed.Common.Web;
+    using WorldFeed.Controllers.Upload;
+    using WorldFeed.Core.Controllers;
     using WorldFeed.Common.Public.Models.Interfaces;
     using WorldFeed.Common.Public.Models.Interfaces.DTO;
     using WorldFeed.Common.Public.Models.Interfaces.DTO.QueryDTO;
     using WorldFeed.Common.Public.Parameters.TweetsClient;
     using WorldFeed.Common.Public.Parameters.TweetsClients;
-    using WorldFeed.Common.Web;
-    using WorldFeed.Controllers.Upload;
-    using WorldFeed.Core.Controllers;
 
     public class TweetController : ITweetController
     {
@@ -21,9 +21,7 @@
         private readonly IUploadQueryExecutor uploadQueryExecutor;
         private readonly IPageCursorIteratorFactories pageCursorIteratorFactories;
 
-        public TweetController(
-            ITweetQueryExecutor tweetQueryExecutor,
-            IUploadQueryExecutor uploadQueryExecutor,
+        public TweetController(ITweetQueryExecutor tweetQueryExecutor, IUploadQueryExecutor uploadQueryExecutor, 
             IPageCursorIteratorFactories pageCursorIteratorFactories)
         {
             this.tweetQueryExecutor = tweetQueryExecutor;

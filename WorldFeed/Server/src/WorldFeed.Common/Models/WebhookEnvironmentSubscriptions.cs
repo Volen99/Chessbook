@@ -2,9 +2,9 @@ namespace WorldFeed.Common.Models
 {
     using System.Linq;
 
-    using WorldFeed.Common.Public;
-    using WorldFeed.Common.Public.Models.Interfaces;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO.Webhooks;
+    using global::WorldFeed.Common.Public;
+    using global::WorldFeed.Common.Public.Models.Interfaces;
+    using global::WorldFeed.Common.Public.Models.Interfaces.DTO.Webhooks;
 
     public class WebhookEnvironmentSubscriptions : IWebhookEnvironmentSubscriptions
     {

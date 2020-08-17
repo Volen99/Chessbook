@@ -2,8 +2,8 @@
 {
     using Newtonsoft.Json;
 
-    using WorldFeed.Common.Public.Models.Interfaces;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO;
+    using global::WorldFeed.Common.Public.Models.Interfaces;
+    using global::WorldFeed.Common.Public.Models.Interfaces.DTO;
 
     public class Media : IMedia
     {
@@ -23,10 +23,8 @@
         {
             get
             {
-                // Once the media has been uploaded there is no possible way for
-                // developers to change the value of the media Id.
+                // Once the media has been uploaded there is no possible way for developers to change the value of the media Id.
                 // The _mediaId parameter is therefore ignored
-
                 if (HasBeenUploaded)
                 {
                     return UploadedMediaInfo.MediaId;

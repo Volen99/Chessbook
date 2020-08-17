@@ -6,14 +6,14 @@
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
-    using WorldFeed.Common.Public;
-    using WorldFeed.Common.Public.Iterators;
-    using WorldFeed.Common.Public.Models.Entities;
-    using WorldFeed.Common.Public.Models.Enums;
-    using WorldFeed.Common.Public.Models.Interfaces;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO;
-    using WorldFeed.Common.Public.Parameters.ListsClient;
-    using WorldFeed.Common.Public.Parameters.UsersClient;
+    using global::WorldFeed.Common.Public;
+    using global::WorldFeed.Common.Public.Iterators;
+    using global::WorldFeed.Common.Public.Models.Entities;
+    using global::WorldFeed.Common.Public.Models.Enums;
+    using global::WorldFeed.Common.Public.Models.Interfaces;
+    using global::WorldFeed.Common.Public.Models.Interfaces.DTO;
+    using global::WorldFeed.Common.Public.Parameters.ListsClient;
+    using global::WorldFeed.Common.Public.Parameters.UsersClient;
 
     /// <summary>
     /// Tweetinvi User.

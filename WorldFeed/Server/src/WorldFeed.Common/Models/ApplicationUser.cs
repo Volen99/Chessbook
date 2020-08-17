@@ -6,8 +6,8 @@ namespace WorldFeed.Common.Models
     using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Identity;
 
-    using WorldFeed.Common.Models.Entities;
-    using WorldFeed.Common.Models.Enums;
+    using global::WorldFeed.Common.Models.Entities;
+    using global::WorldFeed.Common.Models.Enums;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {

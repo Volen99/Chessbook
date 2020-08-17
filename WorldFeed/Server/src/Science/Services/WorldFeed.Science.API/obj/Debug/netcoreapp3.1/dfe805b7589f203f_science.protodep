@@ -1,2 +1,0 @@
-obj\Debug\netcoreapp3.1\Proto/Science.cs \
-obj\Debug\netcoreapp3.1\Proto/ScienceGrpc.cs: Proto/science.proto

@@ -33,13 +33,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\BuildingBlocks\Devspaces.Support\Devspaces.Support.csproj" />
+    <ProjectReference Include="..\..\..\..\Science\Services\Upload\WorldFeed.Science.Upload\WorldFeed.Science.Upload.csproj" />
     <ProjectReference Include="..\..\..\..\WorldFeed.Common\WorldFeed.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\..\..\..\Science\Services\WorldFeed.Science.API\Proto\science.proto" GrpcServices="Client">
+    <!--<Protobuf Include="..\..\..\..\Science\Services\WorldFeed.Science.API\Proto\science.proto" GrpcServices="Client">
       <Link>Protos\science.proto</Link>
-    </Protobuf>
+    </Protobuf>-->
   </ItemGroup>
 
 

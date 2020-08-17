@@ -2,8 +2,8 @@
 {
     using Newtonsoft.Json;
 
-    using WorldFeed.Common.JsonConverters;
-    using WorldFeed.Common.Public.Models.Interfaces;
+    using global::WorldFeed.Common.JsonConverters;
+    using global::WorldFeed.Common.Public.Models.Interfaces;
 
     public class TimeZone : ITimeZone
     {

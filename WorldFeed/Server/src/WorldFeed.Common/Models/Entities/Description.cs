@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using WorldFeed.Common.Models.Urls;
+    using global::WorldFeed.Common.Models.Urls;
 
     public class Description
     {

@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
 
-    using WorldFeed.Common.Attributes;
-    using WorldFeed.Common.DTO;
-    using WorldFeed.Common.Public.Models.RateLimits;
+    using global::WorldFeed.Common.Attributes;
+    using global::WorldFeed.Common.DTO;
+    using global::WorldFeed.Common.Public.Models.RateLimits;
 
     public class CredentialsRateLimits : ICredentialsRateLimits
     {

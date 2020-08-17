@@ -71,6 +71,19 @@
           "lib/netstandard2.0/HealthChecks.Uris.dll": {}
         }
       },
+      "Aspose.Imaging/20.7.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Drawing.Common": "4.7.0",
+          "System.Text.Encoding.CodePages": "4.7.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Aspose.Imaging.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Aspose.Imaging.dll": {}
+        }
+      },
       "Autofac/5.2.0": {
         "type": "package",
         "compile": {
@@ -438,6 +451,15 @@
         },
         "runtime": {
           "lib/netstandard2.0/IdentityServer4.Storage.dll": {}
+        }
+      },
+      "ImageProcessor/2.9.1": {
+        "type": "package",
+        "compile": {
+          "lib/net452/ImageProcessor.dll": {}
+        },
+        "runtime": {
+          "lib/net452/ImageProcessor.dll": {}
         }
       },
       "MassTransit/7.0.3": {
@@ -1224,7 +1246,7 @@
           "lib/netstandard2.0/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "Microsoft.NETCore.Platforms/2.0.0": {
+      "Microsoft.NETCore.Platforms/3.1.0": {
         "type": "package",
         "compile": {
           "lib/netstandard1.0/_._": {}
@@ -1276,6 +1298,24 @@
             "rid": "unix"
           },
           "runtimes/win/lib/netstandard2.0/Microsoft.Win32.Registry.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "Microsoft.Win32.SystemEvents/4.7.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "3.1.0"
+        },
+        "compile": {
+          "ref/netstandard2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Win32.SystemEvents.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.dll": {
             "assetType": "runtime",
             "rid": "win"
           }
@@ -1838,6 +1878,29 @@
         },
         "compile": {
           "ref/netstandard1.5/_._": {}
+        }
+      },
+      "System.Drawing.Common/4.7.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "3.1.0",
+          "Microsoft.Win32.SystemEvents": "4.7.0"
+        },
+        "compile": {
+          "ref/netcoreapp3.0/System.Drawing.Common.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Drawing.Common.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll": {
+            "assetType": "runtime",
+            "rid": "unix"
+          },
+          "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
         }
       },
       "System.Dynamic.Runtime/4.0.11": {
@@ -2500,14 +2563,13 @@
           "ref/netstandard1.3/System.Text.Encoding.dll": {}
         }
       },
-      "System.Text.Encoding.CodePages/4.5.0": {
+      "System.Text.Encoding.CodePages/4.7.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.NETCore.Platforms": "2.0.0",
-          "System.Runtime.CompilerServices.Unsafe": "4.5.0"
+          "Microsoft.NETCore.Platforms": "3.1.0"
         },
         "compile": {
-          "ref/netstandard2.0/_._": {}
+          "lib/netstandard2.0/System.Text.Encoding.CodePages.dll": {}
         },
         "runtime": {
           "lib/netstandard2.0/System.Text.Encoding.CodePages.dll": {}
@@ -2745,6 +2807,26 @@
           "bin/placeholder/Devspaces.Support.dll": {}
         }
       },
+      "WorldFeed/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1",
+          "WorldFeed.Common": "1.0.0",
+          "WorldFeed.Controllers": "1.0.0",
+          "WorldFeed.Credentials": "1.0.0",
+          "WorldFeed.Streams": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WorldFeed.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "WorldFeed.Common/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
@@ -2778,6 +2860,125 @@
           "Microsoft.AspNetCore.App"
         ]
       },
+      "WorldFeed.Controllers/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1",
+          "WorldFeed.Common": "1.0.0",
+          "WorldFeed.Credentials": "1.0.0",
+          "WorldFeed.Logic": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WorldFeed.Controllers.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.Controllers.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "WorldFeed.Credentials/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1",
+          "WorldFeed.Common": "1.0.0",
+          "WorldFeed.Logic": "1.0.0",
+          "WorldFeed.WebLogic": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WorldFeed.Credentials.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.Credentials.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "WorldFeed.Logic/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1",
+          "WorldFeed.Common": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WorldFeed.Logic.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.Logic.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "WorldFeed.Science.Upload/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Aspose.Imaging": "20.7.0",
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.0.1",
+          "Google.Protobuf": "3.12.4",
+          "Grpc.AspNetCore.Server": "2.30.0",
+          "ImageProcessor": "2.9.1",
+          "MassTransit.AspNetCore": "7.0.3",
+          "MassTransit.RabbitMQ": "7.0.3",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.6",
+          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.6",
+          "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.10.9",
+          "Swashbuckle.AspNetCore": "5.5.1",
+          "System.Drawing.Common": "4.7.0",
+          "WorldFeed": "1.0.0",
+          "WorldFeed.Common": "1.0.0",
+          "WorldFeed.Controllers": "1.0.0",
+          "WorldFeed.Web.Common": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WorldFeed.Science.Upload.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.Science.Upload.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "WorldFeed.Security/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1"
+        },
+        "compile": {
+          "bin/placeholder/WorldFeed.Security.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.Security.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "WorldFeed.Streams/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1",
+          "WorldFeed.Common": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WorldFeed.Streams.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.Streams.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "WorldFeed.Web.Common/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
@@ -2789,6 +2990,24 @@
         },
         "runtime": {
           "bin/placeholder/WorldFeed.Web.Common.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "WorldFeed.WebLogic/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1",
+          "WorldFeed.Common": "1.0.0",
+          "WorldFeed.Security": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WorldFeed.WebLogic.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.WebLogic.dll": {}
         },
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
@@ -2855,6 +3074,34 @@
         "aspnetcore.healthchecks.uris.3.1.2.nupkg.sha512",
         "aspnetcore.healthchecks.uris.nuspec",
         "lib/netstandard2.0/HealthChecks.Uris.dll"
+      ]
+    },
+    "Aspose.Imaging/20.7.0": {
+      "sha512": "3JZckyCt3FhIutdhVBfq4XokSo888/GRB+aC0sNsM9QSGE6n1KTjBAxMWD350aS0tmgkUXDAnWHqFWgm8edWVQ==",
+      "type": "package",
+      "path": "aspose.imaging/20.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Help/Aspose.Imaging.chm",
+        "LICENSE.txt",
+        "License/Aspose_End-User-License-Agreement_2017-01-09.pdf",
+        "License/ThirdPartyLicenses.Aspose.Imaging.Net.pdf",
+        "aspose.imaging.20.7.0.nupkg.sha512",
+        "aspose.imaging.nuspec",
+        "lib/net20/Aspose.Imaging.dll",
+        "lib/net20/Aspose.Imaging.xml",
+        "lib/net35-client/Aspose.Imaging.dll",
+        "lib/net35-client/Aspose.Imaging.xml",
+        "lib/net35/Aspose.Imaging.dll",
+        "lib/net35/Aspose.Imaging.xml",
+        "lib/net40-client/Aspose.Imaging.dll",
+        "lib/net40-client/Aspose.Imaging.xml",
+        "lib/net40/Aspose.Imaging.dll",
+        "lib/net40/Aspose.Imaging.xml",
+        "lib/netstandard2.0/Aspose.Imaging.dll",
+        "lib/netstandard2.0/Aspose.Imaging.xml",
+        "readme.txt"
       ]
     },
     "Autofac/5.2.0": {
@@ -3341,6 +3588,19 @@
         "lib/netstandard2.0/IdentityServer4.Storage.dll",
         "lib/netstandard2.0/IdentityServer4.Storage.pdb",
         "lib/netstandard2.0/IdentityServer4.Storage.xml"
+      ]
+    },
+    "ImageProcessor/2.9.1": {
+      "sha512": "QzYXsKGBdgAcxneFucxPcsMnCFr3VwZKZ09cPwVH6TzcgA2JWskfDPr3u6IyDsHRgX+Ju1rgQr+I2I5/wRbcog==",
+      "type": "package",
+      "path": "imageprocessor/2.9.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "imageprocessor.2.9.1.nupkg.sha512",
+        "imageprocessor.nuspec",
+        "lib/net452/ImageProcessor.dll",
+        "lib/net452/ImageProcessor.xml"
       ]
     },
     "MassTransit/7.0.3": {
@@ -4447,17 +4707,17 @@
         "microsoft.net.http.headers.nuspec"
       ]
     },
-    "Microsoft.NETCore.Platforms/2.0.0": {
-      "sha512": "5BdAWDgMNwf90L0J+C/eh6kfHDa37ViL1cBL1nv5zPA4TB2cGV51YiQyvzCEy9DBE0LwwMI4+PkUpIekKyocSA==",
+    "Microsoft.NETCore.Platforms/3.1.0": {
+      "sha512": "z7aeg8oHln2CuNulfhiLYxCVMPEwBl3rzicjvIX+4sUuCwvXw5oXQEtbiU2c0z4qYL5L3Kmx0mMA/+t/SbY67w==",
       "type": "package",
-      "path": "microsoft.netcore.platforms/2.0.0",
+      "path": "microsoft.netcore.platforms/3.1.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/netstandard1.0/_._",
-        "microsoft.netcore.platforms.2.0.0.nupkg.sha512",
+        "microsoft.netcore.platforms.3.1.0.nupkg.sha512",
         "microsoft.netcore.platforms.nuspec",
         "runtime.json",
         "useSharedDesignerContext.txt",
@@ -4595,6 +4855,35 @@
         "runtimes/win/lib/net461/Microsoft.Win32.Registry.dll",
         "runtimes/win/lib/netstandard1.3/Microsoft.Win32.Registry.dll",
         "runtimes/win/lib/netstandard2.0/Microsoft.Win32.Registry.dll",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "Microsoft.Win32.SystemEvents/4.7.0": {
+      "sha512": "mtVirZr++rq+XCDITMUdnETD59XoeMxSpLRIII7JRI6Yj0LEDiO1pPn0ktlnIj12Ix8bfvQqQDMMIF9wC98oCA==",
+      "type": "package",
+      "path": "microsoft.win32.systemevents/4.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/Microsoft.Win32.SystemEvents.dll",
+        "lib/net461/Microsoft.Win32.SystemEvents.xml",
+        "lib/netstandard2.0/Microsoft.Win32.SystemEvents.dll",
+        "lib/netstandard2.0/Microsoft.Win32.SystemEvents.xml",
+        "microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+        "microsoft.win32.systemevents.nuspec",
+        "ref/net461/Microsoft.Win32.SystemEvents.dll",
+        "ref/net461/Microsoft.Win32.SystemEvents.xml",
+        "ref/net472/Microsoft.Win32.SystemEvents.dll",
+        "ref/net472/Microsoft.Win32.SystemEvents.xml",
+        "ref/netstandard2.0/Microsoft.Win32.SystemEvents.dll",
+        "ref/netstandard2.0/Microsoft.Win32.SystemEvents.xml",
+        "runtimes/win/lib/netcoreapp2.0/Microsoft.Win32.SystemEvents.dll",
+        "runtimes/win/lib/netcoreapp2.0/Microsoft.Win32.SystemEvents.xml",
+        "runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.dll",
+        "runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.xml",
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
@@ -5936,6 +6225,45 @@
         "ref/xamarinwatchos10/_._",
         "system.diagnostics.tracing.4.3.0.nupkg.sha512",
         "system.diagnostics.tracing.nuspec"
+      ]
+    },
+    "System.Drawing.Common/4.7.0": {
+      "sha512": "v+XbyYHaZjDfn0ENmJEV1VYLgGgCTx1gnfOBcppowbpOAriglYgGCvFCPr2EEZyBvXlpxbEsTwkOlInl107ahA==",
+      "type": "package",
+      "path": "system.drawing.common/4.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net461/System.Drawing.Common.dll",
+        "lib/netstandard2.0/System.Drawing.Common.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net461/System.Drawing.Common.dll",
+        "ref/netcoreapp3.0/System.Drawing.Common.dll",
+        "ref/netcoreapp3.0/System.Drawing.Common.xml",
+        "ref/netstandard2.0/System.Drawing.Common.dll",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "runtimes/unix/lib/netcoreapp2.0/System.Drawing.Common.dll",
+        "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll",
+        "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.xml",
+        "runtimes/win/lib/netcoreapp2.0/System.Drawing.Common.dll",
+        "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll",
+        "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.xml",
+        "system.drawing.common.4.7.0.nupkg.sha512",
+        "system.drawing.common.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
       ]
     },
     "System.Dynamic.Runtime/4.0.11": {
@@ -8063,10 +8391,10 @@
         "system.text.encoding.nuspec"
       ]
     },
-    "System.Text.Encoding.CodePages/4.5.0": {
-      "sha512": "16EVkWmNnoH3/Yj9c5s5VuLK5Uv/Dnkc3P2kMmnD7wJcUuvcHVvM2IhVJanf2hHRZUitH+cIkPCPHrBoCXc7Rw==",
+    "System.Text.Encoding.CodePages/4.7.0": {
+      "sha512": "aeu4FlaUTemuT1qOd1MyU4T516QR4Fy+9yDbwWMPHOHy7U8FD6SgTzdZFO7gHcfAPHtECqInbwklVvUK4RHcNg==",
       "type": "package",
-      "path": "system.text.encoding.codepages/4.5.0",
+      "path": "system.text.encoding.codepages/4.7.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -8076,36 +8404,28 @@
         "lib/MonoTouch10/_._",
         "lib/net46/System.Text.Encoding.CodePages.dll",
         "lib/net461/System.Text.Encoding.CodePages.dll",
+        "lib/net461/System.Text.Encoding.CodePages.xml",
         "lib/netstandard1.3/System.Text.Encoding.CodePages.dll",
         "lib/netstandard2.0/System.Text.Encoding.CodePages.dll",
+        "lib/netstandard2.0/System.Text.Encoding.CodePages.xml",
         "lib/xamarinios10/_._",
         "lib/xamarinmac20/_._",
         "lib/xamarintvos10/_._",
         "lib/xamarinwatchos10/_._",
         "ref/MonoAndroid10/_._",
         "ref/MonoTouch10/_._",
-        "ref/netstandard1.3/System.Text.Encoding.CodePages.dll",
-        "ref/netstandard1.3/System.Text.Encoding.CodePages.xml",
-        "ref/netstandard1.3/de/System.Text.Encoding.CodePages.xml",
-        "ref/netstandard1.3/es/System.Text.Encoding.CodePages.xml",
-        "ref/netstandard1.3/fr/System.Text.Encoding.CodePages.xml",
-        "ref/netstandard1.3/it/System.Text.Encoding.CodePages.xml",
-        "ref/netstandard1.3/ja/System.Text.Encoding.CodePages.xml",
-        "ref/netstandard1.3/ko/System.Text.Encoding.CodePages.xml",
-        "ref/netstandard1.3/ru/System.Text.Encoding.CodePages.xml",
-        "ref/netstandard1.3/zh-hans/System.Text.Encoding.CodePages.xml",
-        "ref/netstandard1.3/zh-hant/System.Text.Encoding.CodePages.xml",
-        "ref/netstandard2.0/System.Text.Encoding.CodePages.dll",
-        "ref/netstandard2.0/System.Text.Encoding.CodePages.xml",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._",
         "runtimes/win/lib/net461/System.Text.Encoding.CodePages.dll",
+        "runtimes/win/lib/net461/System.Text.Encoding.CodePages.xml",
         "runtimes/win/lib/netcoreapp2.0/System.Text.Encoding.CodePages.dll",
+        "runtimes/win/lib/netcoreapp2.0/System.Text.Encoding.CodePages.xml",
         "runtimes/win/lib/netstandard1.3/System.Text.Encoding.CodePages.dll",
         "runtimes/win/lib/netstandard2.0/System.Text.Encoding.CodePages.dll",
-        "system.text.encoding.codepages.4.5.0.nupkg.sha512",
+        "runtimes/win/lib/netstandard2.0/System.Text.Encoding.CodePages.xml",
+        "system.text.encoding.codepages.4.7.0.nupkg.sha512",
         "system.text.encoding.codepages.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -8848,15 +9168,55 @@
       "path": "../../../../BuildingBlocks/Devspaces.Support/Devspaces.Support.csproj",
       "msbuildProject": "../../../../BuildingBlocks/Devspaces.Support/Devspaces.Support.csproj"
     },
+    "WorldFeed/1.0.0": {
+      "type": "project",
+      "path": "../../../../WorldFeed/WorldFeed.csproj",
+      "msbuildProject": "../../../../WorldFeed/WorldFeed.csproj"
+    },
     "WorldFeed.Common/1.0.0": {
       "type": "project",
       "path": "../../../../WorldFeed.Common/WorldFeed.Common.csproj",
       "msbuildProject": "../../../../WorldFeed.Common/WorldFeed.Common.csproj"
     },
+    "WorldFeed.Controllers/1.0.0": {
+      "type": "project",
+      "path": "../../../../WorldFeed.Controllers/WorldFeed.Controllers.csproj",
+      "msbuildProject": "../../../../WorldFeed.Controllers/WorldFeed.Controllers.csproj"
+    },
+    "WorldFeed.Credentials/1.0.0": {
+      "type": "project",
+      "path": "../../../../WorldFeed.Credentials/WorldFeed.Credentials.csproj",
+      "msbuildProject": "../../../../WorldFeed.Credentials/WorldFeed.Credentials.csproj"
+    },
+    "WorldFeed.Logic/1.0.0": {
+      "type": "project",
+      "path": "../../../../WorldFeed.Logic/WorldFeed.Logic.csproj",
+      "msbuildProject": "../../../../WorldFeed.Logic/WorldFeed.Logic.csproj"
+    },
+    "WorldFeed.Science.Upload/1.0.0": {
+      "type": "project",
+      "path": "../../../../Science/Services/Upload/WorldFeed.Science.Upload/WorldFeed.Science.Upload.csproj",
+      "msbuildProject": "../../../../Science/Services/Upload/WorldFeed.Science.Upload/WorldFeed.Science.Upload.csproj"
+    },
+    "WorldFeed.Security/1.0.0": {
+      "type": "project",
+      "path": "../../../../WorldFeed.Security/WorldFeed.Security.csproj",
+      "msbuildProject": "../../../../WorldFeed.Security/WorldFeed.Security.csproj"
+    },
+    "WorldFeed.Streams/1.0.0": {
+      "type": "project",
+      "path": "../../../../WorldFeed.Streams/WorldFeed.Streams.csproj",
+      "msbuildProject": "../../../../WorldFeed.Streams/WorldFeed.Streams.csproj"
+    },
     "WorldFeed.Web.Common/1.0.0": {
       "type": "project",
       "path": "../../../../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj",
       "msbuildProject": "../../../../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj"
+    },
+    "WorldFeed.WebLogic/1.0.0": {
+      "type": "project",
+      "path": "../../../../WorldFeed.WebLogic/WorldFeed.WebLogic.csproj",
+      "msbuildProject": "../../../../WorldFeed.WebLogic/WorldFeed.WebLogic.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -8878,7 +9238,8 @@
       "Serilog.AspNetCore >= 3.4.0",
       "Serilog.Sinks.Console >= 4.0.0-dev-00834",
       "Swashbuckle.AspNetCore >= 5.5.1",
-      "WorldFeed.Common >= 1.0.0"
+      "WorldFeed.Common >= 1.0.0",
+      "WorldFeed.Science.Upload >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -8913,6 +9274,9 @@
           "projectReferences": {
             "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\BuildingBlocks\\Devspaces.Support\\Devspaces.Support.csproj": {
               "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\BuildingBlocks\\Devspaces.Support\\Devspaces.Support.csproj"
+            },
+            "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\Science\\Services\\Upload\\WorldFeed.Science.Upload\\WorldFeed.Science.Upload.csproj": {
+              "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\Science\\Services\\Upload\\WorldFeed.Science.Upload\\WorldFeed.Science.Upload.csproj"
             },
             "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WorldFeed.Common\\WorldFeed.Common.csproj": {
               "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WorldFeed.Common\\WorldFeed.Common.csproj"
@@ -9022,5 +9386,17 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'ImageProcessor 2.9.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "ImageProcessor",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
 }

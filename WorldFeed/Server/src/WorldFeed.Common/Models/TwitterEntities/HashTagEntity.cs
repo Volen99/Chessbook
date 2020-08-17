@@ -2,8 +2,8 @@
 {
     using Newtonsoft.Json;
 
-    using WorldFeed.Common.Extensions;
-    using WorldFeed.Common.Public.Models.Entities;
+    using global::WorldFeed.Common.Extensions;
+    using global::WorldFeed.Common.Public.Models.Entities;
 
     /// <summary>
     /// A hashtag is a keyword prefixed by # and representing a category of tweet

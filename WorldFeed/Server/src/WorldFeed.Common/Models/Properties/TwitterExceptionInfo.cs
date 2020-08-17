@@ -2,7 +2,7 @@
 {
     using Newtonsoft.Json;
 
-    using WorldFeed.Common.Exceptions;
+    using global::WorldFeed.Common.Exceptions;
 
     public class TwitterExceptionInfo : ITwitterExceptionInfo
     {

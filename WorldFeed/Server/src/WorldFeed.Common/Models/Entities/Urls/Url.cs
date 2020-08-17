@@ -1,6 +1,6 @@
 ﻿namespace WorldFeed.Common.Models.Urls
 {
-    using WorldFeed.Common.Models.Entities;
+    using global::WorldFeed.Common.Models.Entities;
 
     public class Url
     {

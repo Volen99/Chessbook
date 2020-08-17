@@ -3,7 +3,7 @@
     using System;
     using Newtonsoft.Json;
 
-    using WorldFeed.Common.Public.Models.RateLimits;
+    using global::WorldFeed.Common.Public.Models.RateLimits;
 
 
     public class EndpointRateLimit : IEndpointRateLimit

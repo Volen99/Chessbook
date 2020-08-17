@@ -1,7 +1,7 @@
 ﻿namespace WorldFeed.Common.Models
 {
-    using WorldFeed.Common.Helpers;
-    using WorldFeed.Common.Models.Authentication;
+    using global::WorldFeed.Common.Helpers;
+    using global::WorldFeed.Common.Models.Authentication;
 
     /// <summary>
     /// Readonly version of consumer credentials

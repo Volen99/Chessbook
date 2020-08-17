@@ -1,6 +1,6 @@
 ﻿namespace WorldFeed.Common.Models.Entities
 {
-    using WorldFeed.Common.Models.Urls;
+    using global::WorldFeed.Common.Models.Urls;
 
     public class Entity
     {   

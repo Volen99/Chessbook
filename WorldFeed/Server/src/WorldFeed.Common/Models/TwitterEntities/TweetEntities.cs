@@ -3,17 +3,17 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using WorldFeed.Common.Public.Models.Entities;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO;
-    using WorldFeed.Common.Settings;
+    using global::WorldFeed.Common.Public.Models.Entities;
+    using global::WorldFeed.Common.Public.Models.Interfaces.DTO;
+    using global::WorldFeed.Common.Settings;
 
     internal class TweetEntities : ITweetEntities
     {
-        private readonly ITweetDTO _tweetDTO;
+        private readonly ITweetDTO tweetDTO;
 
         public TweetEntities(ITweetDTO tweetDTO, TweetMode tweetMode)
         {
-            _tweetDTO = tweetDTO;
+            this.tweetDTO = tweetDTO;
 
             InitializeEntities(tweetMode);
         }
@@ -26,12 +26,12 @@
             //   we decided that in COMPAT mode, the Entities will be restricted to what is available in the REST API.
             // * REST API : Adds FullText and additional properties if the TweetMode is extended.
 
-            var isTweetComingFromStreamingAPI = _tweetDTO?.ExtendedTweet != null;
+            var isTweetComingFromStreamingAPI = this.tweetDTO?.ExtendedTweet != null;
             var useStreamingApiExtendedTweetForEntities = tweetMode == TweetMode.Extended && isTweetComingFromStreamingAPI;
 
             // Get the entities and extended_entities for whichever Tweet DTO we're using
-            var entities = useStreamingApiExtendedTweetForEntities ? _tweetDTO.ExtendedTweet.LegacyEntities : _tweetDTO?.LegacyEntities;
-            var extendedEntities = useStreamingApiExtendedTweetForEntities ? _tweetDTO.ExtendedTweet.ExtendedEntities : _tweetDTO?.Entities;
+            var entities = useStreamingApiExtendedTweetForEntities ? this.tweetDTO.ExtendedTweet.LegacyEntities : this.tweetDTO?.LegacyEntities;
+            var extendedEntities = useStreamingApiExtendedTweetForEntities ? this.tweetDTO.ExtendedTweet.ExtendedEntities : this.tweetDTO?.Entities;
 
             // Populate for each type of entity.
 
@@ -46,7 +46,7 @@
 
             // If this is a retweet, it's also now possible for an entity to get cut off of the end of the tweet entirely.
             // If the same Tweet is fetched over the REST API, these entities get excluded, so lets do the same.
-            if (_tweetDTO?.RetweetedTweetDTO != null)
+            if (this.tweetDTO?.RetweetedTweetDTO != null)
             {
                 Urls = Urls?.Where(e => e.Indices[0] != e.Indices[1]).ToList();
                 UserMentions = UserMentions?.Where(e => e.Indices[0] != e.Indices[1]).ToList();

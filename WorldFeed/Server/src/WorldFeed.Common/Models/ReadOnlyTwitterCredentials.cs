@@ -1,6 +1,6 @@
 ﻿namespace WorldFeed.Common.Models
 {
-    using WorldFeed.Common.Models.Authentication;
+    using global::WorldFeed.Common.Models.Authentication;
 
     /// <summary>
     /// Readonly version of twitter credentials

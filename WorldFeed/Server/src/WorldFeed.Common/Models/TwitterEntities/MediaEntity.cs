@@ -3,10 +3,10 @@
     using System.Collections.Generic;
     using Newtonsoft.Json;
 
-    using WorldFeed.Common.Extensions;
-    using WorldFeed.Common.JsonConverters;
-    using WorldFeed.Common.Public.Models.Entities;
-    using WorldFeed.Common.Public.Models.Entities.ExtendedEntities;
+    using global::WorldFeed.Common.Extensions;
+    using global::WorldFeed.Common.JsonConverters;
+    using global::WorldFeed.Common.Public.Models.Entities;
+    using global::WorldFeed.Common.Public.Models.Entities.ExtendedEntities;
 
     /// <summary>
     /// Object storing information related with a Media on Twitter

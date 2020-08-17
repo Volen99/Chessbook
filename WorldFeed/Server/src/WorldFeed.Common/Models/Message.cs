@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using WorldFeed.Common.Public;
-    using WorldFeed.Common.Public.Models.Entities;
-    using WorldFeed.Common.Public.Models.Interfaces;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO.Events;
+    using global::WorldFeed.Common.Public;
+    using global::WorldFeed.Common.Public.Models.Entities;
+    using global::WorldFeed.Common.Public.Models.Interfaces;
+    using global::WorldFeed.Common.Public.Models.Interfaces.DTO.Events;
 
     /// <summary>
     /// Message that can be sent privately between Twitter users

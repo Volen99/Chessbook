@@ -1,8 +1,8 @@
 ﻿namespace WorldFeed.Common.Models
 {
-    using WorldFeed.Common.Public.Models.Enums;
-    using WorldFeed.Common.Public.Models.Interfaces;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO;
+    using global::WorldFeed.Common.Public.Models.Enums;
+    using global::WorldFeed.Common.Public.Models.Interfaces;
+    using global::WorldFeed.Common.Public.Models.Interfaces.DTO;
 
     public class AccountSettings : IAccountSettings
     {

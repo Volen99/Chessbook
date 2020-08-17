@@ -1,9 +1,9 @@
 ﻿namespace WorldFeed.Common.Models
 {
-    using WorldFeed.Common.Public;
-    using WorldFeed.Common.Public.Models.Interfaces;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO;
-    using WorldFeed.Common.Settings;
+    using global::WorldFeed.Common.Public;
+    using global::WorldFeed.Common.Public.Models.Interfaces;
+    using global::WorldFeed.Common.Public.Models.Interfaces.DTO;
+    using global::WorldFeed.Common.Settings;
 
     public class Mention : Tweet, IMention
     {

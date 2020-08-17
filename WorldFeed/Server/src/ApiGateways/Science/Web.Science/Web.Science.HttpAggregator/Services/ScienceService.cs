@@ -25,25 +25,30 @@
 
         public async Task<Media> GetMediaItemAsync(int id)
         {
-            return await GrpcCallerService.CallService(this.urls.GrpcScience, async channel =>
-            {
-                var client = new ScienceClient(channel);
-                var request = new MediaRequest { Id = id };
-                var response = await client.GetMediaByIdAsync(request);
+            //return await GrpcCallerService.CallService(this.urls.GrpcScience, async channel =>
+            //{
+            //    //var client = new ScienceClient(channel);
+            //    //var request = new MediaRequest { Id = id };
+            //    //var response = await client.GetMediaByIdAsync(request);
 
-                return MapToMediaResponse(response);
-            });
+            //    //return MapToMediaResponse(response);
+
+            //});
+
+            return default;
         }
 
         public async Task<IEnumerable<Media>> GetMediasAsync(IEnumerable<int> ids)
         {
-            return await GrpcCallerService.CallService(this.urls.GrpcScience, async channel =>
-            {
-                var client = new ScienceClient(channel);
-                var request = new MediasRequest { Ids = string.Join(",", ids), PageIndex = 1, PageSize = 10 };
-                var response = await client.GetMediasByIdsAsync(request);
-                return response.Data.Select(this.MapToMediaResponse);
-            });
+            //return await GrpcCallerService.CallService(this.urls.GrpcScience, async channel =>
+            //{
+            //    //var client = new ScienceClient(channel);
+            //    //var request = new MediasRequest { Ids = string.Join(",", ids), PageIndex = 1, PageSize = 10 };
+            //    //var response = await client.GetMediasByIdsAsync(request);
+            //    //return response.Data.Select(this.MapToMediaResponse);
+            //});
+
+            return default;
         }
 
         private Media MapToMediaResponse(MediaResponse mediaResponse)

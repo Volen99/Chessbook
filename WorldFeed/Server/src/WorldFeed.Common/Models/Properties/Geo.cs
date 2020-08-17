@@ -4,9 +4,9 @@
     using System.Linq;
     using Newtonsoft.Json;
 
-    using WorldFeed.Common.Extensions;
-    using WorldFeed.Common.Public.Models;
-    using WorldFeed.Common.Public.Models.Interfaces;
+    using global::WorldFeed.Common.Extensions;
+    using global::WorldFeed.Common.Public.Models;
+    using global::WorldFeed.Common.Public.Models.Interfaces;
 
     /// <summary>
     /// Geographic information of a location

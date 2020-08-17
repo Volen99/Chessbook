@@ -3,8 +3,8 @@ namespace WorldFeed.Common.Models
     using System;
     using Newtonsoft.Json;
 
-    using WorldFeed.Common.Public.Models.Interfaces;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO.Webhooks;
+    using global::WorldFeed.Common.Public.Models.Interfaces;
+    using global::WorldFeed.Common.Public.Models.Interfaces.DTO.Webhooks;
 
     public class Webhook : IWebhook
     {

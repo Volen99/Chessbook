@@ -2,8 +2,9 @@
 {
     using System.Collections.Generic;
     using Newtonsoft.Json;
-    using WorldFeed.Common.Public.Models.Entities;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO;
+
+    using global::WorldFeed.Common.Public.Models.Entities;
+    using global::WorldFeed.Common.Public.Models.Interfaces.DTO;
 
     public class TwitterConfiguration : ITwitterConfiguration
     {

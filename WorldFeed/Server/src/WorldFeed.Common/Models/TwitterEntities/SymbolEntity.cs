@@ -2,8 +2,8 @@
 {
     using Newtonsoft.Json;
 
-    using WorldFeed.Common.Extensions;
-    using WorldFeed.Common.Public.Models.Entities;
+    using global::WorldFeed.Common.Extensions;
+    using global::WorldFeed.Common.Public.Models.Entities;
 
     public class SymbolEntity : ISymbolEntity
     {

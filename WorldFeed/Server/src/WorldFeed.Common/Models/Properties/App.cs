@@ -2,7 +2,7 @@
 {
     using Newtonsoft.Json;
 
-    using WorldFeed.Common.Public.Models.Interfaces;
+    using global::WorldFeed.Common.Public.Models.Interfaces;
 
     public class App : IApp
     {

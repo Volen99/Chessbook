@@ -68,8 +68,8 @@
             services.AddHealthChecks()                                    // This operation is idempotent
                 .AddCheck("self", () => HealthCheckResult.Healthy())
                 .AddSqlServer(Configuration.GetDefaultConnectionString(),
-                    name: "IdentityDB-check",
-                    tags: new string[] { "IdentityDB" });
+                    name: "WorldFeedIdentityDatabase-check",
+                    tags: new string[] { "WorldFeedIdentityDatabase" });
 
             services.AddTransient<ILoginService<ApplicationUser>, EFLoginService>();
             services.AddTransient<IRedirectService, RedirectService>();

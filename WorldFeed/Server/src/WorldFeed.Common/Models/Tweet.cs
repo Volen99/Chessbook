@@ -5,14 +5,14 @@
     using System.Globalization;
     using System.Threading.Tasks;
 
-    using WorldFeed.Common.Helpers;
-    using WorldFeed.Common.Models.TwitterEntities;
-    using WorldFeed.Common.Public;
-    using WorldFeed.Common.Public.Models.Entities;
-    using WorldFeed.Common.Public.Models.Enums;
-    using WorldFeed.Common.Public.Models.Interfaces;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO;
-    using WorldFeed.Common.Settings;
+    using global::WorldFeed.Common.Helpers;
+    using global::WorldFeed.Common.Models.TwitterEntities;
+    using global::WorldFeed.Common.Public;
+    using global::WorldFeed.Common.Public.Models.Entities;
+    using global::WorldFeed.Common.Public.Models.Enums;
+    using global::WorldFeed.Common.Public.Models.Interfaces;
+    using global::WorldFeed.Common.Public.Models.Interfaces.DTO;
+    using global::WorldFeed.Common.Settings;
 
     /// <summary>
     /// Class representing a Tweet

@@ -1,6 +1,6 @@
 namespace WorldFeed.Common.Models.Authentication
 {
-    using WorldFeed.Common.Helpers;
+    using global::WorldFeed.Common.Helpers;
 
     public interface IReadOnlyConsumerCredentialsWithoutBearer
     {

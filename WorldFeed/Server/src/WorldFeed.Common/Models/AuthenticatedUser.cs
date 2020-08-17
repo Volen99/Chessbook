@@ -3,14 +3,14 @@
     using System;
     using System.Threading.Tasks;
 
-    using WorldFeed.Common.Models.Authentication;
-    using WorldFeed.Common.Public;
-    using WorldFeed.Common.Public.Models.Interfaces;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO;
-    using WorldFeed.Common.Public.Parameters.AccountClient;
-    using WorldFeed.Common.Public.Parameters.AccountSettingsClient;
-    using WorldFeed.Common.Public.Parameters.MessageClient;
-    using WorldFeed.Common.Public.Parameters.TweetsClient;
+    using global::WorldFeed.Common.Models.Authentication;
+    using global::WorldFeed.Common.Public;
+    using global::WorldFeed.Common.Public.Models.Interfaces;
+    using global::WorldFeed.Common.Public.Models.Interfaces.DTO;
+    using global::WorldFeed.Common.Public.Parameters.AccountClient;
+    using global::WorldFeed.Common.Public.Parameters.AccountSettingsClient;
+    using global::WorldFeed.Common.Public.Parameters.MessageClient;
+    using global::WorldFeed.Common.Public.Parameters.TweetsClient;
 
 
     /// <summary>

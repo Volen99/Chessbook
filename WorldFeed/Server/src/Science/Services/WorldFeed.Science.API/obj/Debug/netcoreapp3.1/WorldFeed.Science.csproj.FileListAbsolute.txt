@@ -1,9 +1,0 @@
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\WorldFeed.Science\bin\Debug\netcoreapp3.1\appsettings.Development.json
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\WorldFeed.Science\bin\Debug\netcoreapp3.1\appsettings.json
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\WorldFeed.Science\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\WorldFeed.Science\obj\Debug\netcoreapp3.1\WorldFeed.Science.csprojAssemblyReference.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\WorldFeed.Science\obj\Debug\netcoreapp3.1\WorldFeed.Science.AssemblyInfoInputs.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\WorldFeed.Science\obj\Debug\netcoreapp3.1\WorldFeed.Science.AssemblyInfo.cs
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\WorldFeed.Science\obj\Debug\netcoreapp3.1\WorldFeed.Science.RazorTargetAssemblyInfo.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\WorldFeed.Science\obj\Debug\netcoreapp3.1\staticwebassets\WorldFeed.Science.StaticWebAssets.Manifest.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\WorldFeed.Science\obj\Debug\netcoreapp3.1\staticwebassets\WorldFeed.Science.StaticWebAssets.xml

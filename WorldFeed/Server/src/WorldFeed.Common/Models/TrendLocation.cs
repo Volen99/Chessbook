@@ -2,8 +2,8 @@
 {
     using Newtonsoft.Json;
 
-    using WorldFeed.Common.Public.Models.Enums;
-    using WorldFeed.Common.Public.Models.Interfaces;
+    using global::WorldFeed.Common.Public.Models.Enums;
+    using global::WorldFeed.Common.Public.Models.Interfaces;
 
     public class TrendLocation : ITrendLocation
     {

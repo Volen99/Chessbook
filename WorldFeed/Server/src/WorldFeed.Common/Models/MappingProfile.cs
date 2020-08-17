@@ -5,7 +5,7 @@
     using System.Reflection;
     using AutoMapper;
 
-    using WorldFeed.Common.Services.Mapping;
+    using global::WorldFeed.Common.Services.Mapping;
 
     public class MappingProfile : Profile // ot kenov
     {

@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using Newtonsoft.Json;
 
-    using WorldFeed.Common.Extensions;
-    using WorldFeed.Common.Public.Models.Entities;
+    using global::WorldFeed.Common.Extensions;
+    using global::WorldFeed.Common.Public.Models.Entities;
 
     /// <summary>
     /// Object storing information related with an user mention on Twitter

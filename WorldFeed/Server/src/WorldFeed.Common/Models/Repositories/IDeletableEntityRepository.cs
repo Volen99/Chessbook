@@ -3,7 +3,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using WorldFeed.Common.Models;
+    using global::WorldFeed.Common.Models;
 
     public interface IDeletableEntityRepository<TEntity> : IRepository<TEntity>
         where TEntity : class, IDeletableEntity

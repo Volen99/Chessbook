@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using WorldFeed.Common.Public.Models.Interfaces;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO;
+    using global::WorldFeed.Common.Public.Models.Interfaces;
+    using global::WorldFeed.Common.Public.Models.Interfaces.DTO;
 
     public class SearchResults : ISearchResults
     {

@@ -2,7 +2,7 @@
 {
     using Newtonsoft.Json;
 
-    using WorldFeed.Common.Public.Models.Entities.ExtendedEntities;
+    using global::WorldFeed.Common.Public.Models.Entities.ExtendedEntities;
 
     public class VideoInformationEntity : IVideoInformationEntity
     {

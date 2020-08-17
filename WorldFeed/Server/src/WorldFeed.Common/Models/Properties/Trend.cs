@@ -1,7 +1,8 @@
 ﻿namespace WorldFeed.Common.Models.Properties
 {
     using Newtonsoft.Json;
-    using WorldFeed.Common.Public.Models.Interfaces;
+
+    using global::WorldFeed.Common.Public.Models.Interfaces;
 
     public class Trend : ITrend
     {
