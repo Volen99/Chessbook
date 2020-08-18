@@ -109,7 +109,7 @@ namespace WorldFeed.Programming.Quiz.Web
             services.AddTransient<IQuestionVoteStylesService, QuestionVoteStylesService>();
 
 
-            //services.AddSingleton<IAnonymousUser, AnonymousUser>();
+            // services.AddSingleton<IAnonymousUser, AnonymousUser>();
 
             services.AddDbContext<ApplicationDbContext>();
             services.AddApplicationInsightsTelemetry();
@@ -161,8 +161,8 @@ namespace WorldFeed.Programming.Quiz.Web
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            app.UseAuthentication();        // attempts to authenticate the user before they're allowed access to secure resources
+            app.UseAuthorization();         // authorizes a user to access secure resources
 
             app.UseSession();
 
@@ -171,19 +171,12 @@ namespace WorldFeed.Programming.Quiz.Web
             app.UseEndpoints(
                 endpoints =>
                 {
-                    //endpoints.MapHub<ChatHub>("/chat");
-                    endpoints.MapControllerRoute("comment", "/Comment", new 
-                    { controller = "Comment", action = "Index" });
                     endpoints.MapControllerRoute(
                         "areaRoute",
                         "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                     endpoints.MapControllerRoute(
                         "default",
                         "{controller=Home}/{action=Index}/{id?}");
-                    endpoints.MapControllerRoute(
-                        "profileRoute",
-                        "{controller=Profile}/{action=Index}"
-                        );
                     endpoints.MapRazorPages();
                 });
         }

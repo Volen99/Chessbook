@@ -79,7 +79,6 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Web\WebStatus\bin
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Web\WebStatus\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\e_sqlite3.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Web\WebStatus\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Diagnostics.PerformanceCounter.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Web\WebStatus\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Web\WebStatus\obj\Debug\netcoreapp3.1\WebStatus.csprojAssemblyReference.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Web\WebStatus\obj\Debug\netcoreapp3.1\WebStatus.AssemblyInfoInputs.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Web\WebStatus\obj\Debug\netcoreapp3.1\WebStatus.AssemblyInfo.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Web\WebStatus\obj\Debug\netcoreapp3.1\WebStatus.csproj.CoreCompileInputs.cache
@@ -131,3 +130,4 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Web\WebStatus\bin
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Web\WebStatus\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Web\WebStatus\bin\Debug\netcoreapp3.1\System.Text.Json.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Web\WebStatus\bin\Debug\netcoreapp3.1\YamlDotNet.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Web\WebStatus\obj\Debug\netcoreapp3.1\WebStatus.csprojAssemblyReference.cache

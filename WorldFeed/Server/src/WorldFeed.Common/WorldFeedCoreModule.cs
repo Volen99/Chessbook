@@ -40,6 +40,11 @@
                 throw new InvalidOperationException("This container can only be initialized with the main container");
             }
 
+            // An important note on reflection-based components: Any component type you register via "RegisterType" must be a concrete type.
+            // While components can expose abstract classes or interfaces as services, you can’t register an abstract/interface component.
+            // It makes sense if you think about it: behind the scenes, Autofac is creating an instance of the thing you’re registering.
+            // You can’t "new up" an abstract class or an interface. You have to have an implementation, right?
+            //
             container.RegisterGeneric(typeof(IFactory<>), typeof(Factory<>));
             container.RegisterType<ITaskDelayer, TaskDelayer>(RegistrationLifetime.InstancePerApplication);
             container.RegisterType<IAttributeHelper, AttributeHelper>(RegistrationLifetime.InstancePerApplication);
@@ -59,7 +64,7 @@
 
             container.RegisterType<ITweetinviJsonConverter, TweetinviJsonConverter>(RegistrationLifetime.InstancePerApplication);
 
-            InitializeParameters(container);
+            this.InitializeParameters(container);
             InitializeParametersValidators(container);
         }
 

@@ -7,6 +7,7 @@ namespace Microsoft.AspNetCore.Hosting
     using Microsoft.Extensions.Logging;
     using Microsoft.Data.SqlClient;
     using Polly;
+    using Autofac;
 
     public static class IWebHostExtensions
     {
@@ -24,6 +25,9 @@ namespace Microsoft.AspNetCore.Hosting
 
             using (var scope = webHost.Services.CreateScope())
             {
+                //var cb = new ContainerBuilder();
+                //cb.RegisterType<TContext>().UsingConstructor(typeof(int), typeof(int), typeof(int));
+
                 var services = scope.ServiceProvider;
                 var logger = services.GetRequiredService<ILogger<TContext>>();
                 var typeTest = typeof(TContext);

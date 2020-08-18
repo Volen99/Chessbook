@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "WlMQtG+YlUeqYCXScOz7nrsiPDxwuYYE71B0O6zDEbqwR7n29b6dIaK6S8sig24eCLnS32w5zWvwyJkdIAw/fA==",
+  "dgSpecHash": "uRPbYHVXbV3AYi0XKLpRErgz3lApimNHDj3uTp5nLH5zKmyh7OLkNF55SI59K1H0P4UWPHh7/4BNlLunEOlkKQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\History\\WorldFeed.History.Common\\WorldFeed.History.Common.csproj",
   "expectedPackageFiles": [
@@ -9,8 +9,7 @@
     "C:\\Users\\volen\\.nuget\\packages\\swashbuckle.aspnetcore\\5.5.1\\swashbuckle.aspnetcore.5.5.1.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.5.1\\swashbuckle.aspnetcore.swagger.5.5.1.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.5.1\\swashbuckle.aspnetcore.swaggergen.5.5.1.nupkg.sha512",
-    "C:\\Users\\volen\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.5.1\\swashbuckle.aspnetcore.swaggerui.5.5.1.nupkg.sha512",
-    "C:\\Users\\volen\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+    "C:\\Users\\volen\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.5.1\\swashbuckle.aspnetcore.swaggerui.5.5.1.nupkg.sha512"
   ],
   "logs": []
 }

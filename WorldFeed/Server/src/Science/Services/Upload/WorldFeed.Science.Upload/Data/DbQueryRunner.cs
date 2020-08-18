@@ -5,6 +5,7 @@
     using Microsoft.EntityFrameworkCore;
 
     using WorldFeed.Common.Models;
+    using WorldFeed.Science.Upload.Infrastructure;
 
     public class DbQueryRunner : IDbQueryRunner
     {

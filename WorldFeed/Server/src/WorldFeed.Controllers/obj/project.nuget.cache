@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "LKQzjBIOEwfQsOlxA2O6uSWzYsXOtWV90+PnH67P9U0KUlLngBJYG7QI4I/JvHLU+plCi3q3VTwW2C0Hov9izw==",
+  "dgSpecHash": "5PYACfcTgICocVmWHC6kdFxKy8XzF3Ir6eVW0MVsMSPIwzXLwvJRTiW+PtxNKT5AAKL+nTMUBL85WQC1suuQGg==",
   "success": true,
   "projectFilePath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WorldFeed.Controllers\\WorldFeed.Controllers.csproj",
   "expectedPackageFiles": [
@@ -189,8 +189,7 @@
     "C:\\Users\\volen\\.nuget\\packages\\system.xml.readerwriter\\4.3.1\\system.xml.readerwriter.4.3.1.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
-    "C:\\Users\\volen\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TmVMRfKXyviypmRuM+J95/7vKzTTY0ObPNnUjQzIDDtl/UkqZ1H3LlbC6M8hCpLfZfkrLiG9UX8jw9z4ckg6wg==",
+  "dgSpecHash": "6u9papZAoag2xJbM/AV4BxBFpclDVLqzSAaQFT9D2Ohs1gg9aloZiOPynGGD0V7qNbDiV1TIf3ZfWuBwkvZj8w==",
   "success": true,
   "projectFilePath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\Services\\Identity\\WorldFeed.Identity.API.csproj",
   "expectedPackageFiles": [
@@ -302,8 +302,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\system.xml.xpath\\4.0.1\\system.xml.xpath.4.0.1.nupkg.sha512",
-    "C:\\Users\\volen\\.nuget\\packages\\system.xml.xpath.xdocument\\4.0.1\\system.xml.xpath.xdocument.4.0.1.nupkg.sha512",
-    "C:\\Users\\volen\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+    "C:\\Users\\volen\\.nuget\\packages\\system.xml.xpath.xdocument\\4.0.1\\system.xml.xpath.xdocument.4.0.1.nupkg.sha512"
   ],
   "logs": []
 }

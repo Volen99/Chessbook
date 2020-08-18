@@ -7,7 +7,7 @@
 
     using WorldFeed.Common.Models.Repositories;
     using WorldFeed.Common.Data;
-    using WorldFeed.Science.API.Data;
+    using WorldFeed.Science.Upload.Infrastructure;
 
     public class EfRepository<TEntity> : IRepository<TEntity>
         where TEntity : class

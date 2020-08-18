@@ -402,7 +402,6 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Admin\o
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Admin\obj\Debug\netcoreapp3.1\WorldFeed.Admin.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Admin\obj\Debug\netcoreapp3.1\WorldFeed.Admin.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Admin\obj\Debug\netcoreapp3.1\WorldFeed.Admin.genruntimeconfig.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Admin\obj\Debug\netcoreapp3.1\WorldFeed.Admin.csprojAssemblyReference.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Admin\obj\Debug\netcoreapp3.1\RefitStubs.g.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Admin\obj\Debug\netcoreapp3.1\WorldFeed.Admin.AssemblyInfoInputs.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Admin\obj\Debug\netcoreapp3.1\WorldFeed.Admin.AssemblyInfo.cs
@@ -554,3 +553,4 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Admin\ob
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Admin\obj\Debug\netcoreapp3.1\staticwebassets\WorldFeed.Admin.StaticWebAssets.Manifest.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Admin\obj\Debug\netcoreapp3.1\staticwebassets\WorldFeed.Admin.StaticWebAssets.xml
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Admin\obj\Debug\netcoreapp3.1\WorldFeed.Admin.genruntimeconfig.cache
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Services\Admin\obj\Debug\netcoreapp3.1\WorldFeed.Admin.csprojAssemblyReference.cache

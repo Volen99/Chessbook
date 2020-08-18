@@ -18,6 +18,8 @@
 
         public T Create(params IConstructorNamedParameter[] parameters)
         {
+            // Resolving a component is roughly equivalent to calling "new" to instantiate a class.
+            // That’s really, really oversimplifying it, but from an analogy perspective it’s fine
             return this.container.Resolve<T>(parameters);
         }
 

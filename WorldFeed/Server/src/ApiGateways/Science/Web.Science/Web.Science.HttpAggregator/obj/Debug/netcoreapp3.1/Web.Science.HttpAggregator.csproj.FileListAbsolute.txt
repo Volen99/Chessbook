@@ -179,3 +179,12 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Scien
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\WorldFeed.Streams.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\WorldFeed.WebLogic.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\obj\Debug\netcoreapp3.1\Web.Science.HttpAggregator.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\WorldFeed.Science.Upload.Domain.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\WorldFeed.Science.Upload.Infrastructure.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\WorldFeed.Science.Upload.Domain.pdb
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\WorldFeed.Science.Upload.Infrastructure.pdb
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\Autofac.Extensions.DependencyInjection.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\EventBus.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\EventBusRabbitMQ.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\EventBus.pdb
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\EventBusRabbitMQ.pdb

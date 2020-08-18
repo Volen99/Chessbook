@@ -5,6 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Design;
     using Microsoft.Extensions.Configuration;
+    using WorldFeed.Science.Upload.Infrastructure;
 
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ScienceUploadDbContext>
     {

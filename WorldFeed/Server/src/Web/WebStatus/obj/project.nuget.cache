@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7DqzJtoo562mSohHaLEPuaVUv/i0MiJ2bdaIQO0hMBkT9mNCtgoUV+Y4l/ZgQimkbkCcCnm9yP2BHt+KnhD23A==",
+  "dgSpecHash": "R6qwqwosDIIBn6fk46GUmu0gHfhXf1B5FWgpgxwuVlekOJt/CXn1LIuRZ/he0bBpl8B7HARAJg/DAt5k8GaHIg==",
   "success": true,
   "projectFilePath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\Web\\WebStatus\\WebStatus.csproj",
   "expectedPackageFiles": [
@@ -201,8 +201,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
-    "C:\\Users\\volen\\.nuget\\packages\\yamldotnet\\6.0.0\\yamldotnet.6.0.0.nupkg.sha512",
-    "C:\\Users\\volen\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+    "C:\\Users\\volen\\.nuget\\packages\\yamldotnet\\6.0.0\\yamldotnet.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }

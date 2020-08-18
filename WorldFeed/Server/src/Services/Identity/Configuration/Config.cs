@@ -34,7 +34,8 @@
                 new ApiResource()
                 {
                     Scopes = { "webshoppingagg", "Web Shopping Aggregator" },
-                }
+                },
+                new ApiResource("science.upload", "Science Upload Service"),
             };
         }
 
@@ -82,6 +83,22 @@
 
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent = false,
+                },
+                new Client
+                {
+                    ClientId = "science.uploadswaggerui",
+                    ClientName = "Science Upload Swagger UI",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequirePkce = true,
+                    RequireClientSecret = false,
+
+                    RedirectUris = { $"{clientsUrl["Science.Upload"]}/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { $"{clientsUrl["Science.Upload"]}/swagger/" },
+
+                    AllowedScopes =
+                    {
+                        "science.upload"
+                    }
                 },
             };
         }

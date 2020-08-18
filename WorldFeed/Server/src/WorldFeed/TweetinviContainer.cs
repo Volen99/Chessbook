@@ -51,6 +51,8 @@
 
         /// <summary>
         /// Allow you to retrieve any class used by Tweetinvi by specifying its interface.
+        /// Resolving a component is roughly equivalent to calling "new" to instantiate a class.
+        /// That’s really, really oversimplifying it, but from an analogy perspective it’s fine
         /// </summary>
         public static T Resolve<T>()
         {

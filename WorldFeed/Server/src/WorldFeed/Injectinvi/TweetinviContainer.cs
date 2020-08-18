@@ -22,30 +22,9 @@
         private IContainer container;
         private readonly ContainerBuilder containerBuilder;
         private readonly List<ITweetinviModule> moduleCatalog;
-        private bool isInitialized;
         private readonly object _lock = new object();
 
-        public List<Action<ContainerBuilder>> RegistrationActions { get; }
-
-        public ITwitterClient AssociatedClient { get; set; }
-
-        public bool IsInitialized
-        {
-            get
-            {
-                lock (_lock)
-                {
-                    return this.isInitialized;
-                }
-            }
-            set
-            {
-                lock (_lock)
-                {
-                    this.isInitialized = value;
-                }
-            }
-        }
+        private bool isInitialized;
 
         public TweetinviContainer()
         {
@@ -70,19 +49,41 @@
             });
         }
 
+        public List<Action<ContainerBuilder>> RegistrationActions { get; }
+
+        public ITwitterClient AssociatedClient { get; set; }
+
+        public bool IsInitialized
+        {
+            get
+            {
+                lock (_lock)
+                {
+                    return this.isInitialized;
+                }
+            }
+            set
+            {
+                lock (_lock)
+                {
+                    this.isInitialized = value;
+                }
+            }
+        }
+
         public event EventHandler<TweetinviContainerEventArgs> BeforeRegistrationCompletes;
 
         public void Initialize()
         {
             lock (_lock)
             {
-                if (IsInitialized)
+                if (this.IsInitialized)
                 {
                     return;
                 }
 
                 this.Raise(BeforeRegistrationCompletes, new TweetinviContainerEventArgs(this));
-                BuildContainer();
+                this.BuildContainer();
             }
         }
 
@@ -90,12 +91,12 @@
         {
             lock (_lock)
             {
-                if (IsInitialized)
+                if (this.IsInitialized)
                 {
                     return;
                 }
 
-                this.container = this.containerBuilder.Build();
+                this.container = this.containerBuilder.Build(); // We need to store the container so it can be used to resolve types later
                 IsInitialized = true;
             }
         }
@@ -131,7 +132,7 @@
 
             switch (registrationLifetime)
             {
-                case RegistrationLifetime.InstancePerResolve:
+                case RegistrationLifetime.InstancePerResolve:     // Usually you're only interested in exposing the type via its interface:
                     registrationAction = builder => builder.RegisterType<TTo>().As<TRegistered>();
                     break;
                 case RegistrationLifetime.InstancePerApplication:
@@ -148,6 +149,9 @@
             RegistrationActions.Add(registrationAction);
         }
 
+        /// <summary>
+        /// Autofac supports open generic types. Use the RegisterGeneric() builder method:
+        /// </summary>
         public virtual void RegisterGeneric(Type sourceType, Type targetType, RegistrationLifetime registrationLifetime = RegistrationLifetime.InstancePerResolve)
         {
             if (IsInitialized)
@@ -176,8 +180,9 @@
 
         public virtual void RegisterInstance(Type targetType, object value)
         {
-            if (IsInitialized)
+            if (this.IsInitialized)
             {
+                // Mark Seemann: After the container has .Build(), then it becomes readonly
                 throw new InvalidOperationException("Cannot update container after it was already initialized");
             }
 
@@ -189,8 +194,9 @@
 
         public void RegisterDecorator<TDecorator, TDecorated>() where TDecorator : TDecorated
         {
-            if (IsInitialized)
+            if (this.IsInitialized)
             {
+                // Mark Seemann: After the container has .Build(), then it becomes readonly
                 throw new InvalidOperationException("Cannot update container after it was already initialized");
             }
 
@@ -205,8 +211,9 @@
 
         public T Resolve<T>(params IConstructorNamedParameter[] parameters)
         {
-            if (!IsInitialized)
+            if (!this.IsInitialized)
             {
+                // Register -> Resolve -> Release
                 throw new InvalidOperationException("The container has not yet been built!");
             }
 

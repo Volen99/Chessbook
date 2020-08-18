@@ -125,6 +125,8 @@ namespace WorldFeed
             var parametersValidator = this.tweetinviContainer.Resolve<IParametersValidator>();
             ParametersValidator = parametersValidator;
 
+            // When it’s time to resolve services, you may find that you need to pass parameters to the resolution.
+            // (If you know the values at registration time, you can provide them in the registration instead.)
             Auth = this.tweetinviContainer.Resolve<IAuthClient>();
             AccountSettings = this.tweetinviContainer.Resolve<IAccountSettingsClient>();
             Execute = this.tweetinviContainer.Resolve<IExecuteClient>();

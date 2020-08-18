@@ -8,7 +8,7 @@
     using WorldFeed.Common.Data;
     using WorldFeed.Common.Models;
     using WorldFeed.Common.Models.Repositories;
-    using WorldFeed.Science.API.Data;
+    using WorldFeed.Science.Upload.Infrastructure;
 
     public class EfDeletableEntityRepository<TEntity> : EfRepository<TEntity>, IDeletableEntityRepository<TEntity>
         where TEntity : class, IDeletableEntity
