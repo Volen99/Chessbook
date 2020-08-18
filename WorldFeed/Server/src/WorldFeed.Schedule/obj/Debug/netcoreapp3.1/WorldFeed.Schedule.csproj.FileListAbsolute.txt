@@ -304,7 +304,6 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Schedul
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\WorldFeed.Web.Common.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\WorldFeed.Common.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Schedule\bin\Debug\netcoreapp3.1\WorldFeed.Web.Common.pdb
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Schedule\obj\Debug\netcoreapp3.1\WorldFeed.Schedule.csprojAssemblyReference.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Schedule\obj\Debug\netcoreapp3.1\WorldFeed.Schedule.AssemblyInfoInputs.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Schedule\obj\Debug\netcoreapp3.1\WorldFeed.Schedule.AssemblyInfo.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Schedule\obj\Debug\netcoreapp3.1\WorldFeed.Schedule.csproj.CoreCompileInputs.cache
@@ -317,3 +316,4 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Schedul
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Schedule\obj\Debug\netcoreapp3.1\WorldFeed.Schedule.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Schedule\obj\Debug\netcoreapp3.1\WorldFeed.Schedule.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Schedule\obj\Debug\netcoreapp3.1\WorldFeed.Schedule.genruntimeconfig.cache
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Schedule\obj\Debug\netcoreapp3.1\WorldFeed.Schedule.csprojAssemblyReference.cache

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlSanitizer" Version="5.0.343" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.Windows.Extensions" Version="4.7.0" />
+    <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="3.0.58" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WorldFeed.Programming.Quiz.Data.Models\WorldFeed.Programming.Quiz.Data.Models.csproj" />
+    <ProjectReference Include="..\WorldFeed.Programming.Quiz.Web.ViewModels\WorldFeed.Programming.Quiz.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

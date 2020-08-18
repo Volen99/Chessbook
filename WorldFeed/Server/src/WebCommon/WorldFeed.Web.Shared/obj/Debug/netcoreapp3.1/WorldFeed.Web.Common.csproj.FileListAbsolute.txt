@@ -24,3 +24,4 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WebCommon\WorldFe
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WebCommon\WorldFeed.Web.Shared\obj\Debug\netcoreapp3.1\WorldFeed.Web.Common.csproj.CoreCompileInputs.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WebCommon\WorldFeed.Web.Shared\obj\Debug\netcoreapp3.1\WorldFeed.Web.Common.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WebCommon\WorldFeed.Web.Shared\obj\Debug\netcoreapp3.1\WorldFeed.Web.Common.pdb
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WebCommon\WorldFeed.Web.Shared\obj\Debug\netcoreapp3.1\WorldFeed.Web.Common.csprojAssemblyReference.cache

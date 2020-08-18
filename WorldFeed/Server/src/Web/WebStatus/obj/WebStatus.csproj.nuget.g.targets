@@ -4,7 +4,7 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)microsoft.web.librarymanager.build\2.0.96\build\Microsoft.Web.LibraryManager.Build.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.web.librarymanager.build\2.0.96\build\Microsoft.Web.LibraryManager.Build.targets')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.applicationinsights.dependencycollector\2.12.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.applicationinsights.dependencycollector\2.12.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.web.librarymanager.build\2.1.76\build\Microsoft.Web.LibraryManager.Build.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.web.librarymanager.build\2.1.76\build\Microsoft.Web.LibraryManager.Build.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.applicationinsights.dependencycollector\2.14.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.applicationinsights.dependencycollector\2.14.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets')" />
   </ImportGroup>
 </Project>

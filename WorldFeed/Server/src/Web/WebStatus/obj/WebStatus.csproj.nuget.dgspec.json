@@ -43,27 +43,27 @@
           "dependencies": {
             "AspNetCore.HealthChecks.UI": {
               "target": "Package",
-              "version": "[3.0.6, )"
+              "version": "[3.1.1, )"
             },
             "AspNetCore.HealthChecks.UI.Client": {
               "target": "Package",
-              "version": "[3.0.0, )"
+              "version": "[3.1.1, )"
             },
             "AspNetCore.HealthChecks.Uris": {
               "target": "Package",
-              "version": "[3.0.0, )"
+              "version": "[3.1.2, )"
             },
             "Microsoft.ApplicationInsights.AspNetCore": {
               "target": "Package",
-              "version": "[2.12.0, )"
+              "version": "[2.14.0, )"
             },
             "Microsoft.ApplicationInsights.DependencyCollector": {
               "target": "Package",
-              "version": "[2.12.0, )"
+              "version": "[2.14.0, )"
             },
             "Microsoft.ApplicationInsights.Kubernetes": {
               "target": "Package",
-              "version": "[1.1.1, )"
+              "version": "[1.1.2, )"
             },
             "Microsoft.AspNetCore.Diagnostics.HealthChecks": {
               "target": "Package",
@@ -71,19 +71,19 @@
             },
             "Microsoft.Extensions.Configuration.AzureKeyVault": {
               "target": "Package",
-              "version": "[3.1.0, )"
+              "version": "[3.1.7, )"
             },
             "Microsoft.Extensions.Logging.AzureAppServices": {
               "target": "Package",
-              "version": "[3.1.0, )"
+              "version": "[3.1.7, )"
             },
             "Microsoft.Web.LibraryManager.Build": {
               "target": "Package",
-              "version": "[2.0.96, )"
+              "version": "[2.1.76, )"
             },
             "Serilog.AspNetCore": {
               "target": "Package",
-              "version": "[3.2.0, )"
+              "version": "[3.4.0, )"
             },
             "Serilog.Enrichers.Environment": {
               "target": "Package",
@@ -99,7 +99,7 @@
             },
             "Serilog.Sinks.Http": {
               "target": "Package",
-              "version": "[5.2.0, )"
+              "version": "[7.0.1, )"
             },
             "Serilog.Sinks.Seq": {
               "target": "Package",

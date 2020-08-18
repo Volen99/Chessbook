@@ -25,6 +25,7 @@
         {
             Configuration = configuration;
         }
+         
 
         public IConfiguration Configuration { get; }
 

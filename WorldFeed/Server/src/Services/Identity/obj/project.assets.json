@@ -540,7 +540,7 @@
           "build/_._": {}
         }
       },
-      "Microsoft.AspNetCore.ApiAuthorization.IdentityServer/3.1.6": {
+      "Microsoft.AspNetCore.ApiAuthorization.IdentityServer/3.1.7": {
         "type": "package",
         "dependencies": {
           "IdentityServer4": "3.0.0",
@@ -548,10 +548,10 @@
           "IdentityServer4.EntityFramework": "3.0.0",
           "IdentityServer4.EntityFramework.Storage": "3.0.0",
           "IdentityServer4.Storage": "3.0.0",
-          "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.6",
-          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.6",
-          "Microsoft.AspNetCore.Identity.UI": "3.1.6",
-          "Microsoft.Extensions.Http": "3.1.6"
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.7",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.7",
+          "Microsoft.AspNetCore.Identity.UI": "3.1.7",
+          "Microsoft.Extensions.Http": "3.1.7"
         },
         "compile": {
           "lib/netcoreapp3.1/Microsoft.AspNetCore.ApiAuthorization.IdentityServer.dll": {}
@@ -575,7 +575,7 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Microsoft.AspNetCore.Authentication.JwtBearer/3.1.6": {
+      "Microsoft.AspNetCore.Authentication.JwtBearer/3.1.7": {
         "type": "package",
         "dependencies": {
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "5.5.0"
@@ -839,11 +839,11 @@
           "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Identity.UI/3.1.6": {
+      "Microsoft.AspNetCore.Identity.UI/3.1.7": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.FileProviders.Embedded": "3.1.6",
-          "Microsoft.Extensions.Identity.Stores": "3.1.6",
+          "Microsoft.Extensions.FileProviders.Embedded": "3.1.7",
+          "Microsoft.Extensions.Identity.Stores": "3.1.7",
           "Newtonsoft.Json": "12.0.2"
         },
         "compile": {
@@ -1409,10 +1409,10 @@
           "lib/netcoreapp3.1/Microsoft.Extensions.FileProviders.Abstractions.dll": {}
         }
       },
-      "Microsoft.Extensions.FileProviders.Embedded/3.1.6": {
+      "Microsoft.Extensions.FileProviders.Embedded/3.1.7": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.6"
+          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.7"
         },
         "compile": {
           "lib/netcoreapp3.1/Microsoft.Extensions.FileProviders.Embedded.dll": {}
@@ -1482,12 +1482,12 @@
           "lib/netcoreapp3.1/Microsoft.Extensions.Hosting.Abstractions.dll": {}
         }
       },
-      "Microsoft.Extensions.Http/3.1.6": {
+      "Microsoft.Extensions.Http/3.1.7": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.6",
-          "Microsoft.Extensions.Logging": "3.1.6",
-          "Microsoft.Extensions.Options": "3.1.6"
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.7",
+          "Microsoft.Extensions.Logging": "3.1.7",
+          "Microsoft.Extensions.Options": "3.1.7"
         },
         "compile": {
           "lib/netcoreapp3.1/Microsoft.Extensions.Http.dll": {}
@@ -1496,10 +1496,10 @@
           "lib/netcoreapp3.1/Microsoft.Extensions.Http.dll": {}
         }
       },
-      "Microsoft.Extensions.Http.Polly/3.1.6": {
+      "Microsoft.Extensions.Http.Polly/3.1.7": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Http": "3.1.6",
+          "Microsoft.Extensions.Http": "3.1.7",
           "Polly": "7.1.0",
           "Polly.Extensions.Http": "3.0.0"
         },
@@ -2515,7 +2515,7 @@
           "lib/netstandard2.0/Serilog.Sinks.File.dll": {}
         }
       },
-      "Serilog.Sinks.Http/7.0.0": {
+      "Serilog.Sinks.Http/7.0.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Configuration": "3.1.7",
@@ -4764,11 +4764,11 @@
           "Hangfire.SqlServer": "1.7.12",
           "MassTransit.AspNetCore": "7.0.3",
           "MassTransit.RabbitMQ": "7.0.3",
-          "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": "3.1.6",
-          "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.6",
-          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.6",
-          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.6",
-          "Microsoft.Extensions.Http.Polly": "3.1.6",
+          "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": "3.1.7",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.7",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.7",
+          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.7",
+          "Microsoft.Extensions.Http.Polly": "3.1.7",
           "NodaTime": "3.0.0",
           "Swashbuckle.AspNetCore": "5.5.1",
           "WorldFeed.Web.Common": "1.0.0"
@@ -5412,10 +5412,10 @@
         "microsoft.applicationinsights.windowsserver.telemetrychannel.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.ApiAuthorization.IdentityServer/3.1.6": {
-      "sha512": "NgV4TJrEYIN4KRfKAP1nsiDMovud5WhDFtFZBt6zCQ92yUQEfQo90jHiGfmvsnzCZLDexZ1VpA/KOuDV3D+BnQ==",
+    "Microsoft.AspNetCore.ApiAuthorization.IdentityServer/3.1.7": {
+      "sha512": "8B8LzGVy0HCsMW0e4VzwqLOeFhCuCVsRjIRf/UBVxGU6VA3FCps/Jt2/0UI9jgXrQoE0y2oeQRTbAqEU/qKHaw==",
       "type": "package",
-      "path": "microsoft.aspnetcore.apiauthorization.identityserver/3.1.6",
+      "path": "microsoft.aspnetcore.apiauthorization.identityserver/3.1.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5423,7 +5423,7 @@
         "THIRD-PARTY-NOTICES.TXT",
         "lib/netcoreapp3.1/Microsoft.AspNetCore.ApiAuthorization.IdentityServer.dll",
         "lib/netcoreapp3.1/Microsoft.AspNetCore.ApiAuthorization.IdentityServer.xml",
-        "microsoft.aspnetcore.apiauthorization.identityserver.3.1.6.nupkg.sha512",
+        "microsoft.aspnetcore.apiauthorization.identityserver.3.1.7.nupkg.sha512",
         "microsoft.aspnetcore.apiauthorization.identityserver.nuspec"
       ]
     },
@@ -5442,10 +5442,10 @@
         "microsoft.aspnetcore.authentication.facebook.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Authentication.JwtBearer/3.1.6": {
-      "sha512": "XT5yph4cdiMbas6FyvVafCKfg1QgPZM7Ssma7aDCG0Ee8JhZMMpXGottBeUC43/lDHCaw8wTq29HOKOTDB41vA==",
+    "Microsoft.AspNetCore.Authentication.JwtBearer/3.1.7": {
+      "sha512": "TkJj6eBzFihlnOtssoTJMBPVuRxtQiYr6fJVd5WrYmNpxR3dQ2t55KNPy8jgIS8yXGMq2UUTM/CdyN+NKVbbYQ==",
       "type": "package",
-      "path": "microsoft.aspnetcore.authentication.jwtbearer/3.1.6",
+      "path": "microsoft.aspnetcore.authentication.jwtbearer/3.1.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5453,7 +5453,7 @@
         "THIRD-PARTY-NOTICES.TXT",
         "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.JwtBearer.dll",
         "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.JwtBearer.xml",
-        "microsoft.aspnetcore.authentication.jwtbearer.3.1.6.nupkg.sha512",
+        "microsoft.aspnetcore.authentication.jwtbearer.3.1.7.nupkg.sha512",
         "microsoft.aspnetcore.authentication.jwtbearer.nuspec"
       ]
     },
@@ -5701,10 +5701,10 @@
         "microsoft.aspnetcore.identity.entityframeworkcore.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Identity.UI/3.1.6": {
-      "sha512": "Qxrl4Ud4ViD64yQH8NmeRm/LZBQ8RZnWBf2O1qY/QD9+yld+xJEuXiLP1yaa9ujy8youdt0KNJ3Z3HhBtS6Q+w==",
+    "Microsoft.AspNetCore.Identity.UI/3.1.7": {
+      "sha512": "YuQuwNvceEb2T2EQBSLa0nVES2o6Vo9oCMo85EJrXZLT/KyxP4YptsLX6qLyGxydLzzJsG4qK22E3ACEW1aCIQ==",
       "type": "package",
-      "path": "microsoft.aspnetcore.identity.ui/3.1.6",
+      "path": "microsoft.aspnetcore.identity.ui/3.1.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5720,7 +5720,7 @@
         "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.UI.Views.V4.dll",
         "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.UI.dll",
         "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.UI.xml",
-        "microsoft.aspnetcore.identity.ui.3.1.6.nupkg.sha512",
+        "microsoft.aspnetcore.identity.ui.3.1.7.nupkg.sha512",
         "microsoft.aspnetcore.identity.ui.nuspec",
         "staticwebassets/V3/css/site.css",
         "staticwebassets/V3/js/site.js",
@@ -6514,10 +6514,10 @@
         "microsoft.extensions.fileproviders.abstractions.nuspec"
       ]
     },
-    "Microsoft.Extensions.FileProviders.Embedded/3.1.6": {
-      "sha512": "FEedI4sfgybofimT0/CnEktHr26J16nLORwuw7IJ1DgbC/X3T+gsPxieTaxha/CsW+WIWZQKFG9LJYSz52iPgw==",
+    "Microsoft.Extensions.FileProviders.Embedded/3.1.7": {
+      "sha512": "GZEsp0rG9XFuYZRV+lxNQ6ISijWy5cfAkoesLfVVgRYiFTFCCQgG4WRQQzOMucUo4HNaPRSLwvcbVZHHcoICLA==",
       "type": "package",
-      "path": "microsoft.extensions.fileproviders.embedded/3.1.6",
+      "path": "microsoft.extensions.fileproviders.embedded/3.1.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6530,7 +6530,7 @@
         "lib/netcoreapp3.1/Microsoft.Extensions.FileProviders.Embedded.xml",
         "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.dll",
         "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.xml",
-        "microsoft.extensions.fileproviders.embedded.3.1.6.nupkg.sha512",
+        "microsoft.extensions.fileproviders.embedded.3.1.7.nupkg.sha512",
         "microsoft.extensions.fileproviders.embedded.nuspec",
         "tasks/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.Manifest.Task.dll"
       ]
@@ -6593,10 +6593,10 @@
         "microsoft.extensions.hosting.abstractions.nuspec"
       ]
     },
-    "Microsoft.Extensions.Http/3.1.6": {
-      "sha512": "Zt1+jLObgiPcB/mzb52fMABdMBZ2BmI8LFsxHIG660qiwroaF7Gn9z0aOIAtdPq1ZtEZksSXXg3SXaPka1xzHA==",
+    "Microsoft.Extensions.Http/3.1.7": {
+      "sha512": "yGaFZpLkIxXKp96eyCMieyrWzKKMr4SxOQi0Zo0RiaoiB3l/dOqqeYJ7RMD31djx61lnd7ocqV4j93WtUye/wA==",
       "type": "package",
-      "path": "microsoft.extensions.http/3.1.6",
+      "path": "microsoft.extensions.http/3.1.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6605,21 +6605,21 @@
         "lib/netcoreapp3.1/Microsoft.Extensions.Http.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Http.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Http.xml",
-        "microsoft.extensions.http.3.1.6.nupkg.sha512",
+        "microsoft.extensions.http.3.1.7.nupkg.sha512",
         "microsoft.extensions.http.nuspec"
       ]
     },
-    "Microsoft.Extensions.Http.Polly/3.1.6": {
-      "sha512": "x4sLVf0tr84UI43GSkFITG3rUGTNhNKgjlQPsS4Zi1ELu6esrUXsgjEHbHuSypxR1UCRWwsF1eF1XYag09ATWA==",
+    "Microsoft.Extensions.Http.Polly/3.1.7": {
+      "sha512": "obH3DDVNXphpoAiLfh7pAu2MHEh7ij220sLBqsMtIlhmoZUbLFgM3ZtcKWhXbXUTNShjn7L/GzkaOeMVmT33eg==",
       "type": "package",
-      "path": "microsoft.extensions.http.polly/3.1.6",
+      "path": "microsoft.extensions.http.polly/3.1.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "lib/netstandard2.0/Microsoft.Extensions.Http.Polly.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Http.Polly.xml",
-        "microsoft.extensions.http.polly.3.1.6.nupkg.sha512",
+        "microsoft.extensions.http.polly.3.1.7.nupkg.sha512",
         "microsoft.extensions.http.polly.nuspec"
       ]
     },
@@ -8083,10 +8083,10 @@
         "serilog.sinks.file.nuspec"
       ]
     },
-    "Serilog.Sinks.Http/7.0.0": {
-      "sha512": "xwfWv4ojRL8cheS6DRGE4RDIN7c0K+kgm59/Iw0lNVCCoyadf6SkWz73mEKtEYLBVhKWzVg6nUShXGEUNKsG6w==",
+    "Serilog.Sinks.Http/7.0.1": {
+      "sha512": "XsCvGS9np4OMWuS6qQ5PUD4G2iK9WEkV65t6OKFIk2l1i8Ea7jxBNZItrlnI+O0fMgbxSKdhiUtzj4grBSPeZw==",
       "type": "package",
-      "path": "serilog.sinks.http/7.0.0",
+      "path": "serilog.sinks.http/7.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -8099,7 +8099,7 @@
         "lib/netstandard2.0/Serilog.Sinks.Http.dll",
         "lib/netstandard2.0/Serilog.Sinks.Http.xml",
         "serilog-sink-nuget.png",
-        "serilog.sinks.http.7.0.0.nupkg.sha512",
+        "serilog.sinks.http.7.0.1.nupkg.sha512",
         "serilog.sinks.http.nuspec"
       ]
     },
@@ -13790,7 +13790,7 @@
       "Serilog.Enrichers.Environment >= 2.1.3",
       "Serilog.Settings.Configuration >= 3.1.1-dev-00216",
       "Serilog.Sinks.Console >= 4.0.0-dev-00834",
-      "Serilog.Sinks.Http >= 7.0.0",
+      "Serilog.Sinks.Http >= 7.0.1",
       "Serilog.Sinks.Seq >= 4.1.0-dev-00166",
       "Swashbuckle.AspNetCore >= 5.5.1",
       "WorldFeed.Common >= 1.0.0"
@@ -13973,7 +13973,7 @@
           },
           "Serilog.Sinks.Http": {
             "target": "Package",
-            "version": "[7.0.0, )"
+            "version": "[7.0.1, )"
           },
           "Serilog.Sinks.Seq": {
             "target": "Package",

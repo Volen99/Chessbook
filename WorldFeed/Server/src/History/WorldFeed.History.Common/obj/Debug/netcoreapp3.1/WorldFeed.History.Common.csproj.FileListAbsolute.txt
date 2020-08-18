@@ -15,3 +15,4 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\History\WorldFeed
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\History\WorldFeed.History.Common\obj\Debug\netcoreapp3.1\WorldFeed.History.Common.csproj.CoreCompileInputs.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\History\WorldFeed.History.Common\obj\Debug\netcoreapp3.1\WorldFeed.History.Common.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\History\WorldFeed.History.Common\obj\Debug\netcoreapp3.1\WorldFeed.History.Common.pdb
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\History\WorldFeed.History.Common\obj\Debug\netcoreapp3.1\WorldFeed.History.Common.csprojAssemblyReference.cache

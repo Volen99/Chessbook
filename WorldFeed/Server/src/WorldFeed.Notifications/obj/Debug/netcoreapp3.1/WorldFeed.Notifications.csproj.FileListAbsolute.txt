@@ -186,7 +186,6 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Notificatio
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Notifications\obj\Debug\netcoreapp3.1\WorldFeed.Notifications.csproj.CoreCompileInputs.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Notifications\obj\Debug\netcoreapp3.1\WorldFeed.Notifications.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\WorldFeed.Notifications\obj\Debug\netcoreapp3.1\WorldFeed.Notifications.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Notifications\obj\Debug\netcoreapp3.1\WorldFeed.Notifications.csprojAssemblyReference.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Notifications\obj\Debug\netcoreapp3.1\WorldFeed.Notifications.AssemblyInfoInputs.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Notifications\obj\Debug\netcoreapp3.1\WorldFeed.Notifications.AssemblyInfo.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Notifications\obj\Debug\netcoreapp3.1\WorldFeed.Notifications.csproj.CoreCompileInputs.cache
@@ -317,3 +316,4 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Notific
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Notifications\obj\Debug\netcoreapp3.1\staticwebassets\WorldFeed.Notifications.StaticWebAssets.Manifest.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Notifications\obj\Debug\netcoreapp3.1\staticwebassets\WorldFeed.Notifications.StaticWebAssets.xml
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Notifications\obj\Debug\netcoreapp3.1\WorldFeed.Notifications.genruntimeconfig.cache
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Notifications\obj\Debug\netcoreapp3.1\WorldFeed.Notifications.csprojAssemblyReference.cache

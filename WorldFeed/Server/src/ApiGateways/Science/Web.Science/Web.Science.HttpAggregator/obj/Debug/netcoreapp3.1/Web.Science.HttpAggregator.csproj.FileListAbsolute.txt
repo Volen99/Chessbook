@@ -178,3 +178,4 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Scien
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\WorldFeed.Security.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\WorldFeed.Streams.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\WorldFeed.WebLogic.pdb
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\obj\Debug\netcoreapp3.1\Web.Science.HttpAggregator.MvcApplicationPartsAssemblyInfo.cs
