@@ -1,0 +1,157 @@
+﻿@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@(ViewData["Title"] = "Snake / The Programming Quiz")</title>
+    <link rel="stylesheet" href="~/css/snake/reset.css" type="text/css">
+    <link rel="stylesheet" href="~/css/snake/main.css" type="text/css">
+    <link rel="stylesheet" href="~/css/snake/orientation_utils.css" type="text/css">
+    <link rel="stylesheet" href="~/css/snake/ios_fullscreen.css" type="text/css">
+    <link rel='shortcut icon' type='image/x-icon' href="~/favicon.ico" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,minimal-ui" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="~/js/snake/createjs.min.js"></script>
+    <script type="text/javascript" src="~/js/snake/screenfull.js"></script>
+    <script type="text/javascript" src="~/js/snake/howler.min.js"></script>
+    <script type="text/javascript" src="~/js/snake/platform.js"></script>
+    <script type="text/javascript" src="~/js/snake/ios_fullscreen.js"></script>
+    <script type="text/javascript" src="~/js/snake/ctl_utils.js"></script>
+    <script type="text/javascript" src="~/js/snake/sprite_lib.js"></script>
+    <script type="text/javascript" src="~/js/snake/settings.js"></script>
+    <script type="text/javascript" src="~/js/snake/CLang.js"></script>
+    <script type="text/javascript" src="~/js/snake/CPreloader.js"></script>
+    <script type="text/javascript" src="~/js/snake/CMain.js"></script>
+    <script type="text/javascript" src="~/js/snake/CTextButton.js"></script>
+    <script type="text/javascript" src="~/js/snake/CToggle.js"></script>
+    <script type="text/javascript" src="~/js/snake/CGfxButton.js"></script>
+    <script type="text/javascript" src="~/js/snake/CCreditsPanel.js"></script>
+    <script type="text/javascript" src="~/js/snake/CMenu.js"></script>
+    <script type="text/javascript" src="~/js/snake/CGame.js"></script>
+    <script type="text/javascript" src="~/js/snake/CInterface.js"></script>
+    <script type="text/javascript" src="~/js/snake/CHelpPanel.js"></script>
+    <script type="text/javascript" src="~/js/snake/CEndPanel.js"></script>
+    <script type="text/javascript" src="~/js/snake/CSnake.js"></script>
+    <script type="text/javascript" src="~/js/snake/CSingleQueue.js"></script>
+    <script type="text/javascript" src="~/js/snake/CVector2.js"></script>
+    <script type="text/javascript" src="~/js/snake/CEdges.js"></script>
+    <script type="text/javascript" src="~/js/snake/CEdge.js"></script>
+    <script type="text/javascript" src="~/js/snake/CManageFoods.js"></script>
+    <script type="text/javascript" src="~/js/snake/CFood.js"></script>
+    <script type="text/javascript" src="~/js/snake/CControlAiSnakes.js"></script>
+    <script type="text/javascript" src="~/js/snake/CSubAISnake.js"></script>
+    <script type="text/javascript" src="~/js/snake/CManageSections.js"></script>
+    <script type="text/javascript" src="~/js/snake/CSection.js"></script>
+    <script type="text/javascript" src="~/js/snake/CPause.js"></script>
+    <script type="text/javascript" src="~/js/snake/CAreYouSurePanel.js"></script>
+    <script type="text/javascript" src="~/js/snake/CBackground.js"></script>
+    <script type="text/javascript" src="~/js/snake/CAnimMenu.js"></script>
+    <script type="text/javascript" src="~/js/snake/CLogo.js"></script>
+    <script type="text/javascript" src="~/js/snake/CAnimHelp.js"></script>
+
+</head>
+<body ondragstart="return false;" ondrop="return false;">
+    <div style="position: fixed; background-color: transparent; top: 0px; left: 0px; width: 100%; height: 100%"></div>
+    <script>
+        $(document).ready(function () {
+            var oMain = new CMain({
+                hero_rotation_speed: 10,
+                hero_speed_up: 25, 
+                hero_speed: 20, 
+                snakes_AI_speed: [10, 10, 10, 10],
+                food_score: [1],
+                fullscreen: true, 
+                check_orientation: true
+            });
+
+            // //THIS EVENT IS TRIGGERED WHEN PLAY BUTTON IN MENU SCREEN IS CLICKED
+            $(oMain).on("start_session", function (evt) {
+                if (getParamValue('ctl-arcade') === "true") {
+                    parent.__ctlArcadeStartSession();
+                }
+            });
+
+            // THIS EVENT IS TRIGGERED WHEN THE EXIT BUTTON IS CLICKED
+            $(oMain).on("end_session", function (evt) {
+                if (getParamValue('ctl-arcade') === "true") {
+                    parent.__ctlArcadeEndSession();
+                }
+            });
+
+            //THIS EVENT IS TRIGGERED WHEN GAME STARTS
+            $(oMain).on("start_level", function (evt, iLevel) {
+                if (getParamValue('ctl-arcade') === "true") {
+                    parent.__ctlArcadeStartLevel({ level: iLevel });
+                }
+            });
+
+            //THIS EVENT IS TRIGGERED WHEN GAME IS RESTARTED
+            $(oMain).on("restart_level", function (evt, iLevel) {
+                if (getParamValue('ctl-arcade') === "true") {
+                    parent.__ctlArcadeRestartLevel({ level: iLevel });
+                }
+            });
+
+            //THIS EVENT IS TRIGGERED WHEN THE EXIT BUTTON IS CLICKED
+            $(oMain).on("end_level", function (evt, iLevel) {
+                if (getParamValue('ctl-arcade') === "true") {
+                    parent.__ctlArcadeEndLevel({ level: iLevel });
+                }
+            });
+
+            // //THIS EVENT IS TRIGGERED WHEN GAME IS OVER
+            $(oMain).on("save_score", function (evt, iScore, szMode) {
+                if (getParamValue('ctl-arcade') === "true") {
+                    parent.__ctlArcadeSaveScore({ score: iScore, mode: szMode });
+                }
+            });
+
+            //THIS EVENT IS TRIGGERED WHEN GAME IS OVER
+            $(oMain).on("show_interlevel_ad", function (evt) {
+                if (getParamValue('ctl-arcade') === "true") {
+                    parent.__ctlArcadeShowInterlevelAD();
+                }
+            });
+
+            //THIS EVENT IS TRIGGERED WHEN GAME OVER IS SHOWN
+            $(oMain).on("share_event", function (evt, iScore) {
+                if (getParamValue('ctl-arcade') === "true") {
+                    parent.__ctlArcadeShareEvent({
+                        img: TEXT_SHARE_IMAGE,
+                        title: TEXT_SHARE_TITLE,
+                        msg: TEXT_SHARE_MSG1 + iScore + TEXT_SHARE_MSG2,
+                        msg_share: TEXT_SHARE_SHARE1 + iScore + TEXT_SHARE_SHARE1
+                    });
+                }
+            });
+
+
+            if (isIOS()) {
+                setTimeout(function () {
+                    sizeHandler();
+                }, 200);
+            } else {
+                sizeHandler();
+            }
+        });
+
+    </script>
+
+    <div class="check-fonts">
+        <p class="check-font-1">palamecia_titlingregular</p>
+    </div>
+
+    <input id="user-current" type="hidden" value="@User.Identity.Name" />
+    <form method="post" hidden>
+    </form>
+
+    <canvas id="canvas" class='ani_hack' width="1360" height="768"> </canvas>
+    <div data-orientation="landscape" class="orientation-msg-container"><p class="orientation-msg-text">Please rotate your device</p></div>
+    <div id="block_game" style="position: fixed; background-color: transparent; top: 0px; left: 0px; width: 100%; height: 100%; display:none"></div>
+</body>
+</html>

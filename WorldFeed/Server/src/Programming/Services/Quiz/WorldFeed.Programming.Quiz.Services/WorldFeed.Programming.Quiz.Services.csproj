@@ -26,9 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WorldFeed.Programming.Quiz.Data\WorldFeed.Programming.Quiz.Data.csproj" />
     <ProjectReference Include="..\WorldFeed.Programming.Quiz.Services.Data\WorldFeed.Programming.Quiz.Services.Data.csproj" />
-    <ProjectReference Include="..\WorldFeed.Programming.Quiz.Services.Mapping\WorldFeed.Programming.Quiz.Services.Mapping.csproj" />
     <ProjectReference Include="..\WorldFeed.Programming.Quiz.Web.ViewModels\WorldFeed.Programming.Quiz.Web.ViewModels.csproj" />
   </ItemGroup>
 

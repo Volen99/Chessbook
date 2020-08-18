@@ -109,7 +109,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Comment", "Comment", "{F4FE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Science.Upload", "Science\Services\Upload\WorldFeed.Science.Upload\WorldFeed.Science.Upload.csproj", "{A8EBBB9B-614D-4E38-B8F1-85FBA8D033B8}"
 EndProject
-<<<<<<< HEAD
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Science.Upload.Domain", "Science\Services\Upload\WorldFeed.Science.Upload.Domain\WorldFeed.Science.Upload.Domain.csproj", "{6B22BA1F-1A04-4646-A4F4-ADDC1ECCEF27}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Science.Upload.Infrastructure", "Science\Services\Upload\WorldFeed.Science.Upload.Infrastructure\WorldFeed.Science.Upload.Infrastructure.csproj", "{DDA14DBE-2BBC-46FA-98CE-D8F8A6FFF5BF}"
@@ -126,28 +125,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{EB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{E9261BE3-6734-48CA-8C0C-58F2EDB0B291}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Data", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Data\WorldFeed.Programming.Quiz.Data.csproj", "{4590E5F1-CF86-4A8E-B1C2-692C13BC5B26}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Data.Common", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Data.Common\WorldFeed.Programming.Quiz.Data.Common.csproj", "{83985A8C-98A5-4611-BC33-AA2F4BA0ACEA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Data.Models", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Data.Models\WorldFeed.Programming.Quiz.Data.Models.csproj", "{D17A98C2-AF69-4A3E-8B58-13CFE1F1C91F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Services.Messaging", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Services.Messaging\WorldFeed.Programming.Quiz.Services.Messaging.csproj", "{91C35868-1714-49D2-863A-61C5301F3799}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Web", "Programming\Services\Quiz\WorldFeed.Programming.Quiz\WorldFeed.Programming.Quiz.Web.csproj", "{C8C71D00-2F81-440E-8994-CF4117AA6332}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Common", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Common\WorldFeed.Programming.Quiz.Common.csproj", "{B6B419E1-AF69-456F-98CC-0040684D7846}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Web.ViewModels", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Web.ViewModels\WorldFeed.Programming.Quiz.Web.ViewModels.csproj", "{B9A6BCBB-4430-4CBA-A606-B23D7DD52E12}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Services", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Services\WorldFeed.Programming.Quiz.Services.csproj", "{09CDD879-5080-4BD4-A9F6-29342FCD979A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Services.Data", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Services.Data\WorldFeed.Programming.Quiz.Services.Data.csproj", "{3C32D7E3-C3F5-45CB-8B29-EE2FBB5F1338}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Services.Mapping", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Services.Mapping\WorldFeed.Programming.Quiz.Services.Mapping.csproj", "{65B193F8-5BE1-4391-86E1-90B8BF07F6CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Web", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Web\WorldFeed.Programming.Quiz.Web.csproj", "{990D197B-8F76-4D6A-B209-0DCB7FE0DA87}"
 EndProject
-=======
->>>>>>> parent of 678d09f... Added "The Programming Quiz" in "Programming" microservice
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Common", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Common\WorldFeed.Programming.Quiz.Common.csproj", "{443C0652-B278-46A7-BB01-2C3CA08719A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Data.Common", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Data.Common\WorldFeed.Programming.Quiz.Data.Common.csproj", "{B8C48727-95BB-4603-98DB-4BDC3A33E465}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Data", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Data\WorldFeed.Programming.Quiz.Data.csproj", "{43C4DC59-A8B1-4E91-99AD-FEEB4731705E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Data.Models", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Data.Models\WorldFeed.Programming.Quiz.Data.Models.csproj", "{B871C68A-CCD7-4E3C-A1B3-869642A6D222}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Services.Mapping", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Services.Mapping\WorldFeed.Programming.Quiz.Services.Mapping.csproj", "{C8E4788A-6A93-471B-8C23-2DDF62CF8804}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.Programming.Quiz.Services.Messaging", "Programming\Services\Quiz\WorldFeed.Programming.Quiz.Services.Messaging\WorldFeed.Programming.Quiz.Services.Messaging.csproj", "{4FDEE240-B74E-46DA-8EC5-71BBDD198DD8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -250,7 +247,6 @@ Global
 		{A8EBBB9B-614D-4E38-B8F1-85FBA8D033B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8EBBB9B-614D-4E38-B8F1-85FBA8D033B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8EBBB9B-614D-4E38-B8F1-85FBA8D033B8}.Release|Any CPU.Build.0 = Release|Any CPU
-<<<<<<< HEAD
 		{6B22BA1F-1A04-4646-A4F4-ADDC1ECCEF27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6B22BA1F-1A04-4646-A4F4-ADDC1ECCEF27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B22BA1F-1A04-4646-A4F4-ADDC1ECCEF27}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -259,30 +255,6 @@ Global
 		{DDA14DBE-2BBC-46FA-98CE-D8F8A6FFF5BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDA14DBE-2BBC-46FA-98CE-D8F8A6FFF5BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDA14DBE-2BBC-46FA-98CE-D8F8A6FFF5BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4590E5F1-CF86-4A8E-B1C2-692C13BC5B26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4590E5F1-CF86-4A8E-B1C2-692C13BC5B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4590E5F1-CF86-4A8E-B1C2-692C13BC5B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4590E5F1-CF86-4A8E-B1C2-692C13BC5B26}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83985A8C-98A5-4611-BC33-AA2F4BA0ACEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83985A8C-98A5-4611-BC33-AA2F4BA0ACEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83985A8C-98A5-4611-BC33-AA2F4BA0ACEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83985A8C-98A5-4611-BC33-AA2F4BA0ACEA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D17A98C2-AF69-4A3E-8B58-13CFE1F1C91F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D17A98C2-AF69-4A3E-8B58-13CFE1F1C91F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D17A98C2-AF69-4A3E-8B58-13CFE1F1C91F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D17A98C2-AF69-4A3E-8B58-13CFE1F1C91F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{91C35868-1714-49D2-863A-61C5301F3799}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{91C35868-1714-49D2-863A-61C5301F3799}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{91C35868-1714-49D2-863A-61C5301F3799}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{91C35868-1714-49D2-863A-61C5301F3799}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C8C71D00-2F81-440E-8994-CF4117AA6332}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C8C71D00-2F81-440E-8994-CF4117AA6332}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C8C71D00-2F81-440E-8994-CF4117AA6332}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C8C71D00-2F81-440E-8994-CF4117AA6332}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6B419E1-AF69-456F-98CC-0040684D7846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6B419E1-AF69-456F-98CC-0040684D7846}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6B419E1-AF69-456F-98CC-0040684D7846}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6B419E1-AF69-456F-98CC-0040684D7846}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B9A6BCBB-4430-4CBA-A606-B23D7DD52E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B9A6BCBB-4430-4CBA-A606-B23D7DD52E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9A6BCBB-4430-4CBA-A606-B23D7DD52E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -295,12 +267,34 @@ Global
 		{3C32D7E3-C3F5-45CB-8B29-EE2FBB5F1338}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C32D7E3-C3F5-45CB-8B29-EE2FBB5F1338}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C32D7E3-C3F5-45CB-8B29-EE2FBB5F1338}.Release|Any CPU.Build.0 = Release|Any CPU
-		{65B193F8-5BE1-4391-86E1-90B8BF07F6CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65B193F8-5BE1-4391-86E1-90B8BF07F6CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65B193F8-5BE1-4391-86E1-90B8BF07F6CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65B193F8-5BE1-4391-86E1-90B8BF07F6CA}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
->>>>>>> parent of 678d09f... Added "The Programming Quiz" in "Programming" microservice
+		{990D197B-8F76-4D6A-B209-0DCB7FE0DA87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{990D197B-8F76-4D6A-B209-0DCB7FE0DA87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{990D197B-8F76-4D6A-B209-0DCB7FE0DA87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{990D197B-8F76-4D6A-B209-0DCB7FE0DA87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{443C0652-B278-46A7-BB01-2C3CA08719A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{443C0652-B278-46A7-BB01-2C3CA08719A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{443C0652-B278-46A7-BB01-2C3CA08719A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{443C0652-B278-46A7-BB01-2C3CA08719A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8C48727-95BB-4603-98DB-4BDC3A33E465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8C48727-95BB-4603-98DB-4BDC3A33E465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8C48727-95BB-4603-98DB-4BDC3A33E465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8C48727-95BB-4603-98DB-4BDC3A33E465}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43C4DC59-A8B1-4E91-99AD-FEEB4731705E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43C4DC59-A8B1-4E91-99AD-FEEB4731705E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43C4DC59-A8B1-4E91-99AD-FEEB4731705E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43C4DC59-A8B1-4E91-99AD-FEEB4731705E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B871C68A-CCD7-4E3C-A1B3-869642A6D222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B871C68A-CCD7-4E3C-A1B3-869642A6D222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B871C68A-CCD7-4E3C-A1B3-869642A6D222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B871C68A-CCD7-4E3C-A1B3-869642A6D222}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8E4788A-6A93-471B-8C23-2DDF62CF8804}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8E4788A-6A93-471B-8C23-2DDF62CF8804}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8E4788A-6A93-471B-8C23-2DDF62CF8804}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8E4788A-6A93-471B-8C23-2DDF62CF8804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FDEE240-B74E-46DA-8EC5-71BBDD198DD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FDEE240-B74E-46DA-8EC5-71BBDD198DD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FDEE240-B74E-46DA-8EC5-71BBDD198DD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FDEE240-B74E-46DA-8EC5-71BBDD198DD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -358,7 +352,6 @@ Global
 		{B9D55730-9DDC-4D67-A55B-A2A52B9E2E5B} = {F6A1EA1C-A762-4945-8B5A-85DAFDDDAB3F}
 		{F4FE1B98-FB80-4DBA-8C66-826AB26242C8} = {F6A1EA1C-A762-4945-8B5A-85DAFDDDAB3F}
 		{A8EBBB9B-614D-4E38-B8F1-85FBA8D033B8} = {B9D55730-9DDC-4D67-A55B-A2A52B9E2E5B}
-<<<<<<< HEAD
 		{6B22BA1F-1A04-4646-A4F4-ADDC1ECCEF27} = {B9D55730-9DDC-4D67-A55B-A2A52B9E2E5B}
 		{DDA14DBE-2BBC-46FA-98CE-D8F8A6FFF5BF} = {B9D55730-9DDC-4D67-A55B-A2A52B9E2E5B}
 		{728BE41D-6979-498A-8BCD-D4E3BA476D92} = {7394B8F6-BF6A-420B-A2D9-33807B4F9809}
@@ -367,18 +360,16 @@ Global
 		{B9151FE9-D4A1-463B-8ADA-373019A90B33} = {EC0ED15B-0011-45E9-BF8E-B2663AB264DC}
 		{EB698FC0-5EFA-42B9-A67C-C182C62FBA1A} = {EC0ED15B-0011-45E9-BF8E-B2663AB264DC}
 		{E9261BE3-6734-48CA-8C0C-58F2EDB0B291} = {EC0ED15B-0011-45E9-BF8E-B2663AB264DC}
-		{4590E5F1-CF86-4A8E-B1C2-692C13BC5B26} = {B9151FE9-D4A1-463B-8ADA-373019A90B33}
-		{83985A8C-98A5-4611-BC33-AA2F4BA0ACEA} = {B9151FE9-D4A1-463B-8ADA-373019A90B33}
-		{D17A98C2-AF69-4A3E-8B58-13CFE1F1C91F} = {B9151FE9-D4A1-463B-8ADA-373019A90B33}
-		{91C35868-1714-49D2-863A-61C5301F3799} = {EB698FC0-5EFA-42B9-A67C-C182C62FBA1A}
-		{C8C71D00-2F81-440E-8994-CF4117AA6332} = {E9261BE3-6734-48CA-8C0C-58F2EDB0B291}
-		{B6B419E1-AF69-456F-98CC-0040684D7846} = {EC0ED15B-0011-45E9-BF8E-B2663AB264DC}
 		{B9A6BCBB-4430-4CBA-A606-B23D7DD52E12} = {E9261BE3-6734-48CA-8C0C-58F2EDB0B291}
 		{09CDD879-5080-4BD4-A9F6-29342FCD979A} = {EB698FC0-5EFA-42B9-A67C-C182C62FBA1A}
 		{3C32D7E3-C3F5-45CB-8B29-EE2FBB5F1338} = {EB698FC0-5EFA-42B9-A67C-C182C62FBA1A}
-		{65B193F8-5BE1-4391-86E1-90B8BF07F6CA} = {EB698FC0-5EFA-42B9-A67C-C182C62FBA1A}
-=======
->>>>>>> parent of 678d09f... Added "The Programming Quiz" in "Programming" microservice
+		{990D197B-8F76-4D6A-B209-0DCB7FE0DA87} = {E9261BE3-6734-48CA-8C0C-58F2EDB0B291}
+		{443C0652-B278-46A7-BB01-2C3CA08719A4} = {EC0ED15B-0011-45E9-BF8E-B2663AB264DC}
+		{B8C48727-95BB-4603-98DB-4BDC3A33E465} = {B9151FE9-D4A1-463B-8ADA-373019A90B33}
+		{43C4DC59-A8B1-4E91-99AD-FEEB4731705E} = {B9151FE9-D4A1-463B-8ADA-373019A90B33}
+		{B871C68A-CCD7-4E3C-A1B3-869642A6D222} = {B9151FE9-D4A1-463B-8ADA-373019A90B33}
+		{C8E4788A-6A93-471B-8C23-2DDF62CF8804} = {EB698FC0-5EFA-42B9-A67C-C182C62FBA1A}
+		{4FDEE240-B74E-46DA-8EC5-71BBDD198DD8} = {EB698FC0-5EFA-42B9-A67C-C182C62FBA1A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58A386E4-E7C7-49B8-8E30-D8DD2154B7D5}

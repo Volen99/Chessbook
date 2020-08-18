@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Skill Level";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div id="skills-row" class="row">
+            @{
+                var levels = new Queue<string>(new[] { "Beginner", "Intermediate", "Advanced", "Expert" });
+                var urls = new Queue<string>(new[] { "beginner-robot.png", "intermediate-robot.png", "advanced-robot.png", @"expert-robot.png" });
+
+                for (int lives = 50; lives >= 20; lives -= 10)
+                {
+                    var dataCurrent = new Dictionary<string, string> { { "Level", levels.Peek() }, };
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                        <a class="level-anchor a-btn" asp-controller="SkillLevel" asp-action="SetInitialUserQuizTokens" asp-all-route-data="@dataCurrent" draggable="false">
+                            <img class="skill-level" src="~/images/@urls.Dequeue()" draggable="false" alt="Robot @levels.Peek() Level" />
+                            <span class="level-text">@levels.Dequeue()</span>
+                            <span class="skill-lives"> &#128153; @lives</span>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

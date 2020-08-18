@@ -266,44 +266,6 @@ namespace WorldFeed.Programming.Quiz.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("WorldFeed.Programming.Quiz.Data.Models.FileTable", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Directory")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("Size")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Files");
-                });
-
             modelBuilder.Entity("WorldFeed.Programming.Quiz.Data.Models.Questions", b =>
                 {
                     b.Property<int>("Id")
@@ -658,13 +620,6 @@ namespace WorldFeed.Programming.Quiz.Data.Migrations
                         .HasForeignKey("UserQuizTokenId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("WorldFeed.Programming.Quiz.Data.Models.FileTable", b =>
-                {
-                    b.HasOne("WorldFeed.Programming.Quiz.Data.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("WorldFeed.Programming.Quiz.Data.Models.Styles.QuestionVoteStyles", b =>

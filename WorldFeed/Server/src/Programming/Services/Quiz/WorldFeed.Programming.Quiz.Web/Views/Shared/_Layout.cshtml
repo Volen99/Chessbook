@@ -1,0 +1,100 @@
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0">
+
+    <meta name="title" content="The Programming Quiz" />
+
+    <meta name="description" content="Challenge yourself with 1000 quiz questions about programming and be the first to solve them all to win a special award!
+          The Programming Quiz contains questions about computers from hardware to software. The more you solve, the more extras you will unclock,
+          like mini games to win lives. Compete with friends, and prove that you are the best quiz solver!">
+
+    <meta name="keywords" content="HTML, CSS, XML, XHTML, JavaScript, C#, Java, PHP, C++, C, Quiz, AI, Programming Quiz, The Programming Quiz, Hardware, sotfware, The most difficult programming quiz
+          in the world, algorithms, algorithms quiz, The best Programming Quiz in the world">
+
+    <title>@ViewData["Title"] / The Programming Quiz</title>
+
+    <script src="https://kit.fontawesome.com/7a278366af.js" crossorigin="anonymous"></script>
+    <environment include="Development">
+        <link href="~/lib/bootstrap/dist/js/bootstrap.js">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link href="~/css/site.css" rel="stylesheet" type="text/css" media="screen" runat="server" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,700;1,500;1,700&display=swap" rel="stylesheet">
+    </environment>
+
+    <environment include="Production">
+        <link href="~/lib/bootstrap/dist/js/bootstrap.js">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link href="~/css/site.css" rel="stylesheet" type="text/css" media="screen" runat="server" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,700;1,500;1,700&display=swap" rel="stylesheet">
+    </environment>
+
+    <link rel="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" />
+    @Html.Raw(JavaScriptSnippet.FullScript)
+</head>
+<body>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+
+    <div class="lead-wrapper">
+        <header>
+            <div id="container">
+                <div id="header">
+                    <nav class="navbar navbar-inverse navbar-fixed-top">
+                        <div class="container">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">The Programming Quiz</a>
+                            </div>
+                            <div class="navbar-collapse collapse">
+                                <ul class="nav navbar-nav">
+                                    <li><a asp-area="" asp-controller="Comment" asp-action="Index">Comments</a></li>
+                                </ul>
+                                <ul class="nav navbar-nav">
+                                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                                </ul>
+                                <partial name="_LoginPartial" /><span id="legacy-dude" aria-describedby="tooltip-legacy-dude">></span>
+                                <div id="tooltip-legacy-dude" class="tooltip" role="tooltip">&#128526<div id="arrow" data-popper-arrow></div></div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <input id="username-current" type="hidden" value="@User.Identity.Name" />
+
+    <span id="chat-window"></span>
+
+    @RenderBody()
+    <partial name="_CookieConsentPartial" />
+
+    @*<a id="send-message" class="a-btn">Send Message</a>*@
+
+    <script src="~/js/global.min.js"></script>
+
+    <script src="https://unpkg.com/@@popperjs/core@2/dist/umd/popper.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    <partial name="_FooterPartial" />
+    <script>
+        $("#send-message").click((ev) => {
+            $("#chat-window").load("/Chatter");
+        })
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
