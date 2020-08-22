@@ -1,7 +1,8 @@
 ﻿namespace WorldFeed.BuildingBlocks.EventBus.Abstractions
 {
-    using WorldFeed.BuildingBlocks.EventBus.Events;
     using System.Threading.Tasks;
+
+    using WorldFeed.BuildingBlocks.EventBus.Events;
 
     public interface IIntegrationEventHandler<in TIntegrationEvent> : IIntegrationEventHandler
         where TIntegrationEvent : IntegrationEvent

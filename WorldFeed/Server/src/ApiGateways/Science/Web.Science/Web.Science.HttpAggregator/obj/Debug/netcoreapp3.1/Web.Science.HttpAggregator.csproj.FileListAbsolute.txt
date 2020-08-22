@@ -188,3 +188,10 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Scien
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\EventBusRabbitMQ.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\EventBus.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\EventBusRabbitMQ.pdb
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\Serilog.Enrichers.Environment.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\Serilog.Sinks.Http.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\Serilog.Sinks.PeriodicBatching.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\Serilog.Sinks.RollingFile.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\Serilog.Sinks.Seq.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\MediatR.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Science\Web.Science\Web.Science.HttpAggregator\bin\Debug\netcoreapp3.1\MediatR.Extensions.Microsoft.DependencyInjection.dll

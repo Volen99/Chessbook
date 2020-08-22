@@ -317,4 +317,3 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Statist
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Statistics\obj\Debug\netcoreapp3.1\staticwebassets\WorldFeed.Statistics.StaticWebAssets.Manifest.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Statistics\obj\Debug\netcoreapp3.1\staticwebassets\WorldFeed.Statistics.StaticWebAssets.xml
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Statistics\obj\Debug\netcoreapp3.1\WorldFeed.Statistics.genruntimeconfig.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Statistics\obj\Debug\netcoreapp3.1\WorldFeed.Statistics.csprojAssemblyReference.cache

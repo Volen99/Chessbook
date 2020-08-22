@@ -2,45 +2,33 @@ namespace WorldFeed.Science.Upload
 {
     using System;
     using System.Reflection;
-    using System.IO;
-    using HealthChecks.UI.Client;
+    using System.Collections.Generic;
+    using System.IdentityModel.Tokens.Jwt;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.FileProviders;
     using Microsoft.OpenApi.Models;
     using Microsoft.AspNetCore.Diagnostics.HealthChecks;
     using Microsoft.EntityFrameworkCore;
-
-    using WorldFeed.Common.Models;
-    using WorldFeed.Common.Models.Repositories;
-    using WorldFeed.Common.Data;
-    using WorldFeed.Common.Services.Mapping;
-    using WorldFeed.Science.API.Data;
-    using WorldFeed.Science.API.Models;
-    using WorldFeed.Science.API.Repositories;
-    using WorldFeed.Infrastructure;
-    using WorldFeed.Science.Upload.Services.Files;
-    using WorldFeed.Science.Upload.Infrastructure;
-    using System.Collections.Generic;
-    using WorldFeed.Science.Upload.Infrastructure.Filters;
-    using Autofac;
-    using WorldFeed.Science.Upload.Infrastructure.AutofacModules;
-    using Autofac.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using WorldFeed.Science.Upload.Infrastructure.Middlewares;
     using Microsoft.Extensions.Diagnostics.HealthChecks;
-    using WorldFeed.Science.Upload.Services;
-    using EventBusRabbitMQ;
-    using RabbitMQ.Client;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Mvc;
+    using HealthChecks.UI.Client;
+    using Autofac;
+    using Autofac.Extensions.DependencyInjection;
+    using RabbitMQ.Client;
+    using EventBusRabbitMQ;
+
+    using WorldFeed.Science.Upload.Infrastructure;
+    using WorldFeed.Science.Upload.Infrastructure.Filters;
+    using WorldFeed.Science.Upload.Infrastructure.AutofacModules;
+    using WorldFeed.Science.Upload.Infrastructure.Middlewares;
+    using WorldFeed.Science.Upload.Services;
     using WorldFeed.BuildingBlocks.EventBus.Abstractions;
     using WorldFeed.BuildingBlocks.EventBus;
-    using System.IdentityModel.Tokens.Jwt;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
 
     public class Startup
     {
@@ -312,7 +300,7 @@ namespace WorldFeed.Science.Upload
         public static IServiceCollection AddCustomConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddOptions();
-            // services.Configure<OrderingSettings>(configuration);
+            services.Configure<ScienceUploadSettings>(configuration);
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = context =>

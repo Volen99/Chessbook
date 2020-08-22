@@ -5,11 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WorldFeed.Science.Upload.Domain\WorldFeed.Science.Upload.Domain.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <ProjectReference Include="..\WorldFeed.Science.Upload.Domain\WorldFeed.Science.Upload.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -41,7 +41,7 @@
             set
             {
                 this.tweetDTO = value;
-                DTOUpdated();
+                this.DTOUpdated();
             }
         }
 
@@ -334,18 +334,18 @@
 
         public Tweet(ITweetDTO tweetDTO, TweetMode? tweetMode, ITwitterClient client)
         {
-            Client = client;
+            this.Client = client;
 
             // IMPORTANT: POSITION MATTERS! Look line below!
-            TweetMode = tweetMode ?? TweetMode.Extended;
+            this.TweetMode = tweetMode ?? TweetMode.Extended;
 
             // IMPORTANT: Make sure that the TweetDTO is set up after the TweetMode because it uses the TweetMode to initialize the Entities
-            TweetDTO = tweetDTO;
+            this.TweetDTO = tweetDTO;
         }
 
         public Tweet(ITweetWithSearchMetadataDTO tweetDTO, TweetMode? tweetMode, ITwitterClient client)
         {
-            TweetDTO = tweetDTO;
+            this.TweetDTO = tweetDTO;
             this.tweetMode = tweetMode;
             this.client = client;
         }

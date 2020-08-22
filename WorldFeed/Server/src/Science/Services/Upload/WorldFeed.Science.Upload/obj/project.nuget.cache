@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "IeXQdnxVTRdvRgbsyy7Jvz6VTDcuYG3bVqoG5A8nWS1ge64LkDztTp1Ft1VZ51F8HiW4u8Y3eu+YFGglnffpVA==",
+  "dgSpecHash": "VBzfeuQSEPAtJpW+k3Gp1t7rgt4BzvVsQPXzPUWPNOaaetHL8k/063caR++AFJfMgLy7Yj6iRBmq2hKOenCSxw==",
   "success": true,
   "projectFilePath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\Science\\Services\\Upload\\WorldFeed.Science.Upload\\WorldFeed.Science.Upload.csproj",
   "expectedPackageFiles": [
@@ -34,6 +34,8 @@
     "C:\\Users\\volen\\.nuget\\packages\\masstransit.aspnetcore\\7.0.3\\masstransit.aspnetcore.7.0.3.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\masstransit.extensions.dependencyinjection\\7.0.3\\masstransit.extensions.dependencyinjection.7.0.3.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\masstransit.rabbitmq\\7.0.3\\masstransit.rabbitmq.7.0.3.nupkg.sha512",
+    "C:\\Users\\volen\\.nuget\\packages\\mediatr\\7.0.0\\mediatr.7.0.0.nupkg.sha512",
+    "C:\\Users\\volen\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\7.0.0\\mediatr.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\microsoft.aspnetcore.apiauthorization.identityserver\\3.1.7\\microsoft.aspnetcore.apiauthorization.identityserver.3.1.7.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.7\\microsoft.aspnetcore.authentication.jwtbearer.3.1.7.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\microsoft.aspnetcore.authentication.openidconnect\\3.0.0-preview9.19424.4\\microsoft.aspnetcore.authentication.openidconnect.3.0.0-preview9.19424.4.nupkg.sha512",

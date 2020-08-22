@@ -174,3 +174,5 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\Serilog.Sinks.PeriodicBatching.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\Serilog.Sinks.RollingFile.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\Serilog.Sinks.Seq.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\MediatR.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\MediatR.Extensions.Microsoft.DependencyInjection.dll

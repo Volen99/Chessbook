@@ -7,8 +7,7 @@
     using global::WorldFeed.Common.Public.Models.Interfaces.DTO;
     using global::WorldFeed.Common.Settings;
 
-    // IT WAS internal!!
-    public class TweetEntities : ITweetEntities
+    internal class TweetEntities : ITweetEntities
     {
         private readonly ITweetDTO tweetDTO;
 

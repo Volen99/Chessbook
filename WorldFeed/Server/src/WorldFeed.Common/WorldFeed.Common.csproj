@@ -40,8 +40,6 @@
 
   <ItemGroup>
     <Folder Include="DataAnnotations\" />
-    <Folder Include="Models\Configuration\" />
-    <Folder Include="Models\DTO\" />
     <Folder Include="Resources\Enums\" />
     <Folder Include="Services\Mapping\" />
   </ItemGroup>

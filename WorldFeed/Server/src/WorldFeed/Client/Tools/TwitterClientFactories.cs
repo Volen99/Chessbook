@@ -201,6 +201,7 @@ namespace WorldFeed.Client.Tools
                 return null;
             }
 
+            // var result = this.feedsService.CreateFeed(tweetDTO, this.client.Config.TweetMode, this.client);
             return new Tweet(tweetDTO, this.client.Config.TweetMode, this.client);
         }
 
