@@ -14,9 +14,6 @@ namespace WorldFeed.Common.Models
         public ApplicationUser()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Roles = new HashSet<IdentityUserRole<string>>();
-            this.Claims = new HashSet<IdentityUserClaim<string>>();
-            this.Logins = new HashSet<IdentityUserLogin<string>>(); 
         }
 
         public string FirstName { get; set; }
@@ -35,12 +32,6 @@ namespace WorldFeed.Common.Models
 
         [DataType(DataType.DateTime)]
         public DateTime? ModifiedOn { get; set; }
-
-        public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
-
-        public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
-
-        public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
         // Twitter
 

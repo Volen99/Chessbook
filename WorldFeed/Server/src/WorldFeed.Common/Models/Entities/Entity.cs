@@ -1,12 +1,12 @@
 ﻿namespace WorldFeed.Common.Models.Entities
 {
+    using Microsoft.EntityFrameworkCore;
+
     using global::WorldFeed.Common.Models.Urls;
 
+    [Owned]
     public class Entity
     {   
-        public int Id { get; set; }
-
-        public int UrlId { get; set; }
         public Url Url { get; set; }
 
         public int DescriptionId { get; set; }

@@ -1,6 +1,7 @@
 ﻿namespace WorldFeed.Identity.API.Controllers
 {
     using System;
+    using System.Globalization;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -14,7 +15,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
-
+    using WorldFeed.Common;
     using WorldFeed.Identity.API.Models;
     using WorldFeed.Identity.API.Models.AccountViewModels;
     using WorldFeed.Identity.API.Services;
@@ -248,8 +249,10 @@
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
+            var registerViewModel = new RegisterViewModel();
+
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            return View(registerViewModel);
         }
 
         
@@ -260,18 +263,31 @@
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
                 {
-                    UserName = model.Email,
+                    UserName = model.User.Name,
+                    ScreenName = model.User.Name,
                     Email = model.Email,
-                    City = model.User.City,
-                    Country = model.User.Country,
-                    LastName = model.User.LastName,
-                    Name = model.User.Name,
-                    PhoneNumber = model.User.PhoneNumber,
-                };
+                    Month = model.User.Month,
+                    Day = model.User.Day,
+                    Year = model.User.Year,
+                    Birthday = DateTime.ParseExact($"{model.User.Month}/{model.User.Day}/{model.User.Year} 00:00", "M/d/yyyy hh:mm", CultureInfo.InvariantCulture),
+                    Gender = model.User.Gender,
+                    DefaultProfile = true,
+                    CreatedOn = DateTime.UtcNow,
+                    DefaultProfileImage = true,
+            };
+
+                var age = Calculator.Age(user.Birthday);
+
+                if (age.HasValue)
+                {
+                    user.Age = (int)age;
+                }
+
                 var result = await this.userManager.CreateAsync(user, model.Password);
                 if (result.Errors.Count() > 0)
                 {
@@ -349,9 +365,9 @@
             {
                 UserName = model.UserName,
                 Email = model.Email,
-                Country = "Earth",
-                City = "Sea",
-                LastName = "Last Name",
+                //Country = "Earth",
+                //City = "Sea",
+                //LastName = "Last Name",
                 Name = "Name",
                 //PhoneNumber = model.Use,zr.PhoneNumber,
             };

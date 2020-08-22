@@ -109,11 +109,11 @@
 
             var user = new ApplicationUser
             {
-                City = column[Array.IndexOf(headers, "city")].Trim('"').Trim(),
-                Country = column[Array.IndexOf(headers, "country")].Trim('"').Trim(),
+               // City = column[Array.IndexOf(headers, "city")].Trim('"').Trim(),
+                //Country = column[Array.IndexOf(headers, "country")].Trim('"').Trim(),
                 Email = column[Array.IndexOf(headers, "email")].Trim('"').Trim(),
                 Id = Guid.NewGuid().ToString(),
-                LastName = column[Array.IndexOf(headers, "lastname")].Trim('"').Trim(),
+                //LastName = column[Array.IndexOf(headers, "lastname")].Trim('"').Trim(),
                 Name = column[Array.IndexOf(headers, "name")].Trim('"').Trim(),
                 PhoneNumber = column[Array.IndexOf(headers, "phonenumber")].Trim('"').Trim(),
                 UserName = column[Array.IndexOf(headers, "username")].Trim('"').Trim(),
@@ -132,11 +132,11 @@
         {
             var user = new ApplicationUser()
             {
-                City = "LosAngeles",
-                Country = "U.S.",
+                //City = "LosAngeles",
+                //Country = "U.S.",
                 Email = "demouser@microsoft.com",
                 Id = Guid.NewGuid().ToString(),
-                LastName = "DemoLastName",
+               // LastName = "DemoLastName",
                 Name = "DemoUser",
                 PhoneNumber = "1234567890",
                 UserName = "demouser@microsoft.com",

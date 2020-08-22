@@ -15,7 +15,7 @@ class ImageSnippet {
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'app-science-upload',
+  selector : 'app-science-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.css'],
 })

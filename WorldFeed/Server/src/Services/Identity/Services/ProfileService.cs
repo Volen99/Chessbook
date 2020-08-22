@@ -79,14 +79,14 @@
             if (!string.IsNullOrWhiteSpace(user.Name))
                 claims.Add(new Claim("name", user.Name));
 
-            if (!string.IsNullOrWhiteSpace(user.LastName))
-                claims.Add(new Claim("last_name", user.LastName));
+            //if (!string.IsNullOrWhiteSpace(user.LastName))
+            //    claims.Add(new Claim("last_name", user.LastName));
 
-            if (!string.IsNullOrWhiteSpace(user.City))
-                claims.Add(new Claim("address_city", user.City));
+            //if (!string.IsNullOrWhiteSpace(user.City))
+            //    claims.Add(new Claim("address_city", user.City));
 
-            if (!string.IsNullOrWhiteSpace(user.Country))
-                claims.Add(new Claim("address_country", user.Country));
+            //if (!string.IsNullOrWhiteSpace(user.Country))
+            //    claims.Add(new Claim("address_country", user.Country));
 
             if (this.userManager.SupportsUserEmail)
             {

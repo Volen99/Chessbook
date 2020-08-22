@@ -1,9 +1,17 @@
 ﻿namespace WorldFeed.Identity.API.Models.AccountViewModels
 {
+    using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
+    using WorldFeed.Identity.API.Models.Enums;
 
     public class RegisterViewModel
     {
+        public RegisterViewModel()
+        {
+        }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -22,4 +30,5 @@
 
         public ApplicationUser User { get; set; }
     }
+
 }

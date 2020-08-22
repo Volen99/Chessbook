@@ -31,10 +31,10 @@
                 {
                     Scopes = {"webspa", "Web Spa" },
                 },
-                new ApiResource()
-                {
-                    Scopes = { "webshoppingagg", "Web Shopping Aggregator" },
-                },
+                //new ApiResource()
+                //{
+                //    Scopes = { "webshoppingagg", "Web Shopping Aggregator" },
+                //},
                 new ApiResource("science.upload", "Science Upload Service"),
             };
         }

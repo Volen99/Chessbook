@@ -4,7 +4,7 @@
 
     public class Calculator
     {
-        public static byte? Age(DateTime? date)
+        public static int? Age(DateTime? date)   // TODO: make it byte?
         {
             if (date.HasValue == false)
             {
@@ -20,7 +20,7 @@
                 age--;
             }
 
-            return (byte)age;
+            return (int)age;
         }
     }
 }

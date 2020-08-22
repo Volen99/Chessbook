@@ -14,7 +14,6 @@
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-
         public async Task<bool> ExistAsync(Guid id)
         {
             var request = await this.context.
