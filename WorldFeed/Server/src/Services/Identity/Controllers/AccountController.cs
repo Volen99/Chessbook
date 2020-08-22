@@ -18,6 +18,7 @@
     using WorldFeed.Common;
     using WorldFeed.Identity.API.Models;
     using WorldFeed.Identity.API.Models.AccountViewModels;
+    using WorldFeed.Identity.API.Models.Birthday;
     using WorldFeed.Identity.API.Services;
 
     /// <summary>
@@ -271,21 +272,28 @@
                     UserName = model.User.Name,
                     ScreenName = model.User.Name,
                     Email = model.Email,
-                    Month = model.User.Month,
-                    Day = model.User.Day,
-                    Year = model.User.Year,
-                    Birthday = DateTime.ParseExact($"{model.User.Month}/{model.User.Day}/{model.User.Year} 00:00", "M/d/yyyy hh:mm", CultureInfo.InvariantCulture),
                     Gender = model.User.Gender,
-                    DefaultProfile = true,
+                    CanMediaTag = true,
                     CreatedOn = DateTime.UtcNow,
                     DefaultProfileImage = true,
+                    DefaultProfile = true,
+                    Description = model.User.Description,
+                     
+                    Birthdate = new Birthdate
+                    {
+                        Month = model.User.Birthdate.Month,
+                        Day = model.User.Birthdate.Day,
+                        Year = model.User.Birthdate.Year,
+                        Visibility = model.User.Birthdate.Visibility,
+                        VisibilityYear = model.User.Birthdate.VisibilityYear,
+                    }
             };
 
-                var age = Calculator.Age(user.Birthday);
-
+                var birthday = DateTime.ParseExact($"{model.User.Birthdate.Month}/{model.User.Birthdate.Day}/{model.User.Birthdate.Year} 00:00", "M/d/yyyy hh:mm", CultureInfo.InvariantCulture);
+                var age = Calculator.Age(birthday);
                 if (age.HasValue)
                 {
-                    user.Age = (int)age;
+                    user.Birthdate.Age = (int)age;
                 }
 
                 var result = await this.userManager.CreateAsync(user, model.Password);
@@ -331,6 +339,7 @@
             if (info == null)
             {
                 return RedirectToAction("Login");
+
             }
 
             var result = await this.signInManager
@@ -365,11 +374,7 @@
             {
                 UserName = model.UserName,
                 Email = model.Email,
-                //Country = "Earth",
-                //City = "Sea",
-                //LastName = "Last Name",
-                Name = "Name",
-                //PhoneNumber = model.Use,zr.PhoneNumber,
+                Name = "ExternalRegisterNameMagicString",
             };
 
             var result = await this.userManager.CreateAsync(user);

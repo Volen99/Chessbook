@@ -1,0 +1,16 @@
+span {
+  margin-left: 900px;
+}
+
+p {
+  font-size: 11px;
+}
+
+#color {
+  background-color: #ff1493;
+  background-image: linear-gradient(319deg, #ff1493 0%, #0000ff 37%, #ff8c00 100%);
+}
+
+svg {
+  cursor: pointer;
+}

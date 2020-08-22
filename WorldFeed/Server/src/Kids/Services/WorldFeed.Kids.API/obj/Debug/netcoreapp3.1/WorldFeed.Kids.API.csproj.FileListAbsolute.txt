@@ -1,7 +1,6 @@
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Kids\Services\WorldFeed.Kids.API\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Kids\Services\WorldFeed.Kids.API\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Kids\Services\WorldFeed.Kids.API\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Kids\Services\WorldFeed.Kids.API\obj\Debug\netcoreapp3.1\WorldFeed.Kids.API.csprojAssemblyReference.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Kids\Services\WorldFeed.Kids.API\obj\Debug\netcoreapp3.1\WorldFeed.Kids.API.AssemblyInfoInputs.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Kids\Services\WorldFeed.Kids.API\obj\Debug\netcoreapp3.1\WorldFeed.Kids.API.AssemblyInfo.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Kids\Services\WorldFeed.Kids.API\obj\Debug\netcoreapp3.1\WorldFeed.Kids.API.RazorTargetAssemblyInfo.cache
@@ -129,3 +128,4 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Kids\Services\Wor
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Kids\Services\WorldFeed.Kids.API\obj\Debug\netcoreapp3.1\WorldFeed.Kids.API.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Kids\Services\WorldFeed.Kids.API\obj\Debug\netcoreapp3.1\WorldFeed.Kids.API.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Kids\Services\WorldFeed.Kids.API\obj\Debug\netcoreapp3.1\WorldFeed.Kids.API.genruntimeconfig.cache
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Kids\Services\WorldFeed.Kids.API\obj\Debug\netcoreapp3.1\WorldFeed.Kids.API.csprojAssemblyReference.cache

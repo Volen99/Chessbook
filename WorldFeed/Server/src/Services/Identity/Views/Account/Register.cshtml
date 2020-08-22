@@ -1,6 +1,8 @@
 ﻿@model WorldFeed.Identity.API.Models.AccountViewModels.RegisterViewModel
 
 @using WorldFeed.Identity.API.Models.Enums
+@using WorldFeed.Identity.API.Models.Birthday
+@using WorldFeed.Common.Extensions; 
 
 @{
     ViewData["Title"] = "Register";
@@ -34,6 +36,15 @@
     {
         years.Add(year);
     }
+
+    var enumVisibilityData = from Visibility e in Enum.GetValues(typeof(Visibility))
+                     select new
+                     {
+                         Id = (int)e,
+                         Name = e.GetDisplayName(),
+                     };
+
+    var visibilities = enumVisibilityData.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
 
 }
 
@@ -69,31 +80,49 @@
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group col-sm-6">
-                <label asp-for="User.Month"></label>
-                <select class="form-control" asp-for="User.Month" asp-items="months"></select>
-                <span asp-validation-for="User.Month" class="text-danger"></span>
+                <label asp-for="User.Description" class="control-label form-label"></label>
+                <input asp-for="User.Description" class="form-control form-input" />
+                <span asp-validation-for="User.Description" class="text-danger"></span>
             </div>
             <div class="form-group col-sm-6">
-                <label asp-for="User.Day" class="control-label form-label"></label>
-                <select id="day" class="form-control" asp-for="User.Day" aria-label="Day" title="Day">
+                <label asp-for="User.Birthdate.Month"></label>
+                <select class="form-control" asp-for="User.Birthdate.Month" asp-items="months"></select>
+                <span asp-validation-for="User.Birthdate.Month" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-6">
+                <label asp-for="User.Birthdate.Day" class="control-label form-label"></label>
+                <select id="day" class="form-control" asp-for="User.Birthdate.Day" aria-label="Day" title="Day">
                     <option value="0">Day</option>
                     @foreach (var day in days)
                     {
                         <option value="@day">@day</option>
                     }
                 </select>
-                <span asp-validation-for="User.Day" class="text-danger"></span>
+                <span asp-validation-for="User.Birthdate.Day" class="text-danger"></span>
             </div>
-            <div class="form-group col-sm-6">
-                <label asp-for="User.Year" class="control-label form-label"></label>
-                <select id="day" class="form-control" asp-for="User.Year" aria-label="Day" title="Day">
+            <div class="form-group col-sm-8">
+                <label asp-for="User.Birthdate.Year" class="control-label form-label"></label>
+                <select id="day" class="form-control" asp-for="User.Birthdate.Year" aria-label="Day" title="Day">
                     <option value="0">Year</option>
                     @foreach (var year in years)
                     {
                         <option value="@year">@year</option>
                     }
                 </select>
-                <span asp-validation-for="User.Year" class="text-danger"></span>
+                <span asp-validation-for="User.Birthdate.Year" class="text-danger"></span>
+                <div aria-label="Who sees this?" role="group">
+                    <div class="who-sees-this">Who sees this?</div>
+                    <p>You can control who sees your birthday on World Feed. <a href="https://www.nasa.gov" target="_blank">Learn More</a></p>
+                    <label asp-for="User.Birthdate.Visibility" class="control-label form-label"></label>
+                    <select class="form-control" asp-for="User.Birthdate.Visibility" asp-items="visibilities"></select>
+                    <span class="text-danger" asp-validation-for="User.Birthdate.Visibility"></span>
+                </div>
+                <br />
+                <div aria-label="Who sees this?" role="group">
+                    <label asp-for="User.Birthdate.VisibilityYear" class="control-label form-label"></label>
+                    <select class="form-control" asp-for="User.Birthdate.VisibilityYear" asp-items="visibilities"></select>
+                    <span class="text-danger" asp-validation-for="User.Birthdate.VisibilityYear"></span>
+                </div>
             </div>
             <div class="form-group col-sm-6">
                 <div>Gender</div>
@@ -106,15 +135,6 @@
                     }
                 </span>
             </div>
-            @*<div class="form-group col-sm-6">
-            <label asp-for="User.PhoneNumber" class="control-label form-label">PHONE NUMBER</label>
-            <input asp-for="User.PhoneNumber" class="form-control form-input" />
-            <span asp-validation-for="User.PhoneNumber" class="text-danger" />
-        </div>*@
-        </div>
-        <br /><br />
-        <div class="row">
-            <div class="form-group col-sm-offset-6"></div>
         </div>
         <br /><br />
         <div class="form-group">

@@ -5,10 +5,10 @@ import {StorageService} from '../../../core/shared-core/services/storage.service
 
 @Component({
   selector: 'app-profile-view',
-  templateUrl: './profile-view.component.html',
-  styleUrls: ['./profile-view.component.css']
+  templateUrl: './view.component.html',
+  styleUrls: ['./view.component.css']
 })
-export class ProfileViewComponent implements OnInit {
+export class ViewComponent implements OnInit {
   private storageService: StorageService;
 
   constructor(storageService: StorageService ) {

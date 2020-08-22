@@ -1,18 +1,19 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ProfileViewComponent} from '../../components/profile/view/profile-view.component';
-import {SharedModule} from '../shared-core/shared.module';
+import {SharedModule} from '../../core/shared-core/shared.module';
+import {ViewComponent} from './view/view.component';
+
 
 @NgModule({
   declarations: [
-    ProfileViewComponent,
+    ViewComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
   ],
   exports: [
-    ProfileViewComponent,
+    ViewComponent,
   ],
   providers: []
 })

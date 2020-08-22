@@ -150,67 +150,6 @@ namespace WorldFeed.Identity.API.Migrations.ApplicationDb
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WorldFeed.Common.Models.Entities.Description", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Description");
-                });
-
-            modelBuilder.Entity("WorldFeed.Common.Models.Entities.Indices", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("IndexFirst")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IndexSecond")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Indices");
-                });
-
-            modelBuilder.Entity("WorldFeed.Common.Models.Urls.Url", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("DescriptionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DisplayUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ExpandedUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IndicesId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UrlPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DescriptionId");
-
-                    b.HasIndex("IndicesId");
-
-                    b.ToTable("Url");
-                });
-
             modelBuilder.Entity("WorldFeed.Identity.API.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -219,13 +158,13 @@ namespace WorldFeed.Identity.API.Migrations.ApplicationDb
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Birthday")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("Blocking")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("BusinessProfileState")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("CanMediaTag")
                         .HasColumnType("bit");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -237,9 +176,6 @@ namespace WorldFeed.Identity.API.Migrations.ApplicationDb
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Day")
-                        .HasColumnType("int");
 
                     b.Property<bool>("DefaultProfile")
                         .HasColumnType("bit");
@@ -263,8 +199,8 @@ namespace WorldFeed.Identity.API.Migrations.ApplicationDb
                     b.Property<long>("FavouritesCount")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("FollowRequestSent")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("FollowRequestSent")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("FollowedBy")
                         .HasColumnType("bit");
@@ -282,6 +218,9 @@ namespace WorldFeed.Identity.API.Migrations.ApplicationDb
                         .HasColumnType("int");
 
                     b.Property<bool>("GeoEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasCustomTimelines")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
@@ -308,11 +247,11 @@ namespace WorldFeed.Identity.API.Migrations.ApplicationDb
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<int>("MediaCount")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -325,8 +264,8 @@ namespace WorldFeed.Identity.API.Migrations.ApplicationDb
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<string>("Notifications")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Notifications")
+                        .HasColumnType("bit");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -336,6 +275,9 @@ namespace WorldFeed.Identity.API.Migrations.ApplicationDb
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("PinnedTweetIds")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfileBackgroundColor")
                         .HasColumnType("nvarchar(max)");
@@ -361,6 +303,9 @@ namespace WorldFeed.Identity.API.Migrations.ApplicationDb
                     b.Property<string>("ProfileLinkColor")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProfileLocation")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ProfileSidebarBorderColor")
                         .HasColumnType("nvarchar(max)");
 
@@ -375,6 +320,12 @@ namespace WorldFeed.Identity.API.Migrations.ApplicationDb
 
                     b.Property<bool>("Protected")
                         .HasColumnType("bit");
+
+                    b.Property<bool>("RequireSomeConsent")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ScreenName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -403,9 +354,6 @@ namespace WorldFeed.Identity.API.Migrations.ApplicationDb
 
                     b.Property<bool>("Verified")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -471,52 +419,155 @@ namespace WorldFeed.Identity.API.Migrations.ApplicationDb
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WorldFeed.Common.Models.Urls.Url", b =>
-                {
-                    b.HasOne("WorldFeed.Common.Models.Entities.Description", null)
-                        .WithMany("Urls")
-                        .HasForeignKey("DescriptionId");
-
-                    b.HasOne("WorldFeed.Common.Models.Entities.Indices", "Indices")
-                        .WithMany()
-                        .HasForeignKey("IndicesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("WorldFeed.Identity.API.Models.ApplicationUser", b =>
                 {
-                    b.OwnsOne("WorldFeed.Common.Models.Entities.Entity", "Entities", b1 =>
+                    b.OwnsOne("WorldFeed.Identity.API.Models.Birthday.Birthdate", "Birthdate", b1 =>
                         {
                             b1.Property<string>("ApplicationUserId")
                                 .HasColumnType("nvarchar(450)");
 
-                            b1.Property<int>("DescriptionId")
+                            b1.Property<int>("Age")
                                 .HasColumnType("int");
 
-                            b1.Property<int?>("UrlId")
+                            b1.Property<int>("Day")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Month")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Visibility")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("VisibilityYear")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Year")
                                 .HasColumnType("int");
 
                             b1.HasKey("ApplicationUserId");
 
-                            b1.HasIndex("DescriptionId");
+                            b1.ToTable("AspNetUsers");
 
-                            b1.HasIndex("UrlId");
+                            b1.WithOwner()
+                                .HasForeignKey("ApplicationUserId");
+                        });
+
+                    b.OwnsOne("WorldFeed.Identity.API.Models.Entities.Entity", "Entities", b1 =>
+                        {
+                            b1.Property<string>("ApplicationUserId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.HasKey("ApplicationUserId");
 
                             b1.ToTable("AspNetUsers");
 
                             b1.WithOwner()
                                 .HasForeignKey("ApplicationUserId");
 
-                            b1.HasOne("WorldFeed.Common.Models.Entities.Description", "Description")
-                                .WithMany()
-                                .HasForeignKey("DescriptionId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
+                            b1.OwnsOne("WorldFeed.Identity.API.Models.Entities.Description", "Description", b2 =>
+                                {
+                                    b2.Property<string>("EntityApplicationUserId")
+                                        .HasColumnType("nvarchar(450)");
 
-                            b1.HasOne("WorldFeed.Common.Models.Urls.Url", "Url")
-                                .WithMany()
-                                .HasForeignKey("UrlId");
+                                    b2.HasKey("EntityApplicationUserId");
+
+                                    b2.ToTable("AspNetUsers");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("EntityApplicationUserId");
+
+                                    b2.OwnsMany("WorldFeed.Identity.API.Models.Entities.Urls.Url", "Urls", b3 =>
+                                        {
+                                            b3.Property<string>("DescriptionEntityApplicationUserId")
+                                                .HasColumnType("nvarchar(450)");
+
+                                            b3.Property<int>("Id")
+                                                .ValueGeneratedOnAdd()
+                                                .HasColumnType("int")
+                                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                                            b3.Property<string>("DisplayUrl")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("ExpandedUrl")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.Property<string>("UrlPath")
+                                                .HasColumnType("nvarchar(max)");
+
+                                            b3.HasKey("DescriptionEntityApplicationUserId", "Id");
+
+                                            b3.ToTable("AspNetUsers_Urls");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("DescriptionEntityApplicationUserId");
+
+                                            b3.OwnsOne("WorldFeed.Identity.API.Models.Entities.Indices", "Indices", b4 =>
+                                                {
+                                                    b4.Property<string>("UrlDescriptionEntityApplicationUserId")
+                                                        .HasColumnType("nvarchar(450)");
+
+                                                    b4.Property<int>("UrlId")
+                                                        .ValueGeneratedOnAdd()
+                                                        .HasColumnType("int")
+                                                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                                                    b4.Property<int>("IndexFirst")
+                                                        .HasColumnType("int");
+
+                                                    b4.Property<int>("IndexSecond")
+                                                        .HasColumnType("int");
+
+                                                    b4.HasKey("UrlDescriptionEntityApplicationUserId", "UrlId");
+
+                                                    b4.ToTable("AspNetUsers_Urls");
+
+                                                    b4.WithOwner()
+                                                        .HasForeignKey("UrlDescriptionEntityApplicationUserId", "UrlId");
+                                                });
+                                        });
+                                });
+
+                            b1.OwnsOne("WorldFeed.Identity.API.Models.Entities.Urls.Url", "Url", b2 =>
+                                {
+                                    b2.Property<string>("EntityApplicationUserId")
+                                        .HasColumnType("nvarchar(450)");
+
+                                    b2.Property<string>("DisplayUrl")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("ExpandedUrl")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("UrlPath")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.HasKey("EntityApplicationUserId");
+
+                                    b2.ToTable("AspNetUsers");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("EntityApplicationUserId");
+
+                                    b2.OwnsOne("WorldFeed.Identity.API.Models.Entities.Indices", "Indices", b3 =>
+                                        {
+                                            b3.Property<string>("UrlEntityApplicationUserId")
+                                                .HasColumnType("nvarchar(450)");
+
+                                            b3.Property<int>("IndexFirst")
+                                                .HasColumnType("int");
+
+                                            b3.Property<int>("IndexSecond")
+                                                .HasColumnType("int");
+
+                                            b3.HasKey("UrlEntityApplicationUserId");
+
+                                            b3.ToTable("AspNetUsers");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("UrlEntityApplicationUserId");
+                                        });
+                                });
                         });
                 });
 #pragma warning restore 612, 618
