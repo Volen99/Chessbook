@@ -12,6 +12,7 @@ import {User, UserManager, UserManagerSettings} from 'oidc-client';
 import * as Oidc from 'oidc-client';
 
 import axios from 'axios';
+import {Settings} from "../../models/settings/models/settings.model";
 
 @Injectable()
 export class SecurityService {
@@ -39,13 +40,13 @@ export class SecurityService {
 
     this.configurationService.settingsLoaded$.subscribe(x => {
       this.authorityUrl = this.configurationService.serverSettings.identityUrl;
-      this.storageService.store('IdentityUrl', this.authorityUrl);
+      // this.storageService.store('IdentityUrl', this.authorityUrl);
     });
 
-    if (this.storageService.retrieve('IsAuthorized') !== '') {
-      this.IsAuthorized = this.storageService.retrieve('IsAuthorized');
+    if (this.storageService.retrieve('isAuthorized') !== '') {
+      this.isAuthorized = this.storageService.retrieve('isAuthorized');
       this.authenticationSource.next(true);
-      this.UserData = this.storageService.retrieve('userData');
+      this.userData = this.storageService.retrieve('userData');
     }
 
     this.headers = new HttpHeaders();
@@ -53,16 +54,18 @@ export class SecurityService {
     this.headers.append('Accept', 'application/json');
   }
 
-  public IsAuthorized: boolean;
-  public UserData: any;
+  public isAuthorized: boolean;
+  public userData: any;
 
   public ResetAuthorizationData() {
-    this.IsAuthorized = false;
-    this.storageService.store('IsAuthorized', false);
     this.storageService.store('authorizationDataIdToken', '');
     this.storageService.store('userData', '');
 
-    localStorage.removeItem('oidc.user:https://localhost:5001/:js');
+    this.storageService.remove('isAuthorized');
+
+    const keys = Object.entries(localStorage)[0];
+    const oidcKey = keys.filter(k => k.includes('oidc.'))[0];
+    localStorage.removeItem(oidcKey);
   }
 
   public Authorize() {
@@ -145,7 +148,6 @@ export class SecurityService {
     let authResponseIsValid = false;
 
     if (!result.error) {
-
       if (result.state !== this.storageService.retrieve('authStateControl')) {
         console.log('AuthorizedCallback incorrect state');
       } else {
@@ -173,6 +175,11 @@ export class SecurityService {
     }
   }
 
+  public getUserFromServer() {
+    const sub = this.storageService.retrieve('userData').sub;
+    return this.http.get<User>(this.configurationService.serverSettings.identityUrl + '/Account/GetUser', {params: {sub}});
+  }
+
   public Logoff() {
     let authorizationUrl = this.authorityUrl + '/connect/endsession';
     let id_token_hint = this.storageService.retrieve('authorizationDataIdToken');
@@ -198,6 +205,11 @@ export class SecurityService {
       // this.ResetAuthorizationData();
       this.router.navigate(['/Unauthorized']);
     }
+  }
+
+  public getSettings(): Observable<Settings> {
+    // this.configurationService.serverSettings.identityUrl + '/account/settingsCall'
+    return this.http.get<Settings>('https://localhost:5013' + '/account/settings');
   }
 
   private urlBase64Decode(str: string) {

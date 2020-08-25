@@ -24,7 +24,7 @@ export class ConfigurationService {
 
   load() {
     const baseURI = document.baseURI.endsWith('/') ? document.baseURI : `${document.baseURI}/`;
-    const url = environment.homeApiUrl;                                 // `${baseURI}Home/Configuration`;
+    const url = environment.homeApiUrl; // `${baseURI}Home/Configuration`;
     this.http.get(url, {
       headers: {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT'}, // by me!!!
     } ).subscribe((response) => {

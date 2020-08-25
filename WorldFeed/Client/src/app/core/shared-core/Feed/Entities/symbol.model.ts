@@ -4,5 +4,5 @@ export interface SymbolModel {
   // represents the location of the first character after the cashtag. Therefore the difference between the two
   // numbers will be the length of the hashtag name plus one (for the ‘$’ character).
   indices: [];
-  text: string; // Name of the cashhtag, minus the leading ‘$’ character: "text":"twtr"
+  text: string; // Name of the cashtag, minus the leading ‘$’ character: "text":"twtr"
 }

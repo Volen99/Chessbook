@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   ) {
     // TODO: Set Taster Root (Overlay) container
     //this.toastr.setRootViewContainerRef(vcr);
-    this.Authenticated = this.securityService.IsAuthorized;
+    this.Authenticated = this.securityService.isAuthorized;
   }
 
   ngOnInit() {

@@ -143,6 +143,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBusRabbitMQ", "Buildin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus", "BuildingBlocks\EventBus\EventBus\EventBus.csproj", "{853AFA5B-4699-4763-A1BC-40D5152E5327}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Account", "Account", "{B4A4241F-B45A-4A14-B7F0-12DC32C35C7C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldFeed.AccountSettings", "Services\Account\WorldFeed.AccountSettings\WorldFeed.AccountSettings.csproj", "{10B24B53-D1E6-47E8-8B72-623D38CDD47B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -293,6 +297,10 @@ Global
 		{853AFA5B-4699-4763-A1BC-40D5152E5327}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{853AFA5B-4699-4763-A1BC-40D5152E5327}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{853AFA5B-4699-4763-A1BC-40D5152E5327}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10B24B53-D1E6-47E8-8B72-623D38CDD47B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10B24B53-D1E6-47E8-8B72-623D38CDD47B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10B24B53-D1E6-47E8-8B72-623D38CDD47B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10B24B53-D1E6-47E8-8B72-623D38CDD47B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -367,6 +375,8 @@ Global
 		{B70C317C-2BF1-4E83-9735-9A5AF1177332} = {9BA9CD96-078A-49DE-A98E-72A742BABC09}
 		{B1118B24-1899-4F67-8229-554EE15BF7C6} = {B70C317C-2BF1-4E83-9735-9A5AF1177332}
 		{853AFA5B-4699-4763-A1BC-40D5152E5327} = {B70C317C-2BF1-4E83-9735-9A5AF1177332}
+		{B4A4241F-B45A-4A14-B7F0-12DC32C35C7C} = {511803A5-A736-4F5D-92B9-266F6F3697B7}
+		{10B24B53-D1E6-47E8-8B72-623D38CDD47B} = {B4A4241F-B45A-4A14-B7F0-12DC32C35C7C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58A386E4-E7C7-49B8-8E30-D8DD2154B7D5}

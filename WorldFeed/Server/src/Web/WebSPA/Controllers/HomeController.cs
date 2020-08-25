@@ -27,15 +27,10 @@ namespace WorldFeed.WebSPA.Controllers
 
         public IActionResult Configuration()
         {
+          //  var container = TweetinviContainer.Container;
+
             return Json(this.settings.Value);
         }
-
-        [Authorize]
-        public IActionResult Secret()
-        {
-            return View();
-        }
-
 
         [Authorize]
         public async Task<IActionResult> RefreshTokens()

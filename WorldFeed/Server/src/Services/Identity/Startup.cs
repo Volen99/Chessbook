@@ -132,7 +132,7 @@
             .Services.AddTransient<IProfileService, ProfileService>();
 
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddControllersWithViews();
             services.AddRazorPages();
 

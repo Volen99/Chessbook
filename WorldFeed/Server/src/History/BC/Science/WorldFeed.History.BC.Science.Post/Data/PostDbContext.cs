@@ -8,7 +8,7 @@
     using WorldFeed.History.API.Data.Models;
     using WorldFeed.History.API.Data.Models.Comments;
 
-    public class PostDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string> // TODO: Do you really need to inherit IdentityDbContext?
+    public class PostDbContext : DbContext            // IdentityDbContext<ApplicationUser, ApplicationRole, string> // TODO: Do you really need to inherit IdentityDbContext?
     {
         public PostDbContext(DbContextOptions<PostDbContext> options)
             : base(options)

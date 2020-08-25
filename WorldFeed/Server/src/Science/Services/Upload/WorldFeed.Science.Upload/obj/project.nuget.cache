@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "VBzfeuQSEPAtJpW+k3Gp1t7rgt4BzvVsQPXzPUWPNOaaetHL8k/063caR++AFJfMgLy7Yj6iRBmq2hKOenCSxw==",
+  "dgSpecHash": "0x6BowyXHRuAlTnmQTUHgsysghOuw3kRDuTbotA0bX/Gy6+7YgWMktAdtsWDq2kAUkR5CkfOBlr1JwMYYa31Yw==",
   "success": true,
   "projectFilePath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\Science\\Services\\Upload\\WorldFeed.Science.Upload\\WorldFeed.Science.Upload.csproj",
   "expectedPackageFiles": [
@@ -47,6 +47,8 @@
     "C:\\Users\\volen\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.0.0\\microsoft.aspnetcore.http.features.2.0.0.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\3.1.7\\microsoft.aspnetcore.identity.entityframeworkcore.3.1.7.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\microsoft.aspnetcore.identity.ui\\3.1.7\\microsoft.aspnetcore.identity.ui.3.1.7.nupkg.sha512",
+    "C:\\Users\\volen\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.7\\microsoft.aspnetcore.jsonpatch.3.1.7.nupkg.sha512",
+    "C:\\Users\\volen\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.7\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.7.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
@@ -98,7 +100,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\newid\\3.0.2\\newid.3.0.2.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\newtonsoft.json.bson\\1.0.1\\newtonsoft.json.bson.1.0.1.nupkg.sha512",
+    "C:\\Users\\volen\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\nodatime\\3.0.0\\nodatime.3.0.0.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\polly\\7.2.1\\polly.7.2.1.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\polly.extensions.http\\3.0.0\\polly.extensions.http.3.0.0.nupkg.sha512",

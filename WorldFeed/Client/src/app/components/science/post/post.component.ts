@@ -14,16 +14,6 @@ import {UploadVideoService} from '../../../core/services/upload/upload-video.ser
 import {MediaAPPENDQueryParameters} from '../../../core/interfaces/uploads/upload-media-APPEND-query-parameters.model';
 import {MediaFINALIZEQueryParameters} from '../../../core/interfaces/uploads/upload-media-FINALIZE-query-parameters.model';
 
-class ImageSnippet {
-  public src: string;
-  public file: File;
-
-  constructor(src: string, file: File) {
-    this.src = src;
-    this.file = file;
-  }
-}
-
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'app-science-post',
@@ -65,6 +55,9 @@ export class PostComponent implements OnInit {
     this.uploadVideoService = uploadVideoService;
   }
 
+  public color: string;
+  public count = 1;
+
   public files: any[] = [];
   public progress: number;
   public message: string;
@@ -90,7 +83,7 @@ export class PostComponent implements OnInit {
 
   public uploadFinished = (event) => {
     this.response = event;
-  };
+  }
 
   /**
    * on file drop handler
@@ -287,6 +280,10 @@ export class PostComponent implements OnInit {
     return `${this.microservicePath}${serverPath}`;
   };
 
+  public incrementCounter() {
+    this.count++;
+  }
+
   // I attempt to get the mime-type of the first file in drag event. Returns null if no
   // file types can be identified.
   // --
@@ -345,6 +342,16 @@ export class PostComponent implements OnInit {
         return false;
         break;
     }
+  }
+}
+
+class ImageSnippet {
+  public src: string;
+  public file: File;
+
+  constructor(src: string, file: File) {
+    this.src = src;
+    this.file = file;
   }
 }
 

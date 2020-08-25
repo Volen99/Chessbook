@@ -25,12 +25,12 @@ const routes: Routes = [
     loadChildren: () => import('./components/kids/kids-routing.module').then(m => m.KidsRoutingModule),
   },
   {
-    path: ':{name}',
-    loadChildren: () => import('./components/profile/profile-routing.module').then(m => m.ProfileRoutingModule),
-  },
-  {
     path: 'programming',
     loadChildren: () => import('./components/programming/programming-routing.module').then(m => m.ProgrammingRoutingModule),
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./components/profile/profile-routing.module').then(m => m.ProfileRoutingModule),
   },
 ];
 

@@ -15,11 +15,23 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
+
     using WorldFeed.Common;
+    using WorldFeed.Common.DTO;
+    using WorldFeed.Common.Extensions;
+    using WorldFeed.Common.Models;
+    using WorldFeed.Common.Public.Models.Enums;
+    using WorldFeed.Common.Public.Models.Interfaces;
+    using WorldFeed.Common.Public.Models.Interfaces.DTO;
+    using WorldFeed.Common.Public.Parameters.AccountSettingsClient;
     using WorldFeed.Identity.API.Models;
     using WorldFeed.Identity.API.Models.AccountViewModels;
     using WorldFeed.Identity.API.Models.Birthday;
     using WorldFeed.Identity.API.Services;
+
+    using TimeZone = Common.Models.Properties.TimeZone;
 
     /// <summary>
     /// This sample controller implements a typical login/logout/provision workflow for local accounts.
@@ -269,6 +281,7 @@
             {
                 var user = new ApplicationUser
                 {
+                    Name = model.User.Name,
                     UserName = model.User.Name,
                     ScreenName = model.User.Name,
                     Email = model.Email,
@@ -320,7 +333,6 @@
 
             return RedirectToAction("index", "home");
         }
-
 
         public IActionResult ExternalLogin(string provider, string returnUrl)
         {
@@ -400,6 +412,81 @@
         public IActionResult Redirecting()
         {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<ApplicationUser> GetUser(string sub)
+        {
+            var user = await this.userManager.FindByIdAsync(sub);
+
+            if (user == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            return user;
+        }
+
+        // [Route("Home/Settings")]
+        // [HttpGet]
+        // public async Task<IAccountSettingsDTO> GetAccountSettingsAsync()
+        // {
+        //     var client = new TwitterClient("Jaja", "Haha");
+           
+        //     var result = await client.AccountSettings.GetAccountSettingsAsync();
+           
+        //     return result.AccountSettingsDTO;
+        // }
+
+        //// With attribute routing, the controller and action names play no part in which action is matched, unless token replacement is used
+        //[Route("Home/Settings")]
+        //[HttpPost]
+        //public async Task<IAccountSettings> UpdateAccountSettingsAsync(IUpdateAccountSettingsParameters parameters)
+        //{
+        //    var client = new TwitterClient("Muhaha", "Bahaha");
+
+        //    var result = await client.AccountSettings.UpdateAccountSettingsAsync(parameters);
+
+        //    return result;
+        //}
+
+        [HttpGet]
+        public async Task<AccountSettingsDTO> GetSettings(GetAccountSettingsParameters parameters)
+        {
+            var user = await this.userManager.FindByNameAsync("Volen99");
+
+            var accountSettings = new AccountSettingsDTO()
+            {
+                AlwaysUseHttps = true,
+                DiscoverableByEmail = true,
+                GeoEnabled = user.GeoEnabled,
+                Language = Enum.Parse<Language>("Bulgarian"),
+                PrivacyMode = (PrivacyMode)Enum.ToObject(typeof(PrivacyMode), 1),
+                ScreenName = user.ScreenName,
+                TimeZone = new TimeZone
+                {
+                    Name = TimeZoneFromTwitter.UTC.GetDisplayableValue(),
+                    TzinfoName = TimeZoneFromTwitter.UTC.ToTZinfo(),
+                    UtcOffset = user.UtcOffset,
+                },
+                TrendLocations = new[]
+                {
+                    new TrendLocation
+                    {
+                        Country = "Bulgaria",
+                        CountryCode = "bg",
+                        Name = "Atlanta",
+                        ParentId = 23424977,
+                        PlaceType = PlaceType.Town,
+                        Url = "http://where.yahooapis.com/v1/place/2357024",
+                        WoeId = 2357024,
+                    },
+                },
+                UseCookiePersonalization = true,
+                AllowContributorRequest = Enum.Parse<AllowContributorRequestMode>("All"),
+            };
+
+            return accountSettings;
         }
 
         private void AddErrors(IdentityResult result)

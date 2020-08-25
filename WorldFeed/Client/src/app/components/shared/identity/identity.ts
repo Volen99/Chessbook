@@ -1,12 +1,7 @@
-import {Component, OnInit, OnChanges, Output, Input, EventEmitter} from '@angular/core';
-import {Subscription} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
-import {SecurityService} from '../../../core/shared-core/services/security.service';
-
-import {User, UserManager, UserManagerSettings} from 'oidc-client';
-import * as Oidc from 'oidc-client';
-
-import axios from 'axios';
+import { SecurityService } from '../../../core/shared-core/services/security.service';
 
 @Component({
   selector: 'app-identity',
@@ -14,32 +9,31 @@ import axios from 'axios';
   styleUrls: ['./identity.scss']
 })
 export class Identity implements OnInit {
-  private userManager: UserManager;
   private subscription: Subscription;
-
-  isAuthenticated = false;
-  public userName = ''; // was private
 
   constructor(private securityService: SecurityService) {
 
   }
 
+  public isAuthenticated = false;
+  public userName = '';
+
   ngOnInit() {
     this.subscription = this.securityService.authenticationChallenge$.subscribe(res => {
       this.isAuthenticated = res;
-      this.userName = this.securityService.UserData.email;
+      this.userName = this.securityService.userData.profile.name;
     });
 
     if (window.location.hash) {
       this.securityService.AuthorizedCallback();
     }
 
-    this.isAuthenticated = this.securityService.IsAuthorized;
-    console.log('identity component, checking authorized' + this.securityService.IsAuthorized);
+    this.isAuthenticated = this.securityService.isAuthorized;
+    console.log('identity component, checking authorized' + this.securityService.isAuthorized);
 
     if (this.isAuthenticated) {
-      if (this.securityService.UserData) {
-        this.userName = this.securityService.UserData.email;
+      if (this.securityService.userData) {
+        this.userName = this.securityService.userData.profile.name;
       }
     }
   }

@@ -1,4 +1,6 @@
 export interface Configuration {
   identityUrl: string;
-  signalrHubUrl: string,
+  scienceUrl: string;
+  programmingQuizUrl: string;
+  accountSettingsUrl: string;
 }

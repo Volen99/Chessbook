@@ -1,3 +1,7 @@
 p {
   color: #f2d16b;
 }
+
+h1, h2, h3, h4, h5, h6, p, input {
+  color: wheat;
+}

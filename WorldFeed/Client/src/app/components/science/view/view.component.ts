@@ -27,7 +27,7 @@ export class ViewComponent implements OnInit {
   // ngOnInit is a life cycle hook called by Angular to indicate that Angular is done creating the component.
   // Called after the constructor and called  after the first ngOnChanges()
   ngOnInit() {
-    this.isAuthorized = this.storageService.retrieve('IsAuthorized');
+    this.isAuthorized = this.storageService.retrieve('isAuthorized');
   }
 
   public createImgPath = (serverPath: string) => {

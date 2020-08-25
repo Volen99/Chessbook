@@ -64,6 +64,6 @@ export class RegisterComponent implements OnInit {
 
     this.authenticationService.register(userData).subscribe(res => {
       this.authenticationService.setToken(res['token']);
-    })
+    });
   }
 }

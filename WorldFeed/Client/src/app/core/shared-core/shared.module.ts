@@ -18,6 +18,7 @@ import {StoreModule} from '@ngrx/store';
 import {coursesReducer} from '../../store/courses/reducers/courses.reducer';
 import {postsReducer} from '../../store/posts/reducers/posts.reducer';
 import {sharedReducers} from './shared.reducers';
+
 import {CurrentUserService} from './services/current-user.service';
 import {LoginMenuComponent} from '../../components/shared/navbar/login-menu/login-menu.component';
 import {Identity} from '../../components/shared/identity/identity';
@@ -34,7 +35,6 @@ import {DataService} from './services/data.service';
     NavbarComponent,
     HomeComponent,
     PaginationComponent,
-    // UpperCasePipe
   ],
   imports: [
     CommonModule,
@@ -75,7 +75,6 @@ import {DataService} from './services/data.service';
     LoginMenuComponent,
     NavbarComponent,
     PaginationComponent,
-    // UpperCasePipe,
   ]
 })
 export class SharedModule {

@@ -8,33 +8,33 @@
 
     public class EFLoginService : ILoginService<ApplicationUser>
     {
-        private UserManager<ApplicationUser> _userManager;
-        private SignInManager<ApplicationUser> _signInManager;
+        private UserManager<ApplicationUser> userManager;
+        private SignInManager<ApplicationUser> signInManager;
 
         public EFLoginService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
         public async Task<ApplicationUser> FindByUsername(string user)
         {
-            return await _userManager.FindByEmailAsync(user);
+            return await this.userManager.FindByEmailAsync(user);
         }
 
         public async Task<bool> ValidateCredentials(ApplicationUser user, string password)
         {
-            return await _userManager.CheckPasswordAsync(user, password);
+            return await this.userManager.CheckPasswordAsync(user, password);
         }
 
         public Task SignIn(ApplicationUser user)
         {
-            return _signInManager.SignInAsync(user, true);
+            return this.signInManager.SignInAsync(user, true);
         }
 
         public Task SignInAsync(ApplicationUser user, AuthenticationProperties properties, string authenticationMethod = null)
         {
-            return _signInManager.SignInAsync(user, properties, authenticationMethod);
+            return this.signInManager.SignInAsync(user, properties, authenticationMethod);
         }
     }
 }

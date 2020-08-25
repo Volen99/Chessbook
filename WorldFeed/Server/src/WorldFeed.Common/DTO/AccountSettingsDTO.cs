@@ -7,32 +7,15 @@
     using WorldFeed.Common.Public.Models.Interfaces;
     using WorldFeed.Common.Public.Models.Interfaces.DTO;
 
+    /// <summary>
+    /// https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/manage-account-settings/api-reference/get-account-settings
+    /// </summary>
     public class AccountSettingsDTO : IAccountSettingsDTO
     {
-        private class SleepTimeDTO
+        public AccountSettingsDTO()                             // I wrote the ctor
         {
-            [JsonProperty("enabled")]
-            public bool Enabled { get; set; }
-
-            [JsonProperty("start_time")]
-            [JsonConverter(typeof(JsonPropertyConverterRepository))]
-            public int StartTime { get; set; }
-
-            [JsonProperty("end_time")]
-            [JsonConverter(typeof(JsonPropertyConverterRepository))]
-            public int EndTime { get; set; }
+            this._sleepTime = new SleepTimeDTO();
         }
-
-        [JsonProperty("screen_name")]
-        public string ScreenName { get; set; }
-
-        [JsonProperty("protected")]
-        [JsonConverter(typeof(JsonPropertyConverterRepository))]
-        public PrivacyMode PrivacyMode { get; set; }
-
-        [JsonProperty("language")]
-        [JsonConverter(typeof(JsonPropertyConverterRepository))]
-        public Language Language { get; set; }
 
         [JsonProperty("always_use_https")]
         public bool AlwaysUseHttps { get; set; }
@@ -40,11 +23,32 @@
         [JsonProperty("discoverable_by_email")]
         public bool DiscoverableByEmail { get; set; }
 
+        [JsonProperty("geo_enabled")]
+        public bool GeoEnabled { get; set; }
+
+        [JsonProperty("language")]
+        [JsonConverter(typeof(JsonPropertyConverterRepository))]
+        public Language Language { get; set; }
+
+        [JsonProperty("protected")]
+        [JsonConverter(typeof(JsonPropertyConverterRepository))]
+        public PrivacyMode PrivacyMode { get; set; }
+
+        [JsonProperty("screen_name")]
+        public string ScreenName { get; set; }
+
+        [JsonProperty("sleep_time")]
+        private SleepTimeDTO _sleepTime { get; set; }
+
+        [JsonProperty("time_zone")]
+        [JsonConverter(typeof(JsonPropertyConverterRepository))]
+        public ITimeZone TimeZone { get; set; } // The timezone dates and times should be displayed in for the user
+
         [JsonProperty("discoverable_by_mobile_phone")]
         public bool DiscoverableByMobilePhone { get; set; }
 
-        [JsonProperty("geo_enabled")]
-        public bool GeoEnabled { get; set; }
+        [JsonProperty("trend_location")]
+        public ITrendLocation[] TrendLocations { get; set; }
 
         [JsonProperty("use_cookie_personalization")]
         public bool UseCookiePersonalization { get; set; }
@@ -61,31 +65,27 @@
         [JsonConverter(typeof(JsonPropertyConverterRepository))]
         public AllowDirectMessagesFrom AllowGroupDirectMessagesFrom { get; set; }
 
-        [JsonProperty("time_zone")]
-        [JsonConverter(typeof(JsonPropertyConverterRepository))]
-        public ITimeZone TimeZone { get; set; }
-
         [JsonProperty("display_sensitive_media")]
         public bool DisplaySensitiveMedia { get; set; }
 
         [JsonProperty("smart_mute")]
         public bool SmartMute { get; set; }
 
-        [JsonProperty("sleep_time")]
-        private SleepTimeDTO _sleepTime { get; set; }
-
+        [JsonIgnore]                                                    // by me
         public bool SleepTimeEnabled
         {
             get => _sleepTime.Enabled;
             set => _sleepTime.Enabled = value;
         }
 
+        [JsonIgnore]                                                    // by me
         public int SleepTimeStartHour
         {
             get => _sleepTime.StartTime;
             set => _sleepTime.StartTime = value;
         }
 
+        [JsonIgnore]                                                    // by me
         public int SleepTimeEndHour
         {
             get => _sleepTime.EndTime;
@@ -94,8 +94,22 @@
         
         [JsonProperty("translator_type")]
         public string TranslatorType { get; set; }
-        
-        [JsonProperty("trend_location")]
-        public ITrendLocation[] TrendLocations { get; set; }    
+
+        /// <summary>
+        /// https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/manage-account-settings/api-reference/post-account-settings
+        /// </summary>
+        private class SleepTimeDTO
+        {
+            [JsonProperty("enabled")]
+            public bool Enabled { get; set; }       // When set to true , t or 1 , will enable sleep time for the user
+
+            [JsonProperty("start_time")]
+            [JsonConverter(typeof(JsonPropertyConverterRepository))]
+            public int StartTime { get; set; }      // The hour that sleep time should begin if it is enabled
+
+            [JsonProperty("end_time")]
+            [JsonConverter(typeof(JsonPropertyConverterRepository))]
+            public int EndTime { get; set; }        // The hour that sleep time should end if it is enabled
+        }
     }
 }

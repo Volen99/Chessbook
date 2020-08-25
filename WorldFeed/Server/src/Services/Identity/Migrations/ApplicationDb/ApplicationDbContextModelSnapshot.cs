@@ -349,8 +349,8 @@ namespace WorldFeed.Identity.API.Migrations.ApplicationDb
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<string>("UtcOffset")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UtcOffset")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Verified")
                         .HasColumnType("bit");

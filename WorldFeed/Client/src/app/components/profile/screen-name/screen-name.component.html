@@ -1,0 +1,17 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+      <form [formGroup]="this.usernameForm" (ngSubmit)="onSubmit()">  <!--[formGroup] is a directive-->
+        <h4>Change username</h4>
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="username" placeholder="Username">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" onclick="history.back()">Back</button>
+      </form>
+    </div>
+    <div class="col-lg-4"></div>
+    {{this.usernameForm.value | json}}
+  </div>
+</div>

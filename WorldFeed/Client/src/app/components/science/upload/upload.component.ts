@@ -15,7 +15,7 @@ class ImageSnippet {
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector : 'app-science-upload',
+  selector: 'app-science-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.css'],
 })
@@ -57,12 +57,6 @@ export class UploadComponent implements OnInit {
     this.uploadFile(files);
   }
 
-  /**
-   * format bytes
-   * @param bytes (File size in bytes)
-   * @param decimals (Decimals point)
-   */
-
   public uploadFile = (files) => {
     if (files.length === 0) {
       return;
@@ -103,7 +97,7 @@ export class UploadComponent implements OnInit {
         // }
         this.onUploadFinished.emit(event); // Emits an event containing a given value.
       });
-  }
+  };
 
   /**
    * Delete file from files list

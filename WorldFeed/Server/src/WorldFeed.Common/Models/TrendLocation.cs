@@ -34,7 +34,8 @@
         [JsonProperty("parentid")]
         public long ParentId { get; set; }
 
-        [JsonProperty]
+        [JsonIgnore]                                // by me
+        [JsonProperty("PlaceType")]                 // I Added ("PlaceType")
         public PlaceType PlaceType
         {
             get

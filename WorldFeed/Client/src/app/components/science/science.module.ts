@@ -8,24 +8,30 @@ import {ScienceService} from '../../core/science/services/science.service';
 import {ListPostsComponent} from './list-posts/list-posts.component';
 import {DndDirective} from './direcitives/dnd.directive';
 import {UploadVideoService} from '../../core/services/upload/upload-video.service';
+import { HighlightDirective } from './direcitives/highlight.directive';
+import {UploadComponent} from "./upload/upload.component";
 
 @NgModule({
   declarations: [
     ViewComponent,
     PostComponent,
+    UploadComponent,
     ListPostsComponent,
     DndDirective,
+    HighlightDirective,
   ],
   imports: [
     CommonModule,
     SharedModule,
     ScienceRoutingModule,
   ],
-  exports: [
+  exports: [                // Custom made modules have exports array
     ViewComponent,
     PostComponent,
     ListPostsComponent,
     DndDirective,
+    HighlightDirective,
+    UploadComponent,
   ],
   providers: [ScienceService, UploadVideoService]
 })

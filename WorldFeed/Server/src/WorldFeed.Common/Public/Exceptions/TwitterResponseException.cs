@@ -1,6 +1,7 @@
 namespace WorldFeed.Common.Public.Exceptions
 {
     using System;
+
     using WorldFeed.Common.Web;
 
     public class TwitterResponseException : Exception

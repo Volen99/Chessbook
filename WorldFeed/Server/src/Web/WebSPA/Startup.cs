@@ -13,11 +13,10 @@
     using Microsoft.Extensions.Diagnostics.HealthChecks;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
+    using Microsoft.AspNetCore.Http;
     using HealthChecks.UI.Client;
 
     using global::WebSPA.Infrastructure;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Authentication;
 
     public class Startup
     {
@@ -25,7 +24,6 @@
         {
             Configuration = configuration;
         }
-         
 
         public IConfiguration Configuration { get; }
 

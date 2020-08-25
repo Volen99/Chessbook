@@ -28,7 +28,7 @@
         public string[] Codes { get; }
 
         /// <summary>
-        /// Does Twitter represent this language with different codes.
+        /// Does World Feed represent this language with different codes.
         /// </summary>
         public bool HasMultipleCodes { get; }
 

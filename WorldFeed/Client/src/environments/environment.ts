@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   homeApiUrl: 'https://localhost:5000/Home/Configuration',
   identityApiUrl: 'https://localhost:5003/',
-  statisticsApiUrl: 'https://localhost:5005/',
-  scienceApiUrl: 'https://localhost:5012/',
+  scienceUploadApiUrl: 'https://localhost:5009/',
+  programmingQuizApiUrl: 'https://localhost:5998/',
 };
 
 /*

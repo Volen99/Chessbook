@@ -217,7 +217,9 @@
                 throw new InvalidOperationException("The container has not yet been built!");
             }
 
-            return this.container.Resolve<T>(parameters.Select(p => new NamedParameter(p.Name, p.Value)));
+            var result = this.container.Resolve<T>(parameters.Select(p => new NamedParameter(p.Name, p.Value)));
+
+            return result;
         }
     }
 }

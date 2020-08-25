@@ -48,9 +48,9 @@ namespace WorldFeed.History.BC.Science
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
-            services.AddIdentityCore<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-               .AddRoles<ApplicationRole>()
-               .AddEntityFrameworkStores<KidsDbContext>();
+            //services.AddIdentityCore<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
+            //   .AddRoles<ApplicationRole>()
+            //   .AddEntityFrameworkStores<KidsDbContext>();
 
 
             // Add framework services.

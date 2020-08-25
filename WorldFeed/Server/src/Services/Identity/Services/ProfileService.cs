@@ -13,6 +13,9 @@
 
     using WorldFeed.Identity.API.Models;
 
+    /// <summary>
+    /// Read more: https://docs.identityserver.io/en/dev/reference/profileservice.html
+    /// </summary>
     public class ProfileService : IProfileService
     {
         private readonly UserManager<ApplicationUser> userManager;

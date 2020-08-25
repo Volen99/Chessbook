@@ -1,12 +1,15 @@
 <html>
 <body style="background-color: white">
+<router-outlet></router-outlet>
 <div>
   <h1>Account</h1>
   <hr>
   <div>
     <h4>Login and security</h4>
     <label>Username:</label>
-    <span>Value</span>
+    <span style="cursor: pointer">
+      <a routerLink="./screen_name">{{this.user.profile.name}}</a>
+    </span>
   </div>
   <div>
     <label>Phone:</label>
@@ -14,283 +17,282 @@
   </div>
   <div>
     <label>Email:</label>
-    <span>Value</span>
+    <span>{{this.user.profile.email}}</span>
   </div>
-  <div>
-    <label>Password:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Security:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <h4>Data and permissions</h4>
-    <label>Phone:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Display language:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Country:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Your World Feed data:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>App and sessions:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label class="text-danger">Deactivate your account:</label>
-    <span>Value</span>
-  </div>
-  <h1>Privacy and safety</h1>
-  <hr>
-  <div>
-    <h4>Feeds</h4>
-    <label>Protect your Tweets:</label>
-    <span>Value</span>
-    <p>Only show your Tweets to people who follow you. If selected, you will need to approve each new follower.
-      <a href="https://www.nasa.gov">Learn more</a>
-    </p>
-  </div>
-  <div>
-    <label>Location information:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Photo tagging:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <h4>Direct Messages</h4>
-    <label>Receive messages from anyone:</label>
-    <span>Value</span>
-    <p>
-      You will be able to receive Direct Messages from anyone on Twitter, even if you don’t follow them.
-      <a href="https://www.nasa.gov">Learn more</a>
-    </p>
-  </div>
-  <div>
-    <label>Quality filter:</label>
-    <span>Value</span>
-    <p>Filters lower-quality messages from your Direct Message requests. <a href="https://www.nasa.gov">Learn more</a></p>
-  </div>
-  <div>
-    <label>Show read receipts:</label>
-    <span>Value</span>
-    <p>
-      When someone sends you a message, people in the conversation will know when you’ve seen it.
-      If you turn off this setting, you won’t be able to see read receipts from others.
-      <a href="#">Learn more</a>
-    </p>
-  </div>
-  <div>
-    <label>Phone:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <h4>Discoverability and contacts</h4>
-    <label>Discoverability and contacts:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <h4>Safety</h4>
-    <label>Display media that may contain sensitive content:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Mark media you Tweet as containing material that may be sensitive:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Muted:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Blocked accounts:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Notifications:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Search filters:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <h4>Personalization and data</h4>
-    <label>Personalization and data:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <h4>World Feed for teams</h4>
-    <label>World Feed for teams:</label>
-    <span>Value</span>
-    <p>Anyone can add you to their team</p>
-  </div>
-  <h1>Notifications</h1>
-  <hr>
-  <div>
-    <h4>Filters</h4>
-    <hr>
-    <label>Quality filter:</label>
-    <span>Value</span>
-    <p>
-      Filter lower-quality content from your notifications. This won’t filter out notifications from people you follow
-      or accounts you’ve interacted with recently. <a href="#">Learn more</a>
-    </p>
-  </div>
-  <div>
-    <label>Advanced filers:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Muted:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <h4>Preferences</h4>
-    <hr>
-    <label>Push notifications:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>SMS notifications:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Email notifications:</label>
-    <span>Value</span>
-  </div>
-  <h1>Content preferences</h1>
-  <hr>
-  <div>
-    <h4>Explore</h4>
-    <hr>
-    <label>Search settings:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Explore settings:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <h4>Languages</h4>
-    <hr>
-    <label>Recommendations:</label>
-    <span>Value</span>
-    <p>
-      Select which languages you want recommended Tweets, people, and trends to include.
-    </p>
-  </div>
-  <div>
-    <h4>Safety</h4>
-    <hr>
-    <label>Muted:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Blocked accounts:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <h4>Personalization and data</h4>
-    <hr>
-    <label>Personalization and data:</label>
-    <span>Value</span>
-  </div>
-  <hr>
-  <h1 style="color: deeppink">General</h1>
-  <hr>
-  <h1>Display</h1>
-  <hr>
-  <p>Display settings affect all of your World Feed accounts on this browser. These settings are only visible to you.</p>
-  <hr>
-  <div>
-    <h4 id="color">Color</h4>
-    <hr>
-    <svg height="100" width="100">
-      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="rgb(29 161 242)" />
-    </svg>
-    <svg height="100" width="100">
-      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="rgb(255 173 31)" />
-    </svg>
-    <svg height="100" width="100">
-      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="rgb(224 36 94)" />
-    </svg>
-    <svg height="100" width="100">
-      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="rgb(121 75 196)" />
-    </svg>
-    <svg height="100" width="100">
-      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="rgb(244 93 34)" />
-    </svg>
-    <svg height="100" width="100">
-      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="rgb(23 191 99)" />
-    </svg>
-  </div>
-  <div>
-    <hr>
-    <h4>Background</h4>
-    <hr>
-    <label>Default:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Dim:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Phone:</label>
-    <span>Value</span>
-  </div>
-  <div>
-    <label>Lights out:</label>
-    <span>Value</span>
-  </div>
-  <hr>
-  <h1>Data usage</h1>
-  <hr>
-  <div>
-    <label>Data saver:</label>
-    <span>Value</span>
-    <p>
-      If selected, World Feed will use less network data.
-    </p>
-  </div>
-  <div>
-    <label>Autoplay:</label>
-    <span>Value</span>
-    <p>On cellular or Wi-Fi</p>
-  </div>
-  <hr>
-  <h1>Accessibility</h1>
-  <hr>
-  <div>
-    <h4>Vision</h4>
-    <hr>
-    <label>Increase color contrast:</label>
-    <span>Value</span>
-    <p>Improves legibility by increasing the contrast between text and background colors.</p>
-  </div>
-  <div>
-    <h4>Motion</h4>
-    <hr>
-    <label>Reduce motion:</label>
-    <span>Value</span>
-    <p>Limits the amount of in-app animations, including live engagement counts.</p>
-  </div>
-  <div>
-    <label>Autoplay:</label>
-    <span>Value</span>
-    <p>>On cellular or Wi-Fi</p>
-  </div>
+<!--    <label>Password:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Security:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <h4>Data and permissions</h4>-->
+<!--    <label>Phone:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Display language:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Country:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Your World Feed data:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>App and sessions:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label class="text-danger">Deactivate your account:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <h1>Privacy and safety</h1>-->
+<!--  <hr>-->
+<!--  <div>-->
+<!--    <h4>Feeds</h4>-->
+<!--    <label>Protect your Tweets:</label>-->
+<!--    <span>Value</span>-->
+<!--    <p>Only show your Tweets to people who follow you. If selected, you will need to approve each new follower.-->
+<!--      <a href="https://www.nasa.gov">Learn more</a>-->
+<!--    </p>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Location information:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Photo tagging:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <h4>Direct Messages</h4>-->
+<!--    <label>Receive messages from anyone:</label>-->
+<!--    <span>Value</span>-->
+<!--    <p>-->
+<!--      You will be able to receive Direct Messages from anyone on Twitter, even if you don’t follow them.-->
+<!--      <a href="https://www.nasa.gov">Learn more</a>-->
+<!--    </p>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Quality filter:</label>-->
+<!--    <span>Value</span>-->
+<!--    <p>Filters lower-quality messages from your Direct Message requests. <a href="https://www.nasa.gov">Learn more</a></p>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Show read receipts:</label>-->
+<!--    <span>Value</span>-->
+<!--    <p>-->
+<!--      When someone sends you a message, people in the conversation will know when you’ve seen it.-->
+<!--      If you turn off this setting, you won’t be able to see read receipts from others.-->
+<!--      <a href="#">Learn more</a>-->
+<!--    </p>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Phone:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <h4>Discoverability and contacts</h4>-->
+<!--    <label>Discoverability and contacts:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <h4>Safety</h4>-->
+<!--    <label>Display media that may contain sensitive content:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Mark media you Tweet as containing material that may be sensitive:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Muted:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Blocked accounts:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Notifications:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Search filters:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <h4>Personalization and data</h4>-->
+<!--    <label>Personalization and data:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <h4>World Feed for teams</h4>-->
+<!--    <label>World Feed for teams:</label>-->
+<!--    <span>Value</span>-->
+<!--    <p>Anyone can add you to their team</p>-->
+<!--  </div>-->
+<!--  <h1>Notifications</h1>-->
+<!--  <hr>-->
+<!--  <div>-->
+<!--    <h4>Filters</h4>-->
+<!--    <hr>-->
+<!--    <label>Quality filter:</label>-->
+<!--    <span>Value</span>-->
+<!--    <p>-->
+<!--      Filter lower-quality content from your notifications. This won’t filter out notifications from people you follow-->
+<!--      or accounts you’ve interacted with recently. <a href="#">Learn more</a>-->
+<!--    </p>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Advanced filers:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Muted:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <h4>Preferences</h4>-->
+<!--    <hr>-->
+<!--    <label>Push notifications:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>SMS notifications:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Email notifications:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <h1>Content preferences</h1>-->
+<!--  <hr>-->
+<!--  <div>-->
+<!--    <h4>Explore</h4>-->
+<!--    <hr>-->
+<!--    <label>Search settings:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Explore settings:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <h4>Languages</h4>-->
+<!--    <hr>-->
+<!--    <label>Recommendations:</label>-->
+<!--    <span>Value</span>-->
+<!--    <p>-->
+<!--      Select which languages you want recommended Tweets, people, and trends to include.-->
+<!--    </p>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <h4>Safety</h4>-->
+<!--    <hr>-->
+<!--    <label>Muted:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Blocked accounts:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <h4>Personalization and data</h4>-->
+<!--    <hr>-->
+<!--    <label>Personalization and data:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <hr>-->
+<!--  <h1 style="color: deeppink">General</h1>-->
+<!--  <hr>-->
+<!--  <h1>Display</h1>-->
+<!--  <hr>-->
+<!--  <p>Display settings affect all of your World Feed accounts on this browser. These settings are only visible to you.</p>-->
+<!--  <hr>-->
+<!--  <div>-->
+<!--    <h4 id="color">Color</h4>-->
+<!--    <hr>-->
+<!--    <svg height="100" width="100">-->
+<!--      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="rgb(29 161 242)" />-->
+<!--    </svg>-->
+<!--    <svg height="100" width="100">-->
+<!--      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="rgb(255 173 31)" />-->
+<!--    </svg>-->
+<!--    <svg height="100" width="100">-->
+<!--      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="rgb(224 36 94)" />-->
+<!--    </svg>-->
+<!--    <svg height="100" width="100">-->
+<!--      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="rgb(121 75 196)" />-->
+<!--    </svg>-->
+<!--    <svg height="100" width="100">-->
+<!--      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="rgb(244 93 34)" />-->
+<!--    </svg>-->
+<!--    <svg height="100" width="100">-->
+<!--      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="rgb(23 191 99)" />-->
+<!--    </svg>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <hr>-->
+<!--    <h4>Background</h4>-->
+<!--    <hr>-->
+<!--    <label>Default:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Dim:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Phone:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Lights out:</label>-->
+<!--    <span>Value</span>-->
+<!--  </div>-->
+<!--  <hr>-->
+<!--  <h1>Data usage</h1>-->
+<!--  <hr>-->
+<!--  <div>-->
+<!--    <label>Data saver:</label>-->
+<!--    <span>Value</span>-->
+<!--    <p>-->
+<!--      If selected, World Feed will use less network data.-->
+<!--    </p>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Autoplay:</label>-->
+<!--    <span>Value</span>-->
+<!--    <p>On cellular or Wi-Fi</p>-->
+<!--  </div>-->
+<!--  <hr>-->
+<!--  <h1>Accessibility</h1>-->
+<!--  <hr>-->
+<!--  <div>-->
+<!--    <h4>Vision</h4>-->
+<!--    <hr>-->
+<!--    <label>Increase color contrast:</label>-->
+<!--    <span>Value</span>-->
+<!--    <p>Improves legibility by increasing the contrast between text and background colors.</p>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <h4>Motion</h4>-->
+<!--    <hr>-->
+<!--    <label>Reduce motion:</label>-->
+<!--    <span>Value</span>-->
+<!--    <p>Limits the amount of in-app animations, including live engagement counts.</p>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label>Autoplay:</label>-->
+<!--    <span>Value</span>-->
+<!--    <p>On cellular or Wi-Fi</p>-->
+<!--  </div>-->
   <hr>
   <h1>About World Feed</h1>
   <hr>

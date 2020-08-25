@@ -7,6 +7,7 @@ import {HistoryModule} from './components/history/history.module';
 import {AuthenticationModule} from './components/authentication/authentication.module';
 import {KidsModule} from './components/kids/kids.module';
 import {ScienceModule} from './components/science/science.module';
+import {ProfileModule} from './components/profile/profile.module';
 
 // NgModuleS help organize an application into cohesive blocks of functionality.
 // The @NgModule tells Angular how to compile and launch the app
@@ -22,6 +23,7 @@ import {ScienceModule} from './components/science/science.module';
     HistoryModule,
     ScienceModule,
     KidsModule,
+    ProfileModule,
   ],
   providers: [], // Register service providers and inject them into components
   bootstrap: [AppComponent]

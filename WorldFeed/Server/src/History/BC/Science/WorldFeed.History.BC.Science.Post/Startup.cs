@@ -52,9 +52,9 @@ namespace WorldFeed.History.API
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
-            services.AddIdentityCore<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-               .AddRoles<ApplicationRole>()
-               .AddEntityFrameworkStores<PostDbContext>();
+            //services.AddIdentityCore<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
+            //   .AddRoles<ApplicationRole>()
+            //   .AddEntityFrameworkStores<PostDbContext>();
 
             services
                .AddWebService<PostDbContext>(this.Configuration)

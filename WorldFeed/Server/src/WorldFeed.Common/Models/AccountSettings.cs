@@ -12,7 +12,7 @@
         {
             this.accountSettingsDTO = accountSettingsDTO;
         }
-
+        
         public IAccountSettingsDTO AccountSettingsDTO
         {
             get => this.accountSettingsDTO;

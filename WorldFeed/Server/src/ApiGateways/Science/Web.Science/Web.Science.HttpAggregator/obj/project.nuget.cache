@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "VXfmeedxnK41dZE1+0qI3Lxy8HiHBeIy2ddRkMXw5e7O9hwLUpsgO0WHfGeQ3W2mDNvrV3YlS+pQcjWTZ+Ts3Q==",
+  "dgSpecHash": "7Wc72869bOkTNiWgF9T2E014BhorWtv2nal+S8ULOlFb6YQXRxK4xVs8cPrz2j/Z7xYujgvmH4qR5sp6FRRD7g==",
   "success": true,
   "projectFilePath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\ApiGateways\\Science\\Web.Science\\Web.Science.HttpAggregator\\Web.Science.HttpAggregator.csproj",
   "expectedPackageFiles": [

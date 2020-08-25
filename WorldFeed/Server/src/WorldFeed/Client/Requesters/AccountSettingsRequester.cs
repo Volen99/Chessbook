@@ -16,10 +16,7 @@ namespace WorldFeed.Client.Requesters
         private readonly IAccountSettingsController accountSettingsController;
         private readonly IAccountSettingsClientRequiredParametersValidator validator;
 
-        public AccountSettingsRequester(
-            ITwitterClient client,
-            ITwitterClientEvents clientEvents,
-            IAccountSettingsController accountSettingsController,
+        public AccountSettingsRequester(ITwitterClient client, ITwitterClientEvents clientEvents, IAccountSettingsController accountSettingsController,
             IAccountSettingsClientRequiredParametersValidator validator)
         : base(client, clientEvents)
         {

@@ -117,9 +117,6 @@
                     this.initialized = true;
 
                     var json = Response?.Content;
-
-                    // json = "{\"media_id\":23,\"expires_after_secs\":84600}";
-
                     var converters = Request.ExecutionContext.Converters;
 
                     this.result = this.jsonObjectConverter.Deserialize<TDTO>(json, converters);

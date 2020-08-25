@@ -868,6 +868,36 @@
           "buildMultiTargeting/Microsoft.AspnetCore.Identity.UI.targets": {}
         }
       },
+      "Microsoft.AspNetCore.JsonPatch/3.1.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0",
+          "Newtonsoft.Json": "12.0.2"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.JsonPatch.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.JsonPatch.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.NewtonsoftJson/3.1.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.JsonPatch": "3.1.7",
+          "Newtonsoft.Json": "12.0.2",
+          "Newtonsoft.Json.Bson": "1.0.2"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.AspNetCore.WebUtilities/1.0.2": {
         "type": "package",
         "dependencies": {
@@ -1467,13 +1497,13 @@
           "lib/netstandard1.3/Microsoft.Extensions.HealthChecks.dll": {}
         }
       },
-      "Microsoft.Extensions.Hosting.Abstractions/3.1.5": {
+      "Microsoft.Extensions.Hosting.Abstractions/3.1.7": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Configuration.Abstractions": "3.1.5",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.5",
-          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.5",
-          "Microsoft.Extensions.Logging.Abstractions": "3.1.5"
+          "Microsoft.Extensions.Configuration.Abstractions": "3.1.7",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.7",
+          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.7",
+          "Microsoft.Extensions.Logging.Abstractions": "3.1.7"
         },
         "compile": {
           "lib/netcoreapp3.1/Microsoft.Extensions.Hosting.Abstractions.dll": {}
@@ -2081,17 +2111,16 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
-      "Newtonsoft.Json.Bson/1.0.1": {
+      "Newtonsoft.Json.Bson/1.0.2": {
         "type": "package",
         "dependencies": {
-          "NETStandard.Library": "1.6.1",
-          "Newtonsoft.Json": "10.0.1"
+          "Newtonsoft.Json": "12.0.1"
         },
         "compile": {
-          "lib/netstandard1.3/Newtonsoft.Json.Bson.dll": {}
+          "lib/netstandard2.0/Newtonsoft.Json.Bson.dll": {}
         },
         "runtime": {
-          "lib/netstandard1.3/Newtonsoft.Json.Bson.dll": {}
+          "lib/netstandard2.0/Newtonsoft.Json.Bson.dll": {}
         }
       },
       "NodaTime/3.0.0": {
@@ -4750,6 +4779,26 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
+      "WorldFeed/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1",
+          "WorldFeed.Common": "1.0.0",
+          "WorldFeed.Controllers": "1.0.0",
+          "WorldFeed.Credentials": "1.0.0",
+          "WorldFeed.Streams": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WorldFeed.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "WorldFeed.Common/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
@@ -4783,6 +4832,94 @@
           "Microsoft.AspNetCore.App"
         ]
       },
+      "WorldFeed.Controllers/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1",
+          "WorldFeed.Common": "1.0.0",
+          "WorldFeed.Credentials": "1.0.0",
+          "WorldFeed.Logic": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WorldFeed.Controllers.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.Controllers.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "WorldFeed.Credentials/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1",
+          "WorldFeed.Common": "1.0.0",
+          "WorldFeed.Logic": "1.0.0",
+          "WorldFeed.WebLogic": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WorldFeed.Credentials.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.Credentials.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "WorldFeed.Logic/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1",
+          "WorldFeed.Common": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WorldFeed.Logic.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.Logic.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "WorldFeed.Security/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1"
+        },
+        "compile": {
+          "bin/placeholder/WorldFeed.Security.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.Security.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "WorldFeed.Streams/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1",
+          "WorldFeed.Common": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WorldFeed.Streams.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.Streams.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "WorldFeed.Web.Common/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
@@ -4794,6 +4931,24 @@
         },
         "runtime": {
           "bin/placeholder/WorldFeed.Web.Common.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "WorldFeed.WebLogic/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1",
+          "WorldFeed.Common": "1.0.0",
+          "WorldFeed.Security": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WorldFeed.WebLogic.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WorldFeed.WebLogic.dll": {}
         },
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
@@ -5791,6 +5946,36 @@
         "staticwebassets/V4/lib/jquery/dist/jquery.min.map"
       ]
     },
+    "Microsoft.AspNetCore.JsonPatch/3.1.7": {
+      "sha512": "/gD5mRjrFNvF/aTUeIP+ppL7xMd0QPO+em9gYjfM+z5VRcKV+/rXcL6iGF92RAoLUvalBixObqjcPC2lMqzwow==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.jsonpatch/3.1.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/netstandard2.0/Microsoft.AspNetCore.JsonPatch.dll",
+        "lib/netstandard2.0/Microsoft.AspNetCore.JsonPatch.xml",
+        "microsoft.aspnetcore.jsonpatch.3.1.7.nupkg.sha512",
+        "microsoft.aspnetcore.jsonpatch.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Mvc.NewtonsoftJson/3.1.7": {
+      "sha512": "iqnyCy5d7D0yaVG1/xjt+bz9bIIwHSt7qX8AmTDGTr6VX2BY5XMGfMLD2jYaglwbQanTTUeRd3FziNLx300Hyg==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.mvc.newtonsoftjson/3.1.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Mvc.NewtonsoftJson.xml",
+        "microsoft.aspnetcore.mvc.newtonsoftjson.3.1.7.nupkg.sha512",
+        "microsoft.aspnetcore.mvc.newtonsoftjson.nuspec"
+      ]
+    },
     "Microsoft.AspNetCore.WebUtilities/1.0.2": {
       "sha512": "xWCqsnZLt0nSoiyw3x250k7PzV/ub1dtjZfLUCy89gTdAHF3jWivnzN+Mw5+LB8EYwEA4WY+u5l5s6innImJTw==",
       "type": "package",
@@ -6577,10 +6762,10 @@
         "microsoft.extensions.healthchecks.nuspec"
       ]
     },
-    "Microsoft.Extensions.Hosting.Abstractions/3.1.5": {
-      "sha512": "e57iK9spITqHE7qNgC3IowzK+PK5NC2rmVY4Sz+ZoDNO24nIsgllIRbanSbt2wQz7Iy/N8Jm3C1sXqKc8zEOMQ==",
+    "Microsoft.Extensions.Hosting.Abstractions/3.1.7": {
+      "sha512": "4j6lSyPJF2emznd7Y4nZp8UbVyhe/defMPyFBV+YfINbAgJ3HgUPWp2QdsO87WOzWjlXTU4ZFwL2fuuMbwdR5g==",
       "type": "package",
-      "path": "microsoft.extensions.hosting.abstractions/3.1.5",
+      "path": "microsoft.extensions.hosting.abstractions/3.1.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6589,7 +6774,7 @@
         "lib/netcoreapp3.1/Microsoft.Extensions.Hosting.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Hosting.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Hosting.Abstractions.xml",
-        "microsoft.extensions.hosting.abstractions.3.1.5.nupkg.sha512",
+        "microsoft.extensions.hosting.abstractions.3.1.7.nupkg.sha512",
         "microsoft.extensions.hosting.abstractions.nuspec"
       ]
     },
@@ -7534,18 +7719,24 @@
         "newtonsoft.json.nuspec"
       ]
     },
-    "Newtonsoft.Json.Bson/1.0.1": {
-      "sha512": "W5Ke5xei9yS0ljQZuT75VgSp5M43eCPm5hHAelvKyGGU4dV7hYCmtwdsxoADb/exO6pYHeu/Iki43TdYPzfESQ==",
+    "Newtonsoft.Json.Bson/1.0.2": {
+      "sha512": "QYFyxhaABwmq3p/21VrZNYvCg3DaEoN/wUuw5nmfAf0X3HLjgupwhkEWdgfb9nvGAUIv3osmZoD3kKl4jxEmYQ==",
       "type": "package",
-      "path": "newtonsoft.json.bson/1.0.1",
+      "path": "newtonsoft.json.bson/1.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "LICENSE.md",
         "lib/net45/Newtonsoft.Json.Bson.dll",
+        "lib/net45/Newtonsoft.Json.Bson.pdb",
         "lib/net45/Newtonsoft.Json.Bson.xml",
         "lib/netstandard1.3/Newtonsoft.Json.Bson.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.Bson.pdb",
         "lib/netstandard1.3/Newtonsoft.Json.Bson.xml",
-        "newtonsoft.json.bson.1.0.1.nupkg.sha512",
+        "lib/netstandard2.0/Newtonsoft.Json.Bson.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.Bson.pdb",
+        "lib/netstandard2.0/Newtonsoft.Json.Bson.xml",
+        "newtonsoft.json.bson.1.0.2.nupkg.sha512",
         "newtonsoft.json.bson.nuspec"
       ]
     },
@@ -13745,15 +13936,50 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
+    "WorldFeed/1.0.0": {
+      "type": "project",
+      "path": "../../WorldFeed/WorldFeed.csproj",
+      "msbuildProject": "../../WorldFeed/WorldFeed.csproj"
+    },
     "WorldFeed.Common/1.0.0": {
       "type": "project",
       "path": "../../WorldFeed.Common/WorldFeed.Common.csproj",
       "msbuildProject": "../../WorldFeed.Common/WorldFeed.Common.csproj"
     },
+    "WorldFeed.Controllers/1.0.0": {
+      "type": "project",
+      "path": "../../WorldFeed.Controllers/WorldFeed.Controllers.csproj",
+      "msbuildProject": "../../WorldFeed.Controllers/WorldFeed.Controllers.csproj"
+    },
+    "WorldFeed.Credentials/1.0.0": {
+      "type": "project",
+      "path": "../../WorldFeed.Credentials/WorldFeed.Credentials.csproj",
+      "msbuildProject": "../../WorldFeed.Credentials/WorldFeed.Credentials.csproj"
+    },
+    "WorldFeed.Logic/1.0.0": {
+      "type": "project",
+      "path": "../../WorldFeed.Logic/WorldFeed.Logic.csproj",
+      "msbuildProject": "../../WorldFeed.Logic/WorldFeed.Logic.csproj"
+    },
+    "WorldFeed.Security/1.0.0": {
+      "type": "project",
+      "path": "../../WorldFeed.Security/WorldFeed.Security.csproj",
+      "msbuildProject": "../../WorldFeed.Security/WorldFeed.Security.csproj"
+    },
+    "WorldFeed.Streams/1.0.0": {
+      "type": "project",
+      "path": "../../WorldFeed.Streams/WorldFeed.Streams.csproj",
+      "msbuildProject": "../../WorldFeed.Streams/WorldFeed.Streams.csproj"
+    },
     "WorldFeed.Web.Common/1.0.0": {
       "type": "project",
       "path": "../../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj",
       "msbuildProject": "../../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj"
+    },
+    "WorldFeed.WebLogic/1.0.0": {
+      "type": "project",
+      "path": "../../WorldFeed.WebLogic/WorldFeed.WebLogic.csproj",
+      "msbuildProject": "../../WorldFeed.WebLogic/WorldFeed.WebLogic.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -13776,12 +14002,14 @@
       "Microsoft.AspNetCore.Diagnostics.HealthChecks >= 2.2.0",
       "Microsoft.AspNetCore.HealthChecks >= 1.0.0",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 3.1.7",
+      "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 3.1.7",
       "Microsoft.EntityFrameworkCore.Design >= 3.1.7",
       "Microsoft.EntityFrameworkCore.Relational >= 3.1.7",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.7",
       "Microsoft.EntityFrameworkCore.SqlServer.Design >= 1.1.6",
       "Microsoft.Extensions.Configuration.AzureKeyVault >= 3.1.7",
       "Microsoft.Extensions.DependencyInjection >= 3.1.7",
+      "Microsoft.Extensions.Hosting.Abstractions >= 3.1.7",
       "Microsoft.Extensions.Logging.AzureAppServices >= 3.1.7",
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.10.9",
       "Microsoft.Web.LibraryManager.Build >= 2.1.76",
@@ -13793,6 +14021,7 @@
       "Serilog.Sinks.Http >= 7.0.1",
       "Serilog.Sinks.Seq >= 4.1.0-dev-00166",
       "Swashbuckle.AspNetCore >= 5.5.1",
+      "WorldFeed >= 1.0.0",
       "WorldFeed.Common >= 1.0.0"
     ]
   },
@@ -13828,6 +14057,9 @@
           "projectReferences": {
             "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WorldFeed.Common\\WorldFeed.Common.csproj": {
               "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WorldFeed.Common\\WorldFeed.Common.csproj"
+            },
+            "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WorldFeed\\WorldFeed.csproj": {
+              "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WorldFeed\\WorldFeed.csproj"
             }
           }
         }
@@ -13913,6 +14145,10 @@
             "target": "Package",
             "version": "[3.1.7, )"
           },
+          "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+            "target": "Package",
+            "version": "[3.1.7, )"
+          },
           "Microsoft.EntityFrameworkCore.Design": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
@@ -13936,6 +14172,10 @@
             "version": "[3.1.7, )"
           },
           "Microsoft.Extensions.DependencyInjection": {
+            "target": "Package",
+            "version": "[3.1.7, )"
+          },
+          "Microsoft.Extensions.Hosting.Abstractions": {
             "target": "Package",
             "version": "[3.1.7, )"
           },

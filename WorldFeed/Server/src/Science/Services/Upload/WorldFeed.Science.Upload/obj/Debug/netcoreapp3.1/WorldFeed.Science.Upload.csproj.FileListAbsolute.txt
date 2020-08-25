@@ -150,14 +150,11 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\WorldFeed.Science.Upload.Infrastructure.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\WorldFeed.Science.Upload.Domain.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\WorldFeed.Science.Upload.Infrastructure.pdb
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\obj\Debug\netcoreapp3.1\WorldFeed.Science.Upload.csproj.CoreCompileInputs.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\obj\Debug\netcoreapp3.1\WorldFeed.Science.Upload.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\Autofac.Extensions.DependencyInjection.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\EventBus.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\EventBusRabbitMQ.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\EventBusRabbitMQ.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\EventBus.pdb
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\obj\Debug\netcoreapp3.1\WorldFeed.Science.Upload.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyModel.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\Serilog.dll
@@ -176,3 +173,8 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\Serilog.Sinks.Seq.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\MediatR.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\MediatR.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\obj\Debug\netcoreapp3.1\WorldFeed.Science.Upload.csproj.CoreCompileInputs.cache
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\obj\Debug\netcoreapp3.1\WorldFeed.Science.Upload.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\Science\Services\Upload\WorldFeed.Science.Upload\obj\Debug\netcoreapp3.1\WorldFeed.Science.Upload.MvcApplicationPartsAssemblyInfo.cache

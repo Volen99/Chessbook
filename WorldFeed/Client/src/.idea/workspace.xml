@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bd36487c-259a-4cc4-b522-d7273be1077c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/src.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/profile/screen-name/screen-name.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/profile/screen-name/screen-name.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/profile/screen-name/screen-name.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/science/direcitives/highlight.directive.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/profile/profile-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/profile/profile-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/profile/profile.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/profile/profile.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/profile/view/view.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/profile/view/view.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/profile/view/view.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/profile/view/view.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/profile/view/view.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/profile/view/view.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/science/post/post.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/science/post/post.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/science/science.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/science/science.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/authentication/enums/gender.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/authentication/enums/gender.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/models/configuration.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/models/configuration.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/shared-core/Feed/Entities/symbol.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/shared-core/Feed/Entities/symbol.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/shared-core/services/security.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/shared-core/services/security.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/shared-core/user/user.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/shared-core/user/user.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/.vs/WorldFeed/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/.vs/WorldFeed/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/.vs/WorldFeed/v16/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/.vs/WorldFeed/v16/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/ApiGateways/Science/Web.Science/Web.Science.HttpAggregator/obj/Debug/netcoreapp3.1/Web.Science.HttpAggregator.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/ApiGateways/Science/Web.Science/Web.Science.HttpAggregator/obj/Debug/netcoreapp3.1/Web.Science.HttpAggregator.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/History/BC/Science/WorldFeed.History.BC.Science.Post/obj/Debug/netcoreapp3.1/WorldFeed.History.API.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/History/BC/Science/WorldFeed.History.BC.Science.Post/obj/Debug/netcoreapp3.1/WorldFeed.History.API.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/Science/Services/Upload/WorldFeed.Science.Upload/obj/Debug/netcoreapp3.1/WorldFeed.Science.Upload.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/Science/Services/Upload/WorldFeed.Science.Upload/obj/Debug/netcoreapp3.1/WorldFeed.Science.Upload.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/Services/Identity/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/Services/Identity/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/Services/Identity/Models/ApplicationUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/Services/Identity/Models/ApplicationUser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/Services/Identity/bin/Debug/netcoreapp3.1/WorldFeed.Identity.API.Views.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/Services/Identity/bin/Debug/netcoreapp3.1/WorldFeed.Identity.API.Views.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/Services/Identity/bin/Debug/netcoreapp3.1/WorldFeed.Identity.API.Views.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/Services/Identity/bin/Debug/netcoreapp3.1/WorldFeed.Identity.API.Views.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/Services/Identity/bin/Debug/netcoreapp3.1/WorldFeed.Identity.API.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/Services/Identity/bin/Debug/netcoreapp3.1/WorldFeed.Identity.API.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/Services/Identity/bin/Debug/netcoreapp3.1/WorldFeed.Identity.API.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/Services/Identity/bin/Debug/netcoreapp3.1/WorldFeed.Identity.API.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/Services/Identity/obj/Debug/netcoreapp3.1/WorldFeed.Identity.API.Views.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/Services/Identity/obj/Debug/netcoreapp3.1/WorldFeed.Identity.API.Views.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/Services/Identity/obj/Debug/netcoreapp3.1/WorldFeed.Identity.API.Views.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/Services/Identity/obj/Debug/netcoreapp3.1/WorldFeed.Identity.API.Views.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/Services/Identity/obj/Debug/netcoreapp3.1/WorldFeed.Identity.API.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/Services/Identity/obj/Debug/netcoreapp3.1/WorldFeed.Identity.API.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/Services/Identity/obj/Debug/netcoreapp3.1/WorldFeed.Identity.API.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/Services/Identity/obj/Debug/netcoreapp3.1/WorldFeed.Identity.API.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/Services/Identity/obj/Debug/netcoreapp3.1/WorldFeed.Identity.API.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/Services/Identity/obj/Debug/netcoreapp3.1/WorldFeed.Identity.API.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Server/src/WorldFeed.Common/obj/Debug/netcoreapp3.1/WorldFeed.Common.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../../Server/src/WorldFeed.Common/obj/Debug/netcoreapp3.1/WorldFeed.Common.csprojAssemblyReference.cache" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectId" id="1gTUeGnza7gnVHHbASNvjvBwtiW" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bd36487c-259a-4cc4-b522-d7273be1077c" name="Default Changelist" comment="" />
+      <created>1598138170456</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1598138170456</updated>
+      <workItem from="1598138171710" duration="558000" />
+      <workItem from="1598138755867" duration="10000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1598138763786">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1598138763786" />
+    <state x="478" y="145" width="579" height="534" key="find.popup" timestamp="1598138445042">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="478" y="145" width="579" height="534" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1598138445042" />
+  </component>
+</project>

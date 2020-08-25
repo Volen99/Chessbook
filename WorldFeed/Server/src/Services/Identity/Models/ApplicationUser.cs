@@ -25,30 +25,30 @@
 
         public string ScreenName { get; set; }
 
-        public string Location { get; set; }
+        public string Location { get; set; } // The user-defined location for this account’s profile. Not necessarily a location, nor machine-parseable
 
         public string ProfileLocation { get; set; }
 
         public string Description { get; set; }
 
-        public string Url { get; set; }
+        public string Url { get; set; }                // A URL provided by the user in association with their profile: "https://developer.twitter.com"
 
         public Entity Entities { get; set; }
 
-        public bool Protected { get; set; }
+        public bool Protected { get; set; }                     // When true, indicates that this user has chosen to protect their Tweets
 
-        public long FollowersCount { get; set; }
+        public long FollowersCount { get; set; }                // The number of followers this account currently has
 
-        public int FriendsCount { get; set; }
+        public int FriendsCount { get; set; }                   // The number of users this account is following (AKA their "followings")
 
-        public int ListedCount { get; set; }
+        public int ListedCount { get; set; }                    // The number of public lists that this user is a member of
 
         [DataType(DataType.DateTime)]
-        public DateTime CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }      // The UTC datetime that the user account was created on Twitter: "Sun Jul 20 20:17:40 +0000 1969"
 
-        public long FavouritesCount { get; set; }
+        public long FavouritesCount { get; set; }                // The number of Feeds this user has liked in the account’s lifetime
 
-        public string UtcOffset { get; set; }
+        public int UtcOffset { get; set; }
 
         public DateTime TimeZone { get; set; }
 
@@ -65,8 +65,6 @@
         public bool ContributorsEnabled { get; set; }
 
         public bool IsTranslator { get; set; }
-
-        public Gender Gender { get; set; }
 
         public bool IsTranslationEnabled { get; set; }
 
@@ -94,11 +92,11 @@
 
         public bool ProfileUseBackgroundImage { get; set; }
 
-        public bool DefaultProfile { get; set; }
+        public bool DefaultProfile { get; set; }    // When true, indicates that the user has not altered the theme or background of their user profile
 
         public bool DefaultProfileImage { get; set; }
 
-        public string PinnedTweetIds { get; set; }          // [int]
+        public string PinnedTweetIds { get; set; }              // [int]
 
         public bool HasCustomTimelines { get; set; }        // https://blog.twitter.com/developer/en_us/a/2013/introducing-custom-timelines.html
 
@@ -119,6 +117,8 @@
         public string TranslatorType { get; set; }
 
         public bool RequireSomeConsent { get; set; }
+
+        public Gender Gender { get; set; }
 
         public Birthdate Birthdate { get; set; }
 

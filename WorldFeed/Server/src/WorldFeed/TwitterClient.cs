@@ -146,8 +146,8 @@ namespace WorldFeed
             this.tweetinviContainer.AssociatedClient = this;
 
             this.twitterClientEvents = this.tweetinviContainer.Resolve<ITwitterClientEvents>();
-            Factories = this.tweetinviContainer.Resolve<ITwitterClientFactories>();
-            Json = this.tweetinviContainer.Resolve<IJsonClient>();
+            this.Factories = this.tweetinviContainer.Resolve<ITwitterClientFactories>();
+            this.Json = this.tweetinviContainer.Resolve<IJsonClient>();
 
             var rateLimitCacheManager = this.tweetinviContainer.Resolve<IRateLimitCacheManager>();
             rateLimitCacheManager.RateLimitsClient = RateLimits;

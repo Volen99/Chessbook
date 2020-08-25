@@ -51,6 +51,11 @@
     <PackageReference Include="IdentityModel" Version="4.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\WorldFeed.Common\WorldFeed.Common.csproj" />
+    <ProjectReference Include="..\..\WorldFeed\WorldFeed.csproj" />
+  </ItemGroup>
+
   <ProjectExtensions>
     <VisualStudio><UserProperties package_1json__JSONSchema="http://json.schemastore.org/project-1.0.0-beta4" /></VisualStudio>
   </ProjectExtensions>

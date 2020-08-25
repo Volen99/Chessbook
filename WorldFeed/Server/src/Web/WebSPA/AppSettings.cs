@@ -4,9 +4,7 @@
     {
         public string IdentityUrl { get; set; }
 
-        public string ScienceUrl { get; set; }
-
-        public string SignalrHubUrl { get; set; }
+        public string ScienceUploadUrl { get; set; }
 
         public string ActivateCampaignDetailFunction { get; set; }
 

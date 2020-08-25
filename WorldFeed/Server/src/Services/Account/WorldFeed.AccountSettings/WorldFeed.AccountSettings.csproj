@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.7" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\WorldFeed.Common\WorldFeed.Common.csproj" />
+    <ProjectReference Include="..\..\..\WorldFeed.Controllers\WorldFeed.Controllers.csproj" />
+    <ProjectReference Include="..\..\..\WorldFeed\WorldFeed.csproj" />
+  </ItemGroup>
+
+
+</Project>
