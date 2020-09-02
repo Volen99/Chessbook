@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
@@ -43,8 +43,7 @@ export class DataService {
     this.setHeaders(options, needId);
 
     return this.http.post(url, data, options)
-      .pipe(
-        tap((res: Response) => {
+      .pipe(tap((res: Response) => {
           return res;
         }),
         catchError(this.handleError)
@@ -63,6 +62,7 @@ export class DataService {
   }
 
   private handleError(error: any) {
+    debugger
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('Client side network error occurred:', error.error.message);
@@ -92,7 +92,6 @@ export class DataService {
   }
 
   private setHeaders(options: any, needId?: boolean) {
-    debugger
     if (needId && this.securityService) {
       options["headers"] = new HttpHeaders()
         .append('authorization', 'Bearer ' + this.securityService.GetToken())

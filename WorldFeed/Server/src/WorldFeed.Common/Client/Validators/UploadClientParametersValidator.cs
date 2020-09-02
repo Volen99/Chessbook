@@ -9,6 +9,7 @@ namespace WorldFeed.Common.Client.Validators
     public interface IUploadClientParametersValidator
     {
         void Validate(IUploadParameters parameters);
+
         void Validate(IAddMediaMetadataParameters parameters);
     }
 
@@ -17,9 +18,7 @@ namespace WorldFeed.Common.Client.Validators
         private readonly ITwitterClient client;
         private readonly IUploadClientRequiredParametersValidator uploadClientRequiredParametersValidator;
 
-        public UploadClientParametersValidator(
-            ITwitterClient client,
-            IUploadClientRequiredParametersValidator uploadClientRequiredParametersValidator)
+        public UploadClientParametersValidator(ITwitterClient client, IUploadClientRequiredParametersValidator uploadClientRequiredParametersValidator)
         {
             this.client = client;
             this.uploadClientRequiredParametersValidator = uploadClientRequiredParametersValidator;
@@ -34,7 +33,7 @@ namespace WorldFeed.Common.Client.Validators
             if (parameters.MediaCategory == MediaCategory.Gif || parameters.MediaCategory == MediaCategory.Image ||
                 parameters.MediaCategory == MediaCategory.DmGif || parameters.MediaCategory == MediaCategory.DmImage)
             {
-                var maxUploadSize = Limits.UPLOAD_MAX_IMAGE_SIZE;
+                var maxUploadSize = this.Limits.UPLOAD_MAX_IMAGE_SIZE;
                 if (parameters.Binary.Length > maxUploadSize)
                 {
                     throw new TwitterArgumentLimitException($"{nameof(parameters.Binary)}", maxUploadSize, nameof(Limits.UPLOAD_MAX_IMAGE_SIZE), "binary size");
@@ -43,7 +42,7 @@ namespace WorldFeed.Common.Client.Validators
 
             if (parameters.MediaCategory == MediaCategory.Video || parameters.MediaCategory == MediaCategory.DmVideo)
             {
-                var maxUploadSize = Limits.UPLOAD_MAX_VIDEO_SIZE;
+                var maxUploadSize = this.Limits.UPLOAD_MAX_VIDEO_SIZE;
                 if (parameters.Binary.Length > maxUploadSize)
                 {
                     throw new TwitterArgumentLimitException($"{nameof(parameters.Binary)}", maxUploadSize, nameof(Limits.UPLOAD_MAX_VIDEO_SIZE), "binary size");

@@ -1,4 +1,4 @@
-namespace WorldFeed.Client.Clients
+namespace WorldFeed.AccountSettings.Client.Clients
 {
     using System.Linq;
     using System.Threading.Tasks;
@@ -36,7 +36,7 @@ namespace WorldFeed.Client.Clients
         }
 
         public async Task<IWebhook> CreateAccountActivityWebhookAsync(ICreateAccountActivityWebhookParameters parameters)
-        {
+        {                                                                             // Use .ConfigureAwait(False) to prevent deadlock
             var twitterResult = await this.accountActivityRequester.CreateAccountActivityWebhookAsync(parameters).ConfigureAwait(false);
             return this.client.Factories.CreateWebhook(twitterResult?.Model);
         }

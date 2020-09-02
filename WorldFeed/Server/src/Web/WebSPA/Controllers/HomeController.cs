@@ -27,8 +27,6 @@ namespace WorldFeed.WebSPA.Controllers
 
         public IActionResult Configuration()
         {
-          //  var container = TweetinviContainer.Container;
-
             return Json(this.settings.Value);
         }
 

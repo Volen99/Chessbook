@@ -13,29 +13,23 @@ import {ConfigurationService} from './core/shared-core/services/configuration.se
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  Authenticated = false;
-  subscription: Subscription;
-
-  constructor(private titleService: Title,
-              private securityService: SecurityService,
-              private configurationService: ConfigurationService,
-              vcr: ViewContainerRef
-  ) {
-    // TODO: Set Taster Root (Overlay) container
-    //this.toastr.setRootViewContainerRef(vcr);
+  constructor(private titleService: Title, private securityService: SecurityService, private configurationService: ConfigurationService) {
     this.Authenticated = this.securityService.isAuthorized;
   }
+
+  public Authenticated = false;
+  public subscription: Subscription;
 
   ngOnInit() {
     console.log('app on init');
     this.subscription = this.securityService.authenticationChallenge$.subscribe(res => this.Authenticated = res);
 
-    //Get configuration from server environment variables:
+    // Get configuration from server environment variables:
     console.log('configuration');
     this.configurationService.load();
   }
 
   public setTitle(newTitle: string) {
-    this.titleService.setTitle('eShopOnContainers');
+    this.titleService.setTitle('WorldFeedOnContainers');
   }
 }

@@ -2,7 +2,7 @@ import {SleepTime} from "./sleep-time.model";
 import {TimeZone} from "./time-zone.model";
 import {PlaceType} from "./place-type.model";
 
-export interface Settings {
+export interface AccountSettings {
   always_use_https: boolean;
   discoverable_by_email: boolean;
   geo_enabled: symbol;

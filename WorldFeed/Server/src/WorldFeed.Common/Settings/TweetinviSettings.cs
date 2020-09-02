@@ -91,14 +91,6 @@
 
     public class TweetinviSettings : ITweetinviSettings
     {
-        public IProxyConfig ProxyConfig { get; set; }
-        public TimeSpan HttpRequestTimeout { get; set; }
-        public RateLimitTrackerMode RateLimitTrackerMode { get; set; }
-        public TimeSpan RateLimitWaitFudge { get; set; }
-        public TweetMode? TweetMode { get; set; }
-        public Func<DateTime> GetUtcDateTime { get; set; }
-        public WorldFeedLimits Limits { get; set; }
-
         public TweetinviSettings()
         {
             GetUtcDateTime = () => DateTime.UtcNow;
@@ -122,6 +114,20 @@
             Converters = source.Converters;
             Limits = new WorldFeedLimits(source.Limits);
         }
+
+        public IProxyConfig ProxyConfig { get; set; }
+
+        public TimeSpan HttpRequestTimeout { get; set; }
+
+        public RateLimitTrackerMode RateLimitTrackerMode { get; set; }
+
+        public TimeSpan RateLimitWaitFudge { get; set; }
+
+        public TweetMode? TweetMode { get; set; }
+
+        public Func<DateTime> GetUtcDateTime { get; set; }
+
+        public WorldFeedLimits Limits { get; set; }
 
         public JsonConverter[] Converters { get; set; }
 

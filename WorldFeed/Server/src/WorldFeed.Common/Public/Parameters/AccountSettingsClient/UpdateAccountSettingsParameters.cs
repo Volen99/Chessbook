@@ -1,5 +1,7 @@
 ﻿namespace WorldFeed.Common.Public.Parameters.AccountSettingsClient
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
     using WorldFeed.Common.Extensions;
     using WorldFeed.Common.Public.Models.Enums;
 
@@ -53,7 +55,8 @@
         void SetTimeZone(TimeZoneFromTwitter timeZoneFromTwitter);
     }
 
-    
+
+    // [JsonObject(NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     /// <inheritdoc/>
     public class UpdateAccountSettingsParameters : CustomRequestParameters, IUpdateAccountSettingsParameters
     {
@@ -61,7 +64,7 @@
         public Language? DisplayLanguage { get; set; }
         /// <inheritdoc/>
         public string TimeZone { get; set; }
-        /// <inheritdoc/>
+        /// <inheritdoc/>3
         public long? TrendLocationWoeid { get; set; }
         /// <inheritdoc/>
         public bool? SleepTimeEnabled { get; set; }

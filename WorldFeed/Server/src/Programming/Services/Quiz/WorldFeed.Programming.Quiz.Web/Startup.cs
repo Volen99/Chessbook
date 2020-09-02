@@ -129,7 +129,7 @@ namespace WorldFeed.Programming.Quiz.Web
                 // {
                 //     dbContext.Database.Migrate(); // Does automatically migrations a.k.a. Add-Migration Initial
                 // }
-
+                                       // If you need to block – use .GetAwaiter().GetResult() instead of .Wait() or .Result
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
 

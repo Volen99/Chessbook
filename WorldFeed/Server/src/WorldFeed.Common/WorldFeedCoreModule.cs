@@ -1,5 +1,6 @@
 ﻿namespace WorldFeed.Common
 {
+    using Autofac;
     using System;
 
     using WorldFeed.Common.Client.Validators;

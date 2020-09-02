@@ -13,14 +13,14 @@ export class ConfigurationService {
   private storageService: StorageService;
   private http: HttpClient;
 
-  serverSettings: Configuration;
-  settingsLoaded$ = this.settingsLoadedSource.asObservable();
-  isReady = false;
-
   constructor(http: HttpClient, storageService: StorageService) {
     this.http = http;
     this.storageService = storageService;
   }
+
+  public serverSettings: Configuration;
+  public settingsLoaded$ = this.settingsLoadedSource.asObservable();
+  public isReady = false;
 
   load() {
     const baseURI = document.baseURI.endsWith('/') ? document.baseURI : `${document.baseURI}/`;
@@ -32,6 +32,7 @@ export class ConfigurationService {
       this.serverSettings = response as Configuration;
       console.log(this.serverSettings);
       this.storageService.store('identityUrl', this.serverSettings.identityUrl);
+      this.storageService.store('apiGatewayUrl', this.serverSettings.apiGatewayUrl);
       this.isReady = true;
       this.settingsLoadedSource.next();
     });

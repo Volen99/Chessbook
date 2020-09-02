@@ -155,44 +155,61 @@ namespace WorldFeed
 
         /// <inheritdoc/>
         public IAuthClient Auth { get; }
+
         /// <inheritdoc/>
         public IAccountSettingsClient AccountSettings { get; }
+
         /// <inheritdoc/>
         public IExecuteClient Execute { get; }
+
         /// <inheritdoc/>
         public IHelpClient Help { get; }
+
         /// <inheritdoc/>
         public IListsClient Lists { get; }
+
         /// <inheritdoc/>
         public IMessagesClient Messages { get; }
+
         /// <inheritdoc/>
         public IRateLimitsClient RateLimits { get; }
+
         /// <inheritdoc/>
         public ISearchClient Search { get; }
+
         /// <inheritdoc/>
         public IStreamsClient Streams { get; }
+
         /// <inheritdoc/>
         public ITimelinesClient Timelines { get; }
+
         /// <inheritdoc/>
         public ITrendsClient Trends { get; }
+
         /// <inheritdoc/>
         public ITweetsClient Tweets { get; }
+
         /// <inheritdoc/>
         public IUploadClient Upload { get; }
+
         /// <inheritdoc/>
         public IUsersClient Users { get; }
+
         /// <inheritdoc/>
         public IAccountActivityClient AccountActivity { get; }
 
         /// <inheritdoc/>
         public IExternalClientEvents Events => this.twitterClientEvents;
+
         /// <inheritdoc/>
         public ITwitterClientFactories Factories { get; }
+
         /// <inheritdoc/>
         public IJsonClient Json { get; }
 
         /// <inheritdoc/>
         public IParametersValidator ParametersValidator { get; }
+
         /// <inheritdoc/>
         public IRawExecutors Raw { get; }
 

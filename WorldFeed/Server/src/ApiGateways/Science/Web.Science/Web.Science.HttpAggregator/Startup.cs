@@ -1,4 +1,4 @@
-﻿namespace Web.Science.HttpAggregator
+﻿namespace Web.HttpAggregator
 {
     using System;
     using System.Collections.Generic;

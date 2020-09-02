@@ -1,7 +1,9 @@
-namespace WorldFeed.Controllers.AccountSettings
+﻿namespace WorldFeed.Controllers.AccountSettings
 {
+    using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
+    using WorldFeed.Common.Public;
     using WorldFeed.Common.Public.Models.Interfaces;
     using WorldFeed.Common.Public.Models.Interfaces.DTO;
     using WorldFeed.Common.Public.Parameters.AccountSettingsClient;
@@ -33,7 +35,11 @@ namespace WorldFeed.Controllers.AccountSettings
 
         public Task<ITwitterResult<IAccountSettingsDTO>> GetAccountSettingsAsync(IGetAccountSettingsParameters parameters, ITwitterRequest request)
         {
-            return this.accountSettingsQueryExecutor.GetAccountSettingsAsync(parameters, request);
+            var res =  this.accountSettingsQueryExecutor.GetAccountSettingsAsync(parameters, request);
+
+            var test = res.Result;
+
+            return res;
         }
 
         public Task<ITwitterResult<IAccountSettingsDTO>> UpdateAccountSettingsAsync(IUpdateAccountSettingsParameters parameters, ITwitterRequest request)

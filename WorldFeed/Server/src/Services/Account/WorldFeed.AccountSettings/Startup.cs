@@ -1,22 +1,12 @@
-namespace WorldFeed.Account
+namespace WorldFeed.AccountSettings
 {
-    using System;
     using Autofac;
-    using Autofac.Builder;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-
-    using WorldFeed.Common;
-    using WorldFeed.Common.InjectWorldFeed;
-    using WorldFeed.Common.Public;
-    using WorldFeed.Common.Public.Parameters.AccountSettingsClient;
-    using WorldFeed.Common.Web;
-    using WorldFeed.Controllers;
-    using WorldFeed.Controllers.AccountSettings;
-    using WorldFeed.Credentials;
+    using WorldFeed.AccountSettings.Models.AutofacModules;
 
     public class Startup
     {
@@ -41,10 +31,12 @@ namespace WorldFeed.Account
         {
             // Register your own things directly with Autofac here. Don't call builder.Populate(), that happens in AutofacServiceProviderFactory for u
 
-            //builder.RegisterType<TwitterClient>().As<ITwitterClient>();
-            //builder.RegisterType<AccountSettingsQueryExecutor>().As<IAccountSettingsQueryExecutor>();
-            //builder.RegisterType<GetAccountSettingsParameters>().As<GetAccountSettingsParameters>();
+            builder.RegisterModule<ApplicationModule>();
+        }
 
+        public class Test
+        {
+            public string TestProperty { get; set; }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

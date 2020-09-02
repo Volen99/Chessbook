@@ -10866,9 +10866,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\ApiGateways\\Science\\Web.Science\\Web.Science.HttpAggregator\\Web.Science.HttpAggregator.csproj",
-      "projectName": "Web.Science.HttpAggregator",
-      "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\ApiGateways\\Science\\Web.Science\\Web.Science.HttpAggregator\\Web.Science.HttpAggregator.csproj",
+      "projectUniqueName": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\ApiGateways\\Science\\Web.Science\\Web.Science.HttpAggregator\\Web.HttpAggregator.csproj",
+      "projectName": "Web.HttpAggregator",
+      "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\ApiGateways\\Science\\Web.Science\\Web.Science.HttpAggregator\\Web.HttpAggregator.csproj",
       "packagesPath": "C:\\Users\\volen\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\ApiGateways\\Science\\Web.Science\\Web.Science.HttpAggregator\\obj\\",
       "projectStyle": "PackageReference",

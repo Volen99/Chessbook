@@ -34,7 +34,7 @@
         /// <summary>
         ///   Looks up a localized string similar to https://api.twitter.com/1.1/account/settings.json?.
         /// </summary>
-        public static string Account_UpdateSettings = "https://api.twitter.com/1.1/account/settings.json?";
+        public static string Account_UpdateSettings = "https://localhost:5013/account/settings"; // was "https://api.twitter.com/1.1/account/settings.json?";
 
         /// <summary>
         ///   Looks up a localized string similar to https://api.twitter.com/1.1/account/update_profile.json.

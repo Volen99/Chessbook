@@ -19,7 +19,7 @@
             var clientUrls = new Dictionary<string, string>();
 
             clientUrls.Add("Spa", configuration.GetValue<string>("SpaClient"));
-            clientUrls.Add("WebShoppingAgg", configuration.GetValue<string>("WebShoppingAggClient"));
+            clientUrls.Add("WorldFeedGateway", configuration.GetValue<string>("WorldFeedGatewayClient"));
             clientUrls.Add("Science.Upload", configuration.GetValue<string>("https://localhost:5009"));
 
             if (context.Clients.Any() == false)

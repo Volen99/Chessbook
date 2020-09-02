@@ -17,7 +17,7 @@
             return new List<ApiScope>
             {
                 new ApiScope("webspa", "Web Spa"),
-                new ApiScope("webshoppingagg", "Web Shopping Aggregator"),
+                new ApiScope("worldfeedgateway", "World Feed Gateway"),
             };
         }
 
@@ -31,11 +31,10 @@
                 {
                     Scopes = {"webspa", "Web Spa" },
                 },
-                //new ApiResource()
-                //{
-                //    Scopes = { "webshoppingagg", "Web Shopping Aggregator" },
-                //},
-                new ApiResource("science.upload", "Science Upload Service"),
+                new ApiResource("worldfeedgateway", "Web World Feed Gateway")
+                {
+                    Scopes = { "worldfeedgateway", "Web World Feed Gateway" },
+                },
             };
         }
 
@@ -79,6 +78,7 @@
                     AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
+                        "worldfeedgateway",
                     },
 
                     AllowAccessTokensViaBrowser = true,

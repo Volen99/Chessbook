@@ -1,5 +1,6 @@
 ﻿namespace WorldFeed
 {
+    using WorldFeed.AccountSettings.Client.Clients;
     using WorldFeed.Client;
     using WorldFeed.Client.Clients;
     using WorldFeed.Client.Requesters;

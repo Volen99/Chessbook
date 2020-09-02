@@ -1,41 +1,41 @@
-﻿namespace WorldFeed.Account.Controllers
+﻿namespace WorldFeed.AccountSettings.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using System.IO;
     using System.Threading.Tasks;
 
+    using WorldFeed.AccountSettings.Services;
+    using WorldFeed.Common.Public;
     using WorldFeed.Common.Public.Models.Interfaces;
     using WorldFeed.Common.Public.Models.Interfaces.DTO;
     using WorldFeed.Common.Public.Parameters.AccountSettingsClient;
     using WorldFeed.Common.Web;
-    using WorldFeed.Controllers.AccountSettings;
 
-    public class AccountSettingsController : ControllerBase, IAccountSettingsController
+    public class AccountSettingsController : ControllerBase
     {
         private readonly IAccountSettingsQueryExecutor accountSettingsQueryExecutor;
+        private readonly ITwitterClient client;
 
         public AccountSettingsController()
         {
-            var client = new TwitterClient("", "");
-
-            this.accountSettingsQueryExecutor = TweetinviContainer.Resolve<IAccountSettingsQueryExecutor>();
-            client.AccountSettings.GetAccountSettingsAsync();
+            this.client = new TwitterClient("", "");
         }
 
-        [Route("Account/Settings")]
         [HttpGet]
-        public Task<ITwitterResult<IAccountSettingsDTO>> GetAccountSettingsAsync(IGetAccountSettingsParameters parameters, ITwitterRequest request)
+        [Route("Account/Settings")]
+        public async Task<IAccountSettingsDTO> GetAccountSettingsAsync()
         {
-            return this.accountSettingsQueryExecutor.GetAccountSettingsAsync(parameters, request);
+            var result = await this.client.AccountSettings.GetAccountSettingsAsync();
+
+            return result.AccountSettingsDTO;
         }
 
-        //public Task<ITwitterResult<IAccountSettingsDTO>> GetAccountSettingsAsync(IGetAccountSettingsParameters parameters, ITwitterRequest request)
-        //{
-        //    return this.accountSettingsQueryExecutor.GetAccountSettingsAsync(parameters, request);
-        //}
-
-        public Task<ITwitterResult<IAccountSettingsDTO>> UpdateAccountSettingsAsync(IUpdateAccountSettingsParameters parameters, ITwitterRequest request)
+        [HttpPost]
+        [Route("Account/Settings")]
+        public Task<IAccountSettingsDTO> UpdateAccountSettingsAsync(IUpdateAccountSettingsParameters parameters, ITwitterRequest request)
         {
-            return this.accountSettingsQueryExecutor.UpdateAccountSettingsAsync(parameters, request);
+            var query = this.Request.Query;
+            return default;
         }
 
         public Task<ITwitterResult<IUserDTO>> UpdateProfileAsync(IUpdateProfileParameters parameters, ITwitterRequest request)

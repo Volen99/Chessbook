@@ -108,7 +108,7 @@
             {
                 options.Authority = identityUrl;
                 options.RequireHttpsMetadata = false;
-                options.Audience = "webshoppingagg";
+                options.Audience = "worldfeedgateway";
             });
 
             return services;
@@ -145,7 +145,7 @@
 
                             Scopes = new Dictionary<string, string>()
                             {
-                                { "webshoppingagg", "Shopping Aggregator for Web Clients" }
+                                { "worldfeedgateway", "World Feed Gateway for Web Clients" }
                             }
                         }
                     }

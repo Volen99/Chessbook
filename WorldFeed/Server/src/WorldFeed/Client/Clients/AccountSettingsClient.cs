@@ -1,4 +1,4 @@
-namespace WorldFeed.Client.Clients
+namespace WorldFeed.AccountSettings.Client.Clients
 {
     using System.Threading.Tasks;
 
@@ -24,11 +24,11 @@ namespace WorldFeed.Client.Clients
 
         public Task<IAccountSettings> GetAccountSettingsAsync()
         {
-            return GetAccountSettingsAsync(new GetAccountSettingsParameters());
+            return this.GetAccountSettingsAsync(new GetAccountSettingsParameters());
         }
 
         public async Task<IAccountSettings> GetAccountSettingsAsync(IGetAccountSettingsParameters parameters)
-        {
+        {                                                            // Use .ConfigureAwait(false) to prevent deadlock
             var twitterResult = await this.accountRequester.GetAccountSettingsAsync(parameters).ConfigureAwait(false);
             return this.client.Factories.CreateAccountSettings(twitterResult?.Model);
         }

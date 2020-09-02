@@ -1,7 +1,8 @@
-namespace WorldFeed.Client.Requesters
+﻿namespace WorldFeed.Client.Requesters
 {
     using System.Threading.Tasks;
 
+    using WorldFeed.Client;
     using WorldFeed.Common.Client.Validators;
     using WorldFeed.Common.Events;
     using WorldFeed.Common.Public;

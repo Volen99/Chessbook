@@ -12,7 +12,7 @@ import {User, UserManager, UserManagerSettings} from 'oidc-client';
 import * as Oidc from 'oidc-client';
 
 import axios from 'axios';
-import {Settings} from "../../models/settings/models/settings.model";
+import {AccountSettings} from "../../models/settings/models/settings.model";
 
 @Injectable()
 export class SecurityService {
@@ -56,6 +56,10 @@ export class SecurityService {
 
   public isAuthorized: boolean;
   public userData: any;
+
+  public GetToken(): any {
+    return this.storageService.retrieve('authorizationDataIdToken');
+  }
 
   public ResetAuthorizationData() {
     this.storageService.store('authorizationDataIdToken', '');
@@ -205,11 +209,6 @@ export class SecurityService {
       // this.ResetAuthorizationData();
       this.router.navigate(['/Unauthorized']);
     }
-  }
-
-  public getSettings(): Observable<Settings> {
-    // this.configurationService.serverSettings.identityUrl + '/account/settingsCall'
-    return this.http.get<Settings>('https://localhost:5013' + '/account/settings');
   }
 
   private urlBase64Decode(str: string) {

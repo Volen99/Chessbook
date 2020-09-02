@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7Wc72869bOkTNiWgF9T2E014BhorWtv2nal+S8ULOlFb6YQXRxK4xVs8cPrz2j/Z7xYujgvmH4qR5sp6FRRD7g==",
+  "dgSpecHash": "Yr2uQyC6khQ2zZzLbmy8jjxyMoxYIKTGoKea60pQ+knxvmVxktl9m/W+2f2GUuffoaP9tbcP8+CSsak76y+C+A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\ApiGateways\\Science\\Web.Science\\Web.Science.HttpAggregator\\Web.Science.HttpAggregator.csproj",
+  "projectFilePath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\ApiGateways\\Science\\Web.Science\\Web.Science.HttpAggregator\\Web.HttpAggregator.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\volen\\.nuget\\packages\\aspnetcore.healthchecks.rabbitmq\\3.1.4\\aspnetcore.healthchecks.rabbitmq.3.1.4.nupkg.sha512",
     "C:\\Users\\volen\\.nuget\\packages\\aspnetcore.healthchecks.sqlserver\\3.1.1\\aspnetcore.healthchecks.sqlserver.3.1.1.nupkg.sha512",

@@ -1,6 +1,5 @@
 export interface Configuration {
   identityUrl: string;
-  scienceUrl: string;
+  apiGatewayUrl: string;
   programmingQuizUrl: string;
-  accountSettingsUrl: string;
 }
