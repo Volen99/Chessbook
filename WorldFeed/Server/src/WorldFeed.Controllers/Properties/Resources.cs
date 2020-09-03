@@ -9,7 +9,7 @@
         /// <summary>
         ///   Looks up a localized string similar to https://api.twitter.com/1.1/account/settings.json.
         /// </summary>
-        public static string Account_GetSettings = "https://localhost:5001/account/getsettings"; // was https://api.twitter.com/1.1/account/settings.json
+        public static string Account_GetSettings = "https://localhost:5013/account/settings"; // was https://api.twitter.com/1.1/account/settings.json
 
         /// <summary>
         ///   Looks up a localized string similar to https://api.twitter.com/1.1/mutes/users/create.json?.

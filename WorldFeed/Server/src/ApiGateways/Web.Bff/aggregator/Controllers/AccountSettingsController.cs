@@ -1,9 +1,8 @@
 ﻿namespace Web.HttpAggregator.Controllers
 {
-    using System.IO;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using Newtonsoft.Json.Linq;
+
     using WorldFeed;
     using WorldFeed.Common.Public;
     using WorldFeed.Common.Public.Models.Interfaces.DTO;
@@ -29,7 +28,7 @@
 
         [Route("Account/Settings")]
         [HttpPost]
-        public async Task<IAccountSettingsDTO> UpdateAccountSettingsAsync([FromBody] UpdateAccountSettingsParameters parameters)
+        public async Task<IAccountSettingsDTO> UpdateAccountSettingsAsync([FromBody] UpdateAccountSettingsParameters parameters, [FromHeader(Name = "x-requestid")] string requestId)
         {
             var query = this.Request.Query;
 

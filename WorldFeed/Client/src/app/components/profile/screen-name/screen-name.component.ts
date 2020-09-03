@@ -40,7 +40,6 @@ export class ScreenNameComponent implements OnInit {
 
   async onSubmit(value: any) {
     this.accountSettingsService.getSettings().subscribe(settings => {
-      debugger
       this.accountSettings = settings;
     });
 

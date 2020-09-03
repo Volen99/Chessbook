@@ -14,9 +14,7 @@
         private readonly IJObjectStaticWrapper jObjectStaticWrapper;
         private readonly IFactory<ITwitterExceptionInfo> twitterExceptionInfoUnityFactory;
 
-        public WebExceptionInfoExtractor(
-            IJObjectStaticWrapper jObjectStaticWrapper,
-            IFactory<ITwitterExceptionInfo> twitterExceptionInfoUnityFactory)
+        public WebExceptionInfoExtractor(IJObjectStaticWrapper jObjectStaticWrapper, IFactory<ITwitterExceptionInfo> twitterExceptionInfoUnityFactory)
         {
             this.jObjectStaticWrapper = jObjectStaticWrapper;
             this.twitterExceptionInfoUnityFactory = twitterExceptionInfoUnityFactory;

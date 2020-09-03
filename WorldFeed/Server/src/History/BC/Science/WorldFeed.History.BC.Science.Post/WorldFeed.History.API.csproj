@@ -25,16 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\Media\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\..\WebCommon\WorldFeed.Web.Shared\WorldFeed.Web.Common.csproj" />
     <ProjectReference Include="..\..\..\..\Web\WorldFeed.Web.Shared\WorldFeed.Web.Common.csproj" />
     <ProjectReference Include="..\..\..\..\WorldFeed.Common\WorldFeed.Common.csproj" />
     <ProjectReference Include="..\..\..\..\WorldFeed.Controllers\WorldFeed.Controllers.csproj" />
     <ProjectReference Include="..\..\..\..\WorldFeed\WorldFeed.csproj" />
-    <ProjectReference Include="..\..\..\WorldFeed.History.Common\WorldFeed.History.Common.csproj" />
   </ItemGroup>
 
  

@@ -7,6 +7,7 @@ namespace WorldFeed.AccountSettings
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Configuration;
     using Autofac.Extensions.DependencyInjection;
+    using Microsoft.AspNetCore;
 
     public class Program
     {
@@ -22,7 +23,7 @@ namespace WorldFeed.AccountSettings
             try
             {
                 Log.Information("Configuring web host ({ApplicationContext})...", AppName);
-                var host = CreateHostBuilder(args).Build();
+                var host = BuildWebHost(configuration, args);
 
                 Log.Information("Starting web host ({ApplicationContext})...", AppName);
                 host.Run();
@@ -40,13 +41,22 @@ namespace WorldFeed.AccountSettings
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-            .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        private static IWebHost BuildWebHost(IConfiguration configuration, string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .CaptureStartupErrors(false)
+                .ConfigureAppConfiguration(x => x.AddConfiguration(configuration))
+                .UseStartup<Startup>()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseSerilog()
+                .Build();
+
+        //public static IHostBuilder CreateHostBuilder(string[] args) =>
+        //    Host.CreateDefaultBuilder(args)
+        //    .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+        //        .ConfigureWebHostDefaults(webBuilder =>
+        //        {
+        //            webBuilder.UseStartup<Startup>();
+        //        });
 
         private static Serilog.ILogger CreateSerilogLogger(IConfiguration configuration)
         {
@@ -70,8 +80,6 @@ namespace WorldFeed.AccountSettings
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
-
-            var config = builder.Build();
 
             return builder.Build();
         }

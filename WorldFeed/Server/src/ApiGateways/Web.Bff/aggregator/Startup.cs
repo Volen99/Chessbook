@@ -20,6 +20,7 @@
     using Web.Science.HttpAggregator.Filters.WorldFeed.Science.API.Infrastructure.Filters;
     using Web.Science.HttpAggregator.Config;
     using Web.Science.HttpAggregator.Infrastructure;
+    using Microsoft.IdentityModel.Logging;
 
     public class Startup
     {
@@ -33,6 +34,8 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            IdentityModelEventSource.ShowPII = true;
+
             services.AddHealthChecks()
                 .AddCheck("self", () => HealthCheckResult.Healthy())
                 .AddUrlGroup(new Uri("http://localhost:5001/hc"), name: "identityapi-check", tags: new string[] { "identityapi" });

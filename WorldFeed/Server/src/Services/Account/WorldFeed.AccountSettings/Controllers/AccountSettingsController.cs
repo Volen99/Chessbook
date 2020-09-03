@@ -1,10 +1,14 @@
 ﻿namespace WorldFeed.AccountSettings.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
-    using System.IO;
+    using System;
+    using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
+    using WorldFeed.AccountSettings.IntegrationEvents.Events;
     using WorldFeed.AccountSettings.Services;
+    using WorldFeed.BuildingBlocks.EventBus.Abstractions;
     using WorldFeed.Common.Public;
     using WorldFeed.Common.Public.Models.Interfaces;
     using WorldFeed.Common.Public.Models.Interfaces.DTO;
@@ -15,26 +19,52 @@
     {
         private readonly IAccountSettingsQueryExecutor accountSettingsQueryExecutor;
         private readonly ITwitterClient client;
+        private readonly ILogger<AccountSettingsController> logger;
+        private readonly IEventBus eventBus;
+        private readonly IIdentityService identityService;
+        private readonly IAccountSettingsSerivce accountSettingsSerivce;
 
-        public AccountSettingsController()
+        public AccountSettingsController(IIdentityService identityService, ILogger<AccountSettingsController> logger, IAccountSettingsSerivce accountSettingsSerivce)
         {
+            this.logger = logger;
+            this.identityService = identityService;
             this.client = new TwitterClient("", "");
+            this.accountSettingsSerivce = accountSettingsSerivce;
         }
 
         [HttpGet]
         [Route("Account/Settings")]
         public async Task<IAccountSettingsDTO> GetAccountSettingsAsync()
         {
-            var result = await this.client.AccountSettings.GetAccountSettingsAsync();
+            var userId = this.identityService.GetUserIdentity();
 
-            return result.AccountSettingsDTO;
+            var accountSettings = await this.accountSettingsSerivce.GetAccountSettingsAsync(userId);
+
+            return accountSettings;
         }
 
         [HttpPost]
         [Route("Account/Settings")]
-        public Task<IAccountSettingsDTO> UpdateAccountSettingsAsync(IUpdateAccountSettingsParameters parameters, ITwitterRequest request)
+        public Task<IAccountSettingsDTO> UpdateAccountSettingsAsync(TwitterRequest request, [FromQuery] int? lang = null,
+            [FromQuery] string? time_zone = null)
         {
-            var query = this.Request.Query;
+            var userId = this.identityService.GetUserIdentity();
+
+            var query = this.Request.Query.ToDictionary(x => x.Key, x => x.Value);
+
+            var eventMessage = new UserAccountSettingsUpdatedIntegrationEvent(userId, time_zone, lang, null, null, null);
+
+            try
+            {
+                this.eventBus.Publish(eventMessage);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex, "ERROR Publishing integration event: {IntegrationEventId} from {AppName}", eventMessage.Id, Program.AppName);
+
+                throw;
+            }
+
             return default;
         }
 

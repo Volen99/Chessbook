@@ -2,7 +2,6 @@
 {
     using System;
     using System.Net.Sockets;
-    using System.Text;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
@@ -18,6 +17,7 @@
     using WorldFeed.BuildingBlocks.EventBus;
     using WorldFeed.BuildingBlocks.EventBus.Events;
     using EventBus.Extensions;
+    using System.Text;
 
     public class EventBusRabbitMQ : IEventBus, IDisposable
     {
@@ -205,7 +205,7 @@
         private async Task Consumer_Received(object sender, BasicDeliverEventArgs eventArgs)
         {
             var eventName = eventArgs.RoutingKey;
-            var message = Encoding.UTF8.GetString(eventArgs.Body);
+            var message = Encoding.UTF8.GetString(eventArgs.Body.ToArray());        // TODO: BUG!!!!!
 
             try
             {

@@ -2982,22 +2982,6 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "WorldFeed.History.Common/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1"
-        },
-        "compile": {
-          "bin/placeholder/WorldFeed.History.Common.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/WorldFeed.History.Common.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
-      },
       "WorldFeed.Logic/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
@@ -9381,11 +9365,6 @@
       "path": "../../../../WorldFeed.Credentials/WorldFeed.Credentials.csproj",
       "msbuildProject": "../../../../WorldFeed.Credentials/WorldFeed.Credentials.csproj"
     },
-    "WorldFeed.History.Common/1.0.0": {
-      "type": "project",
-      "path": "../../../WorldFeed.History.Common/WorldFeed.History.Common.csproj",
-      "msbuildProject": "../../../WorldFeed.History.Common/WorldFeed.History.Common.csproj"
-    },
     "WorldFeed.Logic/1.0.0": {
       "type": "project",
       "path": "../../../../WorldFeed.Logic/WorldFeed.Logic.csproj",
@@ -9428,7 +9407,6 @@
       "WorldFeed >= 1.0.0",
       "WorldFeed.Common >= 1.0.0",
       "WorldFeed.Controllers >= 1.0.0",
-      "WorldFeed.History.Common >= 1.0.0",
       "WorldFeed.Web.Common >= 1.0.0"
     ]
   },
@@ -9462,9 +9440,6 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\History\\WorldFeed.History.Common\\WorldFeed.History.Common.csproj": {
-              "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\History\\WorldFeed.History.Common\\WorldFeed.History.Common.csproj"
-            },
             "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WebCommon\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj": {
               "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WebCommon\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj"
             },
