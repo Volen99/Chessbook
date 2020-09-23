@@ -1,5 +1,7 @@
 namespace WorldFeed.Common.Public.Models.Enums
 {
+    using WorldFeed.Common.Models.Enums;
+
     /// <summary>
     /// Current set of languages that can be used for Twitter UI.
     /// They can be used in the UpdateAccountSettings action.

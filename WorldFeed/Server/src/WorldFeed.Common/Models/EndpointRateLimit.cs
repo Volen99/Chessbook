@@ -3,8 +3,7 @@
     using System;
     using Newtonsoft.Json;
 
-    using global::WorldFeed.Common.Public.Models.RateLimits;
-
+    using WorldFeed.Common.Public.Models.RateLimits;
 
     public class EndpointRateLimit : IEndpointRateLimit
     {
@@ -14,7 +13,7 @@
         [JsonProperty("remaining")]
         public int Remaining { get; set; }
 
-        private long _reset;
+        private long reset;
 
         /// <summary>
         /// Integer representing the datetime when the endpoint rate limit will be reset.
@@ -22,12 +21,12 @@
         [JsonProperty("reset")]
         public long Reset
         {
-            get => _reset;
+            get => this.reset;
             set
             {
-                _reset = value;
+                this.reset = value;
                 ResetDateTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-                ResetDateTime = ResetDateTime.AddSeconds(_reset).ToLocalTime();
+                ResetDateTime = ResetDateTime.AddSeconds(this.reset).ToLocalTime();
             }
         }
 

@@ -26,13 +26,10 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Common\
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Common\bin\Debug\netcoreapp3.1\WorldFeed.Common.runtimeconfig.dev.json
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Common\bin\Debug\netcoreapp3.1\WorldFeed.Common.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Common\bin\Debug\netcoreapp3.1\WorldFeed.Common.pdb
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Common\bin\Debug\netcoreapp3.1\WorldFeed.Web.Common.dll
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Common\bin\Debug\netcoreapp3.1\WorldFeed.Web.Common.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Common\obj\Debug\netcoreapp3.1\WorldFeed.Common.csprojAssemblyReference.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Common\obj\Debug\netcoreapp3.1\WorldFeed.Common.AssemblyInfoInputs.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Common\obj\Debug\netcoreapp3.1\WorldFeed.Common.AssemblyInfo.cs
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Common\obj\Debug\netcoreapp3.1\WorldFeed.Common.csproj.CoreCompileInputs.cache
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Common\obj\Debug\netcoreapp3.1\WorldFeed.Common.csproj.CopyComplete
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Common\obj\Debug\netcoreapp3.1\WorldFeed.Common.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Common\obj\Debug\netcoreapp3.1\WorldFeed.Common.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.Common\obj\Debug\netcoreapp3.1\WorldFeed.Common.genruntimeconfig.cache

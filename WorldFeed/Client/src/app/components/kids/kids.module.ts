@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SharedModule} from '../../core/shared-core/shared.module';
-import {ViewComponent} from './view/view.component';
+import {SharedModule} from '../../shared/shared.module';
+import {KidsComponent} from './kids.component';
 import {GamingComponent} from './gaming/gaming.component';
 import {GamesComponent} from './gaming/games/games.component';
 import {KidsRoutingModule} from './kids-routing.module';
@@ -9,7 +9,7 @@ import {KidsRoutingModule} from './kids-routing.module';
 
 @NgModule({
   declarations: [
-    ViewComponent, GamingComponent, GamesComponent
+    KidsComponent, GamingComponent, GamesComponent
   ],
   imports: [
     CommonModule,
@@ -17,7 +17,7 @@ import {KidsRoutingModule} from './kids-routing.module';
     KidsRoutingModule,
   ],
   exports: [
-    ViewComponent,
+    KidsComponent,
     GamingComponent,
     GamesComponent,
   ],

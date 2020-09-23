@@ -1,23 +1,23 @@
-﻿namespace WorldFeed.Common.Data
-{
-    using System.Linq;
-    using Microsoft.EntityFrameworkCore;
+﻿//namespace WorldFeed.Common.Data
+//{
+//    using System.Linq;
+//    using Microsoft.EntityFrameworkCore;
 
-    using WorldFeed.Common.Models;
+//    using WorldFeed.Common.Models;
 
-    internal static class EntityIndexesConfiguration
-    {
-        public static void Configure(ModelBuilder modelBuilder)
-        {
-            // IDeletableEntity.IsDeleted index
-            var deletableEntityTypes = modelBuilder.Model
-                .GetEntityTypes()
-                .Where(et => et.ClrType != null && typeof(IDeletableEntity).IsAssignableFrom(et.ClrType));
+//    internal static class EntityIndexesConfiguration
+//    {
+//        public static void Configure(ModelBuilder modelBuilder)
+//        {
+//            // IDeletableEntity.IsDeleted index
+//            var deletableEntityTypes = modelBuilder.Model
+//                .GetEntityTypes()
+//                .Where(et => et.ClrType != null && typeof(IDeletableEntity).IsAssignableFrom(et.ClrType));
 
-            foreach (var deletableEntityType in deletableEntityTypes)
-            {
-                modelBuilder.Entity(deletableEntityType.ClrType).HasIndex(nameof(IDeletableEntity.IsDeleted));
-            }
-        }
-    }
-}
+//            foreach (var deletableEntityType in deletableEntityTypes)
+//            {
+//                modelBuilder.Entity(deletableEntityType.ClrType).HasIndex(nameof(IDeletableEntity.IsDeleted));
+//            }
+//        }
+//    }
+//}

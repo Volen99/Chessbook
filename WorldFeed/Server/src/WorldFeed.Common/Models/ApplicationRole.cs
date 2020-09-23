@@ -4,7 +4,7 @@ namespace WorldFeed.Common.Models
     using System;
     using Microsoft.AspNetCore.Identity;
 
-    public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
+    public class ApplicationRole : IdentityRole
     {
         public ApplicationRole()
             : this(null)

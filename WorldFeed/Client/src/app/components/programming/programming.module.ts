@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SharedModule} from '../../core/shared-core/shared.module';
-import {ViewComponent} from './view/view.component';
+import {SharedModule} from '../../shared/shared.module';
+import {ProgrammingComponent} from './programming.component';
 import {ProgrammingRoutingModule} from './programming-routing.module';
 
 @NgModule({
   declarations: [
-    ViewComponent,
+    ProgrammingComponent,
   ],
   imports: [
     CommonModule,
@@ -14,7 +14,7 @@ import {ProgrammingRoutingModule} from './programming-routing.module';
     ProgrammingRoutingModule,
   ],
   exports: [
-    ViewComponent,
+    ProgrammingComponent,
   ],
   providers: []
 })

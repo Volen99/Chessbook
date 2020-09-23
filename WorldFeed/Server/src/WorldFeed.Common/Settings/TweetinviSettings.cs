@@ -5,6 +5,7 @@
 
     /// <summary>
     /// Provide a set of preconfigured solutions that you can use to track the Twitter rate limits.
+    /// https://linvi.github.io/tweetinvi/dist/credentials/rate-limits.html
     /// </summary>
     public enum RateLimitTrackerMode
     {

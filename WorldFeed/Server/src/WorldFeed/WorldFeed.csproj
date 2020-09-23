@@ -11,8 +11,6 @@
   <ItemGroup>
     <ProjectReference Include="..\WorldFeed.Common\WorldFeed.Common.csproj" />
     <ProjectReference Include="..\WorldFeed.Controllers\WorldFeed.Controllers.csproj" />
-    <ProjectReference Include="..\WorldFeed.Credentials\WorldFeed.Credentials.csproj" />
-    <ProjectReference Include="..\WorldFeed.Streams\WorldFeed.Streams.csproj" />
   </ItemGroup>
 
 </Project>

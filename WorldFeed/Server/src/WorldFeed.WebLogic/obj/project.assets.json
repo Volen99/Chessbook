@@ -9016,8 +9016,8 @@
     },
     "WorldFeed.Web.Common/1.0.0": {
       "type": "project",
-      "path": "../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj",
-      "msbuildProject": "../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj"
+      "path": "../Web/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj",
+      "msbuildProject": "../Web/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj"
     }
   },
   "projectFileDependencyGroups": {

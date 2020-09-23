@@ -5,7 +5,7 @@
     /// <summary>
     /// EventArgs with value of Type T
     /// </summary>
-    public class GenericEventArgs<T>  : EventArgs
+    public class GenericEventArgs<T> : EventArgs
     {
         public T Value { get; }
 

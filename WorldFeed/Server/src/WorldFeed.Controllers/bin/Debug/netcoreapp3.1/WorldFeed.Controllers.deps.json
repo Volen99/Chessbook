@@ -9,9 +9,7 @@
       "WorldFeed.Controllers/1.0.0": {
         "dependencies": {
           "Swashbuckle.AspNetCore": "5.5.1",
-          "WorldFeed.Common": "1.0.0",
-          "WorldFeed.Credentials": "1.0.0",
-          "WorldFeed.Logic": "1.0.0"
+          "WorldFeed.Common": "1.0.0"
         },
         "runtime": {
           "WorldFeed.Controllers.dll": {}
@@ -1963,52 +1961,6 @@
         "runtime": {
           "WorldFeed.Common.dll": {}
         }
-      },
-      "WorldFeed.Credentials/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1",
-          "WorldFeed.Common": "1.0.0",
-          "WorldFeed.Logic": "1.0.0",
-          "WorldFeed.WebLogic": "1.0.0"
-        },
-        "runtime": {
-          "WorldFeed.Credentials.dll": {}
-        }
-      },
-      "WorldFeed.Logic/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1",
-          "WorldFeed.Common": "1.0.0"
-        },
-        "runtime": {
-          "WorldFeed.Logic.dll": {}
-        }
-      },
-      "WorldFeed.Security/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1"
-        },
-        "runtime": {
-          "WorldFeed.Security.dll": {}
-        }
-      },
-      "WorldFeed.Web.Common/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1"
-        },
-        "runtime": {
-          "WorldFeed.Web.Common.dll": {}
-        }
-      },
-      "WorldFeed.WebLogic/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1",
-          "WorldFeed.Common": "1.0.0",
-          "WorldFeed.Security": "1.0.0"
-        },
-        "runtime": {
-          "WorldFeed.WebLogic.dll": {}
-        }
       }
     }
   },
@@ -3321,31 +3273,6 @@
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
     },
     "WorldFeed.Common/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "WorldFeed.Credentials/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "WorldFeed.Logic/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "WorldFeed.Security/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "WorldFeed.Web.Common/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "WorldFeed.WebLogic/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

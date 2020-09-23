@@ -1,170 +1,170 @@
-namespace WorldFeed.Common.Public.Client.Tools
-{
-    using System.Collections.Generic;
+//namespace WorldFeed.Common.Public.Client.Tools
+//{
+//    using System.Collections.Generic;
 
-    using WorldFeed.Common.DTO;
-    using WorldFeed.Common.Public.Models.Authentication;
-    using WorldFeed.Common.Public.Models.Interfaces;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO.Events;
-    using WorldFeed.Common.Public.Models.Interfaces.DTO.Webhooks;
-    using WorldFeed.Common.Public.Models.RateLimits;
+//    using WorldFeed.Common.DTO;
+//    using WorldFeed.Common.Public.Models.Authentication;
+//    using WorldFeed.Common.Public.Models.Interfaces;
+//    using WorldFeed.Common.Public.Models.Interfaces.DTO;
+//    using WorldFeed.Common.Public.Models.Interfaces.DTO.Events;
+//    using WorldFeed.Common.Public.Models.Interfaces.DTO.Webhooks;
+//    using WorldFeed.Common.Public.Models.RateLimits;
 
-    public interface ITwitterClientFactories
-    {
-        // ACCOUNT SETTINGS
+//    public interface ITwitterClientFactories
+//    {
+//        // ACCOUNT SETTINGS
 
-        /// <summary>
-        /// Creates accountSettings from json
-        /// </summary>
-        IAccountSettings CreateAccountSettings(string json);
-        IAccountSettings CreateAccountSettings(IAccountSettingsDTO dto);
+//        /// <summary>
+//        /// Creates accountSettings from json
+//        /// </summary>
+//        IAccountSettings CreateAccountSettings(string json);
+//        IAccountSettings CreateAccountSettings(IAccountSettingsDTO dto);
 
-        // LISTS
+//        // LISTS
 
-        /// <summary>
-        /// Create TwitterList from json
-        /// </summary>
-        ITwitterList CreateTwitterList(string json);
-        ITwitterList CreateTwitterList(ITwitterListDTO twitterListDTO);
-        ITwitterList[] CreateTwitterLists(IEnumerable<ITwitterListDTO> listDTOs);
+//        /// <summary>
+//        /// Create TwitterList from json
+//        /// </summary>
+//        ITwitterList CreateTwitterList(string json);
+//        ITwitterList CreateTwitterList(ITwitterListDTO twitterListDTO);
+//        ITwitterList[] CreateTwitterLists(IEnumerable<ITwitterListDTO> listDTOs);
 
-        // MESSAGE
+//        // MESSAGE
 
-        /// <summary>
-        /// Creates a message from create event message json
-        /// </summary>
-        IMessage CreateMessageFromMessageEventWithApp(string json);
+//        /// <summary>
+//        /// Creates a message from create event message json
+//        /// </summary>
+//        IMessage CreateMessageFromMessageEventWithApp(string json);
 
-        /// <summary>
-        /// Creates a Message from json
-        /// </summary>
-        IMessage CreateMessage(string json);
+//        /// <summary>
+//        /// Creates a Message from json
+//        /// </summary>
+//        IMessage CreateMessage(string json);
 
-        IMessage CreateMessage(IMessageEventDTO messageEventDTO);
-        IMessage CreateMessage(IMessageEventDTO messageEventDTO, IApp app);
-        IMessage CreateMessage(IGetMessageDTO getMessageDTO);
-        IMessage CreateMessage(ICreateMessageDTO createMessageDTO);
-        IMessage CreateMessage(IMessageEventWithAppDTO messageEventWithAppDTO);
-        IMessage[] CreateMessages(IEnumerable<IMessageEventWithAppDTO> eventWithAppDTOs);
+//        IMessage CreateMessage(IMessageEventDTO messageEventDTO);
+//        IMessage CreateMessage(IMessageEventDTO messageEventDTO, IApp app);
+//        IMessage CreateMessage(IGetMessageDTO getMessageDTO);
+//        IMessage CreateMessage(ICreateMessageDTO createMessageDTO);
+//        IMessage CreateMessage(IMessageEventWithAppDTO messageEventWithAppDTO);
+//        IMessage[] CreateMessages(IEnumerable<IMessageEventWithAppDTO> eventWithAppDTOs);
 
-        // RELATIONSHIP
+//        // RELATIONSHIP
 
-        /// <summary>
-        /// Creates a relationship state from json
-        /// </summary>
-        IRelationshipState CreateRelationshipState(string json);
-        IRelationshipState CreateRelationshipState(IRelationshipStateDTO relationshipStateDTO);
-        IRelationshipState[] CreateRelationshipStates(IRelationshipStateDTO[] relationshipStateDTOs);
-        IRelationshipDetails CreateRelationshipDetails(string json);
-        IRelationshipDetails CreateRelationshipDetails(IRelationshipDetailsDTO dto);
+//        /// <summary>
+//        /// Creates a relationship state from json
+//        /// </summary>
+//        IRelationshipState CreateRelationshipState(string json);
+//        IRelationshipState CreateRelationshipState(IRelationshipStateDTO relationshipStateDTO);
+//        IRelationshipState[] CreateRelationshipStates(IRelationshipStateDTO[] relationshipStateDTOs);
+//        IRelationshipDetails CreateRelationshipDetails(string json);
+//        IRelationshipDetails CreateRelationshipDetails(IRelationshipDetailsDTO dto);
 
-        // SAVED SEARCH
+//        // SAVED SEARCH
 
-        /// <summary>
-        /// Creates a saved search from json
-        /// </summary>
-        ISavedSearch CreateSavedSearch(string json);
-        ISavedSearch CreateSavedSearch(ISavedSearchDTO savedSearchDTO);
+//        /// <summary>
+//        /// Creates a saved search from json
+//        /// </summary>
+//        ISavedSearch CreateSavedSearch(string json);
+//        ISavedSearch CreateSavedSearch(ISavedSearchDTO savedSearchDTO);
 
-        // SEARCH
-        ISearchResults CreateSearchResult(ISearchResultsDTO searchResultsDTO);
+//        // SEARCH
+//        ISearchResults CreateSearchResult(ISearchResultsDTO searchResultsDTO);
 
-        // TWEET
+//        // TWEET
 
-        /// <summary>
-        /// Creates a tweet from json
-        /// </summary>
-        ITweet CreateTweet(string json);
-        ITweet CreateTweet(ITweetDTO tweetDTO);
-        ITweet[] CreateTweets(IEnumerable<ITweetDTO> tweetDTOs);
-        ITweetWithSearchMetadata CreateTweetWithSearchMetadata(ITweetWithSearchMetadataDTO tweetWithSearchMetadataDTO);
+//        /// <summary>
+//        /// Creates a tweet from json
+//        /// </summary>
+//        ITweet CreateTweet(string json);
+//        ITweet CreateTweet(ITweetDTO tweetDTO);
+//        ITweet[] CreateTweets(IEnumerable<ITweetDTO> tweetDTOs);
+//        ITweetWithSearchMetadata CreateTweetWithSearchMetadata(ITweetWithSearchMetadataDTO tweetWithSearchMetadataDTO);
 
-        /// <summary>
-        /// Creates a oembed tweet from json
-        /// </summary>
-        IOEmbedTweet CreateOEmbedTweet(string json);
-        IOEmbedTweet CreateOEmbedTweet(IOEmbedTweetDTO oEmbedTweetDTO);
+//        /// <summary>
+//        /// Creates a oembed tweet from json
+//        /// </summary>
+//        IOEmbedTweet CreateOEmbedTweet(string json);
+//        IOEmbedTweet CreateOEmbedTweet(IOEmbedTweetDTO oEmbedTweetDTO);
 
-        // USER
+//        // USER
 
-        /// <summary>
-        /// Creates a user from json
-        /// </summary>
-        IUser CreateUser(string json);
-        IUser CreateUser(IUserDTO userDTO);
-        IUser[] CreateUsers(IEnumerable<IUserDTO> usersDTO);
+//        /// <summary>
+//        /// Creates a user from json
+//        /// </summary>
+//        IUser CreateUser(string json);
+//        IUser CreateUser(IUserDTO userDTO);
+//        IUser[] CreateUsers(IEnumerable<IUserDTO> usersDTO);
 
-        /// <summary>
-        /// Creates an authenticated user from json
-        /// </summary>
-        IAuthenticatedUser CreateAuthenticatedUser(string json);
-        IAuthenticatedUser CreateAuthenticatedUser(IUserDTO userDTO);
+//        /// <summary>
+//        /// Creates an authenticated user from json
+//        /// </summary>
+//        IAuthenticatedUser CreateAuthenticatedUser(string json);
+//        IAuthenticatedUser CreateAuthenticatedUser(IUserDTO userDTO);
 
-        // WEBHOOKS
+//        // WEBHOOKS
 
-        /// <summary>
-        /// Creates a webhook from json
-        /// </summary>
-        IWebhook CreateWebhook(string json);
-        IWebhook CreateWebhook(IWebhookDTO webhookDTO);
+//        /// <summary>
+//        /// Creates a webhook from json
+//        /// </summary>
+//        IWebhook CreateWebhook(string json);
+//        IWebhook CreateWebhook(IWebhookDTO webhookDTO);
 
-        /// <summary>
-        /// Creates a webhook environment from json
-        /// </summary>
-        IWebhookEnvironment CreateWebhookEnvironment(string json);
-        IWebhookEnvironment CreateWebhookEnvironment(IWebhookEnvironmentDTO webhookEnvironmentDTO);
+//        /// <summary>
+//        /// Creates a webhook environment from json
+//        /// </summary>
+//        IWebhookEnvironment CreateWebhookEnvironment(string json);
+//        IWebhookEnvironment CreateWebhookEnvironment(IWebhookEnvironmentDTO webhookEnvironmentDTO);
 
-        /// <summary>
-        /// Creates a webhook subscription from json
-        /// </summary>
-        IWebhookEnvironmentSubscriptions CreateWebhookEnvironmentSubscriptions(string json);
-        IWebhookEnvironmentSubscriptions CreateWebhookEnvironmentSubscriptions(IWebhookEnvironmentSubscriptionsDTO webhookEnvironmentSubscriptionsDTO);
+//        /// <summary>
+//        /// Creates a webhook subscription from json
+//        /// </summary>
+//        IWebhookEnvironmentSubscriptions CreateWebhookEnvironmentSubscriptions(string json);
+//        IWebhookEnvironmentSubscriptions CreateWebhookEnvironmentSubscriptions(IWebhookEnvironmentSubscriptionsDTO webhookEnvironmentSubscriptionsDTO);
 
-        // HELP
+//        // HELP
 
-        /// <summary>
-        /// Creates a twitter configuration from json
-        /// </summary>
-        ITwitterConfiguration CreateTwitterConfiguration(string json);
+//        /// <summary>
+//        /// Creates a twitter configuration from json
+//        /// </summary>
+//        ITwitterConfiguration CreateTwitterConfiguration(string json);
 
-        // RATE LIMITS
+//        // RATE LIMITS
 
-        /// <summary>
-        /// Creates a RateLimits object from json
-        /// </summary>
-        ICredentialsRateLimits CreateRateLimits(string json);
-        ICredentialsRateLimits CreateRateLimits(CredentialsRateLimitsDTO dto);
+//        /// <summary>
+//        /// Creates a RateLimits object from json
+//        /// </summary>
+//        ICredentialsRateLimits CreateRateLimits(string json);
+//        ICredentialsRateLimits CreateRateLimits(CredentialsRateLimitsDTO dto);
 
-        // CREDENTIALS
+//        // CREDENTIALS
 
-        /// <summary>
-        /// Creates credentials from json
-        /// </summary>
-        ITwitterCredentials CreateTwitterCredentials(string json);
+//        /// <summary>
+//        /// Creates credentials from json
+//        /// </summary>
+//        ITwitterCredentials CreateTwitterCredentials(string json);
 
-        /// <summary>
-        /// Creates consumer credentials from json
-        /// </summary>
-        IConsumerOnlyCredentials CreateConsumerCredentials(string json);
+//        /// <summary>
+//        /// Creates consumer credentials from json
+//        /// </summary>
+//        IConsumerOnlyCredentials CreateConsumerCredentials(string json);
 
-        // MEDIA
+//        // MEDIA
 
-        /// <summary>
-        /// Creates a media from json
-        /// </summary>
-        IMedia CreateMedia(string json);
+//        /// <summary>
+//        /// Creates a media from json
+//        /// </summary>
+//        IMedia CreateMedia(string json);
 
-        /// <summary>
-        /// Creates uploaded media information from json
-        /// </summary>
-        IUploadedMediaInfo CreateUploadedMediaInfo(string json);
+//        /// <summary>
+//        /// Creates uploaded media information from json
+//        /// </summary>
+//        IUploadedMediaInfo CreateUploadedMediaInfo(string json);
 
-        // SEARCH
+//        // SEARCH
 
-        /// <summary>
-        /// Creates search results from json
-        /// </summary>
-        ISearchResults CreateSearchResult(string json);
-    }
-}
+//        /// <summary>
+//        /// Creates search results from json
+//        /// </summary>
+//        ISearchResults CreateSearchResult(string json);
+//    }
+//}

@@ -1,4 +1,4 @@
-﻿namespace WorldFeed
+﻿namespace WorldFeed.Common
 {
     public class GlobalConstants
     {

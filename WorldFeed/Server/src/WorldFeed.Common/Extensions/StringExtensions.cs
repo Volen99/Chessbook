@@ -10,7 +10,6 @@
 
     using WorldFeed.Common.Helpers;
     using WorldFeed.Common.Public;
-    using WorldFeed.Common.Public.Models.Interfaces;
 
     public static class StringExtensions
     {
@@ -138,14 +137,6 @@
             }
         }
 
-        /// <summary>
-        /// Returns the different parts of an Extended Tweet string.
-        /// </summary>
-        public static ITweetTextParts TweetParts(this string tweetText)
-        {
-            return new TweetTextParts(tweetText);
-        }
-
         public static int EstimateTweetLength(string tweet, bool willBePublishedWithMedia = false)
         {
             if (tweet == null)
@@ -157,8 +148,7 @@
 
             foreach (Match link in LinkParser.Matches(tweet))
             {
-                // If an url ends with . and 2 followed chars twitter does not
-                // consider it as an URL
+                // If an url ends with . and 2 followed chars twitter does not consider it as an URL
                 if (link.Groups["start"].Value == string.Empty &&
                     link.Groups["multiplePathElements"].Value == string.Empty &&
                     link.Groups["secondPathElement"].Value.Length < 2 &&

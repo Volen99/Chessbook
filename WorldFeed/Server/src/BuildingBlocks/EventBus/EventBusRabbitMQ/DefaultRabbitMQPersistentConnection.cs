@@ -10,8 +10,7 @@
     using RabbitMQ.Client.Events;
     using RabbitMQ.Client.Exceptions;
 
-    public class DefaultRabbitMQPersistentConnection
-        : IRabbitMQPersistentConnection
+    public class DefaultRabbitMQPersistentConnection : IRabbitMQPersistentConnection
     {
         private readonly IConnectionFactory connectionFactory;
         private readonly ILogger<DefaultRabbitMQPersistentConnection> _logger;

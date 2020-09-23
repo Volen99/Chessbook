@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {environment} from '../../../../environments/environment';
-import {PostModel} from '../../../core/science/interfaces/post.model.';
 import {AppState} from '../../../store/app.state';
 import {Observable} from 'rxjs';
-import {ScienceService} from '../../../core/science/services/science.service';
+import {ScienceService} from '../science.service';
+import {PostModel} from "../../models/post.model";
 
 @Component({
   // tslint:disable-next-line:component-selector

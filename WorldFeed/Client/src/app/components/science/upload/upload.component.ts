@@ -1,17 +1,6 @@
 import {Component, OnInit, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ScienceService} from '../../../core/science/services/science.service';
-import {environment} from '../../../../environments/environment';
-
-class ImageSnippet {
-  public src: string;
-  public file: File;
-
-  constructor(src: string, file: File) {
-    this.src = src;
-    this.file = file;
-  }
-}
+import {ScienceService} from '../science.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -28,16 +17,15 @@ export class UploadComponent implements OnInit {
 
   private http: HttpClient;
   private scienceService: ScienceService;
-  private microservicePath: string = environment.scienceApiUrl;
-
-  public files: any[] = [];
-  public progress: number;
-  public message: string;
 
   constructor(http: HttpClient, scienceService: ScienceService) {
     this.http = http;
     this.scienceService = scienceService;
   }
+
+  public files: any[] = [];
+  public progress: number;
+  public message: string;
 
   ngOnInit() {
 
@@ -90,11 +78,6 @@ export class UploadComponent implements OnInit {
       .subscribe(event => {
         this.files = event.data;
 
-        // if (event.type === HttpEventType.UploadProgress) {
-        //   this.progress = Math.round(100 * event.loaded / event.total);
-        // } else if (event.type === HttpEventType.Response) {
-        //   this.message = 'Upload success.';
-        // }
         this.onUploadFinished.emit(event); // Emits an event containing a given value.
       });
   };
@@ -105,11 +88,6 @@ export class UploadComponent implements OnInit {
    * @param mediaId (Media id)
    */
   deleteFile(index: number, mediaId: number) {
-    // if (this.files[index].progress < 100) {
-    //   console.log('Upload in progress.');
-    //   return;
-    // }
-
     this.scienceService.removeMedia(mediaId).subscribe();
     this.files.splice(index, 1);
   }
@@ -127,5 +105,15 @@ export class UploadComponent implements OnInit {
 
   public createImgPath = (serverPath: string) => {
     return `${this.microservicePath}${serverPath}`;
-  };
+  }
+}
+
+class ImageSnippet {
+  public src: string;
+  public file: File;
+
+  constructor(src: string, file: File) {
+    this.src = src;
+    this.file = file;
+  }
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6licvbTV08Vo1muWAbrkR2D4la7lbiqfm+bfUIywqVdKRM1gUbunybgQSHGYSjVJVd+ES0GdYeaerrV191AURA==",
+  "dgSpecHash": "OSu/q55MvwNVSkrwQEs4kIcu7u4j0gMt8RGxdZ7gfwW3ngBEBl1cGJh9ORwMqlq+CIHfbZsSHq6a8YbK8fLTJQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\ApiGateways\\Identity\\Identity.HttpAggregator.csproj",
   "expectedPackageFiles": [

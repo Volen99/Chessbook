@@ -19,10 +19,8 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.WebLogi
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.WebLogic\bin\Debug\netcoreapp3.1\WorldFeed.WebLogic.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.WebLogic\bin\Debug\netcoreapp3.1\WorldFeed.Common.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.WebLogic\bin\Debug\netcoreapp3.1\WorldFeed.Security.dll
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.WebLogic\bin\Debug\netcoreapp3.1\WorldFeed.Web.Common.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.WebLogic\bin\Debug\netcoreapp3.1\WorldFeed.Common.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.WebLogic\bin\Debug\netcoreapp3.1\WorldFeed.Security.pdb
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.WebLogic\bin\Debug\netcoreapp3.1\WorldFeed.Web.Common.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.WebLogic\obj\Debug\netcoreapp3.1\WorldFeed.WebLogic.csprojAssemblyReference.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.WebLogic\obj\Debug\netcoreapp3.1\WorldFeed.WebLogic.AssemblyInfoInputs.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\WorldFeed.WebLogic\obj\Debug\netcoreapp3.1\WorldFeed.WebLogic.AssemblyInfo.cs

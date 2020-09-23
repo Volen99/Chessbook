@@ -11,7 +11,7 @@
             var nullableStruct = serializer.Deserialize<T?>(reader);
             if (nullableStruct == null)
             {
-                nullableStruct = default (T);
+                nullableStruct = default(T);
             }
 
             return nullableStruct;
@@ -19,7 +19,7 @@
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof (T?);
+            return objectType == typeof(T?);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

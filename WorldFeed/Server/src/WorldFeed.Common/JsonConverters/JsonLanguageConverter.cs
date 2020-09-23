@@ -5,7 +5,6 @@
 
     using WorldFeed.Common.Extensions;
     using WorldFeed.Common.Models.Enums;
-    using WorldFeed.Common.Public.Models.Enums;
 
     public class JsonLanguageConverter : JsonConverter
     {

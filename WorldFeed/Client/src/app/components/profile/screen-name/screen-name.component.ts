@@ -2,11 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Validators, FormGroup, FormBuilder} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 
-import {SecurityService} from "../../../core/shared-core/services/security.service";
-import {AccountSettingsService} from "../../../core/shared-core/services/account-settings/account-settings.service";
-import {AccountSettings} from "../../../core/models/settings/models/settings.model";
-import {TimeZone} from "../../../core/models/settings/models/time-zone.model";
-import { UpdateAccountSettingsParameters } from 'src/app/core/models/settings/models/update-account-settings-parameters.model';
+import {ProfileService} from "../profile.service";
+import {AccountSettings} from "../../models/settings/settings.model";
+import {UpdateAccountSettingsParameters} from "../../models/settings/update-account-settings-parameters.model";
 
 @Component({
   selector: 'app-profile-screen-name',
@@ -18,11 +16,11 @@ export class ScreenNameComponent implements OnInit {
   // or FormArray. It reduces the amount of boilerplate needed to build complex forms
   private fb: FormBuilder;
   private http: HttpClient;
-  private accountSettingsService: AccountSettingsService;
+  private accountSettingsService: ProfileService;
 
   private accountSettings: AccountSettings = {} as AccountSettings;
 
-  constructor(http: HttpClient, fb: FormBuilder, accountSettingsService: AccountSettingsService) {
+  constructor(http: HttpClient, fb: FormBuilder, accountSettingsService: ProfileService) {
     this.http = http;
     this.fb = fb;
     this.accountSettingsService = accountSettingsService;

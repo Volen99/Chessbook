@@ -8989,8 +8989,8 @@
     },
     "WorldFeed.Web.Common/1.0.0": {
       "type": "project",
-      "path": "../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj",
-      "msbuildProject": "../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj"
+      "path": "../Web/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj",
+      "msbuildProject": "../Web/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -9046,9 +9046,6 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WebCommon\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj": {
-              "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WebCommon\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj"
-            },
             "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj": {
               "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\Web\\WorldFeed.Web.Shared\\WorldFeed.Web.Common.csproj"
             }

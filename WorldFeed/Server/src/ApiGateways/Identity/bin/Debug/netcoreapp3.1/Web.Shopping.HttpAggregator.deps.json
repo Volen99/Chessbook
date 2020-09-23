@@ -2650,17 +2650,6 @@
           "WorldFeed.Common.dll": {}
         }
       },
-      "WorldFeed.Web.Common/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1"
-        },
-        "runtime": {
-          "WorldFeed.Web.Common.dll": {}
-        },
-        "compile": {
-          "WorldFeed.Web.Common.dll": {}
-        }
-      },
       "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
         "compile": {
           "Microsoft.AspNetCore.Antiforgery.dll": {}
@@ -4202,6 +4191,12 @@
           "WindowsBase.dll": {}
         },
         "compileOnly": true
+      },
+      "WorldFeed.Web.Common/1.0.0": {
+        "dependencies": {
+          "Swashbuckle.AspNetCore": "5.5.1"
+        },
+        "compileOnly": true
       }
     }
   },
@@ -5530,11 +5525,6 @@
       "serviceable": false,
       "sha512": ""
     },
-    "WorldFeed.Web.Common/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
     "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -6817,6 +6807,11 @@
     },
     "WindowsBase/4.0.0.0": {
       "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WorldFeed.Web.Common/1.0.0": {
+      "type": "project",
       "serviceable": false,
       "sha512": ""
     }

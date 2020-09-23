@@ -1,4 +1,4 @@
-import {PostModel} from '../../../core/science/interfaces/post.model.';
+import {PostModel} from "../../../components/models/post.model";
 
 export interface PostsState {
   readonly all: PostModel[];

@@ -25,10 +25,5 @@
     <ProjectReference Include="..\..\..\WorldFeed\WorldFeed.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\EntityConfigurations\" />
-    <Folder Include="IntegrationEvents\EventHandling\" />
-  </ItemGroup>
-
 
 </Project>

@@ -18,10 +18,7 @@ namespace WorldFeed.AspNet.Core.Logic
         private readonly IWebhookRouter router;
         private readonly IConsumerOnlyCredentials consumerOnlyCredentials;
 
-        public AccountActivityRequestHandler(
-            IWebhookDispatcher dispatcher,
-            IWebhooksRoutes routes,
-            IWebhooksHelper webhooksHelper,
+        public AccountActivityRequestHandler(IWebhookDispatcher dispatcher, IWebhooksRoutes routes, IWebhooksHelper webhooksHelper,
             IFactory<AccountActivityStream> accountActivityStreamFactory,
             ITwitterClient client)
         {

@@ -9,10 +9,10 @@
     using System.Threading.Tasks;
 
     using WorldFeed.Common.Events;
+    using WorldFeed.Common.Exceptions.Public;
     using WorldFeed.Common.Extensions;
     using WorldFeed.Common.Helpers;
     using WorldFeed.Common.Public.Events;
-    using WorldFeed.Common.Public.Exceptions;
     using WorldFeed.Common.Public.Models.Interfaces;
     using WorldFeed.Common.Public.Streaming.Enums;
     using HttpMethod = System.Net.Http.HttpMethod;

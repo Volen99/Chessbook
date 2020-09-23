@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {ViewComponent} from './view/view.component';
+import {ProfileComponent} from './profile.component';
 import {ScreenNameComponent} from './screen-name/screen-name.component';
 
 const routes: Routes = [
   {
-    path: '', component: ViewComponent,
+    path: '', component: ProfileComponent,
     children: [
       {
         path: 'screen_name', component: ScreenNameComponent

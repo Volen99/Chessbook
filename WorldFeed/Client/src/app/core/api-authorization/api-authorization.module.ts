@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginMenuComponent } from '../../components/shared/navbar/login-menu/login-menu.component';
+import { LoginMenuComponent } from '../../shared/navbar/login-menu/login-menu.component';
 import { LoginComponent } from '../../components/authentication/login/login.component';
 import { LogoutComponent } from '../../components/authentication/logout/logout.component';
 import { RouterModule } from '@angular/router';

@@ -5,9 +5,9 @@ namespace WorldFeed.Common.Iterators
     using System.Linq;
     using System.Threading.Tasks;
 
+    using WorldFeed.Common.Exceptions.Public;
     using WorldFeed.Common.Extensions;
     using WorldFeed.Common.Iterators.Models;
-    using WorldFeed.Common.Public.Exceptions;
     using WorldFeed.Common.Public.Iterators;
 
     public class MultiLevelCursorIterator<TParent, TItem> : MultiLevelCursorIterator<TParent, TItem, string>, IMultiLevelCursorIterator<TParent, TItem>

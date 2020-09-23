@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
-import {SharedModule} from './core/shared-core/shared.module';
+import {SharedModule} from './shared/shared.module';
 import {HistoryModule} from './components/history/history.module';
 import {KidsModule} from './components/kids/kids.module';
 import {ScienceModule} from './components/science/science.module';

@@ -10,9 +10,7 @@
         "dependencies": {
           "Swashbuckle.AspNetCore": "5.5.1",
           "WorldFeed.Common": "1.0.0",
-          "WorldFeed.Controllers": "1.0.0",
-          "WorldFeed.Credentials": "1.0.0",
-          "WorldFeed.Streams": "1.0.0"
+          "WorldFeed.Controllers": "1.0.0"
         },
         "runtime": {
           "WorldFeed.dll": {}
@@ -1968,67 +1966,10 @@
       "WorldFeed.Controllers/1.0.0": {
         "dependencies": {
           "Swashbuckle.AspNetCore": "5.5.1",
-          "WorldFeed.Common": "1.0.0",
-          "WorldFeed.Credentials": "1.0.0",
-          "WorldFeed.Logic": "1.0.0"
+          "WorldFeed.Common": "1.0.0"
         },
         "runtime": {
           "WorldFeed.Controllers.dll": {}
-        }
-      },
-      "WorldFeed.Credentials/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1",
-          "WorldFeed.Common": "1.0.0",
-          "WorldFeed.Logic": "1.0.0",
-          "WorldFeed.WebLogic": "1.0.0"
-        },
-        "runtime": {
-          "WorldFeed.Credentials.dll": {}
-        }
-      },
-      "WorldFeed.Logic/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1",
-          "WorldFeed.Common": "1.0.0"
-        },
-        "runtime": {
-          "WorldFeed.Logic.dll": {}
-        }
-      },
-      "WorldFeed.Security/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1"
-        },
-        "runtime": {
-          "WorldFeed.Security.dll": {}
-        }
-      },
-      "WorldFeed.Streams/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1",
-          "WorldFeed.Common": "1.0.0"
-        },
-        "runtime": {
-          "WorldFeed.Streams.dll": {}
-        }
-      },
-      "WorldFeed.Web.Common/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1"
-        },
-        "runtime": {
-          "WorldFeed.Web.Common.dll": {}
-        }
-      },
-      "WorldFeed.WebLogic/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1",
-          "WorldFeed.Common": "1.0.0",
-          "WorldFeed.Security": "1.0.0"
-        },
-        "runtime": {
-          "WorldFeed.WebLogic.dll": {}
         }
       }
     }
@@ -3347,36 +3288,6 @@
       "sha512": ""
     },
     "WorldFeed.Controllers/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "WorldFeed.Credentials/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "WorldFeed.Logic/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "WorldFeed.Security/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "WorldFeed.Streams/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "WorldFeed.Web.Common/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "WorldFeed.WebLogic/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

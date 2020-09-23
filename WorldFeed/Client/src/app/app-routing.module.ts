@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./core/shared-core/shared-routing.module').then(m => m.SharedRoutingModule),
+    loadChildren: () => import('./shared/shared-routing.module').then(m => m.SharedRoutingModule),
   },
   {
     path: 'history',

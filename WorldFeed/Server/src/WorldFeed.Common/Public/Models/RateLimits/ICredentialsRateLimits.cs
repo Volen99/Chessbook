@@ -24,7 +24,7 @@
         DateTime CreatedAt { get; }
         string RateLimitContext { get; }
         bool IsApplicationOnlyCredentials { get; }
-        CredentialsRateLimitsDTO CredentialsRateLimitsDTO { get; }
+        // CredentialsRateLimitsDTO CredentialsRateLimitsDTO { get; }
 
         // ALL OTHERS that are retrieved from the headers
         Dictionary<TwitterEndpointAttribute, IEndpointRateLimit> OtherEndpointRateLimits { get; }

@@ -2023,14 +2023,6 @@
           "WorldFeed.Streams.dll": {}
         }
       },
-      "WorldFeed.Web.Common/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1"
-        },
-        "runtime": {
-          "WorldFeed.Web.Common.dll": {}
-        }
-      },
       "WorldFeed.WebLogic/1.0.0": {
         "dependencies": {
           "Swashbuckle.AspNetCore": "5.5.1",
@@ -2039,6 +2031,14 @@
         },
         "runtime": {
           "WorldFeed.WebLogic.dll": {}
+        }
+      },
+      "WorldFeed.Web.Common.Reference/1.0.0.0": {
+        "runtime": {
+          "WorldFeed.Web.Common.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }
@@ -3386,13 +3386,13 @@
       "serviceable": false,
       "sha512": ""
     },
-    "WorldFeed.Web.Common/1.0.0": {
+    "WorldFeed.WebLogic/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "WorldFeed.WebLogic/1.0.0": {
-      "type": "project",
+    "WorldFeed.Web.Common.Reference/1.0.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

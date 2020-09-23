@@ -1,6 +1,6 @@
-import {PostModel} from '../../../core/science/interfaces/post.model.';
 import * as PostsActions from '../actions/posts.actions';
 import {PostsState} from '../state/posts.state';
+import {PostModel} from "../../../components/models/post.model";
 
 const initialState: PostsState = {
   all: [],

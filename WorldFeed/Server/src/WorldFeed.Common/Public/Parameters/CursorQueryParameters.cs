@@ -6,12 +6,12 @@
     public interface ICursorQueryParameters : ICustomRequestParameters
     {
         /// <summary>
-        /// The cursor value to start the operation with
+        /// Defines the cursor that will be used for executing the first request
         /// </summary>
         string Cursor { get; set; }
 
         /// <summary>
-        /// The maximum number of objects to return
+        /// Defines the maximum number of items that will be returned per request
         /// </summary>
         int PageSize { get; set; }
     }
@@ -26,10 +26,13 @@
 
         public CursorQueryParameters(ICursorQueryParameters parameters) : base(parameters)
         {
-            if (parameters == null) { return; }
+            if (parameters == null)
+            {
+                return; 
+            }
 
-            Cursor = parameters.Cursor;
-            PageSize = parameters.PageSize;
+            this.Cursor = parameters.Cursor;
+            this.PageSize = parameters.PageSize;
         }
 
         /// <inheritdoc/>

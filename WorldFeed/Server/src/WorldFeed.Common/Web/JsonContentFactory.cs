@@ -8,11 +8,11 @@ namespace WorldFeed.Common.Web
 
     public class JsonContentFactory
     {
-        private readonly IJsonObjectConverter _jsonObjectConverter;
+        private readonly IJsonObjectConverter jsonObjectConverter;
 
         public JsonContentFactory(IJsonObjectConverter jsonObjectConverter)
         {
-            _jsonObjectConverter = jsonObjectConverter;
+            this.jsonObjectConverter = jsonObjectConverter;
         }
 
         public StringContent Create<T>(T content)
@@ -22,7 +22,7 @@ namespace WorldFeed.Common.Web
 
         public StringContent Create<T>(T content, JsonConverter[] converters)
         {
-            var jsonBody = _jsonObjectConverter.Serialize(content, converters);
+            var jsonBody = this.jsonObjectConverter.Serialize(content, converters);
             return new StringContent(jsonBody, Encoding.UTF8, "application/json");
         }
     }

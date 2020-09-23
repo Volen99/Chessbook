@@ -1,4 +1,6 @@
-﻿namespace WorldFeed.Infrastructure
+﻿using WorldFeed.Common;
+
+namespace WorldFeed.Infrastructure
 {
     using System.Security.Claims;
 

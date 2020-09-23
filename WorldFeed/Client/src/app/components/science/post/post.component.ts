@@ -1,18 +1,16 @@
 import {Component, OnInit, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
-import {PostModel} from '../../../core/science/interfaces/post.model.';
 import {AppState} from '../../../store/app.state';
 import {Store} from '@ngrx/store';
 import {HttpClient} from '@angular/common/http';
-import {ScienceService} from '../../../core/science/services/science.service';
+import {ScienceService} from '../science.service';
 import {environment} from '../../../../environments/environment';
 import {AddPost} from '../../../store/posts/actions/posts.actions';
-import {Feed} from '../../../core/shared-core/Feed/feed.model';
+import {Feed} from '../../../shared/Feed/feed.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormGroup} from 'ngx-strongly-typed-forms';
-import {MediaINITQueryParameters} from '../../../core/interfaces/uploads/upload-media-INIT-query-parameters.model';
-import {UploadVideoService} from '../../../core/services/upload/upload-video.service';
-import {MediaAPPENDQueryParameters} from '../../../core/interfaces/uploads/upload-media-APPEND-query-parameters.model';
-import {MediaFINALIZEQueryParameters} from '../../../core/interfaces/uploads/upload-media-FINALIZE-query-parameters.model';
+import {MediaINITQueryParameters} from '../../models/uploads/upload-media-INIT-query-parameters.model';
+import {MediaAPPENDQueryParameters} from '../../models/uploads/upload-media-APPEND-query-parameters.model';
+import {MediaFINALIZEQueryParameters} from '../../models/uploads/upload-media-FINALIZE-query-parameters.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -36,15 +34,12 @@ export class PostComponent implements OnInit {
   private route: ActivatedRoute;
 
   private scienceService: ScienceService;
-  private uploadVideoService: UploadVideoService;
-  private microservicePath: string = environment.scienceApiUrl;
   private postForm: FormGroup<File>;
 
   constructor(
     store: Store<AppState>,
     http: HttpClient,
     scienceService: ScienceService,
-    uploadVideoService: UploadVideoService,
     router: Router,
     route: ActivatedRoute) {
 
@@ -52,7 +47,6 @@ export class PostComponent implements OnInit {
     this.http = http;
     this.router = router;
     this.scienceService = scienceService;
-    this.uploadVideoService = uploadVideoService;
   }
 
   public color: string;
@@ -75,8 +69,6 @@ export class PostComponent implements OnInit {
   };
 
   public feed: Feed;
-
-  public post: PostModel;
 
   ngOnInit(): void {
   }

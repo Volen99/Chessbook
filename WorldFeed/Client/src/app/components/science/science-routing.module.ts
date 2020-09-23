@@ -1,9 +1,9 @@
 import {RouterModule, Routes} from '@angular/router';
-import {ViewComponent} from './view/view.component';
+import {ScienceComponent} from './science.component';
 import {NgModule} from '@angular/core';
 
 const routes: Routes = [
-  { path: '', component: ViewComponent },
+  { path: '', component: ScienceComponent },
 ];
 
 @NgModule({

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\WorldFeed.Common\WorldFeed.Common.csproj" />
+    <ProjectReference Include="..\..\..\WorldFeed\WorldFeed.csproj" />
+    <ProjectReference Include="..\WorldFeed.Message.Domain\WorldFeed.Message.Domain.csproj" />
+    <ProjectReference Include="..\WorldFeed.Message.Infrastructure\WorldFeed.Message.Infrastructure.csproj" />
+  </ItemGroup>
+
+
+</Project>

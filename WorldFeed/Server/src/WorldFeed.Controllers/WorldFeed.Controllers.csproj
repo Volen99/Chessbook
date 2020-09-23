@@ -10,8 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WorldFeed.Common\WorldFeed.Common.csproj" />
-    <ProjectReference Include="..\WorldFeed.Credentials\WorldFeed.Credentials.csproj" />
-    <ProjectReference Include="..\WorldFeed.Logic\WorldFeed.Logic.csproj" />
   </ItemGroup>
 
 </Project>

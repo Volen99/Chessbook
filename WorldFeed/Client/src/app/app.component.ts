@@ -1,11 +1,10 @@
 // This is our Main Method where everything starts
-
 import {Title} from '@angular/platform-browser';
-import {Component, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 
-import {SecurityService} from './core/shared-core/services/security.service';
-import {ConfigurationService} from './core/shared-core/services/configuration.service';
+import {SecurityService} from './shared/services/security.service';
+import {ConfigurationService} from './shared/services/configuration.service';
 
 @Component({
   selector: 'app-root',

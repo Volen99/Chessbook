@@ -148,10 +148,8 @@ C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Ident
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Identity\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Identity\bin\Debug\netcoreapp3.1\Devspaces.Support.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Identity\bin\Debug\netcoreapp3.1\WorldFeed.Common.dll
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Identity\bin\Debug\netcoreapp3.1\WorldFeed.Web.Common.dll
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Identity\bin\Debug\netcoreapp3.1\Devspaces.Support.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Identity\bin\Debug\netcoreapp3.1\WorldFeed.Common.pdb
-C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Identity\bin\Debug\netcoreapp3.1\WorldFeed.Web.Common.pdb
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Identity\obj\Debug\netcoreapp3.1\Identity.HttpAggregator.RazorTargetAssemblyInfo.cache
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Identity\obj\Debug\netcoreapp3.1\Identity.HttpAggregator.csproj.CopyComplete
 C:\Users\volen\OneDrive\Desktop\WorldFeed\WorldFeed\Server\src\ApiGateways\Identity\obj\Debug\netcoreapp3.1\staticwebassets\Web.Shopping.HttpAggregator.StaticWebAssets.Manifest.cache

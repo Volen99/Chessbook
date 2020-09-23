@@ -1961,14 +1961,6 @@
         "runtime": {
           "WorldFeed.Common.dll": {}
         }
-      },
-      "WorldFeed.Web.Common/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1"
-        },
-        "runtime": {
-          "WorldFeed.Web.Common.dll": {}
-        }
       }
     }
   },
@@ -3281,11 +3273,6 @@
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
     },
     "WorldFeed.Common/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "WorldFeed.Web.Common/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

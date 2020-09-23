@@ -1962,12 +1962,12 @@
           "WorldFeed.Common.dll": {}
         }
       },
-      "WorldFeed.Web.Common/1.0.0": {
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1"
-        },
+      "WorldFeed.Web.Common.Reference/1.0.0.0": {
         "runtime": {
-          "WorldFeed.Web.Common.dll": {}
+          "WorldFeed.Web.Common.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }
@@ -3285,8 +3285,8 @@
       "serviceable": false,
       "sha512": ""
     },
-    "WorldFeed.Web.Common/1.0.0": {
-      "type": "project",
+    "WorldFeed.Web.Common.Reference/1.0.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

@@ -7,15 +7,15 @@
     {
         public IntegrationEvent()
         {
-            Id = Guid.NewGuid();
-            CreationDate = DateTime.UtcNow;
+            this.Id = Guid.NewGuid();
+            this.CreationDate = DateTime.UtcNow;
         }
 
         [JsonConstructor]
         public IntegrationEvent(Guid id, DateTime createDate)
         {
-            Id = id;
-            CreationDate = createDate;
+            this.Id = id;
+            this.CreationDate = createDate;
         }
 
         [JsonProperty]

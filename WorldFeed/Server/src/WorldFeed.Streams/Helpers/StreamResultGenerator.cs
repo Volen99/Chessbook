@@ -4,8 +4,8 @@
     using System.Threading.Tasks;
 
     using WorldFeed.Common.Events;
+    using WorldFeed.Common.Exceptions.Public;
     using WorldFeed.Common.Public.Events;
-    using WorldFeed.Common.Public.Exceptions;
     using WorldFeed.Common.Public.Models.Interfaces;
     using WorldFeed.Common.Public.Streaming.Enums;
     using WorldFeed.Common.Public.Streaming.Events;

@@ -1,49 +1,44 @@
-﻿namespace WorldFeed.Common.RateLimit
-{
-    using System;
-    using System.Threading.Tasks;
+﻿//namespace WorldFeed.Common.RateLimit
+//{
+//    using System;
+//    using System.Threading.Tasks;
 
-    using WorldFeed.Common.Client.Interfaces;
-    using WorldFeed.Common.Models.Authentication;
-    using WorldFeed.Common.Public.Events;
-    using WorldFeed.Common.Public.Models.Interfaces;
-    using WorldFeed.Common.Public.Models.RateLimits;
-    using WorldFeed.Common.Public.Parameters.RateLimitsClient;
+//    using WorldFeed.Common.Public.Events;
+//    using WorldFeed.Common.Public.Models.RateLimits;
+//    /// <summary>
+//    /// Wait for the RateLimits before performing an operation.
+//    /// </summary>
+//    public interface IRateLimitAwaiter
+//    {
+//        /// <summary>
+//        /// Inform that a query is currently waiting in the RateLimitAwaiter
+//        /// for the appropriate RateLimits to be refreshed before being executed.
+//        /// </summary>
+//        event EventHandler<QueryAwaitingEventArgs> QueryAwaitingForRateLimit;
 
-    /// <summary>
-    /// Wait for the RateLimits before performing an operation.
-    /// </summary>
-    public interface IRateLimitAwaiter
-    {
-        /// <summary>
-        /// Inform that a query is currently waiting in the RateLimitAwaiter
-        /// for the appropriate RateLimits to be refreshed before being executed.
-        /// </summary>
-        event EventHandler<QueryAwaitingEventArgs> QueryAwaitingForRateLimit;
+//        /// <summary>
+//        /// Wait for the credentials' rate limits to be available for the specified query.
+//        /// </summary>
+//        Task WaitForCredentialsRateLimitAsync(ITwitterRequest request);
 
-        /// <summary>
-        /// Wait for the credentials' rate limits to be available for the specified query.
-        /// </summary>
-        Task WaitForCredentialsRateLimitAsync(ITwitterRequest request);
+//        /// <summary>
+//        /// Wait for the credentials' rate limits to be available for the specified query.
+//        /// </summary>
+//        Task WaitForCredentialsRateLimitAsync(IWaitForCredentialsRateLimitParameters parameters);
 
-        /// <summary>
-        /// Wait for the credentials' rate limits to be available for the specified query.
-        /// </summary>
-        Task WaitForCredentialsRateLimitAsync(IWaitForCredentialsRateLimitParameters parameters);
+//        /// <summary>
+//        /// Wait for the credentials' rate limits to be available for the specified endpoint.
+//        /// </summary>
+//        Task WaitForCredentialsRateLimitAsync(IEndpointRateLimit queryRateLimit, IReadOnlyTwitterCredentials credentials, ITwitterExecutionContext executionContext);
 
-        /// <summary>
-        /// Wait for the credentials' rate limits to be available for the specified endpoint.
-        /// </summary>
-        Task WaitForCredentialsRateLimitAsync(IEndpointRateLimit queryRateLimit, IReadOnlyTwitterCredentials credentials, ITwitterExecutionContext executionContext);
+//        /// <summary>
+//        /// Get the duration to wait before executing the specified query.
+//        /// </summary>
+//        Task<TimeSpan> TimeToWaitBeforeTwitterRequestAsync(string query, IReadOnlyTwitterCredentials credentials, ITwitterExecutionContext twitterExecutionContext);
 
-        /// <summary>
-        /// Get the duration to wait before executing the specified query.
-        /// </summary>
-        Task<TimeSpan> TimeToWaitBeforeTwitterRequestAsync(string query, IReadOnlyTwitterCredentials credentials, ITwitterExecutionContext twitterExecutionContext);
-
-        /// <summary>
-        /// Get the duration (milliseconds) to wait before executing a query using the specified rate limits.
-        /// </summary>
-        TimeSpan GetTimeToWaitFromQueryRateLimit(IEndpointRateLimit queryRateLimit, ITwitterExecutionContext executionContext);
-    }
-}
+//        /// <summary>
+//        /// Get the duration (milliseconds) to wait before executing a query using the specified rate limits.
+//        /// </summary>
+//        TimeSpan GetTimeToWaitFromQueryRateLimit(IEndpointRateLimit queryRateLimit, ITwitterExecutionContext executionContext);
+//    }
+//}

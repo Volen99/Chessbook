@@ -6,6 +6,7 @@
     using System.Reflection;
 
     using WorldFeed.Common.Attributes;
+    using WorldFeed.Common.Models.Enums;
     using WorldFeed.Common.Public.Models.Enums;
 
     public static class LanguageExtension

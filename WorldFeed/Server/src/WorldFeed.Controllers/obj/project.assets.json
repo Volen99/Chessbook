@@ -2834,58 +2834,6 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "WorldFeed.Credentials/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1",
-          "WorldFeed.Common": "1.0.0",
-          "WorldFeed.Logic": "1.0.0",
-          "WorldFeed.WebLogic": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/WorldFeed.Credentials.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/WorldFeed.Credentials.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
-      },
-      "WorldFeed.Logic/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1",
-          "WorldFeed.Common": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/WorldFeed.Logic.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/WorldFeed.Logic.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
-      },
-      "WorldFeed.Security/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1"
-        },
-        "compile": {
-          "bin/placeholder/WorldFeed.Security.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/WorldFeed.Security.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
-      },
       "WorldFeed.Web.Common/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
@@ -2897,24 +2845,6 @@
         },
         "runtime": {
           "bin/placeholder/WorldFeed.Web.Common.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
-      },
-      "WorldFeed.WebLogic/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "dependencies": {
-          "Swashbuckle.AspNetCore": "5.5.1",
-          "WorldFeed.Common": "1.0.0",
-          "WorldFeed.Security": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/WorldFeed.WebLogic.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/WorldFeed.WebLogic.dll": {}
         },
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
@@ -9063,38 +8993,16 @@
       "path": "../WorldFeed.Common/WorldFeed.Common.csproj",
       "msbuildProject": "../WorldFeed.Common/WorldFeed.Common.csproj"
     },
-    "WorldFeed.Credentials/1.0.0": {
-      "type": "project",
-      "path": "../WorldFeed.Credentials/WorldFeed.Credentials.csproj",
-      "msbuildProject": "../WorldFeed.Credentials/WorldFeed.Credentials.csproj"
-    },
-    "WorldFeed.Logic/1.0.0": {
-      "type": "project",
-      "path": "../WorldFeed.Logic/WorldFeed.Logic.csproj",
-      "msbuildProject": "../WorldFeed.Logic/WorldFeed.Logic.csproj"
-    },
-    "WorldFeed.Security/1.0.0": {
-      "type": "project",
-      "path": "../WorldFeed.Security/WorldFeed.Security.csproj",
-      "msbuildProject": "../WorldFeed.Security/WorldFeed.Security.csproj"
-    },
     "WorldFeed.Web.Common/1.0.0": {
       "type": "project",
-      "path": "../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj",
-      "msbuildProject": "../WebCommon/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj"
-    },
-    "WorldFeed.WebLogic/1.0.0": {
-      "type": "project",
-      "path": "../WorldFeed.WebLogic/WorldFeed.WebLogic.csproj",
-      "msbuildProject": "../WorldFeed.WebLogic/WorldFeed.WebLogic.csproj"
+      "path": "../Web/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj",
+      "msbuildProject": "../Web/WorldFeed.Web.Shared/WorldFeed.Web.Common.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "Swashbuckle.AspNetCore >= 5.5.1",
-      "WorldFeed.Common >= 1.0.0",
-      "WorldFeed.Credentials >= 1.0.0",
-      "WorldFeed.Logic >= 1.0.0"
+      "WorldFeed.Common >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -9129,12 +9037,6 @@
           "projectReferences": {
             "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WorldFeed.Common\\WorldFeed.Common.csproj": {
               "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WorldFeed.Common\\WorldFeed.Common.csproj"
-            },
-            "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WorldFeed.Credentials\\WorldFeed.Credentials.csproj": {
-              "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WorldFeed.Credentials\\WorldFeed.Credentials.csproj"
-            },
-            "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WorldFeed.Logic\\WorldFeed.Logic.csproj": {
-              "projectPath": "C:\\Users\\volen\\OneDrive\\Desktop\\WorldFeed\\WorldFeed\\Server\\src\\WorldFeed.Logic\\WorldFeed.Logic.csproj"
             }
           }
         }
