@@ -3,8 +3,8 @@
     using System.Runtime.Serialization;
 
     using WorldFeed.Common.Public.Models;
-    using WorldFeed.Upload.Domain.AggregatesModel.PostAggregate.TwitterEntities;
-    using WorldFeed.Upload.Domain.AggregatesModel.TweetAggregate.Properties;
+    using WorldFeed.Post.Domain.AggregatesModel.PostAggregate.TwitterEntities;
+    using WorldFeed.Post.Domain.AggregatesModel.TweetAggregate.Properties;
 
     public abstract class TweetCommand<TCommand> : EntityCommand<int>
         where TCommand : EntityCommand<int>

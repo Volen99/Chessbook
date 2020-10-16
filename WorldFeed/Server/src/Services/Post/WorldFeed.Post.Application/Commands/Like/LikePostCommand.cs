@@ -35,14 +35,12 @@
     {
         private readonly ICurrentUser currentUser;
         private readonly IPostRepository tweetRepository;
-        private readonly ITweetFactory tweetFactory;
+        // private readonly ITweetFactory tweetFactory;
         private readonly ILogger<LikePostCommandHandler> logger;
 
-        public LikePostCommandHandler(IMediator mediator, ICurrentUser currentUser, ITweetFactory tweetFactory,
-            IPostRepository tweetRepository, ILogger<LikePostCommandHandler> logger)
+        public LikePostCommandHandler(IMediator mediator, ICurrentUser currentUser, IPostRepository tweetRepository, ILogger<LikePostCommandHandler> logger)
         {
             this.currentUser = currentUser;
-            this.tweetFactory = tweetFactory;
             this.tweetRepository = tweetRepository;
 
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -50,9 +48,11 @@
 
         public async Task<bool> Handle(LikePostCommand request, CancellationToken cancellationToken)
         {
-            var postCurrent = await this.tweetRepository.GetAsync(request.Id);
+            var postCurrent = await this.tweetRepository.GetPost(request.Id);
 
-            postCurrent
+            // DB operations...
+
+            return default;
         }
     }
 

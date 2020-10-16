@@ -1,6 +1,7 @@
 import {Component, OnInit, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ScienceService} from '../science.service';
+import {TwitterClient} from "../../../worldfeed/TwitterClient";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -45,7 +46,7 @@ export class UploadComponent implements OnInit {
     this.uploadFile(files);
   }
 
-  public uploadFile = (files) => {
+  public uploadFile = async (files) => {
     if (files.length === 0) {
       return;
     }
@@ -73,6 +74,9 @@ export class UploadComponent implements OnInit {
       return;
     }
 
+    let client = new TwitterClient();
+
+    let res = await client.Upload.uploadBinaryAsync(filesArray[0].);
 
     this.scienceService.upload(formData)
       .subscribe(event => {

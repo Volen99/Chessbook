@@ -1,0 +1,120 @@
+import ArgumentException from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
+import {IRateLimitsClient} from "../../../core/Public/Client/Clients/IRateLimitsClient";
+import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {IRateLimitCacheManager} from "../../../core/Core/RateLimit/IRateLimitCacheManager";
+import {IRateLimitAwaiter} from "../../../core/Core/RateLimit/IRateLimitAwaiter";
+import {IHelpRequester} from "../../../core/Public/Client/Requesters/IHelpRequester";
+import {
+  GetRateLimitsParameters,
+  IGetRateLimitsParameters,
+  RateLimitsSource
+} from "../../../core/Public/Parameters/HelpClient/GetRateLimitsParameters";
+import {IEndpointRateLimit} from "../../../core/Public/Models/RateLimits/IEndpointRateLimit";
+import {
+  GetEndpointRateLimitsParameters,
+  IGetEndpointRateLimitsParameters
+} from "../../../core/Public/Parameters/HelpClient/GetEndpointRateLimitsParameters";
+import {WaitForCredentialsRateLimitParameters} from "../../../core/Public/Parameters/RateLimitsClient/WaitForCredentialsRateLimitParameters";
+import {IReadOnlyTwitterCredentials} from "../../../core/Core/Models/Authentication/ReadOnlyTwitterCredentials";
+import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+
+export class RateLimitsClient implements IRateLimitsClient {
+  private readonly _client: ITwitterClient;
+  private readonly _rateLimitCacheManager: IRateLimitCacheManager;
+  private readonly _rateLimitAwaiter: IRateLimitAwaiter;
+  private readonly _helpRequester: IHelpRequester;
+
+  constructor(client: ITwitterClient) {
+    let executionContext = client.CreateTwitterExecutionContext();
+
+    this._client = client;
+    this._helpRequester = client.Raw.help;
+    this._rateLimitCacheManager = executionContext.container.Resolve<IRateLimitCacheManager>();
+    this._rateLimitAwaiter = executionContext.container.Resolve<IRateLimitAwaiter>();
+  }
+
+  public async initializeRateLimitsManagerAsync(): Promise<void> {
+    let credentialsRateLimits = await this._rateLimitCacheManager.rateLimitCache.getCredentialsRateLimitsAsync(this._client.Credentials); // .ConfigureAwait(false);
+    if (credentialsRateLimits == null) {
+      await this._rateLimitCacheManager.refreshCredentialsRateLimitsAsync(this._client.Credentials); // .ConfigureAwait(false);
+    }
+  }
+
+  public async getRateLimitsAsync(fromOrParameters?: RateLimitsSource | IGetRateLimitsParameters): Promise<ICredentialsRateLimits> {
+    let parameters: IGetRateLimitsParameters;
+    if (this.isIGetRateLimitsParameters(fromOrParameters)) {
+      parameters = fromOrParameters;
+    } else {
+      parameters = new GetRateLimitsParameters();
+      if (fromOrParameters) {
+        parameters.from = fromOrParameters;
+      }
+    }
+
+    switch (parameters.from) {
+      case RateLimitsSource.CacheOnly:
+        return await this._rateLimitCacheManager.rateLimitCache.getCredentialsRateLimitsAsync(this._client.Credentials); // .ConfigureAwait(false);
+      case RateLimitsSource.TwitterApiOnly:
+        let twitterResult = await this._helpRequester.getRateLimitsAsync(parameters); // .ConfigureAwait(false);
+        return this._client.Factories.createRateLimits(twitterResult?.model);
+      case RateLimitsSource.CacheOrTwitterApi:
+        return await this._rateLimitCacheManager.getCredentialsRateLimitsAsync(this._client.Credentials); // .ConfigureAwait(false);
+      default:
+        throw new ArgumentException(nameof(parameters.from));
+    }
+  }
+
+  public getEndpointRateLimitAsync(urlOrParameters: string | IGetEndpointRateLimitsParameters, from?: RateLimitsSource): Promise<IEndpointRateLimit> {
+    let parameters: IGetEndpointRateLimitsParameters;
+    if (Type.isString(urlOrParameters)) {
+      parameters = new GetEndpointRateLimitsParameters(urlOrParameters);
+      if (from) {
+        parameters.from = from;
+      }
+    } else {
+      parameters = urlOrParameters;
+    }
+
+    return this._rateLimitCacheManager.getQueryRateLimitAsync(parameters, this._client.Credentials);
+  }
+
+  public waitForQueryRateLimitAsync(urlOrEndpointRateLimit: string | IEndpointRateLimit, from?: RateLimitsSource): Promise<void> {
+    if (this.isIEndpointRateLimit(urlOrEndpointRateLimit)) {
+      return this._rateLimitAwaiter.waitForCredentialsRateLimitAsync(urlOrEndpointRateLimit, this._client.Credentials, this._client.CreateTwitterExecutionContext());
+    } else {
+      let fromCurrent: RateLimitsSource;
+      if (!from) {
+        fromCurrent = RateLimitsSource.CacheOrTwitterApi;
+      } else {
+        fromCurrent = from;
+      }
+
+      let credentialsRateLimitParameters = new WaitForCredentialsRateLimitParameters(urlOrEndpointRateLimit);
+      credentialsRateLimitParameters.Credentials = this._client.Credentials;
+      credentialsRateLimitParameters.ExecutionContext = this._client.CreateTwitterExecutionContext();
+      credentialsRateLimitParameters.From = fromCurrent;
+
+      return this._rateLimitAwaiter.waitForCredentialsRateLimitAsync(credentialsRateLimitParameters);
+    }
+  }
+
+  public clearRateLimitCacheAsync(credentials?: IReadOnlyTwitterCredentials): Promise<void> {
+    if (credentials) {
+      return this._rateLimitCacheManager.rateLimitCache.clearAsync(credentials);
+    } else {
+      return this._rateLimitCacheManager.rateLimitCache.clearAsync(this._client.Credentials);
+    }
+  }
+
+  public clearAllRateLimitCacheAsync(): Promise<void> {
+    return this._rateLimitCacheManager.rateLimitCache.clearAllAsync();
+  }
+
+  private isIGetRateLimitsParameters(fromOrParameters: RateLimitsSource | IGetRateLimitsParameters): fromOrParameters is IGetRateLimitsParameters {
+    return (fromOrParameters as IGetRateLimitsParameters).from !== undefined;
+  }
+
+  private isIEndpointRateLimit(urlOrEndpointRateLimit: any): urlOrEndpointRateLimit is IEndpointRateLimit {
+    return (urlOrEndpointRateLimit as IEndpointRateLimit).isCustomHeaderRateLimit !== undefined;
+  }
+}
