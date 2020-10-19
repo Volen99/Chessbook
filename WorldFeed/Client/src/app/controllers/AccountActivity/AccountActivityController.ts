@@ -31,7 +31,7 @@ export class AccountActivityController implements IAccountActivityController {
   }
 
   public createAccountActivityWebhookAsync(parameters: ICreateAccountActivityWebhookParameters, request: ITwitterRequest): Promise<ITwitterResult<IWebhookDTO>> {
-    request.query.url = this._accountActivityQueryGenerator.GetCreateAccountActivityWebhookQuery(parameters);
+    request.query.url = this._accountActivityQueryGenerator.getCreateAccountActivityWebhookQuery(parameters);
     request.query.httpMethod = HttpMethod.POST;
     return this._twitterAccessor.executeRequestAsync<IWebhookDTO>(request);
   }
@@ -39,7 +39,7 @@ export class AccountActivityController implements IAccountActivityController {
   public getAccountActivityWebhookEnvironmentsAsync(parameters: IGetAccountActivityWebhookEnvironmentsParameters, request: ITwitterRequest): Promise<ITwitterResult<IGetAccountActivityWebhookEnvironmentsResultDTO>> {
     let consumerCredentials = new ConsumerOnlyCredentials(undefined, undefined, undefined, request.query.twitterCredentials);
 
-    request.query.url = this._accountActivityQueryGenerator.GetAccountActivityWebhookEnvironmentsQuery(parameters);
+    request.query.url = this._accountActivityQueryGenerator.getAccountActivityWebhookEnvironmentsQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;
     request.query.twitterCredentials = new TwitterCredentials(consumerCredentials);
 
@@ -49,7 +49,7 @@ export class AccountActivityController implements IAccountActivityController {
   public getAccountActivityEnvironmentWebhooksAsync(parameters: IGetAccountActivityEnvironmentWebhooksParameters, request: ITwitterRequest): Promise<ITwitterResult<IWebhookDTO[]>> {
     let consumerCredentials = new ConsumerOnlyCredentials(request.query.twitterCredentials);
 
-    request.query.url = this._accountActivityQueryGenerator.GetAccountActivityEnvironmentWebhooksQuery(parameters);
+    request.query.url = this._accountActivityQueryGenerator.getAccountActivityEnvironmentWebhooksQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;
     request.query.twitterCredentials = new TwitterCredentials(consumerCredentials);
 
@@ -57,19 +57,19 @@ export class AccountActivityController implements IAccountActivityController {
   }
 
   public deleteAccountActivityWebhookAsync(parameters: IDeleteAccountActivityWebhookParameters, request: ITwitterRequest): Promise<ITwitterResult> {
-    request.query.url = this._accountActivityQueryGenerator.GetDeleteAccountActivityWebhookQuery(parameters);
+    request.query.url = this._accountActivityQueryGenerator.getDeleteAccountActivityWebhookQuery(parameters);
     request.query.httpMethod = HttpMethod.DELETE;
     return this._twitterAccessor.executeRequestAsync(request);
   }
 
   public triggerAccountActivityWebhookCRCAsync(parameters: ITriggerAccountActivityWebhookCRCParameters, request: ITwitterRequest): Promise<ITwitterResult> {
-    request.query.url = this._accountActivityQueryGenerator.GetTriggerAccountActivityWebhookCRCQuery(parameters);
+    request.query.url = this._accountActivityQueryGenerator.getTriggerAccountActivityWebhookCRCQuery(parameters);
     request.query.httpMethod = HttpMethod.PUT;
     return this._twitterAccessor.executeRequestAsync(request);
   }
 
   public subscribeToAccountActivityAsync(parameters: ISubscribeToAccountActivityParameters, request: ITwitterRequest): Promise<ITwitterResult> {
-    request.query.url = this._accountActivityQueryGenerator.GetSubscribeToAccountActivityQuery(parameters);
+    request.query.url = this._accountActivityQueryGenerator.getSubscribeToAccountActivityQuery(parameters);
     request.query.httpMethod = HttpMethod.POST;
     return this._twitterAccessor.executeRequestAsync(request);
   }
@@ -77,7 +77,7 @@ export class AccountActivityController implements IAccountActivityController {
   public unsubscribeFromAccountActivityAsync(parameters: IUnsubscribeFromAccountActivityParameters, request: ITwitterRequest): Promise<ITwitterResult> {
     let consumerCredentials = new ConsumerOnlyCredentials(request.query.twitterCredentials);
 
-    request.query.url = this._accountActivityQueryGenerator.GetUnsubscribeToAccountActivityQuery(parameters);
+    request.query.url = this._accountActivityQueryGenerator.getUnsubscribeToAccountActivityQuery(parameters);
     request.query.httpMethod = HttpMethod.DELETE;
     request.query.twitterCredentials = new TwitterCredentials(consumerCredentials);
 
@@ -87,7 +87,7 @@ export class AccountActivityController implements IAccountActivityController {
   public countAccountActivitySubscriptionsAsync(parameters: ICountAccountActivitySubscriptionsParameters, request: ITwitterRequest): Promise<ITwitterResult<IWebhookSubscriptionsCount>> {
     let consumerCredentials = new ConsumerOnlyCredentials(request.query.twitterCredentials);
 
-    request.query.url = this._accountActivityQueryGenerator.GetCountAccountActivitySubscriptionsQuery(parameters);
+    request.query.url = this._accountActivityQueryGenerator.getCountAccountActivitySubscriptionsQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;
     request.query.twitterCredentials = new TwitterCredentials(consumerCredentials);
 
@@ -95,7 +95,7 @@ export class AccountActivityController implements IAccountActivityController {
   }
 
   public isAccountSubscribedToAccountActivityAsync(parameters: IIsAccountSubscribedToAccountActivityParameters, request: ITwitterRequest): Promise<ITwitterResult> {
-    request.query.url = this._accountActivityQueryGenerator.GetIsAccountSubscribedToAccountActivityQuery(parameters);
+    request.query.url = this._accountActivityQueryGenerator.getIsAccountSubscribedToAccountActivityQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;
     return this._twitterAccessor.executeRequestAsync(request);
   }
@@ -103,7 +103,7 @@ export class AccountActivityController implements IAccountActivityController {
   public getAccountActivitySubscriptionsAsync(parameters: IGetAccountActivitySubscriptionsParameters, request: ITwitterRequest): Promise<ITwitterResult<IWebhookEnvironmentSubscriptionsDTO>> {
     let consumerCredentials = new ConsumerOnlyCredentials(request.query.twitterCredentials);
 
-    request.query.url = this._accountActivityQueryGenerator.GetAccountActivitySubscriptionsQuery(parameters);
+    request.query.url = this._accountActivityQueryGenerator.getAccountActivitySubscriptionsQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;
     request.query.twitterCredentials = new TwitterCredentials(consumerCredentials);
 

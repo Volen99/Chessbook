@@ -2,17 +2,17 @@
 
 export interface IMessagesRetrieveRequestParametersBase extends ICustomRequestParameters {
   // Maximum number of messages to retrieve.
-  MaximumNumberOfMessagesToRetrieve: number;
+  maximumNumberOfMessagesToRetrieve: number;
 
   // Returns tweets with an ID greater than the specified value.
-  SinceId: number;
+  sinceId: number;
 
   // Returns tweets with an ID lower than the specified value.
-  MaxId: number;
+  maxId: number;
 
   // Include tweet entities.
-  IncludeEntities: boolean;
+  includeEntities: boolean;
 
   // Messages with more than 140 characters will be truncated if this value is set to false.
-  FullText: boolean;
+  fullText: boolean;
 }

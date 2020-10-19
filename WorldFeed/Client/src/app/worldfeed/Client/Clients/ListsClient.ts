@@ -111,7 +111,7 @@ export class ListsClient implements IListsClient {
   }
 
   get parametersValidator(): ITwitterListsClientParametersValidator {
-    return this._client.ParametersValidator;
+    return this._client.parametersValidator;
   }
 
   public async createListAsync(nameOrParameters: string | ICreateListParameters, privacyMode?: PrivacyMode): Promise<ITwitterList> {
@@ -126,7 +126,7 @@ export class ListsClient implements IListsClient {
     }
 
     let twitterResult = await this._twitterListsRequester.createListAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createTwitterList(twitterResult?.model);
+    return this._client.factories.createTwitterList(twitterResult?.model);
   }
 
   public async getListAsync(listIdOrSlugOrListIdentifierOrParameters: number | string
@@ -143,7 +143,7 @@ export class ListsClient implements IListsClient {
     }
 
     let twitterResult = await this._twitterListsRequester.getListAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createTwitterList(twitterResult?.model);
+    return this._client.factories.createTwitterList(twitterResult?.model);
   }
   public getListsSubscribedByAccountAsync(parameters?: IGetListsSubscribedByAccountParameters): Promise<ITwitterList[]> {
     let parametersCurrent: IGetListsSubscribedByAccountParameters;
@@ -166,12 +166,12 @@ export class ListsClient implements IListsClient {
     }
 
     let twitterResult = await this._twitterListsRequester.getListsSubscribedByUserAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createTwitterLists(twitterResult?.model);
+    return this._client.factories.createTwitterLists(twitterResult?.model);
   }
 
   public async updateListAsync(parameters: IUpdateListParameters): Promise<ITwitterList> {
     let twitterResult = await this._twitterListsRequester.updateListAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createTwitterList(twitterResult?.model);
+    return this._client.factories.createTwitterList(twitterResult?.model);
   }
 
   public async destroyListAsync(listIdOrSlugOrListIdentifierOrParameters: number | string
@@ -188,7 +188,7 @@ export class ListsClient implements IListsClient {
     }
 
     let twitterResult = await this._twitterListsRequester.destroyListAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createTwitterList(twitterResult?.model);
+    return this._client.factories.createTwitterList(twitterResult?.model);
   }
 
   public async getListsOwnedByAccountAsync(parameters?: IGetListsOwnedByAccountParameters): Promise<ITwitterList[]> {
@@ -215,7 +215,7 @@ export class ListsClient implements IListsClient {
     let iterator = this._twitterListsRequester.getListsOwnedByAccountIterator(parametersCurrent);
     return new TwitterIteratorProxy<ITwitterResult<ITwitterListCursorQueryResultDTO>, ITwitterList>(iterator, pageResult => {
       let listDtos = pageResult?.model?.TwitterLists;
-      return listDtos?.map(dto => this._client.Factories.createTwitterList(dto)); // .ToArray();
+      return listDtos?.map(dto => this._client.factories.createTwitterList(dto)); // .ToArray();
     });
   }
 
@@ -244,7 +244,7 @@ export class ListsClient implements IListsClient {
     let iterator = this._twitterListsRequester.getListsOwnedByUserIterator(parameters);
     return new TwitterIteratorProxy<ITwitterResult<ITwitterListCursorQueryResultDTO>, ITwitterList>(iterator, pageResult => {
       let listDtos = pageResult?.model?.TwitterLists;
-      return listDtos?.map(dto => this._client.Factories.createTwitterList(dto)); // .ToArray();
+      return listDtos?.map(dto => this._client.factories.createTwitterList(dto)); // .ToArray();
     });
   }
 
@@ -305,7 +305,7 @@ export class ListsClient implements IListsClient {
     let iterator = this._twitterListsRequester.getAccountListMembershipsIterator(parametersCurrent);
     return new TwitterIteratorProxy<ITwitterResult<ITwitterListCursorQueryResultDTO>, ITwitterList>(iterator, pageResult => {
       let listDtos = pageResult.model.twitterLists;
-      return listDtos?.map(dto => this._client.Factories.createTwitterList(dto)); // .ToArray();
+      return listDtos?.map(dto => this._client.factories.createTwitterList(dto)); // .ToArray();
     });
   }
 
@@ -333,7 +333,7 @@ export class ListsClient implements IListsClient {
     let iterator = this._twitterListsRequester.getUserListMembershipsIterator(parameters);
     return new TwitterIteratorProxy<ITwitterResult<ITwitterListCursorQueryResultDTO>, ITwitterList>(iterator, pageResult => {
       let listDtos = pageResult.model.twitterLists;
-      return listDtos?.map(dto => this._client.Factories.createTwitterList(dto)); // .ToArray();
+      return listDtos?.map(dto => this._client.factories.createTwitterList(dto)); // .ToArray();
     });
   }
 
@@ -361,7 +361,7 @@ export class ListsClient implements IListsClient {
 
     let iterator = this._twitterListsRequester.getMembersOfListIterator(parameters);
     return new TwitterIteratorProxy<ITwitterResult<IUserCursorQueryResultDTO>, IUser>(iterator, pageResult => {
-      return this._client.Factories.createUsers(pageResult?.model?.Users);
+      return this._client.factories.createUsers(pageResult?.model?.Users);
     });
   }
 
@@ -396,7 +396,7 @@ export class ListsClient implements IListsClient {
     }
 
     let twitterResult = await this._twitterListsRequester.removeMemberFromListAsync(parameters); //.ConfigureAwait(false);
-    return this._client.Factories.createTwitterList(twitterResult?.model);
+    return this._client.factories.createTwitterList(twitterResult?.model);
   }
 
   public async removeMembersFromListAsync(listIdOrListIdentifierOrParameters: number | ITwitterListIdentifier | IRemoveMembersFromListParameters,
@@ -409,7 +409,7 @@ export class ListsClient implements IListsClient {
     }
 
     let twitterResult = await this._twitterListsRequester.removeMembersFromListAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createTwitterList(twitterResult?.model);
+    return this._client.factories.createTwitterList(twitterResult?.model);
   }
 
   // ***********
@@ -425,7 +425,7 @@ export class ListsClient implements IListsClient {
     }
 
     let twitterResult = await this._twitterListsRequester.subscribeToListAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createTwitterList(twitterResult?.model);
+    return this._client.factories.createTwitterList(twitterResult?.model);
   }
 
   public async unsubscribeFromListAsync(listIdOrListIdentifierOrParameters: number | ITwitterListIdentifier | IUnsubscribeFromListParameters): Promise<ITwitterList> {
@@ -437,7 +437,7 @@ export class ListsClient implements IListsClient {
     }
 
     let twitterResult = await this._twitterListsRequester.unsubscribeFromListAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createTwitterList(twitterResult?.model);
+    return this._client.factories.createTwitterList(twitterResult?.model);
   }
 
   public async getListSubscribersAsync(listIdOrListIdentifierOrParameters: number | ITwitterListIdentifier | IGetListSubscribersParameters): Promise<IUser[]> {
@@ -462,7 +462,7 @@ export class ListsClient implements IListsClient {
 
     let pageIterator = this._twitterListsRequester.getListSubscribersIterator(parameters);
     return new TwitterIteratorProxy<ITwitterResult<IUserCursorQueryResultDTO>, IUser>(pageIterator, pageResult => {
-      return this._client.Factories.createUsers(pageResult?.model?.Users);
+      return this._client.factories.createUsers(pageResult?.model?.Users);
     });
   }
 
@@ -487,7 +487,7 @@ export class ListsClient implements IListsClient {
     let iterator = this._twitterListsRequester.getAccountListSubscriptionsIterator(parametersCurrent);
     return new TwitterIteratorProxy<ITwitterResult<ITwitterListCursorQueryResultDTO>, ITwitterList>(iterator, pageResult => {
       let listDtos = pageResult.model.twitterLists;
-      return listDtos?.map(dto => this._client.Factories.createTwitterList(dto)); // .ToArray();
+      return listDtos?.map(dto => this._client.factories.createTwitterList(dto)); // .ToArray();
     });
   }
 
@@ -516,7 +516,7 @@ export class ListsClient implements IListsClient {
     let pageIterator = this._twitterListsRequester.getUserListSubscriptionsIterator(parameters);
     return new TwitterIteratorProxy<ITwitterResult<ITwitterListCursorQueryResultDTO>, ITwitterList>(pageIterator, pageResult => {
       let twitterListDtos = pageResult.model.twitterLists;
-      return this._client.Factories.createTwitterLists(twitterListDtos);
+      return this._client.factories.createTwitterLists(twitterListDtos);
     });
   }
 
@@ -569,7 +569,7 @@ export class ListsClient implements IListsClient {
 
     let pageIterator = this._twitterListsRequester.getTweetsFromListIterator(parameters);
     return new TwitterIteratorProxy<ITwitterResult<ITweetDTO[]>, ITweet, number>(pageIterator,          // number?
-      twitterResult => this._client.Factories.createTweets(twitterResult?.model));
+      twitterResult => this._client.factories.createTweets(twitterResult?.model));
   }
 
   private isICreateListParameters(nameOrParameters: any): nameOrParameters is ICreateListParameters {

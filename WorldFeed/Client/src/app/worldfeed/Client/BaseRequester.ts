@@ -17,7 +17,7 @@ export abstract class BaseRequester implements IBaseRequester {
   }
 
   public CreateRequest(): ITwitterRequest {
-    return this.TwitterClient.CreateRequest();
+    return this.TwitterClient.createRequest();
   }
 
   // 101% buggy
@@ -30,7 +30,7 @@ export abstract class BaseRequester implements IBaseRequester {
           return result;
         }
       } else {
-        let requestNew: ITwitterRequest = this.TwitterClient.CreateRequest();
+        let requestNew: ITwitterRequest = this.TwitterClient.createRequest();
         await action(requestNew);
       }
     } catch (ex: TwitterException) {

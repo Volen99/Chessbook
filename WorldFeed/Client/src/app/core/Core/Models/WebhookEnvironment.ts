@@ -19,6 +19,6 @@ export class WebhookEnvironment implements IWebhookEnvironment {
   }
 
   get webhooks(): IWebhook[] {
-    return this.webhookEnvironmentDTO.webhooks.map(x => this._client.Factories.createWebhook(x));
+    return this.webhookEnvironmentDTO.webhooks.map(x => this._client.factories.createWebhook(x));
   }
 }

@@ -26,28 +26,28 @@ export class TimelinesRequester extends BaseRequester implements ITimelinesReque
   public getUserTimelineIterator(parameters: IGetUserTimelineParameters): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number> { // long?
     this._validator.validate(parameters);
 
-    let request = super.TwitterClient.CreateRequest();
+    let request = super.TwitterClient.createRequest();
     return this._timelineController.getUserTimelineIterator(parameters, request);
   }
 
   public getHomeTimelineIterator(parameters: IGetHomeTimelineParameters): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number> { // long?
     this._validator.validate(parameters);
 
-    let request = super.TwitterClient.CreateRequest();
+    let request = super.TwitterClient.createRequest();
     return this._timelineController.getHomeTimelineIterator(parameters, request);
   }
 
   public getRetweetsOfMeTimelineIterator(parameters: IGetRetweetsOfMeTimelineParameters): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number> {  // long?
     this._validator.validate(parameters);
 
-    let request = super.TwitterClient.CreateRequest();
+    let request = super.TwitterClient.createRequest();
     return this._timelineController.getRetweetsOfMeTimelineIterator(parameters, request);
   }
 
   public getMentionsTimelineIterator(parameters: IGetMentionsTimelineParameters): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number> { // long?
     this._validator.validate(parameters);
 
-    let request = super.TwitterClient.CreateRequest();
+    let request = super.TwitterClient.createRequest();
     return this._timelineController.getMentionsTimelineIterator(parameters, request);
   }
 }

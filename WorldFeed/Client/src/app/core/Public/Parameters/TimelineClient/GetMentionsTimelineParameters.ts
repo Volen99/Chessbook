@@ -12,7 +12,7 @@ export class GetMentionsTimelineParameters extends TimelineRequestParameters imp
     } else {
       super();
 
-      super.PageSize = TwitterLimits.DEFAULTS.TIMELINE_MENTIONS_PAGE_MAX_PAGE_SIZE;
+      super.pageSize = TwitterLimits.DEFAULTS.TIMELINE_MENTIONS_PAGE_MAX_PAGE_SIZE;
     }
   }
 

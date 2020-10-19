@@ -1,5 +1,4 @@
 ﻿import {ITwitterQuery} from "./Models/Interfaces/ITwitterQuery";
-import {Action} from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/FunctionTypes";
 import {TwitterQuery} from "./TwitterQuery";
 import {HttpMethod} from "./Models/Enum/HttpMethod";
 import InvalidOperationException from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/InvalidOperationException";
@@ -8,13 +7,13 @@ import {IUploadProgressChanged} from "./Events/UploadProgressChangedEventArgs";
 
 export interface IMultipartTwitterQuery extends ITwitterQuery {
   // Binary to be send via HttpRequest
-  Binaries: number[][];    // byte[][]
+  binaries: number[][];    // byte[][]
 
   // Content Id
-  ContentId: string;
+  contentId: string;
 
   // Action invoked to show the progress of the upload. {current / total}
-  UploadProgressChanged: Action<IUploadProgressChanged>;
+  uploadProgressChanged: (uploadProgressChanged: IUploadProgressChanged) => void;
 }
 
 export class MultipartTwitterQuery extends TwitterQuery implements IMultipartTwitterQuery {
@@ -24,9 +23,9 @@ export class MultipartTwitterQuery extends TwitterQuery implements IMultipartTwi
     if (source) {
       super(undefined, undefined, source);
       if (this.isMultipartTwitterQuery(source)) {
-        this._binaries = source.Binaries;
-        this.ContentId = source.ContentId;
-        this.UploadProgressChanged = source.UploadProgressChanged;
+        this._binaries = source.binaries;
+        this.contentId = source.contentId;
+        this.uploadProgressChanged = source.uploadProgressChanged;
 
         return;
       }
@@ -34,24 +33,24 @@ export class MultipartTwitterQuery extends TwitterQuery implements IMultipartTwi
       super();
     }
 
-    this.ContentId = "media";
+    this.contentId = "media";
     this.httpMethod = HttpMethod.POST;
   }
 
-  get Binaries(): number[][] {
+  get binaries(): number[][] {
     return this._binaries;
   }
 
-  set Binaries(value: number[][]) {
+  set binaries(value: number[][]) {
     this._binaries = value;
   }
 
-  public ContentId: string;
+  public contentId: string;
 
-  public UploadProgressChanged: Action<IUploadProgressChanged>;
+  public uploadProgressChanged: (uploadProgressChanged: IUploadProgressChanged) => void;
 
   get HttpContent(): HttpContent {
-    return this.GetMultipartFormDataContent(this.ContentId, this._binaries);
+    return this.GetMultipartFormDataContent(this.contentId, this._binaries);
   }
 
   set HttpContent(value: HttpContent) {
@@ -75,7 +74,7 @@ export class MultipartTwitterQuery extends TwitterQuery implements IMultipartTwi
     let multiPartContent = this.CreateHttpContent(contentId, binaries);
 
     let progressableContent: ProgressableStreamContent = new ProgressableStreamContent(multiPartContent, undefined, (args) => {
-      this.UploadProgressChanged?.Invoke(args);
+      this.uploadProgressChanged(args);
     });
 
     return progressableContent;

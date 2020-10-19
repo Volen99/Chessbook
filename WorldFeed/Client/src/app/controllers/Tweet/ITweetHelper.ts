@@ -1,11 +1,12 @@
 ﻿import IEnumerable from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable";
+import {ITweetDTO} from "../../core/Public/Models/Interfaces/DTO/ITweetDTO";
 
 export interface ITweetHelper {
-  GetOldestTweetId(tweetDTOs: IEnumerable<ITweetDTO>): number;
+  getOldestTweetId(tweetDTOs: IEnumerable<ITweetDTO>): number;
 }
 
 export class TweetHelper implements ITweetHelper {
-  public GetOldestTweetId(tweetDTOs: IEnumerable<ITweetDTO>): number {
-    return long.Parse(tweetDTOs.Min(x => x.IdStr));
+  public getOldestTweetId(tweetDTOs: IEnumerable<ITweetDTO>): number {
+    return Number(tweetDTOs.Min(x => x.IdStr));
   }
 }

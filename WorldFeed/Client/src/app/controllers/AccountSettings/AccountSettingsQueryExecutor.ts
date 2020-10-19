@@ -20,17 +20,17 @@ import {Encoding} from "tslint/lib/utils";
 import {WorldFeedConsts} from "../../core/Public/worldFeed-consts";
 
 export interface IAccountSettingsQueryExecutor {
-  GetAccountSettingsAsync(parameters: IGetAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>>;
+  getAccountSettingsAsync(parameters: IGetAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>>;
 
-  UpdateAccountSettingsAsync(parameters: IUpdateAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>>;
+  updateAccountSettingsAsync(parameters: IUpdateAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>>;
 
-  UpdateProfileAsync(parameters: IUpdateProfileParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
+  updateProfileAsync(parameters: IUpdateProfileParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
 
-  UpdateProfileImageAsync(parameters: IUpdateProfileImageParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
+  updateProfileImageAsync(parameters: IUpdateProfileImageParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
 
-  UpdateProfileBannerAsync(parameters: IUpdateProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>;
+  updateProfileBannerAsync(parameters: IUpdateProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>;
 
-  RemoveProfileBannerAsync(parameters: IRemoveProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>;
+  removeProfileBannerAsync(parameters: IRemoveProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>;
 }
 
 export class AccountSettingsQueryExecutor implements IAccountSettingsQueryExecutor {
@@ -42,46 +42,46 @@ export class AccountSettingsQueryExecutor implements IAccountSettingsQueryExecut
     this._twitterAccessor = twitterAccessor;
   }
 
-  public GetAccountSettingsAsync(parameters: IGetAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>> {
-    let query = this._accountSettingsQueryGenerator.GetAccountSettingsQuery(parameters);
+  public getAccountSettingsAsync(parameters: IGetAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>> {
+    let query = this._accountSettingsQueryGenerator.getAccountSettingsQuery(parameters);
     request.query.url = query;
     request.query.httpMethod = HttpMethod.GET;
     return this._twitterAccessor.executeRequestAsync<IAccountSettingsDTO>(request);
   }
 
-  public UpdateAccountSettingsAsync(parameters: IUpdateAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>> {
-    let query = this._accountSettingsQueryGenerator.GetUpdateAccountSettingsQuery(parameters);
+  public updateAccountSettingsAsync(parameters: IUpdateAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>> {
+    let query = this._accountSettingsQueryGenerator.getUpdateAccountSettingsQuery(parameters);
     request.query.url = query;
     request.query.httpMethod = HttpMethod.POST;
     return this._twitterAccessor.executeRequestAsync<IAccountSettingsDTO>(request);
   }
 
-  public UpdateProfileAsync(parameters: IUpdateProfileParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
-    let query = this._accountSettingsQueryGenerator.GetUpdateProfileQuery(parameters);
+  public updateProfileAsync(parameters: IUpdateProfileParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
+    let query = this._accountSettingsQueryGenerator.getUpdateProfileQuery(parameters);
     request.query.url = query;
     request.query.httpMethod = HttpMethod.POST;
     return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
   }
 
-  public UpdateProfileImageAsync(parameters: IUpdateProfileImageParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
-    let query = this._accountSettingsQueryGenerator.GetUpdateProfileImageQuery(parameters);
+  public updateProfileImageAsync(parameters: IUpdateProfileImageParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
+    let query = this._accountSettingsQueryGenerator.getUpdateProfileImageQuery(parameters);
 
     let multipartQuery = new MultipartTwitterQuery(request.query);
     multipartQuery.url = query;
     multipartQuery.httpMethod = HttpMethod.POST;
-    multipartQuery.Binaries = [parameters.binary]; // parameters.Binary
-    multipartQuery.ContentId = 'image';
+    multipartQuery.binaries = [parameters.binary]; // parameters.Binary
+    multipartQuery.contentId = 'image';
     multipartQuery.timeout = parameters.timeout ?? TimeSpan.fromMilliseconds(WorldFeedConsts.INFINITE);
-    multipartQuery.UploadProgressChanged = parameters.uploadProgressChanged;
+    multipartQuery.uploadProgressChanged = parameters.uploadProgressChanged;
 
     request.query = multipartQuery;
 
     return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
   }
 
-        public  UpdateProfileBannerAsync(parameters: IUpdateProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>
+        public  updateProfileBannerAsync(parameters: IUpdateProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>
         {
-            let query = this._accountSettingsQueryGenerator.GetUpdateProfileBannerQuery(parameters);
+            let query = this._accountSettingsQueryGenerator.getUpdateProfileBannerQuery(parameters);
             let banner = StringFormater.UrlEncode(Convert.ToBase64String(parameters.binary));
             let bannerHttpContent = new StringContent(`banner=${banner}`, Encoding.UTF8, "application/x-www-form-urlencoded");
 
@@ -94,9 +94,9 @@ export class AccountSettingsQueryExecutor implements IAccountSettingsQueryExecut
             return this._twitterAccessor.executeRequestAsync(request);
         }
 
-        public  RemoveProfileBannerAsync(parameters: IRemoveProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>
+        public  removeProfileBannerAsync(parameters: IRemoveProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>
         {
-            let query = this._accountSettingsQueryGenerator.GetRemoveProfileBannerQuery(parameters);
+            let query = this._accountSettingsQueryGenerator.getRemoveProfileBannerQuery(parameters);
             request.query.url = query;
             request.query.httpMethod = HttpMethod.POST;
             return this._twitterAccessor.executeRequestAsync(request);

@@ -31,7 +31,7 @@ export class HelpClient implements IHelpClient {
   }
 
   get parametersValidator(): IHelpClientParametersValidator {
-    return this._client.ParametersValidator;
+    return this._client.parametersValidator;
   }
 
   public async getTwitterConfigurationAsync(parameters?: IGetTwitterConfigurationParameters): Promise<ITwitterConfiguration> {

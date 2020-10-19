@@ -82,7 +82,7 @@ export class TwitterResult<TDTO = any, TModel = any> implements ITwitterResult {
     if (!this._initialized) {
       this._initialized = true;
       let json = this.response?.content;
-      let converters = this.request.executionContext.Converters;
+      let converters = this.request.executionContext.converters;
       this._result = this._jsonObjectConverter.Deserialize<TDTO>(json, converters);
     }
 

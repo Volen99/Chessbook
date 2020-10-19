@@ -27,73 +27,73 @@ export enum TweetMode {
 
 export interface ITweetinviSettings {
   // Proxy used to execute Http Requests.
-  ProxyConfig: IProxyConfig;
+  proxyConfig: IProxyConfig;
 
   // Http Requests Timeout duration in milliseconds.
-  HttpRequestTimeout: TimeSpan;
+  httpRequestTimeout: TimeSpan;
 
   // Solution used to track the RateLimits.
-  RateLimitTrackerMode: RateLimitTrackerMode;
+  rateLimitTrackerMode: RateLimitTrackerMode;
 
   // How much additional time to wait than should be strictly necessary for a new batch of Twitter rate limits
   // to be available. Required to account for timing discrepancies both within Twitter's servers and between Twitter and us.
-  RateLimitWaitFudge: TimeSpan;
+  rateLimitWaitFudge: TimeSpan;
 
   // Specify whether you want your tweet to use the extended mode.
-  TweetMode?: TweetMode;
+  tweetMode?: TweetMode;
 
   // A method allowing developers to specify how to retrieve the current DateTime.
   // The DateTime must be valid for the HttpRequest signature to be accepted by Twitter.
-  GetUtcDateTime: () => DateTime;
+  getUtcDateTime: () => DateTime;
 
   // Converters used by Tweetinvi to transform json received from Twitter
   // into models understandable by Tweetinvi.
-  Converters: JsonConverter[];
+  converters: JsonConverter[];
 
   // Limits that Tweetinvi will use to communicate with Twitter
-  Limits: TwitterLimits;
+  limits: TwitterLimits;
 
   // Initialize a setting from another one.
-  Initialize(other: ITweetinviSettings): void;
+  initialize(other: ITweetinviSettings): void;
 }
 
 export class TweetinviSettings implements ITweetinviSettings {
   constructor(source?: ITweetinviSettings) {
     if (!source) {
-      this.GetUtcDateTime = () => DateTime.now; /*UtcNow*/
-      this.Limits = new TwitterLimits();
-      this.HttpRequestTimeout = TimeSpan.fromSeconds(10);
-      this.TweetMode = TweetMode.Extended;
+      this.getUtcDateTime = () => DateTime.now; /*UtcNow*/
+      this.limits = new TwitterLimits();
+      this.httpRequestTimeout = TimeSpan.fromSeconds(10);
+      this.tweetMode = TweetMode.Extended;
     } else {
-      this.ProxyConfig = source.ProxyConfig == null || source.ProxyConfig.Address == null ? null : new ProxyConfig(source.ProxyConfig);
-      this.HttpRequestTimeout = source.HttpRequestTimeout;
-      this.RateLimitTrackerMode = source.RateLimitTrackerMode;
-      this.RateLimitWaitFudge = source.RateLimitWaitFudge;
-      this.TweetMode = source.TweetMode;
-      this.GetUtcDateTime = source.GetUtcDateTime;
-      this.Converters = source.Converters;
-      this.Limits = new TwitterLimits(source.Limits);
+      this.proxyConfig = source.proxyConfig == null || source.proxyConfig.address == null ? null : new ProxyConfig(source.proxyConfig);
+      this.httpRequestTimeout = source.httpRequestTimeout;
+      this.rateLimitTrackerMode = source.rateLimitTrackerMode;
+      this.rateLimitWaitFudge = source.rateLimitWaitFudge;
+      this.tweetMode = source.tweetMode;
+      this.getUtcDateTime = source.getUtcDateTime;
+      this.converters = source.converters;
+      this.limits = new TwitterLimits(source.limits);
     }
   }
 
-  public ProxyConfig: IProxyConfig;
-  public HttpRequestTimeout: TimeSpan;
-  public RateLimitTrackerMode: RateLimitTrackerMode;
-  public RateLimitWaitFudge: TimeSpan;
-  public TweetMode?: TweetMode;
-  public GetUtcDateTime: () => DateTime;
-  public Limits: TwitterLimits;
+  public proxyConfig: IProxyConfig;
+  public httpRequestTimeout: TimeSpan;
+  public rateLimitTrackerMode: RateLimitTrackerMode;
+  public rateLimitWaitFudge: TimeSpan;
+  public tweetMode?: TweetMode;
+  public getUtcDateTime: () => DateTime;
+  public limits: TwitterLimits;
 
-  public Converters: JsonConverter[];
+  public converters: JsonConverter[];
 
-  public Initialize(other: ITweetinviSettings): void {
-    this.ProxyConfig = other.ProxyConfig;
-    this.HttpRequestTimeout = other.HttpRequestTimeout;
-    this.RateLimitTrackerMode = other.RateLimitTrackerMode;
-    this.RateLimitWaitFudge = other.RateLimitWaitFudge;
-    this.TweetMode = other.TweetMode;
-    this.GetUtcDateTime = other.GetUtcDateTime;
-    this.Converters = other.Converters;
-    this.Limits = new TwitterLimits(other.Limits);
+  public initialize(other: ITweetinviSettings): void {
+    this.proxyConfig = other.proxyConfig;
+    this.httpRequestTimeout = other.httpRequestTimeout;
+    this.rateLimitTrackerMode = other.rateLimitTrackerMode;
+    this.rateLimitWaitFudge = other.rateLimitWaitFudge;
+    this.tweetMode = other.tweetMode;
+    this.getUtcDateTime = other.getUtcDateTime;
+    this.converters = other.converters;
+    this.limits = new TwitterLimits(other.limits);
   }
 }

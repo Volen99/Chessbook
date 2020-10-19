@@ -7,7 +7,7 @@ import {TweetMode} from '../../Settings/TweetinviSettings';
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/post-statuses-destroy-id
 export interface IDestroyTweetParameters extends ICustomRequestParameters, ITweetModeParameter {
   // The identifier of the tweet you want to destroy
-  Tweet: ITweetIdentifier;
+  tweet: ITweetIdentifier;
 
   // If set to true, the creator property (IUser) will only contain the id.
   TrimUser?: boolean;
@@ -25,13 +25,13 @@ export class DestroyTweetParameters extends CustomRequestParameters implements I
       tweetCurrent = new TweetIdentifier(tweetIdOrTweet);
     }
 
-    this.Tweet = tweetCurrent;
+    this.tweet = tweetCurrent;
   }
 
-  public Tweet: ITweetIdentifier;
+  public tweet: ITweetIdentifier;
   public TrimUser?: boolean;
 
-  public TweetMode?: TweetMode;
+  public tweetMode?: TweetMode;
 }
 
 // public DestroyTweetParameters(long tweetId) : this(new TweetIdentifier(tweetId))

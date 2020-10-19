@@ -93,12 +93,12 @@ export class UsersClient implements IUsersClient {
 
   constructor(client: ITwitterClient, multiLevelCursorIteratorFactory: IMultiLevelCursorIteratorFactory) {
     this._client = client;
-    this._usersRequester = client.Raw.users;
+    this._usersRequester = client.raw.users;
     this._multiLevelCursorIteratorFactory = multiLevelCursorIteratorFactory;
   }
 
   get parametersValidator(): IUsersClientParametersValidator {
-    return this._client.ParametersValidator;
+    return this._client.parametersValidator;
   }
 
   // #region Authenticated User
@@ -109,7 +109,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let requestResult = await this._usersRequester.getAuthenticatedUserAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createAuthenticatedUser(requestResult?.model);
+    return this._client.factories.createAuthenticatedUser(requestResult?.model);
   }
 
   // #endregion
@@ -132,7 +132,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let requestResult: ITwitterResult<IUserDTO> = await this._usersRequester.getUserAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createUser(requestResult?.model);
+    return this._client.factories.createUser(requestResult?.model);
   }
 
   // #endregion
@@ -161,7 +161,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let requestResult: ITwitterResult<IUserDTO[]> = await this._usersRequester.getUsersAsync(parameters);    // .ConfigureAwait(false);
-    return this._client.Factories.createUsers(requestResult?.model);
+    return this._client.factories.createUsers(requestResult?.model);
   }
 
   // #endregion
@@ -178,7 +178,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let relationshipTwitterResult: ITwitterResult<IRelationshipDetailsDTO> = await this._usersRequester.getRelationshipBetweenAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createRelationshipDetails(relationshipTwitterResult?.model);
+    return this._client.factories.createRelationshipDetails(relationshipTwitterResult?.model);
   }
 
   // #endregion
@@ -226,9 +226,9 @@ export class UsersClient implements IUsersClient {
   public getFriendsIterator(parameters: IGetFriendsParameters): IMultiLevelCursorIterator<number, IUser> {
     let friendsPageIterator = this._usersRequester.getFriendIdsIterator(parameters);
 
-    let maxPageSize = this._client.Config.Limits.USERS_GET_USERS_MAX_SIZE;
+    let maxPageSize = this._client.config.limits.USERS_GET_USERS_MAX_SIZE;
     if (parameters.GetUsersPageSize > maxPageSize) {
-      throw new TwitterArgumentLimitException(`${nameof(parameters.GetUsersPageSize)}`, maxPageSize, nameof(this._client.Config.Limits.USERS_GET_USERS_MAX_SIZE),
+      throw new TwitterArgumentLimitException(`${nameof(parameters.GetUsersPageSize)}`, maxPageSize, nameof(this._client.config.limits.USERS_GET_USERS_MAX_SIZE),
         "page size");
     }
 
@@ -277,10 +277,10 @@ export class UsersClient implements IUsersClient {
   public getFollowersIterator(parameters: IGetFollowersParameters): IMultiLevelCursorIterator<number, IUser> {
     let followerPageIterator = this._usersRequester.getFollowerIdsIterator(parameters);
 
-    let maxPageSize = this._client.Config.Limits.USERS_GET_USERS_MAX_SIZE;
+    let maxPageSize = this._client.config.limits.USERS_GET_USERS_MAX_SIZE;
     if (parameters.GetUsersPageSize > maxPageSize) {
       throw new TwitterArgumentLimitException(`${nameof(parameters.GetUsersPageSize)}`, maxPageSize,
-        nameof(this._client.Config.Limits.USERS_GET_USERS_MAX_SIZE), "page size");
+        nameof(this._client.config.limits.USERS_GET_USERS_MAX_SIZE), "page size");
     }
 
     return this._multiLevelCursorIteratorFactory.createUserMultiLevelIterator(this._client, followerPageIterator, maxPageSize);
@@ -299,7 +299,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let twitterResult: ITwitterResult<IUserDTO> = await this._usersRequester.blockUserAsync(parameters); // ;.ConfigureAwait(false);
-    return this._client.Factories.createUser(twitterResult?.model);
+    return this._client.factories.createUser(twitterResult?.model);
   }
 
   public async unblockUserAsync(userIdOrUsernameOrUserOrParameters: number | string | IUserIdentifier | IUnblockUserParameters): Promise<IUser> {
@@ -311,7 +311,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let twitterResult: ITwitterResult<IUserDTO> = await this._usersRequester.unblockUserAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createUser(twitterResult?.model);
+    return this._client.factories.createUser(twitterResult?.model);
   }
 
   public async reportUserForSpamAsync(userIdOrUsernameOrUserOrParameters: number | string | IUserIdentifier | IReportUserForSpamParameters): Promise<IUser> {
@@ -323,7 +323,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let twitterResult: ITwitterResult<IUserDTO> = await this._usersRequester.reportUserForSpamAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createUser(twitterResult?.model);
+    return this._client.factories.createUser(twitterResult?.model);
   }
 
   public async getBlockedUserIdsAsync(parameters?: IGetBlockedUserIdsParameters): Promise<number[]> {
@@ -374,7 +374,7 @@ export class UsersClient implements IUsersClient {
     let twitterCursorResult = this._usersRequester.getBlockedUsersIterator(parametersCurrent);
     return new TwitterIteratorProxy<ITwitterResult<IUserCursorQueryResultDTO>, IUser>(twitterCursorResult, pageResult => {
       let userDTOs = pageResult.model.users;
-      return this._client.Factories.createUsers(userDTOs);
+      return this._client.factories.createUsers(userDTOs);
     });
   }
 
@@ -391,7 +391,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let twitterResult = await this._usersRequester.followUserAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createUser(twitterResult?.model);
+    return this._client.factories.createUser(twitterResult?.model);
   }
 
   public async unfollowUserAsync(userIdOrUsernameOrUserOrParameters: number | string | IUserIdentifier | IUnfollowUserParameters): Promise<IUser> {
@@ -403,7 +403,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let twitterResult = await this._usersRequester.unfollowUserAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createUser(twitterResult?.model);
+    return this._client.factories.createUser(twitterResult?.model);
   }
 
   // #endregion
@@ -464,9 +464,9 @@ export class UsersClient implements IUsersClient {
 
     let iterator = this._usersRequester.getUserIdsRequestingFriendshipIterator(parametersCurrent);
 
-    let maxPageSize = this._client.Config.Limits.USERS_GET_USERS_MAX_SIZE;
+    let maxPageSize = this._client.config.limits.USERS_GET_USERS_MAX_SIZE;
     if (parametersCurrent.getUsersPageSize > maxPageSize) {
-      throw new TwitterArgumentLimitException(`${nameof(parametersCurrent.getUsersPageSize)}`, maxPageSize, nameof(this._client.Config.Limits.USERS_GET_USERS_MAX_SIZE), "page size");
+      throw new TwitterArgumentLimitException(`${nameof(parametersCurrent.getUsersPageSize)}`, maxPageSize, nameof(this._client.config.limits.USERS_GET_USERS_MAX_SIZE), "page size");
     }
 
     return this._multiLevelCursorIteratorFactory.createUserMultiLevelIterator(this._client, iterator, maxPageSize);
@@ -517,9 +517,9 @@ export class UsersClient implements IUsersClient {
     }
     let iterator = this._usersRequester.getUserIdsYouRequestedToFollowIterator(parametersCurrent);
 
-    let maxPageSize = this._client.Config.Limits.USERS_GET_USERS_MAX_SIZE;
+    let maxPageSize = this._client.config.limits.USERS_GET_USERS_MAX_SIZE;
     if (parametersCurrent.getUsersPageSize > maxPageSize) {
-      throw new TwitterArgumentLimitException(`${nameof(parametersCurrent.getUsersPageSize)}`, maxPageSize, nameof(this._client.Config.Limits.USERS_GET_USERS_MAX_SIZE), "page size");
+      throw new TwitterArgumentLimitException(`${nameof(parametersCurrent.getUsersPageSize)}`, maxPageSize, nameof(this._client.config.limits.USERS_GET_USERS_MAX_SIZE), "page size");
     }
 
     return this._multiLevelCursorIteratorFactory.createUserMultiLevelIterator(this._client, iterator, maxPageSize);
@@ -545,7 +545,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let twitterResult = await this._usersRequester.getRelationshipsWithAsync(parametersCurrent); // .ConfigureAwait(false);
-    let relationshipsWith = this._client.Factories.createRelationshipStates(twitterResult?.model);
+    let relationshipsWith = this._client.factories.createRelationshipStates(twitterResult?.model);
 
     let userRelationshipState = new UserDictionary<IRelationshipState>();
 
@@ -622,7 +622,7 @@ export class UsersClient implements IUsersClient {
     let iterator = this._usersRequester.getMutedUsersIterator(parameters);
     return new TwitterIteratorProxy<ITwitterResult<IUserCursorQueryResultDTO>, IUser>(iterator, pageResult => {
       let userDTOs = pageResult.model.users;
-      return this._client.Factories.createUsers(userDTOs);
+      return this._client.factories.createUsers(userDTOs);
     });
   }
 
@@ -635,7 +635,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let twitterResult = await this._usersRequester.muteUserAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createUser(twitterResult?.model);
+    return this._client.factories.createUser(twitterResult?.model);
   }
 
   public async unmuteUserAsync(userIdOrUsernameOrUserOrParameters: number | string | IUserIdentifier | IUnmuteUserParameters): Promise<IUser> {
@@ -647,7 +647,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let twitterResult = await this._usersRequester.unmuteUserAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createUser(twitterResult?.model);
+    return this._client.factories.createUser(twitterResult?.model);
   }
 
   // #endregion

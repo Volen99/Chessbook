@@ -3,9 +3,9 @@ import {TweetMode} from "../../Settings/TweetinviSettings";
 
 export interface ICreateTrackedTweetStreamParameters extends ICustomRequestParameters {
   // Decide whether to use Extended or Compat mode
-  TweetMode?: TweetMode;
+  tweetMode?: TweetMode;
 }
 
 export class CreateTrackedTweetStreamParameters extends CustomRequestParameters implements ICreateTrackedTweetStreamParameters {
-  public TweetMode?: TweetMode;
+  public tweetMode?: TweetMode;
 }

@@ -76,7 +76,7 @@ export class UploadComponent implements OnInit {
 
     let client = new TwitterClient();
 
-    let res = await client.Upload.uploadBinaryAsync(filesArray[0].);
+    let res = await client.upload.uploadBinaryAsync(filesArray[0].);
 
     this.scienceService.upload(formData)
       .subscribe(event => {

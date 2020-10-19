@@ -22,26 +22,26 @@ export class HelpController implements IHelpController {
   }
 
   public getRateLimitsAsync(parameters: IGetRateLimitsParameters, request: ITwitterRequest): Promise<ITwitterResult<CredentialsRateLimitsDTO>> {
-    return this._helpQueryExecutor.GetRateLimitsAsync(parameters, request);
+    return this._helpQueryExecutor.getRateLimitsAsync(parameters, request);
   }
 
   public getTwitterConfigurationAsync(parameters: IGetTwitterConfigurationParameters, request: ITwitterRequest): Promise<ITwitterResult<ITwitterConfiguration>> {
-    return this._helpQueryExecutor.GetTwitterConfigurationAsync(parameters, request);
+    return this._helpQueryExecutor.getTwitterConfigurationAsync(parameters, request);
   }
 
   public getSupportedLanguagesAsync(parameters: IGetSupportedLanguagesParameters, request: ITwitterRequest): Promise<ITwitterResult<SupportedLanguage[]>> {
-    return this._helpQueryExecutor.GetSupportedLanguagesAsync(parameters, request);
+    return this._helpQueryExecutor.getSupportedLanguagesAsync(parameters, request);
   }
 
   public getPlaceAsync(parameters: IGetPlaceParameters, request: ITwitterRequest): Promise<ITwitterResult<IPlace>> {
-    return this._helpQueryExecutor.GetPlaceAsync(parameters, request);
+    return this._helpQueryExecutor.getPlaceAsync(parameters, request);
   }
 
   public searchGeoAsync(parameters: IGeoSearchParameters, request: ITwitterRequest): Promise<ITwitterResult<SearchGeoSearchResultDTO>> {
-    return this._helpQueryExecutor.SearchGeoAsync(parameters, request);
+    return this._helpQueryExecutor.searchGeoAsync(parameters, request);
   }
 
   public searchGeoReverseAsync(parameters: IGeoSearchReverseParameters, request: ITwitterRequest): Promise<ITwitterResult<SearchGeoSearchResultDTO>> {
-    return this._helpQueryExecutor.SearchGeoReverseAsync(parameters, request);
+    return this._helpQueryExecutor.searchGeoReverseAsync(parameters, request);
   }
 }

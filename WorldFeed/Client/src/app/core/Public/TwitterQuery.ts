@@ -81,8 +81,8 @@ export class TwitterQuery extends TwitterRequestParameters implements ITwitterQu
   public void;
 
   initialize(settings: ITweetinviSettings) {
-    this.timeout = settings.HttpRequestTimeout;
-    this.proxyConfig = settings.ProxyConfig;
+    this.timeout = settings.httpRequestTimeout;
+    this.proxyConfig = settings.proxyConfig;
   }
 
   public ToString(): string {

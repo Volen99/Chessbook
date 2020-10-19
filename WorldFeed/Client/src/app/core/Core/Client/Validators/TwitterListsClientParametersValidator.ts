@@ -87,7 +87,7 @@ export class TwitterListsClientParametersValidator implements ITwitterListsClien
   }
 
   private get Limits(): TwitterLimits {
-    return this._client.Config.Limits;
+    return this._client.config.limits;
   }
 
   public validate(parameters: TwitterListParameters): void {
@@ -109,8 +109,8 @@ export class TwitterListsClientParametersValidator implements ITwitterListsClien
       this._twitterListsClientRequiredParametersValidator.validate(parameters);
 
       let maxPageSize = this.Limits.LISTS_GET_TWEETS_MAX_PAGE_SIZE;
-      if (parameters.PageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.PageSize)}`, maxPageSize, nameof(this.Limits.LISTS_GET_TWEETS_MAX_PAGE_SIZE), "page size");
+      if (parameters.pageSize > maxPageSize) {
+        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.LISTS_GET_TWEETS_MAX_PAGE_SIZE), "page size");
       }
     } else if (this.isIAddMembersToListParameters(parameters)) {
       this._twitterListsClientRequiredParametersValidator.validate(parameters);

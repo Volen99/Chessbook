@@ -39,24 +39,24 @@ export class SearchClientParametersValidator implements ISearchClientParametersV
     this._searchClientRequiredParametersValidator.validate(parameters);
 
     if (this.isISearchTweetsParameters(parameters)) {
-      let isSearchQuerySet = !!parameters.Query;
-      let isSearchQueryValid = this.isSearchQueryValid(parameters.Query);
-      let isGeoCodeSet = this.isGeoCodeValid(parameters.GeoCode);
-      let isEntitiesTypeSet = parameters.Filters !== TweetSearchFilters.None;
+      let isSearchQuerySet = !!parameters.query;
+      let isSearchQueryValid = this.isSearchQueryValid(parameters.query);
+      let isGeoCodeSet = this.isGeoCodeValid(parameters.geoCode);
+      let isEntitiesTypeSet = parameters.filters !== TweetSearchFilters.None;
 
       let isSearchValid = (isSearchQuerySet && isSearchQueryValid) || isGeoCodeSet || isEntitiesTypeSet;
       if (!isSearchValid) {
         throw new ArgumentException("At least one of the required parameters needs to be valid (query, geocode or filter).");
       }
 
-      let maxPageSize = this._client.Config.Limits.SEARCH_TWEETS_MAX_PAGE_SIZE;
-      if (parameters.PageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.PageSize)}`, maxPageSize, nameof(this._client.Config.Limits.SEARCH_TWEETS_MAX_PAGE_SIZE), "page size");
+      let maxPageSize = this._client.config.limits.SEARCH_TWEETS_MAX_PAGE_SIZE;
+      if (parameters.pageSize > maxPageSize) {
+        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this._client.config.limits.SEARCH_TWEETS_MAX_PAGE_SIZE), "page size");
       }
     } else if (this.isISearchUsersParameters(parameters)) {
-      let maxPageSize = this._client.Config.Limits.SEARCH_USERS_MAX_PAGE_SIZE;
-      if (parameters.PageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.PageSize)}`, maxPageSize, nameof(this._client.Config.Limits.SEARCH_USERS_MAX_PAGE_SIZE), "page size");
+      let maxPageSize = this._client.config.limits.SEARCH_USERS_MAX_PAGE_SIZE;
+      if (parameters.pageSize > maxPageSize) {
+        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this._client.config.limits.SEARCH_USERS_MAX_PAGE_SIZE), "page size");
       }
     }
   }
@@ -71,10 +71,10 @@ export class SearchClientParametersValidator implements ISearchClientParametersV
   }
 
   private isISearchTweetsParameters(parameters: SearchParameters): parameters is ISearchTweetsParameters {
-    return (parameters as ISearchTweetsParameters).Filters !== undefined;
+    return (parameters as ISearchTweetsParameters).filters !== undefined;
   }
 
   private isISearchUsersParameters(parameters: SearchParameters): parameters is ISearchUsersParameters {
-    return (parameters as ISearchUsersParameters).Query !== undefined;
+    return (parameters as ISearchUsersParameters).query !== undefined;
   }
 }

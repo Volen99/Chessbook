@@ -99,7 +99,7 @@ export class Message implements IMessage {
 
   // Destroy
   public destroyAsync(): Promise<void> {
-    return this.client.Messages.destroyMessageAsync(this);
+    return this.client.messages.destroyMessageAsync(this);
   }
 
   public Equals(other: IMessage): boolean {

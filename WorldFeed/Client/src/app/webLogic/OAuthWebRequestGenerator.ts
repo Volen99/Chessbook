@@ -43,7 +43,7 @@ import KeyValuePair from "../c#-objects/TypeScript.NET-Core/packages/Core/source
 
         public  Create(request: ITwitterRequest): IOAuthWebRequestGenerator
         {
-            return new OAuthWebRequestGenerator(this._webHelper, request.executionContext.GetUtcDateTime);
+            return new OAuthWebRequestGenerator(this._webHelper, request.executionContext.getUtcDateTime);
         }
     }
 

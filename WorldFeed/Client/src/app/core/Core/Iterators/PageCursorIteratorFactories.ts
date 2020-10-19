@@ -13,7 +13,7 @@ export interface IPageCursorIteratorFactories {
 export class PageCursorIteratorFactories implements IPageCursorIteratorFactories {
   public create<T extends ITwitterIdentifier>(minMaxOrCursorQueryParameters: IMinMaxQueryParameters, getNext: (num: number) => Promise<ITwitterResult<T[]>>):
     ITwitterPageIterator<ITwitterResult<T[]>, number> {
-    let twitterCursorResult = new TwitterPageIterator<ITwitterResult<T[]>, number>(minMaxOrCursorQueryParameters.MaxId, getNext, page => {        // long?
+    let twitterCursorResult = new TwitterPageIterator<ITwitterResult<T[]>, number>(minMaxOrCursorQueryParameters.maxId, getNext, page => {        // long?
         if (page.model.length === 0) {
           return null;
         }
@@ -21,8 +21,8 @@ export class PageCursorIteratorFactories implements IPageCursorIteratorFactories
         return page.model?.reduce((ya, u) => Math.min(ya, u.id), Number.MAX_VALUE);    // Min(x => x.Id) - 1;
       },
       page => {
-        if (minMaxOrCursorQueryParameters.ContinueMinMaxCursor === ContinueMinMaxCursor.UntilPageSizeIsDifferentFromRequested) {
-          return page.model.length < minMaxOrCursorQueryParameters.PageSize;
+        if (minMaxOrCursorQueryParameters.continueMinMaxCursor === ContinueMinMaxCursor.UntilPageSizeIsDifferentFromRequested) {
+          return page.model.length < minMaxOrCursorQueryParameters.pageSize;
         }
 
         return page.model.length === 0;

@@ -12,29 +12,29 @@ import {IIsAccountSubscribedToAccountActivityParameters} from "../../core/Public
 import {IGetAccountActivitySubscriptionsParameters} from "../../core/Public/Parameters/AccountActivity/GetListOfSubscriptionsParameters";
 
 export interface IAccountActivityQueryGenerator {
-  GetCreateAccountActivityWebhookQuery(parameters: ICreateAccountActivityWebhookParameters): string;
+  getCreateAccountActivityWebhookQuery(parameters: ICreateAccountActivityWebhookParameters): string;
 
-  GetAccountActivityWebhookEnvironmentsQuery(parameters: IGetAccountActivityWebhookEnvironmentsParameters): string;
+  getAccountActivityWebhookEnvironmentsQuery(parameters: IGetAccountActivityWebhookEnvironmentsParameters): string;
 
-  GetAccountActivityEnvironmentWebhooksQuery(parameters: IGetAccountActivityEnvironmentWebhooksParameters): string;
+  getAccountActivityEnvironmentWebhooksQuery(parameters: IGetAccountActivityEnvironmentWebhooksParameters): string;
 
-  GetDeleteAccountActivityWebhookQuery(parameters: IDeleteAccountActivityWebhookParameters): string;
+  getDeleteAccountActivityWebhookQuery(parameters: IDeleteAccountActivityWebhookParameters): string;
 
-  GetTriggerAccountActivityWebhookCRCQuery(parameters: ITriggerAccountActivityWebhookCRCParameters): string;
+  getTriggerAccountActivityWebhookCRCQuery(parameters: ITriggerAccountActivityWebhookCRCParameters): string;
 
-  GetSubscribeToAccountActivityQuery(parameters: ISubscribeToAccountActivityParameters): string;
+  getSubscribeToAccountActivityQuery(parameters: ISubscribeToAccountActivityParameters): string;
 
-  GetUnsubscribeToAccountActivityQuery(parameters: IUnsubscribeFromAccountActivityParameters);
+  getUnsubscribeToAccountActivityQuery(parameters: IUnsubscribeFromAccountActivityParameters);
 
-  GetCountAccountActivitySubscriptionsQuery(parameters: ICountAccountActivitySubscriptionsParameters): string;
+  getCountAccountActivitySubscriptionsQuery(parameters: ICountAccountActivitySubscriptionsParameters): string;
 
-  GetIsAccountSubscribedToAccountActivityQuery(parameters: IIsAccountSubscribedToAccountActivityParameters): string;
+  getIsAccountSubscribedToAccountActivityQuery(parameters: IIsAccountSubscribedToAccountActivityParameters): string;
 
-  GetAccountActivitySubscriptionsQuery(parameters: IGetAccountActivitySubscriptionsParameters): string;
+  getAccountActivitySubscriptionsQuery(parameters: IGetAccountActivitySubscriptionsParameters): string;
 }
 
 export class AccountActivityQueryGenerator implements IAccountActivityQueryGenerator {
-  public GetCreateAccountActivityWebhookQuery(parameters: ICreateAccountActivityWebhookParameters): string {
+  public getCreateAccountActivityWebhookQuery(parameters: ICreateAccountActivityWebhookParameters): string {
     let query = new StringBuilder(`${Resources.Webhooks_AccountActivity_All}/${parameters.environment}/webhooks.json?`);
 
     query.addParameterToQuery("url", parameters.webhookUrl);
@@ -43,55 +43,55 @@ export class AccountActivityQueryGenerator implements IAccountActivityQueryGener
     return query.toString();
   }
 
-  public GetAccountActivityWebhookEnvironmentsQuery(parameters: IGetAccountActivityWebhookEnvironmentsParameters): string {
+  public getAccountActivityWebhookEnvironmentsQuery(parameters: IGetAccountActivityWebhookEnvironmentsParameters): string {
     let query = new StringBuilder(Resources.Webhooks_AccountActivity_GetAllWebhooks);
     query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
-  public GetAccountActivityEnvironmentWebhooksQuery(parameters: IGetAccountActivityEnvironmentWebhooksParameters): string {
+  public getAccountActivityEnvironmentWebhooksQuery(parameters: IGetAccountActivityEnvironmentWebhooksParameters): string {
     let query = new StringBuilder(`${Resources.Webhooks_AccountActivity_All}/${parameters.environment}/webhooks.json`);
     query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
-  public GetDeleteAccountActivityWebhookQuery(parameters: IDeleteAccountActivityWebhookParameters): string {
+  public getDeleteAccountActivityWebhookQuery(parameters: IDeleteAccountActivityWebhookParameters): string {
     let query = new StringBuilder(`${Resources.Webhooks_AccountActivity_All}/${parameters.environment}/webhooks/${parameters.webhookId}.json?`);
     query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
-  public GetTriggerAccountActivityWebhookCRCQuery(parameters: ITriggerAccountActivityWebhookCRCParameters): string {
+  public getTriggerAccountActivityWebhookCRCQuery(parameters: ITriggerAccountActivityWebhookCRCParameters): string {
     let query = new StringBuilder(`${Resources.Webhooks_AccountActivity_All}/${parameters.environment}/webhooks/${parameters.webhookId}.json?`);
     query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
-  public GetSubscribeToAccountActivityQuery(parameters: ISubscribeToAccountActivityParameters): string {
+  public getSubscribeToAccountActivityQuery(parameters: ISubscribeToAccountActivityParameters): string {
     let query = new StringBuilder(`https://api.twitter.com/1.1/account_activity/all/${parameters.environment}/subscriptions.json`);
     query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
-  public GetUnsubscribeToAccountActivityQuery(parameters: IUnsubscribeFromAccountActivityParameters): string {
+  public getUnsubscribeToAccountActivityQuery(parameters: IUnsubscribeFromAccountActivityParameters): string {
     let query = new StringBuilder(`https://api.twitter.com/1.1/account_activity/all/${parameters.environment}/subscriptions/${parameters.userId}.json`);
     query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
-  public GetCountAccountActivitySubscriptionsQuery(parameters: ICountAccountActivitySubscriptionsParameters): string {
+  public getCountAccountActivitySubscriptionsQuery(parameters: ICountAccountActivitySubscriptionsParameters): string {
     let query = new StringBuilder("https://api.twitter.com/1.1/account_activity/all/subscriptions/count.json");
     query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
-  public GetIsAccountSubscribedToAccountActivityQuery(parameters: IIsAccountSubscribedToAccountActivityParameters): string {
+  public getIsAccountSubscribedToAccountActivityQuery(parameters: IIsAccountSubscribedToAccountActivityParameters): string {
     let query = new StringBuilder(`https://api.twitter.com/1.1/account_activity/all/${parameters.environment}/subscriptions.json`);
     query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
-  public GetAccountActivitySubscriptionsQuery(parameters: IGetAccountActivitySubscriptionsParameters): string {
+  public getAccountActivitySubscriptionsQuery(parameters: IGetAccountActivitySubscriptionsParameters): string {
     let query = new StringBuilder(`https://api.twitter.com/1.1/account_activity/all/${parameters.environment}/subscriptions/list.json`);
     query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
     return query.toString();

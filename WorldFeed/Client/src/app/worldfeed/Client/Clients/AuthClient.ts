@@ -29,11 +29,11 @@ export class AuthClient implements IAuthClient {
 
   constructor(client: TwitterClient) {
     this._client = client;
-    this._authRequester = client.Raw.Auth;
+    this._authRequester = client.raw.Auth;
   }
 
   get parametersValidator(): IAuthClientParametersValidator {
-    return this._client.ParametersValidator;
+    return this._client.parametersValidator;
   }
 
   public async createBearerTokenAsync(parameters?: ICreateBearerTokenParameters): Promise<string> {
@@ -51,8 +51,8 @@ export class AuthClient implements IAuthClient {
   public async initializeClientBearerTokenAsync(): Promise<void> {
     let bearerToken = await this.createBearerTokenAsync(); // .ConfigureAwait(false);
 
-    this._client.Credentials = new TwitterCredentials(this._client.Credentials);
-    this._client.Credentials.bearerToken = bearerToken;
+    this._client.credentials = new TwitterCredentials(this._client.credentials);
+    this._client.credentials.bearerToken = bearerToken;
   }
 
   public async requestAuthenticationUrlAsync(callbackUrlOrUriOrParameters: string | Uri | IRequestAuthUrlParameters): Promise<IAuthenticationRequest> {

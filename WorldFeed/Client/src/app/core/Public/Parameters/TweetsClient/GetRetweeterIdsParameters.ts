@@ -7,7 +7,7 @@ import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/sourc
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-retweeters-ids
 export interface IGetRetweeterIdsParameters extends ICursorQueryParameters {
   // The identifier of the retweet
-  Tweet: ITweetIdentifier;
+  tweet: ITweetIdentifier;
 }
 
 export class GetRetweeterIdsParameters extends CursorQueryParameters implements IGetRetweeterIdsParameters {
@@ -16,16 +16,16 @@ export class GetRetweeterIdsParameters extends CursorQueryParameters implements 
       if (GetRetweeterIdsParameters.isIGetRetweeterIdsParameters(tweetIdOrTweetOrParameters)) {
         super(tweetIdOrTweetOrParameters);
 
-        this.Tweet = tweetIdOrTweetOrParameters.Tweet;
+        this.tweet = tweetIdOrTweetOrParameters.tweet;
       } else {
         super();
 
         this.pageSize = TwitterLimits.DEFAULTS.TWEETS_GET_RETWEETS_MAX_SIZE;
 
         if (Type.isNumber(tweetIdOrTweetOrParameters)) {
-          this.Tweet = new TweetIdentifier(tweetIdOrTweetOrParameters);
+          this.tweet = new TweetIdentifier(tweetIdOrTweetOrParameters);
         } else {
-          this.Tweet = tweetIdOrTweetOrParameters;
+          this.tweet = tweetIdOrTweetOrParameters;
         }
       }
     } else {
@@ -33,10 +33,10 @@ export class GetRetweeterIdsParameters extends CursorQueryParameters implements 
     }
   }
 
-  public Tweet: ITweetIdentifier;
+  public tweet: ITweetIdentifier;
 
   private static isIGetRetweeterIdsParameters(tweetIdOrTweetOrParameters: | number | ITweetIdentifier | IGetRetweeterIdsParameters): tweetIdOrTweetOrParameters is IGetRetweeterIdsParameters {
-    return (tweetIdOrTweetOrParameters as IGetRetweeterIdsParameters).Tweet !== undefined;
+    return (tweetIdOrTweetOrParameters as IGetRetweeterIdsParameters).tweet !== undefined;
   }
 }
 

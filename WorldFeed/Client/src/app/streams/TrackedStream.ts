@@ -46,7 +46,7 @@ export class TrackedStream extends TwitterStream implements ITrackedStream {
               let queryBuilder = new StringBuilder(url);
                 AddBaseParametersToQuery(queryBuilder);
 
-                let request = this._client.CreateRequest();
+                let request = this._client.createRequest();
                 request.query.url = queryBuilder.toString();
                 request.query.httpMethod = HttpMethod.GET;
                 return request;

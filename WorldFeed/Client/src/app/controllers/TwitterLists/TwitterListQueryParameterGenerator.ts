@@ -1,10 +1,10 @@
 ﻿import {ITwitterListQueryParameterGenerator} from "../../core/Core/QueryGenerators/ITwitterListQueryParameterGenerator";
 import {IUserQueryParameterGenerator} from "../../core/Core/QueryGenerators/IUserQueryParameterGenerator";
 import {ITwitterListIdentifier} from 'src/app/core/Public/Models/Interfaces/ITwitterListIdentifier';
-import {Resources} from 'src/app/properties/resources';
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {IListParameters} from "../../core/Public/Parameters/ListsClient/TwitterListParameters";
 import {UserIdentifier} from "../../core/Public/Models/UserIdentifier";
+import {IGetTweetsFromListParameters} from "../../core/Public/Parameters/ListsClient/GetTweetsFromListParameters";
 
 export class TwitterListQueryParameterGenerator implements ITwitterListQueryParameterGenerator {
   private readonly _userQueryParameterGenerator: IUserQueryParameterGenerator;
@@ -24,18 +24,25 @@ export class TwitterListQueryParameterGenerator implements ITwitterListQueryPara
 
     let ownerIdentifier: string;
     if (twitterListIdentifier.ownerId > 0) {
-      ownerIdentifier = string.Format(Resources.List_OwnerIdParameter, twitterListIdentifier.ownerId.ToString(CultureInfo.InvariantCulture));
+      ownerIdentifier = `&owner_id=${twitterListIdentifier.ownerId.toString(CultureInfo.InvariantCulture)}`;
     } else {
-      ownerIdentifier = string.Format(Resources.List_OwnerScreenNameParameter, twitterListIdentifier.ownerScreenName);
+      ownerIdentifier = `&owner_screen_name=${twitterListIdentifier.ownerScreenName}`;
     }
 
-    var slugParameter = string.Format(Resources.List_SlugParameter, twitterListIdentifier.slug);
+    let slugParameter = `&slug=${twitterListIdentifier.slug}`;
 
     return `${slugParameter}${ownerIdentifier}`;
   }
 
-  public appendListIdentifierParameter(query: StringBuilder, listIdentifier: ITwitterListIdentifier): void {
-    var owner = new UserIdentifier(listIdentifier.ownerScreenName);
+  public appendListIdentifierParameter(query: StringBuilder, listIdentifierOrParameters: ITwitterListIdentifier | IListParameters): void {
+    let listIdentifier: ITwitterListIdentifier;
+    if (this.isITwitterListIdentifier(listIdentifierOrParameters)) {
+      listIdentifier = listIdentifierOrParameters;
+    } else {
+      listIdentifier = listIdentifierOrParameters.list;
+    }
+
+    let owner = new UserIdentifier(listIdentifier.ownerScreenName);
     if (listIdentifier.ownerId > 0) {
       owner.id = listIdentifier.ownerId;
     }
@@ -45,17 +52,17 @@ export class TwitterListQueryParameterGenerator implements ITwitterListQueryPara
     } else {
       query.addParameterToQuery("slug", listIdentifier.slug);
 
-      var ownerParameter = this._userQueryParameterGenerator.generateIdOrScreenNameParameter(owner, "owner_id", "owner_screen_name");
+      let ownerParameter = this._userQueryParameterGenerator.generateIdOrScreenNameParameter(owner, "owner_id", "owner_screen_name");
       query.addFormattedParameterToQuery(ownerParameter);
     }
-  }
-
-  public appendListIdentifierParameter(query: StringBuilder, parameters: IListParameters): void {
-    this.appendListIdentifierParameter(query, parameters.list);
   }
 
   // Tweets From List
   public createTweetsFromListParameters(): IGetTweetsFromListParameters {
     return this._getTweetsFromListParametersFactory.Create();
+  }
+
+  private isITwitterListIdentifier(listIdentifierOrParameters: any): listIdentifierOrParameters is ITwitterListIdentifier {
+    return (listIdentifierOrParameters as ITwitterListIdentifier).id !== undefined;
   }
 }

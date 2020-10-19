@@ -2,17 +2,22 @@
 import {IUserQueryParameterGenerator} from "../../core/Core/QueryGenerators/IUserQueryParameterGenerator";
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {Resources} from "../../properties/resources";
+import {IGetHomeTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetHomeTimelineParameters";
+import {IGetUserTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetUserTimelineParameters";
+import {IGetMentionsTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetMentionsTimelineParameters";
+import {IGetRetweetsOfMeTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
+import {IQueryParameterGenerator} from "../Shared/QueryParameterGenerator";
 
 export interface ITimelineQueryGenerator {
-  GetHomeTimelineQuery(parameters: IGetHomeTimelineParameters, tweetMode: ComputedTweetMode): string;
+  getHomeTimelineQuery(parameters: IGetHomeTimelineParameters, tweetMode: ComputedTweetMode): string;
 
-  GetUserTimelineQuery(parameters: IGetUserTimelineParameters, tweetMode: ComputedTweetMode): string;
+  getUserTimelineQuery(parameters: IGetUserTimelineParameters, tweetMode: ComputedTweetMode): string;
 
   // Mention Timeline
-  GetMentionsTimelineQuery(getMentionsTimelineParameters: IGetMentionsTimelineParameters, tweetMode: ComputedTweetMode): string;
+  getMentionsTimelineQuery(getMentionsTimelineParameters: IGetMentionsTimelineParameters, tweetMode: ComputedTweetMode): string;
 
   // Retweets of Me Timeline
-  GetRetweetsOfMeTimelineQuery(parameters: IGetRetweetsOfMeTimelineParameters, tweetMode: ComputedTweetMode): string;
+  getRetweetsOfMeTimelineQuery(parameters: IGetRetweetsOfMeTimelineParameters, tweetMode: ComputedTweetMode): string;
 }
 
 export class TimelineQueryGenerator implements ITimelineQueryGenerator {
@@ -25,50 +30,50 @@ export class TimelineQueryGenerator implements ITimelineQueryGenerator {
   }
 
   // Home Timeline
-  public GetHomeTimelineQuery(parameters: IGetHomeTimelineParameters, tweetMode: ComputedTweetMode): string {
+  public getHomeTimelineQuery(parameters: IGetHomeTimelineParameters, tweetMode: ComputedTweetMode): string {
     let query = new StringBuilder(Resources.Timeline_GetHomeTimeline);
 
-    this._queryParameterGenerator.AddTimelineParameters(query, parameters, tweetMode);
+    this._queryParameterGenerator.addTimelineParameters(query, parameters, tweetMode);
 
-    query.addParameterToQuery("exclude_replies", parameters.ExcludeReplies);
-    query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addParameterToQuery("exclude_replies", parameters.excludeReplies);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
 
   // User Timeline
-  public GetUserTimelineQuery(parameters: IGetUserTimelineParameters, tweetMode: ComputedTweetMode): string {
+  public getUserTimelineQuery(parameters: IGetUserTimelineParameters, tweetMode: ComputedTweetMode): string {
     let query = new StringBuilder(Resources.Timeline_GetUserTimeline);
 
-    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.User));
+    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
 
-    this._queryParameterGenerator.AddTimelineParameters(query, parameters, tweetMode);
+    this._queryParameterGenerator.addTimelineParameters(query, parameters, tweetMode);
 
-    query.addParameterToQuery("exclude_replies", parameters.ExcludeReplies);
-    query.addParameterToQuery("include_rts", parameters.IncludeRetweets);
-    query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addParameterToQuery("exclude_replies", parameters.excludeReplies);
+    query.addParameterToQuery("include_rts", parameters.includeRetweets);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
 
   // Mentions Timeline
-  public GetMentionsTimelineQuery(parameters: IGetMentionsTimelineParameters, tweetMode: ComputedTweetMode): string {
+  public getMentionsTimelineQuery(parameters: IGetMentionsTimelineParameters, tweetMode: ComputedTweetMode): string {
     let query = new StringBuilder(Resources.Timeline_GetMentionsTimeline);
 
-    this._queryParameterGenerator.AddTimelineParameters(query, parameters, tweetMode);
-    query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    this._queryParameterGenerator.addTimelineParameters(query, parameters, tweetMode);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
 
   // Retweets of Me Timeline
-  public GetRetweetsOfMeTimelineQuery(parameters: IGetRetweetsOfMeTimelineParameters, tweetMode: ComputedTweetMode): string {
+  public getRetweetsOfMeTimelineQuery(parameters: IGetRetweetsOfMeTimelineParameters, tweetMode: ComputedTweetMode): string {
     let query = new StringBuilder(Resources.Timeline_GetRetweetsOfMeTimeline);
 
-    this._queryParameterGenerator.AddTimelineParameters(query, parameters, tweetMode);
+    this._queryParameterGenerator.addTimelineParameters(query, parameters, tweetMode);
 
-    query.addParameterToQuery("include_user_entities", parameters.IncludeUserEntities);
-    query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addParameterToQuery("include_user_entities", parameters.includeUserEntities);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }

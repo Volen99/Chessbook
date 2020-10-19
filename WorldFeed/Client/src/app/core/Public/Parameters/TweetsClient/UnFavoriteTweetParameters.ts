@@ -5,10 +5,10 @@ import {TweetIdentifier} from '../../Models/TweetIdentifier';
 // For more information visit : https://developer.twitter.com/en/docs/tweets/post-and-engage/api-reference/post-favorites-destroy
 export interface IUnfavoriteTweetParameters extends ICustomRequestParameters {
   /// The identifier of the tweet you no longer want to be a favorite
-  Tweet: ITweetIdentifier;
+  tweet: ITweetIdentifier;
 
   // Include the tweet entities
-  IncludeEntities?: boolean;
+  includeEntities?: boolean;
 }
 
 export class UnfavoriteTweetParameters extends CustomRequestParameters implements IUnfavoriteTweetParameters {
@@ -22,11 +22,11 @@ export class UnfavoriteTweetParameters extends CustomRequestParameters implement
       tweetCurrent = tweetIdOrTweet;
     }
 
-    this.Tweet = tweetCurrent;
+    this.tweet = tweetCurrent;
   }
 
-  public Tweet: ITweetIdentifier;
-  public IncludeEntities?: boolean;
+  public tweet: ITweetIdentifier;
+  public includeEntities?: boolean;
 }
 
 // public UnfavoriteTweetParameters(long tweetId) : this(new TweetIdentifier(tweetId))

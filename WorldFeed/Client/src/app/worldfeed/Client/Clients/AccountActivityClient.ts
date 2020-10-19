@@ -63,11 +63,11 @@ export class AccountActivityClient implements IAccountActivityClient {
   }
 
   get parametersValidator(): IAccountActivityClientParametersValidator {
-    return this._client.ParametersValidator;
+    return this._client.parametersValidator;
   }
 
   public createRequestHandler(): IAccountActivityRequestHandler {
-    return this._client.CreateTwitterExecutionContext().container.Resolve<IAccountActivityRequestHandler>();
+    return this._client.createTwitterExecutionContext().container.Resolve<IAccountActivityRequestHandler>();
   }
 
   public async createAccountActivityWebhookAsync(environmentOrParameters: string | ICreateAccountActivityWebhookParameters,
@@ -80,7 +80,7 @@ export class AccountActivityClient implements IAccountActivityClient {
     }
 
     let twitterResult = await this._accountActivityRequester.createAccountActivityWebhookAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createWebhook(twitterResult?.model);
+    return this._client.factories.createWebhook(twitterResult?.model);
   }
 
   public async getAccountActivityWebhookEnvironmentsAsync(parameters?: IGetAccountActivityWebhookEnvironmentsParameters): Promise<IWebhookEnvironment[]> {
@@ -92,7 +92,7 @@ export class AccountActivityClient implements IAccountActivityClient {
     }
 
     let twitterResult = await this._accountActivityRequester.getAccountActivityWebhookEnvironmentsAsync(parametersCurrent); // .ConfigureAwait(false);
-    return twitterResult?.model?.Environments.map(x => this._client.Factories.createWebhookEnvironment(x)); // .ToArray();
+    return twitterResult?.model?.Environments.map(x => this._client.factories.createWebhookEnvironment(x)); // .ToArray();
   }
 
   public async getAccountActivityEnvironmentWebhooksAsync(environmentOrParameters: string | IGetAccountActivityEnvironmentWebhooksParameters): Promise<IWebhook[]> {
@@ -104,7 +104,7 @@ export class AccountActivityClient implements IAccountActivityClient {
     }
 
     let twitterResult = await this._accountActivityRequester.getAccountActivityEnvironmentWebhooksAsync(parameters); // .ConfigureAwait(false);
-    return twitterResult?.model?.map(x => this._client.Factories.createWebhook(x)); // .ToArray();
+    return twitterResult?.model?.map(x => this._client.factories.createWebhook(x)); // .ToArray();
   }
 
   public deleteAccountActivityWebhookAsync(environmentOrParameters: string | IDeleteAccountActivityWebhookParameters,
@@ -184,7 +184,7 @@ export class AccountActivityClient implements IAccountActivityClient {
     }
 
     let twitterResult = await this._accountActivityRequester.getAccountActivitySubscriptionsAsync(parameters); //.ConfigureAwait(false);
-    return this._client.Factories.createWebhookEnvironmentSubscriptions(twitterResult?.model);
+    return this._client.factories.createWebhookEnvironmentSubscriptions(twitterResult?.model);
   }
 
   public unsubscribeFromAccountActivityAsync(environmentOrParameters: string | IUnsubscribeFromAccountActivityParameters,

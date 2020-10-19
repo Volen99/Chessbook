@@ -77,15 +77,15 @@ export class TweetsRequester extends BaseRequester implements ITweetsRequester {
 
   public getRetweeterIdsIterator(parameters: IGetRetweeterIdsParameters): ITwitterPageIterator<ITwitterResult<IIdsCursorQueryResultDTO>> {
     this._tweetsClientRequiredParametersValidator.validate(parameters);
-    let request: ITwitterRequest = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request: ITwitterRequest = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._tweetController.getRetweeterIdsIterator(parameters, request);
   }
 
   public getUserFavoriteTweetsIterator(parameters: IGetUserFavoriteTweetsParameters): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number> // long?
   {
     this._tweetsClientRequiredParametersValidator.validate(parameters);
-    let request: ITwitterRequest = super.TwitterClient.CreateRequest();
+    let request: ITwitterRequest = super.TwitterClient.createRequest();
     return this._tweetController.getFavoriteTweetsIterator(parameters, request);
   }
 

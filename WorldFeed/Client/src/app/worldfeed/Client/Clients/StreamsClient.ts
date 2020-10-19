@@ -30,7 +30,7 @@ import { IStreamsClient } from 'src/app/core/Public/Client/Clients/IStreamsClien
             parameters ??= new CreateSampleStreamParameters();
             let customRequestParameters = this._sampleStreamFactory.GenerateParameterOverrideWrapper("createSampleStreamParameters", parameters);
             let stream = this._sampleStreamFactory.Create(customRequestParameters);
-            stream.TweetMode = parameters.TweetMode ?? this._client.Config.TweetMode;
+            stream.TweetMode = parameters.tweetMode ?? this._client.config.tweetMode;
             return stream;
         }
 
@@ -44,7 +44,7 @@ import { IStreamsClient } from 'src/app/core/Public/Client/Clients/IStreamsClien
             parameters ??= new CreateFilteredTweetStreamParameters();
             let customRequestParameters = this._filteredStreamFactory.GenerateParameterOverrideWrapper("createFilteredTweetStreamParameters", parameters);
             let stream = this._filteredStreamFactory.Create(customRequestParameters);
-            stream.TweetMode = parameters.TweetMode ?? this._client.Config.TweetMode;
+            stream.TweetMode = parameters.tweetMode ?? this._client.config.tweetMode;
             return stream;
         }
 
@@ -58,7 +58,7 @@ import { IStreamsClient } from 'src/app/core/Public/Client/Clients/IStreamsClien
             parameters ??= new CreateTweetStreamParameters();
             let customRequestParameters = this._tweetStreamFactory.GenerateParameterOverrideWrapper("createTweetStreamParameters", parameters);
             let stream = this._tweetStreamFactory.Create(customRequestParameters);
-            stream.TweetMode = parameters.TweetMode ?? this._client.Config.TweetMode;
+            stream.TweetMode = parameters.tweetMode ?? this._client.config.tweetMode;
             return stream;
         }
 
@@ -72,7 +72,7 @@ import { IStreamsClient } from 'src/app/core/Public/Client/Clients/IStreamsClien
             parameters ??= new CreateTrackedTweetStreamParameters();
             let customRequestParameters = this._trackedStreamFactory.GenerateParameterOverrideWrapper("createTrackedTweetStreamParameters", parameters);
             let stream = this._trackedStreamFactory.Create(customRequestParameters);
-            stream.TweetMode = parameters.TweetMode ?? this._client.Config.TweetMode;
+            stream.TweetMode = parameters.tweetMode ?? this._client.config.tweetMode;
             return stream;
         }
     }

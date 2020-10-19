@@ -30,7 +30,7 @@ export class Tweet implements ITweet {
   private _entities: ITweetEntities;
 
   private DTOUpdated(): void {
-    this._createdBy = this._tweetDTO == null ? null : this.client.Factories.createUser(this._tweetDTO.createdBy);
+    this._createdBy = this._tweetDTO == null ? null : this.client.factories.createUser(this._tweetDTO.createdBy);
     this._entities = this._tweetDTO == null ? null : new TweetEntities(this._tweetDTO, this.tweetMode);
   }
 
@@ -256,7 +256,7 @@ export class Tweet implements ITweet {
 
   get retweetedTweet(): ITweet {
     if (this._retweetedTweet == null) {
-      this._retweetedTweet = this.client.Factories.createTweet(this._tweetDTO.retweetedTweetDTO);
+      this._retweetedTweet = this.client.factories.createTweet(this._tweetDTO.retweetedTweetDTO);
     }
 
     return this._retweetedTweet;
@@ -282,7 +282,7 @@ export class Tweet implements ITweet {
 
   get quotedTweet(): ITweet {
     if (this._quotedTweet == null) {
-      this._quotedTweet = this.client.Factories.createTweet(this._tweetDTO.quotedTweetDTO);
+      this._quotedTweet = this.client.factories.createTweet(this._tweetDTO.quotedTweetDTO);
     }
 
     return this._quotedTweet;
@@ -372,31 +372,31 @@ export class Tweet implements ITweet {
   // #endregion
 
   public publishRetweetAsync(): Promise<ITweet> {
-    return this.client.Tweets.publishRetweetAsync(this);
+    return this.client.tweets.publishRetweetAsync(this);
   }
 
   public getRetweetsAsync(): Promise<ITweet[]> {
-    return this.client.Tweets.getRetweetsAsync(this);
+    return this.client.tweets.getRetweetsAsync(this);
   }
 
   public destroyRetweetAsync(): Promise<void> {
-    return this.client.Tweets.destroyTweetAsync(this);
+    return this.client.tweets.destroyTweetAsync(this);
   }
 
   public generateOEmbedTweetAsync(): Promise<IOEmbedTweet> {
-    return this.client.Tweets.getOEmbedTweetAsync(this);
+    return this.client.tweets.getOEmbedTweetAsync(this);
   }
 
   public destroyAsync(): Promise<void> {
-    return this.client.Tweets.destroyTweetAsync(this);
+    return this.client.tweets.destroyTweetAsync(this);
   }
 
   public favoriteAsync(): Promise<void> {
-    return this.client.Tweets.favoriteTweetAsync(this);
+    return this.client.tweets.favoriteTweetAsync(this);
   }
 
   public unfavoriteAsync(): Promise<void> {
-    return this.client.Tweets.unfavoriteTweetAsync(this);
+    return this.client.tweets.unfavoriteTweetAsync(this);
   }
 
   public ToString(): string {

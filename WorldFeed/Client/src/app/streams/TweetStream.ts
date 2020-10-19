@@ -35,7 +35,7 @@ export class TweetStream extends TwitterStream implements ITweetStream
                 var queryBuilder = new StringBuilder(url);
                 AddBaseParametersToQuery(queryBuilder);
 
-                var request = this._client.CreateRequest();
+                var request = this._client.createRequest();
                 request.query.url = queryBuilder.ToString();
                 request.query.httpMethod = HttpMethod.GET;
                 return request;

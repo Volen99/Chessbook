@@ -11,16 +11,16 @@ export enum ContinueMinMaxCursor {
 
 export interface IMinMaxQueryParameters extends ICustomRequestParameters {
   // The maximum number of objects to return
-  PageSize: number;
+  pageSize: number;
 
   // Minimum id that can be returned by the query (start from)
-  SinceId?: number; // long?
+  sinceId?: number; // long?
 
   // Maximum id that can be returned by the query (ends at)
-  MaxId?: number; // long?
+  maxId?: number; // long?
 
   // Defines when the cursor should stop
-  ContinueMinMaxCursor: ContinueMinMaxCursor;
+  continueMinMaxCursor: ContinueMinMaxCursor;
 }
 
 export class MinMaxQueryParameters extends CustomRequestParameters implements IMinMaxQueryParameters {
@@ -28,21 +28,20 @@ export class MinMaxQueryParameters extends CustomRequestParameters implements IM
     if (source) {
       super(source);
 
-      this.PageSize = source.PageSize;
-      this.SinceId = source.SinceId;
-      this.MaxId = source.MaxId;
-      this.ContinueMinMaxCursor = source.ContinueMinMaxCursor;
+      this.pageSize = source.pageSize;
+      this.sinceId = source.sinceId;
+      this.maxId = source.maxId;
+      this.continueMinMaxCursor = source.continueMinMaxCursor;
     } else {
       super();
     }
   }
 
-  public PageSize: number;
-  public SinceId?: number;
-  public MaxId?: number;
-  public ContinueMinMaxCursor: ContinueMinMaxCursor;
+  public pageSize: number;
+  public sinceId?: number;
+  public maxId?: number;
+  public continueMinMaxCursor: ContinueMinMaxCursor;
 }
-
 
 // protected MinMaxQueryParameters()
 // {

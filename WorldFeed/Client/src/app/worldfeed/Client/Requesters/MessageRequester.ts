@@ -44,8 +44,8 @@ export class MessageRequester extends BaseRequester implements IMessageRequester
   public getMessagesIterator(parameters: IGetMessagesParameters): ITwitterPageIterator<ITwitterResult<IMessageCursorQueryResultDTO>> {
     this._messagesClientParametersValidator.validate(parameters);
 
-    let request = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._messageController.getMessagesIterator(parameters, request);
   }
 }

@@ -11,17 +11,17 @@ import {IUserDTO} from "../../core/Public/Models/Interfaces/DTO/IUserDTO";
 import {IAccountSettingsQueryExecutor} from "./AccountSettingsQueryExecutor";
 
 export interface IAccountSettingsController {
-  GetAccountSettingsAsync(parameters: IGetAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>>;
+  getAccountSettingsAsync(parameters: IGetAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>>;
 
-  UpdateAccountSettingsAsync(parameters: IUpdateAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>>;
+  updateAccountSettingsAsync(parameters: IUpdateAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>>;
 
-  UpdateProfileAsync(parameters: IUpdateProfileParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
+  updateProfileAsync(parameters: IUpdateProfileParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
 
-  UpdateProfileImageAsync(parameters: IUpdateProfileImageParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
+  updateProfileImageAsync(parameters: IUpdateProfileImageParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
 
-  UpdateProfileBannerAsync(parameters: IUpdateProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>;
+  updateProfileBannerAsync(parameters: IUpdateProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>;
 
-  RemoveProfileBannerAsync(parameters: IRemoveProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>;
+  removeProfileBannerAsync(parameters: IRemoveProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>;
 }
 
 export class AccountSettingsController implements IAccountSettingsController {
@@ -31,27 +31,27 @@ export class AccountSettingsController implements IAccountSettingsController {
     this._accountSettingsQueryExecutor = accountSettingsQueryExecutor;
   }
 
-  public GetAccountSettingsAsync(parameters: IGetAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>> {
-    return this._accountSettingsQueryExecutor.GetAccountSettingsAsync(parameters, request);
+  public getAccountSettingsAsync(parameters: IGetAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>> {
+    return this._accountSettingsQueryExecutor.getAccountSettingsAsync(parameters, request);
   }
 
-  public UpdateAccountSettingsAsync(parameters: IUpdateAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>> {
-    return this._accountSettingsQueryExecutor.UpdateAccountSettingsAsync(parameters, request);
+  public updateAccountSettingsAsync(parameters: IUpdateAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>> {
+    return this._accountSettingsQueryExecutor.updateAccountSettingsAsync(parameters, request);
   }
 
-  public UpdateProfileAsync(parameters: IUpdateProfileParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
-    return this._accountSettingsQueryExecutor.UpdateProfileAsync(parameters, request);
+  public updateProfileAsync(parameters: IUpdateProfileParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
+    return this._accountSettingsQueryExecutor.updateProfileAsync(parameters, request);
   }
 
-  public UpdateProfileImageAsync(parameters: IUpdateProfileImageParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
-    return this._accountSettingsQueryExecutor.UpdateProfileImageAsync(parameters, request);
+  public updateProfileImageAsync(parameters: IUpdateProfileImageParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
+    return this._accountSettingsQueryExecutor.updateProfileImageAsync(parameters, request);
   }
 
-  public UpdateProfileBannerAsync(parameters: IUpdateProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult> {
-    return this._accountSettingsQueryExecutor.UpdateProfileBannerAsync(parameters, request);
+  public updateProfileBannerAsync(parameters: IUpdateProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult> {
+    return this._accountSettingsQueryExecutor.updateProfileBannerAsync(parameters, request);
   }
 
-  public RemoveProfileBannerAsync(parameters: IRemoveProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult> {
-    return this._accountSettingsQueryExecutor.RemoveProfileBannerAsync(parameters, request);
+  public removeProfileBannerAsync(parameters: IRemoveProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult> {
+    return this._accountSettingsQueryExecutor.removeProfileBannerAsync(parameters, request);
   }
 }

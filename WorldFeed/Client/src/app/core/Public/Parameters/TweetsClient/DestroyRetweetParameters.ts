@@ -7,10 +7,10 @@ import {TweetMode} from '../../Settings/TweetinviSettings';
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/post-statuses-unretweet-id
 export interface IDestroyRetweetParameters extends ICustomRequestParameters, ITweetModeParameter {
   // The identifier of the retweet
-  Tweet: ITweetIdentifier;
+  tweet: ITweetIdentifier;
 
   // Tweets author object will not be populated when set to true
-  TrimUser?: boolean;
+  trimUser?: boolean;
 }
 
 export class DestroyRetweetParameters extends CustomRequestParameters implements IDestroyRetweetParameters {
@@ -24,12 +24,12 @@ export class DestroyRetweetParameters extends CustomRequestParameters implements
       tweetCurrent = new TweetIdentifier(tweetIdOrTweet);
     }
 
-    this.Tweet = tweetCurrent;
+    this.tweet = tweetCurrent;
   }
 
-  public Tweet: ITweetIdentifier;
-  public TrimUser?: boolean;
-  public TweetMode?: TweetMode;
+  public tweet: ITweetIdentifier;
+  public trimUser?: boolean;
+  public tweetMode?: TweetMode;
 }
 
 // public DestroyRetweetParameters(long tweetId)

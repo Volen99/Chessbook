@@ -25,18 +25,18 @@ export class RateLimitsClient implements IRateLimitsClient {
   private readonly _helpRequester: IHelpRequester;
 
   constructor(client: ITwitterClient) {
-    let executionContext = client.CreateTwitterExecutionContext();
+    let executionContext = client.createTwitterExecutionContext();
 
     this._client = client;
-    this._helpRequester = client.Raw.help;
+    this._helpRequester = client.raw.help;
     this._rateLimitCacheManager = executionContext.container.Resolve<IRateLimitCacheManager>();
     this._rateLimitAwaiter = executionContext.container.Resolve<IRateLimitAwaiter>();
   }
 
   public async initializeRateLimitsManagerAsync(): Promise<void> {
-    let credentialsRateLimits = await this._rateLimitCacheManager.rateLimitCache.getCredentialsRateLimitsAsync(this._client.Credentials); // .ConfigureAwait(false);
+    let credentialsRateLimits = await this._rateLimitCacheManager.rateLimitCache.getCredentialsRateLimitsAsync(this._client.credentials); // .ConfigureAwait(false);
     if (credentialsRateLimits == null) {
-      await this._rateLimitCacheManager.refreshCredentialsRateLimitsAsync(this._client.Credentials); // .ConfigureAwait(false);
+      await this._rateLimitCacheManager.refreshCredentialsRateLimitsAsync(this._client.credentials); // .ConfigureAwait(false);
     }
   }
 
@@ -53,12 +53,12 @@ export class RateLimitsClient implements IRateLimitsClient {
 
     switch (parameters.from) {
       case RateLimitsSource.CacheOnly:
-        return await this._rateLimitCacheManager.rateLimitCache.getCredentialsRateLimitsAsync(this._client.Credentials); // .ConfigureAwait(false);
+        return await this._rateLimitCacheManager.rateLimitCache.getCredentialsRateLimitsAsync(this._client.credentials); // .ConfigureAwait(false);
       case RateLimitsSource.TwitterApiOnly:
         let twitterResult = await this._helpRequester.getRateLimitsAsync(parameters); // .ConfigureAwait(false);
-        return this._client.Factories.createRateLimits(twitterResult?.model);
+        return this._client.factories.createRateLimits(twitterResult?.model);
       case RateLimitsSource.CacheOrTwitterApi:
-        return await this._rateLimitCacheManager.getCredentialsRateLimitsAsync(this._client.Credentials); // .ConfigureAwait(false);
+        return await this._rateLimitCacheManager.getCredentialsRateLimitsAsync(this._client.credentials); // .ConfigureAwait(false);
       default:
         throw new ArgumentException(nameof(parameters.from));
     }
@@ -75,12 +75,12 @@ export class RateLimitsClient implements IRateLimitsClient {
       parameters = urlOrParameters;
     }
 
-    return this._rateLimitCacheManager.getQueryRateLimitAsync(parameters, this._client.Credentials);
+    return this._rateLimitCacheManager.getQueryRateLimitAsync(parameters, this._client.credentials);
   }
 
   public waitForQueryRateLimitAsync(urlOrEndpointRateLimit: string | IEndpointRateLimit, from?: RateLimitsSource): Promise<void> {
     if (this.isIEndpointRateLimit(urlOrEndpointRateLimit)) {
-      return this._rateLimitAwaiter.waitForCredentialsRateLimitAsync(urlOrEndpointRateLimit, this._client.Credentials, this._client.CreateTwitterExecutionContext());
+      return this._rateLimitAwaiter.waitForCredentialsRateLimitAsync(urlOrEndpointRateLimit, this._client.credentials, this._client.createTwitterExecutionContext());
     } else {
       let fromCurrent: RateLimitsSource;
       if (!from) {
@@ -90,9 +90,9 @@ export class RateLimitsClient implements IRateLimitsClient {
       }
 
       let credentialsRateLimitParameters = new WaitForCredentialsRateLimitParameters(urlOrEndpointRateLimit);
-      credentialsRateLimitParameters.Credentials = this._client.Credentials;
-      credentialsRateLimitParameters.ExecutionContext = this._client.CreateTwitterExecutionContext();
-      credentialsRateLimitParameters.From = fromCurrent;
+      credentialsRateLimitParameters.credentials = this._client.credentials;
+      credentialsRateLimitParameters.executionContext = this._client.createTwitterExecutionContext();
+      credentialsRateLimitParameters.from = fromCurrent;
 
       return this._rateLimitAwaiter.waitForCredentialsRateLimitAsync(credentialsRateLimitParameters);
     }
@@ -102,7 +102,7 @@ export class RateLimitsClient implements IRateLimitsClient {
     if (credentials) {
       return this._rateLimitCacheManager.rateLimitCache.clearAsync(credentials);
     } else {
-      return this._rateLimitCacheManager.rateLimitCache.clearAsync(this._client.Credentials);
+      return this._rateLimitCacheManager.rateLimitCache.clearAsync(this._client.credentials);
     }
   }
 

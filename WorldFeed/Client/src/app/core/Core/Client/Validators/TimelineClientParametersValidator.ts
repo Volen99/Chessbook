@@ -28,7 +28,7 @@ export class TimelineClientParametersValidator implements ITimelineClientParamet
   }
 
   get Limits(): TwitterLimits {
-    return this._client.Config.Limits;
+    return this._client.config.limits;
   }
 
   public validate(parameters: TimelineParameters): void {
@@ -45,25 +45,25 @@ export class TimelineClientParametersValidator implements ITimelineClientParamet
       maxPageSize = this.Limits.TIMELINE_RETWEETS_OF_ME_MAX_PAGE_SIZE;
     }
 
-    if (parameters.PageSize > maxPageSize) {
-      throw new TwitterArgumentLimitException(`${nameof(parameters.PageSize)}`, maxPageSize, nameof(this.Limits.TIMELINE_RETWEETS_OF_ME_MAX_PAGE_SIZE), "page size");
+    if (parameters.pageSize > maxPageSize) {
+      throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.TIMELINE_RETWEETS_OF_ME_MAX_PAGE_SIZE), "page size");
     }
 
   }
 
   private isIGetHomeTimelineParameters(parameters: TimelineParameters): parameters is IGetHomeTimelineParameters {
-    return (parameters as IGetHomeTimelineParameters).ExcludeReplies !== undefined;
+    return (parameters as IGetHomeTimelineParameters).excludeReplies !== undefined;
   }
 
   private isIGetUserTimelineParameters(parameters: TimelineParameters): parameters is IGetUserTimelineParameters {
-    return (parameters as IGetUserTimelineParameters).ExcludeReplies !== undefined;
+    return (parameters as IGetUserTimelineParameters).excludeReplies !== undefined;
   }
 
   private isIGetMentionsTimelineParameters(parameters: TimelineParameters): parameters is IGetMentionsTimelineParameters {
-    return (parameters as IGetMentionsTimelineParameters).MaxId !== undefined;
+    return (parameters as IGetMentionsTimelineParameters).maxId !== undefined;
   }
 
   private isIGetRetweetsOfMeTimelineParameters(parameters: TimelineParameters): parameters is IGetRetweetsOfMeTimelineParameters {
-    return (parameters as IGetRetweetsOfMeTimelineParameters).MaxId !== undefined;
+    return (parameters as IGetRetweetsOfMeTimelineParameters).maxId !== undefined;
   }
 }

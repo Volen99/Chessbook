@@ -4,25 +4,25 @@ import {TweetMode} from '../Settings/TweetinviSettings';
 
 export interface ITimelineRequestParameters extends IMinMaxQueryParameters, ITweetModeParameter {
   // If set to true, the creator property (IUser) will only contain the id.
-  TrimUser?: boolean;
+  trimUser?: boolean;
 
   // Include tweet entities.
-  IncludeEntities?: boolean;
+  includeEntities?: boolean;
 }
 
 export abstract class TimelineRequestParameters extends MinMaxQueryParameters implements ITimelineRequestParameters {
   protected constructor(source?: ITimelineRequestParameters) {
     if (source) {
       super(source);
-      this.TrimUser = source?.TrimUser;
-      this.IncludeEntities = source?.IncludeEntities;
-      this.TweetMode = source?.TweetMode;
+      this.trimUser = source?.trimUser;
+      this.includeEntities = source?.includeEntities;
+      this.tweetMode = source?.tweetMode;
     }
   }
 
-  public TrimUser?: boolean;
-  public IncludeEntities?: boolean;
-  public TweetMode?: TweetMode;
+  public trimUser?: boolean;
+  public includeEntities?: boolean;
+  public tweetMode?: TweetMode;
 }
 
 // protected TimelineRequestParameters()

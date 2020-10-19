@@ -9,28 +9,28 @@ import {IUpdateProfileBannerParameters} from "../../core/Public/Parameters/Accou
 import {Language} from "../../core/Public/Models/Enum/Language";
 
 export interface IAccountSettingsQueryGenerator {
-  GetAccountSettingsQuery(parameters: IGetAccountSettingsParameters): string;
+  getAccountSettingsQuery(parameters: IGetAccountSettingsParameters): string;
 
-  GetUpdateAccountSettingsQuery(parameters: IUpdateAccountSettingsParameters): string;
+  getUpdateAccountSettingsQuery(parameters: IUpdateAccountSettingsParameters): string;
 
-  GetUpdateProfileQuery(parameters: IUpdateProfileParameters): string;
+  getUpdateProfileQuery(parameters: IUpdateProfileParameters): string;
 
-  GetUpdateProfileImageQuery(parameters: IUpdateProfileImageParameters): string;
+  getUpdateProfileImageQuery(parameters: IUpdateProfileImageParameters): string;
 
-  GetUpdateProfileBannerQuery(parameters: IUpdateProfileBannerParameters): string;
+  getUpdateProfileBannerQuery(parameters: IUpdateProfileBannerParameters): string;
 
-  GetRemoveProfileBannerQuery(parameters: IRemoveProfileBannerParameters): string;
+  getRemoveProfileBannerQuery(parameters: IRemoveProfileBannerParameters): string;
 }
 
 export class AccountSettingsQueryGenerator implements IAccountSettingsQueryGenerator {
-  public GetAccountSettingsQuery(parameters: IGetAccountSettingsParameters): string {
+  public getAccountSettingsQuery(parameters: IGetAccountSettingsParameters): string {
     let query = new StringBuilder(Resources.Account_GetSettings);
     query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
 
-  public GetUpdateAccountSettingsQuery(parameters: IUpdateAccountSettingsParameters): string {
+  public getUpdateAccountSettingsQuery(parameters: IUpdateAccountSettingsParameters): string {
     let baseQuery = new StringBuilder(Resources.Account_UpdateSettings);
 
     let langParameterValue = parameters.displayLanguage === Language.Undefined ? null : parameters.displayLanguage?.GetLanguageCode();
@@ -42,12 +42,12 @@ export class AccountSettingsQueryGenerator implements IAccountSettingsQueryGener
     baseQuery.addParameterToQuery("end_sleep_time", SleepHourToString(parameters.endSleepHour));
     baseQuery.addParameterToQuery("trend_location_woeid", parameters.trendLocationWoeid);
 
-    baseQuery.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    baseQuery.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
     return baseQuery.toString();
   }
 
-  public GetUpdateProfileQuery(parameters: IUpdateProfileParameters): string {
+  public getUpdateProfileQuery(parameters: IUpdateProfileParameters): string {
     let query = new StringBuilder(Resources.Account_UpdateProfile);
 
     query.addParameterToQuery("name", parameters.name);
@@ -58,9 +58,9 @@ export class AccountSettingsQueryGenerator implements IAccountSettingsQueryGener
     query.addParameterToQuery("include_entities", parameters.includeEntities);
     query.addParameterToQuery("skip_status", parameters.skipStatus);
 
-    query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
-    return query.ToString();
+    return query.toString();
   }
 
   private static SleepHourToString(hour?: number): string {
@@ -72,37 +72,37 @@ export class AccountSettingsQueryGenerator implements IAccountSettingsQueryGener
       return `0${hour}`;
     }
 
-    return hour.ToString();
+    return hour.toString();
   }
 
-  public GetUpdateProfileImageQuery(parameters: IUpdateProfileImageParameters): string {
+  public getUpdateProfileImageQuery(parameters: IUpdateProfileImageParameters): string {
     var query = new StringBuilder(Resources.Account_UpdateProfileImage);
 
     query.addParameterToQuery("include_entities", parameters.includeEntities);
     query.addParameterToQuery("skip_status", parameters.skipStatus);
-    query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
-    return query.ToString();
+    return query.toString();
   }
 
-  public GetUpdateProfileBannerQuery(parameters: IUpdateProfileBannerParameters): string {
-    var query = new StringBuilder(Resources.Account_UpdateProfileBanner);
+  public getUpdateProfileBannerQuery(parameters: IUpdateProfileBannerParameters): string {
+    let query = new StringBuilder(Resources.Account_UpdateProfileBanner);
 
     query.addParameterToQuery("width", parameters.width);
     query.addParameterToQuery("height", parameters.height);
     query.addParameterToQuery("offset_left", parameters.offsetLeft);
     query.addParameterToQuery("offset_top", parameters.offsetTop);
 
-    query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
-    return query.ToString();
+    return query.toString();
   }
 
-  public GetRemoveProfileBannerQuery(parameters: IRemoveProfileBannerParameters): string {
-    var query = new StringBuilder(Resources.Account_RemoveProfileBanner);
+  public getRemoveProfileBannerQuery(parameters: IRemoveProfileBannerParameters): string {
+    let query = new StringBuilder(Resources.Account_RemoveProfileBanner);
 
-    query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
-    return query.ToString();
+    return query.toString();
   }
 }

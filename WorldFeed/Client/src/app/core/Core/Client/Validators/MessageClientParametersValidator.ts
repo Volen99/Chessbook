@@ -30,7 +30,7 @@ export class MessagesClientParametersValidator implements IMessagesClientParamet
   }
 
   private get Limits(): TwitterLimits {
-    return this._client.Config.Limits;
+    return this._client.config.limits;
   }
 
   public validate(parameters: MessagesParameters): void {

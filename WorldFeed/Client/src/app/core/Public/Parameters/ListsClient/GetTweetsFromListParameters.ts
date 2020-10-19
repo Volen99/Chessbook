@@ -21,7 +21,7 @@ export class GetTweetsFromListParameters extends TimelineRequestParameters imple
     } else {
       super();
 
-      super.PageSize = TwitterLimits.DEFAULTS.LISTS_GET_TWEETS_MAX_PAGE_SIZE;
+      super.pageSize = TwitterLimits.DEFAULTS.LISTS_GET_TWEETS_MAX_PAGE_SIZE;
 
       if (typeof listIdOrListOrSource === 'number') {
         this.list = new TwitterListIdentifier(listIdOrListOrSource);

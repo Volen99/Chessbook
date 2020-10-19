@@ -95,97 +95,97 @@ export class TwitterList implements ITwitterList {
   }
 
   public getTweetsAsync(): Promise<ITweet[]> {
-    return this.client.Lists.getTweetsFromListAsync(this);
+    return this.client.lists.getTweetsFromListAsync(this);
   }
 
   // Members
   public getMembersAsync(): Promise<IUser[]> {
-    return this.client.Lists.getMembersOfListAsync(new GetMembersOfListParameters(this));
+    return this.client.lists.getMembersOfListAsync(new GetMembersOfListParameters(this));
   }
 
   public addMemberAsync(userId: number): Promise<void> {
-    return this.client.Lists.addMemberToListAsync(this, userId);
+    return this.client.lists.addMemberToListAsync(this, userId);
   }
 
   public addMemberAsync(username: string): Promise<void> {
-    return this.client.Lists.addMemberToListAsync(this, username);
+    return this.client.lists.addMemberToListAsync(this, username);
   }
 
   public addMemberAsync(user: IUserIdentifier): Promise<void> {
-    return this.client.Lists.addMemberToListAsync(this, user);
+    return this.client.lists.addMemberToListAsync(this, user);
   }
 
   public addMembersAsync(userIds: Array<number>): Promise<void> {
-    return this.client.Lists.addMembersToListAsync(this, userIds);
+    return this.client.lists.addMembersToListAsync(this, userIds);
   }
 
   public addMembersAsync(usernames: Array<string>): Promise<void> {
-    return this.client.Lists.addMembersToListAsync(this, usernames);
+    return this.client.lists.addMembersToListAsync(this, usernames);
   }
 
   public addMembersAsync(users: Array<IUserIdentifier>): Promise<void> {
-    return this.client.Lists.addMembersToListAsync(this, users);
+    return this.client.lists.addMembersToListAsync(this, users);
   }
 
   public removeMemberAsync(userId: number): Promise<boolean> {
-    return this.client.Lists.checkIfUserIsMemberOfListAsync(this, userId);
+    return this.client.lists.checkIfUserIsMemberOfListAsync(this, userId);
   }
 
   public removeMemberAsync(username: string): Promise<boolean> {
-    return this.client.Lists.checkIfUserIsMemberOfListAsync(this, username);
+    return this.client.lists.checkIfUserIsMemberOfListAsync(this, username);
   }
 
   public removeMemberAsync(user: IUserIdentifier): Promise<boolean> {
-    return this.client.Lists.checkIfUserIsMemberOfListAsync(this, user);
+    return this.client.lists.checkIfUserIsMemberOfListAsync(this, user);
   }
 
   public removeMembersAsync(userIds: Array<number>): Promise<void> {
-    return this.client.Lists.removeMembersFromListAsync(this, userIds);
+    return this.client.lists.removeMembersFromListAsync(this, userIds);
   }
 
   public removeMembersAsync(usernames: Array<string>): Promise<void> {
-    return this.client.Lists.removeMembersFromListAsync(this, usernames);
+    return this.client.lists.removeMembersFromListAsync(this, usernames);
   }
 
   public removeMembersAsync(users: Array<IUserIdentifier>): Promise<void> {
-    return this.client.Lists.removeMembersFromListAsync(this, users);
+    return this.client.lists.removeMembersFromListAsync(this, users);
   }
 
   public checkUserMembershipAsync(userId: number): Promise<boolean> {
-    return this.client.Lists.checkIfUserIsMemberOfListAsync(this, userId);
+    return this.client.lists.checkIfUserIsMemberOfListAsync(this, userId);
   }
 
   public checkUserMembershipAsync(userScreenName: string): Promise<boolean> {
-    return this.client.Lists.checkIfUserIsMemberOfListAsync(this, userScreenName);
+    return this.client.lists.checkIfUserIsMemberOfListAsync(this, userScreenName);
   }
 
   public checkUserMembershipAsync(user: IUserIdentifier): Promise<boolean> {
-    return this.client.Lists.checkIfUserIsMemberOfListAsync(this, user);
+    return this.client.lists.checkIfUserIsMemberOfListAsync(this, user);
   }
 
   // Subscribers
   public getSubscribersAsync(): Promise<IUser[]> {
-    return this.client.Lists.getListSubscribersAsync(this);
+    return this.client.lists.getListSubscribersAsync(this);
   }
 
   public subscribeAsync(): Promise<ITwitterList> {
-    return this.client.Lists.subscribeToListAsync(this);
+    return this.client.lists.subscribeToListAsync(this);
   }
 
   public unsubscribeAsync(): Promise<ITwitterList> {
-    return this.client.Lists.unsubscribeFromListAsync(this);
+    return this.client.lists.unsubscribeFromListAsync(this);
   }
 
   public checkUserSubscriptionAsync(userId: number): Promise<boolean> {
-    return this.client.Lists.checkIfUserIsSubscriberOfListAsync(this, userId);
+    return this.client.lists.checkIfUserIsSubscriberOfListAsync(this, userId);
   }
 
   public checkUserSubscriptionAsync(username: string): Promise<boolean> {
-    return this.client.Lists.checkIfUserIsSubscriberOfListAsync(this, username);
+    return this.client.lists.checkIfUserIsSubscriberOfListAsync(this, username);
   }
 
   public checkUserSubscriptionAsync(user: IUserIdentifier): Promise<boolean> {
-    return this.client.Lists.checkIfUserIsSubscriberOfListAsync(this, user);
+    return this.client.lists.checkIfUserIsSubscriberOfListAsync(this, user);
   }
 
   public async updateAsync(parameters: IListMetadataParameters): Promise<void> {
@@ -194,7 +194,7 @@ export class TwitterList implements ITwitterList {
     updateListParams.description = parameters?.description;
     updateListParams.privacyMode = parameters?.privacyMode;
 
-    let updateList = await this.client.Lists.updateListAsync(updateListParams); // .ConfigureAwait(false);
+    let updateList = await this.client.lists.updateListAsync(updateListParams); // .ConfigureAwait(false);
 
     if (updateList != null) {
       this._twitterListDTO = updateList.twitterListDTO;
@@ -202,12 +202,12 @@ export class TwitterList implements ITwitterList {
   }
 
   public destroyAsync(): Promise<void> {
-    return this.client.Lists.destroyListAsync(this);
+    return this.client.lists.destroyListAsync(this);
   }
 
   private updateOwner(): void {
     if (this._twitterListDTO != null) {
-      this._owner = this.client.Factories.createUser(this._twitterListDTO.owner);
+      this._owner = this.client.factories.createUser(this._twitterListDTO.owner);
     }
   }
 }

@@ -40,11 +40,11 @@ export class TweetsClient implements ITweetsClient {
 
   constructor(client: ITwitterClient) {
     this._client = client;
-    this._tweetsRequester = client.Raw.tweets;
+    this._tweetsRequester = client.raw.tweets;
   }
 
   get parametersValidator(): ITweetsClientParametersValidator {
-    return this._client.ParametersValidator;
+    return this._client.parametersValidator;
   }
 
   // Tweets
@@ -58,7 +58,7 @@ export class TweetsClient implements ITweetsClient {
     }
 
     let twitterResult = await this._tweetsRequester.getTweetAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createTweet(twitterResult?.model);
+    return this._client.factories.createTweet(twitterResult?.model);
   }
 
   public async getTweetsAsync(tweetIdsOrTweetsOrParameters: number[] | ITweetIdentifier[] | IGetTweetsParameters): Promise<ITweet[]> {
@@ -69,12 +69,12 @@ export class TweetsClient implements ITweetsClient {
       parameters = new GetTweetsParameters(tweetIdsOrTweetsOrParameters);
     }
 
-    if (parameters.Tweets == null || parameters.Tweets.length === 0) {
+    if (parameters.tweets == null || parameters.tweets.length === 0) {
       return new Array<ITweet>(0);    // new ITweet[0];
     }
 
     let requestResult = await this._tweetsRequester.getTweetsAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createTweets(requestResult?.model);
+    return this._client.factories.createTweets(requestResult?.model);
   }
 
 
@@ -89,7 +89,7 @@ export class TweetsClient implements ITweetsClient {
     }
 
     let requestResult = await this._tweetsRequester.publishTweetAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createTweet(requestResult?.model);
+    return this._client.factories.createTweet(requestResult?.model);
   }
 
   // Tweets - Destroy
@@ -119,7 +119,7 @@ export class TweetsClient implements ITweetsClient {
     }
 
     let requestResult = await this._tweetsRequester.getRetweetsAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createTweets(requestResult?.model);
+    return this._client.factories.createTweets(requestResult?.model);
   }
 
   public async publishRetweetAsync(tweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IPublishRetweetParameters): Promise<ITweet> {
@@ -131,7 +131,7 @@ export class TweetsClient implements ITweetsClient {
     }
 
     let requestResult = await this._tweetsRequester.gublishRetweetAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createTweet(requestResult?.model);
+    return this._client.factories.createTweet(requestResult?.model);
   }
 
   public destroyRetweetAsync(retweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IDestroyRetweetParameters): Promise<void> {
@@ -195,7 +195,7 @@ export class TweetsClient implements ITweetsClient {
     let favoriteTweetsIterator = this._tweetsRequester.getUserFavoriteTweetsIterator(parameters);
     return new TwitterIteratorProxy<ITwitterResult<ITweetDTO[]>, ITweet, number>(favoriteTweetsIterator,            // long?
       twitterResult => {
-        return twitterResult.model.map(x => this._client.Factories.createTweet(x)); // .ToArray();
+        return twitterResult.model.map(x => this._client.factories.createTweet(x)); // .ToArray();
       });
   }
 
@@ -268,21 +268,21 @@ export class TweetsClient implements ITweetsClient {
     }
 
     let twitterResult = await this._tweetsRequester.getOEmbedTweetAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createOEmbedTweet(twitterResult?.model);
+    return this._client.factories.createOEmbedTweet(twitterResult?.model);
   }
 
   // #endregion
 
   private isIGetTweetParameters(tweetIdOrParameters: number | IGetTweetParameters): tweetIdOrParameters is IGetTweetParameters {
-    return (tweetIdOrParameters as IGetTweetParameters).IncludeCardUri !== undefined;
+    return (tweetIdOrParameters as IGetTweetParameters).includeCardUri !== undefined;
   }
 
   private isIGetTweetsParameters(tweetIdsOrTweetsOrParameters: number[] | ITweetIdentifier[] | IGetTweetsParameters): tweetIdsOrTweetsOrParameters is IGetTweetsParameters {
-    return (tweetIdsOrTweetsOrParameters as IGetTweetsParameters).IncludeCardUri !== undefined;
+    return (tweetIdsOrTweetsOrParameters as IGetTweetsParameters).includeCardUri !== undefined;
   }
 
   private isIPublishTweetParameters(textOrParameters: string | IPublishTweetParameters): textOrParameters is IPublishTweetParameters {
-    return (textOrParameters as IPublishTweetParameters).Medias !== undefined;
+    return (textOrParameters as IPublishTweetParameters).medias !== undefined;
   }
 
   private isTweet(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters: any): tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters is ITweet {
@@ -295,41 +295,41 @@ export class TweetsClient implements ITweetsClient {
 
   private isIDestroyTweetParameters(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters: number
     | ITweetIdentifier | ITweet | ITweetDTO | IDestroyTweetParameters): tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters is IDestroyTweetParameters {
-    return (tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters as IDestroyTweetParameters).Tweet !== undefined;
+    return (tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters as IDestroyTweetParameters).tweet !== undefined;
   }
 
   private isIGetRetweetsParameters(tweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IGetRetweetsParameters): tweetIdOrTweetIdentifierOrParameters is IGetRetweetsParameters {
-    return (tweetIdOrTweetIdentifierOrParameters as IGetRetweetsParameters).PageSize !== undefined;
+    return (tweetIdOrTweetIdentifierOrParameters as IGetRetweetsParameters).pageSize !== undefined;
   }
 
   private isIPublishRetweetParameters(tweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IPublishRetweetParameters): tweetIdOrTweetIdentifierOrParameters is IPublishRetweetParameters {
-    return (tweetIdOrTweetIdentifierOrParameters as IPublishRetweetParameters).TrimUser !== undefined;
+    return (tweetIdOrTweetIdentifierOrParameters as IPublishRetweetParameters).trimUser !== undefined;
   }
 
   private isIDestroyRetweetParameters(retweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IDestroyRetweetParameters): retweetIdOrTweetIdentifierOrParameters is IDestroyRetweetParameters {
-    return (retweetIdOrTweetIdentifierOrParameters as IDestroyRetweetParameters).TrimUser !== undefined;
+    return (retweetIdOrTweetIdentifierOrParameters as IDestroyRetweetParameters).trimUser !== undefined;
   }
 
   private isIGetRetweeterIdsParameters(tweetIdOrTweetIdentifierOrParametersOr: number | ITweetIdentifier | IGetRetweeterIdsParameters): tweetIdOrTweetIdentifierOrParametersOr is IGetRetweeterIdsParameters {
-    return (tweetIdOrTweetIdentifierOrParametersOr as IGetRetweeterIdsParameters).Tweet !== undefined;
+    return (tweetIdOrTweetIdentifierOrParametersOr as IGetRetweeterIdsParameters).tweet !== undefined;
   }
 
   private isIGetUserFavoriteTweetsParameters(userIdOrUsernameOrUserIdentifierOrParameters: number | string
     | IUserIdentifier | IGetUserFavoriteTweetsParameters): userIdOrUsernameOrUserIdentifierOrParameters is IGetUserFavoriteTweetsParameters {
-    return (userIdOrUsernameOrUserIdentifierOrParameters as IGetUserFavoriteTweetsParameters).User !== undefined;
+    return (userIdOrUsernameOrUserIdentifierOrParameters as IGetUserFavoriteTweetsParameters).user !== undefined;
   }
 
   private isIFavoriteTweetParameters(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters: number
     | ITweetIdentifier | ITweet | ITweetDTO | IFavoriteTweetParameters): tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters is IFavoriteTweetParameters {
-    return (tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters as IFavoriteTweetParameters).IncludeEntities !== undefined;
+    return (tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters as IFavoriteTweetParameters).includeEntities !== undefined;
   }
 
   private isIUnfavoriteTweetParameters(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters: any): tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters is IUnfavoriteTweetParameters {
-    return (tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters as IUnfavoriteTweetParameters).IncludeEntities !== undefined;
+    return (tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters as IUnfavoriteTweetParameters).includeEntities !== undefined;
   }
 
   private isIGetOEmbedTweetParameters(tweetIdOrTweetIdentifierOrParameters: any): tweetIdOrTweetIdentifierOrParameters is IGetOEmbedTweetParameters {
-    return (tweetIdOrTweetIdentifierOrParameters as IGetOEmbedTweetParameters).Alignment !== undefined;
+    return (tweetIdOrTweetIdentifierOrParameters as IGetOEmbedTweetParameters).alignment !== undefined;
   }
 
 }

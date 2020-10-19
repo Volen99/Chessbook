@@ -238,20 +238,20 @@ export class User implements IUser {
 
   // Friends
   public getFriendIds(): ITwitterIterator<number> {
-    return this.client?.Users.getFriendIdsIterator(new GetFriendIdsParameters(this));
+    return this.client?.users.getFriendIdsIterator(new GetFriendIdsParameters(this));
   }
 
   public getFriends(): IMultiLevelCursorIterator<number, IUser> {
-    return this.client?.Users.getFriendsIterator(new GetFriendsParameters(this));
+    return this.client?.users.getFriendsIterator(new GetFriendsParameters(this));
   }
 
   // Followers
   public getFollowerIds(): ITwitterIterator<number> {
-    return this.client?.Users.getFollowerIdsIterator(new GetFollowerIdsParameters(this));
+    return this.client?.users.getFollowerIdsIterator(new GetFollowerIdsParameters(this));
   }
 
   public getFollowers(): IMultiLevelCursorIterator<number, IUser> {
-    return this.client?.Users.getFollowersIterator(new GetFollowersParameters(this));
+    return this.client?.users.getFollowersIterator(new GetFollowersParameters(this));
   }
 
   // Relationship
@@ -265,40 +265,40 @@ export class User implements IUser {
       typeCurrent = userIdOrUsernameOrUser as IUserIdentifier;
     }
 
-    return this.client.Users.getRelationshipBetweenAsync(this, typeCurrent);
+    return this.client.users.getRelationshipBetweenAsync(this, typeCurrent);
   }
 
   // Timeline
   public getUserTimelineAsync(): Promise<ITweet[]> {
-    return this.client.Timelines.getUserTimelineAsync(this);
+    return this.client.timelines.getUserTimelineAsync(this);
   }
 
   // Favorites
   public getFavoriteTweetsAsync(): Promise<ITweet[]> {
-    return this.client.Tweets.getUserFavoriteTweetsAsync(this);
+    return this.client.tweets.getUserFavoriteTweetsAsync(this);
   }
 
   // Lists
   public getListSubscriptionsAsync(): Promise<ITwitterList[]> {
-    return this.client.Lists.getUserListSubscriptionsAsync(this);
+    return this.client.lists.getUserListSubscriptionsAsync(this);
   }
 
   public getOwnedListsAsync(): Promise<ITwitterList[]> {
-    return this.client.Lists.getListsOwnedByUserAsync(new GetListsOwnedByAccountByUserParameters(this));
+    return this.client.lists.getListsOwnedByUserAsync(new GetListsOwnedByAccountByUserParameters(this));
   }
 
   // Block User
   public blockUserAsync(): Promise<IUser> {
-    return this.client.Users.blockUserAsync(this);
+    return this.client.users.blockUserAsync(this);
   }
 
   public unblockUserAsync(): Promise<IUser> {
-    return this.client.Users.unblockUserAsync(this);
+    return this.client.users.unblockUserAsync(this);
   }
 
   // Spam
   public reportUserForSpamAsync(): Promise<IUser> {
-    return this.client.Users.reportUserForSpamAsync(this);
+    return this.client.users.reportUserForSpamAsync(this);
   }
 
   // Stream Profile Image
@@ -311,7 +311,7 @@ export class User implements IUser {
       imageSizeCurrent = imageSize;
     }
 
-    let result = this.client.Users.getProfileImageStreamAsync(new GetProfileImageParameters(this));
+    let result = this.client.users.getProfileImageStreamAsync(new GetProfileImageParameters(this));
     result.ImageSize = imageSizeCurrent;
 
     return result;

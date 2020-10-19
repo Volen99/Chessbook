@@ -8,19 +8,19 @@ import { TweetMode } from '../../Settings/TweetinviSettings';
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-retweets-id
 export interface IGetRetweetsParameters extends ICustomRequestParameters, ITweetModeParameter {
   // The identifier of the tweet you want to retrieve
-  Tweet: ITweetIdentifier;
+  tweet: ITweetIdentifier;
 
   // Tweets author object will not be populated when set to true
-  TrimUser?: boolean;
+  trimUser?: boolean;
 
   // Specifies the number of records to retrieve.
-  PageSize: number;
+  pageSize: number;
 }
 
 export class GetRetweetsParameters extends CustomRequestParameters implements IGetRetweetsParameters {
   constructor(tweetIdOrTweet: | number | ITweetIdentifier) {
     super();
-    this.PageSize = TwitterLimits.DEFAULTS.TWEETS_GET_RETWEETS_MAX_SIZE;
+    this.pageSize = TwitterLimits.DEFAULTS.TWEETS_GET_RETWEETS_MAX_SIZE;
 
     let tweetCurrent: ITweetIdentifier;
     if (tweetIdOrTweet instanceof TweetIdentifier) {
@@ -29,13 +29,13 @@ export class GetRetweetsParameters extends CustomRequestParameters implements IG
       tweetCurrent = new TweetIdentifier(tweetIdOrTweet);
     }
 
-    this.Tweet = tweetCurrent;
+    this.tweet = tweetCurrent;
   }
 
-  public Tweet: ITweetIdentifier;
-  public TrimUser?: boolean;
-  public PageSize: number;
-  public TweetMode?: TweetMode;
+  public tweet: ITweetIdentifier;
+  public trimUser?: boolean;
+  public pageSize: number;
+  public tweetMode?: TweetMode;
 }
 
 

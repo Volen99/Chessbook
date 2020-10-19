@@ -32,11 +32,11 @@ export class TimelinesClient implements ITimelinesClient {
 
   constructor(client: ITwitterClient) {
     this._client = client;
-    this._timelinesRequester = this._client.Raw.timelines;
+    this._timelinesRequester = this._client.raw.timelines;
   }
 
   get parametersValidator(): ITimelineClientParametersValidator {
-    return this._client.ParametersValidator;
+    return this._client.parametersValidator;
   }
 
   public async getHomeTimelineAsync(parameters?: IGetHomeTimelineParameters): Promise<ITweet[]> {
@@ -61,7 +61,7 @@ export class TimelinesClient implements ITimelinesClient {
 
     let pageIterator = this._timelinesRequester.getHomeTimelineIterator(parametersCurrent);
     return new TwitterIteratorProxy<ITwitterResult<ITweetDTO[]>, ITweet, number>(pageIterator, twitterResult =>
-      this._client.Factories.createTweets(twitterResult?.model));
+      this._client.factories.createTweets(twitterResult?.model));
   }
 
   public async getUserTimelineAsync(userIdOrUsernameOrUserIdentifierOrParameters: number | string | IUserIdentifier | IGetUserTimelineParameters): Promise<ITweet[]> {
@@ -89,7 +89,7 @@ export class TimelinesClient implements ITimelinesClient {
     let pageIterator = this._timelinesRequester.getUserTimelineIterator(parameters);
 
     return new TwitterIteratorProxy<ITwitterResult<ITweetDTO[]>, ITweet, number>(pageIterator, twitterResult =>
-      this._client.Factories.createTweets(twitterResult?.model));
+      this._client.factories.createTweets(twitterResult?.model));
   }
 
   public async getMentionsTimelineAsync(parameters?: IGetMentionsTimelineParameters): Promise<ITweet[]> {
@@ -114,7 +114,7 @@ export class TimelinesClient implements ITimelinesClient {
 
     let pageIterator = this._timelinesRequester.getMentionsTimelineIterator(parametersCurrent);
     return new TwitterIteratorProxy<ITwitterResult<ITweetDTO[]>, ITweet, number>(pageIterator, twitterResult =>
-      this._client.Factories.createTweets(twitterResult?.model));
+      this._client.factories.createTweets(twitterResult?.model));
   }
 
   public async getRetweetsOfMeTimelineAsync(parameters?: IGetRetweetsOfMeTimelineParameters): Promise<ITweet[]> {
@@ -141,7 +141,7 @@ export class TimelinesClient implements ITimelinesClient {
     let pageIterator = this._timelinesRequester.getRetweetsOfMeTimelineIterator(parametersCurrent);
 
     return new TwitterIteratorProxy<ITwitterResult<ITweetDTO[]>, ITweet, number>(pageIterator,  // long?
-      twitterResult => this._client.Factories.createTweets(twitterResult?.model));
+      twitterResult => this._client.factories.createTweets(twitterResult?.model));
   }
 
   private isIUserIdentifier(userIdOrUsernameOrUserIdentifierOrParameters: any): userIdOrUsernameOrUserIdentifierOrParameters is IUserIdentifier {
@@ -149,6 +149,6 @@ export class TimelinesClient implements ITimelinesClient {
   }
 
   private isIGetUserTimelineParameters(userIdOrUsernameOrUserIdentifierOrParameters: any): userIdOrUsernameOrUserIdentifierOrParameters is IGetUserTimelineParameters {
-    return (userIdOrUsernameOrUserIdentifierOrParameters as IGetUserTimelineParameters).ExcludeReplies !== undefined;
+    return (userIdOrUsernameOrUserIdentifierOrParameters as IGetUserTimelineParameters).excludeReplies !== undefined;
   }
 }

@@ -33,7 +33,7 @@ export class HelpRequester extends BaseRequester implements IHelpRequester {
 
     return super.ExecuteRequestAsync(request => {
       if (parameters.trackerMode != null) {
-        request.executionContext.RateLimitTrackerMode = parameters.trackerMode.Value;
+        request.executionContext.rateLimitTrackerMode = parameters.trackerMode.Value;
       }
 
       return this._helpController.getRateLimitsAsync(parameters, request);

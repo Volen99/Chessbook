@@ -1,298 +1,297 @@
 ﻿import {ITwitterResult, TwitterResult} from "../../core/Core/Web/TwitterResult";
-import Task from 'src/app/c#-objects/TypeScript.NET-Core/packages/Threading/source/Tasks/Task';
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
 import {Stream} from "stream";
-import { ITwitterAccessor } from 'src/app/core/Core/Web/ITwitterAccessor';
+import {ITwitterAccessor} from 'src/app/core/Core/Web/ITwitterAccessor';
 import {IUserQueryGenerator} from "../../core/Core/QueryGenerators/IUserQueryGenerator";
-import { HttpMethod } from 'src/app/core/Public/Models/Enum/HttpMethod';
-
+import {HttpMethod} from 'src/app/core/Public/Models/Enum/HttpMethod';
+import {IGetAuthenticatedUserParameters} from "../../core/Public/Parameters/AccountClient/GetAuthenticatedUserParameters";
+import {IGetUserParameters} from "../../core/Public/Parameters/UsersClient/GetUserParameters";
+import {IGetUsersParameters} from "../../core/Public/Parameters/UsersClient/GetUsersParameters";
+import {IGetFriendIdsParameters} from "../../core/Public/Parameters/UsersClient/GetFriendIdsParameters";
+import {IGetFollowerIdsParameters} from "../../core/Public/Parameters/UsersClient/GetFollowerIdsParameters";
+import {IBlockUserParameters} from "../../core/Public/Parameters/AccountClient/BlockUserParameters";
+import {IUnblockUserParameters} from "../../core/Public/Parameters/AccountClient/UnblockUserParameters";
+import {IReportUserForSpamParameters} from "../../core/Public/Parameters/AccountClient/ReportUserForSpamParameters";
+import {IGetBlockedUserIdsParameters} from "../../core/Public/Parameters/AccountClient/GetBlockedUserIdsParameter";
+import {IGetBlockedUsersParameters} from "../../core/Public/Parameters/AccountClient/GetBlockedUsersParameter";
+import {IFollowUserParameters} from "../../core/Public/Parameters/AccountClient/FollowUserParameters";
+import {IUnfollowUserParameters} from "../../core/Public/Parameters/AccountClient/UnfollowUserParameters";
+import {IGetUserIdsRequestingFriendshipParameters} from "../../core/Public/Parameters/AccountClient/GetUserIdsRequestingFriendshipParameters";
+import {IGetUserIdsYouRequestedToFollowParameters} from "../../core/Public/Parameters/AccountClient/GetUserIdsYouRequestedToFollowParameters";
+import {IGetRelationshipBetweenParameters} from "../../core/Public/Parameters/UsersClient/GetRelationshipBetweenParameters";
+import {IGetRelationshipsWithParameters} from "../../core/Public/Parameters/AccountClient/GetRelationshipsWithParameters";
+import {IGetMutedUserIdsParameters} from "../../core/Public/Parameters/AccountClient/GetMutedUserIdsParameters";
+import {IGetMutedUsersParameters} from "../../core/Public/Parameters/AccountClient/GetMutedUsersParameters";
+import {IMuteUserParameters} from "../../core/Public/Parameters/AccountClient/MuteUserParameters";
+import {IUnmuteUserParameters} from "../../core/Public/Parameters/AccountClient/UnMuteUserParameters";
+import {IUpdateRelationshipParameters} from "../../core/Public/Parameters/AccountClient/UpdateRelationshipParameters";
+import {IGetUserIdsWhoseRetweetsAreMutedParameters} from "../../core/Public/Parameters/AccountClient/GetUserIdsWhoseRetweetsAreMutedParameters";
+import {IGetProfileImageParameters} from "../../core/Public/Parameters/UsersClient/GetProfileImageParameters";
+import {IUserDTO} from "../../core/Public/Models/Interfaces/DTO/IUserDTO";
+import {IRelationshipDetailsDTO} from "../../core/Public/Models/Interfaces/DTO/IRelationshipDetailsDTO";
+import {IUserCursorQueryResultDTO} from "../../core/Public/Models/Interfaces/DTO/QueryDTO/IUserCursorQueryResultDTO";
+import {IIdsCursorQueryResultDTO} from "../../core/Public/Models/Interfaces/DTO/QueryDTO/IIdsCursorQueryResultDTO";
+import {IRelationshipStateDTO} from "../../core/Public/Models/Interfaces/DTO/IRelationshipStateDTO";
+import {IWebHelper} from "../../core/Core/Helpers/IWebHelper";
 
 export interface IUserQueryExecutor {
-  GetAuthenticatedUserAsync(parameters: IGetAuthenticatedUserParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>;
+  getAuthenticatedUserAsync(parameters: IGetAuthenticatedUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
 
   // USERS
-  GetUserAsync(parameters: IGetUserParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>;
+  getUserAsync(parameters: IGetUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
 
-  GetUsersAsync(parameters: IGetUsersParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO[]>>;
+  getUsersAsync(parameters: IGetUsersParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO[]>>;
 
   // FRIENDS
-  GetFriendIdsAsync(parameters: IGetFriendIdsParameters, request: ITwitterRequest): Task<ITwitterResult<IIdsCursorQueryResultDTO>>;
+  getFriendIdsAsync(parameters: IGetFriendIdsParameters, request: ITwitterRequest): Promise<ITwitterResult<IIdsCursorQueryResultDTO>>;
 
-  GetFollowerIdsAsync(parameters: IGetFollowerIdsParameters, request: ITwitterRequest): Task<ITwitterResult<IIdsCursorQueryResultDTO>>;
+  getFollowerIdsAsync(parameters: IGetFollowerIdsParameters, request: ITwitterRequest): Promise<ITwitterResult<IIdsCursorQueryResultDTO>>;
 
   // BLOCK
-  BlockUserAsync(parameters: IBlockUserParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>;
+  blockUserAsync(parameters: IBlockUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
 
-  UnblockUserAsync(parameters: IUnblockUserParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>;
+  unblockUserAsync(parameters: IUnblockUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
 
-  ReportUserForSpamAsync(parameters: IReportUserForSpamParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>;
+  reportUserForSpamAsync(parameters: IReportUserForSpamParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
 
-  GetBlockedUserIdsAsync(parameters: IGetBlockedUserIdsParameters, request: ITwitterRequest): Task<ITwitterResult<IIdsCursorQueryResultDTO>>;
+  getBlockedUserIdsAsync(parameters: IGetBlockedUserIdsParameters, request: ITwitterRequest): Promise<ITwitterResult<IIdsCursorQueryResultDTO>>;
 
-  GetBlockedUsersAsync(parameters: IGetBlockedUsersParameters, request: ITwitterRequest): Task<ITwitterResult<IUserCursorQueryResultDTO>>;
+  getBlockedUsersAsync(parameters: IGetBlockedUsersParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserCursorQueryResultDTO>>;
 
   // FOLLOWERS
-  FollowUserAsync(parameters: IFollowUserParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>;
+  followUserAsync(parameters: IFollowUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
 
-  UnfollowUserAsync(parameters: IUnfollowUserParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>;
+  unfollowUserAsync(parameters: IUnfollowUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
 
   // ONGOING REQUESTS
-  GetUserIdsRequestingFriendshipAsync(parameters: IGetUserIdsRequestingFriendshipParameters, request: ITwitterRequest): Task<ITwitterResult<IIdsCursorQueryResultDTO>>;
+  getUserIdsRequestingFriendshipAsync(parameters: IGetUserIdsRequestingFriendshipParameters, request: ITwitterRequest): Promise<ITwitterResult<IIdsCursorQueryResultDTO>>;
 
-  GetUserIdsYouRequestedToFollowAsync(parameters: IGetUserIdsYouRequestedToFollowParameters, request: ITwitterRequest): Task<ITwitterResult<IIdsCursorQueryResultDTO>>;
+  getUserIdsYouRequestedToFollowAsync(parameters: IGetUserIdsYouRequestedToFollowParameters, request: ITwitterRequest): Promise<ITwitterResult<IIdsCursorQueryResultDTO>>;
 
   // FRIENDSHIPS
-  GetRelationshipBetweenAsync(parameters: IGetRelationshipBetweenParameters, request: ITwitterRequest): Task<ITwitterResult<IRelationshipDetailsDTO>>;
+  getRelationshipBetweenAsync(parameters: IGetRelationshipBetweenParameters, request: ITwitterRequest): Promise<ITwitterResult<IRelationshipDetailsDTO>>;
 
-  GetRelationshipsWithAsync(parameters: IGetRelationshipsWithParameters, request: ITwitterRequest): Task<ITwitterResult<IRelationshipStateDTO[]>>;
+  getRelationshipsWithAsync(parameters: IGetRelationshipsWithParameters, request: ITwitterRequest): Promise<ITwitterResult<IRelationshipStateDTO[]>>;
 
   // MUTE
-  GetMutedUserIdsAsync(parameters: IGetMutedUserIdsParameters, request: ITwitterRequest): Task<ITwitterResult<IIdsCursorQueryResultDTO>>;
+  getMutedUserIdsAsync(parameters: IGetMutedUserIdsParameters, request: ITwitterRequest): Promise<ITwitterResult<IIdsCursorQueryResultDTO>>;
 
-  GetMutedUsersAsync(cursoredParameters: IGetMutedUsersParameters, request: ITwitterRequest): Task<ITwitterResult<IUserCursorQueryResultDTO>>;
+  getMutedUsersAsync(cursoredParameters: IGetMutedUsersParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserCursorQueryResultDTO>>;
 
-  MuteUserAsync(parameters: IMuteUserParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>;
+  muteUserAsync(parameters: IMuteUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
 
-  UnmuteUserAsync(parameters: IUnmuteUserParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>;
+  unmuteUserAsync(parameters: IUnmuteUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
 
-  UpdateRelationshipAsync(parameters: IUpdateRelationshipParameters, request: ITwitterRequest): Task<ITwitterResult<IRelationshipDetailsDTO>>;
+  updateRelationshipAsync(parameters: IUpdateRelationshipParameters, request: ITwitterRequest): Promise<ITwitterResult<IRelationshipDetailsDTO>>;
 
-  GetUserIdsWhoseRetweetsAreMutedAsync(parameters: IGetUserIdsWhoseRetweetsAreMutedParameters, request: ITwitterRequest): Task<ITwitterResult<number[]>>;
+  getUserIdsWhoseRetweetsAreMutedAsync(parameters: IGetUserIdsWhoseRetweetsAreMutedParameters, request: ITwitterRequest): Promise<ITwitterResult<number[]>>;
 
-  GetProfileImageStreamAsync(parameters: IGetProfileImageParameters, request: ITwitterRequest): Task<Stream>;
+  getProfileImageStreamAsync(parameters: IGetProfileImageParameters, request: ITwitterRequest): Promise<Stream>;
 }
 
-    export class UserQueryExecutor implements IUserQueryExecutor
-    {
-        private readonly _userQueryGenerator: IUserQueryGenerator;
-        private readonly _twitterAccessor: ITwitterAccessor;
-        private readonly _webHelper: IWebHelper;
+export class UserQueryExecutor implements IUserQueryExecutor {
+  private readonly _userQueryGenerator: IUserQueryGenerator;
+  private readonly _twitterAccessor: ITwitterAccessor;
+  private readonly _webHelper: IWebHelper;
 
-        constructor(userQueryGenerator: IUserQueryGenerator, twitterAccessor: ITwitterAccessor, webHelper: IWebHelper)
-        {
-            this._userQueryGenerator = userQueryGenerator;
-            this._twitterAccessor = twitterAccessor;
-            this._webHelper = webHelper;
-        }
+  constructor(userQueryGenerator: IUserQueryGenerator, twitterAccessor: ITwitterAccessor, webHelper: IWebHelper) {
+    this._userQueryGenerator = userQueryGenerator;
+    this._twitterAccessor = twitterAccessor;
+    this._webHelper = webHelper;
+  }
 
-        public  GetAuthenticatedUserAsync(parameters: IGetAuthenticatedUserParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>
-        {
-            let query = this._userQueryGenerator.getAuthenticatedUserQuery(parameters);
+  public getAuthenticatedUserAsync(parameters: IGetAuthenticatedUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
+    let query = this._userQueryGenerator.getAuthenticatedUserQuery(parameters);
 
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.GET;
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.GET;
 
-            return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
-        }
+    return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
+  }
 
-        public GetUserAsync(parameters: IGetUserParameters, request: ITwitterRequest):  Task<ITwitterResult<IUserDTO>>
-{
-            let query = this._userQueryGenerator.getUserQuery(parameters);
+  public getUserAsync(parameters: IGetUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
+    let query = this._userQueryGenerator.getUserQuery(parameters);
 
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.GET;
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.GET;
 
-            return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
-        }
+    return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
+  }
 
-        public GetUsersAsync(parameters: IGetUsersParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO[]>>
-{
-            if (parameters.Users.Length === 0)
-            {
-                ITwitterResult<IUserDTO[]> result = new TwitterResult<IUserDTO[]>(null)
-                {
-                    Request = null,
-                    Response = null,
-                    Model = new IUserDTO[0]
-                };
+  public getUsersAsync(parameters: IGetUsersParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO[]>> {
+    if (parameters.Users.length === 0) {
+      let result: ITwitterResult<IUserDTO[]> = new TwitterResult<IUserDTO[]>(null);
+      result.request = null;
+      result.response = null;
+      result.model = Array<IUserDTO>(0); // new IUserDTO[0];
 
-                return Task.FromResult(result);
-            }
-
-            let query = this._userQueryGenerator.getUsersQuery(parameters);
-
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.GET;
-
-            return this._twitterAccessor.executeRequestAsync<IUserDTO[]>(request);
-        }
-
-        public GetFollowerIdsAsync(parameters: IGetFollowerIdsParameters, request: ITwitterRequest): Task<ITwitterResult<IIdsCursorQueryResultDTO>>
-{
-            let query = this._userQueryGenerator.getFollowerIdsQuery(parameters);
-
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.GET;
-
-            return this._twitterAccessor.executeRequestAsync<IIdsCursorQueryResultDTO>(request);
-        }
-
-        public GetFriendIdsAsync(parameters: IGetFriendIdsParameters, request: ITwitterRequest):  Task<ITwitterResult<IIdsCursorQueryResultDTO>>
-{
-            let query = this._userQueryGenerator.getFriendIdsQuery(parameters);
-
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.GET;
-
-            return this._twitterAccessor.executeRequestAsync<IIdsCursorQueryResultDTO>(request);
-        }
-
-        public GetRelationshipBetweenAsync(parameters: IGetRelationshipBetweenParameters, request: ITwitterRequest):  Task<ITwitterResult<IRelationshipDetailsDTO>>
-        {
-            let query = this._userQueryGenerator.getRelationshipBetweenQuery(parameters);
-
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.GET;
-
-            return this._twitterAccessor.executeRequestAsync<IRelationshipDetailsDTO>(request);
-        }
-
-        // Stream Profile Image
-        public  GetProfileImageStreamAsync(parameters: IGetProfileImageParameters, request: ITwitterRequest): Task<Stream>
-        {
-            let url = this._userQueryGenerator.downloadProfileImageURL(parameters);
-
-            request.query.url = url;
-            request.query.httpMethod = HttpMethod.GET;
-
-            return this._webHelper.getResponseStreamAsync(request);
-        }
-
-        // BLOCK
-        public BlockUserAsync(parameters: IBlockUserParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>
-{
-            let query = this._userQueryGenerator.getBlockUserQuery(parameters);
-
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.POST;
-
-            return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
-        }
-
-        public UnblockUserAsync(parameters: IUnblockUserParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>
-{
-            let query = this._userQueryGenerator.getUnblockUserQuery(parameters);
-
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.POST;
-
-            return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
-        }
-
-        public  ReportUserForSpamAsync(parameters: IReportUserForSpamParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>
-        {
-            let query = this._userQueryGenerator.getReportUserForSpamQuery(parameters);
-
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.POST;
-
-            return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
-        }
-
-        public  GetBlockedUserIdsAsync(parameters: IGetBlockedUserIdsParameters, request: ITwitterRequest): Task<ITwitterResult<IIdsCursorQueryResultDTO>>
-        {
-            let query = this._userQueryGenerator.getBlockedUserIdsQuery(parameters);
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.GET;
-            return this._twitterAccessor.executeRequestAsync<IIdsCursorQueryResultDTO>(request);
-        }
-
-        public  GetBlockedUsersAsync(parameters: IGetBlockedUsersParameters, request: ITwitterRequest): Task<ITwitterResult<IUserCursorQueryResultDTO>>
-        {
-            let query = this._userQueryGenerator.getBlockedUsersQuery(parameters);
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.GET;
-            return this._twitterAccessor.executeRequestAsync<IUserCursorQueryResultDTO>(request);
-        }
-
-        // FOLLOWERS
-        public  FollowUserAsync(parameters: IFollowUserParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>
-        {
-            let query = this._userQueryGenerator.getFollowUserQuery(parameters);
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.POST;
-            return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
-        }
-
-        public  UpdateRelationshipAsync(parameters: IUpdateRelationshipParameters, request: ITwitterRequest): Task<ITwitterResult<IRelationshipDetailsDTO>>
-        {
-            let query = this._userQueryGenerator.getUpdateRelationshipQuery(parameters);
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.POST;
-            return this._twitterAccessor.executeRequestAsync<IRelationshipDetailsDTO>(request);
-        }
-
-        public UnfollowUserAsync(parameters: IUnfollowUserParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>
-{
-            let query = this._userQueryGenerator.getUnfollowUserQuery(parameters);
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.POST;
-            return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
-        }
-
-        public  GetUserIdsRequestingFriendshipAsync(parameters: IGetUserIdsRequestingFriendshipParameters, request: ITwitterRequest): Task<ITwitterResult<IIdsCursorQueryResultDTO>>
-        {
-            let query = this._userQueryGenerator.getUserIdsRequestingFriendshipQuery(parameters);
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.GET;
-            return this._twitterAccessor.executeRequestAsync<IIdsCursorQueryResultDTO>(request);
-        }
-
-        public  GetUserIdsYouRequestedToFollowAsync(parameters: IGetUserIdsYouRequestedToFollowParameters, request: ITwitterRequest): Task<ITwitterResult<IIdsCursorQueryResultDTO>>
-        {
-            let query = this._userQueryGenerator.getUserIdsYouRequestedToFollowQuery(parameters);
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.GET;
-            return this._twitterAccessor.executeRequestAsync<IIdsCursorQueryResultDTO>(request);
-        }
-
-        // FRIENDSHIPS
-        public  GetRelationshipsWithAsync(parameters: IGetRelationshipsWithParameters, request: ITwitterRequest): Task<ITwitterResult<IRelationshipStateDTO[]>>
-        {
-            let query = this._userQueryGenerator.getRelationshipsWithQuery(parameters);
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.GET;
-            return this._twitterAccessor.executeRequestAsync<IRelationshipStateDTO[]>(request);
-        }
-
-        // MUTE
-        public GetUserIdsWhoseRetweetsAreMutedAsync(parameters: IGetUserIdsWhoseRetweetsAreMutedParameters, request: ITwitterRequest): Task<ITwitterResult<number[]>>
-{
-            let query = this._userQueryGenerator.getUserIdsWhoseRetweetsAreMutedQuery(parameters);
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.GET;
-            return this._twitterAccessor.executeRequestAsync<number[]>(request);
-        }
-
-        public GetMutedUserIdsAsync(parameters: IGetMutedUserIdsParameters, request: ITwitterRequest): Task<ITwitterResult<IIdsCursorQueryResultDTO>>
-{
-            let query = this._userQueryGenerator.getMutedUserIdsQuery(parameters);
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.GET;
-            return this._twitterAccessor.executeRequestAsync<IIdsCursorQueryResultDTO>(request);
-        }
-
-        public GetMutedUsersAsync(parameters: IGetMutedUsersParameters, request: ITwitterRequest): Task<ITwitterResult<IUserCursorQueryResultDTO>>
-{
-            let query = this._userQueryGenerator.getMutedUsersQuery(parameters);
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.GET;
-            return this._twitterAccessor.executeRequestAsync<IUserCursorQueryResultDTO>(request);
-        }
-
-        public MuteUserAsync(parameters: IMuteUserParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>
-        {
-            let query = this._userQueryGenerator.getMuteUserQuery(parameters);
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.POST;
-            return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
-        }
-
-        public  UnmuteUserAsync(parameters: IUnmuteUserParameters, request: ITwitterRequest): Task<ITwitterResult<IUserDTO>>
-        {
-            let query = this._userQueryGenerator.getUnmuteUserQuery(parameters);
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.POST;
-            return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
-        }
+      return Task.FromResult(result);
     }
+
+    let query = this._userQueryGenerator.getUsersQuery(parameters);
+
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.GET;
+
+    return this._twitterAccessor.executeRequestAsync<IUserDTO[]>(request);
+  }
+
+  public getFollowerIdsAsync(parameters: IGetFollowerIdsParameters, request: ITwitterRequest): Promise<ITwitterResult<IIdsCursorQueryResultDTO>> {
+    let query = this._userQueryGenerator.getFollowerIdsQuery(parameters);
+
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.GET;
+
+    return this._twitterAccessor.executeRequestAsync<IIdsCursorQueryResultDTO>(request);
+  }
+
+  public getFriendIdsAsync(parameters: IGetFriendIdsParameters, request: ITwitterRequest): Promise<ITwitterResult<IIdsCursorQueryResultDTO>> {
+    let query = this._userQueryGenerator.getFriendIdsQuery(parameters);
+
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.GET;
+
+    return this._twitterAccessor.executeRequestAsync<IIdsCursorQueryResultDTO>(request);
+  }
+
+  public getRelationshipBetweenAsync(parameters: IGetRelationshipBetweenParameters, request: ITwitterRequest): Promise<ITwitterResult<IRelationshipDetailsDTO>> {
+    let query = this._userQueryGenerator.getRelationshipBetweenQuery(parameters);
+
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.GET;
+
+    return this._twitterAccessor.executeRequestAsync<IRelationshipDetailsDTO>(request);
+  }
+
+  // Stream Profile Image
+  public getProfileImageStreamAsync(parameters: IGetProfileImageParameters, request: ITwitterRequest): Promise<Stream> {
+    let url = this._userQueryGenerator.downloadProfileImageURL(parameters);
+
+    request.query.url = url;
+    request.query.httpMethod = HttpMethod.GET;
+
+    return this._webHelper.getResponseStreamAsync(request);
+  }
+
+  // BLOCK
+  public blockUserAsync(parameters: IBlockUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
+    let query = this._userQueryGenerator.getBlockUserQuery(parameters);
+
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.POST;
+
+    return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
+  }
+
+  public unblockUserAsync(parameters: IUnblockUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
+    let query = this._userQueryGenerator.getUnblockUserQuery(parameters);
+
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.POST;
+
+    return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
+  }
+
+  public reportUserForSpamAsync(parameters: IReportUserForSpamParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
+    let query = this._userQueryGenerator.getReportUserForSpamQuery(parameters);
+
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.POST;
+
+    return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
+  }
+
+  public getBlockedUserIdsAsync(parameters: IGetBlockedUserIdsParameters, request: ITwitterRequest): Promise<ITwitterResult<IIdsCursorQueryResultDTO>> {
+    let query = this._userQueryGenerator.getBlockedUserIdsQuery(parameters);
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.GET;
+    return this._twitterAccessor.executeRequestAsync<IIdsCursorQueryResultDTO>(request);
+  }
+
+  public getBlockedUsersAsync(parameters: IGetBlockedUsersParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserCursorQueryResultDTO>> {
+    let query = this._userQueryGenerator.getBlockedUsersQuery(parameters);
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.GET;
+    return this._twitterAccessor.executeRequestAsync<IUserCursorQueryResultDTO>(request);
+  }
+
+  // FOLLOWERS
+  public followUserAsync(parameters: IFollowUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
+    let query = this._userQueryGenerator.getFollowUserQuery(parameters);
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.POST;
+    return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
+  }
+
+  public updateRelationshipAsync(parameters: IUpdateRelationshipParameters, request: ITwitterRequest): Promise<ITwitterResult<IRelationshipDetailsDTO>> {
+    let query = this._userQueryGenerator.getUpdateRelationshipQuery(parameters);
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.POST;
+    return this._twitterAccessor.executeRequestAsync<IRelationshipDetailsDTO>(request);
+  }
+
+  public unfollowUserAsync(parameters: IUnfollowUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
+    let query = this._userQueryGenerator.getUnfollowUserQuery(parameters);
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.POST;
+    return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
+  }
+
+  public getUserIdsRequestingFriendshipAsync(parameters: IGetUserIdsRequestingFriendshipParameters, request: ITwitterRequest): Promise<ITwitterResult<IIdsCursorQueryResultDTO>> {
+    let query = this._userQueryGenerator.getUserIdsRequestingFriendshipQuery(parameters);
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.GET;
+    return this._twitterAccessor.executeRequestAsync<IIdsCursorQueryResultDTO>(request);
+  }
+
+  public getUserIdsYouRequestedToFollowAsync(parameters: IGetUserIdsYouRequestedToFollowParameters, request: ITwitterRequest): Promise<ITwitterResult<IIdsCursorQueryResultDTO>> {
+    let query = this._userQueryGenerator.getUserIdsYouRequestedToFollowQuery(parameters);
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.GET;
+    return this._twitterAccessor.executeRequestAsync<IIdsCursorQueryResultDTO>(request);
+  }
+
+  // FRIENDSHIPS
+  public getRelationshipsWithAsync(parameters: IGetRelationshipsWithParameters, request: ITwitterRequest): Promise<ITwitterResult<IRelationshipStateDTO[]>> {
+    let query = this._userQueryGenerator.getRelationshipsWithQuery(parameters);
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.GET;
+    return this._twitterAccessor.executeRequestAsync<IRelationshipStateDTO[]>(request);
+  }
+
+  // MUTE
+  public getUserIdsWhoseRetweetsAreMutedAsync(parameters: IGetUserIdsWhoseRetweetsAreMutedParameters, request: ITwitterRequest): Promise<ITwitterResult<number[]>> {
+    let query = this._userQueryGenerator.getUserIdsWhoseRetweetsAreMutedQuery(parameters);
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.GET;
+    return this._twitterAccessor.executeRequestAsync<number[]>(request);
+  }
+
+  public getMutedUserIdsAsync(parameters: IGetMutedUserIdsParameters, request: ITwitterRequest): Promise<ITwitterResult<IIdsCursorQueryResultDTO>> {
+    let query = this._userQueryGenerator.getMutedUserIdsQuery(parameters);
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.GET;
+    return this._twitterAccessor.executeRequestAsync<IIdsCursorQueryResultDTO>(request);
+  }
+
+  public getMutedUsersAsync(parameters: IGetMutedUsersParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserCursorQueryResultDTO>> {
+    let query = this._userQueryGenerator.getMutedUsersQuery(parameters);
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.GET;
+    return this._twitterAccessor.executeRequestAsync<IUserCursorQueryResultDTO>(request);
+  }
+
+  public muteUserAsync(parameters: IMuteUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
+    let query = this._userQueryGenerator.getMuteUserQuery(parameters);
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.POST;
+    return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
+  }
+
+  public unmuteUserAsync(parameters: IUnmuteUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
+    let query = this._userQueryGenerator.getUnmuteUserQuery(parameters);
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.POST;
+    return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
+  }
+}

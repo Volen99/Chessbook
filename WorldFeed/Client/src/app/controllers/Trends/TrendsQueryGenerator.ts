@@ -1,41 +1,43 @@
 ﻿import {Resources} from "../../properties/resources";
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {GetTrendsExclude, IGetTrendsAtParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsAtParameters";
+import {IGetTrendsLocationParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsLocationParameters";
+import {IGetTrendsLocationCloseToParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsLocationCloseToParameters";
 
 export interface ITrendsQueryGenerator {
-  GetTrendsAtQuery(parameters: IGetTrendsAtParameters): string;
+  getTrendsAtQuery(parameters: IGetTrendsAtParameters): string;
 
-  GetTrendsLocationQuery(parameters: IGetTrendsLocationParameters): string;
+  getTrendsLocationQuery(parameters: IGetTrendsLocationParameters): string;
 
-  GetTrendsLocationCloseToQuery(parameters: IGetTrendsLocationCloseToParameters): string;
+  getTrendsLocationCloseToQuery(parameters: IGetTrendsLocationCloseToParameters): string;
 }
 
 export class TrendsQueryGenerator implements ITrendsQueryGenerator {
-  public GetTrendsAtQuery(parameters: IGetTrendsAtParameters): string {
-    var query = new StringBuilder(Resources.Trends_GetTrendsFromWoeId);
-    query.addParameterToQuery("id", parameters.Woeid);
+  public getTrendsAtQuery(parameters: IGetTrendsAtParameters): string {
+    let query = new StringBuilder(Resources.Trends_GetTrendsFromWoeId);
+    query.addParameterToQuery("id", parameters.woeid);
 
-    if (parameters.Exclude != null && parameters.Exclude !== GetTrendsExclude.Nothing) {
-      query.addParameterToQuery("exclude", parameters.Exclude.ToString().ToLowerInvariant());
+    if (parameters.exclude != null && parameters.exclude !== GetTrendsExclude.Nothing) {
+      query.addParameterToQuery("exclude", parameters.exclude.toString().toLocaleLowerCase());
     }
 
-    query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
-  public GetTrendsLocationQuery(parameters: IGetTrendsLocationParameters): string {
+  public getTrendsLocationQuery(parameters: IGetTrendsLocationParameters): string {
     let query = new StringBuilder(Resources.Trends_GetAvailableTrendsLocations);
-    query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
-  public GetTrendsLocationCloseToQuery(parameters: IGetTrendsLocationCloseToParameters): string {
-    let coordinates = parameters.Coordinates;
+  public getTrendsLocationCloseToQuery(parameters: IGetTrendsLocationCloseToParameters): string {
+    let coordinates = parameters.coordinates;
     let query = new StringBuilder(Resources.Trends_GetTrendsLocationCloseTo);
 
     query.addParameterToQuery("lat", coordinates.latitude);
     query.addParameterToQuery("long", coordinates.longitude);
-    query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }

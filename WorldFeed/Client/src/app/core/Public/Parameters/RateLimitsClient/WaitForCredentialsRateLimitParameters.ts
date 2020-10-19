@@ -3,19 +3,19 @@ import {RateLimitsSource} from "../HelpClient/GetRateLimitsParameters";
 import {IReadOnlyTwitterCredentials} from "../../../Core/Models/Authentication/ReadOnlyTwitterCredentials";
 
 export interface IWaitForCredentialsRateLimitParameters {
-  Url: string;
-  Credentials: IReadOnlyTwitterCredentials;
-  ExecutionContext: ITwitterExecutionContext;
-  From: RateLimitsSource;
+  url: string;
+  credentials: IReadOnlyTwitterCredentials;
+  executionContext: ITwitterExecutionContext;
+  from: RateLimitsSource;
 }
 
 export class WaitForCredentialsRateLimitParameters implements IWaitForCredentialsRateLimitParameters {
   constructor(url: string) {
-    this.Url = url;
+    this.url = url;
   }
 
-  public Url: string;
-  public Credentials: IReadOnlyTwitterCredentials;
-  public ExecutionContext: ITwitterExecutionContext;
-  public From: RateLimitsSource;
+  public url: string;
+  public credentials: IReadOnlyTwitterCredentials;
+  public executionContext: ITwitterExecutionContext;
+  public from: RateLimitsSource;
 }

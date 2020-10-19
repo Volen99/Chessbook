@@ -50,7 +50,7 @@ export class UsersRequester extends BaseRequester implements IUsersRequester {
   public getAuthenticatedUserAsync(parameters: IGetAuthenticatedUserParameters): Promise<ITwitterResult<IUserDTO>> {
     this._validator.validate(parameters);
 
-    let request = super.TwitterClient.CreateRequest();
+    let request = super.TwitterClient.createRequest();
     return super.ExecuteRequestAsync(() => this._userController.getAuthenticatedUserAsync(parameters, request), request);
   }
 
@@ -67,16 +67,16 @@ export class UsersRequester extends BaseRequester implements IUsersRequester {
   public getFriendIdsIterator(parameters: IGetFriendIdsParameters): ITwitterPageIterator<ITwitterResult<IIdsCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._userController.getFriendIdsIterator(parameters, request);
   }
 
   public getFollowerIdsIterator(parameters: IGetFollowerIdsParameters): ITwitterPageIterator<ITwitterResult<IIdsCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._userController.getFollowerIdsIterator(parameters, request);
   }
 
@@ -104,16 +104,16 @@ export class UsersRequester extends BaseRequester implements IUsersRequester {
   public getUserIdsRequestingFriendshipIterator(parameters: IGetUserIdsRequestingFriendshipParameters): ITwitterPageIterator<ITwitterResult<IIdsCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._userController.getUserIdsRequestingFriendshipIterator(parameters, request);
   }
 
   public getUserIdsYouRequestedToFollowIterator(parameters: IGetUserIdsYouRequestedToFollowParameters): ITwitterPageIterator<ITwitterResult<IIdsCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._userController.getUserIdsYouRequestedToFollowIterator(parameters, request);
   }
 
@@ -136,16 +136,16 @@ export class UsersRequester extends BaseRequester implements IUsersRequester {
   public getBlockedUserIdsIterator(parameters: IGetBlockedUserIdsParameters): ITwitterPageIterator<ITwitterResult<IIdsCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._userController.getBlockedUserIdsIterator(parameters, request);
   }
 
   public getBlockedUsersIterator(parameters: IGetBlockedUsersParameters): ITwitterPageIterator<ITwitterResult<IUserCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._userController.getBlockedUsersIterator(parameters, request);
   }
 
@@ -164,16 +164,16 @@ export class UsersRequester extends BaseRequester implements IUsersRequester {
   public getMutedUserIdsIterator(parameters: IGetMutedUserIdsParameters): ITwitterPageIterator<ITwitterResult<IIdsCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._userController.getMutedUserIdsIterator(parameters, request);
   }
 
   public getMutedUsersIterator(parameters: IGetMutedUsersParameters): ITwitterPageIterator<ITwitterResult<IUserCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._userController.getMutedUsersIterator(parameters, request);
   }
 

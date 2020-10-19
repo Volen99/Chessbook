@@ -30,11 +30,11 @@ export class AccountSettingsClient implements IAccountSettingsClient {
 
   constructor(client: ITwitterClient) {
     this._client = client;
-    this._accountRequester = client.Raw.accountSettings;
+    this._accountRequester = client.raw.accountSettings;
   }
 
   get parametersValidator(): IAccountSettingsClientParametersValidator {
-    return this._client.ParametersValidator;
+    return this._client.parametersValidator;
   }
 
   public async getAccountSettingsAsync(parameters: IGetAccountSettingsParameters): Promise<IAccountSettings> {
@@ -46,17 +46,17 @@ export class AccountSettingsClient implements IAccountSettingsClient {
     }
 
     let twitterResult = await this._accountRequester.getAccountSettingsAsync(parametersCurrent); // .ConfigureAwait(false);
-    return this._client.Factories.createAccountSettings(twitterResult?.model);
+    return this._client.factories.createAccountSettings(twitterResult?.model);
   }
 
   public async updateAccountSettingsAsync(parameters: IUpdateAccountSettingsParameters): Promise<IAccountSettings> {
     let twitterResult = await this._accountRequester.updateAccountSettingsAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createAccountSettings(twitterResult?.model);
+    return this._client.factories.createAccountSettings(twitterResult?.model);
   }
 
   public async updateProfileAsync(parameters: IUpdateProfileParameters): Promise<IAuthenticatedUser> {
     let twitterResult = await this._accountRequester.updateProfileAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createAuthenticatedUser(twitterResult?.model);
+    return this._client.factories.createAuthenticatedUser(twitterResult?.model);
   }
 
   public async updateProfileImageAsync(binaryOrParameters: number[] | IUpdateProfileImageParameters): Promise<IUser> {
@@ -68,7 +68,7 @@ export class AccountSettingsClient implements IAccountSettingsClient {
     }
 
     let twitterResult = await this._accountRequester.updateProfileImageAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createUser(twitterResult?.model);
+    return this._client.factories.createUser(twitterResult?.model);
   }
 
   public updateProfileBannerAsync(binaryOrParameters: number[] | IUpdateProfileBannerParameters): Promise<void> {

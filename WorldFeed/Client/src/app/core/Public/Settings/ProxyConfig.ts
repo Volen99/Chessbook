@@ -2,7 +2,7 @@
 import Exception from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exception";
 
 export interface IProxyConfig extends IWebProxy {
-  Address: Uri;
+  address: Uri;
 }
 
 export class ProxyConfig implements IProxyConfig {
@@ -13,7 +13,7 @@ export class ProxyConfig implements IProxyConfig {
     if (url != null) {
       new ProxyConfig(new Uri(url), credentials);
     } else if (proxyConfig != null) {
-      this._proxyAddress = proxyConfig.Address;
+      this._proxyAddress = proxyConfig.address;
 
       let networkCredentials = proxyConfig.Credentials as NetworkCrede  ntial;
       if (networkCredentials != null) {
@@ -38,7 +38,7 @@ export class ProxyConfig implements IProxyConfig {
     this._networkCredentials = (NetworkCredential)value;
   }
 
-  get Address(): Uri {
+  get address(): Uri {
     return this._proxyAddress;
   }
 

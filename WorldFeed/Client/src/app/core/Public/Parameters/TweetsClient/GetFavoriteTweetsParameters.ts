@@ -9,10 +9,10 @@ import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/sourc
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-favorites-list
 export interface IGetUserFavoriteTweetsParameters extends IMinMaxQueryParameters, ITweetModeParameter {
   // The user from whom you want to get the favorite tweets
-  User: IUserIdentifier;
+  user: IUserIdentifier;
 
   // Include the tweet entities
-  IncludeEntities?: boolean;
+  includeEntities?: boolean;
 }
 
 export class GetUserFavoriteTweetsParameters extends MinMaxQueryParameters implements IGetUserFavoriteTweetsParameters {
@@ -20,12 +20,12 @@ export class GetUserFavoriteTweetsParameters extends MinMaxQueryParameters imple
     if (GetUserFavoriteTweetsParameters.isIGetUserFavoriteTweetsParameters(usernameOrIdOrUserOrParameters)) {
       super(usernameOrIdOrUserOrParameters);
 
-      this.User = usernameOrIdOrUserOrParameters.User;
-      this.IncludeEntities = usernameOrIdOrUserOrParameters.IncludeEntities;
+      this.user = usernameOrIdOrUserOrParameters.user;
+      this.includeEntities = usernameOrIdOrUserOrParameters.includeEntities;
     } else {
       super();
 
-      super.PageSize = TwitterLimits.DEFAULTS.TWEETS_GET_FAVORITE_TWEETS_MAX_SIZE;
+      super.pageSize = TwitterLimits.DEFAULTS.TWEETS_GET_FAVORITE_TWEETS_MAX_SIZE;
 
       let userCurrent: IUserIdentifier;
       if (Type.isString(usernameOrIdOrUserOrParameters) || Type.isNumber(usernameOrIdOrUserOrParameters)) {
@@ -34,17 +34,17 @@ export class GetUserFavoriteTweetsParameters extends MinMaxQueryParameters imple
         userCurrent = usernameOrIdOrUserOrParameters;
       }
 
-      this.User = userCurrent;
+      this.user = userCurrent;
     }
   }
 
-  public User: IUserIdentifier;
-  public IncludeEntities?: boolean;
-  public TweetMode?: TweetMode;
+  public user: IUserIdentifier;
+  public includeEntities?: boolean;
+  public tweetMode?: TweetMode;
 
   private static isIGetUserFavoriteTweetsParameters(usernameOrIdOrUserOrParameters: | string | number | IUserIdentifier | IGetUserFavoriteTweetsParameters):
     usernameOrIdOrUserOrParameters is IGetUserFavoriteTweetsParameters {
-    return (usernameOrIdOrUserOrParameters as IGetUserFavoriteTweetsParameters).User !== undefined;
+    return (usernameOrIdOrUserOrParameters as IGetUserFavoriteTweetsParameters).user !== undefined;
   }
 }
 

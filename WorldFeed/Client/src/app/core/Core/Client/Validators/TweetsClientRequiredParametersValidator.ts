@@ -39,35 +39,35 @@ export class TweetsClientRequiredParametersValidator implements ITweetsClientReq
     }
 
     if (this.isParametersForThrowIfTweetBad(parameters)) {
-      this.throwIfTweetCannotBeUsed(parameters.Tweet, `${nameof(parameters.Tweet)}`);
+      this.throwIfTweetCannotBeUsed(parameters.tweet, `${nameof(parameters.tweet)}`);
     } else if (this.isIGetTweetsParameters(parameters)) {
-      if (parameters.Tweets == null) {
+      if (parameters.tweets == null) {
         throw new ArgumentNullException('ArgumentNull_Generic');
       }
 
-      if (parameters.Tweets.length === 0) {
-        throw new ArgumentException("You need at least 1 tweet id", `${nameof(parameters.Tweets)}`);
+      if (parameters.tweets.length === 0) {
+        throw new ArgumentException("You need at least 1 tweet id", `${nameof(parameters.tweets)}`);
       }
 
-      let validTweetIdentifiers = parameters.Tweets.filter(x => x?.id != null || !!x?.idStr);
+      let validTweetIdentifiers = parameters.tweets.filter(x => x?.id != null || !!x?.idStr);
 
       if (!(validTweetIdentifiers.length > 0)) {
-        throw new ArgumentException("There are no valid tweet identifiers", `${nameof(parameters.Tweets)}`);
+        throw new ArgumentException("There are no valid tweet identifiers", `${nameof(parameters.tweets)}`);
       }
     } else if (this.isIPublishTweetParameters(parameters)) {
-      if (parameters.InReplyToTweet != null) {
-        this.throwIfTweetCannotBeUsed(parameters.InReplyToTweet);
+      if (parameters.inReplyToTweet != null) {
+        this.throwIfTweetCannotBeUsed(parameters.inReplyToTweet);
       }
 
-      if (parameters.QuotedTweet != null) {
-        this.throwIfTweetCannotBeUsed(parameters.QuotedTweet);
+      if (parameters.quotedTweet != null) {
+        this.throwIfTweetCannotBeUsed(parameters.quotedTweet);
       }
 
-      if (parameters.Medias.some(x => !x.hasBeenUploaded)) {
-        throw new ArgumentException("Some media were not uploaded", `${nameof(parameters.Medias)}`);
+      if (parameters.medias.some(x => !x.hasBeenUploaded)) {
+        throw new ArgumentException("Some media were not uploaded", `${nameof(parameters.medias)}`);
       }
     } else if (this.isIGetUserFavoriteTweetsParameters(parameters)) {
-      this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.User, `${nameof(parameters.User)}`);
+      this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.user, `${nameof(parameters.user)}`);
     }
   }
 
@@ -94,14 +94,14 @@ export class TweetsClientRequiredParametersValidator implements ITweetsClientReq
   }
 
   private isIGetTweetsParameters(parameters: TweetsParameters): parameters is IGetTweetsParameters {
-    return (parameters as IGetTweetsParameters).IncludeCardUri !== undefined;
+    return (parameters as IGetTweetsParameters).includeCardUri !== undefined;
   }
 
   private isIPublishTweetParameters(parameters: TweetsParameters): parameters is IPublishTweetParameters {
-    return (parameters as IPublishTweetParameters).Medias !== undefined;
+    return (parameters as IPublishTweetParameters).medias !== undefined;
   }
 
   private isIGetUserFavoriteTweetsParameters(parameters: TweetsParameters): parameters is IGetUserFavoriteTweetsParameters {
-    return (parameters as IGetUserFavoriteTweetsParameters).IncludeEntities !== undefined;
+    return (parameters as IGetUserFavoriteTweetsParameters).includeEntities !== undefined;
   }
 }

@@ -17,38 +17,38 @@ export class SearchClientRequiredParametersValidator implements ISearchClientReq
     }
 
     if (this.isISearchUsersParameters(parameters)) {
-      if (parameters.Query == null) {
-        throw new ArgumentNullException(`${nameof(parameters.Query)}`);
+      if (parameters.query == null) {
+        throw new ArgumentNullException(`${nameof(parameters.query)}`);
       }
     } else if (this.isICreateSavedSearchParameters(parameters)) {
-      if (!(parameters.Query)) {
-        throw new ArgumentException(`${nameof(parameters.Query)}`);
+      if (!(parameters.query)) {
+        throw new ArgumentException(`${nameof(parameters.query)}`);
       }
     } else if (this.isIGetSavedSearchParameters(parameters)) {
-      if (parameters.SavedSearchId <= 0) {
-        throw new ArgumentNullException(`${nameof(parameters.SavedSearchId)}`);
+      if (parameters.savedSearchId <= 0) {
+        throw new ArgumentNullException(`${nameof(parameters.savedSearchId)}`);
       }
     } else if (this.isIDestroySavedSearchParameters(parameters)) {
-      if (parameters.SavedSearchId <= 0) {
-        throw new ArgumentNullException(`${nameof(parameters.SavedSearchId)}`);
+      if (parameters.savedSearchId <= 0) {
+        throw new ArgumentNullException(`${nameof(parameters.savedSearchId)}`);
       }
     }
   }
 
   private isISearchUsersParameters(parameters: SearchParameters): parameters is ISearchUsersParameters {
-    return (parameters as ISearchUsersParameters).Query !== undefined;
+    return (parameters as ISearchUsersParameters).query !== undefined;
   }
 
   private isICreateSavedSearchParameters(parameters: SearchParameters): parameters is ICreateSavedSearchParameters {
-    return (parameters as ICreateSavedSearchParameters).Query !== undefined;
+    return (parameters as ICreateSavedSearchParameters).query !== undefined;
   }
 
   private isIGetSavedSearchParameters(parameters: SearchParameters): parameters is IGetSavedSearchParameters {
-    return (parameters as IGetSavedSearchParameters).SavedSearchId !== undefined;
+    return (parameters as IGetSavedSearchParameters).savedSearchId !== undefined;
   }
 
   private isIDestroySavedSearchParameters(parameters: SearchParameters): parameters is IDestroySavedSearchParameters {
-    return (parameters as IDestroySavedSearchParameters).SavedSearchId !== undefined;
+    return (parameters as IDestroySavedSearchParameters).savedSearchId !== undefined;
   }
 
 }

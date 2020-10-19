@@ -52,7 +52,7 @@ export class TweetsClientParametersValidator implements ITweetsClientParametersV
   }
 
   private get Limits(): TwitterLimits {
-    return this._client.Config.Limits;
+    return this._client.config.limits;
   }
 
   public validate(parameters: TweetsParameters): void {
@@ -60,20 +60,20 @@ export class TweetsClientParametersValidator implements ITweetsClientParametersV
 
     if (this.isIGetTweetsParameters(parameters)) {
       let maxPageSize = this.Limits.TWEETS_GET_TWEETS_REQUEST_MAX_SIZE;
-      if (parameters.Tweets.length > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.Tweets)}`, maxPageSize, nameof(this.Limits.TWEETS_GET_TWEETS_REQUEST_MAX_SIZE), "items");
+      if (parameters.tweets.length > maxPageSize) {
+        throw new TwitterArgumentLimitException(`${nameof(parameters.tweets)}`, maxPageSize, nameof(this.Limits.TWEETS_GET_TWEETS_REQUEST_MAX_SIZE), "items");
       }
     } else if (this.isIGetUserFavoriteTweetsParameters(parameters)) {
       this._tweetsClientRequiredParametersValidator.validate(parameters);
 
       let maxPageSize = this.Limits.TWEETS_GET_FAVORITE_TWEETS_MAX_SIZE;
-      if (parameters.PageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.PageSize)}`, maxPageSize, nameof(this.Limits.TWEETS_GET_FAVORITE_TWEETS_MAX_SIZE), "page size");
+      if (parameters.pageSize > maxPageSize) {
+        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.TWEETS_GET_FAVORITE_TWEETS_MAX_SIZE), "page size");
       }
     } else if (this.isIGetRetweetsParameters(parameters)) {
       let maxPageSize = this.Limits.TWEETS_GET_RETWEETS_MAX_SIZE;
-      if (parameters.PageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.PageSize)}`, maxPageSize, nameof(this.Limits.TWEETS_GET_RETWEETS_MAX_SIZE), "page size");
+      if (parameters.pageSize > maxPageSize) {
+        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.TWEETS_GET_RETWEETS_MAX_SIZE), "page size");
       }
     } else if (this.isIGetRetweeterIdsParameters(parameters)) {
       let maxPageSize = this.Limits.TWEETS_GET_RETWEETER_IDS_MAX_PAGE_SIZE;
@@ -84,18 +84,18 @@ export class TweetsClientParametersValidator implements ITweetsClientParametersV
   }
 
   private isIGetTweetsParameters(parameters: TweetsParameters): parameters is IGetTweetsParameters {
-    return (parameters as IGetTweetsParameters).Tweets !== undefined;
+    return (parameters as IGetTweetsParameters).tweets !== undefined;
   }
 
   private isIGetUserFavoriteTweetsParameters(parameters: TweetsParameters): parameters is IGetUserFavoriteTweetsParameters {
-    return (parameters as IGetUserFavoriteTweetsParameters).User !== undefined;
+    return (parameters as IGetUserFavoriteTweetsParameters).user !== undefined;
   }
 
   private isIGetRetweetsParameters(parameters: TweetsParameters): parameters is IGetRetweetsParameters {
-    return (parameters as IGetRetweetsParameters).PageSize !== undefined;
+    return (parameters as IGetRetweetsParameters).pageSize !== undefined;
   }
 
   private isIGetRetweeterIdsParameters(parameters: TweetsParameters): parameters is IGetRetweeterIdsParameters {
-    return (parameters as IGetRetweeterIdsParameters).Tweet !== undefined;
+    return (parameters as IGetRetweeterIdsParameters).tweet !== undefined;
   }
 }

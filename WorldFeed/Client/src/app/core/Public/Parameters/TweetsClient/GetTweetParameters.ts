@@ -7,22 +7,22 @@ import {TweetMode} from '../../Settings/TweetinviSettings';
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-show-id
 export interface IGetTweetParameters extends ICustomRequestParameters, ITweetModeParameter {
   // The identifier of the tweet you want to retrieve
-  Tweet: ITweetIdentifier;
+  tweet: ITweetIdentifier;
 
   // Tweet's author object will not be populated when set to true
-  TrimUser?: boolean;
+  trimUser?: boolean;
 
   // Tweet's `current_user_retweet` field will be populated when set to true
-  IncludeMyRetweet?: boolean;
+  includeMyRetweet?: boolean;
 
   /// Tweet's entities will not be included if set to false
-  IncludeEntities?: boolean;
+  includeEntities?: boolean;
 
   // Tweet's alt text attached to media will be included when set to true
-  IncludeExtAltText?: boolean;
+  includeExtAltText?: boolean;
 
   // Tweet's card uri will be included when set to true
-  IncludeCardUri?: boolean;
+  includeCardUri?: boolean;
 }
 
 export class GetTweetParameters extends CustomRequestParameters implements IGetTweetParameters {
@@ -36,17 +36,17 @@ export class GetTweetParameters extends CustomRequestParameters implements IGetT
       tweetCurrent = new TweetIdentifier(tweetIdOrTweet);
     }
 
-    this.Tweet = tweetCurrent;
+    this.tweet = tweetCurrent;
   }
 
-  public Tweet: ITweetIdentifier;
+  public tweet: ITweetIdentifier;
 
-  public TrimUser?: boolean;
-  public IncludeMyRetweet?: boolean;
-  public IncludeEntities?: boolean;
-  public IncludeExtAltText?: boolean;
-  public IncludeCardUri?: boolean;
-  public TweetMode?: TweetMode;
+  public trimUser?: boolean;
+  public includeMyRetweet?: boolean;
+  public includeEntities?: boolean;
+  public includeExtAltText?: boolean;
+  public includeCardUri?: boolean;
+  public tweetMode?: TweetMode;
 }
 
 

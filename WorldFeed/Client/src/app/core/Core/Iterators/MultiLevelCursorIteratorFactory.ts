@@ -51,6 +51,6 @@ export class MultiLevelCursorIteratorFactory implements IMultiLevelCursorIterato
   }
 
   public createUserMultiLevelIterator(client: ITwitterClient, iterator: ITwitterPageIterator<ITwitterResult<IIdsCursorQueryResultDTO>>, maxPageSize: number): IMultiLevelCursorIterator<number, IUser> {
-    return this.create(iterator, dtoIds => dtoIds.ids, client.Users.getUsersAsync, maxPageSize);
+    return this.create(iterator, dtoIds => dtoIds.ids, client.users.getUsersAsync, maxPageSize);
   }
 }

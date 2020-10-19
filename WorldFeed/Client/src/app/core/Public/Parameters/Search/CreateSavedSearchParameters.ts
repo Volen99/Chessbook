@@ -3,14 +3,14 @@ import {CustomRequestParameters, ICustomRequestParameters} from "../CustomReques
 // For more information read: https://developer.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/post-saved_searches-create
 export interface ICreateSavedSearchParameters extends ICustomRequestParameters {
   // The query of the search the user would like to save.
-  Query: string;
+  query: string;
 }
 
 export class CreateSavedSearchParameters extends CustomRequestParameters implements ICreateSavedSearchParameters {
   constructor(query: string) {
     super();
-    this.Query = query;
+    this.query = query;
   }
 
-  public Query: string;
+  public query: string;
 }

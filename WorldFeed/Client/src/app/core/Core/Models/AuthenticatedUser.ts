@@ -33,38 +33,38 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
   }
 
   get credentials(): IReadOnlyTwitterCredentials {
-    return this.client.Credentials;
+    return this.client.credentials;
   }
 
   // Home Timeline
   public getHomeTimelineAsync(): Promise<ITweet[]> {
-    return super.client.Timelines.getHomeTimelineAsync();
+    return super.client.timelines.getHomeTimelineAsync();
   }
 
   public getMentionsTimelineAsync(): Promise<ITweet[]> {
-    return super.client.Timelines.getMentionsTimelineAsync();
+    return super.client.timelines.getMentionsTimelineAsync();
   }
 
   // Friendships
   public updateRelationshipAsync(parameters: IUpdateRelationshipParameters): Promise<void> {
-    return super.client.Users.updateRelationshipAsync(parameters);
+    return super.client.users.updateRelationshipAsync(parameters);
   }
 
   // Friends - Followers
   public getUserIdsRequestingFriendshipAsync(): Promise<number[]> {
-    return super.client.Users.getUserIdsRequestingFriendshipAsync(new GetUserIdsRequestingFriendshipParameters());
+    return super.client.users.getUserIdsRequestingFriendshipAsync(new GetUserIdsRequestingFriendshipParameters());
   }
 
   public getUsersRequestingFriendshipAsync(): Promise<IUser[]> {
-    return super.client.Users.getUsersRequestingFriendshipAsync(new GetUsersRequestingFriendshipParameters());
+    return super.client.users.getUsersRequestingFriendshipAsync(new GetUsersRequestingFriendshipParameters());
   }
 
   public getUserIdsYouRequestedToFollowAsync(): Promise<number[]> {
-    return super.client.Users.getUserIdsYouRequestedToFollowAsync();
+    return super.client.users.getUserIdsYouRequestedToFollowAsync();
   }
 
   public getUsersYouRequestedToFollowAsync(): Promise<IUser[]> {
-    return super.client.Users.getUsersYouRequestedToFollowAsync(new GetUsersYouRequestedToFollowParameters());
+    return super.client.users.getUsersYouRequestedToFollowAsync(new GetUsersYouRequestedToFollowParameters());
   }
 
 
@@ -80,7 +80,7 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
       typeCurrent = userIdOrUsernameOrUser as IUserIdentifier;
     }
 
-    return super.client.Users.followUserAsync(typeCurrent);
+    return super.client.users.followUserAsync(typeCurrent);
   }
 
   public unfollowUserAsync(userIdOrUsernameOrUser: number | string | IUserIdentifier): Promise<IUser> {
@@ -93,11 +93,11 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
       typeCurrent = userIdOrUsernameOrUser as IUserIdentifier;
     }
 
-    return super.client.Users.unfollowUserAsync(typeCurrent);
+    return super.client.users.unfollowUserAsync(typeCurrent);
   }
 
   public listSavedSearchesAsync(): Promise<ISavedSearch[]> {
-    return super.client.Search.listSavedSearchesAsync();
+    return super.client.search.listSavedSearchesAsync();
   }
 
   // Block
@@ -116,7 +116,7 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
       typeCurrent = userIdOrUsernameOrUser as IUserIdentifier;
     }
 
-    return super.client.Users.blockUserAsync(typeCurrent);
+    return super.client.users.blockUserAsync(typeCurrent);
   }
 
   // Unblock
@@ -135,16 +135,16 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
       typeCurrent = userIdOrUsernameOrUser as IUserIdentifier;
     }
 
-    return super.client.Users.unblockUserAsync(typeCurrent);
+    return super.client.users.unblockUserAsync(typeCurrent);
   }
 
   // Get Blocked Users
   public getBlockedUserIdsAsync(): Promise<number[]> {
-    return super.client.Users.getBlockedUserIdsAsync();
+    return super.client.users.getBlockedUserIdsAsync();
   }
 
   public getBlockedUsersAsync(): Promise<IUser[]> {
-    return super.client.Users.getBlockedUsersAsync();
+    return super.client.users.getBlockedUsersAsync();
   }
 
   // Spam
@@ -163,16 +163,16 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
       typeCurrent = userIdOrUsernameOrUser as IUserIdentifier;
     }
 
-    return super.client.Users.reportUserForSpamAsync(typeCurrent);
+    return super.client.users.reportUserForSpamAsync(typeCurrent);
   }
 
   // Direct Messages
   public getLatestMessagesAsync(): Promise<IMessage[]> {
-    return super.client.Messages.getMessagesAsync();
+    return super.client.messages.getMessagesAsync();
   }
 
   public publishMessageAsync(publishMessageParameters: IPublishMessageParameters): Promise<IMessage> {
-    return super.client.Messages.publishMessageAsync(publishMessageParameters);
+    return super.client.messages.publishMessageAsync(publishMessageParameters);
   }
 
   // Tweet
@@ -185,12 +185,12 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
       typeCurrent = textOrParameters as IPublishTweetParameters;
     }
 
-    return super.client.Tweets.publishTweetAsync(typeCurrent);
+    return super.client.tweets.publishTweetAsync(typeCurrent);
   }
 
   // Settings
   public updateAccountSettingsAsync(parameters: IUpdateAccountSettingsParameters): Promise<IAccountSettings> {
-    return super.client.AccountSettings.updateAccountSettingsAsync(parameters);
+    return super.client.accountSettings.updateAccountSettingsAsync(parameters);
   }
 
   // Twitter Lists
@@ -203,7 +203,7 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
       typeCurrent = listOrList as ITwitterListIdentifier;
     }
 
-    return super.client.Lists.subscribeToListAsync(typeCurrent);
+    return super.client.lists.subscribeToListAsync(typeCurrent);
   }
 
   public unsubscribeFromListAsync(listOrList: number | ITwitterListIdentifier): Promise<ITwitterList> {
@@ -214,16 +214,16 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
       typeCurrent = listOrList as ITwitterListIdentifier;
     }
 
-    return super.client.Lists.unsubscribeFromListAsync(listOrList);
+    return super.client.lists.unsubscribeFromListAsync(listOrList);
   }
 
   // Mute
   public getMutedUserIdsAsync(): Promise<number[]> {
-    return super.client.Users.getMutedUserIdsAsync();
+    return super.client.users.getMutedUserIdsAsync();
   }
 
   public getMutedUsersAsync(): Promise<IUser[]> {
-    return super.client.Users.getMutedUsersAsync();
+    return super.client.users.getMutedUsersAsync();
   }
 
   public muteUserAsync(userIdOrUsernameOrUser: number | string | IUserIdentifier): Promise<IUser> {
@@ -236,7 +236,7 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
       typeCurrent = userIdOrUsernameOrUser as IUserIdentifier;
     }
 
-    return super.client.Users.muteUserAsync(typeCurrent);
+    return super.client.users.muteUserAsync(typeCurrent);
   }
 
   public unmuteUserAsync(userIdOrUsernameOrUser: number | string | IUserIdentifier): Promise<IUser> {
@@ -249,6 +249,6 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
       typeCurrent = userIdOrUsernameOrUser as IUserIdentifier;
     }
 
-    return super.client.Users.unmuteUserAsync(user);
+    return super.client.users.unmuteUserAsync(user);
   }
 }

@@ -5,10 +5,10 @@ import {TweetIdentifier} from "../../Models/TweetIdentifier";
 // For more information visit : https://developer.twitter.com/en/docs/tweets/post-and-engage/api-reference/post-favorites-create
 export interface IFavoriteTweetParameters extends ICustomRequestParameters {
   // The identifier of the tweet you want to favorite
-  Tweet: ITweetIdentifier;
+  tweet: ITweetIdentifier;
 
   // Include the tweet entities
-  IncludeEntities?: boolean;
+  includeEntities?: boolean;
 }
 
 export class FavoriteTweetParameters extends CustomRequestParameters implements IFavoriteTweetParameters {
@@ -22,11 +22,11 @@ export class FavoriteTweetParameters extends CustomRequestParameters implements 
       tweetCurrent = tweetIdOrTweet;
     }
 
-    this.Tweet = tweetCurrent;
+    this.tweet = tweetCurrent;
   }
 
-  public Tweet: ITweetIdentifier;
-  public IncludeEntities?: boolean;
+  public tweet: ITweetIdentifier;
+  public includeEntities?: boolean;
 }
 
 

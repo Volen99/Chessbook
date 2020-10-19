@@ -23,7 +23,7 @@ export class TrendsClient implements ITrendsClient {
   }
 
   get parametersValidator(): ITrendsClientParametersValidator {
-    return this._client.ParametersValidator;
+    return this._client.parametersValidator;
   }
 
   public async getPlaceTrendsAtAsync(woeidOrParameters: number | IGetTrendsAtParameters): Promise<IGetTrendsAtResult> {
@@ -34,7 +34,7 @@ export class TrendsClient implements ITrendsClient {
       parameters = new GetTrendsAtParameters(woeidOrParameters);
     }
 
-    let twitterResult = await this._client.Raw.trends.getPlaceTrendsAtAsync(parameters); // .ConfigureAwait(false);
+    let twitterResult = await this._client.raw.trends.getPlaceTrendsAtAsync(parameters); // .ConfigureAwait(false);
     return twitterResult?.model[0];
   }
 
@@ -46,7 +46,7 @@ export class TrendsClient implements ITrendsClient {
       parametersCurrent = new GetTrendsLocationParameters();
     }
 
-    let twitterResult = await this._client.Raw.trends.getTrendLocationsAsync(parametersCurrent); // .ConfigureAwait(false);
+    let twitterResult = await this._client.raw.trends.getTrendLocationsAsync(parametersCurrent); // .ConfigureAwait(false);
     return twitterResult?.model;
   }
 
@@ -58,12 +58,12 @@ export class TrendsClient implements ITrendsClient {
       parameters = new GetTrendsLocationCloseToParameters(latitudeOrCoordinatesOrParameters);
     }
 
-    let twitterResult = await this._client.Raw.trends.getTrendsLocationCloseToAsync(parameters); // .ConfigureAwait(false);
+    let twitterResult = await this._client.raw.trends.getTrendsLocationCloseToAsync(parameters); // .ConfigureAwait(false);
     return twitterResult?.model;
   }
 
   private isIGetTrendsAtParameters(woeidOrParameters: any): woeidOrParameters is IGetTrendsAtParameters {
-    return (woeidOrParameters as IGetTrendsAtParameters).Woeid !== undefined;
+    return (woeidOrParameters as IGetTrendsAtParameters).woeid !== undefined;
   }
 
   private isICoordinates(latitudeOrCoordinatesOrParameters: any): latitudeOrCoordinatesOrParameters is ICoordinates {

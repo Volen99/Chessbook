@@ -2,59 +2,62 @@
 import {ICoordinates} from "../../core/Public/Models/Interfaces/ICoordinates";
 import {IGeoCode} from "../../core/Public/Models/Interfaces/IGeoCode";
 import DateTime from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import {ISearchTweetsParameters, SearchTweetsParameters} from "../../core/Public/Parameters/Search/SearchTweetsParameters";
+import {ISearchUsersParameters, SearchUsersParameters} from "../../core/Public/Parameters/Search/SearchUsersParameters";
+import {WorldFeedConsts} from "../../core/Public/worldFeed-consts";
 
 export interface ISearchQueryParameterGenerator {
-  CreateSearchTweetParameter(query: string): ISearchTweetsParameters;
+  createSearchTweetParameter(query: string): ISearchTweetsParameters;
 
-  CreateSearchTweetParameter(geoCode: IGeoCode): ISearchTweetsParameters;
+  createSearchTweetParameter(geoCode: IGeoCode): ISearchTweetsParameters;
 
-  CreateSearchTweetParameter(coordinates: ICoordinates, radius: number, measure: DistanceMeasure): ISearchTweetsParameters;
+  createSearchTweetParameter(coordinates: ICoordinates, radius: number, measure: DistanceMeasure): ISearchTweetsParameters;
 
-  CreateSearchTweetParameter(latitude: number, longitude: number, radius: number, measure: DistanceMeasure): ISearchTweetsParameters;
+  createSearchTweetParameter(latitude: number, longitude: number, radius: number, measure: DistanceMeasure): ISearchTweetsParameters;
 
-  GenerateSinceParameter(since?: DateTime): string;
+  generateSinceParameter(since?: DateTime): string;
 
-  GenerateUntilParameter(until?: DateTime): string;
+  generateUntilParameter(until?: DateTime): string;
 
-  GenerateGeoCodeParameter(geoCode: IGeoCode): string;
+  generateGeoCodeParameter(geoCode: IGeoCode): string;
 
-  CreateUserSearchParameters(query: string): ISearchUsersParameters
+  createUserSearchParameters(query: string): ISearchUsersParameters;
 }
 
 export class SearchQueryParameterGenerator implements ISearchQueryParameterGenerator {
-  public CreateSearchTweetParameter(query: string): ISearchTweetsParameters {
+  public createSearchTweetParameter(query: string): ISearchTweetsParameters {
     return new SearchTweetsParameters(query);
   }
 
-  public CreateSearchTweetParameter(geoCode: IGeoCode): ISearchTweetsParameters {
+  public createSearchTweetParameter(geoCode: IGeoCode): ISearchTweetsParameters {
     return new SearchTweetsParameters(geoCode);
   }
 
-  public CreateSearchTweetParameter(coordinates: ICoordinates, radius: number, measure: DistanceMeasure): ISearchTweetsParameters {
+  public createSearchTweetParameter(coordinates: ICoordinates, radius: number, measure: DistanceMeasure): ISearchTweetsParameters {
     return new SearchTweetsParameters(coordinates, radius, measure);
   }
 
-  public CreateSearchTweetParameter(latitude: number, longitude: number, radius: number, measure: DistanceMeasure): ISearchTweetsParameters {
+  public createSearchTweetParameter(latitude: number, longitude: number, radius: number, measure: DistanceMeasure): ISearchTweetsParameters {
     return new SearchTweetsParameters(latitude, longitude, radius, measure);
   }
 
-  public GenerateSinceParameter(since?: DateTime): string {
+  public generateSinceParameter(since?: DateTime): string {
     if (since == null) {
-      return string.Empty;
+      return WorldFeedConsts.EMPTY;
     }
 
-    return `since=${since.Value.ToString("yyyy-MM-dd")}`;
+    return `since=${since.toString("yyyy-MM-dd")}`;
   }
 
-  public GenerateUntilParameter(until?: DateTime): string {
+  public generateUntilParameter(until?: DateTime): string {
     if (until == null) {
-      return string.Empty;
+      return WorldFeedConsts.EMPTY;
     }
 
-    return `until=${until.Value.ToString("yyyy-MM-dd")}`;
+    return `until=${until.toString("yyyy-MM-dd")}`;
   }
 
-  public GenerateGeoCodeParameter(geoCode: IGeoCode): string {
+  public generateGeoCodeParameter(geoCode: IGeoCode): string {
     if (geoCode?.coordinates == null) {
       return null;
     }
@@ -67,7 +70,7 @@ export class SearchQueryParameterGenerator implements ISearchQueryParameterGener
     return `${latitude},${longitude},${radius}${measure}`;
   }
 
-  public CreateUserSearchParameters(query: string): ISearchUsersParameters {
+  public createUserSearchParameters(query: string): ISearchUsersParameters {
     return new SearchUsersParameters(query);
   }
 }

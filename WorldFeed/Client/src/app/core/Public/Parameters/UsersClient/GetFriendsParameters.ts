@@ -15,8 +15,8 @@ export class GetFriendsParameters extends GetFriendIdsParameters implements IGet
   constructor(usernameOrUserIdOrUserParameters: | string | number | IUserIdentifier | IGetFriendsParameters) {
     if (GetFriendsParameters.isIGetFriendsParameters(usernameOrUserIdOrUserParameters)) {
       super(usernameOrUserIdOrUserParameters);
-      this.SkipStatus = usernameOrUserIdOrUserParameters.SkipStatus;
-      this.IncludeEntities = usernameOrUserIdOrUserParameters.IncludeEntities;
+      this.skipStatus = usernameOrUserIdOrUserParameters.skipStatus;
+      this.includeEntities = usernameOrUserIdOrUserParameters.includeEntities;
       this.GetUsersPageSize = usernameOrUserIdOrUserParameters.GetUsersPageSize;
     } else {
       let userCurrent: IUserIdentifier;
@@ -34,9 +34,9 @@ export class GetFriendsParameters extends GetFriendIdsParameters implements IGet
     }
   }
 
-  public IncludeEntities?: boolean;
+  public includeEntities?: boolean;
 
-  public SkipStatus?: boolean;
+  public skipStatus?: boolean;
 
   public GetUsersPageSize: number;
 

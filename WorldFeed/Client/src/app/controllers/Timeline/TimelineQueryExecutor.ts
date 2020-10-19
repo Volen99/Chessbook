@@ -1,22 +1,27 @@
 ﻿import {ITwitterAccessor} from "../../core/Core/Web/ITwitterAccessor";
-import Task from 'src/app/c#-objects/TypeScript.NET-Core/packages/Threading/source/Tasks/Task';
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
 import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMode";
 import {HttpMethod} from 'src/app/core/Public/Models/Enum/HttpMethod';
+import {IGetHomeTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetHomeTimelineParameters";
+import {IGetUserTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetUserTimelineParameters";
+import {IGetMentionsTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetMentionsTimelineParameters";
+import {IGetRetweetsOfMeTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
+import {ITweetDTO} from "../../core/Public/Models/Interfaces/DTO/ITweetDTO";
+import {ITimelineQueryGenerator} from "./TimelineQueryGenerator";
 
 export interface ITimelineQueryExecutor {
   // Home Timeline
-  GetHomeTimelineAsync(parameters: IGetHomeTimelineParameters, request: ITwitterRequest): Task<ITwitterResult<ITweetDTO[]>>
+  getHomeTimelineAsync(parameters: IGetHomeTimelineParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO[]>>;
 
   // User Timeline
-  GetUserTimelineAsync(parameters: IGetUserTimelineParameters, request: ITwitterRequest): Task<ITwitterResult<ITweetDTO[]>>
+  getUserTimelineAsync(parameters: IGetUserTimelineParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO[]>>;
 
   // Mention Timeline
-  GetMentionsTimelineAsync(parameters: IGetMentionsTimelineParameters, request: ITwitterRequest): Task<ITwitterResult<ITweetDTO[]>>
+  getMentionsTimelineAsync(parameters: IGetMentionsTimelineParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO[]>>;
 
   // Retweets Of Me Timeline
-  GetRetweetsOfMeTimelineAsync(parameters: IGetRetweetsOfMeTimelineParameters, request: ITwitterRequest): Task<ITwitterResult<ITweetDTO[]>>
+  getRetweetsOfMeTimelineAsync(parameters: IGetRetweetsOfMeTimelineParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO[]>>;
 }
 
 export class TimelineQueryExecutor implements ITimelineQueryExecutor {
@@ -29,31 +34,31 @@ export class TimelineQueryExecutor implements ITimelineQueryExecutor {
   }
 
   // Home Timeline
-  public GetHomeTimelineAsync(parameters: IGetHomeTimelineParameters, request: ITwitterRequest): Task<ITwitterResult<ITweetDTO[]>> {
-    let query = this._timelineQueryGenerator.GetHomeTimelineQuery(parameters, new ComputedTweetMode(parameters, request));
+  public getHomeTimelineAsync(parameters: IGetHomeTimelineParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO[]>> {
+    let query = this._timelineQueryGenerator.getHomeTimelineQuery(parameters, new ComputedTweetMode(parameters, request));
     request.query.url = query;
     request.query.httpMethod = HttpMethod.GET;
     return this._twitterAccessor.executeRequestAsync<ITweetDTO[]>(request);
   }
 
-  public GetUserTimelineAsync(parameters: IGetUserTimelineParameters, request: ITwitterRequest): Task<ITwitterResult<ITweetDTO[]>> {
-    let query = this._timelineQueryGenerator.GetUserTimelineQuery(parameters, new ComputedTweetMode(parameters, request));
+  public getUserTimelineAsync(parameters: IGetUserTimelineParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO[]>> {
+    let query = this._timelineQueryGenerator.getUserTimelineQuery(parameters, new ComputedTweetMode(parameters, request));
     request.query.url = query;
     request.query.httpMethod = HttpMethod.GET;
     return this._twitterAccessor.executeRequestAsync<ITweetDTO[]>(request);
   }
 
   // Mention Timeline
-  public GetMentionsTimelineAsync(parameters: IGetMentionsTimelineParameters, request: ITwitterRequest): Task<ITwitterResult<ITweetDTO[]>> {
-    let query = this._timelineQueryGenerator.GetMentionsTimelineQuery(parameters, new ComputedTweetMode(parameters, request));
+  public getMentionsTimelineAsync(parameters: IGetMentionsTimelineParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO[]>> {
+    let query = this._timelineQueryGenerator.getMentionsTimelineQuery(parameters, new ComputedTweetMode(parameters, request));
     request.query.url = query;
     request.query.httpMethod = HttpMethod.GET;
     return this._twitterAccessor.executeRequestAsync<ITweetDTO[]>(request);
   }
 
   // Retweets of Me Timeline
-  public GetRetweetsOfMeTimelineAsync(parameters: IGetRetweetsOfMeTimelineParameters, request: ITwitterRequest): Task<ITwitterResult<ITweetDTO[]>> {
-    var query = this._timelineQueryGenerator.GetRetweetsOfMeTimelineQuery(parameters, new ComputedTweetMode(parameters, request));
+  public getRetweetsOfMeTimelineAsync(parameters: IGetRetweetsOfMeTimelineParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO[]>> {
+    let query = this._timelineQueryGenerator.getRetweetsOfMeTimelineQuery(parameters, new ComputedTweetMode(parameters, request));
     request.query.url = query;
     request.query.httpMethod = HttpMethod.GET;
     return this._twitterAccessor.executeRequestAsync<ITweetDTO[]>(request);

@@ -5,33 +5,36 @@ import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 export class ComputedTweetMode {
   private readonly _tweetMode?: TweetMode;
 
-  constructor(parameter?: ITweetModeParameter, request?: ITwitterRequest, tweetMode: TweetMode) {
-    if (tweetMode) {
-      this._tweetMode = tweetMode;
+  constructor(parameterOrTweetMode: ITweetModeParameter | TweetMode, request?: ITwitterRequest) {
+    if (this.isITweetModeParameter(parameterOrTweetMode)) {
+      this._tweetMode = parameterOrTweetMode?.tweetMode ?? request.executionContext.tweetMode;
     } else {
-      this._tweetMode = parameter?.TweetMode ?? request.executionContext.TweetMode;
+      this._tweetMode = parameterOrTweetMode;
     }
   }
 
-        public static implicit operator TweetMode?(computedTweetMode: ComputedTweetMode)
-        {
-            return computedTweetMode._tweetMode;
-        }
+  public static implicit operator TweetMode?(computedTweetMode: ComputedTweetMode) {
+    return computedTweetMode._tweetMode;
+  }
 
-        public toString(): string {
-            if (this._tweetMode === TweetMode.None) {
-                return null;
-            }
-
-            return this._tweetMode?.toString().toLocaleLowerCase();
-        }
-
-        // public static ComputedTweetMode Extended => new ComputedTweetMode(TweetMode.Extended);
-
-      static get extended(): ComputedTweetMode {
-          return new ComputedTweetMode(undefined, undefined, TweetMode.Extended);
-        }
+  public toString(): string {
+    if (this._tweetMode === TweetMode.None) {
+      return null;
     }
+
+    return this._tweetMode?.toString().toLocaleLowerCase();
+  }
+
+  // public static ComputedTweetMode Extended => new ComputedTweetMode(TweetMode.Extended);
+
+  static get extended(): ComputedTweetMode {
+    return new ComputedTweetMode(TweetMode.Extended);
+  }
+
+  private isITweetModeParameter(parameterOrTweetMode: any): parameterOrTweetMode is ITweetModeParameter {
+    return (parameterOrTweetMode as ITweetModeParameter).tweetMode !== undefined;
+  }
+}
 
 // public ComputedTweetMode(ITweetModeParameter parameter, ITwitterRequest request)
 // {

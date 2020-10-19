@@ -3,20 +3,29 @@ import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterAccessor} from "../../core/Core/Web/ITwitterAccessor";
 import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMode";
 import {HttpMethod} from 'src/app/core/Public/Models/Enum/HttpMethod';
-import Task from 'src/app/c#-objects/TypeScript.NET-Core/packages/Threading/source/Tasks/Task';
+import {ISearchTweetsParameters} from "../../core/Public/Parameters/Search/SearchTweetsParameters";
+import {ISearchUsersParameters} from "../../core/Public/Parameters/Search/SearchUsersParameters";
+import {ICreateSavedSearchParameters} from "../../core/Public/Parameters/Search/CreateSavedSearchParameters";
+import {IGetSavedSearchParameters} from "../../core/Public/Parameters/Search/GetSavedSearchParameters";
+import {IListSavedSearchesParameters} from "../../core/Public/Parameters/Search/ListSavedSearchesParameters";
+import {IDestroySavedSearchParameters} from "../../core/Public/Parameters/Search/DestroySavedSearchParameters";
+import {ISearchResultsDTO} from "../../core/Public/Models/Interfaces/DTO/ISearchResultsDTO";
+import {UserDTO} from "../../core/Core/DTO/UserDTO";
+import {SavedSearchDTO} from "../../core/Core/DTO/SavedSearchDTO";
+import {ISearchQueryGenerator} from "./SearchQueryGenerator";
 
 export interface ISearchQueryExecutor {
-  SearchTweetsAsync(parameters: ISearchTweetsParameters, request: ITwitterRequest): Task<ITwitterResult<ISearchResultsDTO>>;
+  searchTweetsAsync(parameters: ISearchTweetsParameters, request: ITwitterRequest): Promise<ITwitterResult<ISearchResultsDTO>>;
 
-  SearchUsersAsync(parameters: ISearchUsersParameters, request: ITwitterRequest): Task<ITwitterResult<UserDTO[]>>;
+  searchUsersAsync(parameters: ISearchUsersParameters, request: ITwitterRequest): Promise<ITwitterResult<UserDTO[]>>;
 
-  CreateSavedSearchAsync(parameters: ICreateSavedSearchParameters, request: ITwitterRequest): Task<ITwitterResult<SavedSearchDTO>>;
+  createSavedSearchAsync(parameters: ICreateSavedSearchParameters, request: ITwitterRequest): Promise<ITwitterResult<SavedSearchDTO>>;
 
-  GetSavedSearchAsync(parameters: IGetSavedSearchParameters, request: ITwitterRequest): Task<ITwitterResult<SavedSearchDTO>>;
+  getSavedSearchAsync(parameters: IGetSavedSearchParameters, request: ITwitterRequest): Promise<ITwitterResult<SavedSearchDTO>>;
 
-  ListSavedSearchesAsync(parameters: IListSavedSearchesParameters, request: ITwitterRequest): Task<ITwitterResult<SavedSearchDTO[]>>;
+  listSavedSearchesAsync(parameters: IListSavedSearchesParameters, request: ITwitterRequest): Promise<ITwitterResult<SavedSearchDTO[]>>;
 
-  DestroySavedSearchAsync(parameters: IDestroySavedSearchParameters, request: ITwitterRequest): Task<ITwitterResult<SavedSearchDTO>>;
+  destroySavedSearchAsync(parameters: IDestroySavedSearchParameters, request: ITwitterRequest): Promise<ITwitterResult<SavedSearchDTO>>;
 }
 
 export class SearchQueryExecutor implements ISearchQueryExecutor {
@@ -28,38 +37,38 @@ export class SearchQueryExecutor implements ISearchQueryExecutor {
     this._twitterAccessor = twitterAccessor;
   }
 
-  public SearchTweetsAsync(parameters: ISearchTweetsParameters, request: ITwitterRequest): Task<ITwitterResult<ISearchResultsDTO>> {
-    request.query.url = this._searchQueryGenerator.GetSearchTweetsQuery(parameters, new ComputedTweetMode(parameters, request));
+  public searchTweetsAsync(parameters: ISearchTweetsParameters, request: ITwitterRequest): Promise<ITwitterResult<ISearchResultsDTO>> {
+    request.query.url = this._searchQueryGenerator.getSearchTweetsQuery(parameters, new ComputedTweetMode(parameters, request));
     request.query.httpMethod = HttpMethod.GET;
     return this._twitterAccessor.executeRequestAsync<ISearchResultsDTO>(request);
   }
 
-  public SearchUsersAsync(parameters: ISearchUsersParameters, request: ITwitterRequest): Task<ITwitterResult<UserDTO[]>> {
-    request.query.url = this._searchQueryGenerator.GetSearchUsersQuery(parameters);
+  public searchUsersAsync(parameters: ISearchUsersParameters, request: ITwitterRequest): Promise<ITwitterResult<UserDTO[]>> {
+    request.query.url = this._searchQueryGenerator.getSearchUsersQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;
     return this._twitterAccessor.executeRequestAsync<UserDTO[]>(request);
   }
 
-  public CreateSavedSearchAsync(parameters: ICreateSavedSearchParameters, request: ITwitterRequest): Task<ITwitterResult<SavedSearchDTO>> {
-    request.query.url = this._searchQueryGenerator.GetCreateSavedSearchQuery(parameters);
+  public createSavedSearchAsync(parameters: ICreateSavedSearchParameters, request: ITwitterRequest): Promise<ITwitterResult<SavedSearchDTO>> {
+    request.query.url = this._searchQueryGenerator.getCreateSavedSearchQuery(parameters);
     request.query.httpMethod = HttpMethod.POST;
     return this._twitterAccessor.executeRequestAsync<SavedSearchDTO>(request);
   }
 
-  public GetSavedSearchAsync(parameters: IGetSavedSearchParameters, request: ITwitterRequest): Task<ITwitterResult<SavedSearchDTO>> {
-    request.query.url = this._searchQueryGenerator.GetSavedSearchQuery(parameters);
+  public getSavedSearchAsync(parameters: IGetSavedSearchParameters, request: ITwitterRequest): Promise<ITwitterResult<SavedSearchDTO>> {
+    request.query.url = this._searchQueryGenerator.getSavedSearchQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;
     return this._twitterAccessor.executeRequestAsync<SavedSearchDTO>(request);
   }
 
-  public ListSavedSearchesAsync(parameters: IListSavedSearchesParameters, request: ITwitterRequest): Task<ITwitterResult<SavedSearchDTO[]>> {
-    request.query.url = this._searchQueryGenerator.GetListSavedSearchQuery(parameters);
+  public listSavedSearchesAsync(parameters: IListSavedSearchesParameters, request: ITwitterRequest): Promise<ITwitterResult<SavedSearchDTO[]>> {
+    request.query.url = this._searchQueryGenerator.getListSavedSearchQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;
     return this._twitterAccessor.executeRequestAsync<SavedSearchDTO[]>(request);
   }
 
-  public DestroySavedSearchAsync(parameters: IDestroySavedSearchParameters, request: ITwitterRequest): Task<ITwitterResult<SavedSearchDTO>> {
-    request.query.url = this._searchQueryGenerator.GetDestroySavedSearchQuery(parameters);
+  public destroySavedSearchAsync(parameters: IDestroySavedSearchParameters, request: ITwitterRequest): Promise<ITwitterResult<SavedSearchDTO>> {
+    request.query.url = this._searchQueryGenerator.getDestroySavedSearchQuery(parameters);
     request.query.httpMethod = HttpMethod.POST;
     return this._twitterAccessor.executeRequestAsync<SavedSearchDTO>(request);
   }

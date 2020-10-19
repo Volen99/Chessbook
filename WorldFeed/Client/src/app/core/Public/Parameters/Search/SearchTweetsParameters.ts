@@ -18,38 +18,38 @@ import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/sourc
 /// </summary>
 export interface ISearchTweetsParameters extends IMinMaxQueryParameters, ITweetModeParameter {
   // Query to search tweets.
-  Query: string;
+  query: string;
 
   // Specify the language of the query you are sending (only ja is currently effective).
   // This is intended for language-specific consumers and the default should work in the majority of cases.
-  Locale: string;
+  locale: string;
 
   // Language identified for the tweet.
-  Lang?: LanguageFilter;
+  lang?: LanguageFilter;
 
   // Restrict your query to a given location.
-  GeoCode: IGeoCode;
+  geoCode: IGeoCode;
 
   // Choose if the result set will be represented by recent or popular Tweets, or even a mix of both
-  SearchType?: SearchResultType;
+  searchType?: SearchResultType;
 
   // Search will only return tweets published after this date.
-  Since?: DateTime;
+  since?: DateTime;
 
   // Search will only return tweets published before this date.
-  Until?: DateTime;
+  until?: DateTime;
 
   // Filters tweets based on metadata.
-  Filters: TweetSearchFilters;
+  filters: TweetSearchFilters;
 
   // Include tweet entities.
-  IncludeEntities?: boolean;
+  includeEntities?: boolean;
 
   // Set the geo location where the search have to be performed.
-  SetGeoCodeWithSource(coordinates: ICoordinates, radius: number, measure: DistanceMeasure): void;
+  setGeoCodeWithSource(coordinates: ICoordinates, radius: number, measure: DistanceMeasure): void;
 
   // Set the geo location where the search have to be performed.
-  SetGeoCode(latitude: number, longitude: number, radius: number, measure: DistanceMeasure): void;
+  setGeoCode(latitude: number, longitude: number, radius: number, measure: DistanceMeasure): void;
 }
 
 // https://dev.twitter.com/rest/reference/get/search/tweets
@@ -59,60 +59,60 @@ export class SearchTweetsParameters extends MinMaxQueryParameters implements ISe
     if (SearchTweetsParameters.isISearchTweetsParameters(searchQueryOrGeoCodeOrParameters)) {
       super(searchQueryOrGeoCodeOrParameters);
 
-      this.Query = searchQueryOrGeoCodeOrParameters.Query;
-      this.Locale = searchQueryOrGeoCodeOrParameters.Locale;
-      this.Lang = searchQueryOrGeoCodeOrParameters.Lang;
-      this.GeoCode = new GeoCode(undefined, undefined, undefined, undefined, undefined, searchQueryOrGeoCodeOrParameters.GeoCode);
-      this.SearchType = searchQueryOrGeoCodeOrParameters.SearchType;
-      this.Since = searchQueryOrGeoCodeOrParameters.Since;
-      this.Until = searchQueryOrGeoCodeOrParameters.Until;
-      this.Filters = searchQueryOrGeoCodeOrParameters.Filters;
-      this.IncludeEntities = searchQueryOrGeoCodeOrParameters.IncludeEntities;
-      this.TweetMode = searchQueryOrGeoCodeOrParameters.TweetMode;
+      this.query = searchQueryOrGeoCodeOrParameters.query;
+      this.locale = searchQueryOrGeoCodeOrParameters.locale;
+      this.lang = searchQueryOrGeoCodeOrParameters.lang;
+      this.geoCode = new GeoCode(undefined, undefined, undefined, undefined, undefined, searchQueryOrGeoCodeOrParameters.geoCode);
+      this.searchType = searchQueryOrGeoCodeOrParameters.searchType;
+      this.since = searchQueryOrGeoCodeOrParameters.since;
+      this.until = searchQueryOrGeoCodeOrParameters.until;
+      this.filters = searchQueryOrGeoCodeOrParameters.filters;
+      this.includeEntities = searchQueryOrGeoCodeOrParameters.includeEntities;
+      this.tweetMode = searchQueryOrGeoCodeOrParameters.tweetMode;
     } else {
       super();
 
-      this.Filters = TweetSearchFilters.None;
-      this.PageSize = TwitterLimits.DEFAULTS.SEARCH_TWEETS_MAX_PAGE_SIZE;
+      this.filters = TweetSearchFilters.None;
+      this.pageSize = TwitterLimits.DEFAULTS.SEARCH_TWEETS_MAX_PAGE_SIZE;
 
       if (Type.isString(searchQueryOrGeoCodeOrParameters)) {
-        this.Query = searchQueryOrGeoCodeOrParameters;
+        this.query = searchQueryOrGeoCodeOrParameters;
       } else if (SearchTweetsParameters.isIGeoCode(searchQueryOrGeoCodeOrParameters)) {
-        this.GeoCode = searchQueryOrGeoCodeOrParameters;
+        this.geoCode = searchQueryOrGeoCodeOrParameters;
       } else if (latitude && longitude) {
-        this.GeoCode = new GeoCode(latitude, longitude, undefined, radius, measure);
+        this.geoCode = new GeoCode(latitude, longitude, undefined, radius, measure);
       } else if (coordinates) {
-        this.GeoCode = new GeoCode(undefined, undefined, coordinates, radius, measure);
+        this.geoCode = new GeoCode(undefined, undefined, coordinates, radius, measure);
       }
     }
   }
 
-  public Query: string;
-  public Locale: string;
+  public query: string;
+  public locale: string;
 
-  public Lang?: LanguageFilter;
-  public GeoCode: IGeoCode;
-  public SearchType?: SearchResultType;
+  public lang?: LanguageFilter;
+  public geoCode: IGeoCode;
+  public searchType?: SearchResultType;
 
-  public Since?: DateTime;
-  public Until?: DateTime;
+  public since?: DateTime;
+  public until?: DateTime;
 
-  public Filters: TweetSearchFilters;
+  public filters: TweetSearchFilters;
 
-  public IncludeEntities?: boolean;
+  public includeEntities?: boolean;
 
-  public TweetMode?: TweetMode;
+  public tweetMode?: TweetMode;
 
-  public SetGeoCodeWithSource(coordinates: ICoordinates, radius: number, measure: DistanceMeasure): void {
-    this.GeoCode = new GeoCode(undefined, undefined, coordinates, radius, measure);
+  public setGeoCodeWithSource(coordinates: ICoordinates, radius: number, measure: DistanceMeasure): void {
+    this.geoCode = new GeoCode(undefined, undefined, coordinates, radius, measure);
   }
 
-  public SetGeoCode(latitude: number, longitude: number, radius: number, measure: DistanceMeasure): void {
-    this.GeoCode = new GeoCode(latitude, longitude, undefined, radius, measure);
+  public setGeoCode(latitude: number, longitude: number, radius: number, measure: DistanceMeasure): void {
+    this.geoCode = new GeoCode(latitude, longitude, undefined, radius, measure);
   }
 
   private static isISearchTweetsParameters(searchQueryOrGeoCodeOrParameters: any): searchQueryOrGeoCodeOrParameters is ISearchTweetsParameters {
-    return (searchQueryOrGeoCodeOrParameters as ISearchTweetsParameters).Filters !== undefined;
+    return (searchQueryOrGeoCodeOrParameters as ISearchTweetsParameters).filters !== undefined;
   }
 
   private static isIGeoCode(searchQueryOrGeoCodeOrParameters: any): searchQueryOrGeoCodeOrParameters is IGeoCode {

@@ -1,40 +1,45 @@
 ﻿import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
-import Task from 'src/app/c#-objects/TypeScript.NET-Core/packages/Threading/source/Tasks/Task';
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterAccessor} from 'src/app/core/Core/Web/ITwitterAccessor';
 import {HttpMethod} from 'src/app/core/Public/Models/Enum/HttpMethod';
+import {IGetTrendsAtParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsAtParameters";
+import {IGetTrendsLocationParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsLocationParameters";
+import {IGetTrendsLocationCloseToParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsLocationCloseToParameters";
+import {IGetTrendsAtResult} from "../../core/Public/Models/Interfaces/IGetTrendsAtResult";
+import {ITrendLocation} from "../../core/Public/Models/Interfaces/ITrendLocation";
+import {ITrendsQueryGenerator} from "./TrendsQueryGenerator";
 
 export interface ITrendsQueryExecutor {
-  GetPlaceTrendsAtAsync(parameters: IGetTrendsAtParameters, request: ITwitterRequest): Task<ITwitterResult<IGetTrendsAtResult[]>>
+  getPlaceTrendsAtAsync(parameters: IGetTrendsAtParameters, request: ITwitterRequest): Promise<ITwitterResult<IGetTrendsAtResult[]>>;
 
-  GetTrendLocationsAsync(parameters: IGetTrendsLocationParameters, request: ITwitterRequest): Task<ITwitterResult<ITrendLocation[]>>
+  getTrendLocationsAsync(parameters: IGetTrendsLocationParameters, request: ITwitterRequest): Promise<ITwitterResult<ITrendLocation[]>>;
 
-  GetTrendsLocationCloseToAsync(parameters: IGetTrendsLocationCloseToParameters, request: ITwitterRequest): Task<ITwitterResult<ITrendLocation[]>>
+  getTrendsLocationCloseToAsync(parameters: IGetTrendsLocationCloseToParameters, request: ITwitterRequest): Promise<ITwitterResult<ITrendLocation[]>>;
 }
 
-public class TrendsQueryExecutor implements ITrendsQueryExecutor {
+export class TrendsQueryExecutor implements ITrendsQueryExecutor {
   private readonly _trendsQueryGenerator: ITrendsQueryGenerator;
   private readonly _twitterAccessor: ITwitterAccessor;
 
-  public TrendsQueryExecutor(trendsQueryGenerator: ITrendsQueryGenerator, twitterAccessor: ITwitterAccessor) {
+  constructor(trendsQueryGenerator: ITrendsQueryGenerator, twitterAccessor: ITwitterAccessor) {
     this._trendsQueryGenerator = trendsQueryGenerator;
     this._twitterAccessor = twitterAccessor;
   }
 
-  public GetPlaceTrendsAtAsync(parameters: IGetTrendsAtParameters, request: ITwitterRequest): Task<ITwitterResult<IGetTrendsAtResult[]>> {
-    request.query.url = this._trendsQueryGenerator.GetTrendsAtQuery(parameters);
+  public getPlaceTrendsAtAsync(parameters: IGetTrendsAtParameters, request: ITwitterRequest): Promise<ITwitterResult<IGetTrendsAtResult[]>> {
+    request.query.url = this._trendsQueryGenerator.getTrendsAtQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;
     return this._twitterAccessor.executeRequestAsync<IGetTrendsAtResult[]>(request);
   }
 
-  public GetTrendLocationsAsync(parameters: IGetTrendsLocationParameters, request: ITwitterRequest): Task<ITwitterResult<ITrendLocation[]>> {
-    request.query.url = _trendsQueryGenerator.GetTrendsLocationQuery(parameters);
+  public getTrendLocationsAsync(parameters: IGetTrendsLocationParameters, request: ITwitterRequest): Promise<ITwitterResult<ITrendLocation[]>> {
+    request.query.url = this._trendsQueryGenerator.getTrendsLocationQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;
     return this._twitterAccessor.executeRequestAsync<ITrendLocation[]>(request);
   }
 
-  public GetTrendsLocationCloseToAsync(parameters: IGetTrendsLocationCloseToParameters, request: ITwitterRequest): Task<ITwitterResult<ITrendLocation[]>> {
-    request.query.url = this._trendsQueryGenerator.GetTrendsLocationCloseToQuery(parameters);
+  public getTrendsLocationCloseToAsync(parameters: IGetTrendsLocationCloseToParameters, request: ITwitterRequest): Promise<ITwitterResult<ITrendLocation[]>> {
+    request.query.url = this._trendsQueryGenerator.getTrendsLocationCloseToQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;
     return this._twitterAccessor.executeRequestAsync<ITrendLocation[]>(request);
   }

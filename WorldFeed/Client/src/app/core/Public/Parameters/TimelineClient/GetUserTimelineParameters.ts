@@ -7,17 +7,17 @@ import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/sourc
 // For more information visit : https://developer.twitter.com/en/docs/tweets/timelines/api-reference/get-statuses-user_timeline
 export interface IGetUserTimelineParameters extends ITimelineRequestParameters {
   // User from who you want to get the timeline
-  User: IUserIdentifier;
+  user: IUserIdentifier;
 
   /// <summary>
   /// Include Retweets. When this parameter is set to false, Twitter will send you the same result set but without including the retweets.
   /// It means that if there are a total of 100 tweets, and the latest are 80 new tweets and 20 retweets.
   /// If the MaximumResultSet is set to 100, you will receive 80 tweets and not 100 even if there is more than 80 new tweets in the Timeline
   /// </summary>
-  IncludeRetweets: boolean;
+  includeRetweets: boolean;
 
   // Exclude reply tweets from the result set.
-  ExcludeReplies: boolean;
+  excludeReplies: boolean;
 }
 
 export class GetUserTimelineParameters extends TimelineRequestParameters implements IGetUserTimelineParameters {
@@ -25,15 +25,15 @@ export class GetUserTimelineParameters extends TimelineRequestParameters impleme
     if (GetUserTimelineParameters.isIGetUserTimelineParameters(userIdOrUsernameOrUserIdentifierOrParameters)) {
       super(userIdOrUsernameOrUserIdentifierOrParameters);
 
-      super.PageSize = userIdOrUsernameOrUserIdentifierOrParameters.PageSize;
-      this.User = userIdOrUsernameOrUserIdentifierOrParameters.User;
-      this.IncludeRetweets = userIdOrUsernameOrUserIdentifierOrParameters.IncludeRetweets;
-      this.IncludeContributorDetails = userIdOrUsernameOrUserIdentifierOrParameters.ExcludeReplies;
-      this.ExcludeReplies = userIdOrUsernameOrUserIdentifierOrParameters.ExcludeReplies;
+      super.pageSize = userIdOrUsernameOrUserIdentifierOrParameters.pageSize;
+      this.user = userIdOrUsernameOrUserIdentifierOrParameters.user;
+      this.includeRetweets = userIdOrUsernameOrUserIdentifierOrParameters.includeRetweets;
+      this.IncludeContributorDetails = userIdOrUsernameOrUserIdentifierOrParameters.excludeReplies;
+      this.excludeReplies = userIdOrUsernameOrUserIdentifierOrParameters.excludeReplies;
     } else {
       super();
 
-      super.PageSize = TwitterLimits.DEFAULTS.TIMELINE_USER_PAGE_MAX_PAGE_SIZE;
+      super.pageSize = TwitterLimits.DEFAULTS.TIMELINE_USER_PAGE_MAX_PAGE_SIZE;
 
       let userCurrent: IUserIdentifier;
       if (Type.isNumber(userIdOrUsernameOrUserIdentifierOrParameters) || Type.isString(userIdOrUsernameOrUserIdentifierOrParameters)) {
@@ -42,17 +42,17 @@ export class GetUserTimelineParameters extends TimelineRequestParameters impleme
         userCurrent = userIdOrUsernameOrUserIdentifierOrParameters;
       }
 
-      this.User = userCurrent;
+      this.user = userCurrent;
     }
   }
 
-  public User: IUserIdentifier;
-  public IncludeRetweets: boolean;
+  public user: IUserIdentifier;
+  public includeRetweets: boolean;
   public IncludeContributorDetails: boolean;
-  public ExcludeReplies: boolean;
+  public excludeReplies: boolean;
 
   private static isIGetUserTimelineParameters(userIdOrUsernameOrUserIdentifierOrParameters: any): userIdOrUsernameOrUserIdentifierOrParameters is IGetUserTimelineParameters {
-    return (userIdOrUsernameOrUserIdentifierOrParameters as IGetUserTimelineParameters).ExcludeReplies !== undefined;
+    return (userIdOrUsernameOrUserIdentifierOrParameters as IGetUserTimelineParameters).excludeReplies !== undefined;
   }
 }
 

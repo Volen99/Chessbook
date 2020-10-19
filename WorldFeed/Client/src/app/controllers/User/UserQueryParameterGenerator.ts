@@ -3,106 +3,86 @@ import {IUserIdentifier} from "../../core/Public/Models/Interfaces/IUserIdentifi
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import ArgumentException from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import ArgumentNullException from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException";
+import Type from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
 
-export class UserQueryParameterGenerator implements IUserQueryParameterGenerator
-    {
-        private GenerateUserIdParameter(userId: number, parameterName: string = "user_id"): string {
-            if (userId <= 0)
-            {
-                return null;
-            }
+export class UserQueryParameterGenerator implements IUserQueryParameterGenerator {
+  private generateUserIdParameter(userIdAsNumberOrString: number | string, parameterName: string = "user_id"): string {
+    if (Type.isNumber(userIdAsNumberOrString)) {
+      if (userIdAsNumberOrString <= 0) {
+        return null;
+      }
 
-            return `${parameterName}=${userId.ToString(CultureInfo.InvariantCulture)}`;
-        }
+      return `${parameterName}=${userIdAsNumberOrString.toString(CultureInfo.InvariantCulture)}`;
+    } else {
+      if (userIdAsNumberOrString == null) {
+        return null;
+      }
 
-        private  GenerateUserIdParameter(userId: string, parameterName: string = "user_id"): string
-        {
-            if (userId == null)
-            {
-                return null;
-            }
+      return `${parameterName}=${userIdAsNumberOrString}`;
+    }
+  }
 
-            return `${parameterName}=${userId}`;
-        }
+  public generateScreenNameParameter(screenName: string, parameterName: string = "screen_name"): string {
+    return `${parameterName}=${screenName}`;
+  }
 
-        public  GenerateScreenNameParameter(screenName: string, parameterName: string = "screen_name"): string
-        {
-            return `${parameterName}=${screenName}`;
-        }
+  public generateIdOrScreenNameParameter(user: IUserIdentifier, idParameterName: string = "user_id",
+                                         screenNameParameterName: string = "screen_name"): string {
+    if (user == null) {
+      return null;
+    }
 
-        public  generateIdOrScreenNameParameter(user: IUserIdentifier, idParameterName: string = "user_id",
-                                                screenNameParameterName: string  = "screen_name"): string
-        {
-            if (user == null)
-            {
-                return null;
-            }
+    if (user.id > 0) {
+      return this.generateUserIdParameter(user.id, idParameterName);
+    }
 
-            if (user.id > 0)
-            {
-                return GenerateUserIdParameter(user.id, idParameterName);
-            }
+    if (user.idStr) {
+      return this.generateUserIdParameter(user.idStr, idParameterName);
+    }
 
-            if (!user.idStr.IsNullOrEmpty())
-            {
-                return GenerateUserIdParameter(user.idStr, idParameterName);
-            }
+    return this.generateScreenNameParameter(user.screenName, screenNameParameterName);
+  }
 
-            return GenerateScreenNameParameter(user.screenName, screenNameParameterName);
-        }
+  public appendUser(query: StringBuilder, user: IUserIdentifier): void {
+    query.addFormattedParameterToQuery(this.generateIdOrScreenNameParameter(user));
+  }
 
-        public  appendUser(query: StringBuilder, user: IUserIdentifier): void
-        {
-            query.addFormattedParameterToQuery(GenerateIdOrScreenNameParameter(user));
-        }
-
-        public  appendUsers(query: StringBuilder, users: Array<IUserIdentifier>): void
-        {
-            query.addFormattedParameterToQuery(GenerateListOfUserIdentifiersParameter(users));
-        }
+  public appendUsers(query: StringBuilder, users: Array<IUserIdentifier>): void {
+    query.addFormattedParameterToQuery(this.generateListOfUserIdentifiersParameter(users));
+  }
 
         private  GenerateCollectionParameter(screenNames: string[]): string
         {
-            return string.Join(",", screenNames.Where(x => x != null));
+            return screenNames.filter(x => x != null).join(', '); // string.Join(",", screenNames.Where(x => x != null));
         }
 
-        public  generateListOfUserIdentifiersParameter(usersIdentifiers: Array<IUserIdentifier>): string
-        {
-            if (usersIdentifiers == null)
-            {
-                throw new ArgumentNullException(nameof(usersIdentifiers));
-            }
+        public  generateListOfUserIdentifiersParameter(usersIdentifiers: Array<IUserIdentifier>): string {
+          if (usersIdentifiers == null) {
+            throw new ArgumentNullException(nameof(usersIdentifiers));
+          }
 
-            var usersList = usersIdentifiers.ToArray();
+            let usersList = usersIdentifiers; // .ToArray();
 
-            if (usersList.Any(user => user.Id <= 0 && string.IsNullOrEmpty(user.IdStr) && string.IsNullOrEmpty(user.ScreenName)))
-            {
+            if (usersList.some(user => user.id <= 0 && !(user.idStr) && !(user.screenName))) {
                 throw new ArgumentException("At least 1 valid user identifier is required.");
             }
 
-            var userIds = new Array<string>();
-            var usernames = new Array<string>();
+            let userIds = new Array<string>();
+            let usernames = new Array<string>();
 
-            usersList.ForEach(user =>
-            {
-                if (user.Id > 0)
-                {
-                    userIds.Add(user.Id.ToString(CultureInfo.InvariantCulture));
-                }
-                else if (!string.IsNullOrEmpty(user.IdStr))
-                {
-                    userIds.Add(user.IdStr);
-                }
-                else if (user.ScreenName != null)
-                {
-                    usernames.Add(user.ScreenName);
-                }
+            usersList.ForEach(user => {
+              if (user.Id > 0) {
+                userIds.push(user.Id.ToString(CultureInfo.InvariantCulture));
+              } else if (user.IdStr) {
+                userIds.push(user.IdStr);
+              } else if (user.ScreenName != null) {
+                usernames.push(user.ScreenName);
+              }
             });
 
             let parameterBuilder = new StringBuilder();
 
-            if (userIds.length === 0 && usernames.length === 0)
-            {
+            if (userIds.length === 0 && usernames.length === 0) {
                 return null;
             }
 

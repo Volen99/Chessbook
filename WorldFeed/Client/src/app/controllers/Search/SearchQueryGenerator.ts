@@ -4,133 +4,128 @@ import IEnumerable from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/so
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {Resources} from "../../properties/resources";
 import {TweetSearchFilters} from "../../core/Public/Parameters/Enum/TweetSearchFilters";
+import {ISearchTweetsParameters} from "../../core/Public/Parameters/Search/SearchTweetsParameters";
+import {ISearchUsersParameters} from "../../core/Public/Parameters/Search/SearchUsersParameters";
+import {ICreateSavedSearchParameters} from "../../core/Public/Parameters/Search/CreateSavedSearchParameters";
+import {IGetSavedSearchParameters} from "../../core/Public/Parameters/Search/GetSavedSearchParameters";
+import {IListSavedSearchesParameters} from "../../core/Public/Parameters/Search/ListSavedSearchesParameters";
+import {IDestroySavedSearchParameters} from "../../core/Public/Parameters/Search/DestroySavedSearchParameters";
+import {ISearchQueryParameterGenerator} from "./SearchQueryParameterGenerator";
 
 export interface ISearchQueryGenerator {
-  GetSearchTweetsQuery(parameters: ISearchTweetsParameters, tweetMode: ComputedTweetMode): string;
+  getSearchTweetsQuery(parameters: ISearchTweetsParameters, tweetMode: ComputedTweetMode): string;
 
-  GetSearchUsersQuery(parameters: ISearchUsersParameters): string;
+  getSearchUsersQuery(parameters: ISearchUsersParameters): string;
 
-  GetCreateSavedSearchQuery(parameters: ICreateSavedSearchParameters): string;
+  getCreateSavedSearchQuery(parameters: ICreateSavedSearchParameters): string;
 
-  GetSavedSearchQuery(parameters: IGetSavedSearchParameters): string;
+  getSavedSearchQuery(parameters: IGetSavedSearchParameters): string;
 
-  GetListSavedSearchQuery(parameters: IListSavedSearchesParameters): string;
+  getListSavedSearchQuery(parameters: IListSavedSearchesParameters): string;
 
-  GetDestroySavedSearchQuery(parameters: IDestroySavedSearchParameters): string;
+  getDestroySavedSearchQuery(parameters: IDestroySavedSearchParameters): string;
 }
 
-    export class SearchQueryGenerator implements ISearchQueryGenerator
-    {
-        private readonly _queryParameterGenerator: IQueryParameterGenerator;
-        private readonly _searchQueryParameterGenerator: ISearchQueryParameterGenerator;
+export class SearchQueryGenerator implements ISearchQueryGenerator {
+  private readonly _queryParameterGenerator: IQueryParameterGenerator;
+  private readonly _searchQueryParameterGenerator: ISearchQueryParameterGenerator;
 
-        constructor(queryParameterGenerator: IQueryParameterGenerator, searchQueryParameterGenerator: ISearchQueryParameterGenerator)
+  constructor(queryParameterGenerator: IQueryParameterGenerator, searchQueryParameterGenerator: ISearchQueryParameterGenerator) {
+    this._queryParameterGenerator = queryParameterGenerator;
+    this._searchQueryParameterGenerator = searchQueryParameterGenerator;
+  }
+
+  public getSearchTweetsQuery(parameters: ISearchTweetsParameters, tweetMode: ComputedTweetMode): string {
+    let query = new StringBuilder(Resources.Search_SearchTweets);
+
+    query.addParameterToQuery("q", this.generateQueryParameter(parameters.query, parameters.filters));
+    query.addParameterToQuery("geocode", this._searchQueryParameterGenerator.generateGeoCodeParameter(parameters.geoCode));
+
+    query.addParameterToQuery("lang", parameters.lang?.GetLanguageCode());
+    query.addParameterToQuery("locale", parameters.locale);
+    query.addParameterToQuery("result_type", parameters.searchType?.ToString().ToLowerInvariant());
+
+    this._queryParameterGenerator.addMinMaxQueryParameters(query, parameters);
+
+    query.addFormattedParameterToQuery(this._searchQueryParameterGenerator.generateSinceParameter(parameters.since));
+    query.addFormattedParameterToQuery(this._searchQueryParameterGenerator.generateUntilParameter(parameters.until));
+    query.addParameterToQuery("include_entities", parameters.includeEntities);
+    query.addParameterToQuery("tweet_mode", tweetMode);
+
+    query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+
+    return query.toString();
+  }
+
+  private generateQueryParameter(query: string, tweetSearchFilters: TweetSearchFilters): string {
+    if (tweetSearchFilters === TweetSearchFilters.None) {
+      return query;
+    }
+
+    for (const entitiesTypeFilter of this.getFlags(tweetSearchFilters)) {
+      if (entitiesTypeFilter !== TweetSearchFilters.None) {
+        let filter = entitiesTypeFilter.GetQueryFilterName().ToLowerInvariant();
+        query += ` filter:${filter}`;
+      }
+    }
+
+    return query;
+  }
+
+        private  getFlags(tweetSearchFilters: TweetSearchFilters): IEnumerable<TweetSearchFilters>
         {
-            this._queryParameterGenerator = queryParameterGenerator;
-            this._searchQueryParameterGenerator = searchQueryParameterGenerator;
-        }
-
-        public  GetSearchTweetsQuery(parameters: ISearchTweetsParameters, tweetMode: ComputedTweetMode): string
-        {
-            let query = new StringBuilder(Resources.Search_SearchTweets);
-
-            query.addParameterToQuery("q", GenerateQueryParameter(parameters.Query, parameters.Filters));
-            query.addParameterToQuery("geocode", this._searchQueryParameterGenerator.GenerateGeoCodeParameter(parameters.GeoCode));
-
-            query.addParameterToQuery("lang", parameters.Lang?.GetLanguageCode());
-            query.addParameterToQuery("locale", parameters.Locale);
-            query.addParameterToQuery("result_type", parameters.SearchType?.ToString().ToLowerInvariant());
-
-            this._queryParameterGenerator.AddMinMaxQueryParameters(query, parameters);
-
-            query.addFormattedParameterToQuery(this._searchQueryParameterGenerator.GenerateSinceParameter(parameters.Since));
-            query.addFormattedParameterToQuery(this._searchQueryParameterGenerator.GenerateUntilParameter(parameters.Until));
-            query.addParameterToQuery("include_entities", parameters.IncludeEntities);
-            query.addParameterToQuery("tweet_mode", tweetMode);
-
-            query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
-
-            return query.toString();
-        }
-
-        private  GenerateQueryParameter(query: string, tweetSearchFilters: TweetSearchFilters): string
-        {
-            if (tweetSearchFilters == TweetSearchFilters.None)
+            for (const value: TweetSearchFilters of Enum.GetValues(tweetSearchFilters.GetType()))
             {
-                return query;
-            }
-
-            foreach (var entitiesTypeFilter in GetFlags(tweetSearchFilters))
-            {
-                if (entitiesTypeFilter != TweetSearchFilters.None)
-                {
-                    var filter = entitiesTypeFilter.GetQueryFilterName().ToLowerInvariant();
-                    query += string.Format(" filter:{0}", filter);
-                }
-            }
-
-            return query;
-        }
-
-        private  GetFlags(tweetSearchFilters: TweetSearchFilters): IEnumerable<TweetSearchFilters>
-        {
-            foreach (TweetSearchFilters value in Enum.GetValues(tweetSearchFilters.GetType()))
-            {
-                if (tweetSearchFilters.HasFlag(value) && (tweetSearchFilters & value) == value)
+                if (tweetSearchFilters.HasFlag(value) && (tweetSearchFilters & value) === value)
                 {
                     yield return value;
                 }
             }
         }
 
-        public  GetSearchUsersQuery(parameters: ISearchUsersParameters): string
-        {
-            var query = new StringBuilder(Resources.Search_SearchUsers);
+  public getSearchUsersQuery(parameters: ISearchUsersParameters): string {
+    let query = new StringBuilder(Resources.Search_SearchUsers);
 
-            query.addParameterToQuery("q", parameters.Query);
-            query.addParameterToQuery("page", parameters.Page);
-            query.addParameterToQuery("count", parameters.PageSize);
-            query.addParameterToQuery("include_entities", parameters.IncludeEntities);
+    query.addParameterToQuery("q", parameters.query);
+    query.addParameterToQuery("page", parameters.page);
+    query.addParameterToQuery("count", parameters.pageSize);
+    query.addParameterToQuery("include_entities", parameters.includeEntities);
 
-            query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
-            return query.ToString();
-        }
+    return query.toString();
+  }
 
-        public  GetCreateSavedSearchQuery(parameters: ICreateSavedSearchParameters): string
-        {
-            var query = new StringBuilder(Resources.SavedSearch_Create);
+  public getCreateSavedSearchQuery(parameters: ICreateSavedSearchParameters): string {
+    let query = new StringBuilder(Resources.SavedSearch_Create);
 
-            query.addParameterToQuery("query", parameters.Query);
-            query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addParameterToQuery("query", parameters.query);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
-            return query.ToString();
-        }
+    return query.toString();
+  }
 
-        public  GetSavedSearchQuery(parameters: IGetSavedSearchParameters): string
-        {
-            var query = new StringBuilder(string.Format(Resources.SavedSearch_Get, parameters.SavedSearchId));
+  public getSavedSearchQuery(parameters: IGetSavedSearchParameters): string {
+    let query = new StringBuilder(string.Format(Resources.SavedSearch_Get, parameters.savedSearchId));
 
-            query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
-            return query.ToString();
-        }
+    return query.toString();
+  }
 
-        public  GetListSavedSearchQuery(parameters: IListSavedSearchesParameters): string
-        {
-            var query = new StringBuilder(Resources.SavedSearches_List);
+  public getListSavedSearchQuery(parameters: IListSavedSearchesParameters): string {
+    let query = new StringBuilder(Resources.SavedSearches_List);
 
-            query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
-            return query.ToString();
-        }
+    return query.toString();
+  }
 
-        public  GetDestroySavedSearchQuery(parameters: IDestroySavedSearchParameters): string
-        {
-            var query = new StringBuilder(string.Format(Resources.SavedSearch_Destroy, parameters.SavedSearchId));
+  public getDestroySavedSearchQuery(parameters: IDestroySavedSearchParameters): string {
+    let query = new StringBuilder(string.Format(Resources.SavedSearch_Destroy, parameters.savedSearchId));
 
-            query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
-            return query.toString();
-        }
-    }
+    return query.toString();
+  }
+}

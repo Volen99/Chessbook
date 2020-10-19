@@ -57,18 +57,18 @@ export class TwitterClientParameters {
         // IMPORTANT NOTE: The setter is for convenience. It is strongly recommended to create a new TwitterClient instead.
         // As using this setter could result in unexpected concurrency between the time of set and the execution of previous
         // non awaited async operations.
-        get Credentials(): IReadOnlyTwitterCredentials {
+        get credentials(): IReadOnlyTwitterCredentials {
           return this._credentials;
         }
 
-        set Credentials(value: IReadOnlyTwitterCredentials) {
+        set credentials(value: IReadOnlyTwitterCredentials) {
           this._credentials = new ReadOnlyTwitterCredentials(value);
         }
 
 
         constructor (parameters?: TwitterClientParameters) {
-          this.Credentials = credentials;
-          this.Config = parameters?.Settings ?? new TweetinviSettings();
+          this.credentials = credentials;
+          this.config = parameters?.Settings ?? new TweetinviSettings();
 
           if (parameters?.Container == null) {
             if (!TweetinviContainer.Container.IsInitialized) {
@@ -100,85 +100,85 @@ export class TwitterClientParameters {
           this._tweetinviContainer.BeforeRegistrationCompletes -= BeforeRegistrationDelegate;
 
           let requestExecutor = this._tweetinviContainer.Resolve<IRawExecutors>();
-          this.Raw = requestExecutor;
+          this.raw = requestExecutor;
 
           let parametersValidator = this._tweetinviContainer.Resolve<IParametersValidator>();
-          this.ParametersValidator = parametersValidator;
+          this.parametersValidator = parametersValidator;
 
-          this.Auth = this._tweetinviContainer.Resolve<IAuthClient>();
-          this.AccountSettings = this._tweetinviContainer.Resolve<IAccountSettingsClient>();
-          this.Execute = this._tweetinviContainer.Resolve<IExecuteClient>();
-          this.Help = this._tweetinviContainer.Resolve<IHelpClient>();
-          this.Lists = this._tweetinviContainer.Resolve<IListsClient>();
-          this.Messages = this._tweetinviContainer.Resolve<IMessagesClient>();
-          this.RateLimits = this._tweetinviContainer.Resolve<IRateLimitsClient>();
-          this.Search = this._tweetinviContainer.Resolve<ISearchClient>();
-          this.Streams = this._tweetinviContainer.Resolve<IStreamsClient>();
-          this.Timelines = this._tweetinviContainer.Resolve<ITimelinesClient>();
-          this.Trends = this._tweetinviContainer.Resolve<ITrendsClient>();
-          this.Tweets = this._tweetinviContainer.Resolve<ITweetsClient>();
-          this.Upload = this._tweetinviContainer.Resolve<IUploadClient>();
-          this.Users = this._tweetinviContainer.Resolve<IUsersClient>();
-          this.AccountActivity = this._tweetinviContainer.Resolve<IAccountActivityClient>();
+          this.auth = this._tweetinviContainer.Resolve<IAuthClient>();
+          this.accountSettings = this._tweetinviContainer.Resolve<IAccountSettingsClient>();
+          this.execute = this._tweetinviContainer.Resolve<IExecuteClient>();
+          this.help = this._tweetinviContainer.Resolve<IHelpClient>();
+          this.lists = this._tweetinviContainer.Resolve<IListsClient>();
+          this.messages = this._tweetinviContainer.Resolve<IMessagesClient>();
+          this.rateLimits = this._tweetinviContainer.Resolve<IRateLimitsClient>();
+          this.search = this._tweetinviContainer.Resolve<ISearchClient>();
+          this.streams = this._tweetinviContainer.Resolve<IStreamsClient>();
+          this.timelines = this._tweetinviContainer.Resolve<ITimelinesClient>();
+          this.trends = this._tweetinviContainer.Resolve<ITrendsClient>();
+          this.tweets = this._tweetinviContainer.Resolve<ITweetsClient>();
+          this.upload = this._tweetinviContainer.Resolve<IUploadClient>();
+          this.users = this._tweetinviContainer.Resolve<IUsersClient>();
+          this.accountActivity = this._tweetinviContainer.Resolve<IAccountActivityClient>();
 
           this._tweetinviContainer.AssociatedClient = this;
 
           this._twitterClientEvents = this._tweetinviContainer.Resolve<ITwitterClientEvents>();
-          this.Factories = this._tweetinviContainer.Resolve<ITwitterClientFactories>();
-          this.Json = this._tweetinviContainer.Resolve<IJsonClient>();
+          this.factories = this._tweetinviContainer.Resolve<ITwitterClientFactories>();
+          this.json = this._tweetinviContainer.Resolve<IJsonClient>();
 
           let rateLimitCacheManager = this._tweetinviContainer.Resolve<IRateLimitCacheManager>();
-          rateLimitCacheManager.RateLimitsClient = this.RateLimits;
+          rateLimitCacheManager.RateLimitsClient = this.rateLimits;
         }
 
-      public Config: ITweetinviSettings;
+      public config: ITweetinviSettings;
 
-      public Auth: IAuthClient;
-      public AccountSettings: IAccountSettingsClient;
-      public Execute: IExecuteClient;
-      public Help: IHelpClient;
-      public Lists: IListsClient;
-      public Messages: IMessagesClient;
-      public RateLimits: IRateLimitsClient;
-      public Search: ISearchClient;
-      public Streams: IStreamsClient;
-      public Timelines: ITimelinesClient;
-      public Trends: ITrendsClient;
-      public Tweets: ITweetsClient;
-      public Upload: IUploadClient;
-      public Users: IUsersClient;
-      public AccountActivity: IAccountActivityClient;
+      public auth: IAuthClient;
+      public accountSettings: IAccountSettingsClient;
+      public execute: IExecuteClient;
+      public help: IHelpClient;
+      public lists: IListsClient;
+      public messages: IMessagesClient;
+      public rateLimits: IRateLimitsClient;
+      public search: ISearchClient;
+      public streams: IStreamsClient;
+      public timelines: ITimelinesClient;
+      public trends: ITrendsClient;
+      public tweets: ITweetsClient;
+      public upload: IUploadClient;
+      public users: IUsersClient;
+      public accountActivity: IAccountActivityClient;
 
-        get Events(): IExternalClientEvents {
+        get events(): IExternalClientEvents {
           return this._twitterClientEvents;
         }
 
-        public Factories: ITwitterClientFactories;
-        public Json: IJsonClient;
+        public factories: ITwitterClientFactories;
+        public json: IJsonClient;
 
-        public ParametersValidator: IParametersValidator;
-        public Raw: IRawExecutor;
+        public parametersValidator: IParametersValidator;
+        public raw: IRawExecutor;
 
-      public CreateTwitterExecutionContext(): ITwitterExecutionContext {
+      public createTwitterExecutionContext(): ITwitterExecutionContext {
         let result = new TwitterExecutionContext();
-        result.requestFactory = this.CreateRequest;
+        result.requestFactory = this.createRequest;
         result.container = this._tweetinviContainer;
         result.events = this._twitterClientEvents;
 
         return result;
       }
 
-      public CreateRequest(): ITwitterRequest {
+      public createRequest(): ITwitterRequest {
         let twitterQuery = new TwitterQuery();
         // we are cloning here to ensure that the context will never be modified regardless of concurrency
-        twitterQuery.twitterCredentials = new TwitterCredentials(this.Credentials);
+        twitterQuery.twitterCredentials = new TwitterCredentials(this.credentials);
 
         let request = new TwitterRequest();
-        request.executionContext = this.CreateTwitterExecutionContext();
+        request.executionContext = this.createTwitterExecutionContext();
         request.query = twitterQuery;
 
-        request.query.initialize(this.Config);
-        request.executionContext.Initialize(this.Config);
+        request.query.initialize(this.config);
+        request.executionContext.initialize(this.config);
 
         return request;
       }

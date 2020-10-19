@@ -4,7 +4,7 @@ import {TwitterLimits} from "../../Settings/TwitterLimits";
 // For more information visit: https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-retweets_of_me
 export interface IGetRetweetsOfMeTimelineParameters extends ITimelineRequestParameters {
   // Include user entities.
-  IncludeUserEntities?: boolean;
+  includeUserEntities?: boolean;
 }
 
 export class GetRetweetsOfMeTimelineParameters extends TimelineRequestParameters implements IGetRetweetsOfMeTimelineParameters {
@@ -12,15 +12,15 @@ export class GetRetweetsOfMeTimelineParameters extends TimelineRequestParameters
     if (source) {
       super(source);
 
-      this.IncludeUserEntities = source.IncludeUserEntities;
+      this.includeUserEntities = source.includeUserEntities;
     } else {
       super();
 
-      super.PageSize = TwitterLimits.DEFAULTS.TIMELINE_RETWEETS_OF_ME_MAX_PAGE_SIZE;
+      super.pageSize = TwitterLimits.DEFAULTS.TIMELINE_RETWEETS_OF_ME_MAX_PAGE_SIZE;
     }
   }
 
-  public IncludeUserEntities?: boolean;
+  public includeUserEntities?: boolean;
 }
 
 // public GetRetweetsOfMeTimelineParameters()

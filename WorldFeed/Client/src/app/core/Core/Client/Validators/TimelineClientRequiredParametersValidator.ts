@@ -20,7 +20,7 @@ export class TimelineClientRequiredParametersValidator implements ITimelineClien
     }
 
     if (this.isIGetUserTimelineParameters(parameters)) {
-      this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.User, `${nameof(parameters.User)}`);
+      this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.user, `${nameof(parameters.user)}`);
     }
   }
 

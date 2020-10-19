@@ -94,16 +94,16 @@ export class TwitterListsRequester extends BaseRequester implements ITwitterList
   public getListsOwnedByAccountIterator(parameters: IGetListsOwnedByAccountParameters): ITwitterPageIterator<ITwitterResult<ITwitterListCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request: ITwitterRequest = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request: ITwitterRequest = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._twitterListController.getListsOwnedByUserIterator(new GetListsOwnedByAccountByUserParameters(parameters), request);
   }
 
   public getListsOwnedByUserIterator(parameters: IGetListsOwnedByUserParameters): ITwitterPageIterator<ITwitterResult<ITwitterListCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request: ITwitterRequest = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request: ITwitterRequest = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._twitterListController.getListsOwnedByUserIterator(parameters, request);
   }
 
@@ -126,24 +126,24 @@ export class TwitterListsRequester extends BaseRequester implements ITwitterList
   public getAccountListMembershipsIterator(parameters: IGetAccountListMembershipsParameters): ITwitterPageIterator<ITwitterResult<ITwitterListCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request: ITwitterRequest = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request: ITwitterRequest = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._twitterListController.getUserListMembershipsIterator(new GetUserListMembershipsParameters(parameters), request);
   }
 
   public getUserListMembershipsIterator(parameters: IGetUserListMembershipsParameters): ITwitterPageIterator<ITwitterResult<ITwitterListCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request: ITwitterRequest = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request: ITwitterRequest = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._twitterListController.getUserListMembershipsIterator(parameters, request);
   }
 
   public getMembersOfListIterator(parameters: IGetMembersOfListParameters): ITwitterPageIterator<ITwitterResult<IUserCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request: ITwitterRequest = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request: ITwitterRequest = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._twitterListController.getMembersOfListIterator(parameters, request);
   }
 
@@ -175,8 +175,8 @@ export class TwitterListsRequester extends BaseRequester implements ITwitterList
   public getListSubscribersIterator(parameters: IGetListSubscribersParameters): ITwitterPageIterator<ITwitterResult<IUserCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request: ITwitterRequest = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request: ITwitterRequest = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._twitterListController.getListSubscribersIterator(parameters, request);
 
   }
@@ -184,16 +184,16 @@ export class TwitterListsRequester extends BaseRequester implements ITwitterList
   public getAccountListSubscriptionsIterator(parameters: IGetAccountListSubscriptionsParameters): ITwitterPageIterator<ITwitterResult<ITwitterListCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request: ITwitterRequest = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request: ITwitterRequest = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._twitterListController.getUserListSubscriptionsIterator(new GetUserListSubscriptionsParameters(parameters), request);
   }
 
   public getUserListSubscriptionsIterator(parameters: IGetUserListSubscriptionsParameters): ITwitterPageIterator<ITwitterResult<ITwitterListCursorQueryResultDTO>> {
     this._validator.validate(parameters);
 
-    let request: ITwitterRequest = super.TwitterClient.CreateRequest();
-    request.executionContext.Converters = JsonQueryConverterRepository.Converters;
+    let request: ITwitterRequest = super.TwitterClient.createRequest();
+    request.executionContext.converters = JsonQueryConverterRepository.Converters;
     return this._twitterListController.getUserListSubscriptionsIterator(parameters, request);
   }
 
@@ -205,7 +205,7 @@ export class TwitterListsRequester extends BaseRequester implements ITwitterList
   public getTweetsFromListIterator(parameters: IGetTweetsFromListParameters): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number> {    // long?
     this._validator.validate(parameters);
 
-    let request: ITwitterRequest = super.TwitterClient.CreateRequest();
+    let request: ITwitterRequest = super.TwitterClient.createRequest();
     return this._twitterListController.getTweetsFromListIterator(parameters, request);
   }
 }

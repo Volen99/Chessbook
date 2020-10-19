@@ -6,7 +6,7 @@ import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/sourc
 // For more information read : https://developer.twitter.com/en/docs/trends/locations-with-trending-topics/api-reference/get-trends-closest
 export interface IGetTrendsLocationCloseToParameters extends ICustomRequestParameters {
   // Coordinates from where to search trends
-  Coordinates: ICoordinates;
+  coordinates: ICoordinates;
 }
 
 export class GetTrendsLocationCloseToParameters extends CustomRequestParameters implements IGetTrendsLocationCloseToParameters {
@@ -21,10 +21,10 @@ export class GetTrendsLocationCloseToParameters extends CustomRequestParameters 
       coordinatesCurrent = latitudeOrCoordinates;
     }
 
-    this.Coordinates = coordinatesCurrent;
+    this.coordinates = coordinatesCurrent;
   }
 
-  public Coordinates: ICoordinates;
+  public coordinates: ICoordinates;
 }
 
 

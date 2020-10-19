@@ -5,16 +5,16 @@ import ArgumentOutOfRangeException from "../../../../c#-objects/TypeScript.NET-C
 // For more information read : https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-search
 export interface ISearchUsersParameters extends ICustomRequestParameters {
   // Query to search for people.
-  Query: string;
+  query: string;
 
   // Search result page to retrieve.
-  Page?: number;
+  page?: number;
 
   // Number of Users to Retrieve. Cannot be more than 1000 as per the documentation. | I am the documentation. 01.10.2020
-  PageSize: number;
+  pageSize: number;
 
   // Retrieve the user entities.
-  IncludeEntities?: boolean;
+  includeEntities?: boolean;
 }
 
 // https://dev.twitter.com/rest/reference/get/users/search
@@ -23,44 +23,44 @@ export class SearchUsersParameters extends CustomRequestParameters implements IS
     if (SearchUsersParameters.isISearchUsersParameters(queryOrParameters)) {
       super(queryOrParameters);
 
-      this.PageSize = queryOrParameters.PageSize;
-      this.Query = queryOrParameters.Query;
-      this.IncludeEntities = queryOrParameters.IncludeEntities;
-      this.Page = queryOrParameters.Page;
+      this.pageSize = queryOrParameters.pageSize;
+      this.query = queryOrParameters.query;
+      this.includeEntities = queryOrParameters.includeEntities;
+      this.page = queryOrParameters.page;
     } else {
-      this.PageSize = TwitterLimits.DEFAULTS.SEARCH_USERS_MAX_PAGE_SIZE;
-      this.Query = queryOrParameters;
-      this.IncludeEntities = true;
-      this.Page = 1;
+      this.pageSize = TwitterLimits.DEFAULTS.SEARCH_USERS_MAX_PAGE_SIZE;
+      this.query = queryOrParameters;
+      this.includeEntities = true;
+      this.page = 1;
     }
   }
 
-  public Query: string;
+  public query: string;
 
   private _page?: number;
 
-  get Page(): number {  // int?
+  get page(): number {  // int?
     return this._page;
   }
 
-  set Page(value: number) {
+  set page(value: number) {
     if (value == null) {
       this._page = null;
     } else {
       if (this._page < 1) {
-        throw new ArgumentOutOfRangeException(nameof(this.Page), "Search users page number cannot be lower than 1");
+        throw new ArgumentOutOfRangeException(nameof(this.page), "Search users page number cannot be lower than 1");
       }
 
       this._page = value;
     }
   }
 
-  public PageSize: number;
+  public pageSize: number;
 
-  public IncludeEntities?: boolean;
+  public includeEntities?: boolean;
 
   private static isISearchUsersParameters(queryOrParameters: any): queryOrParameters is ISearchUsersParameters {
-    return (queryOrParameters as ISearchUsersParameters).Query !== undefined;
+    return (queryOrParameters as ISearchUsersParameters).query !== undefined;
   }
 }
 

@@ -19,77 +19,78 @@ import {IExecuteClient} from "./Client/Clients/IExecuteClient";
 import {IHelpClient} from "./Client/Clients/IHelpClient";
 import {IAuthClient} from "./Client/Clients/IAuthClient";
 import {IAccountSettingsClient} from "./Client/Clients/IAccountSettingsClient";
+import {IExternalClientEvents} from "../Core/Events/TweetinviGlobalEvents";
 
 export interface ITwitterClient {
   // Client to execute all actions related with the account associated with the clients' credentials
-  AccountSettings: IAccountSettingsClient;
+  accountSettings: IAccountSettingsClient;
 
   // Client to execute all actions related with authentication
-  Auth: IAuthClient;
+  auth: IAuthClient;
 
   // Client to execute all actions from the help path
-  Help: IHelpClient;
+  help: IHelpClient;
 
   // Client to execute custom requests
-  Execute: IExecuteClient;
+  execute: IExecuteClient;
 
   // Client to execute all actions related with twitter lists
-  Lists: IListsClient;
+  lists: IListsClient;
 
   // Client to execute all actions related with messages
-  Messages: IMessagesClient;
+  messages: IMessagesClient;
 
   // Client to execute all actions related with rate limits
-  RateLimits: IRateLimitsClient;
+  rateLimits: IRateLimitsClient;
 
   // Client to execute all actions related with search
-  Search: ISearchClient;
+  search: ISearchClient;
 
   // Client to create all type of streams
-  Streams: IStreamsClient;
+  streams: IStreamsClient;
 
   // Client to execute all actions related with timelines
-  Timelines: ITimelinesClient;
+  timelines: ITimelinesClient;
 
   // Client to execute all actions related with trends
-  Trends: ITrendsClient;
+  trends: ITrendsClient;
 
   // Client to execute all actions related with tweets
-  Tweets: ITweetsClient;
+  tweets: ITweetsClient;
 
   // Client to execute all actions related with users
-  Users: IUsersClient;
+  users: IUsersClient;
 
   // Client to execute all actions related with media upload
-  Upload: IUploadClient;
+  upload: IUploadClient;
 
   // Client to execute all the actions related with webhooks
-  AccountActivity: IAccountActivityClient;
+  accountActivity: IAccountActivityClient;
 
   // Execute Request and receive request results
-  Raw: IRawExecutors;
+  raw: IRawExecutors;
 
   // Client's config
-  Config: ITweetinviSettings;
+  config: ITweetinviSettings;
 
   // Client's credentials
-  Credentials: IReadOnlyTwitterCredentials;
+  credentials: IReadOnlyTwitterCredentials;
 
   // Listen to events raised by actions performed by the client
-  Events: IExternalClientEvents;
+  events: IExternalClientEvents;
 
   // Simple way to construct tweetinvi objects
-  Factories: ITwitterClientFactories;
+  factories: ITwitterClientFactories;
 
   // Help you perform json operations with Tweetinvi objects
-  Json: IJsonClient;
+  json: IJsonClient;
 
   // Validate parameters to ensure that they meet the default criteria
-  ParametersValidator: IParametersdValidator;
+  parametersValidator: IParametersdValidator;
 
   // Creates skeleton request representing a request from the client
-  CreateRequest(): ITwitterRequest;
+  createRequest(): ITwitterRequest;
 
   // Create an execution context for a request to be sent to Twitter.
-  CreateTwitterExecutionContext(): ITwitterExecutionContext;
+  createTwitterExecutionContext(): ITwitterExecutionContext;
 }

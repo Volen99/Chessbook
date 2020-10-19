@@ -30,7 +30,7 @@ export enum OEmbedTweetWidgetType {
 // For more information visit : https://developer.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-oembed
 export interface IGetOEmbedTweetParameters extends ICustomRequestParameters {
   // The identifier of the tweet for which you want to get the oembed tweet
-  Tweet: ITweetIdentifier;
+  tweet: ITweetIdentifier;
 
   /// <summary>
   /// The maximum width of a rendered Tweet in whole pixels.
@@ -39,48 +39,48 @@ export interface IGetOEmbedTweetParameters extends ICustomRequestParameters {
   ///
   /// <para>Min: 220; Max: 550</para>
   /// </summary>
-  MaxWidth?: number;
+  maxWidth?: number;
 
   // When set to true links in a Tweet are not expanded to photo, video, or link previews.
-  HideMedia?: boolean;
+  hideMedia?: boolean;
 
   // When set to true a collapsed version of the previous Tweet in a conversation thread
   // will not be displayed when the requested Tweet is in reply to another Tweet.
-  HideThread?: boolean;
+  hideThread?: boolean;
 
   // When set to true the script responsible for loading widgets.js will not be returned.
   // Your webpages should include their own reference to widgets.js
   // for use across all Twitter widgets including Embedded Tweets.
-  OmitScript?: boolean;
+  omitScript?: boolean;
 
   // Specifies whether the embedded Tweet should be floated left, right, or center
   // in the page relative to the parent element.
-  Alignment?: OEmbedTweetAlignment;
+  alignment?: OEmbedTweetAlignment;
 
   // A list of Twitter usernames related to your content.
   // This value will be forwarded to Tweet action intents if a viewer chooses
   // to reply, like, or retweet the embedded Tweet.
-  RelatedUsernames: string[];
+  relatedUsernames: string[];
 
   /// <summary>
   /// Request returned HTML and a rendered Tweet in the specified Twitter language supported by embedded Tweets.
   /// <para> https://developer.twitter.com/en/docs/twitter-for-websites/twitter-for-websites-supported-languages/overview </para>
   /// </summary>
-  Language?: Language;
+  language?: Language;
 
   // When set to dark, the Tweet is displayed with light text over a dark background.
-  Theme?: OEmbedTweetTheme;
+  theme?: OEmbedTweetTheme;
 
   // Adjust the color of Tweet text links with a hexadecimal color value.
-  LinkColor: string;
+  linkColor: string;
 
   // Set to video to return a Twitter Video embed for the given Tweet.
-  WidgetType?: OEmbedTweetWidgetType;
+  widgetType?: OEmbedTweetWidgetType;
 
   // This is the `dnt` parameter.
   // When set to true, the Tweet and its embedded page on your site are not used for purposes
   // that include personalized suggestions and personalized ads.
-  EnablePersonalisationAndSuggestions?: boolean;
+  enablePersonalisationAndSuggestions?: boolean;
 }
 
 export class GetOEmbedTweetParameters extends CustomRequestParameters implements IGetOEmbedTweetParameters {
@@ -88,24 +88,24 @@ export class GetOEmbedTweetParameters extends CustomRequestParameters implements
     super();
 
     if (Type.isNumber(tweetIdOrTweet)) {
-      this.Tweet = new TweetIdentifier(tweetIdOrTweet);
+      this.tweet = new TweetIdentifier(tweetIdOrTweet);
     } else {
-      this.Tweet = tweetIdOrTweet;
+      this.tweet = tweetIdOrTweet;
     }
   }
 
-  public Tweet: ITweetIdentifier;
-  public MaxWidth?: number;
-  public HideMedia?: boolean;
-  public HideThread?: boolean;
-  public OmitScript?: boolean;
-  public Alignment?: OEmbedTweetAlignment;
-  public RelatedUsernames: string[];
-  public Language?: Language;
-  public Theme?: OEmbedTweetTheme;
-  public LinkColor: string;
-  public WidgetType?: OEmbedTweetWidgetType;
-  public EnablePersonalisationAndSuggestions?: boolean;
+  public tweet: ITweetIdentifier;
+  public maxWidth?: number;
+  public hideMedia?: boolean;
+  public hideThread?: boolean;
+  public omitScript?: boolean;
+  public alignment?: OEmbedTweetAlignment;
+  public relatedUsernames: string[];
+  public language?: Language;
+  public theme?: OEmbedTweetTheme;
+  public linkColor: string;
+  public widgetType?: OEmbedTweetWidgetType;
+  public enablePersonalisationAndSuggestions?: boolean;
 }
 
 // public GetOEmbedTweetParameters(long tweetId) : this(new TweetIdentifier(tweetId))

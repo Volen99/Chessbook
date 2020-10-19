@@ -3,15 +3,15 @@ import {CustomRequestParameters, ICustomRequestParameters} from "../CustomReques
 // For more information read : https://developer.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/get-saved_searches-show-id
 export interface IGetSavedSearchParameters extends ICustomRequestParameters {
   // The ID of the saved search.
-  SavedSearchId: number;
+  savedSearchId: number;
 }
 
 export class GetSavedSearchParameters extends CustomRequestParameters implements IGetSavedSearchParameters {
   constructor(savedSearchId: number) {
     super();
 
-    this.SavedSearchId = savedSearchId;
+    this.savedSearchId = savedSearchId;
   }
 
-  public SavedSearchId: number;
+  public savedSearchId: number;
 }

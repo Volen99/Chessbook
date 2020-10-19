@@ -86,10 +86,10 @@ export class ChunkedUploader implements IChunkedUploader {
     let multipartQuery = new MultipartTwitterQuery(request.query);
     multipartQuery.url = appendQuery;
     multipartQuery.httpMethod = HttpMethod.POST;
-    multipartQuery.Binaries = [parameters.binary];              // new[] { parameters.Binary };
+    multipartQuery.binaries = [parameters.binary];              // new[] { parameters.Binary };
     multipartQuery.timeout = parameters.timeout ?? TimeSpan.fromMilliseconds(-1); // Timeout.Infinite
-    multipartQuery.ContentId = parameters.mediaType;
-    multipartQuery.UploadProgressChanged = args => {
+    multipartQuery.contentId = parameters.mediaType;
+    multipartQuery.uploadProgressChanged = args => {
       let progressChangedEventArgs = new MediaUploadProgressChangedEventArgs(UploadProgressState.PROGRESS_CHANGED, args.NumberOfBytesUploaded, args.TotalOfBytesToUpload);
       parameters.uploadProgressChanged(progressChangedEventArgs);
     };
@@ -151,10 +151,10 @@ export class ChunkedUploader implements IChunkedUploader {
 
   private UploadInitModel = class {
     // [JsonProperty("media_id")];
-    public MediaId: number;
+    public mediaId: number;
 
     // [JsonProperty("expires_after_secs")];
-    public ExpiresAfterInSeconds: number;
+    public expiresAfterInSeconds: number;
   };
 }
 

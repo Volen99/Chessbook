@@ -26,7 +26,7 @@ export class MessagesClient implements IMessagesClient {
   }
 
   get parametersValidator(): IMessagesClientParametersValidator {
-    return this._client.ParametersValidator;
+    return this._client.parametersValidator;
   }
 
   public async publishMessageAsync(textOrParameters: string | IPublishMessageParameters, recipientIdOrUser?: number | IUserIdentifier): Promise<IMessage> {
@@ -45,7 +45,7 @@ export class MessagesClient implements IMessagesClient {
     }
 
     let twitterResult = await this._messageRequester.publishMessageAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createMessage(twitterResult?.model);
+    return this._client.factories.createMessage(twitterResult?.model);
   }
 
   public async getMessageAsync(messageIdOrParameters: number | IGetMessageParameters): Promise<IMessage> {
@@ -57,7 +57,7 @@ export class MessagesClient implements IMessagesClient {
     }
 
     let twitterResult = await this._messageRequester.getMessageAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createMessage(twitterResult?.model);
+    return this._client.factories.createMessage(twitterResult?.model);
   }
 
   public async getMessagesAsync(parameters?: IGetMessagesParameters): Promise<IMessage[]> {
@@ -96,7 +96,7 @@ export class MessagesClient implements IMessagesClient {
         return messageDto as IMessageEventWithAppDTO;
       });
 
-      return this._client.Factories.createMessages(messageDtos);
+      return this._client.factories.createMessages(messageDtos);
     });
   }
 

@@ -9,18 +9,18 @@ export enum GetTrendsExclude {
 export interface IGetTrendsAtParameters extends ICustomRequestParameters {
   // The Yahoo! Where On Earth ID of the location to return trending information for.
   // Global information is available by using 1 as the WOEID .
-  Woeid: number;
+  woeid: number;
 
   // Setting this equal to hashtags will remove all hashtags from the trends list.
-  Exclude?: GetTrendsExclude;
+  exclude?: GetTrendsExclude;
 }
 
 export class GetTrendsAtParameters extends CustomRequestParameters implements IGetTrendsAtParameters {
   constructor(woeid: number) {
     super();
-    this.Woeid = woeid;
+    this.woeid = woeid;
   }
 
-  public Woeid: number;
-  public Exclude?: GetTrendsExclude;
+  public woeid: number;
+  public exclude?: GetTrendsExclude;
 }

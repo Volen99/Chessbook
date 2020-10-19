@@ -16,8 +16,8 @@ export class GetFollowersParameters extends GetFollowerIdsParameters implements 
   constructor(usernameOrUserIdOrUserParameters: | string | number | IUserIdentifier | IGetFollowersParameters) {
     if (GetFollowersParameters.isIGetFollowersParameters(usernameOrUserIdOrUserParameters)) {
       super(usernameOrUserIdOrUserParameters);
-      this.SkipStatus = usernameOrUserIdOrUserParameters.SkipStatus;
-      this.IncludeEntities = usernameOrUserIdOrUserParameters.IncludeEntities;
+      this.skipStatus = usernameOrUserIdOrUserParameters.skipStatus;
+      this.includeEntities = usernameOrUserIdOrUserParameters.includeEntities;
       this.GetUsersPageSize = usernameOrUserIdOrUserParameters.GetUsersPageSize;
     } else {
       let userCurrent: IUserIdentifier;
@@ -33,8 +33,8 @@ export class GetFollowersParameters extends GetFollowerIdsParameters implements 
     }
   }
 
-  public SkipStatus?: boolean;
-  public IncludeEntities?: boolean;
+  public skipStatus?: boolean;
+  public includeEntities?: boolean;
   public GetUsersPageSize: number;
 
   private static isIGetFollowersParameters(usernameOrUserIdOrUserParameters: | string | number | IUserIdentifier | IGetFollowersParameters):

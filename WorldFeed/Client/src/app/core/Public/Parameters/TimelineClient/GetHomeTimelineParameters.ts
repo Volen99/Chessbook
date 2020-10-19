@@ -4,7 +4,7 @@ import {TwitterLimits} from "../../Settings/TwitterLimits";
 // For more information visit : https://developer.twitter.com/en/docs/tweets/timelines/api-reference/get-statuses-home_timeline
 export interface IGetHomeTimelineParameters extends ITimelineRequestParameters {
   // Exclude reply tweets from the result set.
-  ExcludeReplies: boolean;
+  excludeReplies: boolean;
 }
 
 export class GetHomeTimelineParameters extends TimelineRequestParameters implements IGetHomeTimelineParameters {
@@ -12,16 +12,16 @@ export class GetHomeTimelineParameters extends TimelineRequestParameters impleme
     if (source) {
       super(source);
 
-      super.PageSize = source.PageSize;
-      this.ExcludeReplies = source.ExcludeReplies;
+      super.pageSize = source.pageSize;
+      this.excludeReplies = source.excludeReplies;
     } else {
       super();
 
-      super.PageSize = TwitterLimits.DEFAULTS.TIMELINE_HOME_PAGE_MAX_PAGE_SIZE;
+      super.pageSize = TwitterLimits.DEFAULTS.TIMELINE_HOME_PAGE_MAX_PAGE_SIZE;
     }
   }
 
-  public ExcludeReplies: boolean;
+  public excludeReplies: boolean;
 }
 
 

@@ -100,7 +100,7 @@ export class UsersClientParametersValidator implements IUsersClientParametersVal
   }
 
   private get Limits(): TwitterLimits {
-    return this._client.Config.Limits;
+    return this._client.config.limits;
   }
 
   public validate(parameters: UserParameters): void {

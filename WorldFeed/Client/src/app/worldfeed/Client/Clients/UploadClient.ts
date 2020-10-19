@@ -18,11 +18,11 @@ export class UploadClient implements IUploadClient {
 
   constructor(client: ITwitterClient) {
     this._client = client;
-    this._uploadRequester = client.Raw.upload;
+    this._uploadRequester = client.raw.upload;
   }
 
   get parametersValidator(): IUploadClientParametersValidator {
-    return this._client.ParametersValidator;
+    return this._client.parametersValidator;
   }
 
   public async uploadBinaryAsync(binaryOrParameters: number[] | IUploadParameters): Promise<IMedia> {

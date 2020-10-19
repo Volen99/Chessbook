@@ -34,7 +34,7 @@ export class AccountSettingsClientParametersValidator implements IAccountSetting
   }
 
   private get Limits(): TwitterLimits {
-    return this._client.Config.Limits;
+    return this._client.config.limits;
   }
 
   public validate(parameters: AccountActivityParameters): void {

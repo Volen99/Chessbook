@@ -34,7 +34,7 @@ export class SearchClient implements ISearchClient {
   }
 
   get parametersValidator(): ISearchClientParametersValidator {
-    return this._client.ParametersValidator;
+    return this._client.parametersValidator;
   }
 
   public async searchTweetsAsync(queryOrGeoCodeOrParameters: string | IGeoCode | ISearchTweetsParameters): Promise<ITweet[]> {
@@ -57,9 +57,9 @@ export class SearchClient implements ISearchClient {
       parameters = new SearchTweetsParameters(queryOrParameters);
     }
 
-    let pageIterator = this._client.Raw.search.getSearchTweetsIterator(parameters);
+    let pageIterator = this._client.raw.search.getSearchTweetsIterator(parameters);
     let page = await pageIterator.nextPageAsync();                                     // .ConfigureAwait(false);
-    return this._client.Factories.createSearchResult(page?.content?.model);
+    return this._client.factories.createSearchResult(page?.content?.model);
   }
 
   public getSearchTweetsIterator(queryOrParameters: string | ISearchTweetsParameters): ITwitterIterator<ITweet, number> {       // long?
@@ -70,9 +70,9 @@ export class SearchClient implements ISearchClient {
       parameters = new SearchTweetsParameters(queryOrParameters);
     }
 
-    let pageIterator = this._client.Raw.search.getSearchTweetsIterator(parameters);
+    let pageIterator = this._client.raw.search.getSearchTweetsIterator(parameters);
     return new TwitterIteratorProxy<ITwitterResult<ISearchResultsDTO>, ITweet, number>(pageIterator,  // number?
-      twitterResult => this._client.Factories.createTweets(twitterResult?.model?.TweetDTOs));
+      twitterResult => this._client.factories.createTweets(twitterResult?.model?.TweetDTOs));
   }
 
   public filterTweets(tweets: ITweet[], filter?: OnlyGetTweetsThatAre, tweetsMustContainGeoInformation: boolean): ITweet[] {
@@ -113,9 +113,9 @@ export class SearchClient implements ISearchClient {
       parameters = new SearchUsersParameters(queryOrParameters);
     }
 
-    let pageIterator = this._client.Raw.search.getSearchUsersIterator(parameters);
+    let pageIterator = this._client.raw.search.getSearchUsersIterator(parameters);
     return new TwitterIteratorProxy<IFilteredTwitterResult<UserDTO[]>, IUser, number>(pageIterator,    // number?
-      twitterResult => this._client.Factories.createUsers(twitterResult?.FilteredDTO));
+      twitterResult => this._client.factories.createUsers(twitterResult?.FilteredDTO));
   }
 
   public async createSavedSearchAsync(queryOrParameters: string | ICreateSavedSearchParameters): Promise<ISavedSearch> {
@@ -126,8 +126,8 @@ export class SearchClient implements ISearchClient {
       parameters = new SearchUsersParameters(queryOrParameters);
     }
 
-    let twitterResult = await this._client.Raw.search.createSavedSearchAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createSavedSearch(twitterResult?.model);
+    let twitterResult = await this._client.raw.search.createSavedSearchAsync(parameters); // .ConfigureAwait(false);
+    return this._client.factories.createSavedSearch(twitterResult?.model);
   }
 
   public async getSavedSearchAsync(savedSearchIdOrParameters: number | IGetSavedSearchParameters): Promise<ISavedSearch> {
@@ -138,8 +138,8 @@ export class SearchClient implements ISearchClient {
       parameters = new GetSavedSearchParameters(savedSearchIdOrParameters);
     }
 
-    let twitterResult = await this._client.Raw.search.getSavedSearchAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createSavedSearch(twitterResult?.model);
+    let twitterResult = await this._client.raw.search.getSavedSearchAsync(parameters); // .ConfigureAwait(false);
+    return this._client.factories.createSavedSearch(twitterResult?.model);
   }
 
   public async listSavedSearchesAsync(parameters?: IListSavedSearchesParameters): Promise<ISavedSearch[]> {
@@ -150,8 +150,8 @@ export class SearchClient implements ISearchClient {
       parametersCurrent = new ListSavedSearchesParameters();
     }
 
-    let twitterResult = await this._client.Raw.search.listSavedSearchesAsync(parametersCurrent); // .ConfigureAwait(false);
-    return twitterResult?.model?.map(this._client.Factories.createSavedSearch); // .ToArray();
+    let twitterResult = await this._client.raw.search.listSavedSearchesAsync(parametersCurrent); // .ConfigureAwait(false);
+    return twitterResult?.model?.map(this._client.factories.createSavedSearch); // .ToArray();
   }
 
   public async destroySavedSearchAsync(savedSearchIdOrSearchOrParameters: number | ISavedSearch | IDestroySavedSearchParameters): Promise<ISavedSearch> {
@@ -162,23 +162,23 @@ export class SearchClient implements ISearchClient {
       parameters = new DestroySavedSearchParameters(savedSearchIdOrSearchOrParameters);
     }
 
-    let twitterResult = await this._client.Raw.search.destroySavedSearchAsync(parameters); // .ConfigureAwait(false);
-    return this._client.Factories.createSavedSearch(twitterResult?.model);
+    let twitterResult = await this._client.raw.search.destroySavedSearchAsync(parameters); // .ConfigureAwait(false);
+    return this._client.factories.createSavedSearch(twitterResult?.model);
   }
 
   private isISearchTweetsParameters(queryOrGeoCodeOrParameters: any): queryOrGeoCodeOrParameters is ISearchTweetsParameters {
-    return (queryOrGeoCodeOrParameters as ISearchTweetsParameters).Filters !== undefined;
+    return (queryOrGeoCodeOrParameters as ISearchTweetsParameters).filters !== undefined;
   }
 
   private isICreateSavedSearchParameters(queryOrParameters: any): queryOrParameters is ICreateSavedSearchParameters {
-    return (queryOrParameters as ICreateSavedSearchParameters).Query !== undefined;
+    return (queryOrParameters as ICreateSavedSearchParameters).query !== undefined;
   }
 
   private isIGetSavedSearchParameters(savedSearchIdOrParameters: any): savedSearchIdOrParameters is IGetSavedSearchParameters {
-    return (savedSearchIdOrParameters as IGetSavedSearchParameters).SavedSearchId !== undefined;
+    return (savedSearchIdOrParameters as IGetSavedSearchParameters).savedSearchId !== undefined;
   }
 
   private isIDestroySavedSearchParameters(savedSearchIdOrSearchOrParameters: any): savedSearchIdOrSearchOrParameters is IDestroySavedSearchParameters {
-    return (savedSearchIdOrSearchOrParameters as IDestroySavedSearchParameters).SavedSearchId !== undefined;
+    return (savedSearchIdOrSearchOrParameters as IDestroySavedSearchParameters).savedSearchId !== undefined;
   }
 }
