@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Sharebook\WorldFeed.csproj" />
+    <ProjectReference Include="..\Sharebook.Profile.Domain\WorldFeed.Profile.Domain.csproj" />
+    <ProjectReference Include="..\Sharebook.Profile.Infrastructure\WorldFeed.Profile.Infrastructure.csproj" />
+  </ItemGroup>
+
+
+</Project>
