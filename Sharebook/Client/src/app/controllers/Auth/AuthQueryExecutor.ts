@@ -12,6 +12,7 @@ import {InvalidateTokenResponse} from "../../core/Public/Models/Authentication/I
 import {CreateTokenResponseDTO} from "../../core/Core/DTO/CreateTokenResponseDTO";
 import {IAuthQueryGenerator} from "./AuthQueryGenerator";
 import {IOAuthWebRequestGeneratorFactory} from "../../webLogic/OAuthWebRequestGenerator";
+import {InjectionToken} from "@angular/core";
 
 export interface IAuthQueryExecutor {
   createBearerTokenAsync(parameters: ICreateBearerTokenParameters, request: ITwitterRequest): Promise<ITwitterResult<CreateTokenResponseDTO>>;
@@ -24,6 +25,11 @@ export interface IAuthQueryExecutor {
 
   invalidateAccessTokenAsync(parameters: IInvalidateAccessTokenParameters, request: ITwitterRequest): Promise<ITwitterResult<InvalidateTokenResponse>>;
 }
+
+export const IAuthQueryExecutorToken = new InjectionToken<IAuthQueryExecutor>('IAuthQueryExecutor', {
+  providedIn: 'root',
+  factory: () => new AuthQueryExecutor(),
+});
 
 export class AuthQueryExecutor implements IAuthQueryExecutor {
   private readonly _queryGenerator: IAuthQueryGenerator;

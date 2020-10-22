@@ -32,73 +32,74 @@ import {TwitterRequest} from "../core/Public/TwitterRequest";
 import {TwitterQuery} from "../core/Public/TwitterQuery";
 import {TwitterCredentials} from "../core/Public/Models/Authentication/TwitterCredentials";
 import {ITwitterClientEvents} from "../core/Core/Events/TweetinviGlobalEvents";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class TwitterClientParameters {
   constructor() {
     this.Settings = new TweetinviSettings();
   }
 
   public RateLimitCache: IRateLimitCache;
-  public Container: ITweetinviContainer;
+  // public Container: ITweetinviContainer;
   public Settings: ITweetinviSettings;
 
   // public event BeforeRegistrationCompletes: EventHandler<TweetinviContainerEventArgs>;
 
-  public RaiseBeforeRegistrationCompletes(args: TweetinviContainerEventArg): void {
-    args.TweetinviContainer.Raise(BeforeRegistrationCompletes, args);
-  }
+  // public RaiseBeforeRegistrationCompletes(args: TweetinviContainerEventArg): void {
+  //   args.TweetinviContainer.Raise(BeforeRegistrationCompletes, args);
+  // }
 }
 
-    export class TwitterClient implements ITwitterClient
-    {
-        private _credentials: IReadOnlyTwitterCredentials;
-        private readonly _tweetinviContainer: ITweetinviContainer;
-        private readonly _twitterClientEvents: ITwitterClientEvents;
+export class TwitterClient implements ITwitterClient {
+  private _credentials: IReadOnlyTwitterCredentials;
+  // private readonly _tweetinviContainer: ITweetinviContainer;
+  private readonly _twitterClientEvents: ITwitterClientEvents;
 
-        // IMPORTANT NOTE: The setter is for convenience. It is strongly recommended to create a new TwitterClient instead.
-        // As using this setter could result in unexpected concurrency between the time of set and the execution of previous
-        // non awaited async operations.
-        get credentials(): IReadOnlyTwitterCredentials {
-          return this._credentials;
-        }
-
-        set credentials(value: IReadOnlyTwitterCredentials) {
-          this._credentials = new ReadOnlyTwitterCredentials(value);
-        }
+  // IMPORTANT NOTE: The setter is for convenience. It is strongly recommended to create a new TwitterClient instead.
+  // As using this setter could result in unexpected concurrency between the time of set and the execution of previous
+  // non awaited async operations.
+  // get credentials(): IReadOnlyTwitterCredentials {
+  //   return this._credentials;
+  // }
+  //
+  // set credentials(value: IReadOnlyTwitterCredentials) {
+  //   this._credentials = new ReadOnlyTwitterCredentials(value);
+  // }
 
 
         constructor (parameters?: TwitterClientParameters) {
-          this.credentials = credentials;
+          // this.credentials = credentials;
           this.config = parameters?.Settings ?? new TweetinviSettings();
 
-          if (parameters?.Container == null) {
-            if (!TweetinviContainer.Container.IsInitialized) {
-              TweetinviContainer.Container.Initialize();
-            }
-          } else {
-            if (!parameters.Container.IsInitialized) {
-              throw new InvalidOperationException("Cannot create a client with a non initialized container!");
-            }
-          }
+          // if (parameters?.Container == null) {
+          //   if (!TweetinviContainer.Container.IsInitialized) {
+          //     TweetinviContainer.Container.Initialize();
+          //   }
+          // } else {
+          //   if (!parameters.Container.IsInitialized) {
+          //     throw new InvalidOperationException("Cannot create a client with a non initialized container!");
+          //   }
+          // }
 
-          this._tweetinviContainer = new TweetinviContainer(parameters?.Container ?? TweetinviContainer.Container);
-          this._tweetinviContainer.RegisterInstance(typeof(ITweetinviContainer), this._tweetinviContainer);
+          // this._tweetinviContainer = new TweetinviContainer(parameters?.Container ?? TweetinviContainer.Container);
+          // this._tweetinviContainer.RegisterInstance(typeof(ITweetinviContainer), this._tweetinviContainer);
+          //
+          // if (parameters?.RateLimitCache != null) {
+          //   this._tweetinviContainer.RegisterInstance(typeof(IRateLimitCache), parameters.RateLimitCache);
+          // }
 
-          if (parameters?.RateLimitCache != null) {
-            this._tweetinviContainer.RegisterInstance(typeof(IRateLimitCache), parameters.RateLimitCache);
-          }
-
-          this._tweetinviContainer.RegisterInstance(typeof(TwitterClient), this);
-          this._tweetinviContainer.RegisterInstance(typeof(ITwitterClient), this);
-
-          void BeforeRegistrationDelegate(sender: object, args: TweetinviContainerEventArgs)
-          {
-            parameters?.RaiseBeforeRegistrationCompletes(args);
-          }
-
-          this._tweetinviContainer.BeforeRegistrationCompletes += BeforeRegistrationDelegate;
-          this._tweetinviContainer.Initialize();
-          this._tweetinviContainer.BeforeRegistrationCompletes -= BeforeRegistrationDelegate;
+          // this._tweetinviContainer.RegisterInstance(typeof(TwitterClient), this);
+          // this._tweetinviContainer.RegisterInstance(typeof(ITwitterClient), this);
+          //
+          // void BeforeRegistrationDelegate(sender: object, args: TweetinviContainerEventArgs)
+          // {
+          //   parameters?.RaiseBeforeRegistrationCompletes(args);
+          // }
+          //
+          // this._tweetinviContainer.BeforeRegistrationCompletes += BeforeRegistrationDelegate;
+          // this._tweetinviContainer.Initialize();
+          // this._tweetinviContainer.BeforeRegistrationCompletes -= BeforeRegistrationDelegate;
 
           let requestExecutor = this._tweetinviContainer.Resolve<IRawExecutors>();
           this.raw = requestExecutor;

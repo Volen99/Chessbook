@@ -14,6 +14,7 @@ import {SearchGeoSearchResultDTO} from "../../core/Public/Models/Interfaces/DTO/
 import {CredentialsRateLimitsDTO} from "../../core/Core/DTO/CredentialsRateLimitsDTO";
 import {IPlace} from "../../core/Public/Models/Interfaces/IPlace";
 import {ITwitterConfiguration} from "../../core/Public/Models/Interfaces/DTO/ITwitterConfiguration";
+import {InjectionToken} from "@angular/core";
 
 export interface IHelpQueryExecutor {
   getRateLimitsAsync(parameters: IGetRateLimitsParameters, request: ITwitterRequest): Promise<ITwitterResult<CredentialsRateLimitsDTO>>;
@@ -28,6 +29,11 @@ export interface IHelpQueryExecutor {
 
   searchGeoReverseAsync(parameters: IGeoSearchReverseParameters, request: ITwitterRequest): Promise<ITwitterResult<SearchGeoSearchResultDTO>>;
 }
+
+export const IHelpQueryExecutorToken = new InjectionToken<IHelpQueryExecutor>('IHelpQueryExecutor', {
+  providedIn: 'root',
+  factory: () => new HelpQueryExecutor(),
+});
 
 export class HelpQueryExecutor implements IHelpQueryExecutor {
   private readonly _helpQueryGenerator: IHelpQueryGenerator;

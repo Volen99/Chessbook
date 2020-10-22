@@ -5,6 +5,7 @@ import DateTime from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/
 import {ISearchTweetsParameters, SearchTweetsParameters} from "../../core/Public/Parameters/Search/SearchTweetsParameters";
 import {ISearchUsersParameters, SearchUsersParameters} from "../../core/Public/Parameters/Search/SearchUsersParameters";
 import {SharebookConsts} from "../../core/Public/sharebook-consts";
+import {InjectionToken} from "@angular/core";
 
 export interface ISearchQueryParameterGenerator {
   createSearchTweetParameter(query: string): ISearchTweetsParameters;
@@ -23,6 +24,11 @@ export interface ISearchQueryParameterGenerator {
 
   createUserSearchParameters(query: string): ISearchUsersParameters;
 }
+
+export const ISearchQueryParameterGeneratorToken = new InjectionToken<ISearchQueryParameterGenerator>('ISearchQueryParameterGenerator', {
+  providedIn: 'root',
+  factory: () => new SearchQueryParameterGenerator(),
+});
 
 export class SearchQueryParameterGenerator implements ISearchQueryParameterGenerator {
   public createSearchTweetParameter(query: string): ISearchTweetsParameters {

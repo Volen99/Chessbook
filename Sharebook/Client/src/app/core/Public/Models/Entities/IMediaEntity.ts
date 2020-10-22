@@ -2,6 +2,8 @@
 import Dictionary from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
 import {IVideoInformationEntity} from "./ExtendedEntities/IVideoInformationEntity";
 import {IMediaEntitySize} from "./IMediaEntitySize";
+import {InjectionToken} from "@angular/core";
+import {MediaEntity} from "../../../Core/Models/TwitterEntities/MediaEntity";
 
 // Media element posted in Twitter
 export interface IMediaEntity extends IEquatable<IMediaEntity> {
@@ -38,3 +40,8 @@ export interface IMediaEntity extends IEquatable<IMediaEntity> {
   // Video metadata
   videoDetails: IVideoInformationEntity;
 }
+
+export const IMediaEntityToken = new InjectionToken<IMediaEntity>('IMediaEntity', {
+  providedIn: 'root',
+  factory: () => new MediaEntity(),
+});

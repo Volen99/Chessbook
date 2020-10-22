@@ -36,6 +36,7 @@ import {Stream} from "stream";
 import {IGetUsersParameters} from "../../Parameters/UsersClient/GetUsersParameters";
 import {IUserDictionary} from "../../Models/UserDictionary";
 import {IUsersClientParametersValidator} from "../../../Core/Client/Validators/UsersClientParametersValidator";
+import {InjectionToken} from "@angular/core";
 
 export interface IUsersClient {
   // Validate all the Users client parameters
@@ -229,7 +230,7 @@ export interface IUsersClient {
   /// Block a user from the client's account
   /// <para>Read more : https://dev.twitter.com/en/docs/accounts-and-users/mute-block-report-users/api-reference/post-blocks-create </para>
   /// </summary>
-  blockUserAsync(parametersМ: IBlockUserParameters): Promise<IUser>;
+  blockUserAsync(parameters: IBlockUserParameters): Promise<IUser>;
 
   unblockUserAsync(userId: number): Promise<IUser>;
 
@@ -520,3 +521,8 @@ export interface IUsersClient {
 
   // #endregion
 }
+
+export const IUsersClientToken = new InjectionToken<IUsersClient>('IUsersClient', {
+  providedIn: 'root',
+  factory: () => new,
+});

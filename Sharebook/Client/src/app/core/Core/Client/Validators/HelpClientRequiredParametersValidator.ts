@@ -7,9 +7,15 @@ import {IGetPlaceParameters} from "../../../Public/Parameters/HelpClient/GetPlac
 import {IGeoSearchParameters} from "../../../Public/Parameters/HelpClient/GeoSearchParameters";
 import {IGeoSearchReverseParameters} from "../../../Public/Parameters/HelpClient/GeoSearchReverseParameters";
 import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
+import {InjectionToken} from "@angular/core";
 
 export interface IHelpClientRequiredParametersValidator extends IHelpClientParametersValidator {
 }
+
+export const IHelpClientRequiredParametersValidatorToken = new InjectionToken<IHelpClientRequiredParametersValidator>('IHelpClientRequiredParametersValidator', {
+  providedIn: 'root',
+  factory: () => new HelpClientRequiredParametersValidator(),
+});
 
 export class HelpClientRequiredParametersValidator implements IHelpClientRequiredParametersValidator {
 

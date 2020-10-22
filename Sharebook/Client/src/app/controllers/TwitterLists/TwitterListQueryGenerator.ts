@@ -24,6 +24,7 @@ import {IUnsubscribeFromListParameters} from "../../core/Public/Parameters/Lists
 import {IGetTweetsFromListParameters} from "../../core/Public/Parameters/ListsClient/GetTweetsFromListParameters";
 import {IQueryParameterGenerator} from "../Shared/QueryParameterGenerator";
 import {IListMetadataParameters} from "../../core/Public/Parameters/ListsClient/IListMetadataParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface ITwitterListQueryGenerator {
   // list
@@ -68,6 +69,11 @@ export interface ITwitterListQueryGenerator {
   // Tweets
   getTweetsFromListQuery(queryParameters: IGetTweetsFromListParameters, tweetMode: ComputedTweetMode): string;
 }
+
+export const ITwitterListQueryGeneratorToken = new InjectionToken<ITwitterListQueryGenerator>('ITwitterListQueryGenerator', {
+  providedIn: 'root',
+  factory: () => new TwitterListQueryGenerator(),
+});
 
 export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
   private readonly _userQueryParameterGenerator: IUserQueryParameterGenerator;

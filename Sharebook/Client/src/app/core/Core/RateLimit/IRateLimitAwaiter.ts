@@ -5,6 +5,7 @@ import {IWaitForCredentialsRateLimitParameters} from "../../Public/Parameters/Ra
 import {IEndpointRateLimit} from "../../Public/Models/RateLimits/IEndpointRateLimit";
 import {ITwitterExecutionContext} from "../Client/TwitterExecutionContext";
 import {QueryAwaitingEventArgs} from '../../Public/Events/QueryAwaitingEventArgs';
+import {InjectionToken} from "@angular/core";
 
 // Wait for the RateLimits before performing an operation.
 export interface IRateLimitAwaiter {
@@ -28,4 +29,9 @@ export interface IRateLimitAwaiter {
   // Get the duration (milliseconds) to wait before executing a query using the specified rate limits.
   getTimeToWaitFromQueryRateLimit(queryRateLimit: IEndpointRateLimit, executionContext: ITwitterExecutionContext): TimeSpan;
 }
+
+export const IRateLimitAwaiterToken = new InjectionToken<IRateLimitAwaiter>('IRateLimitAwaiter', {
+  providedIn: 'root',
+  factory: () => new RateLimitAwaiter(),
+});
 

@@ -15,6 +15,7 @@ import {ITwitterClient} from "../../../Public/ITwitterClient";
 import {TwitterLimits} from 'src/app/core/Public/Settings/TwitterLimits';
 import {TweetsParameters} from "./parameters-types";
 import {TwitterArgumentLimitException} from 'src/app/core/Public/Exceptions/TwitterArgumentLimitException';
+import {InjectionToken} from "@angular/core";
 
 export interface ITweetsClientParametersValidator {
   validate(parameters: IGetTweetParameters): void;
@@ -41,6 +42,11 @@ export interface ITweetsClientParametersValidator {
 
   validate(parameters: IGetOEmbedTweetParameters): void;
 }
+
+export const ITweetsClientParametersValidatorToken = new InjectionToken<ITweetsClientParametersValidator>('ITweetsClientParametersValidator', {
+  providedIn: 'root',
+  factory: () => new TweetsClientParametersValidator(),
+});
 
 export class TweetsClientParametersValidator implements ITweetsClientParametersValidator {
   private readonly _tweetsClientRequiredParametersValidator: ITweetsClientRequiredParametersValidator;

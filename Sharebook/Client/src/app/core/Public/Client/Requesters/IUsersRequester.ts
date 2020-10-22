@@ -29,6 +29,7 @@ import {IMuteUserParameters} from "../../Parameters/AccountClient/MuteUserParame
 import {IUnmuteUserParameters} from "../../Parameters/AccountClient/UnMuteUserParameters";
 import {IGetProfileImageParameters} from "../../Parameters/UsersClient/GetProfileImageParameters";
 import {Stream} from "stream";
+import {InjectionToken} from "@angular/core";
 
 /// <summary>
 /// A client providing all the methods related with users.
@@ -198,3 +199,8 @@ export interface IUsersRequester {
   /// <returns>A stream of the image file</returns>
   getProfileImageStream(parameters: IGetProfileImageParameters): Promise<Stream>;
 }
+
+export const IUsersRequesterToken = new InjectionToken<IUsersRequester>('IUsersRequester', {
+  providedIn: 'root',
+  factory: () => new,
+});

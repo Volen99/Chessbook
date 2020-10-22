@@ -1,4 +1,5 @@
 ﻿import {IReadOnlyTwitterCredentials} from "../Models/Authentication/ReadOnlyTwitterCredentials";
+import {InjectionToken} from "@angular/core";
 
 // Cache storing the RateLimits to reduce the number of access to the Twitter API rate limits.
 // Access to the rate limit cache should be done via the RateLimitCacheManager.
@@ -15,3 +16,8 @@ export interface IRateLimitCache {
   // Return the rate limits entry for a set of credentials.
   getCredentialsRateLimitsAsync(credentials: IReadOnlyTwitterCredentials): Promise<ICredentialsRateLimits>;
 }
+
+export const IRateLimitCacheToken = new InjectionToken<IRateLimitCache>('IRateLimitCache', {
+  providedIn: 'root',
+  factory: () => new RateLimitCache(),
+});

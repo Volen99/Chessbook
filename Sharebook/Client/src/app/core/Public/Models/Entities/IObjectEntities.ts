@@ -3,6 +3,8 @@ import {IUrlEntity} from "./IUrlEntity";
 import {IMediaEntity} from "./IMediaEntity";
 import {ISymbolEntity} from "./ISymbolEntity";
 import {IUserMentionEntity} from "./IUserMentionEntity";
+import {InjectionToken} from "@angular/core";
+import {ObjectEntitiesDTO} from "../../../Core/DTO/ObjectEntitiesDTO";
 
 export interface IObjectEntities {
   // Collection of urls associated with a Tweet
@@ -20,3 +22,8 @@ export interface IObjectEntities {
   // Collection of medias associated with a Tweet
   medias: Array<IMediaEntity>;
 }
+
+export const IObjectEntitiesToken = new InjectionToken<IObjectEntities>('IObjectEntities', {
+  providedIn: 'root',
+  factory: () => new ObjectEntitiesDTO(),
+});

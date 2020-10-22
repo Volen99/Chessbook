@@ -9,6 +9,7 @@ import {IMessagesClientRequiredParametersValidator} from "./MessageClientRequire
 import {MessagesParameters} from "./parameters-types";
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
 import {QuickReplyOption} from "../../Models/Properties/QuickReplyOption";
+import {InjectionToken} from "@angular/core";
 
 export interface IMessagesClientParametersValidator {
   validate(parameters: IPublishMessageParameters): void;
@@ -19,6 +20,11 @@ export interface IMessagesClientParametersValidator {
 
   validate(parameters: IGetMessagesParameters): void;
 }
+
+export const IMessagesClientParametersValidatorToken = new InjectionToken<IMessagesClientParametersValidator>('IMessagesClientParametersValidator', {
+  providedIn: 'root',
+  factory: () => new MessagesClientParametersValidator(),
+});
 
 export class MessagesClientParametersValidator implements IMessagesClientParametersValidator {
   private readonly _client: ITwitterClient;

@@ -7,6 +7,7 @@ import {IUpdateProfileImageParameters} from "../../core/Public/Parameters/Accoun
 import {IRemoveProfileBannerParameters} from "../../core/Public/Parameters/AccountSettingsClient/RemoveProfileBannerParameters";
 import {IUpdateProfileBannerParameters} from "../../core/Public/Parameters/AccountSettingsClient/UpdateProfileBannerParameters";
 import {Language} from "../../core/Public/Models/Enum/Language";
+import {InjectionToken} from "@angular/core";
 
 export interface IAccountSettingsQueryGenerator {
   getAccountSettingsQuery(parameters: IGetAccountSettingsParameters): string;
@@ -21,6 +22,11 @@ export interface IAccountSettingsQueryGenerator {
 
   getRemoveProfileBannerQuery(parameters: IRemoveProfileBannerParameters): string;
 }
+
+export const IAccountSettingsQueryGeneratorToken = new InjectionToken<IAccountSettingsQueryGenerator>('IAccountSettingsQueryGenerator', {
+  providedIn: 'root',
+  factory: () => new AccountSettingsQueryGenerator(),
+});
 
 export class AccountSettingsQueryGenerator implements IAccountSettingsQueryGenerator {
   public getAccountSettingsQuery(parameters: IGetAccountSettingsParameters): string {

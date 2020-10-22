@@ -1,5 +1,7 @@
 ﻿import {Stream} from "stream";
 import Dictionary from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
+import {InjectionToken} from "@angular/core";
+import {TwitterResponse} from "../../../webLogic/TwitterResponse";
 
 export static class WebRequestResultExtension {
   public static ToJson(/*this*/ twitterResponse: ITwitterResponse): string {
@@ -63,3 +65,8 @@ export interface ITwitterResponse {
   binary: number[];
   content: string;
 }
+
+export const ITwitterResponseToken = new InjectionToken<ITwitterResponse>('ITwitterResponse', {
+  providedIn: 'root',
+  factory: () => new TwitterResponse(),
+});

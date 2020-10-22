@@ -6,6 +6,8 @@ import {IGetMentionsTimelineParameters} from "../../Public/Parameters/TimelineCl
 import {IGetRetweetsOfMeTimelineParameters} from "../../Public/Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
 import {ITwitterPageIterator} from "../Iterators/TwitterPageIterator";
 import {ITweetDTO} from "../../Public/Models/Interfaces/DTO/ITweetDTO";
+import {InjectionToken} from "@angular/core";
+import {TimelineController} from "../../../controllers/Timeline/TimelineController";
 
 export interface ITimelineController {
   getHomeTimelineIterator(parameters: IGetHomeTimelineParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number>; // long?
@@ -13,3 +15,8 @@ export interface ITimelineController {
   getMentionsTimelineIterator(parameters: IGetMentionsTimelineParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number>; // long?
   getRetweetsOfMeTimelineIterator(parameters: IGetRetweetsOfMeTimelineParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number>; // long?
 }
+
+export const ITimelineControllerToken = new InjectionToken<ITimelineController>('ITimelineController', {
+  providedIn: 'root',
+  factory: () => new TimelineController(),
+});

@@ -8,6 +8,7 @@ import {IRequestCredentialsParameters} from "../../Parameters/Auth/RequestCreden
 import {InvalidateTokenResponse} from "../../Models/Authentication/InvalidateTokenResponse";
 import {IInvalidateBearerTokenParameters} from "../../Parameters/Auth/InvalidateBearerTokenParameters";
 import {IInvalidateAccessTokenParameters} from "../../Parameters/Auth/InvalidateAccessTokenParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface IAuthClient {
   // Validate all the Account activity client parameters
@@ -90,3 +91,8 @@ export interface IAuthClient {
   /// <para> https://developer.twitter.com/en/docs/basics/authentication/api-reference/invalidate_access_token </para>
   invalidateAccessTokenAsync(parameters: IInvalidateAccessTokenParameters): Promise<InvalidateTokenResponse>;
 }
+
+export const IAuthClientToken = new InjectionToken<IAuthClient>('IAuthClient', {
+  providedIn: 'root',
+  factory: () => new,
+});

@@ -17,6 +17,7 @@ import {IUnfavoriteTweetParameters} from "../../Parameters/TweetsClient/UnFavori
 import {IOEmbedTweet} from "../../Models/Interfaces/IOEmbedTweet";
 import {IGetOEmbedTweetParameters} from "../../Parameters/TweetsClient/GetOEmbedTweetParameters";
 import {ITweetsClientParametersValidator} from "../../../Core/Client/Validators/TweetsClientParametersValidator";
+import {InjectionToken} from "@angular/core";
 
 export interface ITweetsClient {
   // Validate all the Tweets client parameters
@@ -182,3 +183,8 @@ export interface ITweetsClient {
   /// <returns>The generated oembed tweet</returns>
   getOEmbedTweetAsync(parameters: IGetOEmbedTweetParameters): Promise<IOEmbedTweet>;
 }
+
+export const ITweetsClientToken = new InjectionToken<ITweetsClient>('ITweetsClient', {
+  providedIn: 'root',
+  factory: () => new,
+});

@@ -11,6 +11,7 @@ import {IGetMessageDTO} from "../../core/Public/Models/Interfaces/DTO/IGetMessag
 import {IMessageCursorQueryResultDTO} from "../../core/Public/Models/Interfaces/DTO/QueryDTO/IMessageCursorQueryResultDTO";
 import {ICreateMessageDTO} from "../../core/Public/Models/Interfaces/DTO/ICreateMessageDTO";
 import {IMessageQueryGenerator} from "./MessageQueryGenerator";
+import {InjectionToken} from "@angular/core";
 
 export interface IMessageQueryExecutor {
   // Publish Message
@@ -22,6 +23,11 @@ export interface IMessageQueryExecutor {
 
   getMessagesAsync(parameters: IGetMessagesParameters, request: TwitterRequest): Promise<ITwitterResult<IMessageCursorQueryResultDTO>>;
 }
+
+export const IMessageQueryExecutorToken = new InjectionToken<IMessageQueryExecutor>('IMessageQueryExecutor', {
+  providedIn: 'root',
+  factory: () => new MessageQueryExecutor(),
+});
 
 export class MessageQueryExecutor implements IMessageQueryExecutor {
   private readonly _twitterAccessor: ITwitterAccessor;

@@ -9,6 +9,7 @@ import {IRemoveProfileBannerParameters} from "../../../Public/Parameters/Account
 import {IAccountSettingsClientRequiredParametersValidator} from "./AccountSettingsClientRequiredParametersValidator";
 import {ITwitterClient} from "../../../Public/ITwitterClient";
 import {AccountActivityParameters} from "./parameters-types";
+import {InjectionToken} from "@angular/core";
 
 export interface IAccountSettingsClientParametersValidator {
   validate(parameters: IGetAccountSettingsParameters): void;
@@ -23,6 +24,11 @@ export interface IAccountSettingsClientParametersValidator {
 
   validate(parameters: IRemoveProfileBannerParameters): void;
 }
+
+export const IAccountSettingsClientParametersValidatorToken = new InjectionToken<IAccountSettingsClientParametersValidator>('IAccountSettingsClientParametersValidator', {
+  providedIn: 'root',
+  factory: () => new AccountSettingsClientParametersValidator(),
+});
 
 export class AccountSettingsClientParametersValidator implements IAccountSettingsClientParametersValidator {
   private readonly _accountSettingsClientRequiredParametersValidator: IAccountSettingsClientRequiredParametersValidator;

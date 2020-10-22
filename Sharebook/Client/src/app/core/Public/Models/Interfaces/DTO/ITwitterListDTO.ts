@@ -2,6 +2,8 @@
 import {IUserDTO} from "./IUserDTO";
 import { PrivacyMode } from '../../Enum/PrivacyMode';
 import DateTime from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import {InjectionToken} from "@angular/core";
+import {TwitterListDTO} from "../../../../Core/DTO/TwitterListDTO";
 
 export interface ITwitterListDTO extends ITwitterListIdentifier {
   idStr: string;
@@ -19,3 +21,8 @@ export interface ITwitterListDTO extends ITwitterListIdentifier {
   memberCount: number;
   subscriberCount: number;
 }
+
+export const ITwitterListDTOToken = new InjectionToken<ITwitterListDTO>('ITwitterListDTO', {
+  providedIn: 'root',
+  factory: () => new TwitterListDTO(),
+});

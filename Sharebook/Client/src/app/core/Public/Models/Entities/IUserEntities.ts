@@ -1,5 +1,7 @@
 ﻿import {IDescriptionEntity} from "./IDescriptionEntity";
 import {IWebsiteEntity} from "./IWebsiteEntity";
+import {InjectionToken} from "@angular/core";
+import {UserEntities} from "../../../Core/Models/TwitterEntities/UserEntities";
 
 export interface IUserEntities {
   // Website metadata
@@ -8,3 +10,8 @@ export interface IUserEntities {
   // User description
   description: IDescriptionEntity;
 }
+
+export const IUserEntitiesToken = new InjectionToken<IUserEntities>('IUserEntities', {
+  providedIn: 'root',
+  factory: () => new UserEntities(),
+});

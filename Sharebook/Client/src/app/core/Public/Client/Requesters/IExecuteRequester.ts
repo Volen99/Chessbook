@@ -1,6 +1,8 @@
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {ITwitterRequest} from "../../Models/Interfaces/ITwitterRequest";
 import {ITwitterQuery} from "../../Models/Interfaces/ITwitterQuery";
+import {IBaseCursorQueryDTO} from "../../Models/Interfaces/DTO/QueryDTO/IBaseCursorQueryDTO";
+import {InjectionToken} from "@angular/core";
 
 export interface IExecuteRequester {
   // Execute a custom request
@@ -23,3 +25,8 @@ export interface IExecuteRequester {
 
   prepareTwitterRequestAsync(configureRequest: (req: ITwitterRequest) => void): Promise<ITwitterRequest>;
 }
+
+export const IExecuteRequesterToken = new InjectionToken<IExecuteRequester>('IExecuteRequester', {
+  providedIn: 'root',
+  factory: () => new,
+});

@@ -1,4 +1,5 @@
 ﻿import {ITwitterCredentials} from "../../Public/Models/Authentication/TwitterCredentials";
+import {InjectionToken} from "@angular/core";
 
 export interface ICredentialsAccessor {
   applicationCredentials: ITwitterCredentials;
@@ -8,3 +9,8 @@ export interface ICredentialsAccessor {
 
   executeOperationWithCredentials(credentials: ITwitterCredentials, operation: () => void): void;
 }
+
+export const ICredentialsAccessorToken = new InjectionToken<ICredentialsAccessor>('ICredentialsAccessor', {
+  providedIn: 'root',
+  factory: () => new CredentialsAccessor(),
+});

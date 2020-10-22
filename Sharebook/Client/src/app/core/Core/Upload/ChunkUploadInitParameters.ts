@@ -1,4 +1,5 @@
 ﻿import {CustomRequestParameters, ICustomRequestParameters} from "../../Public/Parameters/CustomRequestParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface IChunkUploadInitParameters {
   mediaType: string;
@@ -7,6 +8,11 @@ export interface IChunkUploadInitParameters {
   additionalOwnerIds: Array<number>;
   customRequestParameters: ICustomRequestParameters;
 }
+
+export const IChunkUploadInitParametersToken = new InjectionToken<IChunkUploadInitParameters>('IChunkUploadInitParameters', {
+  providedIn: 'root',
+  factory: () => new ChunkUploadInitParameters(),
+});
 
 export class ChunkUploadInitParameters implements IChunkUploadInitParameters {
   constructor() {

@@ -3,6 +3,7 @@ import {IRateLimitCache} from "./IRateLimitCache";
 import {IRateLimitsClient} from "../../Public/Client/Clients/IRateLimitsClient";
 import {IGetEndpointRateLimitsParameters} from "../../Public/Parameters/HelpClient/GetEndpointRateLimitsParameters";
 import {IEndpointRateLimit} from "../../Public/Models/RateLimits/IEndpointRateLimit";
+import {InjectionToken} from "@angular/core";
 
 // Proxy used to access and refresh the rate limits cache.
 export interface IRateLimitCacheManager {
@@ -27,3 +28,8 @@ export interface IRateLimitCacheManager {
   // Returns whether the rate limits should be refreshed to retrieve a specific endpoint information
   shouldEndpointCacheBeUpdated(rateLimit: IEndpointRateLimit): boolean;
 }
+
+export const IRateLimitCacheManagerToken = new InjectionToken<IRateLimitCacheManager>('IRateLimitCacheManager', {
+  providedIn: 'root',
+  factory: () => new RateLimitCacheManager(),
+});

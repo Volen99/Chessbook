@@ -2,9 +2,15 @@ import {IMessagesClientParametersValidator} from "./MessageClientParametersValid
 import {MessagesParameters} from "./parameters-types";
 import {IPublishMessageParameters} from "../../../Public/Parameters/MessageClient/PublishMessageParameters";
 import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
+import {InjectionToken} from "@angular/core";
 
 export interface IMessagesClientRequiredParametersValidator extends IMessagesClientParametersValidator {
 }
+
+export const IMessagesClientRequiredParametersValidatorToken = new InjectionToken<IMessagesClientRequiredParametersValidator>('IMessagesClientRequiredParametersValidator', {
+  providedIn: 'root',
+  factory: () => new MessagesClientRequiredParametersValidator(),
+});
 
 export class MessagesClientRequiredParametersValidator implements IMessagesClientRequiredParametersValidator {
   public validate(parameters: MessagesParameters): void {

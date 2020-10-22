@@ -22,6 +22,7 @@ import {
   MessagesParameters,
   SearchParameters, TimelineParameters, TrendsParameters, TweetsParameters, UploadParameters, UserParameters
 } from "./parameters-types";
+import {InjectionToken} from "@angular/core";
 
 export interface IParametersValidator extends IAccountActivityClientParametersValidator,
   IAccountSettingsClientParametersValidator,
@@ -36,6 +37,11 @@ export interface IParametersValidator extends IAccountActivityClientParametersVa
   IUploadClientParametersValidator,
   IUsersClientParametersValidator {
 }
+
+export const IParametersValidatorToken = new InjectionToken<IParametersValidator>('IParametersValidator', {
+  providedIn: 'root',
+  factory: () => new ParametersValidator(),
+});
 
 export class ParametersValidator implements IParametersValidator {
   private readonly _accountActivityClientParametersValidator: IAccountActivityClientParametersValidator;

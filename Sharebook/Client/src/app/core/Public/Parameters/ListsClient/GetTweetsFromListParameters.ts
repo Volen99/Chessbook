@@ -3,6 +3,7 @@ import {ITimelineRequestParameters, TimelineRequestParameters} from "../Timeline
 import {ITwitterListIdentifier} from "../../Models/Interfaces/ITwitterListIdentifier";
 import {TwitterLimits} from "../../Settings/TwitterLimits";
 import {TwitterListIdentifier} from '../../Models/TwitterListIdentifier';
+import {InjectionToken} from "@angular/core";
 
 // For more information visit: https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-statuses
 export interface IGetTweetsFromListParameters extends IListParameters, ITimelineRequestParameters {
@@ -11,6 +12,11 @@ export interface IGetTweetsFromListParameters extends IListParameters, ITimeline
   // If the MaximumResultSet is set to 100, you will receive 80 tweets and not 100 even if there is more than 80 new tweets in the Timeline.
   includeRetweets?: boolean;
 }
+
+export const IGetTweetsFromListParametersToken = new InjectionToken<IGetTweetsFromListParameters>('IGetTweetsFromListParameters', {
+  providedIn: 'root',
+  factory: () => new GetTweetsFromListParameters(),
+});
 
 export class GetTweetsFromListParameters extends TimelineRequestParameters implements IGetTweetsFromListParameters {
   constructor(listIdOrListOrSource?: number | ITwitterListIdentifier | IGetTweetsFromListParameters) {

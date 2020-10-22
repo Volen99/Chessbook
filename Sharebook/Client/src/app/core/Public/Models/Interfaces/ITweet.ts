@@ -17,6 +17,8 @@ import {Language} from '../Enum/Language';
 import {ITweetDTO} from "./DTO/ITweetDTO";
 import {IOEmbedTweet} from "./IOEmbedTweet";
 import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import {InjectionToken} from "@angular/core";
+import {Tweet} from "../../../Core/Models/Tweet";
 
 // ... Well a Tweet :) https://dev.twitter.com/docs/platform-objects/tweets
 export interface ITweet extends ITweetIdentifier, IEquatable<ITweet> {
@@ -202,3 +204,8 @@ export interface ITweet extends ITweetIdentifier, IEquatable<ITweet> {
   // Generate an OEmbedTweet.
   generateOEmbedTweetAsync(): Promise<IOEmbedTweet>;
 }
+
+export const ITweetToken = new InjectionToken<ITweet>('ITweet', {
+  providedIn: 'root',
+  factory: () => new Tweet(),
+});

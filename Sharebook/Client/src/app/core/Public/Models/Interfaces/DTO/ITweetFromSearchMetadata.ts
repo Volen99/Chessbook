@@ -2,3 +2,5 @@
   resultType: string;
   isoLanguageCode: string;
 }
+
+

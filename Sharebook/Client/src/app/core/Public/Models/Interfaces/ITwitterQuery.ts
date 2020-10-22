@@ -6,6 +6,8 @@ import {IProxyConfig} from "../../Settings/ProxyConfig";
 import {ITwitterCredentials} from "../Authentication/TwitterCredentials";
 import {IOAuthQueryParameter} from "../../../Core/Web/IOAuthQueryParameter";
 import {IEndpointRateLimit} from "../RateLimits/IEndpointRateLimit";
+import {InjectionToken} from "@angular/core";
+import {TwitterQuery} from "../../TwitterQuery";
 
 // All the information necessary for an http request to be executed.
 export interface ITwitterQuery extends ITwitterRequestParameters {
@@ -36,3 +38,8 @@ export interface ITwitterQuery extends ITwitterRequestParameters {
 
   initialize(settings: ITweetinviSettings): void;
 }
+
+export const ITwitterQueryToken = new InjectionToken<ITwitterQuery>('ITwitterQuery', {
+  providedIn: 'root',
+  factory: () => new TwitterQuery(),
+});

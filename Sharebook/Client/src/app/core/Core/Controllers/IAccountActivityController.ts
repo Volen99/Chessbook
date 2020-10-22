@@ -14,6 +14,8 @@ import {IWebhookDTO} from "../../Public/Models/Interfaces/DTO/Webhooks/IWebhookD
 import {IGetAccountActivityWebhookEnvironmentsResultDTO} from "../../Public/Models/Interfaces/DTO/Webhooks/IGetAccountActivityWebhookEnvironmentsResultDTO";
 import {IWebhookEnvironmentSubscriptionsDTO} from "../../Public/Models/Interfaces/DTO/Webhooks/IWebhookEnvironmentSubscriptionsDTO";
 import {IWebhookSubscriptionsCount} from "../../Public/Models/Interfaces/IWebhookSubscriptionsCount";
+import {InjectionToken} from "@angular/core";
+import {AccountActivityController} from "../../../controllers/AccountActivity/AccountActivityController";
 
 export interface IAccountActivityController {
   createAccountActivityWebhookAsync(parameters: ICreateAccountActivityWebhookParameters, request: ITwitterRequest): Promise<ITwitterResult<IWebhookDTO>>;
@@ -36,3 +38,8 @@ export interface IAccountActivityController {
 
   unsubscribeFromAccountActivityAsync(parameters: IUnsubscribeFromAccountActivityParameters, request: ITwitterRequest): Promise<ITwitterResult>;
 }
+
+export const IAccountActivityControllerToken = new InjectionToken<IAccountActivityController>('IAccountActivityController', {
+  providedIn: 'root',
+  factory: () => new AccountActivityController(),
+});

@@ -7,6 +7,7 @@ import {IGetMessageDTO} from "../../Models/Interfaces/DTO/IGetMessageDTO";
 import {IGetMessagesParameters} from "../../Parameters/MessageClient/GetMessagesParameters";
 import {IMessageCursorQueryResultDTO} from "../../Models/Interfaces/DTO/QueryDTO/IMessageCursorQueryResultDTO";
 import {ITwitterPageIterator} from "../../../Core/Iterators/TwitterPageIterator";
+import {InjectionToken} from "@angular/core";
 
 export interface IMessageRequester {
   /// <summary>
@@ -36,3 +37,9 @@ export interface IMessageRequester {
   /// <returns>An iterator to list the recent messages of the user</returns>
   getMessagesIterator(parameters: IGetMessagesParameters): ITwitterPageIterator<ITwitterResult<IMessageCursorQueryResultDTO>>;
 }
+
+
+export const IMessageRequesterToken = new InjectionToken<IMessageRequester>('IMessageRequester', {
+  providedIn: 'root',
+  factory: () => new,
+});

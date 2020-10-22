@@ -11,6 +11,8 @@ import {IPlace} from "../../Public/Models/Interfaces/IPlace";
 import {SearchGeoSearchResultDTO} from "../../Public/Models/Interfaces/DTO/GeoSearchResultDTO";
 import {IGeoSearchReverseParameters} from "../../Public/Parameters/HelpClient/GeoSearchReverseParameters";
 import {CredentialsRateLimitsDTO} from "../DTO/CredentialsRateLimitsDTO";
+import {InjectionToken} from "@angular/core";
+import {HelpController} from "../../../controllers/Help/HelpController";
 
 export interface IHelpController {
   getRateLimitsAsync(parameters: IGetRateLimitsParameters, request: ITwitterRequest): Promise<ITwitterResult<CredentialsRateLimitsDTO>>;
@@ -25,3 +27,8 @@ export interface IHelpController {
 
   searchGeoReverseAsync(parameters: IGeoSearchReverseParameters, request: ITwitterRequest): Promise<ITwitterResult<SearchGeoSearchResultDTO>>;
 }
+
+export const IHelpControllerToken = new InjectionToken<IHelpController>('IHelpController', {
+  providedIn: 'root',
+  factory: () => new HelpController(),
+});

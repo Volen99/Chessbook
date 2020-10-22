@@ -10,6 +10,7 @@ import {SavedSearchDTO} from "../../../Core/DTO/SavedSearchDTO";
 import {IGetSavedSearchParameters} from "../../Parameters/Search/GetSavedSearchParameters";
 import {IListSavedSearchesParameters} from "../../Parameters/Search/ListSavedSearchesParameters";
 import {IDestroySavedSearchParameters} from "../../Parameters/Search/DestroySavedSearchParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface ISearchRequester {
   /// <summary>
@@ -54,3 +55,9 @@ export interface ISearchRequester {
   /// <returns>Twitter result containing the deleted search</returns>
   destroySavedSearchAsync(parameters: IDestroySavedSearchParameters): Promise<ITwitterResult<SavedSearchDTO>>;
 }
+
+
+export const ISearchRequesterToken = new InjectionToken<ISearchRequester>('ISearchRequester', {
+  providedIn: 'root',
+  factory: () => new,
+});

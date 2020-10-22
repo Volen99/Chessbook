@@ -1,4 +1,7 @@
 ﻿// Identifier allowing to identify a unique list on Twitter.
+import {InjectionToken} from "@angular/core";
+import {TwitterListIdentifier} from "../TwitterListIdentifier";
+
 export interface ITwitterListIdentifier {
   // Id of the list.
   id: number;
@@ -15,3 +18,9 @@ export interface ITwitterListIdentifier {
   // A slug needs to be provided in addition to the OwnerScreenName for a list identifier to be valid.
   ownerScreenName: string;
 }
+
+
+export const ITwitterListIdentifierToken = new InjectionToken<ITwitterListIdentifier>('ITwitterListIdentifier', {
+  providedIn: 'root',
+  factory: () => new TwitterListIdentifier(),
+});

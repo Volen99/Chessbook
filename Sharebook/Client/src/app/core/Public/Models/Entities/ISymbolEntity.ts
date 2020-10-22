@@ -1,4 +1,7 @@
 ﻿import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
+import {ITweetIdentifier} from "../Interfaces/ITweetIdentifier";
+import {InjectionToken} from "@angular/core";
+import {SymbolEntity} from "../../../Core/Models/TwitterEntities/SymbolEntity";
 
 // https://dev.twitter.com/overview/api/entities-in-twitter-objects#symbols
 export interface ISymbolEntity extends IEquatable<ISymbolEntity> {
@@ -13,3 +16,8 @@ export interface ISymbolEntity extends IEquatable<ISymbolEntity> {
   // numbers will be the length of the hashtag name plus one (for the ‘$’ character).
   indices: number[];
 }
+
+export const ISymbolEntityToken = new InjectionToken<ITweetIdentifier>('ISymbolEntity', {
+  providedIn: 'root',
+  factory: () => new SymbolEntity(),
+});

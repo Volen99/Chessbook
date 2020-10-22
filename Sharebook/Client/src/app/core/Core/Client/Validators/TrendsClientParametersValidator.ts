@@ -3,6 +3,7 @@ import {IGetTrendsAtParameters} from "../../../Public/Parameters/TrendsClient/Ge
 import {IGetTrendsLocationParameters} from "../../../Public/Parameters/TrendsClient/GetTrendsLocationParameters";
 import {ITrendsClientRequiredParametersValidator} from "./TrendsClientRequiredParametersValidator";
 import {TrendsParameters} from "./parameters-types";
+import {InjectionToken} from "@angular/core";
 
 export interface ITrendsClientParametersValidator {
   validate(parameters: IGetTrendsLocationCloseToParameters): void;
@@ -11,6 +12,11 @@ export interface ITrendsClientParametersValidator {
 
   validate(parameters: IGetTrendsLocationParameters): void;
 }
+
+export const ITrendsClientParametersValidatorToken = new InjectionToken<ITrendsClientParametersValidator>('ITrendsClientParametersValidator', {
+  providedIn: 'root',
+  factory: () => new TrendsClientParametersValidator(),
+});
 
 export class TrendsClientParametersValidator implements ITrendsClientParametersValidator {
   private readonly _requiredParametersValidator: ITrendsClientRequiredParametersValidator;

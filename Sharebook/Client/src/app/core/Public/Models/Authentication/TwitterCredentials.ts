@@ -1,6 +1,7 @@
 ﻿import {IReadOnlyTwitterCredentials} from "../../../Core/Models/Authentication/ReadOnlyTwitterCredentials";
 import {IReadOnlyConsumerCredentials} from "../../../Core/Models/Authentication/ReadOnlyConsumerCredentials";
 import {CredentialsHashCodeGenerator} from "../../../Core/Helpers/CredentialsHashCodeGenerator";
+import {InjectionToken} from "@angular/core";
 
 // Defines a contract of 4 information to connect to an OAuth service
 export interface ITwitterCredentials extends IReadOnlyTwitterCredentials {
@@ -20,6 +21,11 @@ export interface ITwitterCredentials extends IReadOnlyTwitterCredentials {
   // Secret Key provided to the consumer to provide an authentication of the client
   /*new*/ accessTokenSecret: string;
 }
+
+export const ITwitterCredentialsToken = new InjectionToken<ITwitterCredentials>('ITwitterCredentials', {
+  providedIn: 'root',
+  factory: () => new TwitterCredentials(),
+});
 
 // This class provides host basic information for authorizing a OAuth
 // consumer to connect to a service. It does not contain any logic

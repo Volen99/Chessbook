@@ -1,4 +1,6 @@
 ﻿import {IRelationshipStateDTO} from "./DTO/IRelationshipStateDTO";
+import {InjectionToken} from "@angular/core";
+import {RelationshipState} from "../../../Core/Models/TwitterEntities/RelationshipState";
 
 export interface IRelationshipState {
   // User id of the relationship target.
@@ -28,3 +30,8 @@ export interface IRelationshipState {
   // DTO
   relationshipStateDTO: IRelationshipStateDTO;
 }
+
+export const IRelationshipStateToken = new InjectionToken<IRelationshipState>('IRelationshipState', {
+  providedIn: 'root',
+  factory: () => new RelationshipState(),
+});

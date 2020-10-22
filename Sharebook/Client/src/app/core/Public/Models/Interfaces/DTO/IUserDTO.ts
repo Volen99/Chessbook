@@ -3,6 +3,8 @@ import {ITweetDTO} from "./ITweetDTO";
 import IEnumerable from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable";
 import {IUserEntities} from "../../Entities/IUserEntities";
 import DateTime from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import {InjectionToken} from "@angular/core";
+import {UserDTO} from "../../../../Core/DTO/UserDTO";
 
 export interface IUserDTO extends IUserIdentifier {
   name: string;
@@ -84,3 +86,8 @@ export interface IUserDTO extends IUserIdentifier {
 
   withheldScope: string;
 }
+
+export const IUserDTOToken = new InjectionToken<IUserDTO>('IUserDTO', {
+  providedIn: 'root',
+  factory: () => new UserDTO(),
+});

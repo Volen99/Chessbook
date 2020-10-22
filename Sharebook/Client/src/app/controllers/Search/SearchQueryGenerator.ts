@@ -11,6 +11,7 @@ import {IGetSavedSearchParameters} from "../../core/Public/Parameters/Search/Get
 import {IListSavedSearchesParameters} from "../../core/Public/Parameters/Search/ListSavedSearchesParameters";
 import {IDestroySavedSearchParameters} from "../../core/Public/Parameters/Search/DestroySavedSearchParameters";
 import {ISearchQueryParameterGenerator} from "./SearchQueryParameterGenerator";
+import {InjectionToken} from "@angular/core";
 
 export interface ISearchQueryGenerator {
   getSearchTweetsQuery(parameters: ISearchTweetsParameters, tweetMode: ComputedTweetMode): string;
@@ -25,6 +26,11 @@ export interface ISearchQueryGenerator {
 
   getDestroySavedSearchQuery(parameters: IDestroySavedSearchParameters): string;
 }
+
+export const ISearchQueryGeneratorToken = new InjectionToken<ISearchQueryGenerator>('ISearchQueryGenerator', {
+  providedIn: 'root',
+  factory: () => new SearchQueryGenerator(),
+});
 
 export class SearchQueryGenerator implements ISearchQueryGenerator {
   private readonly _queryParameterGenerator: IQueryParameterGenerator;

@@ -8,6 +8,7 @@ import {IUpdateProfileImageParameters} from "../../Parameters/AccountSettingsCli
 import {IUpdateProfileBannerParameters} from "../../Parameters/AccountSettingsClient/UpdateProfileBannerParameters";
 import {IRemoveProfileBannerParameters} from "../../Parameters/AccountSettingsClient/RemoveProfileBannerParameters";
 import {IUser} from "../../Models/Interfaces/IUser";
+import {InjectionToken} from "@angular/core";
 
 // A client providing all the actions relative to the account settings
 export interface IAccountSettingsClient {
@@ -61,3 +62,8 @@ export interface IAccountSettingsClient {
   /// </summary>
   removeProfileBannerAsync(parameters: IRemoveProfileBannerParameters): Promise<void>;
 }
+
+export const IAccountSettingsClientToken = new InjectionToken<IAccountSettingsClient>('IAccountSettingsClient', {
+  providedIn: 'root',
+  factory: () => new,
+});

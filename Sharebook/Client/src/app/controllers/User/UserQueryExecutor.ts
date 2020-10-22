@@ -33,6 +33,7 @@ import {IUserCursorQueryResultDTO} from "../../core/Public/Models/Interfaces/DTO
 import {IIdsCursorQueryResultDTO} from "../../core/Public/Models/Interfaces/DTO/QueryDTO/IIdsCursorQueryResultDTO";
 import {IRelationshipStateDTO} from "../../core/Public/Models/Interfaces/DTO/IRelationshipStateDTO";
 import {IWebHelper} from "../../core/Core/Helpers/IWebHelper";
+import {InjectionToken} from "@angular/core";
 
 export interface IUserQueryExecutor {
   getAuthenticatedUserAsync(parameters: IGetAuthenticatedUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
@@ -88,6 +89,11 @@ export interface IUserQueryExecutor {
 
   getProfileImageStreamAsync(parameters: IGetProfileImageParameters, request: ITwitterRequest): Promise<Stream>;
 }
+
+export const IUserQueryExecutorToken = new InjectionToken<IUserQueryExecutor>('IUserQueryExecutor', {
+  providedIn: 'root',
+  factory: () => new UserQueryExecutor(),
+});
 
 export class UserQueryExecutor implements IUserQueryExecutor {
   private readonly _userQueryGenerator: IUserQueryGenerator;

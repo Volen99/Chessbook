@@ -6,6 +6,7 @@ import {IGeoSearchParameters} from "../../../Public/Parameters/HelpClient/GeoSea
 import {IGeoSearchReverseParameters} from "../../../Public/Parameters/HelpClient/GeoSearchReverseParameters";
 import {IHelpClientRequiredParametersValidator} from "./HelpClientRequiredParametersValidator";
 import {HelpParameters} from "./parameters-types";
+import {InjectionToken} from "@angular/core";
 
 export interface IHelpClientParametersValidator {
   validate(parameters: IGetRateLimitsParameters): void;
@@ -20,6 +21,11 @@ export interface IHelpClientParametersValidator {
 
   validate(parameters: IGeoSearchReverseParameters): void;
 }
+
+export const IHelpClientParametersValidatorToken = new InjectionToken<IHelpClientParametersValidator>('IHelpClientParametersValidator', {
+  providedIn: 'root',
+  factory: () => new HelpClientParametersValidator(),
+});
 
 export class HelpClientParametersValidator implements IHelpClientParametersValidator {
   private readonly _helpClientRequiredParametersValidator: IHelpClientRequiredParametersValidator;

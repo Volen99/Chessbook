@@ -4,6 +4,9 @@ import {IGetSupportedLanguagesParameters} from "../../Public/Parameters/HelpClie
 import {IGetPlaceParameters} from "../../Public/Parameters/HelpClient/GetPlaceParameters";
 import {IGeoSearchParameters} from "../../Public/Parameters/HelpClient/GeoSearchParameters";
 import {IGeoSearchReverseParameters} from "../../Public/Parameters/HelpClient/GeoSearchReverseParameters";
+import {InjectionToken} from "@angular/core";
+import {HelpQueryGenerator} from "../../../controllers/Help/HelpQueryGenerator";
+import {MessageQueryGenerator} from "../../../controllers/Messages/MessageQueryGenerator";
 
 export interface IHelpQueryGenerator {
   getRateLimitsQuery(parameters: IGetRateLimitsParameters): string;
@@ -19,3 +22,13 @@ export interface IHelpQueryGenerator {
 
   getSearchGeoReverseQuery(parameters: IGeoSearchReverseParameters);
 }
+
+export const IHelpQueryGeneratorToken = new InjectionToken<IHelpQueryGenerator>('IHelpQueryGenerator', {
+  providedIn: 'root',
+  factory: () => new MessageQueryGenerator(),
+});
+
+export const IHelpQueryGeneratorToken = new InjectionToken<IHelpQueryGenerator>('IHelpQueryGenerator', {
+  providedIn: 'root',
+  factory: () => new HelpQueryGenerator(),
+});

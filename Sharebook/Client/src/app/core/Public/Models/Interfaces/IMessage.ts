@@ -7,6 +7,8 @@ import {ITwitterClient} from "../../ITwitterClient";
 import {IQuickReplyOption} from "./IQuickReplyOption";
 import {IQuickReplyResponse} from "./IQuickReplyResponse";
 import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import {InjectionToken} from "@angular/core";
+import {Message} from "../../../Core/Models/Message";
 
 // Message that can be sent privately between Twitter users privately.
 // https://developer.twitter.com/en/docs/direct-messages/sending-and-receiving/api-reference/new-event
@@ -57,3 +59,8 @@ export interface IMessage extends IEquatable<IMessage> {
   // Destroy the message.
   destroyAsync(): Promise<void>;
 }
+
+export const IMessageToken = new InjectionToken<IMessage>('IMessage', {
+  providedIn: 'root',
+  factory: () => new Message(),
+});

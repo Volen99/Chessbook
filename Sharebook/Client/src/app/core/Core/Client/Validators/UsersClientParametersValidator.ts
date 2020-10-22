@@ -30,6 +30,7 @@ import {IUsersClientRequiredParametersValidator} from './UsersClientRequiredPara
 import {TwitterLimits} from 'src/app/core/Public/Settings/TwitterLimits';
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
 import {UserParameters} from "./parameters-types";
+import {InjectionToken} from "@angular/core";
 
 export interface IUsersClientParametersValidator {
   validate(parameters: IGetAuthenticatedUserParameters): void;
@@ -89,6 +90,11 @@ export interface IUsersClientParametersValidator {
 
   validate(parameters: IUnmuteUserParameters);
 }
+
+export const IUsersClientParametersValidatorToken = new InjectionToken<IUsersClientParametersValidator>('IUsersClientParametersValidator', {
+  providedIn: 'root',
+  factory: () => new UsersClientParametersValidator(),
+});
 
 export class UsersClientParametersValidator implements IUsersClientParametersValidator {
   private readonly _usersClientRequiredParametersValidator: IUsersClientRequiredParametersValidator;

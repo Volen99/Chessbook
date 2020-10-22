@@ -9,6 +9,7 @@ import {IUpdateProfileBannerParameters} from "../../core/Public/Parameters/Accou
 import {IRemoveProfileBannerParameters} from "../../core/Public/Parameters/AccountSettingsClient/RemoveProfileBannerParameters";
 import {IUserDTO} from "../../core/Public/Models/Interfaces/DTO/IUserDTO";
 import {IAccountSettingsQueryExecutor} from "./AccountSettingsQueryExecutor";
+import {InjectionToken} from "@angular/core";
 
 export interface IAccountSettingsController {
   getAccountSettingsAsync(parameters: IGetAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>>;
@@ -23,6 +24,11 @@ export interface IAccountSettingsController {
 
   removeProfileBannerAsync(parameters: IRemoveProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>;
 }
+
+export const IAccountSettingsControllerToken = new InjectionToken<IAccountSettingsController>('IAccountSettingsController', {
+  providedIn: 'root',
+  factory: () => new AccountSettingsController(),
+});
 
 export class AccountSettingsController implements IAccountSettingsController {
   private readonly _accountSettingsQueryExecutor: IAccountSettingsQueryExecutor;

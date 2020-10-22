@@ -14,6 +14,7 @@ import {IReadOnlyTwitterCredentials} from "../core/Core/Models/Authentication/Re
 import {ITwitterQuery} from "../core/Public/Models/Interfaces/ITwitterQuery";
 import KeyValuePair from "../c#-objects/TypeScript.NET-Core/packages/Core/source/KeyValuePair";
 import Random from "../c#-objects/TypeScript.NET-Core/packages/Core/source/Random";
+import {InjectionToken} from "@angular/core";
 
 // using HttpMethod = Tweetinvi.Models.HttpMethod;
 export interface IOAuthWebRequestGeneratorFactory {
@@ -21,6 +22,11 @@ export interface IOAuthWebRequestGeneratorFactory {
 
   create(request: ITwitterRequest): IOAuthWebRequestGenerator;
 }
+
+export const IOAuthWebRequestGeneratorFactoryToken = new InjectionToken<IOAuthWebRequestGeneratorFactory>('IOAuthWebRequestGeneratorFactory', {
+  providedIn: 'root',
+  factory: () => new OAuthWebRequestGeneratorFactory(),
+});
 
 export class OAuthWebRequestGeneratorFactory implements IOAuthWebRequestGeneratorFactory {
   private readonly _webHelper: IWebHelper;

@@ -49,7 +49,7 @@ namespace Tweetinvi.Core.Helpers
         public IEnumerable<T1> GetPropertyAttributes<T1, T2, T3>(Expression<Func<T3>> propertyExpression) where T1 : Attribute
         {
             var body = propertyExpression?.Body as MemberExpression;
-            
+
             if (body?.Member == null)
             {
                 return null;
@@ -69,3 +69,8 @@ namespace Tweetinvi.Core.Helpers
         }
     }
 }
+
+export const IAttributeHelperToken = new InjectionToken<IAttributeHelper>('IAttributeHelper', {
+  providedIn: 'root',
+  factory: () => new,
+});

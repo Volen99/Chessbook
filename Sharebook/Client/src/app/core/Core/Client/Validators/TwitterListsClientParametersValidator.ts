@@ -26,6 +26,7 @@ import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterA
 import ArgumentOutOfRangeException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentOutOfRangeException";
 import {ITwitterListsClientRequiredParametersValidator} from "./TwitterListsClientRequiredParametersValidator";
 import {TwitterListParameters} from "./parameters-types";
+import {InjectionToken} from "@angular/core";
 
 export interface ITwitterListsClientParametersValidator {
   validate(parameters: ICreateListParameters): void;
@@ -74,6 +75,11 @@ export interface ITwitterListsClientParametersValidator {
 
   validate(parameters: ICheckIfUserIsSubscriberOfListParameters): void;
 }
+
+export const ITwitterListsClientParametersValidatorToken = new InjectionToken<ITwitterListsClientParametersValidator>('ITwitterListsClientParametersValidator', {
+  providedIn: 'root',
+  factory: () => new TwitterListsClientParametersValidator(),
+});
 
 type GetListsParameters = IGetListsOwnedByAccountParameters | IGetListsOwnedByUserParameters;
 

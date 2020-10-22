@@ -1,11 +1,18 @@
 ﻿import {ITimelineRequestParameters, TimelineRequestParameters} from "../TimelineRequestParameters";
 import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {InjectionToken} from "@angular/core";
 
 // For more information visit : https://developer.twitter.com/en/docs/tweets/timelines/api-reference/get-statuses-home_timeline
-export interface IGetHomeTimelineParameters extends ITimelineRequestParameters {
+export
+interface IGetHomeTimelineParameters extends ITimelineRequestParameters {
   // Exclude reply tweets from the result set.
   excludeReplies: boolean;
 }
+
+export const IGetHomeTimelineParametersToken = new InjectionToken<IGetHomeTimelineParameters>('IGetHomeTimelineParameters', {
+  providedIn: 'root',
+  factory: () => new GetHomeTimelineParameters(),
+});
 
 export class GetHomeTimelineParameters extends TimelineRequestParameters implements IGetHomeTimelineParameters {
   constructor(source?: IGetHomeTimelineParameters) {

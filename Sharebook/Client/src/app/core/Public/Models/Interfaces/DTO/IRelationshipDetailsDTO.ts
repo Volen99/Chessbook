@@ -1,4 +1,7 @@
-﻿export interface IRelationshipDetailsDTO {
+﻿import {InjectionToken} from "@angular/core";
+import {RelationshipDetailsDTO} from "../../../../Core/DTO/RelationshipDetailsDTO.TS";
+
+export interface IRelationshipDetailsDTO {
   sourceId: number;
   sourceIdStr: string;
   sourceScreenName: string;
@@ -23,3 +26,8 @@
   allReplies: boolean;
   markedSpam: boolean;
 }
+
+export const IRelationshipDetailsDTOToken = new InjectionToken<IRelationshipDetailsDTO>('IRelationshipDetailsDTO', {
+  providedIn: 'root',
+  factory: () => new RelationshipDetailsDTO(),
+});

@@ -6,6 +6,7 @@ import {ITweetStream} from "../../../Core/Streaming/ITweetStream";
 import {ICreateTweetStreamParameters} from "../../Parameters/StreamsClient/CreateTweetStreamParameters";
 import {ITrackedStream} from "../../../Core/Streaming/ITrackedStream";
 import {ICreateTrackedTweetStreamParameters} from "../../Parameters/StreamsClient/CreateTrackedStreamParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface IStreamsClient {
   createSampleStream(): ISampleStream;
@@ -30,3 +31,9 @@ export interface IStreamsClient {
   // Create a stream that receive tweets. In addition this stream allow you to filter the results received.
   createTrackedTweetStream(parameters: ICreateTrackedTweetStreamParameters): ITrackedStream;
 }
+
+
+export const IStreamsClientToken = new InjectionToken<IStreamsClient>('IStreamsClient', {
+  providedIn: 'root',
+  factory: () => new,
+});

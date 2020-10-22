@@ -1,12 +1,18 @@
 ﻿import {IUserIdentifier} from "../../../Public/Models/Interfaces/IUserIdentifier";
 import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import ArgumentNullException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException";
+import {InjectionToken} from "@angular/core";
 
 export interface IUserQueryValidator {
   throwIfUserCannotBeIdentified(user: IUserIdentifier): void;
 
   throwIfUserCannotBeIdentified(user: IUserIdentifier, parameterName: string): void;
 }
+
+export const IUserQueryValidatorToken = new InjectionToken<IUserQueryValidator>('IUserQueryValidator', {
+  providedIn: 'root',
+  factory: () => new UserQueryValidator(),
+});
 
 export class UserQueryValidator implements IUserQueryValidator {
   public throwIfUserCannotBeIdentified(user: IUserIdentifier, parameterName?: string): void {

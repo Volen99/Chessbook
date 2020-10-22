@@ -11,6 +11,10 @@ import {IUpdateRelationshipParameters} from "../../Parameters/AccountClient/Upda
 import {ISavedSearch} from "./ISavedSearch";
 import {ITwitterList} from "./ITwitterList";
 import {IUpdateAccountSettingsParameters} from "../../Parameters/AccountSettingsClient/UpdateAccountSettingsParameters";
+import {Inject, InjectionToken} from "@angular/core";
+import {AuthenticatedUser} from "../../../Core/Models/AuthenticatedUser";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {UserDTO} from "../../../Core/DTO/UserDTO";
 
 // User associated with a Token, this "privileged" user has access private information like messages, timeline...
 export interface IAuthenticatedUser extends IUser {
@@ -89,6 +93,8 @@ export interface IAuthenticatedUser extends IUser {
   // Block
 
   // Block a specific user.
+  blockUserAsync(): Promise<void>;      // by mi
+
   blockUserAsync(user: IUserIdentifier): Promise<void>;
 
   // Block a specific user.
@@ -100,6 +106,8 @@ export interface IAuthenticatedUser extends IUser {
   // Unblock
 
   // Unblock a specific user.
+  unblockUserAsync(): Promise<void>;      // by mi
+
   unblockUserAsync(user: IUserIdentifier): Promise<void>;
 
   // Unblock a specific user.
@@ -117,6 +125,8 @@ export interface IAuthenticatedUser extends IUser {
   // Spam
 
   // Report a specific user for being a spammer.
+  reportUserForSpamAsync(): Promise<void>;      // by mi
+
   reportUserForSpamAsync(user: IUserIdentifier): Promise<void>;
 
   // Report a specific user for being a spammer.
@@ -166,3 +176,8 @@ export interface IAuthenticatedUser extends IUser {
   // Modify the authenticated account settings.
   updateAccountSettingsAsync(parameters: IUpdateAccountSettingsParameters): Promise<IAccountSettings>;
 }
+
+export const IAuthenticatedUserToken = new InjectionToken<IAuthenticatedUser>('IAuthenticatedUser', {
+  providedIn: 'root',
+  factory: () => new AuthenticatedUser(),
+});

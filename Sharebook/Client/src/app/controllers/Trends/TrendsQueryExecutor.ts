@@ -8,6 +8,7 @@ import {IGetTrendsLocationCloseToParameters} from "../../core/Public/Parameters/
 import {IGetTrendsAtResult} from "../../core/Public/Models/Interfaces/IGetTrendsAtResult";
 import {ITrendLocation} from "../../core/Public/Models/Interfaces/ITrendLocation";
 import {ITrendsQueryGenerator} from "./TrendsQueryGenerator";
+import {InjectionToken} from "@angular/core";
 
 export interface ITrendsQueryExecutor {
   getPlaceTrendsAtAsync(parameters: IGetTrendsAtParameters, request: ITwitterRequest): Promise<ITwitterResult<IGetTrendsAtResult[]>>;
@@ -16,6 +17,11 @@ export interface ITrendsQueryExecutor {
 
   getTrendsLocationCloseToAsync(parameters: IGetTrendsLocationCloseToParameters, request: ITwitterRequest): Promise<ITwitterResult<ITrendLocation[]>>;
 }
+
+export const ITrendsQueryExecutorToken = new InjectionToken<ITrendsQueryExecutor>('ITrendsQueryExecutor', {
+  providedIn: 'root',
+  factory: () => new TrendsQueryExecutor(),
+});
 
 export class TrendsQueryExecutor implements ITrendsQueryExecutor {
   private readonly _trendsQueryGenerator: ITrendsQueryGenerator;

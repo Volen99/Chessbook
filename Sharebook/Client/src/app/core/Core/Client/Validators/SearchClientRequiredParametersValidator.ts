@@ -6,9 +6,15 @@ import {ICreateSavedSearchParameters} from "../../../Public/Parameters/Search/Cr
 import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import {IGetSavedSearchParameters} from "../../../Public/Parameters/Search/GetSavedSearchParameters";
 import {IDestroySavedSearchParameters} from "../../../Public/Parameters/Search/DestroySavedSearchParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface ISearchClientRequiredParametersValidator extends ISearchClientParametersValidator {
 }
+
+export const ISearchClientRequiredParametersValidatorToken = new InjectionToken<ISearchClientRequiredParametersValidator>('ISearchClientRequiredParametersValidator', {
+  providedIn: 'root',
+  factory: () => new SearchClientRequiredParametersValidator(),
+});
 
 export class SearchClientRequiredParametersValidator implements ISearchClientRequiredParametersValidator {
   public validate(parameters: SearchParameters): void {

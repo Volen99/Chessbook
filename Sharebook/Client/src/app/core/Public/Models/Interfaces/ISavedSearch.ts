@@ -1,5 +1,7 @@
 ﻿import {ISavedSearchDTO} from "./DTO/ISavedSearchDTO";
 import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import {InjectionToken} from "@angular/core";
+import {SavedSearch} from "../../../Core/Models/SavedSearch";
 
 // Twitter saved search.
 export interface ISavedSearch {
@@ -21,3 +23,8 @@ export interface ISavedSearch {
   // Creation date.
   createdAt: DateTime; // DateTimeOffset;
 }
+
+export const ISavedSearchToken = new InjectionToken<ISavedSearch>('ISavedSearch', {
+  providedIn: 'root',
+  factory: () => new SavedSearch(),
+});

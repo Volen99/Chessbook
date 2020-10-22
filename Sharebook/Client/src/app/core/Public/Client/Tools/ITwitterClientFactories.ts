@@ -36,6 +36,7 @@ import {ITwitterConfiguration} from "../../Models/Interfaces/DTO/ITwitterConfigu
 import {ITwitterCredentials} from "../../Models/Authentication/TwitterCredentials";
 import {IConsumerOnlyCredentials} from "../../Models/Authentication/ConsumerOnlyCredentials";
 import {CredentialsRateLimitsDTO} from "../../../Core/DTO/CredentialsRateLimitsDTO";
+import {InjectionToken} from "@angular/core";
 
 export interface ITwitterClientFactories {
   // ACCOUNT SETTINGS
@@ -177,3 +178,9 @@ export interface ITwitterClientFactories {
   // Creates search results from json
   createSearchResult(json: string): ISearchResults;
 }
+
+
+export const ITwitterClientFactoriesToken = new InjectionToken<ITwitterClientFactories>('ITwitterClientFactories', {
+  providedIn: 'root',
+  factory: () => new,
+});

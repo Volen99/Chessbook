@@ -6,6 +6,7 @@ import {IRequestAuthUrlParameters} from "../../core/Public/Parameters/Auth/IRequ
 import {IRequestCredentialsParameters} from "../../core/Public/Parameters/Auth/RequestCredentialsParameters";
 import {IInvalidateBearerTokenParameters} from "../../core/Public/Parameters/Auth/InvalidateBearerTokenParameters";
 import {IInvalidateAccessTokenParameters} from "../../core/Public/Parameters/Auth/InvalidateAccessTokenParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface IAuthQueryGenerator {
   getCreateBearerTokenQuery(parameters: ICreateBearerTokenParameters): string;
@@ -18,6 +19,11 @@ export interface IAuthQueryGenerator {
 
   getInvalidateAccessTokenQuery(parameters: IInvalidateAccessTokenParameters): string;
 }
+
+export const IAuthQueryGeneratorToken = new InjectionToken<IAuthQueryGenerator>('IAuthQueryGenerator', {
+  providedIn: 'root',
+  factory: () => new AuthQueryGenerator(),
+});
 
 export class AuthQueryGenerator implements IAuthQueryGenerator {
   public getCreateBearerTokenQuery(parameters: ICreateBearerTokenParameters): string {

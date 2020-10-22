@@ -5,12 +5,18 @@ import {MediaCategory} from "../../../Public/Models/Enum/MediaCategory";
 import {TwitterLimits} from "../../../Public/Settings/TwitterLimits";
 import {ITwitterClient} from "../../../Public/ITwitterClient";
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
+import {InjectionToken} from "@angular/core";
 
 export interface IUploadClientParametersValidator {
   validate(parameters: IUploadParameters): void;
 
   validate(parameters: IAddMediaMetadataParameters): void;
 }
+
+export const IUploadClientParametersValidatorToken = new InjectionToken<IUploadClientParametersValidator>('IUploadClientParametersValidator', {
+  providedIn: 'root',
+  factory: () => new UploadClientParametersValidator(),
+});
 
 export class UploadClientParametersValidator implements IUploadClientParametersValidator {
   private readonly _client: ITwitterClient;

@@ -9,9 +9,15 @@ import {IIsAccountSubscribedToAccountActivityParameters} from "../../../Public/P
 import {IGetAccountActivitySubscriptionsParameters} from "../../../Public/Parameters/AccountActivity/GetListOfSubscriptionsParameters";
 import {IUnsubscribeFromAccountActivityParameters} from "../../../Public/Parameters/AccountActivity/UnsubscribeFromAccountActivityParameters";
 import {AccountActivityParameters} from "./parameters-types";
+import {InjectionToken} from "@angular/core";
 
 export interface IAccountActivityClientRequiredParametersValidator extends IAccountActivityClientParametersValidator {
 }
+
+export const IAccountActivityClientRequiredParametersValidatorToken = new InjectionToken<IAccountActivityClientRequiredParametersValidator>('IAccountActivityClientRequiredParametersValidator', {
+  providedIn: 'root',
+  factory: () => new AccountActivityClientRequiredParametersValidator(),
+});
 
 type SubscribeParameters = ISubscribeToAccountActivityParameters
   | IIsAccountSubscribedToAccountActivityParameters

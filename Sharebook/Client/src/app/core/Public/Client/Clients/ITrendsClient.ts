@@ -5,6 +5,7 @@ import {IGetTrendsLocationParameters} from "../../Parameters/TrendsClient/GetTre
 import {ICoordinates} from "../../Models/Interfaces/ICoordinates";
 import {IGetTrendsLocationCloseToParameters} from "../../Parameters/TrendsClient/GetTrendsLocationCloseToParameters";
 import {ITrendsClientParametersValidator} from "../../../Core/Client/Validators/TrendsClientParametersValidator";
+import {InjectionToken} from "@angular/core";
 
 export interface ITrendsClient {
   // Validate all the Trends client parameters
@@ -39,3 +40,9 @@ export interface ITrendsClient {
   /// <returns>Trending locations</returns>
   getTrendsLocationCloseToAsync(parameters: IGetTrendsLocationCloseToParameters): Promise<ITrendLocation[]>;
 }
+
+
+export const ITrendsClientToken = new InjectionToken<ITrendsClient>('ITrendsClient', {
+  providedIn: 'root',
+  factory: () => new,
+});

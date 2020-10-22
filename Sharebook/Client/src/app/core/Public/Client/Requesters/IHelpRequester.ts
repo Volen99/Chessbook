@@ -10,6 +10,7 @@ import {IGeoSearchParameters} from "../../Parameters/HelpClient/GeoSearchParamet
 import {SearchGeoSearchResultDTO} from "../../Models/Interfaces/DTO/GeoSearchResultDTO";
 import {IGeoSearchReverseParameters} from "../../Parameters/HelpClient/GeoSearchReverseParameters";
 import {CredentialsRateLimitsDTO} from "../../../Core/DTO/CredentialsRateLimitsDTO";
+import {InjectionToken} from "@angular/core";
 
 export interface IHelpRequester {
   /// <summary>
@@ -54,3 +55,9 @@ export interface IHelpRequester {
   /// <returns>Twitter result containing the matching the search</returns>
   searchGeoReverseAsync(parameters: IGeoSearchReverseParameters): Promise<ITwitterResult<SearchGeoSearchResultDTO>>;
 }
+
+
+export const IHelpRequesterToken = new InjectionToken<IHelpRequester>('IHelpRequester', {
+  providedIn: 'root',
+  factory: () => new,
+});

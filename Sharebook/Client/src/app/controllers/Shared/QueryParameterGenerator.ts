@@ -7,6 +7,7 @@ import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMo
 import {OEmbedTweetAlignment, OEmbedTweetTheme} from "../../core/Public/Parameters/TweetsClient/GetOEmbedTweetParameters";
 import {Language} from "../../core/Public/Models/Enum/Language";
 import {SharebookConsts} from "../../core/Public/sharebook-consts";
+import {InjectionToken} from "@angular/core";
 
 export interface IQueryParameterGenerator {
   appendCursorParameters(query: StringBuilder, parameters: ICursorQueryParameters): void;
@@ -25,6 +26,11 @@ export interface IQueryParameterGenerator {
 
   addTimelineParameters(query: StringBuilder, parameters: ITimelineRequestParameters, tweetMode: ComputedTweetMode): void;
 }
+
+export const IQueryParameterGeneratorToken = new InjectionToken<ITweetIdentifier>('IQueryParameterGenerator', {
+  providedIn: 'root',
+  factory: () => new QueryParameterGenerator(),
+});
 
 export class QueryParameterGenerator implements IQueryParameterGenerator {
   public appendCursorParameters(query: StringBuilder, parameters: ICursorQueryParameters): void {

@@ -11,6 +11,7 @@ import {GeoCode} from "../../Models/GeoCode";
 import {TweetMode} from '../../Settings/TweetinviSettings';
 import {LanguageFilter} from "../../Models/Enum/LanguageFilter";
 import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import {InjectionToken} from "@angular/core";
 
 /// <summary>
 /// For more information read : https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets
@@ -51,6 +52,11 @@ export interface ISearchTweetsParameters extends IMinMaxQueryParameters, ITweetM
   // Set the geo location where the search have to be performed.
   setGeoCode(latitude: number, longitude: number, radius: number, measure: DistanceMeasure): void;
 }
+
+export const ISearchTweetsParametersToken = new InjectionToken<ISearchTweetsParameters>('ISearchTweetsParameters', {
+  providedIn: 'root',
+  factory: () => new SearchTweetsParameters(),
+});
 
 // https://dev.twitter.com/rest/reference/get/search/tweets
 export class SearchTweetsParameters extends MinMaxQueryParameters implements ISearchTweetsParameters {

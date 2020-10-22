@@ -1,11 +1,17 @@
 ﻿import {ITimelineRequestParameters, TimelineRequestParameters} from "../TimelineRequestParameters";
 import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {InjectionToken} from "@angular/core";
 
 // For more information visit: https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-retweets_of_me
 export interface IGetRetweetsOfMeTimelineParameters extends ITimelineRequestParameters {
   // Include user entities.
   includeUserEntities?: boolean;
 }
+
+export const IGetRetweetsOfMeTimelineParametersToken = new InjectionToken<IGetRetweetsOfMeTimelineParameters>('IGetRetweetsOfMeTimelineParameters', {
+  providedIn: 'root',
+  factory: () => new GetRetweetsOfMeTimelineParameters(),
+});
 
 export class GetRetweetsOfMeTimelineParameters extends TimelineRequestParameters implements IGetRetweetsOfMeTimelineParameters {
   constructor(source?: IGetRetweetsOfMeTimelineParameters) {

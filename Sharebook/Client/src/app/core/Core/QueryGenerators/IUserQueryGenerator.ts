@@ -21,6 +21,8 @@ import {IGetMutedUserIdsParameters} from "../../Public/Parameters/AccountClient/
 import {IGetMutedUsersParameters} from "../../Public/Parameters/AccountClient/GetMutedUsersParameters";
 import {IMuteUserParameters} from "../../Public/Parameters/AccountClient/MuteUserParameters";
 import {IUnmuteUserParameters} from "../../Public/Parameters/AccountClient/UnMuteUserParameters";
+import {InjectionToken} from "@angular/core";
+import {UserQueryGenerator} from "../../../controllers/User/UserQueryGenerator";
 
 export interface IUserQueryGenerator {
   getAuthenticatedUserQuery(parameters: IGetAuthenticatedUserParameters): string;
@@ -75,3 +77,8 @@ export interface IUserQueryGenerator {
 
   getUnmuteUserQuery(parameters: IUnmuteUserParameters): string;
 }
+
+export const IUserQueryGeneratorToken = new InjectionToken<IUserQueryGenerator>('IUserQueryGenerator', {
+  providedIn: 'root',
+  factory: () => new UserQueryGenerator(),
+});

@@ -1,4 +1,6 @@
 ﻿import {IRelationshipDetailsDTO} from "./DTO/IRelationshipDetailsDTO";
+import {InjectionToken} from "@angular/core";
+import {RelationshipDetails} from "../../../Core/Models/TwitterEntities/RelationshipDetails";
 
 export interface IRelationshipDetails {
   // The source user of the relationship
@@ -56,3 +58,8 @@ export interface IRelationshipDetails {
 
   relationshipDetailsDTO: IRelationshipDetailsDTO;
 }
+
+export const IRelationshipDetailsToken = new InjectionToken<IRelationshipDetails>('IRelationshipDetails', {
+  providedIn: 'root',
+  factory: () => new RelationshipDetails(),
+});

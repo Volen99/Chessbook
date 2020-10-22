@@ -6,6 +6,7 @@ import {IPublishMessageParameters} from "../../Parameters/MessageClient/PublishM
 import {IGetMessageParameters} from "../../Parameters/MessageClient/GetMessageParameters";
 import {IGetMessagesParameters} from "../../Parameters/MessageClient/GetMessagesParameters";
 import {IDeleteMessageParameters} from "../../Parameters/MessageClient/DestroyMessageParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface IMessagesClient {
   // Validate all the message client parameters
@@ -59,3 +60,8 @@ export interface IMessagesClient {
   /// <para> https://developer.twitter.com/en/docs/direct-messages/sending-and-receiving/guides/direct-message-migration </para>
   destroyMessageAsync(parameters: IDeleteMessageParameters): Promise<void>;
 }
+
+export const IMessagesClientToken = new InjectionToken<IMessagesClient>('IMessagesClient', {
+  providedIn: 'root',
+  factory: () => new,
+});

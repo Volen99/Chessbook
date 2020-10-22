@@ -4,6 +4,7 @@ import {IGetTrendsAtResult} from "../../Models/Interfaces/IGetTrendsAtResult";
 import {IGetTrendsLocationParameters} from "../../Parameters/TrendsClient/GetTrendsLocationParameters";
 import {ITrendLocation} from "../../Models/Interfaces/ITrendLocation";
 import {IGetTrendsLocationCloseToParameters} from "../../Parameters/TrendsClient/GetTrendsLocationCloseToParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface ITrendsRequester {
   /// <summary>
@@ -27,3 +28,8 @@ export interface ITrendsRequester {
   /// <returns>Twitter result containing the trending locations</returns>
   getTrendsLocationCloseToAsync(parameters: IGetTrendsLocationCloseToParameters): Promise<ITwitterResult<ITrendLocation[]>>;
 }
+
+export const ITrendsRequesterToken = new InjectionToken<ITrendsRequester>('ITrendsRequester', {
+  providedIn: 'root',
+  factory: () => new,
+});

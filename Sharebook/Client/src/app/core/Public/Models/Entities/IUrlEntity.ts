@@ -1,4 +1,6 @@
 ﻿import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
+import {InjectionToken} from "@angular/core";
+import {UrlEntity} from "../../../Core/Models/TwitterEntities/UrlEntity";
 
 // Information related with an URL in twitter
 export interface IUrlEntity extends IEquatable<IUrlEntity> {
@@ -25,3 +27,9 @@ export interface IUrlEntity extends IEquatable<IUrlEntity> {
     description: string; // HTML description for the link
   };*/
 }
+
+
+export const IUrlEntityToken = new InjectionToken<IUrlEntity>('IUrlEntity', {
+  providedIn: 'root',
+  factory: () => new UrlEntity(),
+});

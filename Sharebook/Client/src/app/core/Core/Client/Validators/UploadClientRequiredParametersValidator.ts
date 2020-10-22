@@ -2,9 +2,15 @@ import {IUploadParameters} from "../../../Public/Parameters/Upload/UploadBinaryP
 import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
 import {IAddMediaMetadataParameters} from "../../../Public/Parameters/Upload/AddMediaMetadataParameters";
 import {IUploadClientParametersValidator} from "./UploadClientParametersValidator";
+import {InjectionToken} from "@angular/core";
 
 export interface IUploadClientRequiredParametersValidator extends IUploadClientParametersValidator {
 }
+
+export const IUploadClientRequiredParametersValidatorToken = new InjectionToken<IUploadClientRequiredParametersValidator>('IUploadClientRequiredParametersValidator', {
+  providedIn: 'root',
+  factory: () => new UploadClientRequiredParametersValidator(),
+});
 
 export class UploadClientRequiredParametersValidator implements IUploadClientRequiredParametersValidator {
 

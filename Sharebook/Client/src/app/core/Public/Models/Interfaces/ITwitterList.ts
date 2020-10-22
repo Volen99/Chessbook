@@ -8,6 +8,8 @@ import {IUser} from "./IUser";
 import {ITwitterClient} from "../../ITwitterClient";
 import {IListMetadataParameters} from "../../Parameters/ListsClient/IListMetadataParameters";
 import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import {InjectionToken} from "@angular/core";
+import {TwitterList} from "../../../Core/Models/TwitterList";
 
 export interface ITwitterList extends ITwitterListIdentifier {
   twitterListDTO: ITwitterListDTO;
@@ -122,3 +124,9 @@ export interface ITwitterList extends ITwitterListIdentifier {
   // Destroy the list.
   destroyAsync(): Promise<void>;
 }
+
+
+export const ITwitterListToken = new InjectionToken<ITwitterList>('ITwitterList', {
+  providedIn: 'root',
+  factory: () => new TwitterList(),
+});

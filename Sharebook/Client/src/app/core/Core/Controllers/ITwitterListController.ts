@@ -24,6 +24,9 @@ import {IGetTweetsFromListParameters} from "../../Public/Parameters/ListsClient/
 import {ITwitterListCursorQueryResultDTO} from "../../Public/Models/Interfaces/DTO/QueryDTO/ITwitterListCursorQueryResultDTO";
 import {IUserCursorQueryResultDTO} from "../../Public/Models/Interfaces/DTO/QueryDTO/IUserCursorQueryResultDTO";
 import {ITweetDTO} from "../../Public/Models/Interfaces/DTO/ITweetDTO";
+import {InjectionToken} from "@angular/core";
+import {TweetIdentifier} from "../../Public/Models/TweetIdentifier";
+import {TwitterListController} from "../../../controllers/TwitterLists/TwitterListController";
 
 export interface ITwitterListController {
   // LIST
@@ -68,3 +71,8 @@ export interface ITwitterListController {
   // GET TWEETS
   getTweetsFromListIterator(parameters: IGetTweetsFromListParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number>; // long?
 }
+
+export const ITwitterListControllerToken = new InjectionToken<ITwitterListController>('ITwitterListController', {
+  providedIn: 'root',
+  factory: () => new TwitterListController(),
+});

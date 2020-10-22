@@ -8,6 +8,7 @@ import {ITwitterCredentials} from "../../Models/Authentication/TwitterCredential
 import {IInvalidateBearerTokenParameters} from "../../Parameters/Auth/InvalidateBearerTokenParameters";
 import {InvalidateTokenResponse} from "../../Models/Authentication/InvalidateTokenResponse";
 import {IInvalidateAccessTokenParameters} from "../../Parameters/Auth/InvalidateAccessTokenParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface IAuthRequester {
   /// <summary>
@@ -49,3 +50,8 @@ export interface IAuthRequester {
   /// <returns>Request result</returns>
   invalidateAccessTokenAsync(parameters: IInvalidateAccessTokenParameters): Promise<ITwitterResult<InvalidateTokenResponse>>;
 }
+
+export const IAuthRequesterToken = new InjectionToken<IAuthRequester>('IAuthRequester', {
+  providedIn: 'root',
+  factory: () => new,
+});

@@ -6,6 +6,7 @@ import {IGetMentionsTimelineParameters} from "../../Parameters/TimelineClient/Ge
 import {IGetUserTimelineParameters} from "../../Parameters/TimelineClient/GetUserTimelineParameters";
 import {IGetRetweetsOfMeTimelineParameters} from "../../Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
 import {ITimelineClientParametersValidator} from "../../../Core/Client/Validators/TimelineClientParametersValidator";
+import {InjectionToken} from "@angular/core";
 
 export interface ITimelinesClient {
   // Validate all the Timelines client parameters
@@ -106,3 +107,9 @@ export interface ITimelinesClient {
   /// <returns>An iterator to list the tweets that got retweeted by others</returns>
   getRetweetsOfMeTimelineIterator(parameters: IGetRetweetsOfMeTimelineParameters): ITwitterIterator<ITweet, number>; // long?
 }
+
+
+export const ITimelinesClientToken = new InjectionToken<ITimelinesClient>('ITimelinesClient', {
+  providedIn: 'root',
+  factory: () => new,
+});

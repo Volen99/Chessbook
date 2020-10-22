@@ -1,5 +1,6 @@
 ﻿import {IReadOnlyConsumerCredentials} from "../../../Core/Models/Authentication/ReadOnlyConsumerCredentials";
 import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import {InjectionToken} from "@angular/core";
 
 export interface IConsumerOnlyCredentials extends IReadOnlyConsumerCredentials {
   // Key identifying a specific consumer application
@@ -14,6 +15,11 @@ export interface IConsumerOnlyCredentials extends IReadOnlyConsumerCredentials {
   /*new*/
   bearerToken: string;
 }
+
+export const IConsumerOnlyCredentialsToken = new InjectionToken<IConsumerOnlyCredentials>('IConsumerOnlyCredentials', {
+  providedIn: 'root',
+  factory: () => new ConsumerOnlyCredentials(),
+});
 
 // Authentication tokens of a specific app
 export class ConsumerOnlyCredentials implements IConsumerOnlyCredentials {

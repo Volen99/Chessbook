@@ -22,9 +22,15 @@ import {IAddMemberToListParameters} from "../../../Public/Parameters/ListsClient
 import {ICheckIfUserIsMemberOfListParameters} from "../../../Public/Parameters/ListsClient/Members/CheckIfUserIsMemberOfListParameters";
 import {IRemoveMemberFromListParameters} from "../../../Public/Parameters/ListsClient/Members/RemoveMemberFromListParameters";
 import {ICheckIfUserIsSubscriberOfListParameters} from "../../../Public/Parameters/ListsClient/Subscribers/CheckIfUserIsSubscriberOfListParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface ITwitterListsClientRequiredParametersValidator extends ITwitterListsClientParametersValidator {
 }
+
+export const ITwitterListsClientRequiredParametersValidatorToken = new InjectionToken<ITwitterListsClientRequiredParametersValidator>('ITwitterListsClientRequiredParametersValidator', {
+  providedIn: 'root',
+  factory: () => new TwitterListsClientRequiredParametersValidator(),
+});
 
 type ThrowIfParameters = IGetListParameters
   | IUpdateListParameters

@@ -9,6 +9,7 @@ import {IGetMentionsTimelineParameters} from "../../core/Public/Parameters/Timel
 import {IGetRetweetsOfMeTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
 import {ITweetDTO} from "../../core/Public/Models/Interfaces/DTO/ITweetDTO";
 import {ITimelineQueryGenerator} from "./TimelineQueryGenerator";
+import {InjectionToken} from "@angular/core";
 
 export interface ITimelineQueryExecutor {
   // Home Timeline
@@ -23,6 +24,11 @@ export interface ITimelineQueryExecutor {
   // Retweets Of Me Timeline
   getRetweetsOfMeTimelineAsync(parameters: IGetRetweetsOfMeTimelineParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO[]>>;
 }
+
+export const ITimelineQueryExecutorToken = new InjectionToken<ITimelineQueryExecutor>('ITimelineQueryExecutor', {
+  providedIn: 'root',
+  factory: () => new TimelineQueryExecutor(),
+});
 
 export class TimelineQueryExecutor implements ITimelineQueryExecutor {
   private readonly _twitterAccessor: ITwitterAccessor;

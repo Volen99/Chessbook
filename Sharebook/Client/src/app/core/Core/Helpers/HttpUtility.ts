@@ -1,4 +1,5 @@
 ﻿import Regex, {Match} from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/RegularExpressions";
+import {InjectionToken} from "@angular/core";
 
 export interface IHttpUtility {
   htmlEncode(unicodeText: string): string;
@@ -9,6 +10,11 @@ export interface IHttpUtility {
 
   htmlDecode(unicodeText: string, encodeTagsToo: boolean): string;
 }
+
+export const IHttpUtilityToken = new InjectionToken<IHttpUtility>('IHttpUtility', {
+  providedIn: 'root',
+  factory: () => new,
+});
 
 export class HttpUtility implements IHttpUtility {
   private readonly _entityResolver: Regex = new Regex("([&][#](?'decimal'[0-9]+);)|([&][#][(x|X)](?'hex'[0-9a-fA-F]+);)|([&](?'html'\\w+);)");

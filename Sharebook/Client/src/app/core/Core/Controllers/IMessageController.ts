@@ -8,6 +8,8 @@ import {IGetMessageDTO} from "../../Public/Models/Interfaces/DTO/IGetMessageDTO"
 import {ICreateMessageDTO} from "../../Public/Models/Interfaces/DTO/ICreateMessageDTO";
 import {IMessageCursorQueryResultDTO} from "../../Public/Models/Interfaces/DTO/QueryDTO/IMessageCursorQueryResultDTO";
 import {ITwitterPageIterator} from "../Iterators/TwitterPageIterator";
+import {InjectionToken} from "@angular/core";
+import {MessageController} from "../../../controllers/Messages/MessageController";
 
 export interface IMessageController {
   publishMessageAsync(parameters: IPublishMessageParameters, request: ITwitterRequest): Promise<ITwitterResult<ICreateMessageDTO>>;
@@ -18,3 +20,8 @@ export interface IMessageController {
 
   getMessagesIterator(parameters: IGetMessagesParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<IMessageCursorQueryResultDTO>>;
 }
+
+export const IMessageControllerToken = new InjectionToken<IMessageController>('IMessageController', {
+  providedIn: 'root',
+  factory: () => new MessageController(),
+});

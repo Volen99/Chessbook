@@ -2,6 +2,7 @@
 import Dictionary from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
 import {IReadOnlyTwitterCredentials} from "../Models/Authentication/ReadOnlyTwitterCredentials";
 import {ITwitterCredentials} from "../../Public/Models/Authentication/TwitterCredentials";
+import {InjectionToken} from "@angular/core";
 
 export interface IRateLimitUpdaterFactory {
   create(rateLimitCacheManager: IRateLimitCacheManager): IRateLimitUpdater;
@@ -18,3 +19,8 @@ export interface IRateLimitUpdater {
   // Inform that you want to query rate limits to be set to 0.
   clearRateLimitsForQueryAsync(query: string, credentials: IReadOnlyTwitterCredentials): Promise<void>;
 }
+
+export const ITweetIdentifierToken = new InjectionToken<IRateLimitUpdater>('IRateLimitUpdater', {
+  providedIn: 'root',
+  factory: () => new RateLimitUpdaterFactory(),
+});

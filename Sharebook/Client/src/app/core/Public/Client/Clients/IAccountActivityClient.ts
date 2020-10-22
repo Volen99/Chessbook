@@ -14,6 +14,7 @@ import {IIsAccountSubscribedToAccountActivityParameters} from "../../Parameters/
 import {IWebhookEnvironmentSubscriptions} from "../../Models/Interfaces/IWebhookEnvironmentSubscriptions";
 import {IGetAccountActivitySubscriptionsParameters} from "../../Parameters/AccountActivity/GetListOfSubscriptionsParameters";
 import {IUnsubscribeFromAccountActivityParameters} from "../../Parameters/AccountActivity/UnsubscribeFromAccountActivityParameters";
+import {InjectionToken} from "@angular/core";
 
 // A client providing all the actions related with the account activity api
 export interface IAccountActivityClient {
@@ -113,3 +114,8 @@ export interface IAccountActivityClient {
   // <para>Read more : https://developer.twitter.com/en/docs/accounts-and-users/subscribe-account-activity/api-reference/aaa-premium#delete-account-activity-all-env-name-subscriptions-user-id-json </para>
   unsubscribeFromAccountActivityAsync(parameters: IUnsubscribeFromAccountActivityParameters): Promise<void>;
 }
+
+export const IAccountActivityClientToken = new InjectionToken<IAccountActivityClient>('IAccountActivityClient', {
+  providedIn: 'root',
+  factory: () => new,
+});

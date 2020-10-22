@@ -2,6 +2,7 @@
 import {TwitterException} from "./TwitterException";
 import {ITwitterRequest} from "../Models/Interfaces/ITwitterRequest";
 import {ITwitterExceptionInfo} from "../../Core/Exceptions/ITwitterExceptionInfo";
+import {InjectionToken} from "@angular/core";
 
 export interface ITwitterTimeoutException extends ITwitterException {
 }
@@ -16,3 +17,8 @@ export class TwitterTimeoutException extends TwitterException implements ITwitte
     super.twitterExceptionInfos = new ITwitterExceptionInfo[0];
   }
 }
+
+export const ITwitterTimeoutExceptionToken = new InjectionToken<ITwitterTimeoutException>('ITwitterTimeoutException', {
+  providedIn: 'root',
+  factory: () => new TwitterTimeoutException(),
+});

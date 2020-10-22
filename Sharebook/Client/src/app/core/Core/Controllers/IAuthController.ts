@@ -9,6 +9,8 @@ import {InvalidateTokenResponse} from "../../Public/Models/Authentication/Invali
 import {ITwitterCredentials} from "../../Public/Models/Authentication/TwitterCredentials";
 import {IAuthenticationRequest} from "../../Public/Models/Authentication/IAuthenticationRequest";
 import {CreateTokenResponseDTO} from "../DTO/CreateTokenResponseDTO";
+import {InjectionToken} from "@angular/core";
+import {TweetIdentifier} from "../../Public/Models/TweetIdentifier";
 
 export interface IAuthController {
   createBearerTokenAsync(parameters: ICreateBearerTokenParameters, request: ITwitterRequest): Promise<ITwitterResult<CreateTokenResponseDTO>>;
@@ -21,3 +23,8 @@ export interface IAuthController {
 
   invalidateBearerTokenAsync(parameters: IInvalidateBearerTokenParameters, request: ITwitterRequest): Promise<ITwitterResult<InvalidateTokenResponse>>;
 }
+
+export const IAuthControllerToken = new InjectionToken<IAuthController>('IAuthController', {
+  providedIn: 'root',
+  factory: () => new AuthController(),
+});

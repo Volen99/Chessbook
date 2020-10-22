@@ -27,6 +27,7 @@ import {IGetUserListSubscriptionsParameters} from "../../Parameters/ListsClient/
 import {ICheckIfUserIsSubscriberOfListParameters} from "../../Parameters/ListsClient/Subscribers/CheckIfUserIsSubscriberOfListParameters";
 import {IGetTweetsFromListParameters} from "../../Parameters/ListsClient/GetTweetsFromListParameters";
 import {ITweetDTO} from "../../Models/Interfaces/DTO/ITweetDTO";
+import {InjectionToken} from "@angular/core";
 
 export interface ITwitterListsRequester {
   /// <summary>
@@ -190,3 +191,9 @@ export interface ITwitterListsRequester {
   /// <returns>An iterator to get through the tweets of a list</returns>
   getTweetsFromListIterator(parameters: IGetTweetsFromListParameters): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number>; // long?
 }
+
+
+export const ITwitterListsRequesterToken = new InjectionToken<ITwitterListsRequester>('ITwitterListsRequester', {
+  providedIn: 'root',
+  factory: () => new,
+});

@@ -1,4 +1,6 @@
 ﻿import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
+import {InjectionToken} from "@angular/core";
+import {HashtagEntity} from "../../../Core/Models/TwitterEntities/HashTagEntity";
 
 // A hashtag is a keyword prefixed by # and representing a category of tweet
 export interface IHashtagEntity extends IEquatable<IHashtagEntity> {
@@ -9,3 +11,8 @@ export interface IHashtagEntity extends IEquatable<IHashtagEntity> {
   // An array of integers indicating the offsets within the Tweet text where the hashtag begins and ends
   indices: number[];
 }
+
+export const IHashtagEntityToken = new InjectionToken<IHashtagEntity>('IHashtagEntity', {
+  providedIn: 'root',
+  factory: () => new HashtagEntity(),
+});

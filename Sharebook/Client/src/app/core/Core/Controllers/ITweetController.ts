@@ -16,6 +16,7 @@ import {IFavoriteTweetParameters} from "../../Public/Parameters/TweetsClient/Fav
 import {IUnfavoriteTweetParameters} from "../../Public/Parameters/TweetsClient/UnFavoriteTweetParameters";
 import {IGetOEmbedTweetParameters} from "../../Public/Parameters/TweetsClient/GetOEmbedTweetParameters";
 import {IIdsCursorQueryResultDTO} from "../../Public/Models/Interfaces/DTO/QueryDTO/IIdsCursorQueryResultDTO";
+import {InjectionToken} from "@angular/core";
 
 export interface ITweetController {
   // TWEET
@@ -55,3 +56,8 @@ export interface ITweetController {
 
   getOEmbedTweetAsync(parameters: IGetOEmbedTweetParameters, request: ITwitterRequest): Promise<ITwitterResult<IOEmbedTweetDTO>>;
 }
+
+export const ITweetControllerToken = new InjectionToken<ITweetController>('ITweetController', {
+  providedIn: 'root',
+  factory: () => new TweetController(),
+});

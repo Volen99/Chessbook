@@ -9,6 +9,7 @@ import {ITimelinesRequester} from "./Requesters/ITimelinesRequester";
 import {ITrendsRequester} from "./Requesters/ITrendsRequester";
 import {ITweetsRequester} from "./Requesters/ITweetsRequester";
 import {IUsersRequester} from "./Requesters/IUsersRequester";
+import {InjectionToken} from "@angular/core";
 
 export interface IRawExecutors {
   // Client to execute all the actions related with webhooks
@@ -44,3 +45,8 @@ export interface IRawExecutors {
   // Client to execute all actions related with users
   users: IUsersRequester;
 }
+
+export const IRawExecutorsToken = new InjectionToken<IRawExecutors>('IRawExecutors', {
+  providedIn: 'root',
+  factory: () => new,
+});

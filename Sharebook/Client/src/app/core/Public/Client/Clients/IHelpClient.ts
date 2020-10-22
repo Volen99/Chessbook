@@ -8,6 +8,7 @@ import {IGetPlaceParameters} from "../../Parameters/HelpClient/GetPlaceParameter
 import {IGeoSearchParameters} from "../../Parameters/HelpClient/GeoSearchParameters";
 import {ICoordinates} from "../../Models/Interfaces/ICoordinates";
 import {IGeoSearchReverseParameters} from "../../Parameters/HelpClient/GeoSearchReverseParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface IHelpClient {
   // Validate all the Help client parameters
@@ -56,3 +57,9 @@ export interface IHelpClient {
   /// <returns>Places matching the search</returns>
   searchGeoReverseAsync(parameters: IGeoSearchReverseParameters): Promise<IPlace[]>;
 }
+
+
+export const IHelpClientToken = new InjectionToken<IHelpClient>('IHelpClient', {
+  providedIn: 'root',
+  factory: () => new,
+});

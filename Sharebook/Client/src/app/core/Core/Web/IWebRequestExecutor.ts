@@ -1,6 +1,8 @@
 ﻿import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterClientHandler} from "./ITwitterClientHandler";
 import {ITwitterResponse} from "./ITwitterResponse";
+import {InjectionToken} from "@angular/core";
+import {WebRequestExecutor} from "../../../webLogic/WebRequestExecutor";
 
 // Generate a Token that can be used to perform OAuth queries
 export interface IWebRequestExecutor {
@@ -11,3 +13,7 @@ export interface IWebRequestExecutor {
   executeMultipartQueryAsync(request: ITwitterRequest): Promise<ITwitterResponse>;
 }
 
+export const IWebRequestExecutorToken = new InjectionToken<IWebRequestExecutor>('IWebRequestExecutor', {
+  providedIn: 'root',
+  factory: () => new WebRequestExecutor(),
+});

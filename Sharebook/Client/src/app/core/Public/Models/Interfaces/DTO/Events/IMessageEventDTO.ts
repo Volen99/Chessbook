@@ -2,6 +2,8 @@
 import {IEventInitiatedViaDTO} from "../IEventInitiatedViaDTO";
 import {IMessageCreateDTO} from "../IMessageCreateDTO";
 import DateTime from "../../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import {InjectionToken} from "@angular/core";
+import {MessageEventDTO} from "../../../../../Core/DTO/Events/MessageEventDTO";
 
 export interface IMessageEventDTO {
   type: EventType;
@@ -10,3 +12,8 @@ export interface IMessageEventDTO {
   initiatedVia: IEventInitiatedViaDTO;
   messageCreate: IMessageCreateDTO;
 }
+
+export const IMessageEventDTOToken = new InjectionToken<IMessageEventDTO>('IMessageEventDTO', {
+  providedIn: 'root',
+  factory: () => new MessageEventDTO(),
+});

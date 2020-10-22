@@ -9,6 +9,7 @@ import {IInvalidateAccessTokenParameters} from "../../../Public/Parameters/Auth/
 import {AuthParameters} from "./parameters-types";
 import {UriKind} from "../../../Public/Models/Enum/uri-kind";
 import {IAuthClientRequiredParametersValidator} from "./AuthClientRequiredParametersValidator";
+import {InjectionToken} from "@angular/core";
 
 export interface IAuthClientParametersValidator {
   validate(parameters: ICreateBearerTokenParameters, request: ITwitterRequest): void;
@@ -21,6 +22,11 @@ export interface IAuthClientParametersValidator {
 
   validate(parameters: IInvalidateBearerTokenParameters, request: ITwitterRequest): void;
 }
+
+export const IAuthClientParametersValidatorToken = new InjectionToken<IAuthClientParametersValidator>('IAuthClientParametersValidator', {
+  providedIn: 'root',
+  factory: () => new AuthClientParametersValidator(),
+});
 
 export class AuthClientParametersValidator implements IAuthClientParametersValidator {
   private readonly _authClientRequiredParametersValidator: IAuthClientRequiredParametersValidator;

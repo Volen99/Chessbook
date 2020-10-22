@@ -11,6 +11,7 @@ import {TweetSearchFilters} from "../../../Public/Parameters/Enum/TweetSearchFil
 import ArgumentException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException';
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
 import {IGeoCode} from "../../../Public/Models/Interfaces/IGeoCode";
+import {InjectionToken} from "@angular/core";
 
 export interface ISearchClientParametersValidator {
   validate(parameters: ISearchTweetsParameters): void;
@@ -25,6 +26,11 @@ export interface ISearchClientParametersValidator {
 
   validate(parameters: IDestroySavedSearchParameters): void;
 }
+
+export const ISearchClientParametersValidatorToken = new InjectionToken<ISearchClientParametersValidator>('ISearchClientParametersValidator', {
+  providedIn: 'root',
+  factory: () => new SearchClientParametersValidator(),
+});
 
 export class SearchClientParametersValidator implements ISearchClientParametersValidator {
   private readonly _client: ITwitterClient;

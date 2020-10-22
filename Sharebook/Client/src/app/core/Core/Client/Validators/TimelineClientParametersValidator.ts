@@ -7,6 +7,7 @@ import {ITimelineClientRequiredParametersValidator} from "./TimelineClientRequir
 import {TwitterLimits} from "../../../Public/Settings/TwitterLimits";
 import {TimelineParameters} from "./parameters-types";
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
+import {InjectionToken} from "@angular/core";
 
 export interface ITimelineClientParametersValidator {
   validate(parameters: IGetHomeTimelineParameters): void;
@@ -17,6 +18,11 @@ export interface ITimelineClientParametersValidator {
 
   validate(parameters: IGetRetweetsOfMeTimelineParameters): void;
 }
+
+export const ITimelineClientParametersValidatorToken = new InjectionToken<ITimelineClientParametersValidator>('ITimelineClientParametersValidator', {
+  providedIn: 'root',
+  factory: () => new TimelineClientParametersValidator(),
+});
 
 export class TimelineClientParametersValidator implements ITimelineClientParametersValidator {
   private readonly _timelineClientRequiredParametersValidator: ITimelineClientRequiredParametersValidator;

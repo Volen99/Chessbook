@@ -13,6 +13,7 @@ import {IGetAccountActivitySubscriptionsParameters} from "../../Parameters/Accou
 import {IWebhookEnvironmentSubscriptionsDTO} from "../../Models/Interfaces/DTO/Webhooks/IWebhookEnvironmentSubscriptionsDTO";
 import {IUnsubscribeFromAccountActivityParameters} from "../../Parameters/AccountActivity/UnsubscribeFromAccountActivityParameters";
 import {IGetAccountActivityWebhookEnvironmentsResultDTO} from "../../Models/Interfaces/DTO/Webhooks/IGetAccountActivityWebhookEnvironmentsResultDTO";
+import {InjectionToken} from "@angular/core";
 
 export interface IAccountActivityRequester {
   // <summary>
@@ -80,3 +81,8 @@ export interface IAccountActivityRequester {
   // </summary>
   unsubscribeFromAccountActivityAsync(parameters: IUnsubscribeFromAccountActivityParameters): Promise<ITwitterResult>;
 }
+
+export const IAccountActivityRequesterToken = new InjectionToken<IAccountActivityRequester>('IAccountActivityRequester', {
+  providedIn: 'root',
+  factory: () => new,
+});

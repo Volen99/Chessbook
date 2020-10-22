@@ -1,4 +1,5 @@
 ﻿import StringBuilder from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
+import {InjectionToken} from "@angular/core";
 
 // Allow developers to enhance default requests with additional query parameters
 export interface ICustomRequestParameters {
@@ -14,6 +15,11 @@ export interface ICustomRequestParameters {
   // Clear the query parameters of the query.
   clearCustomQueryParameters(): void;
 }
+
+export const ICustomRequestParametersToken = new InjectionToken<ICustomRequestParameters>('ICustomRequestParameters', {
+  providedIn: 'root',
+  factory: () => new CustomRequestParameters(),
+});
 
 export class CustomRequestParameters implements ICustomRequestParameters {
   private readonly _customQueryParameters: Array<[string, string]>;

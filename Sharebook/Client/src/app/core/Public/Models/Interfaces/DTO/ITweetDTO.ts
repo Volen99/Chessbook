@@ -8,6 +8,8 @@ import {ITweetEntities} from "../../Entities/ITweetEntities";
 import {IUserDTO} from "./IUserDTO";
 import { Language } from '../../Enum/Language';
 import DateTime from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import {InjectionToken} from "@angular/core";
+import {TweetDTO} from "../../../../Core/DTO/TweetDTO";
 
 export interface ITweetDTO extends ITweetIdentifier {
   text: string;
@@ -86,3 +88,8 @@ export interface ITweetDTO extends ITweetIdentifier {
 
   place: IPlace;
 }
+
+export const ITweetDTOToken = new InjectionToken<ITweetDTO>('ITweetDTO', {
+  providedIn: 'root',
+  factory: () => new TweetDTO(),
+});

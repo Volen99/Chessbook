@@ -14,9 +14,15 @@ import {IGetTweetsParameters} from "../../../Public/Parameters/TweetsClient/GetT
 import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import {IPublishTweetParameters} from "../../../Public/Parameters/TweetsClient/PublishTweetParameters";
 import {IGetUserFavoriteTweetsParameters} from "../../../Public/Parameters/TweetsClient/GetFavoriteTweetsParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface ITweetsClientRequiredParametersValidator extends ITweetsClientParametersValidator {
 }
+
+export const ITweetsClientRequiredParametersValidatorToken = new InjectionToken<ITweetsClientRequiredParametersValidator>('ITweetsClientRequiredParametersValidator', {
+  providedIn: 'root',
+  factory: () => new TweetsClientRequiredParametersValidator(),
+});
 
 type ParametersForThrowIfTweetBad = IDestroyTweetParameters
   | IGetRetweetsParameters

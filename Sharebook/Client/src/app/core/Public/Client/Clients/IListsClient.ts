@@ -31,6 +31,7 @@ import {IRemoveMembersFromListParameters} from "../../Parameters/ListsClient/Mem
 import {ISubscribeToListParameters} from "../../Parameters/ListsClient/Subscribers/SubscribeToListParameters";
 import {IUnsubscribeFromListParameters} from "../../Parameters/ListsClient/Subscribers/UnsubscribeFromListParameters";
 import {IAddMembersToListParameters} from "../../Parameters/ListsClient/Members/AddMembersToListParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface IListsClient {
   // Validate all the List client parameters
@@ -440,3 +441,9 @@ export interface IListsClient {
   /// <returns>An iterator to get through the tweets of a list</returns>
   getTweetsFromListIterator(parameters: IGetTweetsFromListParameters): ITwitterIterator<ITweet, number>; // long?
 }
+
+
+export const IListsClientToken = new InjectionToken<IListsClient>('IListsClient', {
+  providedIn: 'root',
+  factory: () => new,
+});

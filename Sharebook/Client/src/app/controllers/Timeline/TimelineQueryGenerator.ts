@@ -7,6 +7,7 @@ import {IGetUserTimelineParameters} from "../../core/Public/Parameters/TimelineC
 import {IGetMentionsTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetMentionsTimelineParameters";
 import {IGetRetweetsOfMeTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
 import {IQueryParameterGenerator} from "../Shared/QueryParameterGenerator";
+import {InjectionToken} from "@angular/core";
 
 export interface ITimelineQueryGenerator {
   getHomeTimelineQuery(parameters: IGetHomeTimelineParameters, tweetMode: ComputedTweetMode): string;
@@ -19,6 +20,11 @@ export interface ITimelineQueryGenerator {
   // Retweets of Me Timeline
   getRetweetsOfMeTimelineQuery(parameters: IGetRetweetsOfMeTimelineParameters, tweetMode: ComputedTweetMode): string;
 }
+
+export const ITimelineQueryGeneratorToken = new InjectionToken<ITimelineQueryGenerator>('ITimelineQueryGenerator', {
+  providedIn: 'root',
+  factory: () => new TimelineQueryGenerator(),
+});
 
 export class TimelineQueryGenerator implements ITimelineQueryGenerator {
   private readonly _userQueryParameterGenerator: IUserQueryParameterGenerator;

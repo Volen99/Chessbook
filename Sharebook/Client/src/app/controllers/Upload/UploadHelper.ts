@@ -8,10 +8,16 @@ import {IUploadMediaStatusQueryExecutor} from "./UploadMediaStatusQueryExecutor"
 import {IUploadProcessingInfo} from "../../core/Public/Models/Interfaces/DTO/IUploadProcessingInfo";
 import {ProcessingState} from "../../core/Public/Models/Enum/ProcessingState";
 import {Resources} from "../../properties/resources";
+import {InjectionToken} from "@angular/core";
 
 export interface IUploadHelper {
   waitForMediaProcessingToGetAllMetadataAsync(media: IMedia, request: ITwitterRequest): Promise<void>;
 }
+
+export const IUploadHelperToken = new InjectionToken<IUploadHelper>('IUploadHelper', {
+  providedIn: 'root',
+  factory: () => new UploadHelper(),
+});
 
 export class UploadHelper implements IUploadHelper {
   private readonly _uploadQueryExecutor: IUploadMediaStatusQueryExecutor;

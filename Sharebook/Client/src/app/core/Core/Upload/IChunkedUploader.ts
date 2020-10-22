@@ -4,6 +4,8 @@ import {IChunkUploadInitParameters} from "./ChunkUploadInitParameters";
 import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import {IChunkUploadAppendParameters} from "./ChunkUploadAppendParameters";
 import {ICustomRequestParameters} from "../../Public/Parameters/CustomRequestParameters";
+import {InjectionToken} from "@angular/core";
+import {ChunkedUploader} from "../../../controllers/Upload/ChunkedUploader";
 
 export interface IChunkedUploader {
   mediaId?: number;
@@ -20,3 +22,8 @@ export interface IChunkedUploader {
 
   finalizeAsync(customRequestParameters: ICustomRequestParameters, request: ITwitterRequest): Promise<boolean>;
 }
+
+export const IChunkedUploaderToken = new InjectionToken<IChunkedUploader>('IChunkedUploader', {
+  providedIn: 'root',
+  factory: () => new ChunkedUploader(),
+});

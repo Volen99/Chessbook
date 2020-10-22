@@ -7,6 +7,7 @@ import {IUser} from "../../Public/Models/Interfaces/IUser";
 import {MultiLevelCursorIterator} from "./MultiLevelCursorIterator";
 import {CursorPageResult} from "./Models/CursorPageResult";
 import {MultiLevelPageProcessingResult} from "./Models/MultiLevelPageProcessingResult";
+import {InjectionToken} from "@angular/core";
 
 export interface IMultiLevelCursorIteratorFactory {
   create<TDTO, TInput, TOutput>(
@@ -54,3 +55,9 @@ export class MultiLevelCursorIteratorFactory implements IMultiLevelCursorIterato
     return this.create(iterator, dtoIds => dtoIds.ids, client.users.getUsersAsync, maxPageSize);
   }
 }
+
+
+export const IMultiLevelCursorIteratorFactoryToken = new InjectionToken<IMultiLevelCursorIteratorFactory>('IMultiLevelCursorIteratorFactory', {
+  providedIn: 'root',
+  factory: () => new,
+});

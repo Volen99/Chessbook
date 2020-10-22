@@ -4,6 +4,7 @@ import {ITwitterResult} from 'src/app/core/Core/Web/TwitterResult';
 import {IAddMediaMetadataParameters} from "../../Parameters/Upload/AddMediaMetadataParameters";
 import {IUploadedMediaInfo} from '../../Models/Interfaces/DTO/IUploadedMediaInfo';
 import {IMedia} from "../../Models/Interfaces/IMedia";
+import {InjectionToken} from "@angular/core";
 
 export interface IUploadRequester {
   /// <summary>
@@ -36,3 +37,8 @@ export interface IUploadRequester {
   /// <returns>Completes wait the media is ready for use</returns>
   waitForMediaProcessingToGetAllMetadataAsync(media: IMedia): Promise<void>;
 }
+
+export const IUploadRequesterToken = new InjectionToken<IUploadRequester>('IUploadRequester', {
+  providedIn: 'root',
+  factory: () => new,
+});

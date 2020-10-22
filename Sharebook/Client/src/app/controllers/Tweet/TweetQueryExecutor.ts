@@ -19,6 +19,7 @@ import {IGetTweetParameters} from "../../core/Public/Parameters/TweetsClient/Get
 import {ITweetDTO} from "../../core/Public/Models/Interfaces/DTO/ITweetDTO";
 import {IIdsCursorQueryResultDTO} from "../../core/Public/Models/Interfaces/DTO/QueryDTO/IIdsCursorQueryResultDTO";
 import {IOEmbedTweetDTO} from "../../core/Public/Models/Interfaces/DTO/IOembedTweetDTO";
+import {InjectionToken} from "@angular/core";
 
 export interface ITweetQueryExecutor {
   getTweetAsync(parameters: IGetTweetParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO>>;
@@ -52,6 +53,11 @@ export interface ITweetQueryExecutor {
 
   getOEmbedTweetAsync(parameters: IGetOEmbedTweetParameters, request: ITwitterRequest): Promise<ITwitterResult<IOEmbedTweetDTO>>;
 }
+
+export const ITweetQueryExecutorToken = new InjectionToken<ITweetQueryExecutor>('ITweetQueryExecutor', {
+  providedIn: 'root',
+  factory: () => new TweetQueryExecutor(),
+});
 
 export class TweetQueryExecutor implements ITweetQueryExecutor {
   private readonly _tweetQueryGenerator: ITweetQueryGenerator;

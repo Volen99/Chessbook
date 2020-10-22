@@ -1,4 +1,6 @@
 ﻿import {IOEmbedTweetDTO} from "./DTO/IOembedTweetDTO";
+import {InjectionToken} from "@angular/core";
+import {OEmbedTweet} from "../../../Core/Models/OEmbedTweet";
 
 export interface IOEmbedTweet {
   // Author of the tweet.
@@ -25,3 +27,8 @@ export interface IOEmbedTweet {
   cacheAge: string;
   oembedTweetDTO: IOEmbedTweetDTO;
 }
+
+export const IOEmbedTweetToken = new InjectionToken<IOEmbedTweet>('IOEmbedTweet', {
+  providedIn: 'root',
+  factory: () => new OEmbedTweet(),
+});

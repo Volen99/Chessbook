@@ -11,6 +11,8 @@ import {IGetRetweeterIdsParameters} from "../../Public/Parameters/TweetsClient/G
 import {IFavoriteTweetParameters} from "../../Public/Parameters/TweetsClient/FavoriteTweetParameters";
 import {IUnfavoriteTweetParameters} from "../../Public/Parameters/TweetsClient/UnFavoriteTweetParameters";
 import {IGetOEmbedTweetParameters} from "../../Public/Parameters/TweetsClient/GetOEmbedTweetParameters";
+import {InjectionToken} from "@angular/core";
+import {TweetQueryGenerator} from "../../../controllers/Tweet/TweetQueryGenerator";
 
 export interface ITweetQueryGenerator {
   getTweetQuery(parameters: IGetTweetParameters, tweetMode: ComputedTweetMode): string;
@@ -37,3 +39,8 @@ export interface ITweetQueryGenerator {
 
   getOEmbedTweetQuery(parameters: IGetOEmbedTweetParameters): string;
 }
+
+export const ITweetQueryGeneratorToken = new InjectionToken<ITweetQueryGenerator>('ITweetQueryGenerator', {
+  providedIn: 'root',
+  factory: () => new TweetQueryGenerator(),
+});

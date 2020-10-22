@@ -8,6 +8,7 @@ import {IAddMediaMetadataParameters} from "../../Parameters/Upload/AddMediaMetad
 import {IUploadedMediaInfo} from "../../Models/Interfaces/DTO/IUploadedMediaInfo";
 import {IUploadClientParametersValidator} from "../../../Core/Client/Validators/UploadClientParametersValidator";
 import {IMediaMetadata} from "../../Models/Interfaces/DTO/IMediaMetadata";
+import {InjectionToken} from "@angular/core";
 
 export interface IUploadClient {
   // Validate all the Upload client parameters
@@ -91,3 +92,8 @@ export interface IUploadClient {
   /// <returns>Completes wait the media is ready for use</returns>
   waitForMediaProcessingToGetAllMetadataAsync(media: IMedia): Promise<void>;
 }
+
+export const IUploadClientToken = new InjectionToken<IUploadClient>('IUploadClient', {
+  providedIn: 'root',
+  factory: () => new,
+});

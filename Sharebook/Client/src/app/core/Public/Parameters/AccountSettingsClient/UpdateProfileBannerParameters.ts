@@ -1,6 +1,7 @@
 ﻿import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import TimeSpan from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
 import {IUploadProgressChanged} from "../../Events/UploadProgressChangedEventArgs";
+import {InjectionToken} from "@angular/core";
 
 // For more information visit: https://dev.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/post-account-update_profile_banner
 export interface IUpdateProfileBannerParameters extends ICustomRequestParameters {
@@ -25,6 +26,11 @@ export interface IUpdateProfileBannerParameters extends ICustomRequestParameters
   // Action invoked to show the progress of the upload. {current / total}
   uploadProgressChanged: (uploadProgressChanged: IUploadProgressChanged) => void;
 }
+
+export const IUpdateProfileBannerParametersToken = new InjectionToken<IUpdateProfileBannerParameters>('IUpdateProfileBannerParameters', {
+  providedIn: 'root',
+  factory: () => new UpdateProfileBannerParameters(),
+});
 
 export class UpdateProfileBannerParameters extends CustomRequestParameters implements IUpdateProfileBannerParameters {
   constructor(image: number[]) {

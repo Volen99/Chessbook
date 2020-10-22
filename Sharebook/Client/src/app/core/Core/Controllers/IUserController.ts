@@ -30,6 +30,8 @@ import {IGetMutedUsersParameters} from "../../Public/Parameters/AccountClient/Ge
 import {IMuteUserParameters} from "../../Public/Parameters/AccountClient/MuteUserParameters";
 import {IUnmuteUserParameters} from "../../Public/Parameters/AccountClient/UnMuteUserParameters";
 import {IGetProfileImageParameters} from "../../Public/Parameters/UsersClient/GetProfileImageParameters";
+import {InjectionToken} from "@angular/core";
+import {UserController} from "../../../controllers/User/UserController";
 
 export interface IUserController {
   getAuthenticatedUserAsync(parameters: IGetAuthenticatedUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
@@ -85,3 +87,9 @@ export interface IUserController {
 
   getProfileImageStreamAsync(parameters: IGetProfileImageParameters, request: ITwitterRequest): Promise<Stream>;
 }
+
+export const IUserControllerToken = new InjectionToken<IUserController>('IUserController', {
+  providedIn: 'root',
+  factory: () => new UserController(),
+});
+

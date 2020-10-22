@@ -2,6 +2,8 @@
 import Dictionary from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
 import {Stream} from "stream";
 import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
+import {InjectionToken} from "@angular/core";
+import {WebHelper} from "../../../webLogic/WebHelper";
 
 export interface IWebHelper {
   getResponseStreamAsync(request: ITwitterRequest): Promise<Stream>;
@@ -16,3 +18,8 @@ export interface IWebHelper {
 
   getBaseURL(uri: Uri): string;
 }
+
+export const IWebHelperToken = new InjectionToken<IWebHelper>('IWebHelper', {
+  providedIn: 'root',
+  factory: () => new WebHelper(),
+});

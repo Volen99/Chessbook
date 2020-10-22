@@ -10,6 +10,7 @@ import {IGetAccountActivitySubscriptionsParameters} from "../../../Public/Parame
 import {IUnsubscribeFromAccountActivityParameters} from "../../../Public/Parameters/AccountActivity/UnsubscribeFromAccountActivityParameters";
 import {IAccountActivityClientRequiredParametersValidator} from "./AccountActivityClientRequiredParameterValidator";
 import {AccountActivityParameters} from "./parameters-types";
+import {InjectionToken} from "@angular/core";
 
 export interface IAccountActivityClientParametersValidator {
   validate(parameters: ICreateAccountActivityWebhookParameters): void;
@@ -32,6 +33,12 @@ export interface IAccountActivityClientParametersValidator {
 
   validate(parameters: IUnsubscribeFromAccountActivityParameters): void;
 }
+
+export const IAccountActivityClientParametersValidatorToken = new InjectionToken<IAccountActivityClientParametersValidator>('IAccountActivityClientParametersValidator', {
+  providedIn: 'root',
+  factory: () => new AccountActivityClientParametersValidator(),
+});
+
 
 export class AccountActivityClientParametersValidator implements IAccountActivityClientParametersValidator {
   private readonly _activityClientRequiredParametersValidator: IAccountActivityClientRequiredParametersValidator;

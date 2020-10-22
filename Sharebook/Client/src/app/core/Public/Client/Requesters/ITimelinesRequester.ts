@@ -5,6 +5,7 @@ import {ITweetDTO} from "../../Models/Interfaces/DTO/ITweetDTO";
 import {IGetHomeTimelineParameters} from "../../Parameters/TimelineClient/GetHomeTimelineParameters";
 import {IGetRetweetsOfMeTimelineParameters} from "../../Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
 import {IGetMentionsTimelineParameters} from "../../Parameters/TimelineClient/GetMentionsTimelineParameters";
+import {InjectionToken} from "@angular/core";
 
 // A client providing all the actions relative to timelines.
 // The results from this client contain additional metadata.
@@ -43,3 +44,8 @@ export interface ITimelinesRequester {
   /// <returns>An iterator to list the of tweets mentioning the authenticated user's</returns>
   getMentionsTimelineIterator(parameters: IGetMentionsTimelineParameters): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number>; // long?
 }
+
+export const ITimelinesRequesterToken = new InjectionToken<ITimelinesRequester>('ITimelinesRequester', {
+  providedIn: 'root',
+  factory: () => new,
+});

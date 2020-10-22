@@ -18,6 +18,7 @@ import {IUserDTO} from "../../core/Public/Models/Interfaces/DTO/IUserDTO";
 import {ProgressableStreamContent} from "../../core/Core/Upload/ProgressableStreamContent";
 import {Encoding} from "tslint/lib/utils";
 import {SharebookConsts} from "../../core/Public/sharebook-consts";
+import {InjectionToken} from "@angular/core";
 
 export interface IAccountSettingsQueryExecutor {
   getAccountSettingsAsync(parameters: IGetAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>>;
@@ -32,6 +33,11 @@ export interface IAccountSettingsQueryExecutor {
 
   removeProfileBannerAsync(parameters: IRemoveProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>;
 }
+
+export const IAccountSettingsQueryExecutorToken = new InjectionToken<IAccountSettingsQueryExecutor>('IAccountSettingsQueryExecutor', {
+  providedIn: 'root',
+  factory: () => new AccountSettingsQueryExecutor(),
+});
 
 export class AccountSettingsQueryExecutor implements IAccountSettingsQueryExecutor {
   private readonly _accountSettingsQueryGenerator: IAccountSettingsQueryGenerator;

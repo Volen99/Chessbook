@@ -12,6 +12,7 @@ import {IGetSavedSearchParameters} from "../../Parameters/Search/GetSavedSearchP
 import {IListSavedSearchesParameters} from "../../Parameters/Search/ListSavedSearchesParameters";
 import {IDestroySavedSearchParameters} from "../../Parameters/Search/DestroySavedSearchParameters";
 import {ISearchClientParametersValidator} from "../../../Core/Client/Validators/SearchClientParametersValidator";
+import {InjectionToken} from "@angular/core";
 
 export interface ISearchClient {
   // Validate all the Search client parameters
@@ -111,3 +112,9 @@ export interface ISearchClient {
   /// <returns>Deleted search</returns>
   destroySavedSearchAsync(parameters: IDestroySavedSearchParameters): Promise<ISavedSearch>;
 }
+
+
+export const ISearchClientToken = new InjectionToken<ISearchClient>('ISearchClient', {
+  providedIn: 'root',
+  factory: () => new,
+});

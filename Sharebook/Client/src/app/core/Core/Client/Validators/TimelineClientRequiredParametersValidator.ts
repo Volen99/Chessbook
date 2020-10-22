@@ -3,9 +3,15 @@ import {IUserQueryValidator} from "./UserQueryValidator";
 import {TimelineParameters} from "./parameters-types";
 import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
 import {IGetUserTimelineParameters} from "../../../Public/Parameters/TimelineClient/GetUserTimelineParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface ITimelineClientRequiredParametersValidator extends ITimelineClientParametersValidator {
 }
+
+export const ITimelineClientRequiredParametersValidatorToken = new InjectionToken<ITimelineClientRequiredParametersValidator>('ITimelineClientRequiredParametersValidator', {
+  providedIn: 'root',
+  factory: () => new TimelineClientRequiredParametersValidator(),
+});
 
 export class TimelineClientRequiredParametersValidator implements ITimelineClientRequiredParametersValidator {
   private readonly _userQueryValidator: IUserQueryValidator;

@@ -27,6 +27,7 @@ import {ICheckIfUserIsSubscriberOfListParameters} from "../../core/Public/Parame
 import {IGetTweetsFromListParameters} from "../../core/Public/Parameters/ListsClient/GetTweetsFromListParameters";
 import {ITweetDTO} from "../../core/Public/Models/Interfaces/DTO/ITweetDTO";
 import {ITwitterListQueryGenerator} from "./TwitterListQueryGenerator";
+import {InjectionToken} from "@angular/core";
 
 export interface ITwitterListQueryExecutor {
   // list
@@ -77,6 +78,11 @@ export interface ITwitterListQueryExecutor {
   // **************
   getTweetsFromListAsync(parameters: IGetTweetsFromListParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO[]>>;
 }
+
+export const ITwitterListQueryExecutorToken = new InjectionToken<ITwitterListQueryExecutor>('ITwitterListQueryExecutor', {
+  providedIn: 'root',
+  factory: () => new TwitterListQueryExecutor(),
+});
 
 export class TwitterListQueryExecutor implements ITwitterListQueryExecutor {
   private readonly _listsQueryGenerator: ITwitterListQueryGenerator;

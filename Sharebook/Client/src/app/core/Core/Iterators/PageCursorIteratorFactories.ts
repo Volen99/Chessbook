@@ -4,6 +4,7 @@ import {ICursorQueryParameters} from "../../Public/Parameters/CursorQueryParamet
 import {ITwitterPageIterator, TwitterPageIterator} from "./TwitterPageIterator";
 import {ITwitterIdentifier} from "../../Public/Models/Interfaces/ITwitterIdentifier";
 import {IBaseCursorQueryDTO} from "../../Public/Models/Interfaces/DTO/QueryDTO/IBaseCursorQueryDTO";
+import {InjectionToken} from "@angular/core";
 
 export interface IPageCursorIteratorFactories {
   create<T extends ITwitterIdentifier>(parameters: IMinMaxQueryParameters, getNext: (num: number) => Promise<ITwitterResult<T[]>>): ITwitterPageIterator<ITwitterResult<T[]>, number>; // long?
@@ -39,3 +40,8 @@ export class PageCursorIteratorFactories implements IPageCursorIteratorFactories
     return twitterCursorResult;
   }
 }
+
+export const IPageCursorIteratorFactoriesToken = new InjectionToken<IPageCursorIteratorFactories>('IPageCursorIteratorFactories', {
+  providedIn: 'root',
+  factory: () => new,
+});

@@ -8,9 +8,15 @@ import {ITwitterRequest} from 'src/app/core/Public/Models/Interfaces/ITwitterReq
 import {RequestCredentialsParameters} from "../../../Public/Parameters/Auth/RequestCredentialsParameters";
 import {AuthParameters} from "./parameters-types";
 import {IInvalidateAccessTokenParameters} from "../../../Public/Parameters/Auth/InvalidateAccessTokenParameters";
+import {InjectionToken} from "@angular/core";
 
 export interface IAuthClientRequiredParametersValidator extends IAuthClientParametersValidator {
 }
+
+export const IAuthClientRequiredParametersValidatorToken = new InjectionToken<IAuthClientRequiredParametersValidator>('IAuthClientRequiredParametersValidator', {
+  providedIn: 'root',
+  factory: () => new AuthClientRequiredParametersValidator(),
+});
 
 export class AuthClientRequiredParametersValidator implements IAuthClientRequiredParametersValidator {
   public validate(parameters: AuthParameters, request?: ITwitterRequest): void {

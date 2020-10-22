@@ -15,6 +15,7 @@ import {IFavoriteTweetParameters} from "../../Parameters/TweetsClient/FavoriteTw
 import {IUnfavoriteTweetParameters} from "../../Parameters/TweetsClient/UnFavoriteTweetParameters";
 import {IGetOEmbedTweetParameters} from "../../Parameters/TweetsClient/GetOEmbedTweetParameters";
 import {IOEmbedTweetDTO} from "../../Models/Interfaces/DTO/IOembedTweetDTO";
+import {InjectionToken} from "@angular/core";
 
 // A client providing all the methods related with tweets. The results from this client contain additional metadata.
 export interface ITweetsRequester {
@@ -102,3 +103,8 @@ export interface ITweetsRequester {
   /// <returns>TwitterResult containing the oembed tweet</returns>
   getOEmbedTweetAsync(parameters: IGetOEmbedTweetParameters): Promise<ITwitterResult<IOEmbedTweetDTO>>;
 }
+
+export const ITweetsRequesterToken = new InjectionToken<ITweetsRequester>('ITweetsRequester', {
+  providedIn: 'root',
+  factory: () => new,
+});
