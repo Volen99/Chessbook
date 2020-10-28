@@ -1,18 +1,17 @@
-﻿namespace Tweetinvi.Core.Injectinvi
-{
-    public interface IFactory<T>
+﻿
+    export interface IFactory<T>
     {
         T Create(params IConstructorNamedParameter[] parameters);
         IConstructorNamedParameter GenerateParameterOverrideWrapper(string parameterName, object parameterValue);
     }
 
-    public class Factory<T> : IFactory<T>
+    export class Factory<T> implements IFactory<T>
     {
-        private readonly ITweetinviContainer _container;
+        private readonly _container: ITweetinviContainer;
 
-        public Factory(ITweetinviContainer container)
+        constructor(container: ITweetinviContainer)
         {
-            _container = container;
+            this._container = container;
         }
 
         public T Create(params IConstructorNamedParameter[] parameters)
@@ -25,4 +24,3 @@
             return new ConstructorNamedParameter(parameterName, parameterValue);
         }
     }
-}

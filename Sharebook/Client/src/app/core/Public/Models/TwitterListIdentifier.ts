@@ -1,10 +1,12 @@
 ﻿import {ITwitterListIdentifier} from "./Interfaces/ITwitterListIdentifier";
-import {IUserIdentifier} from "./Interfaces/IUserIdentifier";
+import {IUserIdentifier, IUserIdentifierToken} from "./Interfaces/IUserIdentifier";
 import {UserIdentifier} from "./UserIdentifier";
 import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class TwitterListIdentifier implements ITwitterListIdentifier {
-  constructor(listIdOrSlug?: number | string, ownerIdOrScreenNameOrOwner?: number | string | IUserIdentifier) {
+  constructor(@Inject(IUserIdentifierToken) listIdOrSlug?: number | string, ownerIdOrScreenNameOrOwner?: number | string | IUserIdentifier) {
     if (TwitterListIdentifier.isIUserIdentifier(ownerIdOrScreenNameOrOwner)) {
       this.slug = listIdOrSlug as string;
       this.Owner = ownerIdOrScreenNameOrOwner;

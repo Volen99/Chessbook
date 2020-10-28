@@ -6,7 +6,7 @@ import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterReque
 import {TwitterAuthException} from "../../core/Public/Exceptions/TwitterAuthException";
 import {TwitterAuthAbortedException} from "../../core/Public/Exceptions/TwitterAuthAbortedException";
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
-import {IAuthQueryExecutor} from "./AuthQueryExecutor";
+import {IAuthQueryExecutor, IAuthQueryExecutorToken} from "./AuthQueryExecutor";
 import {ICreateBearerTokenParameters} from "../../core/Public/Parameters/Auth/CreateBearerTokenParameters";
 import {IRequestAuthUrlParameters} from "../../core/Public/Parameters/Auth/IRequestAuthUrlParameters";
 import {RequestAuthUrlInternalParameters} from "./RequestAuthUrlInternalParameters";
@@ -16,12 +16,14 @@ import {IRequestCredentialsParameters} from "../../core/Public/Parameters/Auth/R
 import {ITwitterCredentials, TwitterCredentials} from "../../core/Public/Models/Authentication/TwitterCredentials";
 import {IInvalidateBearerTokenParameters} from "../../core/Public/Parameters/Auth/InvalidateBearerTokenParameters";
 import {IInvalidateAccessTokenParameters} from "../../core/Public/Parameters/Auth/InvalidateAccessTokenParameters";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class AuthController implements IAuthController {
   private readonly _authQueryExecutor: IAuthQueryExecutor;
   private readonly _parseRequestUrlResponseRegex: Regex;
 
-  constructor(authQueryExecutor: IAuthQueryExecutor) {
+  constructor(@Inject(IAuthQueryExecutorToken) authQueryExecutor: IAuthQueryExecutor) {
     this._authQueryExecutor = authQueryExecutor;
     this._parseRequestUrlResponseRegex = new Regex(Resources.Auth_RequestTokenParserRegex);
   }
@@ -36,7 +38,7 @@ export class AuthController implements IAuthController {
     let authProcessParams = new RequestAuthUrlInternalParameters(parameters, authToken);
 
     if (!parameters.callbackUrl) {
-      authProcessParams.CallbackUrl = Resources.Auth_PinCodeUrl;
+      authProcessParams.callbackUrl = Resources.Auth_PinCodeUrl;
     }
 
     let requestTokenResponse = await this._authQueryExecutor.requestAuthUrlAsync(authProcessParams, request); // .ConfigureAwait(false);

@@ -4,8 +4,11 @@ import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/so
 import {Resources} from "../../properties/resources";
 import {ITweetIdentifier} from "../../core/Public/Models/Interfaces/ITweetIdentifier";
 import {TweetMode} from "../../core/Public/Settings/TweetinviSettings";
-import {IQueryParameterGenerator} from "../Shared/QueryParameterGenerator";
-import {IUserQueryParameterGenerator} from "../../core/Core/QueryGenerators/IUserQueryParameterGenerator";
+import {IQueryParameterGenerator, IQueryParameterGeneratorToken} from "../Shared/QueryParameterGenerator";
+import {
+  IUserQueryParameterGenerator,
+  IUserQueryParameterGeneratorToken
+} from "../../core/Core/QueryGenerators/IUserQueryParameterGenerator";
 import {IGetTweetParameters} from "../../core/Public/Parameters/TweetsClient/GetTweetParameters";
 import {IGetTweetsParameters} from "../../core/Public/Parameters/TweetsClient/GetTweetsParameters";
 import {IGetOEmbedTweetParameters} from "../../core/Public/Parameters/TweetsClient/GetOEmbedTweetParameters";
@@ -18,12 +21,15 @@ import {IGetRetweetsParameters} from "../../core/Public/Parameters/TweetsClient/
 import {IGetUserFavoriteTweetsParameters} from "../../core/Public/Parameters/TweetsClient/GetFavoriteTweetsParameters";
 import {IDestroyTweetParameters} from "../../core/Public/Parameters/TweetsClient/DestroyTweetParameters";
 import {IPublishTweetParameters} from "../../core/Public/Parameters/TweetsClient/PublishTweetParameters";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class TweetQueryGenerator implements ITweetQueryGenerator {
   private readonly _queryParameterGenerator: IQueryParameterGenerator;
   private readonly _userQueryParameterGenerator: IUserQueryParameterGenerator;
 
-  constructor(queryParameterGenerator: IQueryParameterGenerator, userQueryParameterGenerator: IUserQueryParameterGenerator) {
+  constructor(@Inject(IQueryParameterGeneratorToken) queryParameterGenerator: IQueryParameterGenerator,
+              @Inject(IUserQueryParameterGeneratorToken) userQueryParameterGenerator: IUserQueryParameterGenerator) {
     this._queryParameterGenerator = queryParameterGenerator;
     this._userQueryParameterGenerator = userQueryParameterGenerator;
   }
@@ -32,7 +38,7 @@ export class TweetQueryGenerator implements ITweetQueryGenerator {
   public getTweetQuery(parameters: IGetTweetParameters, tweetMode: ComputedTweetMode): string {
     let query = new StringBuilder(Resources.Tweet_Get);
 
-    query.addParameterToQuery("id", parameters.tweet?.id.ToString() ?? parameters.tweet?.idStr);
+    query.addParameterToQuery("id", parameters.tweet?.id.toString() ?? parameters.tweet?.idStr);
     query.addParameterToQuery("include_card_uri", parameters.includeCardUri);
     query.addParameterToQuery("include_entities", parameters.includeEntities);
     query.addParameterToQuery("include_ext_alt_text", parameters.includeExtAltText);
@@ -48,8 +54,8 @@ export class TweetQueryGenerator implements ITweetQueryGenerator {
   public getTweetsQuery(parameters: IGetTweetsParameters, tweetMode: ComputedTweetMode): string {
     let query = new StringBuilder(Resources.Tweet_Lookup);
 
-    let validTweetIdentifiers = parameters.tweets.filter(x => GetTweetId(x) != null);
-    let tweetIds = validTweetIdentifiers.Select(GetTweetId);
+    let validTweetIdentifiers = parameters.tweets.filter(x => this.getTweetId(x) != null);
+    let tweetIds = validTweetIdentifiers.map(this.getTweetId);
 
     query.addParameterToQuery("id", string.Join(",", tweetIds));
     query.addParameterToQuery("include_card_uri", parameters.includeCardUri);

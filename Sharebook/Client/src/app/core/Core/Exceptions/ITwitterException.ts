@@ -1,7 +1,11 @@
-﻿import {ITwitterExceptionInfo} from "./ITwitterExceptionInfo";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterExceptionInfo} from "./ITwitterExceptionInfo";
 import {ITwitterQuery} from "../../Public/Models/Interfaces/ITwitterQuery";
 import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {InjectionToken} from "@angular/core";
+import {TwitterException} from "../../Public/Exceptions/TwitterException";
+import {TwitterRequest} from "../../Public/TwitterRequest";
+import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 
 export interface ITwitterException {
   webException: WebException;
@@ -16,5 +20,5 @@ export interface ITwitterException {
 
 export const ITwitterExceptionToken = new InjectionToken<ITwitterException>('ITwitterException', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new TwitterException(Inject(TwitterRequest), Inject(String), Inject(Number)),
 });

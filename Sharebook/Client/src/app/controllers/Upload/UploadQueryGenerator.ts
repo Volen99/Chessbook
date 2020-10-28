@@ -5,7 +5,9 @@ import {Resources} from "../../properties/resources";
 import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
 import {IChunkUploadAppendParameters} from "../../core/Core/Upload/ChunkUploadAppendParameters";
 import {ICustomRequestParameters} from "../../core/Public/Parameters/CustomRequestParameters";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class UploadQueryGenerator implements IUploadQueryGenerator {
   public getChunkedUploadInitQuery(parameters: IChunkUploadInitParameters): string {
     let initQuery = new StringBuilder(Resources.Upload_URL);

@@ -27,7 +27,7 @@ export class CustomHeader {
   public behaviour: CustomHeaderWill;
 }
 
-export class CustomRequestHeaders implements Array<CustomHeader> {
+export class CustomRequestHeaders { // : IEnumerable<CustomHeader>
   private _customHeaders: Dictionary<string, CustomHeader>;
 
   constructor() {
@@ -66,7 +66,7 @@ export class CustomRequestHeaders implements Array<CustomHeader> {
       }
 
       currentValue.behaviour = behaviour;
-      currentValue.values.add(values);                     // AddRange
+      currentValue.values = currentValue.values.concat(values);     // AddRange
       this._customHeaders[keyOrCustomHeader] = currentValue;
     }
   }

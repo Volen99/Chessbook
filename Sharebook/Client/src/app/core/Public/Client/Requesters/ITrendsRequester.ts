@@ -1,10 +1,18 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {IGetTrendsAtParameters} from "../../Parameters/TrendsClient/GetTrendsAtParameters";
 import {IGetTrendsAtResult} from "../../Models/Interfaces/IGetTrendsAtResult";
 import {IGetTrendsLocationParameters} from "../../Parameters/TrendsClient/GetTrendsLocationParameters";
 import {ITrendLocation} from "../../Models/Interfaces/ITrendLocation";
 import {IGetTrendsLocationCloseToParameters} from "../../Parameters/TrendsClient/GetTrendsLocationCloseToParameters";
-import {InjectionToken} from "@angular/core";
+import {TrendsRequester} from "../../../../sharebook/Client/Requesters/TrendsRequester";
+import {
+  TrendsClientRequiredParametersValidator
+} from "../../../Core/Client/Validators/TrendsClientRequiredParametersValidator";
+import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {TrendsController} from "../../../../controllers/Trends/TrendsController";
 
 export interface ITrendsRequester {
   /// <summary>
@@ -31,5 +39,6 @@ export interface ITrendsRequester {
 
 export const ITrendsRequesterToken = new InjectionToken<ITrendsRequester>('ITrendsRequester', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new TrendsRequester(Inject(TrendsController), Inject(TrendsClientRequiredParametersValidator),
+    Inject(TwitterClient), Inject(TwitterClientEvents)),
 });

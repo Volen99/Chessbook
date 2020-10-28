@@ -1,16 +1,21 @@
 import {BaseRequester} from "../BaseRequester";
 import {IExecuteRequester} from 'src/app/core/Public/Client/Requesters/IExecuteRequester';
-import {ITwitterAccessor} from "../../../core/Core/Web/ITwitterAccessor";
+import {ITwitterAccessor, ITwitterAccessorToken} from "../../../core/Core/Web/ITwitterAccessor";
 import {ITwitterRequest} from "../../../core/Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
 import {ITwitterQuery} from "../../../core/Public/Models/Interfaces/ITwitterQuery";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class ExecuteRequester extends BaseRequester implements IExecuteRequester {
   private readonly _accessor: ITwitterAccessor;
 
-  constructor(client: ITwitterClient, clientEvents: ITwitterClientEvents, accessor: ITwitterAccessor) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(ITwitterClientEventsToken) clientEvents: ITwitterClientEvents,
+              @Inject(ITwitterAccessorToken) accessor: ITwitterAccessor) {
+
     super(client, clientEvents);
     this._accessor = accessor;
   }

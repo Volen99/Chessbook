@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {IUploadedMediaInfo} from "../../Models/Interfaces/DTO/IUploadedMediaInfo";
 import {IMedia} from "../../Models/Interfaces/IMedia";
 import {IWebhook} from "../../Models/Interfaces/IWebhook";
@@ -36,7 +38,8 @@ import {ITwitterConfiguration} from "../../Models/Interfaces/DTO/ITwitterConfigu
 import {ITwitterCredentials} from "../../Models/Authentication/TwitterCredentials";
 import {IConsumerOnlyCredentials} from "../../Models/Authentication/ConsumerOnlyCredentials";
 import {CredentialsRateLimitsDTO} from "../../../Core/DTO/CredentialsRateLimitsDTO";
-import {InjectionToken} from "@angular/core";
+import {TwitterClientFactories} from "../../../../sharebook/Client/Tools/TwitterClientFactories";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface ITwitterClientFactories {
   // ACCOUNT SETTINGS
@@ -182,5 +185,5 @@ export interface ITwitterClientFactories {
 
 export const ITwitterClientFactoriesToken = new InjectionToken<ITwitterClientFactories>('ITwitterClientFactories', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new TwitterClientFactories(Inject(TwitterClient), Inject(JsonObjectConverter)),
 });

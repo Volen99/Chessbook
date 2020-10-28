@@ -10,7 +10,9 @@ import {IGetSupportedLanguagesParameters} from "../../core/Public/Parameters/Hel
 import {IGetPlaceParameters} from "../../core/Public/Parameters/HelpClient/GetPlaceParameters";
 import {AccuracyMeasure, Granularity, IGeoSearchParameters} from "../../core/Public/Parameters/HelpClient/GeoSearchParameters";
 import {IGeoSearchReverseParameters} from "../../core/Public/Parameters/HelpClient/GeoSearchReverseParameters";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class HelpQueryGenerator implements IHelpQueryGenerator {
   public getRateLimitsQuery(parameters: IGetRateLimitsParameters): string {
     let query = new StringBuilder(Resources.Help_GetRateLimit);
@@ -109,7 +111,7 @@ export class HelpQueryGenerator implements IHelpQueryGenerator {
     return query.toString();
   }
 
-  public GetPlaceFromIdQuery(placeId: string): string {
+  public getPlaceFromIdQuery(placeId: string): string {
     if (placeId == null) {
       throw new ArgumentNullException(nameof(placeId));
     }

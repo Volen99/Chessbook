@@ -1,11 +1,17 @@
 ﻿import {Coordinates} from "./Coordinates";
-import {ICoordinates} from "./Interfaces/ICoordinates";
+import {ICoordinates, ICoordinatesToken} from "./Interfaces/ICoordinates";
 import {DistanceMeasure} from './Enum/DistanceMeasure';
-import {IGeoCode} from "./Interfaces/IGeoCode";
+import {IGeoCode, IGeoCodeToken} from "./Interfaces/IGeoCode";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class GeoCode implements IGeoCode {
-  constructor(latitude?: number, longitude?: number, coordinates?: ICoordinates,
-              radius?: number, distanceMeasure?: DistanceMeasure, source?: IGeoCode) {
+  constructor(latitude?: number,
+              longitude?: number,
+              @Inject(ICoordinatesToken) coordinates?: ICoordinates,
+              radius?: number,
+              @Inject(IGeoCodeToken) distanceMeasure?: DistanceMeasure,
+              @Inject(IGeoCodeToken) source?: IGeoCode) {
     if (coordinates || source) {
       if (source) {
         this.coordinates = new Coordinates(source.coordinates.latitude, source.coordinates.longitude);
@@ -53,4 +59,3 @@ export class GeoCode implements IGeoCode {
 //     Radius = source.Radius;
 //     DistanceMeasure = source.DistanceMeasure;
 // }
-

@@ -11,10 +11,10 @@ import {SavedSearchDTO} from "../../core/Core/DTO/SavedSearchDTO";
 import {IGetSavedSearchParameters} from "../../core/Public/Parameters/Search/GetSavedSearchParameters";
 import {IListSavedSearchesParameters} from "../../core/Public/Parameters/Search/ListSavedSearchesParameters";
 import {IDestroySavedSearchParameters} from "../../core/Public/Parameters/Search/DestroySavedSearchParameters";
-import {ISearchQueryExecutor} from "./SearchQueryExecutor";
+import {ISearchQueryExecutor, ISearchQueryExecutorToken, SearchQueryExecutor} from "./SearchQueryExecutor";
 import {TwitterRequest} from "../../core/Public/TwitterRequest";
 import HashSet from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/HashSet";
-import {InjectionToken} from "@angular/core";
+import {Inject, InjectionToken} from "@angular/core";
 
 export interface ISearchController {
   getSearchTweetsIterator(parameters: ISearchTweetsParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<ISearchResultsDTO>, number>; // long?
@@ -30,13 +30,13 @@ export interface ISearchController {
 
 export const ISearchControllerToken = new InjectionToken<ISearchController>('ISearchController', {
   providedIn: 'root',
-  factory: () => new SearchController(),
+  factory: () => new SearchController(Inject(SearchQueryExecutor)),
 });
 
 export class SearchController implements ISearchController {
   private readonly _searchQueryExecutor: ISearchQueryExecutor;
 
-  constructor(searchQueryExecutor: ISearchQueryExecutor) {
+  constructor(@Inject(ISearchQueryExecutorToken) searchQueryExecutor: ISearchQueryExecutor) {
     this._searchQueryExecutor = searchQueryExecutor;
   }
 

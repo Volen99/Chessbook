@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {ISearchTweetsParameters} from "../../Parameters/Search/SearchTweetsParameters";
 import {ITwitterPageIterator} from "../../../Core/Iterators/TwitterPageIterator";
@@ -10,7 +12,12 @@ import {SavedSearchDTO} from "../../../Core/DTO/SavedSearchDTO";
 import {IGetSavedSearchParameters} from "../../Parameters/Search/GetSavedSearchParameters";
 import {IListSavedSearchesParameters} from "../../Parameters/Search/ListSavedSearchesParameters";
 import {IDestroySavedSearchParameters} from "../../Parameters/Search/DestroySavedSearchParameters";
-import {InjectionToken} from "@angular/core";
+import {SearchRequester} from "../../../../sharebook/Client/Requesters/SearchRequester";
+import {SearchController} from "../../../../controllers/Search/SearchController";
+import {
+  SearchClientRequiredParametersValidator
+} from "../../../Core/Client/Validators/SearchClientRequiredParametersValidator";
+import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
 
 export interface ISearchRequester {
   /// <summary>
@@ -59,5 +66,6 @@ export interface ISearchRequester {
 
 export const ISearchRequesterToken = new InjectionToken<ISearchRequester>('ISearchRequester', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new SearchRequester(Inject(SearchController), Inject(SearchClientRequiredParametersValidator),
+    Inject(TwitterClient), Inject(TwitterClientEvents)),
 });

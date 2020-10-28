@@ -1,0 +1,118 @@
+function solveClasses() {
+  class Developer {
+    constructor(firstName, lastName) {
+      this.firstName = firstName
+      this.lastName = lastName
+    }
+
+    firstName = '';
+    lastName = '';
+    baseSalary = 1000;
+    tasks = [];
+    experience = 0;
+
+    addTask(id, taskName, priority)/*: string*/ {
+      let taskNew = {
+        id: id,
+        name: taskName,     // might bug
+        priority: priority,
+      }
+
+      if (priority === 'high') {
+        this.tasks.unshift(taskNew)
+      } else {
+        this.tasks.push(taskNew);
+      }
+
+      return `Task id ${id}, with ${priority} priority, has been added.`
+    }
+
+    doTask() {
+      if (this.tasks.length <= 0) {
+        return `${this.firstName}, you have finished all your tasks. You can rest now.`;
+      }
+
+      let taskCurrent = this.tasks.filter(t => t.priority === 'high')[0];
+
+      this.tasks.splice(taskCurrent);
+
+      return taskCurrent.name;
+    }
+
+    getSalary() {
+      return `${this.firstName} ${this.lastName} has a salary of: ${this.baseSalary}`
+    }
+
+    reviewTasks() {
+      let result = `Tasks, that need to be completed:\n`;
+      for (let task of this.tasks) {
+        result += `${task.id}: ${task.name} - ${task.priority}\n`
+      }
+
+      return result.trimEnd();
+    }
+  }
+
+  class Junior extends Developer {
+    constructor(firstName, lastName, bonus, experience) {
+      super(firstName, lastName);
+
+      this.experience = experience;
+
+      this.baseSalary += Number(bonus);
+    }
+
+    learn(years) {
+      this.experience += years;
+    }
+  }
+
+  class Senior extends Developer {
+    constructor(firstName, lastName, bonus, experience) {
+      super(firstName, lastName);
+
+      this.baseSalary += Number(bonus);
+      this.experience = experience + 5;
+    }
+
+    changeTaskPriority(taskId) {
+      let taskCurrent = this.tasks.filter(t => t.id === taskId)[0];
+      if (taskCurrent.priority === 'high') {
+        taskCurrent.priority = 'low';
+
+        this.tasks.shift()
+        this.tasks.push(taskCurrent);
+      } else {
+        taskCurrent.priority = 'high';
+
+        this.tasks.pop();
+        this.tasks.unshift(taskCurrent);
+      }
+
+      return taskCurrent;
+    }
+  }
+
+  return {
+    Developer,
+    Junior,
+    Senior
+  }
+}
+
+// 😭
+
+let classes = solveClasses();
+const developer = new classes.Developer("George", "Joestar");
+console.log(developer.addTask(1, "Inspect bug", "low"));
+console.log(developer.addTask(2, "Update repository", "high"));
+console.log(developer.reviewTasks());
+console.log(developer.getSalary());
+
+const junior = new classes.Junior("Jonathan", "Joestar", 200, 2);
+console.log(junior.getSalary());
+
+const senior = new classes.Senior("Joseph", "Joestar", 200, 2);
+senior.addTask(1, "Create functionality", "low");
+senior.addTask(2, "Update functionality", "high");
+console.log(senior.changeTaskPriority(1)["priority"]);

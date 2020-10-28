@@ -4,8 +4,8 @@ import {IUserIdentifier} from "../../../core/Public/Models/Interfaces/IUserIdent
 import {ITwitterListIdentifier} from 'src/app/core/Public/Models/Interfaces/ITwitterListIdentifier';
 import {IListsClient} from 'src/app/core/Public/Client/Clients/IListsClient';
 import {PrivacyMode} from "../../../core/Public/Models/Enum/PrivacyMode";
-import {ITwitterListsRequester} from "../../../core/Public/Client/Requesters/ITwitterListsRequester";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {ITwitterListsRequester, ITwitterListsRequesterToken} from "../../../core/Public/Client/Requesters/ITwitterListsRequester";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {ITwitterListsClientParametersValidator} from "../../../core/Core/Client/Validators/TwitterListsClientParametersValidator";
 import {ITwitterList} from "../../../core/Public/Models/Interfaces/ITwitterList";
 import {CreateListParameters, ICreateListParameters} from "../../../core/Public/Parameters/ListsClient/CreateListParameters";
@@ -100,12 +100,15 @@ import {ITweetDTO} from "../../../core/Public/Models/Interfaces/DTO/ITweetDTO";
 import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
 import {TwitterException} from "../../../core/Public/Exceptions/TwitterException";
 import {IGetUserFavoriteTweetsParameters} from "../../../core/Public/Parameters/TweetsClient/GetFavoriteTweetsParameters";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class ListsClient implements IListsClient {
   private readonly _twitterListsRequester: ITwitterListsRequester;
   private readonly _client: ITwitterClient;
 
-  constructor(twitterListsRequester: ITwitterListsRequester, client: ITwitterClient) {
+  constructor(@Inject(ITwitterListsRequesterToken) twitterListsRequester: ITwitterListsRequester,
+              @Inject(ITwitterClientToken) client: ITwitterClient) {
     this._twitterListsRequester = twitterListsRequester;
     this._client = client;
   }
@@ -395,7 +398,7 @@ export class ListsClient implements IListsClient {
       parameters = new RemoveMemberFromListParameters(listIdOrListIdentifierOrParameters, userIdOrUsernameOrUserIdentifier);
     }
 
-    let twitterResult = await this._twitterListsRequester.removeMemberFromListAsync(parameters); //.ConfigureAwait(false);
+    let twitterResult = await this._twitterListsRequester.removeMemberFromListAsync(parameters); // .ConfigureAwait(false);
     return this._client.factories.createTwitterList(twitterResult?.model);
   }
 

@@ -4,7 +4,7 @@ import {IPublishMessageParameters} from "../../core/Public/Parameters/MessageCli
 import {IDeleteMessageParameters} from "../../core/Public/Parameters/MessageClient/DestroyMessageParameters";
 import {IGetMessageParameters} from "../../core/Public/Parameters/MessageClient/GetMessageParameters";
 import {IGetMessagesParameters} from "../../core/Public/Parameters/MessageClient/GetMessagesParameters";
-import {IQueryParameterGenerator} from "../Shared/QueryParameterGenerator";
+import {IQueryParameterGenerator, IQueryParameterGeneratorToken} from "../Shared/QueryParameterGenerator";
 import {ICreateMessageDTO} from "../../core/Public/Models/Interfaces/DTO/ICreateMessageDTO";
 import {CreateMessageDTO} from "../../core/Core/DTO/CreateMessageDTO";
 import {MessageEventDTO} from "../../core/Core/DTO/Events/MessageEventDTO";
@@ -19,6 +19,7 @@ import {AttachmentType} from "../../core/Public/Models/Enum/AttachmentType";
 import {MediaEntity} from "../../core/Core/Models/TwitterEntities/MediaEntity";
 import {QuickReplyDTO} from "../../core/Core/DTO/QuickReplyDTO";
 import {QuickReplyType} from "../../core/Public/Models/Enum/QuickReplyType";
+import {Inject, Injectable} from "@angular/core";
 
 export class RequestWithPayload {
   public url: string;
@@ -35,11 +36,13 @@ export interface IMessageQueryGenerator {
   getMessagesQuery(parameters: IGetMessagesParameters): string;
 }
 
+@Injectable()
 export class MessageQueryGenerator implements IMessageQueryGenerator {
   private readonly _jsonContentFactory: JsonContentFactory;
   private readonly _queryParameterGenerator: IQueryParameterGenerator;
 
-  constructor(jsonContentFactory: JsonContentFactory, queryParameterGenerator: IQueryParameterGenerator) {
+  constructor(jsonContentFactory: JsonContentFactory,
+              @Inject(IQueryParameterGeneratorToken) queryParameterGenerator: IQueryParameterGenerator) {
     this._jsonContentFactory = jsonContentFactory;
     this._queryParameterGenerator = queryParameterGenerator;
   }

@@ -1,6 +1,7 @@
-﻿import {IUserIdentifier} from "../../Public/Models/Interfaces/IUserIdentifier";
+﻿import {InjectionToken} from "@angular/core";
+
+import {IUserIdentifier} from "../../Public/Models/Interfaces/IUserIdentifier";
 import StringBuilder from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
-import {InjectionToken} from "@angular/core";
 import {UserQueryParameterGenerator} from "../../../controllers/User/UserQueryParameterGenerator";
 
 export interface IUserQueryParameterGenerator {

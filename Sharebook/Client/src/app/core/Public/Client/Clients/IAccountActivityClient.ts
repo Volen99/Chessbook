@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {IAccountActivityClientParametersValidator} from "../../../Core/Client/Validators/AccountActivityClientParametersValidator";
 import {IAccountActivityRequestHandler} from "../../Models/Webhooks/IAccountActivityRequestHandler";
 import {IWebhook} from "../../Models/Interfaces/IWebhook";
@@ -14,7 +16,8 @@ import {IIsAccountSubscribedToAccountActivityParameters} from "../../Parameters/
 import {IWebhookEnvironmentSubscriptions} from "../../Models/Interfaces/IWebhookEnvironmentSubscriptions";
 import {IGetAccountActivitySubscriptionsParameters} from "../../Parameters/AccountActivity/GetListOfSubscriptionsParameters";
 import {IUnsubscribeFromAccountActivityParameters} from "../../Parameters/AccountActivity/UnsubscribeFromAccountActivityParameters";
-import {InjectionToken} from "@angular/core";
+import {AccountActivityRequester} from "../../../../sharebook/Client/Requesters/AccountActivityRequester";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 // A client providing all the actions related with the account activity api
 export interface IAccountActivityClient {
@@ -117,5 +120,5 @@ export interface IAccountActivityClient {
 
 export const IAccountActivityClientToken = new InjectionToken<IAccountActivityClient>('IAccountActivityClient', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new AccountActiv ityClient(Inject(AccountActivityRequester), Inject(TwitterClient)),
 });

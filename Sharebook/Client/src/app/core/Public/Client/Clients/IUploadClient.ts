@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {IMedia} from "../../Models/Interfaces/IMedia";
 import {IUploadParameters} from "../../Parameters/Upload/UploadBinaryParameters";
 import {IUploadTweetImageParameters} from "../../Parameters/Upload/UploadTweetImageParameters";
@@ -8,7 +10,8 @@ import {IAddMediaMetadataParameters} from "../../Parameters/Upload/AddMediaMetad
 import {IUploadedMediaInfo} from "../../Models/Interfaces/DTO/IUploadedMediaInfo";
 import {IUploadClientParametersValidator} from "../../../Core/Client/Validators/UploadClientParametersValidator";
 import {IMediaMetadata} from "../../Models/Interfaces/DTO/IMediaMetadata";
-import {InjectionToken} from "@angular/core";
+import {UploadClient} from "../../../../sharebook/Client/Clients/UploadClient";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface IUploadClient {
   // Validate all the Upload client parameters
@@ -95,5 +98,5 @@ export interface IUploadClient {
 
 export const IUploadClientToken = new InjectionToken<IUploadClient>('IUploadClient', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new UploadClient(Inject(TwitterClient)),
 });

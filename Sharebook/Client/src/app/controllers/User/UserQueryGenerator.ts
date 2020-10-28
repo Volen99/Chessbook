@@ -1,8 +1,13 @@
-﻿import {IUserQueryGenerator} from "../../core/Core/QueryGenerators/IUserQueryGenerator";
-import {IUserQueryParameterGenerator} from "../../core/Core/QueryGenerators/IUserQueryParameterGenerator";
+﻿import {Inject, Injectable} from "@angular/core";
+
+import {IUserQueryGenerator} from "../../core/Core/QueryGenerators/IUserQueryGenerator";
+import {
+  IUserQueryParameterGenerator,
+  IUserQueryParameterGeneratorToken
+} from "../../core/Core/QueryGenerators/IUserQueryParameterGenerator";
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {Resources} from "../../properties/resources";
-import {IQueryParameterGenerator} from "../Shared/QueryParameterGenerator";
+import {IQueryParameterGenerator, IQueryParameterGeneratorToken} from "../Shared/QueryParameterGenerator";
 import {IGetAuthenticatedUserParameters} from "../../core/Public/Parameters/AccountClient/GetAuthenticatedUserParameters";
 import {IGetUserParameters} from "../../core/Public/Parameters/UsersClient/GetUserParameters";
 import {IGetUsersParameters} from "../../core/Public/Parameters/UsersClient/GetUsersParameters";
@@ -27,11 +32,13 @@ import {IGetMutedUsersParameters} from "../../core/Public/Parameters/AccountClie
 import {IMuteUserParameters} from "../../core/Public/Parameters/AccountClient/MuteUserParameters";
 import {IUnmuteUserParameters} from "../../core/Public/Parameters/AccountClient/UnMuteUserParameters";
 
+@Injectable()
 export class UserQueryGenerator implements IUserQueryGenerator {
   private readonly _userQueryParameterGenerator: IUserQueryParameterGenerator;
   private readonly _queryParameterGenerator: IQueryParameterGenerator;
 
-  constructor(userQueryParameterGenerator: IUserQueryParameterGenerator, queryParameterGenerator: IQueryParameterGenerator) {
+  constructor(@Inject(IUserQueryParameterGeneratorToken) userQueryParameterGenerator: IUserQueryParameterGenerator,
+              @Inject(IQueryParameterGeneratorToken) queryParameterGenerator: IQueryParameterGenerator) {
     this._userQueryParameterGenerator = userQueryParameterGenerator;
     this._queryParameterGenerator = queryParameterGenerator;
   }

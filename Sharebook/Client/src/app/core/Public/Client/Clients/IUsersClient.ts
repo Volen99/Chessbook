@@ -1,4 +1,6 @@
-﻿import {IUserIdentifier} from '../../Models/Interfaces/IUserIdentifier';
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {IUserIdentifier} from '../../Models/Interfaces/IUserIdentifier';
 import {IAuthenticatedUser} from "../../Models/Interfaces/IAuthenticatedUser";
 import {IGetAuthenticatedUserParameters} from "../../Parameters/AccountClient/GetAuthenticatedUserParameters";
 import {IUser} from "../../Models/Interfaces/IUser";
@@ -36,7 +38,9 @@ import {Stream} from "stream";
 import {IGetUsersParameters} from "../../Parameters/UsersClient/GetUsersParameters";
 import {IUserDictionary} from "../../Models/UserDictionary";
 import {IUsersClientParametersValidator} from "../../../Core/Client/Validators/UsersClientParametersValidator";
-import {InjectionToken} from "@angular/core";
+import {UsersClient} from "../../../../sharebook/Client/Clients/UsersClient";
+import {MultiLevelCursorIteratorFactory} from "../../../Core/Iterators/MultiLevelCursorIteratorFactory";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface IUsersClient {
   // Validate all the Users client parameters
@@ -524,5 +528,5 @@ export interface IUsersClient {
 
 export const IUsersClientToken = new InjectionToken<IUsersClient>('IUsersClient', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new UsersClient(Inject(TwitterClient), Inject(MultiLevelCursorIteratorFactory)),
 });

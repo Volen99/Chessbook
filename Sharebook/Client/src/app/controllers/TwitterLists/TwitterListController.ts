@@ -2,8 +2,8 @@
 import { TwitterRequest } from 'src/app/core/Public/TwitterRequest';
 import { ITwitterResult } from 'src/app/core/Core/Web/TwitterResult';
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
-import {IPageCursorIteratorFactories} from "../../core/Core/Iterators/PageCursorIteratorFactories";
-import {ITwitterListQueryExecutor} from "./TwitterListQueryExecutor";
+import {IPageCursorIteratorFactories, IPageCursorIteratorFactoriesToken} from "../../core/Core/Iterators/PageCursorIteratorFactories";
+import {ITwitterListQueryExecutor, ITwitterListQueryExecutorToken} from "./TwitterListQueryExecutor";
 import {ICreateListParameters} from "../../core/Public/Parameters/ListsClient/CreateListParameters";
 import {IGetListParameters} from "../../core/Public/Parameters/ListsClient/GetListParameters";
 import {IGetListsSubscribedByUserParameters} from "../../core/Public/Parameters/ListsClient/GetListsSubscribedByUserParameters";
@@ -45,12 +45,15 @@ import {
   IGetTweetsFromListParameters
 } from "../../core/Public/Parameters/ListsClient/GetTweetsFromListParameters";
 import {ITweetDTO} from "../../core/Public/Models/Interfaces/DTO/ITweetDTO";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class TwitterListController implements ITwitterListController {
   private readonly _twitterListQueryExecutor: ITwitterListQueryExecutor;
   private readonly _pageCursorIteratorFactories: IPageCursorIteratorFactories;
 
-  constructor(twitterListQueryExecutor: ITwitterListQueryExecutor, pageCursorIteratorFactories: IPageCursorIteratorFactories) {
+  constructor(@Inject(ITwitterListQueryExecutorToken) twitterListQueryExecutor: ITwitterListQueryExecutor,
+              @Inject(IPageCursorIteratorFactoriesToken) pageCursorIteratorFactories: IPageCursorIteratorFactories) {
     this._twitterListQueryExecutor = twitterListQueryExecutor;
     this._pageCursorIteratorFactories = pageCursorIteratorFactories;
   }

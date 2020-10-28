@@ -9,14 +9,16 @@ import {IUploadTweetVideoParameters, UploadTweetVideoParameters} from "../../../
 import {IUploadMessageVideoParameters, UploadMessageVideoParameters} from "../../../core/Public/Parameters/Upload/UploadMessageVideoParameters";
 import {AddMediaMetadataParameters, IAddMediaMetadataParameters} from "../../../core/Public/Parameters/Upload/AddMediaMetadataParameters";
 import {IUploadedMediaInfo} from "../../../core/Public/Models/Interfaces/DTO/IUploadedMediaInfo";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {IMediaMetadata} from "../../../core/Public/Models/Interfaces/DTO/IMediaMetadata";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class UploadClient implements IUploadClient {
   private readonly _client: ITwitterClient;
   private readonly _uploadRequester: IUploadRequester;
 
-  constructor(client: ITwitterClient) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient) {
     this._client = client;
     this._uploadRequester = client.raw.upload;
   }

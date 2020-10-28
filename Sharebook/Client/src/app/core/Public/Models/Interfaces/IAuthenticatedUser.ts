@@ -15,6 +15,8 @@ import {Inject, InjectionToken} from "@angular/core";
 import {AuthenticatedUser} from "../../../Core/Models/AuthenticatedUser";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
 import {UserDTO} from "../../../Core/DTO/UserDTO";
+import {IUserDTO} from "./DTO/IUserDTO";
+import {ITwitterClient} from "../../ITwitterClient";
 
 // User associated with a Token, this "privileged" user has access private information like messages, timeline...
 export interface IAuthenticatedUser extends IUser {
@@ -179,5 +181,5 @@ export interface IAuthenticatedUser extends IUser {
 
 export const IAuthenticatedUserToken = new InjectionToken<IAuthenticatedUser>('IAuthenticatedUser', {
   providedIn: 'root',
-  factory: () => new AuthenticatedUser(),
+  factory: () => new AuthenticatedUser(Inject(UserDTO), Inject(TwitterClient)),
 });

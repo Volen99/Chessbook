@@ -2,8 +2,8 @@ import {IMessagesClientParametersValidator} from "../../../core/Core/Client/Vali
 import {IUserIdentifier} from "../../../core/Public/Models/Interfaces/IUserIdentifier";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
 import {IMessagesClient} from "../../../core/Public/Client/Clients/IMessagesClient";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
-import {IMessageRequester} from "../../../core/Public/Client/Requesters/IMessageRequester";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
+import {IMessageRequester, IMessageRequesterToken} from "../../../core/Public/Client/Requesters/IMessageRequester";
 import {IMessage} from "../../../core/Public/Models/Interfaces/IMessage";
 import {IPublishMessageParameters, PublishMessageParameters} from "../../../core/Public/Parameters/MessageClient/PublishMessageParameters";
 import {GetMessageParameters, IGetMessageParameters} from "../../../core/Public/Parameters/MessageClient/GetMessageParameters";
@@ -15,12 +15,15 @@ import {MessageEventWithAppDTO} from "../../../core/Core/DTO/MessageEventWithApp
 import {IMessageEventWithAppDTO} from "../../../core/Public/Models/Interfaces/DTO/IMessageEventWithAppDTO";
 import {DestroyMessageParameters, IDeleteMessageParameters} from "../../../core/Public/Parameters/MessageClient/DestroyMessageParameters";
 import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class MessagesClient implements IMessagesClient {
   private readonly _client: ITwitterClient;
   private readonly _messageRequester: IMessageRequester;
 
-  constructor(client: ITwitterClient, messageRequester: IMessageRequester) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(IMessageRequesterToken) messageRequester: IMessageRequester) {
     this._client = client;
     this._messageRequester = messageRequester;
   }

@@ -1,3 +1,5 @@
+import {Injectable, InjectionToken} from "@angular/core";
+
 import {IAccountActivityClientParametersValidator} from "./AccountActivityClientParametersValidator";
 import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
 import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
@@ -9,7 +11,6 @@ import {IIsAccountSubscribedToAccountActivityParameters} from "../../../Public/P
 import {IGetAccountActivitySubscriptionsParameters} from "../../../Public/Parameters/AccountActivity/GetListOfSubscriptionsParameters";
 import {IUnsubscribeFromAccountActivityParameters} from "../../../Public/Parameters/AccountActivity/UnsubscribeFromAccountActivityParameters";
 import {AccountActivityParameters} from "./parameters-types";
-import {InjectionToken} from "@angular/core";
 
 export interface IAccountActivityClientRequiredParametersValidator extends IAccountActivityClientParametersValidator {
 }
@@ -23,6 +24,7 @@ type SubscribeParameters = ISubscribeToAccountActivityParameters
   | IIsAccountSubscribedToAccountActivityParameters
   | IGetAccountActivitySubscriptionsParameters;
 
+@Injectable()
 export class AccountActivityClientRequiredParametersValidator implements IAccountActivityClientRequiredParametersValidator {
   public validate(parameters: AccountActivityParameters): void {
     if (parameters == null) {

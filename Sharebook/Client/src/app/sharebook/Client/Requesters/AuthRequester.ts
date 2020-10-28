@@ -1,9 +1,12 @@
 import {BaseRequester} from "../BaseRequester";
 import {IAuthRequester} from "../../../core/Public/Client/Requesters/IAuthRequester";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
-import {IAuthController} from "../../../core/Core/Controllers/IAuthController";
-import {IAuthClientRequiredParametersValidator} from "../../../core/Core/Client/Validators/AuthClientRequiredParametersValidator";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {IAuthController, IAuthControllerToken} from "../../../core/Core/Controllers/IAuthController";
+import {
+  IAuthClientRequiredParametersValidator,
+  IAuthClientRequiredParametersValidatorToken
+} from "../../../core/Core/Client/Validators/AuthClientRequiredParametersValidator";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
 import {ICreateBearerTokenParameters} from "../../../core/Public/Parameters/Auth/CreateBearerTokenParameters";
 import {CreateTokenResponseDTO} from "../../../core/Core/DTO/CreateTokenResponseDTO";
@@ -14,13 +17,16 @@ import {ITwitterCredentials} from "../../../core/Public/Models/Authentication/Tw
 import {IInvalidateBearerTokenParameters} from "../../../core/Public/Parameters/Auth/InvalidateBearerTokenParameters";
 import {InvalidateTokenResponse} from "../../../core/Public/Models/Authentication/InvalidateTokenResponse";
 import {IInvalidateAccessTokenParameters} from "../../../core/Public/Parameters/Auth/InvalidateAccessTokenParameters";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class AuthRequester extends BaseRequester implements IAuthRequester {
   private readonly _authController: IAuthController;
   private readonly _validator: IAuthClientRequiredParametersValidator;
 
-  constructor(client: ITwitterClient, clientEvents: ITwitterClientEvents, authController: IAuthController,
-              validator: IAuthClientRequiredParametersValidator) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient, clientEvents: ITwitterClientEvents,
+              @Inject(IAuthControllerToken) authController: IAuthController,
+              @Inject(IAuthClientRequiredParametersValidatorToken) validator: IAuthClientRequiredParametersValidator) {
     super(client, clientEvents);
     this._authController = authController;
     this._validator = validator;

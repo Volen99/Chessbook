@@ -1,6 +1,7 @@
 ﻿import {IOEmbedTweetDTO} from "./DTO/IOembedTweetDTO";
-import {InjectionToken} from "@angular/core";
+import {Inject, InjectionToken} from "@angular/core";
 import {OEmbedTweet} from "../../../Core/Models/OEmbedTweet";
+import {OEmbedTweetDTO} from "../../../Core/DTO/OembedTweetDTO";
 
 export interface IOEmbedTweet {
   // Author of the tweet.
@@ -30,5 +31,5 @@ export interface IOEmbedTweet {
 
 export const IOEmbedTweetToken = new InjectionToken<IOEmbedTweet>('IOEmbedTweet', {
   providedIn: 'root',
-  factory: () => new OEmbedTweet(),
+  factory: () => new OEmbedTweet(Inject(OEmbedTweetDTO)),
 });

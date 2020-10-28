@@ -1,6 +1,6 @@
 ﻿import {ITimelineRequestParameters, TimelineRequestParameters} from "../TimelineRequestParameters";
 import {TwitterLimits} from "../../Settings/TwitterLimits";
-import {InjectionToken} from "@angular/core";
+import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 // For more information visit : https://developer.twitter.com/en/docs/tweets/timelines/api-reference/get-statuses-home_timeline
 export
@@ -14,8 +14,9 @@ export const IGetHomeTimelineParametersToken = new InjectionToken<IGetHomeTimeli
   factory: () => new GetHomeTimelineParameters(),
 });
 
+@Injectable()
 export class GetHomeTimelineParameters extends TimelineRequestParameters implements IGetHomeTimelineParameters {
-  constructor(source?: IGetHomeTimelineParameters) {
+  constructor(@Inject(IGetHomeTimelineParametersToken) source?: IGetHomeTimelineParameters) {
     if (source) {
       super(source);
 

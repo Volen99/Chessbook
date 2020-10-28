@@ -1,7 +1,9 @@
 ﻿import {ITweetWithSearchMetadata} from "./ITweetWithSearchMetadata";
 import {ISearchMetadata} from "./DTO/ISearchMetadata";
-import {InjectionToken} from "@angular/core";
+import {Inject, InjectionToken} from "@angular/core";
 import { SearchResults } from 'src/app/core/Core/Models/Properties/SearchResults';
+import {SearchMetadata} from "../../../Core/DTO/SearchMetadata";
+import {TweetWithSearchMetadata} from "../../../../logic/TweetWithSearchMetadata";
 
 export interface ISearchResults {
   // All the tweets returned by the Twitter Request
@@ -13,5 +15,5 @@ export interface ISearchResults {
 
 export const ISearchResultsToken = new InjectionToken<ISearchResults>('ISearchResults', {
   providedIn: 'root',
-  factory: () => new SearchResults(),
+  factory: () => new SearchResults(Inject(Array<TweetWithSearchMetadata>()), Inject(SearchMetadata)),
 });

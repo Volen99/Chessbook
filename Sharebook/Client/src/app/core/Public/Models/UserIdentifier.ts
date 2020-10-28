@@ -1,6 +1,8 @@
 ﻿import {IUserIdentifier} from "./Interfaces/IUserIdentifier";
 import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class UserIdentifier implements IUserIdentifier {
   constructor(userIdOrScreenName?: number | string) {
     if (Type.isNumber(userIdOrScreenName)) {

@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {IGetUserTimelineParameters} from "../../Parameters/TimelineClient/GetUserTimelineParameters";
 import {ITwitterPageIterator} from "../../../Core/Iterators/TwitterPageIterator";
@@ -5,7 +7,13 @@ import {ITweetDTO} from "../../Models/Interfaces/DTO/ITweetDTO";
 import {IGetHomeTimelineParameters} from "../../Parameters/TimelineClient/GetHomeTimelineParameters";
 import {IGetRetweetsOfMeTimelineParameters} from "../../Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
 import {IGetMentionsTimelineParameters} from "../../Parameters/TimelineClient/GetMentionsTimelineParameters";
-import {InjectionToken} from "@angular/core";
+import {TimelinesRequester} from "../../../../sharebook/Client/Requesters/TimelinesRequester";
+import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
+import {
+  TimelineClientRequiredParametersValidator
+} from "../../../Core/Client/Validators/TimelineClientRequiredParametersValidator";
+import {TimelineController} from "../../../../controllers/Timeline/TimelineController";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 // A client providing all the actions relative to timelines.
 // The results from this client contain additional metadata.
@@ -47,5 +55,6 @@ export interface ITimelinesRequester {
 
 export const ITimelinesRequesterToken = new InjectionToken<ITimelinesRequester>('ITimelinesRequester', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new TimelinesRequester(Inject(TwitterClient), Inject(TwitterClientEvents),
+    Inject(TimelineController), Inject(TimelineClientRequiredParametersValidator)),
 });

@@ -2,7 +2,7 @@
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {TwitterRequest} from "../../core/Public/TwitterRequest";
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
-import {IUserQueryExecutor} from "./UserQueryExecutor";
+import {IUserQueryExecutor, IUserQueryExecutorToken} from "./UserQueryExecutor";
 import {IGetAuthenticatedUserParameters} from "../../core/Public/Parameters/AccountClient/GetAuthenticatedUserParameters";
 import {IGetUsersParameters} from "../../core/Public/Parameters/UsersClient/GetUsersParameters";
 import {IGetUserParameters} from "../../core/Public/Parameters/UsersClient/GetUserParameters";
@@ -42,11 +42,13 @@ import {GetMutedUserIdsParameters, IGetMutedUserIdsParameters} from "../../core/
 import {GetMutedUsersParameters, IGetMutedUsersParameters} from "../../core/Public/Parameters/AccountClient/GetMutedUsersParameters";
 import {IMuteUserParameters} from "../../core/Public/Parameters/AccountClient/MuteUserParameters";
 import {IUnmuteUserParameters} from "../../core/Public/Parameters/AccountClient/UnMuteUserParameters";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class UserController implements IUserController {
   private readonly _userQueryExecutor: IUserQueryExecutor;
 
-  constructor(userQueryExecutor: IUserQueryExecutor) {
+  constructor(@Inject(IUserQueryExecutorToken) userQueryExecutor: IUserQueryExecutor) {
     this._userQueryExecutor = userQueryExecutor;
   }
 

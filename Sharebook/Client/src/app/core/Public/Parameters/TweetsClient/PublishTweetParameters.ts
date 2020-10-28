@@ -6,7 +6,7 @@ import {ICoordinates} from "../../Models/Interfaces/ICoordinates";
 import {IMedia} from "../../Models/Interfaces/IMedia";
 import {TweetIdentifier} from "../../Models/TweetIdentifier";
 import { TweetMode } from '../../Settings/TweetinviSettings';
-import {InjectionToken} from "@angular/core";
+import {Injectable, InjectionToken} from "@angular/core";
 
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-show-id
 export interface IPublishTweetParameters extends ICustomRequestParameters, ITweetModeParameter {
@@ -75,12 +75,13 @@ export interface IPublishTweetParameters extends ICustomRequestParameters, ITwee
 
 export const IPublishTweetParametersToken = new InjectionToken<IPublishTweetParameters>('IPublishTweetParameters', {
   providedIn: 'root',
-  factory: () => new PublishTweetParameters(),
+  factory: () => new PublishTweetParameters(),    // TODO: might bug kk
 });
 
+@Injectable()
 export class PublishTweetParameters extends CustomRequestParameters implements IPublishTweetParameters {
   // @ts-ignore
-  constructor(textOrSource?: string | IPublishTweetParameters) {
+  constructor(@Inject(IPublishTweetParametersToken) textOrSource?: string | IPublishTweetParameters) {
     if (typeof textOrSource === 'string') {
       super();
 

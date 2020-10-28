@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {IMessagesClientParametersValidator} from "../../../Core/Client/Validators/MessageClientParametersValidator";
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
 import {ITwitterIterator} from "../../Iterators/ITwitterIterator";
@@ -6,7 +8,9 @@ import {IPublishMessageParameters} from "../../Parameters/MessageClient/PublishM
 import {IGetMessageParameters} from "../../Parameters/MessageClient/GetMessageParameters";
 import {IGetMessagesParameters} from "../../Parameters/MessageClient/GetMessagesParameters";
 import {IDeleteMessageParameters} from "../../Parameters/MessageClient/DestroyMessageParameters";
-import {InjectionToken} from "@angular/core";
+import {MessagesClient} from "../../../../sharebook/Client/Clients/MessagesClient";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {MessageRequester} from "../../../../sharebook/Client/Requesters/MessageRequester";
 
 export interface IMessagesClient {
   // Validate all the message client parameters
@@ -63,5 +67,5 @@ export interface IMessagesClient {
 
 export const IMessagesClientToken = new InjectionToken<IMessagesClient>('IMessagesClient', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new MessagesClient(Inject(TwitterClient), Inject(MessageRequester)),
 });

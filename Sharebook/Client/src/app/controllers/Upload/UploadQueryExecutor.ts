@@ -4,8 +4,8 @@ import {IAddMediaMetadataParameters} from "../../core/Public/Parameters/Upload/A
 import {IChunkUploadResult} from "../../core/Core/Upload/ChunkUploaderResult";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {IChunkedUploader} from "../../core/Core/Upload/IChunkedUploader";
-import {ITwitterAccessor} from "../../core/Core/Web/ITwitterAccessor";
-import {IUploadHelper} from "./UploadHelper";
+import {ITwitterAccessor, ITwitterAccessorToken} from "../../core/Core/Web/ITwitterAccessor";
+import {IUploadHelper, IUploadHelperToken, UploadHelper} from "./UploadHelper";
 import {TwitterRequest} from "../../core/Public/TwitterRequest";
 import {ChunkUploadAppendParameters} from "../../core/Core/Upload/ChunkUploadAppendParameters";
 import {MediaCategory} from "../../core/Public/Models/Enum/MediaCategory";
@@ -20,6 +20,8 @@ import {Resources} from "../../properties/resources";
 import TimeSpan from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
 import DateTime from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {MediaUploadProgressChangedEventArgs} from "../../core/Public/Events/MediaUploadProgressChangedEventArgs";
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {TwitterAccessor} from "../../Tweetinvi.Credentials/TwitterAccessor";
 
 export interface IUploadQueryExecutor {
   // Upload a binary
@@ -29,12 +31,21 @@ export interface IUploadQueryExecutor {
   addMediaMetadataAsync(metadata: IAddMediaMetadataParameters, request: ITwitterRequest): Promise<ITwitterResult>;
 }
 
+export const IUploadQueryExecutorToken = new InjectionToken<IUploadQueryExecutor>('IUploadQueryExecutor', {
+  providedIn: 'root',
+  factory: () => new UploadQueryExecutor(Inject(TwitterAccessor), Inject(IFactory<IChunkedUploader>),
+    Inject(UploadHelper))
+});
+
+@Injectable()
 export class UploadQueryExecutor implements IUploadQueryExecutor {
   private readonly _twitterAccessor: ITwitterAccessor;
   private readonly _chunkedUploadFactory: IFactory<IChunkedUploader>;
   private readonly _uploadHelper: IUploadHelper;
 
-  constructor(twitterAccessor: ITwitterAccessor, chunkedUploadFactory: IFactory<IChunkedUploader>, uploadHelper: IUploadHelper) {
+  constructor(@Inject(ITwitterAccessorToken) twitterAccessor: ITwitterAccessor,
+              @Inject(IFactoryToken/*<IChunkedUploader>*/) chunkedUploadFactory: IFactory<IChunkedUploader>,
+              @Inject(IUploadHelperToken) uploadHelper: IUploadHelper) {
     this._twitterAccessor = twitterAccessor;
     this._chunkedUploadFactory = chunkedUploadFactory;
     this._uploadHelper = uploadHelper;

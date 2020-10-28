@@ -1,11 +1,16 @@
 ﻿import Exception from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exception';
-import {InjectionToken} from "@angular/core";
+import {Injectable, InjectionToken} from "@angular/core";
 
 export interface IPagedOperationsHelper {
   iterateOverWithLimit<TInput, TResult>(input: TInput[], transform: (input: TInput[]) => Promise<TResult[]>, maxItemsPerRequest: number): Promise<TResult[]>;
 }
 
+export const IPagedOperationsHelperToken = new InjectionToken<IPagedOperationsHelper>('IPagedOperationsHelper', {
+  providedIn: 'root',
+  factory: () => new PagedOperationsHelper(),
+});
 
+@Injectable()
 export class PagedOperationsHelper implements IPagedOperationsHelper {
   public async getPageResultIterator<TInput, TResult>(input: TInput[], transform: (input: TInput[]) => Promise<TResult[]>, maxItemsPerRequest: number): Promise<TResult[]> {
     let result = new Array<TResult>();
@@ -41,9 +46,3 @@ export class PagedOperationsHelper implements IPagedOperationsHelper {
     return result;
   }
 }
-
-
-export const IPagedOperationsHelperToken = new InjectionToken<IPagedOperationsHelper>('IPagedOperationsHelper', {
-  providedIn: 'root',
-  factory: () => new,
-});

@@ -1,12 +1,17 @@
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+
 import {IGetRateLimitsParameters} from "../../../Public/Parameters/HelpClient/GetRateLimitsParameters";
 import {IGetTwitterConfigurationParameters} from "../../../Public/Parameters/HelpClient/GetTwitterConfigurationParameters";
 import {IGetSupportedLanguagesParameters} from "../../../Public/Parameters/HelpClient/GetSupportedLanguagesParameters";
 import {IGetPlaceParameters} from "../../../Public/Parameters/HelpClient/GetPlaceParameters";
 import {IGeoSearchParameters} from "../../../Public/Parameters/HelpClient/GeoSearchParameters";
 import {IGeoSearchReverseParameters} from "../../../Public/Parameters/HelpClient/GeoSearchReverseParameters";
-import {IHelpClientRequiredParametersValidator} from "./HelpClientRequiredParametersValidator";
+import {
+  HelpClientRequiredParametersValidator,
+  IHelpClientRequiredParametersValidator,
+  IHelpClientRequiredParametersValidatorToken
+} from "./HelpClientRequiredParametersValidator";
 import {HelpParameters} from "./parameters-types";
-import {InjectionToken} from "@angular/core";
 
 export interface IHelpClientParametersValidator {
   validate(parameters: IGetRateLimitsParameters): void;
@@ -24,13 +29,14 @@ export interface IHelpClientParametersValidator {
 
 export const IHelpClientParametersValidatorToken = new InjectionToken<IHelpClientParametersValidator>('IHelpClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new HelpClientParametersValidator(),
+  factory: () => new HelpClientParametersValidator(Inject(HelpClientRequiredParametersValidator)),
 });
 
+@Injectable()
 export class HelpClientParametersValidator implements IHelpClientParametersValidator {
   private readonly _helpClientRequiredParametersValidator: IHelpClientRequiredParametersValidator;
 
-  constructor(helpClientRequiredParametersValidator: IHelpClientRequiredParametersValidator) {
+  constructor(@Inject(IHelpClientRequiredParametersValidatorToken) helpClientRequiredParametersValidator: IHelpClientRequiredParametersValidator) {
     this._helpClientRequiredParametersValidator = helpClientRequiredParametersValidator;
   }
 

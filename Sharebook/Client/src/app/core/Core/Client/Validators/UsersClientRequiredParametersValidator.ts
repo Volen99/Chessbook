@@ -1,5 +1,7 @@
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+
 import {IUsersClientParametersValidator} from "./UsersClientParametersValidator";
-import {IUserQueryValidator} from "./UserQueryValidator";
+import {IUserQueryValidator, IUserQueryValidatorToken, UserQueryValidator} from "./UserQueryValidator";
 import {IGetUserParameters} from "../../../Public/Parameters/UsersClient/GetUserParameters";
 import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
 import {IGetUsersParameters} from "../../../Public/Parameters/UsersClient/GetUsersParameters";
@@ -34,20 +36,20 @@ import {IMuteUserParameters} from "../../../Public/Parameters/AccountClient/Mute
 import Uri from "../../../../c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri";
 import {UriKind} from "../../../Public/Models/Enum/uri-kind";
 import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
-import {InjectionToken} from "@angular/core";
 
 export interface IUsersClientRequiredParametersValidator extends IUsersClientParametersValidator {
 }
 
 export const IUsersClientRequiredParametersValidatorToken = new InjectionToken<IUsersClientRequiredParametersValidator>('IUsersClientRequiredParametersValidator', {
   providedIn: 'root',
-  factory: () => new UsersClientRequiredParametersValidator(),
+  factory: () => new UsersClientRequiredParametersValidator(Inject(UserQueryValidator)),
 });
 
+@Injectable()
 export class UsersClientRequiredParametersValidator implements IUsersClientRequiredParametersValidator {
   private readonly _userQueryValidator: IUserQueryValidator;
 
-  constructor(userQueryValidator: IUserQueryValidator) {
+  constructor(@Inject(IUserQueryValidatorToken) userQueryValidator: IUserQueryValidator) {
     this._userQueryValidator = userQueryValidator;
   }
 

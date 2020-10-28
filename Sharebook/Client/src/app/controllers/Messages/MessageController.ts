@@ -1,7 +1,7 @@
 ﻿import {IMessageController} from "../../core/Core/Controllers/IMessageController";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterRequest} from 'src/app/core/Public/Models/Interfaces/ITwitterRequest';
-import {IMessageQueryExecutor} from "./MessageQueryExecutor";
+import {IMessageQueryExecutor, IMessageQueryExecutorToken} from "./MessageQueryExecutor";
 import {IPublishMessageParameters} from "../../core/Public/Parameters/MessageClient/PublishMessageParameters";
 import {IDeleteMessageParameters} from "../../core/Public/Parameters/MessageClient/DestroyMessageParameters";
 import {ITwitterPageIterator, TwitterPageIterator} from "../../core/Core/Iterators/TwitterPageIterator";
@@ -11,11 +11,13 @@ import {GetMessagesParameters, IGetMessagesParameters} from "../../core/Public/P
 import {IMessageCursorQueryResultDTO} from "../../core/Public/Models/Interfaces/DTO/QueryDTO/IMessageCursorQueryResultDTO";
 import {TwitterRequest} from "../../core/Public/TwitterRequest";
 import {ICreateMessageDTO} from "../../core/Public/Models/Interfaces/DTO/ICreateMessageDTO";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class MessageController implements IMessageController {
   private readonly _messageQueryExecutor: IMessageQueryExecutor;
 
-  constructor(messageQueryExecutor: IMessageQueryExecutor) {
+  constructor(@Inject(IMessageQueryExecutorToken) messageQueryExecutor: IMessageQueryExecutor) {
     this._messageQueryExecutor = messageQueryExecutor;
   }
 

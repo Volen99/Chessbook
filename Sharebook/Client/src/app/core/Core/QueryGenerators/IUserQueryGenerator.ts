@@ -1,4 +1,6 @@
-﻿import {IGetAuthenticatedUserParameters} from "../../Public/Parameters/AccountClient/GetAuthenticatedUserParameters";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {IGetAuthenticatedUserParameters} from "../../Public/Parameters/AccountClient/GetAuthenticatedUserParameters";
 import {IGetUserParameters} from "../../Public/Parameters/UsersClient/GetUserParameters";
 import {IGetUsersParameters} from "../../Public/Parameters/UsersClient/GetUsersParameters";
 import {IGetFriendIdsParameters} from "../../Public/Parameters/UsersClient/GetFriendIdsParameters";
@@ -21,8 +23,9 @@ import {IGetMutedUserIdsParameters} from "../../Public/Parameters/AccountClient/
 import {IGetMutedUsersParameters} from "../../Public/Parameters/AccountClient/GetMutedUsersParameters";
 import {IMuteUserParameters} from "../../Public/Parameters/AccountClient/MuteUserParameters";
 import {IUnmuteUserParameters} from "../../Public/Parameters/AccountClient/UnMuteUserParameters";
-import {InjectionToken} from "@angular/core";
 import {UserQueryGenerator} from "../../../controllers/User/UserQueryGenerator";
+import {QueryParameterGenerator} from "../../../controllers/Shared/QueryParameterGenerator";
+import {UserQueryParameterGenerator} from "../../../controllers/User/UserQueryParameterGenerator";
 
 export interface IUserQueryGenerator {
   getAuthenticatedUserQuery(parameters: IGetAuthenticatedUserParameters): string;
@@ -80,5 +83,5 @@ export interface IUserQueryGenerator {
 
 export const IUserQueryGeneratorToken = new InjectionToken<IUserQueryGenerator>('IUserQueryGenerator', {
   providedIn: 'root',
-  factory: () => new UserQueryGenerator(),
+  factory: () => new UserQueryGenerator(Inject(UserQueryParameterGenerator), Inject(QueryParameterGenerator)),
 });

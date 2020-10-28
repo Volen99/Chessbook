@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {IGetTweetParameters} from "../../Parameters/TweetsClient/GetTweetParameters";
 import {ITweetDTO} from "../../Models/Interfaces/DTO/ITweetDTO";
@@ -15,7 +17,13 @@ import {IFavoriteTweetParameters} from "../../Parameters/TweetsClient/FavoriteTw
 import {IUnfavoriteTweetParameters} from "../../Parameters/TweetsClient/UnFavoriteTweetParameters";
 import {IGetOEmbedTweetParameters} from "../../Parameters/TweetsClient/GetOEmbedTweetParameters";
 import {IOEmbedTweetDTO} from "../../Models/Interfaces/DTO/IOembedTweetDTO";
-import {InjectionToken} from "@angular/core";
+import {TweetsRequester} from "../../../../sharebook/Client/Requesters/TweetsRequester";
+import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
+import {
+  TweetsClientRequiredParametersValidator
+} from "../../../Core/Client/Validators/TweetsClientRequiredParametersValidator";
+import {TweetController} from "../../../../controllers/Tweet/TweetController";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 // A client providing all the methods related with tweets. The results from this client contain additional metadata.
 export interface ITweetsRequester {
@@ -106,5 +114,6 @@ export interface ITweetsRequester {
 
 export const ITweetsRequesterToken = new InjectionToken<ITweetsRequester>('ITweetsRequester', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new TweetsRequester(Inject(TwitterClient), Inject(TwitterClientEvents),
+    Inject(TweetController), Inject(TweetsClientRequiredParametersValidator)),
 });

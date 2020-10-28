@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {IPublishMessageParameters} from "../../Parameters/MessageClient/PublishMessageParameters";
 import {ICreateMessageDTO} from "../../Models/Interfaces/DTO/ICreateMessageDTO";
@@ -7,7 +9,13 @@ import {IGetMessageDTO} from "../../Models/Interfaces/DTO/IGetMessageDTO";
 import {IGetMessagesParameters} from "../../Parameters/MessageClient/GetMessagesParameters";
 import {IMessageCursorQueryResultDTO} from "../../Models/Interfaces/DTO/QueryDTO/IMessageCursorQueryResultDTO";
 import {ITwitterPageIterator} from "../../../Core/Iterators/TwitterPageIterator";
-import {InjectionToken} from "@angular/core";
+import {MessageRequester} from "../../../../sharebook/Client/Requesters/MessageRequester";
+import {
+  MessagesClientParametersValidator
+} from "../../../Core/Client/Validators/MessageClientParametersValidator";
+import {ITwitterClientEvents, TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {MessageController} from "../../../../controllers/Messages/MessageController";
 
 export interface IMessageRequester {
   /// <summary>
@@ -41,5 +49,6 @@ export interface IMessageRequester {
 
 export const IMessageRequesterToken = new InjectionToken<IMessageRequester>('IMessageRequester', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new MessageRequester(Inject(TwitterClient), Inject(MessageController),
+    Inject(MessagesClientParametersValidator), Inject(TwitterClientEvents)),
 });

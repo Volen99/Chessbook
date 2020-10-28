@@ -1,15 +1,17 @@
-﻿import {IUploadRequester} from "src/app/core/Public/Client/Requesters/IUploadRequester";
+﻿import {Inject} from "@angular/core";
+
+import {IUploadRequester, IUploadRequesterToken} from "src/app/core/Public/Client/Requesters/IUploadRequester";
 import {IRawExecutors} from 'src/app/core/Public/Client/IRawExecutors';
-import {IAuthRequester} from "../../core/Public/Client/Requesters/IAuthRequester";
-import {IAccountSettingsRequester} from "../../core/Public/Client/Requesters/IAccountSettingsRequester";
-import {IHelpRequester} from "../../core/Public/Client/Requesters/IHelpRequester";
-import {ISearchRequester} from "../../core/Public/Client/Requesters/ISearchRequester";
-import {ITwitterListsRequester} from "../../core/Public/Client/Requesters/ITwitterListsRequester";
-import {ITimelinesRequester} from "../../core/Public/Client/Requesters/ITimelinesRequester";
-import {ITrendsRequester} from "../../core/Public/Client/Requesters/ITrendsRequester";
-import {ITweetsRequester} from "../../core/Public/Client/Requesters/ITweetsRequester";
-import {IUsersRequester} from "../../core/Public/Client/Requesters/IUsersRequester";
-import {IAccountActivityRequester} from "../../core/Public/Client/Requesters/IAccountActivityRequester";
+import {IAuthRequester, IAuthRequesterToken} from "../../core/Public/Client/Requesters/IAuthRequester";
+import {IAccountSettingsRequester, IAccountSettingsRequesterToken} from "../../core/Public/Client/Requesters/IAccountSettingsRequester";
+import {IHelpRequester, IHelpRequesterToken} from "../../core/Public/Client/Requesters/IHelpRequester";
+import {ISearchRequester, ISearchRequesterToken} from "../../core/Public/Client/Requesters/ISearchRequester";
+import {ITwitterListsRequester, ITwitterListsRequesterToken} from "../../core/Public/Client/Requesters/ITwitterListsRequester";
+import {ITimelinesRequester, ITimelinesRequesterToken} from "../../core/Public/Client/Requesters/ITimelinesRequester";
+import {ITrendsRequester, ITrendsRequesterToken} from "../../core/Public/Client/Requesters/ITrendsRequester";
+import {ITweetsRequester, ITweetsRequesterToken} from "../../core/Public/Client/Requesters/ITweetsRequester";
+import {IUsersRequester, IUsersRequesterToken} from "../../core/Public/Client/Requesters/IUsersRequester";
+import {IAccountActivityRequester, IAccountActivityRequesterToken} from "../../core/Public/Client/Requesters/IAccountActivityRequester";
 
 export class RawExecutors implements IRawExecutors {
   private readonly _authRequester: IAuthRequester;
@@ -25,17 +27,17 @@ export class RawExecutors implements IRawExecutors {
   private readonly _accountActivityRequester: IAccountActivityRequester;
 
   constructor(
-    accountActivityRequester: IAccountActivityRequester,
-    authRequester: IAuthRequester,
-    accountSettingsRequester: IAccountSettingsRequester,
-    helpRequester: IHelpRequester,
-    searchRequester: ISearchRequester,
-    listsRequester: ITwitterListsRequester,
-    timelinesRequester: ITimelinesRequester,
-    trendsRequester: ITrendsRequester,
-    tweetsRequester: ITweetsRequester,
-    uploadRequester: IUploadRequester,
-    usersRequester: IUsersRequester) {
+    @Inject(IAccountActivityRequesterToken) accountActivityRequester: IAccountActivityRequester,
+    @Inject(IAuthRequesterToken) authRequester: IAuthRequester,
+    @Inject(IAccountSettingsRequesterToken) accountSettingsRequester: IAccountSettingsRequester,
+    @Inject(IHelpRequesterToken) helpRequester: IHelpRequester,
+    @Inject(ISearchRequesterToken) searchRequester: ISearchRequester,
+    @Inject(ITwitterListsRequesterToken) listsRequester: ITwitterListsRequester,
+    @Inject(ITimelinesRequesterToken) timelinesRequester: ITimelinesRequester,
+    @Inject(ITrendsRequesterToken) trendsRequester: ITrendsRequester,
+    @Inject(ITweetsRequesterToken) tweetsRequester: ITweetsRequester,
+    @Inject(IUploadRequesterToken) uploadRequester: IUploadRequester,
+    @Inject(IUsersRequesterToken) usersRequester: IUsersRequester) {
     this._accountActivityRequester = accountActivityRequester;
     this._authRequester = authRequester;
     this._accountSettingsRequester = accountSettingsRequester;

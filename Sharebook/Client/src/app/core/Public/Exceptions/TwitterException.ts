@@ -5,16 +5,24 @@ import {ITwitterException} from "../../Core/Exceptions/ITwitterException";
 import {ITwitterResponse} from "../../Core/Web/ITwitterResponse";
 import {ITwitterQuery} from "../Models/Interfaces/ITwitterQuery";
 import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {WebExceptionInfoExtractor} from "../../../logic/Exceptions/WebExceptionInfoExtractor";
 
 export interface ITwitterExceptionFactory {
   create(exceptionInfosOrTwitterResponseOrWebException: ITwitterExceptionInfo[] | ITwitterResponse | WebException,
          urlOrRequest: string | ITwitterRequest, statusCode: number): TwitterException;
 }
 
+export const ITwitterExceptionFactoryToken = new InjectionToken<ITwitterExceptionFactory>('ITwitterExceptionFactory', {
+  providedIn: 'root',
+  factory: () => new TwitterExceptionFactory(Inject(WebExceptionInfoExtractor)),
+});
+
+@Injectable()
 export class TwitterExceptionFactory implements ITwitterExceptionFactory {
   private readonly _webExceptionInfoExtractor: IWebExceptionInfoExtractor;
 
-  constructor(webExceptionInfoExtractor: IWebExceptionInfoExtractor) {
+  constructor(@Inject(IWebExceptionInfoExtractorToken) webExceptionInfoExtractor: IWebExceptionInfoExtractor) {
     this._webExceptionInfoExtractor = webExceptionInfoExtractor;
   }
 
@@ -67,7 +75,7 @@ export class TwitterException extends WebException implements ITwitterException 
     messageOrUrlOrRequestOrResponseOrWebException: string
       | ITwitterRequest
       | WebException
-      | ITwitterResponse = `{request.Query.Url} request failed.`, request?: ITwitterRequest,
+      | ITwitterResponse = `{request.Query.Url} request failed.`,
     statusCode?: number) {
 
 
@@ -111,9 +119,8 @@ export class TwitterException extends WebException implements ITwitterException 
     this.creationDate = DateTime.now;
     this.URL = request.query.url;
     this.twitterQuery = request.query;
-
-
   }
+
   public toString(): string {
     let date = `--- Date : ${this.creationDate.ToLocalTime()}\r\n`;
     let url = URL == null ? "" : `URL : ${URL}\r\n`;

@@ -1,5 +1,7 @@
 ﻿import {ITweetIdentifier} from "./Interfaces/ITweetIdentifier";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class TweetIdentifier implements ITweetIdentifier {
   constructor(tweetId: number) {
     this.id = tweetId;
@@ -9,7 +11,7 @@ export class TweetIdentifier implements ITweetIdentifier {
   public id: number;
   public idStr: string;
 
-  public ToString(): string {
+  public toString(): string {
     return this.idStr ?? this.id.toString();
   }
 }

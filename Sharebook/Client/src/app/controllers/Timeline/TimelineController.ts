@@ -1,8 +1,8 @@
 ﻿import {ITimelineController} from "../../core/Core/Controllers/ITimelineController";
 import {TwitterRequest} from "../../core/Public/TwitterRequest";
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
-import {ITimelineQueryExecutor} from "./TimelineQueryExecutor";
-import {IPageCursorIteratorFactories} from "../../core/Core/Iterators/PageCursorIteratorFactories";
+import {ITimelineQueryExecutor, ITimelineQueryExecutorToken} from "./TimelineQueryExecutor";
+import {IPageCursorIteratorFactories, IPageCursorIteratorFactoriesToken} from "../../core/Core/Iterators/PageCursorIteratorFactories";
 import {GetHomeTimelineParameters, IGetHomeTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetHomeTimelineParameters";
 import {ITweetDTO} from "../../core/Public/Models/Interfaces/DTO/ITweetDTO";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
@@ -16,12 +16,15 @@ import {
   GetRetweetsOfMeTimelineParameters,
   IGetRetweetsOfMeTimelineParameters
 } from "../../core/Public/Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class TimelineController implements ITimelineController {
   private readonly _timelineQueryExecutor: ITimelineQueryExecutor;
   private readonly _pageCursorIteratorFactories: IPageCursorIteratorFactories;
 
-  constructor(timelineQueryExecutor: ITimelineQueryExecutor, pageCursorIteratorFactories: IPageCursorIteratorFactories) {
+  constructor(@Inject(ITimelineQueryExecutorToken) timelineQueryExecutor: ITimelineQueryExecutor,
+              @Inject(IPageCursorIteratorFactoriesToken) pageCursorIteratorFactories: IPageCursorIteratorFactories) {
     this._timelineQueryExecutor = timelineQueryExecutor;
     this._pageCursorIteratorFactories = pageCursorIteratorFactories;
   }

@@ -1,3 +1,5 @@
+import {Injectable, InjectionToken} from "@angular/core";
+
 import {IHelpClientParametersValidator} from "./HelpClientParametersValidator";
 import {IGetRateLimitsParameters} from "../../../Public/Parameters/HelpClient/GetRateLimitsParameters";
 import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
@@ -7,7 +9,6 @@ import {IGetPlaceParameters} from "../../../Public/Parameters/HelpClient/GetPlac
 import {IGeoSearchParameters} from "../../../Public/Parameters/HelpClient/GeoSearchParameters";
 import {IGeoSearchReverseParameters} from "../../../Public/Parameters/HelpClient/GeoSearchReverseParameters";
 import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
-import {InjectionToken} from "@angular/core";
 
 export interface IHelpClientRequiredParametersValidator extends IHelpClientParametersValidator {
 }
@@ -17,6 +18,7 @@ export const IHelpClientRequiredParametersValidatorToken = new InjectionToken<IH
   factory: () => new HelpClientRequiredParametersValidator(),
 });
 
+@Injectable()
 export class HelpClientRequiredParametersValidator implements IHelpClientRequiredParametersValidator {
 
   public validate(parameters: IGetRateLimitsParameters

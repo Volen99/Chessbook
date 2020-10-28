@@ -8,7 +8,17 @@ import {ITwitterCredentials} from "../../Models/Authentication/TwitterCredential
 import {IInvalidateBearerTokenParameters} from "../../Parameters/Auth/InvalidateBearerTokenParameters";
 import {InvalidateTokenResponse} from "../../Models/Authentication/InvalidateTokenResponse";
 import {IInvalidateAccessTokenParameters} from "../../Parameters/Auth/InvalidateAccessTokenParameters";
-import {InjectionToken} from "@angular/core";
+import {Inject, InjectionToken} from "@angular/core";
+import {AuthRequester} from "../../../../sharebook/Client/Requesters/AuthRequester";
+import {ITwitterClient} from "../../ITwitterClient";
+import {ITwitterClientEvents, TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
+import {IAuthController} from "../../../Core/Controllers/IAuthController";
+import {
+  AuthClientRequiredParametersValidator,
+  IAuthClientRequiredParametersValidator
+} from "../../../Core/Client/Validators/AuthClientRequiredParametersValidator";
+import {AuthController} from "../../../../controllers/Auth/AuthController";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface IAuthRequester {
   /// <summary>
@@ -53,5 +63,6 @@ export interface IAuthRequester {
 
 export const IAuthRequesterToken = new InjectionToken<IAuthRequester>('IAuthRequester', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new AuthRequester(Inject(TwitterClient), Inject(TwitterClientEvents),
+    Inject(AuthController), Inject(AuthClientRequiredParametersValidator)),
 });

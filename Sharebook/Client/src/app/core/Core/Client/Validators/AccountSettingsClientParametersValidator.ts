@@ -1,3 +1,5 @@
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+
 import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import {TwitterLimits} from "../../../Public/Settings/TwitterLimits";
 import {IGetAccountSettingsParameters} from "../../../Public/Parameters/AccountSettingsClient/GetAccountSettingsParameters";
@@ -6,10 +8,14 @@ import {IUpdateProfileParameters} from "../../../Public/Parameters/AccountSettin
 import {IUpdateProfileImageParameters} from "../../../Public/Parameters/AccountSettingsClient/UpdateProfileImageParameters";
 import {IUpdateProfileBannerParameters} from "../../../Public/Parameters/AccountSettingsClient/UpdateProfileBannerParameters";
 import {IRemoveProfileBannerParameters} from "../../../Public/Parameters/AccountSettingsClient/RemoveProfileBannerParameters";
-import {IAccountSettingsClientRequiredParametersValidator} from "./AccountSettingsClientRequiredParametersValidator";
-import {ITwitterClient} from "../../../Public/ITwitterClient";
+import {
+  AccountSettingsClientRequiredParametersValidator,
+  IAccountSettingsClientRequiredParametersValidator,
+  IAccountSettingsClientRequiredParametersValidatorToken
+} from "./AccountSettingsClientRequiredParametersValidator";
+import {ITwitterClient, ITwitterClientToken} from "../../../Public/ITwitterClient";
 import {AccountActivityParameters} from "./parameters-types";
-import {InjectionToken} from "@angular/core";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface IAccountSettingsClientParametersValidator {
   validate(parameters: IGetAccountSettingsParameters): void;
@@ -27,14 +33,16 @@ export interface IAccountSettingsClientParametersValidator {
 
 export const IAccountSettingsClientParametersValidatorToken = new InjectionToken<IAccountSettingsClientParametersValidator>('IAccountSettingsClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new AccountSettingsClientParametersValidator(),
+  factory: () => new AccountSettingsClientParametersValidator(Inject(TwitterClient), Inject(AccountSettingsClientRequiredParametersValidator)),
 });
 
+@Injectable()
 export class AccountSettingsClientParametersValidator implements IAccountSettingsClientParametersValidator {
   private readonly _accountSettingsClientRequiredParametersValidator: IAccountSettingsClientRequiredParametersValidator;
   private readonly _client: ITwitterClient;
 
-  constructor(client: ITwitterClient, accountSettingsClientRequiredParametersValidator: IAccountSettingsClientRequiredParametersValidator) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(IAccountSettingsClientRequiredParametersValidatorToken) accountSettingsClientRequiredParametersValidator: IAccountSettingsClientRequiredParametersValidator) {
     this._client = client;
     this._accountSettingsClientRequiredParametersValidator = accountSettingsClientRequiredParametersValidator;
   }

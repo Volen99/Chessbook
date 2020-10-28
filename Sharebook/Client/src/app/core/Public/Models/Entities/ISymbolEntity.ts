@@ -17,7 +17,7 @@ export interface ISymbolEntity extends IEquatable<ISymbolEntity> {
   indices: number[];
 }
 
-export const ISymbolEntityToken = new InjectionToken<ITweetIdentifier>('ISymbolEntity', {
+export const ISymbolEntityToken = new InjectionToken<ISymbolEntity>('ISymbolEntity', {
   providedIn: 'root',
   factory: () => new SymbolEntity(),
 });

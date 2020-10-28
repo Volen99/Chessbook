@@ -2,7 +2,7 @@ import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
 import {IUserIdentifier} from "../../../core/Public/Models/Interfaces/IUserIdentifier";
 import {ITimelinesClient} from "../../../core/Public/Client/Clients/ITimelinesClient";
 import {ITwitterIterator} from "../../../core/Public/Iterators/ITwitterIterator";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {ITimelinesRequester} from "../../../core/Public/Client/Requesters/ITimelinesRequester";
 import {ITimelineClientParametersValidator} from "../../../core/Core/Client/Validators/TimelineClientParametersValidator";
 import {ITweet} from "../../../core/Public/Models/Interfaces/ITweet";
@@ -25,12 +25,13 @@ import {
   IGetRetweetsOfMeTimelineParameters
 } from "../../../core/Public/Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
 import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import {Inject} from "@angular/core";
 
 export class TimelinesClient implements ITimelinesClient {
   private readonly _client: ITwitterClient;
   private readonly _timelinesRequester: ITimelinesRequester;
 
-  constructor(client: ITwitterClient) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient) {
     this._client = client;
     this._timelinesRequester = this._client.raw.timelines;
   }

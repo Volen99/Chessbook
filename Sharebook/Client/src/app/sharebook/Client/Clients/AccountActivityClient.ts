@@ -1,6 +1,6 @@
 import {IAccountActivityClient} from "../../../core/Public/Client/Clients/IAccountActivityClient";
-import {IAccountActivityRequester} from "../../../core/Public/Client/Requesters/IAccountActivityRequester";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {IAccountActivityRequester, IAccountActivityRequesterToken} from "../../../core/Public/Client/Requesters/IAccountActivityRequester";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {IAccountActivityClientParametersValidator} from "../../../core/Core/Client/Validators/AccountActivityClientParametersValidator";
 import {IAccountActivityRequestHandler} from "../../../core/Public/Models/Webhooks/IAccountActivityRequestHandler";
 import {IWebhook} from "../../../core/Public/Models/Interfaces/IWebhook";
@@ -52,12 +52,15 @@ import {
   GetAccountActivitySubscriptionsParameters,
   IGetAccountActivitySubscriptionsParameters
 } from "../../../core/Public/Parameters/AccountActivity/GetListOfSubscriptionsParameters";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class AccountActivityClient implements IAccountActivityClient {
   private readonly _accountActivityRequester: IAccountActivityRequester;
   private readonly _client: ITwitterClient;
 
-  constructor(accountActivityRequester: IAccountActivityRequester, client: ITwitterClient) {
+  constructor(@Inject(IAccountActivityRequesterToken) accountActivityRequester: IAccountActivityRequester,
+              @Inject(ITwitterClientToken) client: ITwitterClient) {
     this._accountActivityRequester = accountActivityRequester;
     this._client = client;
   }
@@ -92,7 +95,7 @@ export class AccountActivityClient implements IAccountActivityClient {
     }
 
     let twitterResult = await this._accountActivityRequester.getAccountActivityWebhookEnvironmentsAsync(parametersCurrent); // .ConfigureAwait(false);
-    return twitterResult?.model?.Environments.map(x => this._client.factories.createWebhookEnvironment(x)); // .ToArray();
+    return twitterResult?.model?.environments.map(x => this._client.factories.createWebhookEnvironment(x)); // .ToArray();
   }
 
   public async getAccountActivityEnvironmentWebhooksAsync(environmentOrParameters: string | IGetAccountActivityEnvironmentWebhooksParameters): Promise<IWebhook[]> {
@@ -183,7 +186,7 @@ export class AccountActivityClient implements IAccountActivityClient {
       parameters = environmentOrParameters;
     }
 
-    let twitterResult = await this._accountActivityRequester.getAccountActivitySubscriptionsAsync(parameters); //.ConfigureAwait(false);
+    let twitterResult = await this._accountActivityRequester.getAccountActivitySubscriptionsAsync(parameters); // .ConfigureAwait(false);
     return this._client.factories.createWebhookEnvironmentSubscriptions(twitterResult?.model);
   }
 

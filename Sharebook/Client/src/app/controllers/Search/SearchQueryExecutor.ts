@@ -12,7 +12,9 @@ import {IDestroySavedSearchParameters} from "../../core/Public/Parameters/Search
 import {ISearchResultsDTO} from "../../core/Public/Models/Interfaces/DTO/ISearchResultsDTO";
 import {UserDTO} from "../../core/Core/DTO/UserDTO";
 import {SavedSearchDTO} from "../../core/Core/DTO/SavedSearchDTO";
-import {ISearchQueryGenerator} from "./SearchQueryGenerator";
+import {ISearchQueryGenerator, SearchQueryGenerator} from "./SearchQueryGenerator";
+import {Inject, InjectionToken} from "@angular/core";
+import {TwitterAccessor} from "../../Tweetinvi.Credentials/TwitterAccessor";
 
 export interface ISearchQueryExecutor {
   searchTweetsAsync(parameters: ISearchTweetsParameters, request: ITwitterRequest): Promise<ITwitterResult<ISearchResultsDTO>>;
@@ -27,6 +29,11 @@ export interface ISearchQueryExecutor {
 
   destroySavedSearchAsync(parameters: IDestroySavedSearchParameters, request: ITwitterRequest): Promise<ITwitterResult<SavedSearchDTO>>;
 }
+
+export const ISearchQueryExecutorToken = new InjectionToken<ISearchQueryExecutor>('ISearchQueryExecutor', {
+  providedIn: 'root',
+  factory: () => new SearchQueryExecutor(Inject(SearchQueryGenerator), Inject(TwitterAccessor)),
+});
 
 export class SearchQueryExecutor implements ISearchQueryExecutor {
   private readonly _searchQueryGenerator: ISearchQueryGenerator;

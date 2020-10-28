@@ -1,4 +1,6 @@
-﻿import {ITwitterConfiguration} from "../../Public/Models/Interfaces/DTO/ITwitterConfiguration";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterConfiguration} from "../../Public/Models/Interfaces/DTO/ITwitterConfiguration";
 import {ITwitterResult} from "../Web/TwitterResult";
 import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import {SupportedLanguage} from "../Models/SupportedLanguage";
@@ -11,8 +13,8 @@ import {IPlace} from "../../Public/Models/Interfaces/IPlace";
 import {SearchGeoSearchResultDTO} from "../../Public/Models/Interfaces/DTO/GeoSearchResultDTO";
 import {IGeoSearchReverseParameters} from "../../Public/Parameters/HelpClient/GeoSearchReverseParameters";
 import {CredentialsRateLimitsDTO} from "../DTO/CredentialsRateLimitsDTO";
-import {InjectionToken} from "@angular/core";
 import {HelpController} from "../../../controllers/Help/HelpController";
+import {HelpQueryExecutor} from "../../../controllers/Help/HelpQueryExecutor";
 
 export interface IHelpController {
   getRateLimitsAsync(parameters: IGetRateLimitsParameters, request: ITwitterRequest): Promise<ITwitterResult<CredentialsRateLimitsDTO>>;
@@ -30,5 +32,5 @@ export interface IHelpController {
 
 export const IHelpControllerToken = new InjectionToken<IHelpController>('IHelpController', {
   providedIn: 'root',
-  factory: () => new HelpController(),
+  factory: () => new HelpController(Inject(HelpQueryExecutor)),
 });

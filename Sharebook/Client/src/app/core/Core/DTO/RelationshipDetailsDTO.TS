@@ -5,171 +5,171 @@ export class RelationshipDetailsDTO implements IRelationshipDetailsDTO {
   private _relationship: any;  // TwitterRelationshipDTO
 
   private get _sourceAccessor(): any /*SourceRelationshipDTO*/ {
-    return this._relationship.Source;
+    return this._relationship.source;
   }
 
   private get _targetAccessor(): any /*TargetRelationshipDTO*/ {
-    return this._relationship.Target;
+    return this._relationship.target;
   }
 
   get sourceId(): number {
-    return this._sourceAccessor.SourceId;
+    return this._sourceAccessor.sourceId;
   }
 
   get sourceIdStr(): string {
-    return this._sourceAccessor.SourceIdStr;
+    return this._sourceAccessor.sourceIdStr;
   }
 
   get sourceScreenName(): string {
-    return this._sourceAccessor.SourceScreenName;
+    return this._sourceAccessor.sourceScreenName;
   }
 
   get targetId(): number {
-    return this._targetAccessor.TargetId;
+    return this._targetAccessor.targetId;
   }
 
   get targetIdStr(): string {
-    return this._targetAccessor.TargetIdStr;
+    return this._targetAccessor.targetIdStr;
   }
 
   get targetScreenName(): string {
-    return this._targetAccessor.TargetScreenName;
+    return this._targetAccessor.targetScreenName;
   }
 
   // [JsonIgnore]
   get following(): boolean {
-    return this._sourceAccessor.Following;
+    return this._sourceAccessor.following;
   }
 
   // [JsonIgnore]
   get followedBy(): boolean {
-    return this._sourceAccessor.FollowedBy;
+    return this._sourceAccessor.followedBy;
   }
 
 
   // [JsonIgnore]
   get followingReceived(): boolean {
-    return this._sourceAccessor.FollowingReceived;
+    return this._sourceAccessor.followingReceived;
   }
 
   // [JsonIgnore]
   get followingRequested(): boolean {
-    return this._sourceAccessor.FollowingRequested;
+    return this._sourceAccessor.followingRequested;
   }
 
   // [JsonIgnore]
   get notificationsEnabled(): boolean {
-    return this._sourceAccessor.NotificationsEnabled;
+    return this._sourceAccessor.notificationsEnabled;
   }
 
   // [JsonIgnore]
   get canSendDirectMessage(): boolean {
-    return this._sourceAccessor.CanSendDirectMessage;
+    return this._sourceAccessor.canSendDirectMessage;
   }
 
   // [JsonIgnore]
   get blocking(): boolean {
-    return this._sourceAccessor.Blocking;
+    return this._sourceAccessor.blocking;
   }
 
   // [JsonIgnore]
   get blockedBy(): boolean {
-    return this._sourceAccessor.BlockedBy;
+    return this._sourceAccessor.blockedBy;
   }
 
 
   // [JsonIgnore]
   get muting(): boolean {
-    return this._sourceAccessor.Muting;
+    return this._sourceAccessor.muting;
   }
 
   // [JsonIgnore]
   get wantRetweets(): boolean {
-    return this._sourceAccessor.WantRetweets;
+    return this._sourceAccessor.wantRetweets;
   }
 
   // [JsonIgnore]
   get allReplies(): boolean {
-    return this._sourceAccessor.AllReplies;
+    return this._sourceAccessor.allReplies;
   }
 
   // [JsonIgnore]
   get markedSpam(): boolean {
-    return this._sourceAccessor.MarkedSpam;
+    return this._sourceAccessor.markedSpam;
   }
 
   private TwitterRelationshipDTO = class {
     // [JsonProperty("source")]
-    public Source: any;  // SourceRelationshipDTO
+    public source: any;  // SourceRelationshipDTO
 
     // [JsonProperty("target")]
-    public Target: any; // TargetRelationshipDTO;
+    public target: any; // TargetRelationshipDTO;
   };
 
   private SourceRelationshipDTO = class {
     // [JsonProperty("id")]
-    public SourceId: number;
+    public sourceId: number;
 
     // [JsonProperty("id_str")]
-    public SourceIdStr: string;
+    public sourceIdStr: string;
 
     // [JsonProperty("screen_name")]
-    public SourceScreenName: string;
+    public sourceScreenName: string;
 
     // [JsonProperty("following")]
-    public Following: boolean;
+    public following: boolean;
 
     // [JsonProperty("followed_by")]
-    public FollowedBy: boolean;
+    public followedBy: boolean;
 
     // [JsonProperty("following_received")]
     // [JsonConverter(typeof(JsonPropertyConverterRepository))]
-    public FollowingReceived: boolean;
+    public followingReceived: boolean;
 
     // [JsonProperty("following_requested")]
     // [JsonConverter(typeof(JsonPropertyConverterRepository))]
-    public FollowingRequested: boolean;
+    public followingRequested: boolean;
 
     // [JsonProperty("notifications_enabled")]
     // [JsonConverter(typeof(JsonPropertyConverterRepository))]
-    public NotificationsEnabled: boolean;
+    public notificationsEnabled: boolean;
 
     // [JsonProperty("can_dm")]
-    public CanSendDirectMessage: boolean;
+    public canSendDirectMessage: boolean;
 
     // [JsonProperty("blocking")]
     // [JsonConverter(typeof(JsonPropertyConverterRepository))]
-    public Blocking: boolean;
+    public blocking: boolean;
 
     // [JsonProperty("blocked_by")]
     // [JsonConverter(typeof(JsonPropertyConverterRepository))]
-    public BlockedBy: boolean;
+    public blockedBy: boolean;
 
     // [JsonProperty("muting")]
     // [JsonConverter(typeof(JsonPropertyConverterRepository))]
-    public Muting: boolean;
+    public muting: boolean;
 
     // [JsonProperty("want_retweets")]
     // [JsonConverter(typeof(JsonPropertyConverterRepository))]
-    public WantRetweets: boolean;
+    public wantRetweets: boolean;
 
     // [JsonProperty("all_replies")]
     // [JsonConverter(typeof(JsonPropertyConverterRepository))]
-    public AllReplies: boolean;
+    public allReplies: boolean;
 
     // [JsonProperty("marked_spam")]
     // [JsonConverter(typeof(JsonPropertyConverterRepository))]
-    public MarkedSpam: boolean;
+    public markedSpam: boolean;
   };
 
   private TargetRelationshipDTO = class {
     // [JsonProperty("id")]
-    public TargetId: number;
+    public targetId: number;
 
     // [JsonProperty("id_str")]
-    public TargetIdStr: string;
+    public targetIdStr: string;
 
     // [JsonProperty("screen_name")]
-    public TargetScreenName: string;
+    public targetScreenName: string;
   };
 }

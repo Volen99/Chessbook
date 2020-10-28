@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {ITweet} from "../../Models/Interfaces/ITweet";
 import {IGeoCode} from "../../Models/Interfaces/IGeoCode";
 import {ISearchTweetsParameters} from "../../Parameters/Search/SearchTweetsParameters";
@@ -12,7 +14,8 @@ import {IGetSavedSearchParameters} from "../../Parameters/Search/GetSavedSearchP
 import {IListSavedSearchesParameters} from "../../Parameters/Search/ListSavedSearchesParameters";
 import {IDestroySavedSearchParameters} from "../../Parameters/Search/DestroySavedSearchParameters";
 import {ISearchClientParametersValidator} from "../../../Core/Client/Validators/SearchClientParametersValidator";
-import {InjectionToken} from "@angular/core";
+import {SearchClient} from "../../../../sharebook/Client/Clients/SearchClient";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface ISearchClient {
   // Validate all the Search client parameters
@@ -116,5 +119,5 @@ export interface ISearchClient {
 
 export const ISearchClientToken = new InjectionToken<ISearchClient>('ISearchClient', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new SearchClient(Inject(TwitterClient)),
 });

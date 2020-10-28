@@ -1,3 +1,5 @@
+import {Injectable, InjectionToken} from "@angular/core";
+
 import {IAuthClientParametersValidator} from "./AuthClientParametersValidator";
 import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
 import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
@@ -8,7 +10,6 @@ import {ITwitterRequest} from 'src/app/core/Public/Models/Interfaces/ITwitterReq
 import {RequestCredentialsParameters} from "../../../Public/Parameters/Auth/RequestCredentialsParameters";
 import {AuthParameters} from "./parameters-types";
 import {IInvalidateAccessTokenParameters} from "../../../Public/Parameters/Auth/InvalidateAccessTokenParameters";
-import {InjectionToken} from "@angular/core";
 
 export interface IAuthClientRequiredParametersValidator extends IAuthClientParametersValidator {
 }
@@ -18,6 +19,7 @@ export const IAuthClientRequiredParametersValidatorToken = new InjectionToken<IA
   factory: () => new AuthClientRequiredParametersValidator(),
 });
 
+@Injectable()
 export class AuthClientRequiredParametersValidator implements IAuthClientRequiredParametersValidator {
   public validate(parameters: AuthParameters, request?: ITwitterRequest): void {
     if (parameters == null) {

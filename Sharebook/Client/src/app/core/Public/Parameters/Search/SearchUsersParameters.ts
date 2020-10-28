@@ -1,7 +1,7 @@
 ﻿import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {TwitterLimits} from "../../Settings/TwitterLimits";
 import ArgumentOutOfRangeException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentOutOfRangeException";
-import {InjectionToken} from "@angular/core";
+import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 // For more information read : https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-search
 export interface ISearchUsersParameters extends ICustomRequestParameters {
@@ -20,12 +20,13 @@ export interface ISearchUsersParameters extends ICustomRequestParameters {
 
 export const ISearchUsersParametersToken = new InjectionToken<ISearchUsersParametersToken>('ISearchUsersParametersToken', {
   providedIn: 'root',
-  factory: () => new SearchUsersParameters(),
+  factory: () => new SearchUsersParameters(Inject([String, SearchUsersParameters])),
 });
 
+@Injectable()
 // https://dev.twitter.com/rest/reference/get/users/search
 export class SearchUsersParameters extends CustomRequestParameters implements ISearchUsersParameters {
-  constructor(queryOrParameters: string | ISearchUsersParameters) {
+  constructor(@Inject(ISearchUsersParametersToken) queryOrParameters: string | ISearchUsersParameters) {
     if (SearchUsersParameters.isISearchUsersParameters(queryOrParameters)) {
       super(queryOrParameters);
 

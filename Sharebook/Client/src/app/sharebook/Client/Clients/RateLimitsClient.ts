@@ -1,6 +1,6 @@
 import ArgumentException from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import {IRateLimitsClient} from "../../../core/Public/Client/Clients/IRateLimitsClient";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {IRateLimitCacheManager} from "../../../core/Core/RateLimit/IRateLimitCacheManager";
 import {IRateLimitAwaiter} from "../../../core/Core/RateLimit/IRateLimitAwaiter";
 import {IHelpRequester} from "../../../core/Public/Client/Requesters/IHelpRequester";
@@ -17,14 +17,16 @@ import {
 import {WaitForCredentialsRateLimitParameters} from "../../../core/Public/Parameters/RateLimitsClient/WaitForCredentialsRateLimitParameters";
 import {IReadOnlyTwitterCredentials} from "../../../core/Core/Models/Authentication/ReadOnlyTwitterCredentials";
 import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class RateLimitsClient implements IRateLimitsClient {
   private readonly _client: ITwitterClient;
   private readonly _rateLimitCacheManager: IRateLimitCacheManager;
   private readonly _rateLimitAwaiter: IRateLimitAwaiter;
   private readonly _helpRequester: IHelpRequester;
 
-  constructor(client: ITwitterClient) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient) {
     let executionContext = client.createTwitterExecutionContext();
 
     this._client = client;

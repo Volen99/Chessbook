@@ -1,6 +1,6 @@
 ﻿import {ITimelineRequestParameters, TimelineRequestParameters} from "../TimelineRequestParameters";
 import {TwitterLimits} from "../../Settings/TwitterLimits";
-import {InjectionToken} from "@angular/core";
+import {Inject, InjectionToken} from "@angular/core";
 
 // For more information visit : https://developer.twitter.com/en/docs/tweets/timelines/api-reference/get-statuses-mentions_timeline
 export interface IGetMentionsTimelineParameters extends ITimelineRequestParameters {
@@ -12,7 +12,7 @@ export const IGetMentionsTimelineParametersToken = new InjectionToken<IGetMentio
 });
 
 export class GetMentionsTimelineParameters extends TimelineRequestParameters implements IGetMentionsTimelineParameters {
-  constructor(source?: IGetMentionsTimelineParameters) {
+  constructor(@Inject(IGetMentionsTimelineParametersToken) source?: IGetMentionsTimelineParameters) {
     if (source) {
       super(source);
     } else {

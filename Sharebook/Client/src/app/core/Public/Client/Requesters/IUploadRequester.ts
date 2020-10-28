@@ -1,10 +1,18 @@
+import {Inject, InjectionToken} from "@angular/core";
+
+import {UploadRequester} from "../../../../sharebook/Client/Requesters/UploadRequester";
 import {IChunkUploadResult} from 'src/app/core/Core/Upload/ChunkUploaderResult';
 import {IUploadParameters} from "../../Parameters/Upload/UploadBinaryParameters";
 import {ITwitterResult} from 'src/app/core/Core/Web/TwitterResult';
 import {IAddMediaMetadataParameters} from "../../Parameters/Upload/AddMediaMetadataParameters";
 import {IUploadedMediaInfo} from '../../Models/Interfaces/DTO/IUploadedMediaInfo';
 import {IMedia} from "../../Models/Interfaces/IMedia";
-import {InjectionToken} from "@angular/core";
+import {UploadClientRequiredParametersValidator} from "../../../Core/Client/Validators/UploadClientRequiredParametersValidator";
+import {UploadQueryExecutor} from "../../../../controllers/Upload/UploadQueryExecutor";
+import {UploadMediaStatusQueryExecutor} from "../../../../controllers/Upload/UploadMediaStatusQueryExecutor";
+import {UploadHelper} from "../../../../controllers/Upload/UploadHelper";
+import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface IUploadRequester {
   /// <summary>
@@ -40,5 +48,6 @@ export interface IUploadRequester {
 
 export const IUploadRequesterToken = new InjectionToken<IUploadRequester>('IUploadRequester', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new UploadRequester(Inject(TwitterClient), Inject(TwitterClientEvents), Inject(UploadClientRequiredParametersValidator),
+    Inject(UploadQueryExecutor), Inject(UploadMediaStatusQueryExecutor), Inject(UploadHelper)),
 });

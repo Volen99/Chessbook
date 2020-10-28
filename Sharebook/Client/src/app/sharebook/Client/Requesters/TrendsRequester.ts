@@ -1,23 +1,31 @@
 import {BaseRequester} from "../BaseRequester";
 import {ITrendsRequester} from "../../../core/Public/Client/Requesters/ITrendsRequester";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
-import {ITrendsController} from "../../../core/Core/Controllers/ITrendsController";
-import {ITrendsClientRequiredParametersValidator} from "../../../core/Core/Client/Validators/TrendsClientRequiredParametersValidator";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {ITrendsController, ITrendsControllerToken} from "../../../core/Core/Controllers/ITrendsController";
+import {
+  ITrendsClientRequiredParametersValidator,
+  ITrendsClientRequiredParametersValidatorToken
+} from "../../../core/Core/Client/Validators/TrendsClientRequiredParametersValidator";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {IGetTrendsAtParameters} from "../../../core/Public/Parameters/TrendsClient/GetTrendsAtParameters";
 import {IGetTrendsAtResult} from "../../../core/Public/Models/Interfaces/IGetTrendsAtResult";
 import {IGetTrendsLocationParameters} from "../../../core/Public/Parameters/TrendsClient/GetTrendsLocationParameters";
 import {ITrendLocation} from "../../../core/Public/Models/Interfaces/ITrendLocation";
 import {IGetTrendsLocationCloseToParameters} from "../../../core/Public/Parameters/TrendsClient/GetTrendsLocationCloseToParameters";
 import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class TrendsRequester extends BaseRequester implements ITrendsRequester {
   private readonly _trendsController: ITrendsController;
   private readonly _trendsClientRequiredParametersValidator: ITrendsClientRequiredParametersValidator;
 
-  constructor(trendsController: ITrendsController, trendsClientRequiredParametersValidator: ITrendsClientRequiredParametersValidator,
-              client: ITwitterClient, twitterClientEvents: ITwitterClientEvents) {
+  constructor(@Inject(ITrendsControllerToken) trendsController: ITrendsController,
+              @Inject(ITrendsClientRequiredParametersValidatorToken) trendsClientRequiredParametersValidator: ITrendsClientRequiredParametersValidator,
+              @Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(ITwitterClientEventsToken) twitterClientEvents: ITwitterClientEvents) {
     super(client, twitterClientEvents);
+
     this._trendsController = trendsController;
     this._trendsClientRequiredParametersValidator = trendsClientRequiredParametersValidator;
   }

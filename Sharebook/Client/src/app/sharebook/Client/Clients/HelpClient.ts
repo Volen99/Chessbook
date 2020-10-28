@@ -1,8 +1,8 @@
 import {IHelpClient} from "../../../core/Public/Client/Clients/IHelpClient";
 import {ITwitterConfiguration} from "../../../core/Public/Models/Interfaces/DTO/ITwitterConfiguration";
 import {SupportedLanguage} from "../../../core/Core/Models/SupportedLanguage";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
-import {IHelpRequester} from "../../../core/Public/Client/Requesters/IHelpRequester";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
+import {IHelpRequester, IHelpRequesterToken} from "../../../core/Public/Client/Requesters/IHelpRequester";
 import {IHelpClientParametersValidator} from "../../../core/Core/Client/Validators/HelpClientParametersValidator";
 import {
   GetTwitterConfigurationParameters,
@@ -20,12 +20,15 @@ import {
   GeoSearchReverseParameters,
   IGeoSearchReverseParameters
 } from "../../../core/Public/Parameters/HelpClient/GeoSearchReverseParameters";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class HelpClient implements IHelpClient {
   private readonly _client: ITwitterClient;
   private readonly _helpRequester: IHelpRequester;
 
-  constructor(client: ITwitterClient, helpRequester: IHelpRequester) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(IHelpRequesterToken) helpRequester: IHelpRequester) {
     this._client = client;
     this._helpRequester = helpRequester;
   }

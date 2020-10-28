@@ -2,9 +2,12 @@ import {IHelpRequester} from "../../../core/Public/Client/Requesters/IHelpReques
 import {BaseRequester} from "../BaseRequester";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
 import {SupportedLanguage} from "../../../core/Core/Models/SupportedLanguage";
-import {IHelpController} from "../../../core/Core/Controllers/IHelperController";
-import {IHelpClientRequiredParametersValidator} from "../../../core/Core/Client/Validators/HelpClientRequiredParametersValidator";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {IHelpController, IHelpControllerToken} from "../../../core/Core/Controllers/IHelperController";
+import {
+  IHelpClientRequiredParametersValidator,
+  IHelpClientRequiredParametersValidatorToken
+} from "../../../core/Core/Client/Validators/HelpClientRequiredParametersValidator";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
 import {IGetRateLimitsParameters} from "../../../core/Public/Parameters/HelpClient/GetRateLimitsParameters";
 import {CredentialsRateLimitsDTO} from "../../../core/Core/DTO/CredentialsRateLimitsDTO";
@@ -16,13 +19,18 @@ import {IPlace} from "../../../core/Public/Models/Interfaces/IPlace";
 import {IGeoSearchParameters} from "../../../core/Public/Parameters/HelpClient/GeoSearchParameters";
 import {SearchGeoSearchResultDTO} from "../../../core/Public/Models/Interfaces/DTO/GeoSearchResultDTO";
 import {IGeoSearchReverseParameters} from "../../../core/Public/Parameters/HelpClient/GeoSearchReverseParameters";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class HelpRequester extends BaseRequester implements IHelpRequester {
   private readonly _helpController: IHelpController;
   private readonly _validator: IHelpClientRequiredParametersValidator;
 
-  constructor(client: ITwitterClient, clientEvents: ITwitterClientEvents,
-              helpController: IHelpController, validator: IHelpClientRequiredParametersValidator) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(ITwitterClientEventsToken) clientEvents: ITwitterClientEvents,
+              @Inject(IHelpControllerToken) helpController: IHelpController,
+              @Inject(IHelpClientRequiredParametersValidatorToken) validator: IHelpClientRequiredParametersValidator) {
+
     super(client, clientEvents);
     this._helpController = helpController;
     this._validator = validator;

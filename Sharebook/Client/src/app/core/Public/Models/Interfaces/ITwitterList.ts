@@ -8,8 +8,9 @@ import {IUser} from "./IUser";
 import {ITwitterClient} from "../../ITwitterClient";
 import {IListMetadataParameters} from "../../Parameters/ListsClient/IListMetadataParameters";
 import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {InjectionToken} from "@angular/core";
+import {Inject, InjectionToken} from "@angular/core";
 import {TwitterList} from "../../../Core/Models/TwitterList";
+import {TwitterListDTO} from "../../../Core/DTO/TwitterListDTO";
 
 export interface ITwitterList extends ITwitterListIdentifier {
   twitterListDTO: ITwitterListDTO;
@@ -128,5 +129,5 @@ export interface ITwitterList extends ITwitterListIdentifier {
 
 export const ITwitterListToken = new InjectionToken<ITwitterList>('ITwitterList', {
   providedIn: 'root',
-  factory: () => new TwitterList(),
+  factory: () => new TwitterList(Inject(TwitterListDTO), Inject(TwitterClient)),
 });

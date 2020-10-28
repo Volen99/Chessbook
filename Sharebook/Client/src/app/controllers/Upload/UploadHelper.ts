@@ -4,11 +4,15 @@ import TimeSpan from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/
 import DateTime from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {IUploadedMediaInfo} from "../../core/Public/Models/Interfaces/DTO/IUploadedMediaInfo";
 import InvalidOperationException from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/InvalidOperationException";
-import {IUploadMediaStatusQueryExecutor} from "./UploadMediaStatusQueryExecutor";
+import {
+  IUploadMediaStatusQueryExecutor,
+  IUploadMediaStatusQueryExecutorToken,
+  UploadMediaStatusQueryExecutor
+} from "./UploadMediaStatusQueryExecutor";
 import {IUploadProcessingInfo} from "../../core/Public/Models/Interfaces/DTO/IUploadProcessingInfo";
 import {ProcessingState} from "../../core/Public/Models/Enum/ProcessingState";
 import {Resources} from "../../properties/resources";
-import {InjectionToken} from "@angular/core";
+import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 export interface IUploadHelper {
   waitForMediaProcessingToGetAllMetadataAsync(media: IMedia, request: ITwitterRequest): Promise<void>;
@@ -16,13 +20,14 @@ export interface IUploadHelper {
 
 export const IUploadHelperToken = new InjectionToken<IUploadHelper>('IUploadHelper', {
   providedIn: 'root',
-  factory: () => new UploadHelper(),
+  factory: () => new UploadHelper(Inject(UploadMediaStatusQueryExecutor)),
 });
 
+@Injectable()
 export class UploadHelper implements IUploadHelper {
   private readonly _uploadQueryExecutor: IUploadMediaStatusQueryExecutor;
 
-  constructor(uploadQueryExecutor: IUploadMediaStatusQueryExecutor) {
+  constructor(@Inject(IUploadMediaStatusQueryExecutorToken) uploadQueryExecutor: IUploadMediaStatusQueryExecutor) {
     this._uploadQueryExecutor = uploadQueryExecutor;
   }
 

@@ -1,17 +1,17 @@
 ﻿import {IMinMaxQueryParameters, MinMaxQueryParameters} from "../MaxAndMinBaseQueryParameters";
 import {ITweetModeParameter} from "../ITweetModeParameter";
-import {IGeoCode} from "../../Models/Interfaces/IGeoCode";
+import {IGeoCode, IGeoCodeToken} from "../../Models/Interfaces/IGeoCode";
 import {SearchResultType} from "../../Models/Enum/SearchResultType";
 import DateTime from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime';
 import {TweetSearchFilters} from "../Enum/TweetSearchFilters";
 import {DistanceMeasure} from "../../Models/Enum/DistanceMeasure";
-import {ICoordinates} from "../../Models/Interfaces/ICoordinates";
+import {ICoordinates, ICoordinatesToken} from "../../Models/Interfaces/ICoordinates";
 import {TwitterLimits} from "../../Settings/TwitterLimits";
 import {GeoCode} from "../../Models/GeoCode";
 import {TweetMode} from '../../Settings/TweetinviSettings';
 import {LanguageFilter} from "../../Models/Enum/LanguageFilter";
 import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
-import {InjectionToken} from "@angular/core";
+import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 /// <summary>
 /// For more information read : https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets
@@ -58,10 +58,15 @@ export const ISearchTweetsParametersToken = new InjectionToken<ISearchTweetsPara
   factory: () => new SearchTweetsParameters(),
 });
 
+@Injectable()
 // https://dev.twitter.com/rest/reference/get/search/tweets
 export class SearchTweetsParameters extends MinMaxQueryParameters implements ISearchTweetsParameters {
-  constructor(searchQueryOrGeoCodeOrParameters?: string | IGeoCode | ISearchTweetsParameters, latitude?: number, longitude?: number,
-              coordinates?: ICoordinates, radius?: number, measure?: DistanceMeasure) {
+  constructor(@Inject([IGeoCodeToken, ISearchTweetsParametersToken]) searchQueryOrGeoCodeOrParameters?: string | IGeoCode | ISearchTweetsParameters,
+              latitude?: number,
+              longitude?: number,
+              @Inject(ICoordinatesToken) coordinates?: ICoordinates,
+              radius?: number,
+              measure?: DistanceMeasure) {
     if (SearchTweetsParameters.isISearchTweetsParameters(searchQueryOrGeoCodeOrParameters)) {
       super(searchQueryOrGeoCodeOrParameters);
 

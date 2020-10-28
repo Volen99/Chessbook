@@ -1,10 +1,12 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {ITwitterListIdentifier} from "../../Models/Interfaces/ITwitterListIdentifier";
 import {PrivacyMode} from "../../Models/Enum/PrivacyMode";
 import {IUserIdentifier} from '../../Models/Interfaces/IUserIdentifier';
 import IEnumerable from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable';
 import {ITwitterIterator} from '../../Iterators/ITwitterIterator';
-import {ITwitterList} from "../../Models/Interfaces/ITwitterList";
 import {Promise} from 'src/app/c#-objects/TypeScript.NET-Core/packages/Promises/source/Promise';
+import {ITwitterList} from "../../Models/Interfaces/ITwitterList";
 import {ICreateListParameters} from "../../Parameters/ListsClient/CreateListParameters";
 import {IGetListParameters} from "../../Parameters/ListsClient/GetListParameters";
 import {IGetListsSubscribedByAccountParameters} from "../../Parameters/ListsClient/GetListsSubscribedByAccountParameters";
@@ -15,7 +17,6 @@ import {IGetListsOwnedByAccountParameters} from "../../Parameters/ListsClient/Ge
 import {IGetListsOwnedByUserParameters} from "../../Parameters/ListsClient/GetListsOwnedByUserParameters";
 import {IAddMemberToListParameters} from "../../Parameters/ListsClient/Members/AddMemberToListParameters";
 import {ITwitterListsClientParametersValidator} from "../../../Core/Client/Validators/TwitterListsClientParametersValidator";
-import {IUser} from "../../Models/Interfaces/IUser";
 import {IGetListSubscribersParameters} from "../../Parameters/ListsClient/Subscribers/GetListSubscribersParameters";
 import {IGetAccountListSubscriptionsParameters} from "../../Parameters/ListsClient/Subscribers/GetAccountListSubscriptionsParameters";
 import {IGetUserListSubscriptionsParameters} from "../../Parameters/ListsClient/Subscribers/GetUserListSubscriptionsParameters";
@@ -31,7 +32,10 @@ import {IRemoveMembersFromListParameters} from "../../Parameters/ListsClient/Mem
 import {ISubscribeToListParameters} from "../../Parameters/ListsClient/Subscribers/SubscribeToListParameters";
 import {IUnsubscribeFromListParameters} from "../../Parameters/ListsClient/Subscribers/UnsubscribeFromListParameters";
 import {IAddMembersToListParameters} from "../../Parameters/ListsClient/Members/AddMembersToListParameters";
-import {InjectionToken} from "@angular/core";
+import {ListsClient} from "../../../../sharebook/Client/Clients/ListsClient";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {TwitterListsRequester} from "../../../../sharebook/Client/Requesters/TwitterListsRequester";
+import {IUser} from "../../Models/Interfaces/IUser";
 
 export interface IListsClient {
   // Validate all the List client parameters
@@ -320,7 +324,7 @@ export interface IListsClient {
   /// <returns>The latest version of the list</returns>
   subscribeToListAsync(parameters: ISubscribeToListParameters): Promise<ITwitterList>;
 
-  unsubscribeFromListAsync(listId: number): Promise<ITwitterList>
+  unsubscribeFromListAsync(listId: number): Promise<ITwitterList>;
 
   unsubscribeFromListAsync(list: ITwitterListIdentifier): Promise<ITwitterList>;
 
@@ -445,5 +449,5 @@ export interface IListsClient {
 
 export const IListsClientToken = new InjectionToken<IListsClient>('IListsClient', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new ListsClient(Inject(TwitterListsRequester), Inject(TwitterClient)),
 });

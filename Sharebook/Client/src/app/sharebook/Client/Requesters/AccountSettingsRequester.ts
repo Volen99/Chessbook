@@ -1,10 +1,13 @@
 import {BaseRequester} from "../BaseRequester";
 import {IAccountSettingsRequester} from "../../../core/Public/Client/Requesters/IAccountSettingsRequester";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
-import {IAccountSettingsController} from "../../../controllers/AccountSettings/AccountSettingsController";
-import {IAccountSettingsClientRequiredParametersValidator} from "../../../core/Core/Client/Validators/AccountSettingsClientRequiredParametersValidator";
+import {IAccountSettingsController, IAccountSettingsControllerToken} from "../../../controllers/AccountSettings/AccountSettingsController";
+import {
+  IAccountSettingsClientRequiredParametersValidator,
+  IAccountSettingsClientRequiredParametersValidatorToken
+} from "../../../core/Core/Client/Validators/AccountSettingsClientRequiredParametersValidator";
 import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {IGetAccountSettingsParameters} from "../../../core/Public/Parameters/AccountSettingsClient/GetAccountSettingsParameters";
 import {IAccountSettingsDTO} from "../../../core/Public/Models/Interfaces/DTO/IAccountSettingsDTO";
 import {IUpdateAccountSettingsParameters} from "../../../core/Public/Parameters/AccountSettingsClient/UpdateAccountSettingsParameters";
@@ -13,14 +16,17 @@ import {IUserDTO} from "../../../core/Public/Models/Interfaces/DTO/IUserDTO";
 import {IUpdateProfileImageParameters} from "../../../core/Public/Parameters/AccountSettingsClient/UpdateProfileImageParameters";
 import {IUpdateProfileBannerParameters} from "../../../core/Public/Parameters/AccountSettingsClient/UpdateProfileBannerParameters";
 import {IRemoveProfileBannerParameters} from "../../../core/Public/Parameters/AccountSettingsClient/RemoveProfileBannerParameters";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class AccountSettingsRequester extends BaseRequester implements IAccountSettingsRequester {
   private readonly _accountSettingsController: IAccountSettingsController;
   private readonly _validator: IAccountSettingsClientRequiredParametersValidator;
 
-  constructor(client: ITwitterClient, clientEvents: ITwitterClientEvents,
-              accountSettingsController: IAccountSettingsController,
-              validator: IAccountSettingsClientRequiredParametersValidator) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(ITwitterClientEventsToken) clientEvents: ITwitterClientEvents,
+              @Inject(IAccountSettingsControllerToken) accountSettingsController: IAccountSettingsController,
+              @Inject(IAccountSettingsClientRequiredParametersValidatorToken) validator: IAccountSettingsClientRequiredParametersValidator) {
     super(client, clientEvents);
     this._accountSettingsController = accountSettingsController;
     this._validator = validator;

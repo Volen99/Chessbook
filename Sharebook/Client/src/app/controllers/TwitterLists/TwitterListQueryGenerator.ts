@@ -1,6 +1,12 @@
 ﻿import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMode";
-import {IUserQueryParameterGenerator} from "../../core/Core/QueryGenerators/IUserQueryParameterGenerator";
-import {ITwitterListQueryParameterGenerator} from "../../core/Core/QueryGenerators/ITwitterListQueryParameterGenerator";
+import {
+  IUserQueryParameterGenerator,
+  IUserQueryParameterGeneratorToken
+} from "../../core/Core/QueryGenerators/IUserQueryParameterGenerator";
+import {
+  ITwitterListQueryParameterGenerator,
+  ITwitterListQueryParameterGeneratorToken
+} from "../../core/Core/QueryGenerators/ITwitterListQueryParameterGenerator";
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {Resources} from "../../properties/resources";
 import {ICreateListParameters} from "../../core/Public/Parameters/ListsClient/CreateListParameters";
@@ -22,9 +28,9 @@ import {ICheckIfUserIsSubscriberOfListParameters} from "../../core/Public/Parame
 import {IGetUserListSubscriptionsParameters} from "../../core/Public/Parameters/ListsClient/Subscribers/GetUserListSubscriptionsParameters";
 import {IUnsubscribeFromListParameters} from "../../core/Public/Parameters/ListsClient/Subscribers/UnsubscribeFromListParameters";
 import {IGetTweetsFromListParameters} from "../../core/Public/Parameters/ListsClient/GetTweetsFromListParameters";
-import {IQueryParameterGenerator} from "../Shared/QueryParameterGenerator";
+import {IQueryParameterGenerator, IQueryParameterGeneratorToken} from "../Shared/QueryParameterGenerator";
 import {IListMetadataParameters} from "../../core/Public/Parameters/ListsClient/IListMetadataParameters";
-import {InjectionToken} from "@angular/core";
+import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 export interface ITwitterListQueryGenerator {
   // list
@@ -75,13 +81,15 @@ export const ITwitterListQueryGeneratorToken = new InjectionToken<ITwitterListQu
   factory: () => new TwitterListQueryGenerator(),
 });
 
+@Injectable()
 export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
   private readonly _userQueryParameterGenerator: IUserQueryParameterGenerator;
   private readonly _queryParameterGenerator: IQueryParameterGenerator;
   private readonly _twitterListQueryParameterGenerator: ITwitterListQueryParameterGenerator;
 
-  constructor(userQueryParameterGenerator: IUserQueryParameterGenerator, queryParameterGenerator: IQueryParameterGenerator,
-              twitterListQueryParameterGenerator: ITwitterListQueryParameterGenerator) {
+  constructor(@Inject(IUserQueryParameterGeneratorToken) userQueryParameterGenerator: IUserQueryParameterGenerator,
+              @Inject(IQueryParameterGeneratorToken) queryParameterGenerator: IQueryParameterGenerator,
+              @Inject(ITwitterListQueryParameterGeneratorToken) twitterListQueryParameterGenerator: ITwitterListQueryParameterGenerator) {
     this._userQueryParameterGenerator = userQueryParameterGenerator;
     this._queryParameterGenerator = queryParameterGenerator;
     this._twitterListQueryParameterGenerator = twitterListQueryParameterGenerator;

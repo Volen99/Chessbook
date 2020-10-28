@@ -1,15 +1,20 @@
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+
 import {TwitterLimits} from "../../../Public/Settings/TwitterLimits";
 import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import {IPublishMessageParameters} from "../../../Public/Parameters/MessageClient/PublishMessageParameters";
 import {IDeleteMessageParameters} from "../../../Public/Parameters/MessageClient/DestroyMessageParameters";
 import {IGetMessageParameters} from "../../../Public/Parameters/MessageClient/GetMessageParameters";
 import {IGetMessagesParameters} from "../../../Public/Parameters/MessageClient/GetMessagesParameters";
-import {ITwitterClient} from "../../../Public/ITwitterClient";
-import {IMessagesClientRequiredParametersValidator} from "./MessageClientRequiredParametersValidator";
+import {ITwitterClient, ITwitterClientToken} from "../../../Public/ITwitterClient";
+import {
+  IMessagesClientRequiredParametersValidator,
+  IMessagesClientRequiredParametersValidatorToken, MessagesClientRequiredParametersValidator
+} from "./MessageClientRequiredParametersValidator";
 import {MessagesParameters} from "./parameters-types";
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
 import {QuickReplyOption} from "../../Models/Properties/QuickReplyOption";
-import {InjectionToken} from "@angular/core";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface IMessagesClientParametersValidator {
   validate(parameters: IPublishMessageParameters): void;
@@ -23,14 +28,16 @@ export interface IMessagesClientParametersValidator {
 
 export const IMessagesClientParametersValidatorToken = new InjectionToken<IMessagesClientParametersValidator>('IMessagesClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new MessagesClientParametersValidator(),
+  factory: () => new MessagesClientParametersValidator(Inject(TwitterClient), Inject(MessagesClientRequiredParametersValidator)),
 });
 
+@Injectable()
 export class MessagesClientParametersValidator implements IMessagesClientParametersValidator {
   private readonly _client: ITwitterClient;
   private readonly _messagesClientRequiredParametersValidator: IMessagesClientRequiredParametersValidator;
 
-  constructor(client: ITwitterClient, messagesClientRequiredParametersValidator: IMessagesClientRequiredParametersValidator) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(IMessagesClientRequiredParametersValidatorToken) messagesClientRequiredParametersValidator: IMessagesClientRequiredParametersValidator) {
     this._client = client;
     this._messagesClientRequiredParametersValidator = messagesClientRequiredParametersValidator;
   }
@@ -55,7 +62,7 @@ export class MessagesClientParametersValidator implements IMessagesClientParamet
         }
 
         // If one option has a description, then they all must: https://developer.twitter.com/en/docs/direct-messages/quick-replies/api-reference/options
-        let numberOfOptionsWithDescription = parameters.quickReplyOptions.Count(x => !string.IsNullOrEmpty(x.Description));
+        let numberOfOptionsWithDescription = parameters.quickReplyOptions.count(x => !string.IsNullOrEmpty(x.Description));
         if (numberOfOptionsWithDescription > 0 && numberOfOptionsWithDescription !== parameters.quickReplyOptions.length) {
           throw new ArgumentException("If one Quick Reply Option has a description, then they all must", `${nameof(parameters.quickReplyOptions)}`);
         }

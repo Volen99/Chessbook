@@ -7,7 +7,16 @@ import {IUserDTO} from "../../Models/Interfaces/DTO/IUserDTO";
 import {IUpdateProfileImageParameters} from "../../Parameters/AccountSettingsClient/UpdateProfileImageParameters";
 import {IUpdateProfileBannerParameters} from "../../Parameters/AccountSettingsClient/UpdateProfileBannerParameters";
 import {IRemoveProfileBannerParameters} from "../../Parameters/AccountSettingsClient/RemoveProfileBannerParameters";
-import {InjectionToken} from "@angular/core";
+import {Inject, InjectionToken} from "@angular/core";
+import {AccountSettingsRequester} from "../../../../sharebook/Client/Requesters/AccountSettingsRequester";
+import {ITwitterClient} from "../../ITwitterClient";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {ITwitterClientEvents, TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
+import {AccountSettingsController, IAccountSettingsController} from "../../../../controllers/AccountSettings/AccountSettingsController";
+import {
+  AccountSettingsClientRequiredParametersValidator,
+  IAccountSettingsClientRequiredParametersValidator
+} from "../../../Core/Client/Validators/AccountSettingsClientRequiredParametersValidator";
 
 // A client providing all the actions relative to the account settings
 // The results from this client contain additional metadata.
@@ -57,5 +66,6 @@ export interface IAccountSettingsRequester {
 
 export const IAccountSettingsRequesterToken = new InjectionToken<IAccountSettingsRequester>('IAccountSettingsRequester', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new AccountSettingsRequester(Inject(TwitterClient), Inject(TwitterClientEvents),
+    Inject(AccountSettingsController), Inject(AccountSettingsClientRequiredParametersValidator)),
 });

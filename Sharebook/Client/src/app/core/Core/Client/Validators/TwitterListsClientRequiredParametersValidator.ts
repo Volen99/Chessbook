@@ -1,3 +1,5 @@
+import {Injectable, InjectionToken} from "@angular/core";
+
 import {ITwitterListsClientParametersValidator} from "./TwitterListsClientParametersValidator";
 import {IUserQueryValidator} from "./UserQueryValidator";
 import {TwitterListParameters} from "./parameters-types";
@@ -22,7 +24,6 @@ import {IAddMemberToListParameters} from "../../../Public/Parameters/ListsClient
 import {ICheckIfUserIsMemberOfListParameters} from "../../../Public/Parameters/ListsClient/Members/CheckIfUserIsMemberOfListParameters";
 import {IRemoveMemberFromListParameters} from "../../../Public/Parameters/ListsClient/Members/RemoveMemberFromListParameters";
 import {ICheckIfUserIsSubscriberOfListParameters} from "../../../Public/Parameters/ListsClient/Subscribers/CheckIfUserIsSubscriberOfListParameters";
-import {InjectionToken} from "@angular/core";
 
 export interface ITwitterListsClientRequiredParametersValidator extends ITwitterListsClientParametersValidator {
 }
@@ -52,6 +53,7 @@ type ParametersForBothAbove = IAddMemberToListParameters      // best naming eve
   | IRemoveMemberFromListParameters
   | ICheckIfUserIsSubscriberOfListParameters;
 
+@Injectable()
 export class TwitterListsClientRequiredParametersValidator implements ITwitterListsClientRequiredParametersValidator {
   private readonly _userQueryValidator: IUserQueryValidator;
 

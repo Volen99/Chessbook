@@ -1,9 +1,13 @@
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+
 import {IGetTrendsLocationCloseToParameters} from "../../../Public/Parameters/TrendsClient/GetTrendsLocationCloseToParameters";
 import {IGetTrendsAtParameters} from "../../../Public/Parameters/TrendsClient/GetTrendsAtParameters";
 import {IGetTrendsLocationParameters} from "../../../Public/Parameters/TrendsClient/GetTrendsLocationParameters";
-import {ITrendsClientRequiredParametersValidator} from "./TrendsClientRequiredParametersValidator";
+import {
+  ITrendsClientRequiredParametersValidator,
+  ITrendsClientRequiredParametersValidatorToken, TrendsClientRequiredParametersValidator
+} from "./TrendsClientRequiredParametersValidator";
 import {TrendsParameters} from "./parameters-types";
-import {InjectionToken} from "@angular/core";
 
 export interface ITrendsClientParametersValidator {
   validate(parameters: IGetTrendsLocationCloseToParameters): void;
@@ -15,13 +19,14 @@ export interface ITrendsClientParametersValidator {
 
 export const ITrendsClientParametersValidatorToken = new InjectionToken<ITrendsClientParametersValidator>('ITrendsClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new TrendsClientParametersValidator(),
+  factory: () => new TrendsClientParametersValidator(Inject(TrendsClientRequiredParametersValidator)),
 });
 
+@Injectable()
 export class TrendsClientParametersValidator implements ITrendsClientParametersValidator {
   private readonly _requiredParametersValidator: ITrendsClientRequiredParametersValidator;
 
-  constructor(requiredParametersValidator: ITrendsClientRequiredParametersValidator) {
+  constructor(@Inject(ITrendsClientRequiredParametersValidatorToken) requiredParametersValidator: ITrendsClientRequiredParametersValidator) {
     this._requiredParametersValidator = requiredParametersValidator;
   }
 

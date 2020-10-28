@@ -16,7 +16,7 @@ export interface ITwitterRequestParameters {
   isHttpContentPartOfQueryParams: boolean;
 
   // Content Types accepted by the HttpRequest
-  acceptHeaders: List<string>;
+  acceptHeaders: Array<string>;
 
   // Authorization header that Twitter uses to validate a twitter HttpRequest
   authorizationHeader: string;

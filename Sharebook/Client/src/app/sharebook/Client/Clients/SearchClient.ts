@@ -1,7 +1,7 @@
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
 import {OnlyGetTweetsThatAre} from "../../../core/Public/Parameters/Enum/OnlyGetTweetsThatAre";
 import {ISearchClient} from "../../../core/Public/Client/Clients/ISearchClient";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {ISearchClientParametersValidator} from "../../../core/Core/Client/Validators/SearchClientParametersValidator";
 import {ITweet} from "../../../core/Public/Models/Interfaces/ITweet";
 import {ISearchTweetsParameters, SearchTweetsParameters} from "../../../core/Public/Parameters/Search/SearchTweetsParameters";
@@ -25,11 +25,13 @@ import {IFilteredTwitterResult} from "../../../core/Core/Web/FilteredTwitterResu
 import {UserDTO} from "../../../core/Core/DTO/UserDTO";
 import {ICreateSavedSearchParameters} from "../../../core/Public/Parameters/Search/CreateSavedSearchParameters";
 import {GetSavedSearchParameters, IGetSavedSearchParameters} from "../../../core/Public/Parameters/Search/GetSavedSearchParameters";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class SearchClient implements ISearchClient {
   private readonly _client: ITwitterClient;
 
-  constructor(client: ITwitterClient) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient) {
     this._client = client;
   }
 
@@ -72,7 +74,7 @@ export class SearchClient implements ISearchClient {
 
     let pageIterator = this._client.raw.search.getSearchTweetsIterator(parameters);
     return new TwitterIteratorProxy<ITwitterResult<ISearchResultsDTO>, ITweet, number>(pageIterator,  // number?
-      twitterResult => this._client.factories.createTweets(twitterResult?.model?.TweetDTOs));
+      twitterResult => this._client.factories.createTweets(twitterResult?.model?.tweetDTOs));
   }
 
   public filterTweets(tweets: ITweet[], filter?: OnlyGetTweetsThatAre, tweetsMustContainGeoInformation: boolean): ITweet[] {

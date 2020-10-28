@@ -1,19 +1,22 @@
-﻿import List from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/List";
-import TimeSpan from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
+﻿import TimeSpan from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
 import {HttpMethod} from "./Models/Enum/HttpMethod";
 import DateTime from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {ITweetinviSettings} from "./Settings/TweetinviSettings";
 import {CustomRequestHeaders} from "./Models/Interfaces/CustomRequestHeaders";
-import {ITwitterQuery} from "./Models/Interfaces/ITwitterQuery";
+import {ITwitterQuery, ITwitterQueryToken} from "./Models/Interfaces/ITwitterQuery";
 import {TwitterRequestParameters} from "./TwitterRequestParameters";
 import {IProxyConfig} from "./Settings/ProxyConfig";
 import {ITwitterCredentials} from "./Models/Authentication/TwitterCredentials";
 import {IOAuthQueryParameter} from "../Core/Web/IOAuthQueryParameter";
 import {IEndpointRateLimit} from "./Models/RateLimits/IEndpointRateLimit";
 import {SharebookConsts} from "./sharebook-consts";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class TwitterQuery extends TwitterRequestParameters implements ITwitterQuery {
-  constructor(queryURL?: string, httpMethod?: HttpMethod, source?: ITwitterQuery) {
+  constructor(queryURL?: string,
+              httpMethod?: HttpMethod,
+              @Inject(ITwitterQueryToken) source?: ITwitterQuery) {
     super(source);
 
     if (source != null) {
@@ -27,9 +30,9 @@ export class TwitterQuery extends TwitterRequestParameters implements ITwitterQu
     } else {
       this._timeout = TimeSpan.fromSeconds(10);
 
-      let acceptHeaders = new List<string>();
-      acceptHeaders.add("image/jpeg");
-      acceptHeaders.add("application/json");
+      let acceptHeaders = new Array<string>();
+      acceptHeaders.push("image/jpeg");
+      acceptHeaders.push("application/json");
 
       super.acceptHeaders = acceptHeaders;
       super.httpMethod = HttpMethod.GET;

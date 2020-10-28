@@ -1,8 +1,10 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {ITwitterRequest} from "../../Models/Interfaces/ITwitterRequest";
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {ITwitterQuery} from "../../Models/Interfaces/ITwitterQuery";
-import {InjectionToken} from "@angular/core";
-import {IBaseCursorQueryDTO} from "../../Models/Interfaces/DTO/QueryDTO/IBaseCursorQueryDTO";
+import {ExecuteClient} from "../../../../sharebook/Client/Clients/ExecuteClient";
+import {ExecuteRequester} from "../../../../sharebook/Client/Requesters/ExecuteRequester";
 
 export interface IExecuteClient {
   // Execute a custom request
@@ -24,5 +26,5 @@ export interface IExecuteClient {
 
 export const IExecuteClientToken = new InjectionToken<IExecuteClient>('IExecuteClient', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new ExecuteClient(Inject(ExecuteRequester)),
 });

@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
 import {ITwitterIterator} from "../../Iterators/ITwitterIterator";
 import {ITweet} from "../../Models/Interfaces/ITweet";
@@ -6,7 +8,8 @@ import {IGetMentionsTimelineParameters} from "../../Parameters/TimelineClient/Ge
 import {IGetUserTimelineParameters} from "../../Parameters/TimelineClient/GetUserTimelineParameters";
 import {IGetRetweetsOfMeTimelineParameters} from "../../Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
 import {ITimelineClientParametersValidator} from "../../../Core/Client/Validators/TimelineClientParametersValidator";
-import {InjectionToken} from "@angular/core";
+import {TimelinesClient} from "../../../../sharebook/Client/Clients/TimelinesClient";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface ITimelinesClient {
   // Validate all the Timelines client parameters
@@ -111,5 +114,5 @@ export interface ITimelinesClient {
 
 export const ITimelinesClientToken = new InjectionToken<ITimelinesClient>('ITimelinesClient', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new TimelinesClient(Inject(TwitterClient)),
 });

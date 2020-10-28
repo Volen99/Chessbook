@@ -1,9 +1,9 @@
 ﻿import {IListParameters} from "./TwitterListParameters";
 import {ITimelineRequestParameters, TimelineRequestParameters} from "../TimelineRequestParameters";
-import {ITwitterListIdentifier} from "../../Models/Interfaces/ITwitterListIdentifier";
+import {ITwitterListIdentifier, ITwitterListIdentifierToken} from "../../Models/Interfaces/ITwitterListIdentifier";
 import {TwitterLimits} from "../../Settings/TwitterLimits";
 import {TwitterListIdentifier} from '../../Models/TwitterListIdentifier';
-import {InjectionToken} from "@angular/core";
+import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 // For more information visit: https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-statuses
 export interface IGetTweetsFromListParameters extends IListParameters, ITimelineRequestParameters {
@@ -18,8 +18,9 @@ export const IGetTweetsFromListParametersToken = new InjectionToken<IGetTweetsFr
   factory: () => new GetTweetsFromListParameters(),
 });
 
+@Injectable()
 export class GetTweetsFromListParameters extends TimelineRequestParameters implements IGetTweetsFromListParameters {
-  constructor(listIdOrListOrSource?: number | ITwitterListIdentifier | IGetTweetsFromListParameters) {
+  constructor(@Inject([ITwitterListIdentifierToken, IGetTweetsFromListParametersToken]) listIdOrListOrSource?: number | ITwitterListIdentifier | IGetTweetsFromListParameters) {
     if (GetTweetsFromListParameters.isIGetTweetsFromListParameters(listIdOrListOrSource)) {
       super(listIdOrListOrSource);
       this.list = listIdOrListOrSource.list;

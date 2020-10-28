@@ -1,5 +1,5 @@
 import {IAccountSettingsClient} from "../../../core/Public/Client/Clients/IAccountSettingsClient";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {IAccountSettingsRequester} from "../../../core/Public/Client/Requesters/IAccountSettingsRequester";
 import {IAccountSettingsClientParametersValidator} from "../../../core/Core/Client/Validators/AccountSettingsClientParametersValidator";
 import {IAccountSettings} from "../../../core/Public/Models/Interfaces/IAccountSettings";
@@ -23,12 +23,14 @@ import {
   IRemoveProfileBannerParameters,
   RemoveProfileBannerParameters
 } from "../../../core/Public/Parameters/AccountSettingsClient/RemoveProfileBannerParameters";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class AccountSettingsClient implements IAccountSettingsClient {
   private readonly _client: ITwitterClient;
   private readonly _accountRequester: IAccountSettingsRequester;
 
-  constructor(client: ITwitterClient) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient) {
     this._client = client;
     this._accountRequester = client.raw.accountSettings;
   }

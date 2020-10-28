@@ -20,10 +20,10 @@ export class SymbolEntity implements ISymbolEntity {
       return this.indices === other.indices;
     }
 
-    return this.indices.ContainsSameObjectsAs(other.indices, true);
+    return this.indices.containsSameObjectsAs(other.indices, true);
   }
 
-  public ToString(): string {
-    return `${Text}`;
+  public toString(): string {
+    return `${this.text}`;
   }
 }

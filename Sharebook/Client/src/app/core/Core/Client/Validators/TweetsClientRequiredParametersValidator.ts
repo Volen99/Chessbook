@@ -1,5 +1,7 @@
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+
 import {ITweetsClientParametersValidator} from "./TweetsClientParametersValidator";
-import {IUserQueryValidator} from "./UserQueryValidator";
+import {IUserQueryValidator, IUserQueryValidatorToken, UserQueryValidator} from "./UserQueryValidator";
 import {TweetsParameters} from "./parameters-types";
 import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
 import {IDestroyTweetParameters} from "../../../Public/Parameters/TweetsClient/DestroyTweetParameters";
@@ -14,14 +16,13 @@ import {IGetTweetsParameters} from "../../../Public/Parameters/TweetsClient/GetT
 import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import {IPublishTweetParameters} from "../../../Public/Parameters/TweetsClient/PublishTweetParameters";
 import {IGetUserFavoriteTweetsParameters} from "../../../Public/Parameters/TweetsClient/GetFavoriteTweetsParameters";
-import {InjectionToken} from "@angular/core";
 
 export interface ITweetsClientRequiredParametersValidator extends ITweetsClientParametersValidator {
 }
 
 export const ITweetsClientRequiredParametersValidatorToken = new InjectionToken<ITweetsClientRequiredParametersValidator>('ITweetsClientRequiredParametersValidator', {
   providedIn: 'root',
-  factory: () => new TweetsClientRequiredParametersValidator(),
+  factory: () => new TweetsClientRequiredParametersValidator(Inject(UserQueryValidator)),
 });
 
 type ParametersForThrowIfTweetBad = IDestroyTweetParameters
@@ -32,10 +33,11 @@ type ParametersForThrowIfTweetBad = IDestroyTweetParameters
   | IUnfavoriteTweetParameters
   | IGetOEmbedTweetParameters;
 
+@Injectable()
 export class TweetsClientRequiredParametersValidator implements ITweetsClientRequiredParametersValidator {
   private readonly _userQueryValidator: IUserQueryValidator;
 
-  constructor(userQueryValidator: IUserQueryValidator) {
+  constructor(@Inject(IUserQueryValidatorToken) userQueryValidator: IUserQueryValidator) {
     this._userQueryValidator = userQueryValidator;
   }
 

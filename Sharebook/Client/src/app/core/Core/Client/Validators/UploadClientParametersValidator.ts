@@ -1,11 +1,16 @@
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+
 import {IUploadParameters} from "../../../Public/Parameters/Upload/UploadBinaryParameters";
 import {IAddMediaMetadataParameters} from "../../../Public/Parameters/Upload/AddMediaMetadataParameters";
-import {IUploadClientRequiredParametersValidator} from './UploadClientRequiredParametersValidator';
+import {
+  IUploadClientRequiredParametersValidator,
+  IUploadClientRequiredParametersValidatorToken, UploadClientRequiredParametersValidator
+} from './UploadClientRequiredParametersValidator';
 import {MediaCategory} from "../../../Public/Models/Enum/MediaCategory";
 import {TwitterLimits} from "../../../Public/Settings/TwitterLimits";
-import {ITwitterClient} from "../../../Public/ITwitterClient";
+import {ITwitterClient, ITwitterClientToken} from "../../../Public/ITwitterClient";
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
-import {InjectionToken} from "@angular/core";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface IUploadClientParametersValidator {
   validate(parameters: IUploadParameters): void;
@@ -15,14 +20,16 @@ export interface IUploadClientParametersValidator {
 
 export const IUploadClientParametersValidatorToken = new InjectionToken<IUploadClientParametersValidator>('IUploadClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new UploadClientParametersValidator(),
+  factory: () => new UploadClientParametersValidator(Inject(TwitterClient), Inject(UploadClientRequiredParametersValidator)),
 });
 
+@Injectable()
 export class UploadClientParametersValidator implements IUploadClientParametersValidator {
   private readonly _client: ITwitterClient;
   private readonly _uploadClientRequiredParametersValidator: IUploadClientRequiredParametersValidator;
 
-  constructor(client: ITwitterClient, uploadClientRequiredParametersValidator: IUploadClientRequiredParametersValidator) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(IUploadClientRequiredParametersValidatorToken) uploadClientRequiredParametersValidator: IUploadClientRequiredParametersValidator) {
     this._client = client;
     this._uploadClientRequiredParametersValidator = uploadClientRequiredParametersValidator;
   }

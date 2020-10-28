@@ -1,7 +1,8 @@
-﻿import {IChunkUploadInitParameters} from "../Upload/ChunkUploadInitParameters";
+﻿import {InjectionToken} from "@angular/core";
+
+import {IChunkUploadInitParameters} from "../Upload/ChunkUploadInitParameters";
 import {IChunkUploadAppendParameters} from "../Upload/ChunkUploadAppendParameters";
 import {ICustomRequestParameters} from "../../Public/Parameters/CustomRequestParameters";
-import {InjectionToken} from "@angular/core";
 import {UploadQueryGenerator} from "../../../controllers/Upload/UploadQueryGenerator";
 
 export interface IUploadQueryGenerator {

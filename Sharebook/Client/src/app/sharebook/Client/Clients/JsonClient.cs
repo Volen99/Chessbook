@@ -2,6 +2,7 @@ using Tweetinvi.Core.Json;
 
 namespace Tweetinvi.Client
 {
+    @Injectable()
     public class JsonClient : IJsonClient
     {
         private readonly ITweetinviJsonConverter _tweetinviJsonConverter;

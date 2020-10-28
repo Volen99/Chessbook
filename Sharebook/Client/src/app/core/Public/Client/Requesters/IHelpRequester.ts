@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {IGetRateLimitsParameters} from "../../Parameters/HelpClient/GetRateLimitsParameters";
 import {IGetTwitterConfigurationParameters} from "../../Parameters/HelpClient/GetTwitterConfigurationParameters";
@@ -10,7 +12,13 @@ import {IGeoSearchParameters} from "../../Parameters/HelpClient/GeoSearchParamet
 import {SearchGeoSearchResultDTO} from "../../Models/Interfaces/DTO/GeoSearchResultDTO";
 import {IGeoSearchReverseParameters} from "../../Parameters/HelpClient/GeoSearchReverseParameters";
 import {CredentialsRateLimitsDTO} from "../../../Core/DTO/CredentialsRateLimitsDTO";
-import {InjectionToken} from "@angular/core";
+import {HelpRequester} from "../../../../sharebook/Client/Requesters/HelpRequester";
+import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
+import {
+  HelpClientRequiredParametersValidator,
+} from "../../../Core/Client/Validators/HelpClientRequiredParametersValidator";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {HelpController} from "../../../../controllers/Help/HelpController";
 
 export interface IHelpRequester {
   /// <summary>
@@ -59,5 +67,6 @@ export interface IHelpRequester {
 
 export const IHelpRequesterToken = new InjectionToken<IHelpRequester>('IHelpRequester', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new HelpRequester(Inject(TwitterClient), Inject(TwitterClientEvents),
+    Inject(HelpController), Inject(HelpClientRequiredParametersValidator)),
 });

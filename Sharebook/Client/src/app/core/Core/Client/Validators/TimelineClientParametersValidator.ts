@@ -1,13 +1,18 @@
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+
 import {IGetUserTimelineParameters} from "../../../Public/Parameters/TimelineClient/GetUserTimelineParameters";
 import {IGetMentionsTimelineParameters} from "../../../Public/Parameters/TimelineClient/GetMentionsTimelineParameters";
 import {IGetRetweetsOfMeTimelineParameters} from "../../../Public/Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
 import {IGetHomeTimelineParameters} from "../../../Public/Parameters/TimelineClient/GetHomeTimelineParameters";
-import {ITwitterClient} from "../../../Public/ITwitterClient";
-import {ITimelineClientRequiredParametersValidator} from "./TimelineClientRequiredParametersValidator";
+import {ITwitterClient, ITwitterClientToken} from "../../../Public/ITwitterClient";
+import {
+  ITimelineClientRequiredParametersValidator,
+  ITimelineClientRequiredParametersValidatorToken, TimelineClientRequiredParametersValidator
+} from "./TimelineClientRequiredParametersValidator";
 import {TwitterLimits} from "../../../Public/Settings/TwitterLimits";
 import {TimelineParameters} from "./parameters-types";
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
-import {InjectionToken} from "@angular/core";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface ITimelineClientParametersValidator {
   validate(parameters: IGetHomeTimelineParameters): void;
@@ -21,14 +26,16 @@ export interface ITimelineClientParametersValidator {
 
 export const ITimelineClientParametersValidatorToken = new InjectionToken<ITimelineClientParametersValidator>('ITimelineClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new TimelineClientParametersValidator(),
+  factory: () => new TimelineClientParametersValidator(Inject(TwitterClient), Inject(TimelineClientRequiredParametersValidator)),
 });
 
+@Injectable()
 export class TimelineClientParametersValidator implements ITimelineClientParametersValidator {
   private readonly _timelineClientRequiredParametersValidator: ITimelineClientRequiredParametersValidator;
   private readonly _client: ITwitterClient;
 
-  constructor(client: ITwitterClient, timelineClientRequiredParametersValidator: ITimelineClientRequiredParametersValidator) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(ITimelineClientRequiredParametersValidatorToken) timelineClientRequiredParametersValidator: ITimelineClientRequiredParametersValidator) {
     this._client = client;
     this._timelineClientRequiredParametersValidator = timelineClientRequiredParametersValidator;
   }

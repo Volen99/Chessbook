@@ -1,7 +1,7 @@
 ﻿import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import TimeSpan from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
 import {IUploadProgressChanged} from "../../Events/UploadProgressChangedEventArgs";
-import {InjectionToken} from "@angular/core";
+import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 // For more information visit: https://dev.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/post-account-update_profile_banner
 export interface IUpdateProfileBannerParameters extends ICustomRequestParameters {
@@ -29,9 +29,10 @@ export interface IUpdateProfileBannerParameters extends ICustomRequestParameters
 
 export const IUpdateProfileBannerParametersToken = new InjectionToken<IUpdateProfileBannerParameters>('IUpdateProfileBannerParameters', {
   providedIn: 'root',
-  factory: () => new UpdateProfileBannerParameters(),
+  factory: () => new UpdateProfileBannerParameters(Inject(Array<number>())),
 });
 
+@Injectable()
 export class UpdateProfileBannerParameters extends CustomRequestParameters implements IUpdateProfileBannerParameters {
   constructor(image: number[]) {
     super();

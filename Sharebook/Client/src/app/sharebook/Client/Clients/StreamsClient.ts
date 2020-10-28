@@ -1,24 +1,26 @@
-import { IStreamsClient } from 'src/app/core/Public/Client/Clients/IStreamsClient';
+import {IStreamsClient} from 'src/app/core/Public/Client/Clients/IStreamsClient';
+import {Inject, Injectable} from "@angular/core";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 
- export class StreamsClient implements IStreamsClient
-    {
-        private readonly _client: ITwitterClient;
-        private readonly _sampleStreamFactory: IFactory<ISampleStream>;
-        private readonly _filteredStreamFactory: IFactory<IFilteredStream>;
-        private readonly _trackedStreamFactory: IFactory<ITrackedStream>;
-        private readonly _tweetStreamFactory: IFactory<ITweetStream>;
+@Injectable()
+export class StreamsClient implements IStreamsClient {
+  private readonly _client: ITwitterClient;
+  private readonly _sampleStreamFactory: IFactory<ISampleStream>;
+  private readonly _filteredStreamFactory: IFactory<IFilteredStream>;
+  private readonly _trackedStreamFactory: IFactory<ITrackedStream>;
+  private readonly _tweetStreamFactory: IFactory<ITweetStream>;
 
-        constructor(client: ITwitterClient, sampleStreamFactory: IFactory<ISampleStream>,
-                    filteredStreamFactory: IFactory<IFilteredStream>,
-                    trackedStreamFactory: IFactory<ITrackedStream>,
-                    tweetStreamFactory: IFactory<ITweetStream>)
-        {
-            this._client = client;
-            this._sampleStreamFactory = sampleStreamFactory;
-            this._filteredStreamFactory = filteredStreamFactory;
-            this._trackedStreamFactory = trackedStreamFactory;
-            this._tweetStreamFactory = tweetStreamFactory;
-        }
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject() sampleStreamFactory: IFactory<ISampleStream>,
+              @Inject() filteredStreamFactory: IFactory<IFilteredStream>,
+              @Inject() trackedStreamFactory: IFactory<ITrackedStream>,
+              @Inject() tweetStreamFactory: IFactory<ITweetStream>) {
+    this._client = client;
+    this._sampleStreamFactory = sampleStreamFactory;
+    this._filteredStreamFactory = filteredStreamFactory;
+    this._trackedStreamFactory = trackedStreamFactory;
+    this._tweetStreamFactory = tweetStreamFactory;
+  }
 
         public createSampleStream(): ISampleStream
         {

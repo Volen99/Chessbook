@@ -1,4 +1,6 @@
-﻿import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterResult} from "../Web/TwitterResult";
 import {ICreateListParameters} from "../../Public/Parameters/ListsClient/CreateListParameters";
 import {IGetListParameters} from "../../Public/Parameters/ListsClient/GetListParameters";
@@ -24,9 +26,9 @@ import {IGetTweetsFromListParameters} from "../../Public/Parameters/ListsClient/
 import {ITwitterListCursorQueryResultDTO} from "../../Public/Models/Interfaces/DTO/QueryDTO/ITwitterListCursorQueryResultDTO";
 import {IUserCursorQueryResultDTO} from "../../Public/Models/Interfaces/DTO/QueryDTO/IUserCursorQueryResultDTO";
 import {ITweetDTO} from "../../Public/Models/Interfaces/DTO/ITweetDTO";
-import {InjectionToken} from "@angular/core";
-import {TweetIdentifier} from "../../Public/Models/TweetIdentifier";
 import {TwitterListController} from "../../../controllers/TwitterLists/TwitterListController";
+import {TwitterListQueryExecutor} from "../../../controllers/TwitterLists/TwitterListQueryExecutor";
+import {PageCursorIteratorFactories} from "../Iterators/PageCursorIteratorFactories";
 
 export interface ITwitterListController {
   // LIST
@@ -74,5 +76,5 @@ export interface ITwitterListController {
 
 export const ITwitterListControllerToken = new InjectionToken<ITwitterListController>('ITwitterListController', {
   providedIn: 'root',
-  factory: () => new TwitterListController(),
+  factory: () => new TwitterListController(Inject(TwitterListQueryExecutor), Inject(PageCursorIteratorFactories)),
 });

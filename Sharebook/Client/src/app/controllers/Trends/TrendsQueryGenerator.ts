@@ -3,7 +3,7 @@ import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/so
 import {GetTrendsExclude, IGetTrendsAtParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsAtParameters";
 import {IGetTrendsLocationParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsLocationParameters";
 import {IGetTrendsLocationCloseToParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsLocationCloseToParameters";
-import {InjectionToken} from "@angular/core";
+import {Injectable, InjectionToken} from "@angular/core";
 
 export interface ITrendsQueryGenerator {
   getTrendsAtQuery(parameters: IGetTrendsAtParameters): string;
@@ -18,6 +18,7 @@ export const ITrendsQueryGeneratorToken = new InjectionToken<ITrendsQueryGenerat
   factory: () => new TrendsQueryGenerator(),
 });
 
+@Injectable()
 export class TrendsQueryGenerator implements ITrendsQueryGenerator {
   public getTrendsAtQuery(parameters: IGetTrendsAtParameters): string {
     let query = new StringBuilder(Resources.Trends_GetTrendsFromWoeId);

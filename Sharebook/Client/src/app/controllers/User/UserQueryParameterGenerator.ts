@@ -4,7 +4,9 @@ import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/so
 import ArgumentException from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import ArgumentNullException from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException";
 import Type from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class UserQueryParameterGenerator implements IUserQueryParameterGenerator {
   private generateUserIdParameter(userIdAsNumberOrString: number | string, parameterName: string = "user_id"): string {
     if (Type.isNumber(userIdAsNumberOrString)) {

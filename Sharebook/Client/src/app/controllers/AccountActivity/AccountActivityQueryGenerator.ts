@@ -10,7 +10,7 @@ import {IUnsubscribeFromAccountActivityParameters} from "../../core/Public/Param
 import {ICountAccountActivitySubscriptionsParameters} from "../../core/Public/Parameters/AccountActivity/CountNumberOfSubscriptionsParameters";
 import {IIsAccountSubscribedToAccountActivityParameters} from "../../core/Public/Parameters/AccountActivity/IsAccountSubscribedToAppAccountActivityParameters";
 import {IGetAccountActivitySubscriptionsParameters} from "../../core/Public/Parameters/AccountActivity/GetListOfSubscriptionsParameters";
-import {InjectionToken} from "@angular/core";
+import {Injectable, InjectionToken} from "@angular/core";
 
 export interface IAccountActivityQueryGenerator {
   getCreateAccountActivityWebhookQuery(parameters: ICreateAccountActivityWebhookParameters): string;
@@ -39,6 +39,7 @@ export const IAccountActivityQueryGeneratorToken = new InjectionToken<IAccountAc
   factory: () => new AccountActivityQueryGenerator(),
 });
 
+@Injectable()
 export class AccountActivityQueryGenerator implements IAccountActivityQueryGenerator {
   public getCreateAccountActivityWebhookQuery(parameters: ICreateAccountActivityWebhookParameters): string {
     let query = new StringBuilder(`${Resources.Webhooks_AccountActivity_All}/${parameters.environment}/webhooks.json?`);

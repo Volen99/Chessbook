@@ -1,6 +1,9 @@
 ﻿import {ITweet} from "./ITweet";
-import {InjectionToken} from "@angular/core";
-import {TweetIdentifier} from "../TweetIdentifier";
+import {Inject, InjectionToken} from "@angular/core";
+import {Mention} from "../../../Core/Models/Mention";
+import {TweetMode} from "../../Settings/TweetinviSettings";
+import {TweetDTO} from "../../../Core/DTO/TweetDTO";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 // Twitter mention
 export interface IMention extends ITweet {  // Notice that IMention inherits from ITweet
@@ -10,5 +13,5 @@ export interface IMention extends ITweet {  // Notice that IMention inherits fro
 
 export const IMentionToken = new InjectionToken<IMention>('IMention', {
   providedIn: 'root',
-  factory: () => new Mention(),
+  factory: () => new Mention(Inject(TweetDTO), Inject(TweetMode), Inject(TwitterClient)),
 });

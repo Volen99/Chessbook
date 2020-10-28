@@ -1,7 +1,7 @@
 ﻿import {IHelpController} from "../../core/Core/Controllers/IHelperController";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
-import {IHelpQueryExecutor} from "./HelpQueryExecutor";
+import {HelpQueryExecutor, IHelpQueryExecutor, IHelpQueryExecutorToken} from "./HelpQueryExecutor";
 import {IGetRateLimitsParameters} from "../../core/Public/Parameters/HelpClient/GetRateLimitsParameters";
 import {CredentialsRateLimitsDTO} from "../../core/Core/DTO/CredentialsRateLimitsDTO";
 import {IGetTwitterConfigurationParameters} from "../../core/Public/Parameters/HelpClient/GetTwitterConfigurationParameters";
@@ -13,11 +13,13 @@ import {SearchGeoSearchResultDTO} from "../../core/Public/Models/Interfaces/DTO/
 import {IPlace} from "../../core/Public/Models/Interfaces/IPlace";
 import {SupportedLanguage} from "../../core/Core/Models/SupportedLanguage";
 import {ITwitterConfiguration} from "../../core/Public/Models/Interfaces/DTO/ITwitterConfiguration";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class HelpController implements IHelpController {
   private readonly _helpQueryExecutor: IHelpQueryExecutor;
 
-  constructor(helpQueryExecutor: IHelpQueryExecutor) {
+  constructor(@Inject(IHelpQueryExecutorToken) helpQueryExecutor: IHelpQueryExecutor) {
     this._helpQueryExecutor = helpQueryExecutor;
   }
 

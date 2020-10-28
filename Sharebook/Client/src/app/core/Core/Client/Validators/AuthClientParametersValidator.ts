@@ -1,3 +1,5 @@
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+
 import {ITwitterRequest} from "../../../Public/Models/Interfaces/ITwitterRequest";
 import Uri from "../../../../c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri";
 import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
@@ -8,8 +10,11 @@ import {IInvalidateBearerTokenParameters} from "../../../Public/Parameters/Auth/
 import {IInvalidateAccessTokenParameters} from "../../../Public/Parameters/Auth/InvalidateAccessTokenParameters";
 import {AuthParameters} from "./parameters-types";
 import {UriKind} from "../../../Public/Models/Enum/uri-kind";
-import {IAuthClientRequiredParametersValidator} from "./AuthClientRequiredParametersValidator";
-import {InjectionToken} from "@angular/core";
+import {
+  AuthClientRequiredParametersValidator,
+  IAuthClientRequiredParametersValidator,
+  IAuthClientRequiredParametersValidatorToken
+} from "./AuthClientRequiredParametersValidator";
 
 export interface IAuthClientParametersValidator {
   validate(parameters: ICreateBearerTokenParameters, request: ITwitterRequest): void;
@@ -25,13 +30,14 @@ export interface IAuthClientParametersValidator {
 
 export const IAuthClientParametersValidatorToken = new InjectionToken<IAuthClientParametersValidator>('IAuthClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new AuthClientParametersValidator(),
+  factory: () => new AuthClientParametersValidator(Inject(AuthClientRequiredParametersValidator)),
 });
 
+@Injectable()
 export class AuthClientParametersValidator implements IAuthClientParametersValidator {
   private readonly _authClientRequiredParametersValidator: IAuthClientRequiredParametersValidator;
 
-  constructor(authClientRequiredParametersValidator: IAuthClientRequiredParametersValidator) {
+  constructor(@Inject(IAuthClientRequiredParametersValidatorToken) authClientRequiredParametersValidator: IAuthClientRequiredParametersValidator) {
     this._authClientRequiredParametersValidator = authClientRequiredParametersValidator;
   }
 

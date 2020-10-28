@@ -1,6 +1,6 @@
 ﻿import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterResponse} from "./ITwitterResponse";
-import {InjectionToken} from "@angular/core";
+import {Injectable, InjectionToken} from "@angular/core";
 
 export interface ITwitterResultFactory {
   create<T = any, TDTO = any, TModel = any>(requestOrResult: ITwitterRequest | ITwitterResult<TDTO>, response: ITwitterResponse | ((tDTO: TDTO) => TModel),
@@ -11,9 +11,10 @@ export interface ITwitterResultFactory {
 
 export const ITwitterResultFactoryToken = new InjectionToken<ITwitterResultFactory>('ITwitterResultFactory', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new TwitterResultFactory(),
 });
 
+@Injectable()
 export class TwitterResultFactory implements ITwitterResultFactory {
   private readonly _jsonObjectConverter: IJsonObjectConverter;
 
@@ -58,6 +59,12 @@ export interface ITwitterResult<TModel = any, TDTO = any> {
   result?: TModel;
 }
 
+export const ITwitterResultToken = new InjectionToken<ITwitterResult>('ITwitterResult', {
+  providedIn: 'root',
+  factory: () => new TwitterResult(),
+});
+
+@Injectable()
 export class TwitterResult<TDTO = any, TModel = any> implements ITwitterResult {
   private readonly IJsonObjectConverter;
   _jsonObjectConverter;
@@ -74,7 +81,6 @@ export class TwitterResult<TDTO = any, TModel = any> implements ITwitterResult {
       this._jsonObjectConverter = jsonObjectConverter;
       this._convert = convert;
     }
-
   }
 
   public response: ITwitterResponse;

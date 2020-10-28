@@ -22,7 +22,9 @@ import {
   InvalidateAccessTokenParameters
 } from "../../../core/Public/Parameters/Auth/InvalidateAccessTokenParameters";
 import {RequestUrlAuthUrlParameters} from "../../../core/Public/Parameters/Auth/RequestUrlAuthUrlParameters";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class AuthClient implements IAuthClient {
   private readonly _client: TwitterClient;
   private readonly _authRequester: IAuthRequester;
@@ -45,7 +47,7 @@ export class AuthClient implements IAuthClient {
     }
 
     let twitterResult = await this._authRequester.createBearerTokenAsync(parametersCurrent); // .ConfigureAwait(false);
-    return twitterResult?.model.AccessToken;
+    return twitterResult?.model.accessToken;
   }
 
   public async initializeClientBearerTokenAsync(): Promise<void> {
@@ -74,7 +76,7 @@ export class AuthClient implements IAuthClient {
   }
 
   public requestCredentialsFromVerifierCodeAsync(verifierCode: string, authenticationRequest: IAuthenticationRequest): Promise<ITwitterCredentials> {
-    return RequestCredentialsAsync(new RequestCredentialsParameters(verifierCode, authenticationRequest));
+    return this.requestCredentialsAsync(new RequestCredentialsParameters(verifierCode, authenticationRequest));
   }
 
   public requestCredentialsFromCallbackUrlAsync(callbackUrlOrUri: string | Uri, authenticationRequest: IAuthenticationRequest): Promise<ITwitterCredentials> {

@@ -1,4 +1,6 @@
-﻿import {ITwitterResult} from '../Web/TwitterResult';
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterResult} from '../Web/TwitterResult';
 import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import {IPublishMessageParameters} from "../../Public/Parameters/MessageClient/PublishMessageParameters";
 import {IDeleteMessageParameters} from "../../Public/Parameters/MessageClient/DestroyMessageParameters";
@@ -8,8 +10,8 @@ import {IGetMessageDTO} from "../../Public/Models/Interfaces/DTO/IGetMessageDTO"
 import {ICreateMessageDTO} from "../../Public/Models/Interfaces/DTO/ICreateMessageDTO";
 import {IMessageCursorQueryResultDTO} from "../../Public/Models/Interfaces/DTO/QueryDTO/IMessageCursorQueryResultDTO";
 import {ITwitterPageIterator} from "../Iterators/TwitterPageIterator";
-import {InjectionToken} from "@angular/core";
 import {MessageController} from "../../../controllers/Messages/MessageController";
+import {MessageQueryExecutor} from "../../../controllers/Messages/MessageQueryExecutor";
 
 export interface IMessageController {
   publishMessageAsync(parameters: IPublishMessageParameters, request: ITwitterRequest): Promise<ITwitterResult<ICreateMessageDTO>>;
@@ -23,5 +25,5 @@ export interface IMessageController {
 
 export const IMessageControllerToken = new InjectionToken<IMessageController>('IMessageController', {
   providedIn: 'root',
-  factory: () => new MessageController(),
+  factory: () => new MessageController(Inject(MessageQueryExecutor)),
 });

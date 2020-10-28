@@ -1,5 +1,5 @@
 ﻿import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMode";
-import {IQueryParameterGenerator} from "../Shared/QueryParameterGenerator";
+import {IQueryParameterGenerator, IQueryParameterGeneratorToken, QueryParameterGenerator} from "../Shared/QueryParameterGenerator";
 import IEnumerable from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable';
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {Resources} from "../../properties/resources";
@@ -10,8 +10,12 @@ import {ICreateSavedSearchParameters} from "../../core/Public/Parameters/Search/
 import {IGetSavedSearchParameters} from "../../core/Public/Parameters/Search/GetSavedSearchParameters";
 import {IListSavedSearchesParameters} from "../../core/Public/Parameters/Search/ListSavedSearchesParameters";
 import {IDestroySavedSearchParameters} from "../../core/Public/Parameters/Search/DestroySavedSearchParameters";
-import {ISearchQueryParameterGenerator} from "./SearchQueryParameterGenerator";
-import {InjectionToken} from "@angular/core";
+import {
+  ISearchQueryParameterGenerator,
+  ISearchQueryParameterGeneratorToken,
+  SearchQueryParameterGenerator
+} from "./SearchQueryParameterGenerator";
+import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 export interface ISearchQueryGenerator {
   getSearchTweetsQuery(parameters: ISearchTweetsParameters, tweetMode: ComputedTweetMode): string;
@@ -29,14 +33,16 @@ export interface ISearchQueryGenerator {
 
 export const ISearchQueryGeneratorToken = new InjectionToken<ISearchQueryGenerator>('ISearchQueryGenerator', {
   providedIn: 'root',
-  factory: () => new SearchQueryGenerator(),
+  factory: () => new SearchQueryGenerator(Inject(QueryParameterGenerator), Inject(SearchQueryParameterGenerator)),
 });
 
+@Injectable()
 export class SearchQueryGenerator implements ISearchQueryGenerator {
   private readonly _queryParameterGenerator: IQueryParameterGenerator;
   private readonly _searchQueryParameterGenerator: ISearchQueryParameterGenerator;
 
-  constructor(queryParameterGenerator: IQueryParameterGenerator, searchQueryParameterGenerator: ISearchQueryParameterGenerator) {
+  constructor(@Inject(IQueryParameterGeneratorToken) queryParameterGenerator: IQueryParameterGenerator,
+              @Inject(ISearchQueryParameterGeneratorToken) searchQueryParameterGenerator: ISearchQueryParameterGenerator) {
     this._queryParameterGenerator = queryParameterGenerator;
     this._searchQueryParameterGenerator = searchQueryParameterGenerator;
   }
@@ -47,7 +53,7 @@ export class SearchQueryGenerator implements ISearchQueryGenerator {
     query.addParameterToQuery("q", this.generateQueryParameter(parameters.query, parameters.filters));
     query.addParameterToQuery("geocode", this._searchQueryParameterGenerator.generateGeoCodeParameter(parameters.geoCode));
 
-    query.addParameterToQuery("lang", parameters.lang?.GetLanguageCode());
+    query.addParameterToQuery("lang", parameters.lang?.getLanguageCode());
     query.addParameterToQuery("locale", parameters.locale);
     query.addParameterToQuery("result_type", parameters.searchType?.ToString().ToLowerInvariant());
 

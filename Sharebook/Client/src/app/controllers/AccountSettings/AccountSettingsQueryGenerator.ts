@@ -7,7 +7,7 @@ import {IUpdateProfileImageParameters} from "../../core/Public/Parameters/Accoun
 import {IRemoveProfileBannerParameters} from "../../core/Public/Parameters/AccountSettingsClient/RemoveProfileBannerParameters";
 import {IUpdateProfileBannerParameters} from "../../core/Public/Parameters/AccountSettingsClient/UpdateProfileBannerParameters";
 import {Language} from "../../core/Public/Models/Enum/Language";
-import {InjectionToken} from "@angular/core";
+import {Injectable, InjectionToken} from "@angular/core";
 
 export interface IAccountSettingsQueryGenerator {
   getAccountSettingsQuery(parameters: IGetAccountSettingsParameters): string;
@@ -28,6 +28,7 @@ export const IAccountSettingsQueryGeneratorToken = new InjectionToken<IAccountSe
   factory: () => new AccountSettingsQueryGenerator(),
 });
 
+@Injectable()
 export class AccountSettingsQueryGenerator implements IAccountSettingsQueryGenerator {
   public getAccountSettingsQuery(parameters: IGetAccountSettingsParameters): string {
     let query = new StringBuilder(Resources.Account_GetSettings);
@@ -82,7 +83,7 @@ export class AccountSettingsQueryGenerator implements IAccountSettingsQueryGener
   }
 
   public getUpdateProfileImageQuery(parameters: IUpdateProfileImageParameters): string {
-    var query = new StringBuilder(Resources.Account_UpdateProfileImage);
+    let query = new StringBuilder(Resources.Account_UpdateProfileImage);
 
     query.addParameterToQuery("include_entities", parameters.includeEntities);
     query.addParameterToQuery("skip_status", parameters.skipStatus);

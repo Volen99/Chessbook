@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fd68ae18-2d59-4beb-954b-9411df789675" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/exam" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/solve" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder.ts" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri.ts" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core/packages/publish.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core/packages/tsconfig-base.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/datetime-offset.js" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/datetime-offset.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/datetime-offset.js/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/datetime-offset.js/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/lib/global.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/lib/global.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/babel-plugin-ts-nameof/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/babel-plugin-ts-nameof/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/transforms-babel/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/transforms-babel/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/transforms-common/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/transforms-common/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/transforms-ts/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/transforms-ts/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof.macro/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof.macro/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/setup/custom.md" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/setup/custom.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/setup/fusebox.md" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/setup/fusebox.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/setup/gulp.md" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/setup/gulp.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/tsconfig.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="ProjectId" id="1jKmEPAZiwRc2hzlU8sOtM0NTqc" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration name="exam" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/exam" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.exam" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fd68ae18-2d59-4beb-954b-9411df789675" name="Default Changelist" comment="" />
+      <created>1603561044758</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1603561044758</updated>
+      <workItem from="1603561045823" duration="1867000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="553" height="466" key="DebuggerActiveHint" timestamp="1603562099512">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="553" height="466" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1603562099512" />
+    <state width="1515" height="261" key="GridCell.Tab.0.bottom" timestamp="1603563472455">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603563472455" />
+    <state width="1515" height="261" key="GridCell.Tab.0.center" timestamp="1603563472455">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603563472455" />
+    <state width="1515" height="261" key="GridCell.Tab.0.left" timestamp="1603563472455">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603563472455" />
+    <state width="1515" height="261" key="GridCell.Tab.0.right" timestamp="1603563472455">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603563472455" />
+    <state width="1515" height="261" key="GridCell.Tab.1.bottom" timestamp="1603563472456">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603563472456" />
+    <state width="1515" height="261" key="GridCell.Tab.1.center" timestamp="1603563472456">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1603563472456" />
+    <state width="1515" height="261" key="GridCell.Tab.1.left" timestamp="1603563472456">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1603563472456" />
+    <state width="1515" height="261" key="GridCell.Tab.1.right" timestamp="1603563472456">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1603563472456" />
+    <state width="1515" height="261" key="GridCell.Tab.2.bottom" timestamp="1603563472456">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603563472456" />
+    <state width="1515" height="261" key="GridCell.Tab.2.center" timestamp="1603563472456">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1603563472456" />
+    <state width="1515" height="261" key="GridCell.Tab.2.left" timestamp="1603563472456">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1603563472456" />
+    <state width="1515" height="261" key="GridCell.Tab.2.right" timestamp="1603563472456">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1603563472456" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/exam</url>
+          <line>50</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

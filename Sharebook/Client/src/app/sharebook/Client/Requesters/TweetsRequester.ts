@@ -17,19 +17,27 @@ import {IDestroyTweetParameters} from "../../../core/Public/Parameters/TweetsCli
 import {IPublishTweetParameters} from "../../../core/Public/Parameters/TweetsClient/PublishTweetParameters";
 import {IGetTweetsParameters} from "../../../core/Public/Parameters/TweetsClient/GetTweetsParameters";
 import {IGetTweetParameters} from "../../../core/Public/Parameters/TweetsClient/GetTweetParameters";
-import {ITweetController} from "../../../core/Core/Controllers/ITweetController";
-import {ITweetsClientRequiredParametersValidator} from "../../../core/Core/Client/Validators/TweetsClientRequiredParametersValidator";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {ITweetController, ITweetControllerToken} from "../../../core/Core/Controllers/ITweetController";
+import {
+  ITweetsClientRequiredParametersValidator,
+  ITweetsClientRequiredParametersValidatorToken
+} from "../../../core/Core/Client/Validators/TweetsClientRequiredParametersValidator";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {ITwitterRequest} from "../../../core/Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class TweetsRequester extends BaseRequester implements ITweetsRequester {
   private readonly _tweetController: ITweetController;
   private readonly _tweetsClientRequiredParametersValidator: ITweetsClientRequiredParametersValidator;
 
-  constructor(client: ITwitterClient, clientEvents: ITwitterClientEvents, tweetController: ITweetController,
-              tweetsClientRequiredParametersValidator: ITweetsClientRequiredParametersValidator) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(ITwitterClientEventsToken) clientEvents: ITwitterClientEvents,
+              @Inject(ITweetControllerToken) tweetController: ITweetController,
+              @Inject(ITweetsClientRequiredParametersValidatorToken) tweetsClientRequiredParametersValidator: ITweetsClientRequiredParametersValidator) {
     super(client, clientEvents);
+
     this._tweetController = tweetController;
     this._tweetsClientRequiredParametersValidator = tweetsClientRequiredParametersValidator;
   }

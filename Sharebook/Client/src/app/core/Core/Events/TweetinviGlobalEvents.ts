@@ -1,5 +1,9 @@
-﻿
-    export interface ITweetinviEvents : ITwitterClientEvents
+﻿import {InjectionToken} from "@angular/core";
+import {ITwitterException} from "../Exceptions/ITwitterException";
+import {AfterExecutingQueryEventArgs} from "../../Public/Events/AfterExecutingQueryEventArgs";
+import {BeforeExecutingRequestEventArgs} from "../../Public/Events/BeforeExecutingRequestEventArgs";
+
+export interface ITweetinviEvents : ITwitterClientEvents
     {
         void SubscribeToClientEvents(ITwitterClient client);
         void UnsubscribeFromClientEvents(ITwitterClient client);
@@ -60,6 +64,11 @@
 
     RaiseOnTwitterException(exception: ITwitterException): void;
   }
+
+  export const ITwitterClientEventsToken = new InjectionToken<ITwitterClientEvents>('ITwitterClientEvents', {
+    providedIn: 'root',
+    factory: () => new TwitterClientEvents()
+  });
 
     export class TwitterClientEvents : ITwitterClientEvents
     {

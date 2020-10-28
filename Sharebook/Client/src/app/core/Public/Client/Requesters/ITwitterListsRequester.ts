@@ -1,4 +1,6 @@
-import {ITwitterResult} from "../../../Core/Web/TwitterResult";
+import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterResult, TwitterResultFactory} from "../../../Core/Web/TwitterResult";
 import {ICreateListParameters} from "../../Parameters/ListsClient/CreateListParameters";
 import {ITwitterListDTO} from "../../Models/Interfaces/DTO/ITwitterListDTO";
 import {IGetListParameters} from "../../Parameters/ListsClient/GetListParameters";
@@ -27,7 +29,14 @@ import {IGetUserListSubscriptionsParameters} from "../../Parameters/ListsClient/
 import {ICheckIfUserIsSubscriberOfListParameters} from "../../Parameters/ListsClient/Subscribers/CheckIfUserIsSubscriberOfListParameters";
 import {IGetTweetsFromListParameters} from "../../Parameters/ListsClient/GetTweetsFromListParameters";
 import {ITweetDTO} from "../../Models/Interfaces/DTO/ITweetDTO";
-import {InjectionToken} from "@angular/core";
+import {TwitterListsRequester} from "../../../../sharebook/Client/Requesters/TwitterListsRequester";
+import {
+  TwitterListsClientRequiredParametersValidator
+} from "../../../Core/Client/Validators/TwitterListsClientRequiredParametersValidator";
+import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
+import {TwitterListController} from "../../../../controllers/TwitterLists/TwitterListController";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {TwitterClientFactories} from "../../../../sharebook/Client/Tools/TwitterClientFactories";
 
 export interface ITwitterListsRequester {
   /// <summary>
@@ -195,5 +204,6 @@ export interface ITwitterListsRequester {
 
 export const ITwitterListsRequesterToken = new InjectionToken<ITwitterListsRequester>('ITwitterListsRequester', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new TwitterListsRequester(Inject(TwitterClient), Inject(TwitterClientEvents), Inject(TwitterResultFactory),
+    Inject(TwitterClientFactories), Inject(TwitterListController), Inject(TwitterListsClientRequiredParametersValidator)),
 });

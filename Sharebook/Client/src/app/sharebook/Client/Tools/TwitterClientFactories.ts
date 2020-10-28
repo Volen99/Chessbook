@@ -1,16 +1,19 @@
 import {ITwitterClientFactories} from "../../../core/Public/Client/Tools/ITwitterClientFactories";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {AccountSettings} from "../../../core/Core/Models/AccountSettings";
 import {IAccountSettingsDTO} from "../../../core/Public/Models/Interfaces/DTO/IAccountSettingsDTO";
 import {IAccountSettings} from "../../../core/Public/Models/Interfaces/IAccountSettings";
 import {ITwitterListDTO} from "../../../core/Public/Models/Interfaces/DTO/ITwitterListDTO";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class TwitterClientFactories implements ITwitterClientFactories
     {
         private readonly _client: ITwitterClient;
         private readonly _jsonObjectConverter: IJsonObjectConverter;
 
-        constructor(client: ITwitterClient, jsonObjectConverter: IJsonObjectConverter)
+        constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+                    @Inject() jsonObjectConverter: IJsonObjectConverter)
         {
             this._client = client;
             this._jsonObjectConverter = jsonObjectConverter;

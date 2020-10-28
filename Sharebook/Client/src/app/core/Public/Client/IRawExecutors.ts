@@ -9,7 +9,19 @@ import {ITimelinesRequester} from "./Requesters/ITimelinesRequester";
 import {ITrendsRequester} from "./Requesters/ITrendsRequester";
 import {ITweetsRequester} from "./Requesters/ITweetsRequester";
 import {IUsersRequester} from "./Requesters/IUsersRequester";
-import {InjectionToken} from "@angular/core";
+import {Inject, InjectionToken} from "@angular/core";
+import {RawExecutors} from "../../../sharebook/Client/RawExecutors";
+import {AccountActivityRequester} from "../../../sharebook/Client/Requesters/AccountActivityRequester";
+import {AuthRequester} from "../../../sharebook/Client/Requesters/AuthRequester";
+import {HelpRequester} from "../../../sharebook/Client/Requesters/HelpRequester";
+import {AccountSettingsRequester} from "../../../sharebook/Client/Requesters/AccountSettingsRequester";
+import {TwitterListsRequester} from "../../../sharebook/Client/Requesters/TwitterListsRequester";
+import {TrendsRequester} from "../../../sharebook/Client/Requesters/TrendsRequester";
+import {TimelinesRequester} from "../../../sharebook/Client/Requesters/TimelinesRequester";
+import {UploadRequester} from "../../../sharebook/Client/Requesters/UploadRequester";
+import {UsersRequester} from "../../../sharebook/Client/Requesters/UsersRequester";
+import {TweetsRequester} from "../../../sharebook/Client/Requesters/TweetsRequester";
+import {SearchRequester} from "../../../sharebook/Client/Requesters/SearchRequester";
 
 export interface IRawExecutors {
   // Client to execute all the actions related with webhooks
@@ -48,5 +60,10 @@ export interface IRawExecutors {
 
 export const IRawExecutorsToken = new InjectionToken<IRawExecutors>('IRawExecutors', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new RawExecutors(Inject(AccountActivityRequester), Inject(AuthRequester),
+    Inject(AccountSettingsRequester), Inject(HelpRequester),
+    Inject(SearchRequester), Inject(TwitterListsRequester),
+    Inject(TimelinesRequester), Inject(TrendsRequester),
+    Inject(TweetsRequester), Inject(UploadRequester),
+    Inject(UsersRequester)),
 });

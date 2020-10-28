@@ -1,10 +1,13 @@
 import {BaseRequester} from "../BaseRequester";
 import {IAccountActivityRequester} from "../../../core/Public/Client/Requesters/IAccountActivityRequester";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
-import {IAccountActivityClientRequiredParametersValidator} from "../../../core/Core/Client/Validators/AccountActivityClientRequiredParameterValidator";
-import {IAccountActivityController} from "../../../core/Core/Controllers/IAccountActivityController";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
-import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
+import {
+  IAccountActivityClientRequiredParametersValidator,
+  IAccountActivityClientRequiredParametersValidatorToken
+} from "../../../core/Core/Client/Validators/AccountActivityClientRequiredParameterValidator";
+import {IAccountActivityController, IAccountActivityControllerToken} from "../../../core/Core/Controllers/IAccountActivityController";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
+import {ITwitterClientEvents, ITwitterClientEventsToken} from "../../../core/Core/Events/TweetinviGlobalEvents";
 import {ICreateAccountActivityWebhookParameters} from "../../../core/Public/Parameters/AccountActivity/RegisterAccountActivityWebhookParameters";
 import {IDeleteAccountActivityWebhookParameters} from "../../../core/Public/Parameters/AccountActivity/RemoveAccountActivityWebhookParameters";
 import {IGetAccountActivityEnvironmentWebhooksParameters} from "../../../core/Public/Parameters/AccountActivity/GetAccountActivityEnvironmentWebhooksParameters";
@@ -19,15 +22,19 @@ import {IWebhookEnvironmentSubscriptionsDTO} from "../../../core/Public/Models/I
 import {IWebhookSubscriptionsCount} from "../../../core/Public/Models/Interfaces/IWebhookSubscriptionsCount";
 import {IWebhookDTO} from "../../../core/Public/Models/Interfaces/DTO/Webhooks/IWebhookDTO";
 import {IGetAccountActivityWebhookEnvironmentsResultDTO} from "../../../core/Public/Models/Interfaces/DTO/Webhooks/IGetAccountActivityWebhookEnvironmentsResultDTO";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class AccountActivityRequester extends BaseRequester implements IAccountActivityRequester {
   private readonly _validator: IAccountActivityClientRequiredParametersValidator;
   private readonly _accountActivityController: IAccountActivityController;
 
-  constructor(client: ITwitterClient, twitterClientEvents: ITwitterClientEvents,
-              validator: IAccountActivityClientRequiredParametersValidator,
-              accountActivityController: IAccountActivityController) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(ITwitterClientEventsToken) twitterClientEvents: ITwitterClientEvents,
+              @Inject(IAccountActivityClientRequiredParametersValidatorToken) validator: IAccountActivityClientRequiredParametersValidator,
+              @Inject(IAccountActivityControllerToken) accountActivityController: IAccountActivityController) {
     super(client, twitterClientEvents);
+
     this._validator = validator;
     this._accountActivityController = accountActivityController;
   }

@@ -1,5 +1,6 @@
-﻿import {ITwitterClientFactories} from "./Client/Tools/ITwitterClientFactories";
-import {IReadOnlyTwitterCredentials} from "../Core/Models/Authentication/ReadOnlyTwitterCredentials";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterClientFactories} from "./Client/Tools/ITwitterClientFactories";
 import {ITweetinviSettings} from "./Settings/TweetinviSettings";
 import {IRawExecutors} from "./Client/IRawExecutors";
 import {ITwitterRequest} from "./Models/Interfaces/ITwitterRequest";
@@ -21,7 +22,6 @@ import {IAuthClient} from "./Client/Clients/IAuthClient";
 import {IAccountSettingsClient} from "./Client/Clients/IAccountSettingsClient";
 import {IExternalClientEvents} from "../Core/Events/TweetinviGlobalEvents";
 import {IParametersValidator} from "../Core/Client/Validators/ParametersValidator";
-import {Inject, InjectionToken} from "@angular/core";
 import {TwitterClient, TwitterClientParameters} from "../../sharebook/TwitterClient";
 
 export interface ITwitterClient {

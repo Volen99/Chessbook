@@ -1,4 +1,6 @@
-﻿import {ITwitterResult} from "../Web/TwitterResult";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterResult} from "../Web/TwitterResult";
 import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import {IGetTweetParameters} from "../../Public/Parameters/TweetsClient/GetTweetParameters";
 import {ITweetDTO} from "../../Public/Models/Interfaces/DTO/ITweetDTO";
@@ -16,7 +18,10 @@ import {IFavoriteTweetParameters} from "../../Public/Parameters/TweetsClient/Fav
 import {IUnfavoriteTweetParameters} from "../../Public/Parameters/TweetsClient/UnFavoriteTweetParameters";
 import {IGetOEmbedTweetParameters} from "../../Public/Parameters/TweetsClient/GetOEmbedTweetParameters";
 import {IIdsCursorQueryResultDTO} from "../../Public/Models/Interfaces/DTO/QueryDTO/IIdsCursorQueryResultDTO";
-import {InjectionToken} from "@angular/core";
+import {TweetController} from "../../../controllers/Tweet/TweetController";
+import {TweetQueryExecutor} from "../../../controllers/Tweet/TweetQueryExecutor";
+import {UploadQueryExecutor} from "../../../controllers/Upload/UploadQueryExecutor";
+import {PageCursorIteratorFactories} from "../Iterators/PageCursorIteratorFactories";
 
 export interface ITweetController {
   // TWEET
@@ -59,5 +64,6 @@ export interface ITweetController {
 
 export const ITweetControllerToken = new InjectionToken<ITweetController>('ITweetController', {
   providedIn: 'root',
-  factory: () => new TweetController(),
+  factory: () => new TweetController(Inject(TweetQueryExecutor), Inject(UploadQueryExecutor),
+    Inject(PageCursorIteratorFactories)),
 });

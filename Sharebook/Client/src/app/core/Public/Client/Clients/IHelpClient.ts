@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {ITwitterConfiguration} from "../../Models/Interfaces/DTO/ITwitterConfiguration";
 import {SupportedLanguage} from "../../../Core/Models/SupportedLanguage";
 import {IGetTwitterConfigurationParameters} from "../../Parameters/HelpClient/GetTwitterConfigurationParameters";
@@ -8,7 +10,9 @@ import {IGetPlaceParameters} from "../../Parameters/HelpClient/GetPlaceParameter
 import {IGeoSearchParameters} from "../../Parameters/HelpClient/GeoSearchParameters";
 import {ICoordinates} from "../../Models/Interfaces/ICoordinates";
 import {IGeoSearchReverseParameters} from "../../Parameters/HelpClient/GeoSearchReverseParameters";
-import {InjectionToken} from "@angular/core";
+import {HelpClient} from "../../../../sharebook/Client/Clients/HelpClient";
+import {HelpRequester} from "../../../../sharebook/Client/Requesters/HelpRequester";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface IHelpClient {
   // Validate all the Help client parameters
@@ -61,5 +65,5 @@ export interface IHelpClient {
 
 export const IHelpClientToken = new InjectionToken<IHelpClient>('IHelpClient', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new HelpClient(Inject(TwitterClient), Inject(HelpRequester)),
 });

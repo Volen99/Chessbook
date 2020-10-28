@@ -1,9 +1,10 @@
+import {Injectable, InjectionToken} from "@angular/core";
+
 import {IAccountSettingsClientParametersValidator} from "./AccountSettingsClientParametersValidator";
 import ArgumentNullException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException";
 import {AccountActivityParameters} from "./parameters-types";
 import {IUpdateProfileImageParameters} from "../../../Public/Parameters/AccountSettingsClient/UpdateProfileImageParameters";
 import {IUpdateProfileBannerParameters} from "../../../Public/Parameters/AccountSettingsClient/UpdateProfileBannerParameters";
-import {InjectionToken} from "@angular/core";
 
 export interface IAccountSettingsClientRequiredParametersValidator extends IAccountSettingsClientParametersValidator {
 }
@@ -13,6 +14,7 @@ export const IAccountSettingsClientRequiredParametersValidatorToken = new Inject
   factory: () => new AccountSettingsClientRequiredParametersValidator(),
 });
 
+@Injectable()
 export class AccountSettingsClientRequiredParametersValidator implements IAccountSettingsClientRequiredParametersValidator {
   public validate(parameters: AccountActivityParameters): void {
     if (parameters == null) {

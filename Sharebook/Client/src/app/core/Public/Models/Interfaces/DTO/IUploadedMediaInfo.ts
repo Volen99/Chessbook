@@ -4,7 +4,7 @@ import {IUploadProcessingInfo} from "./IUploadProcessingInfo";
 import DateTime from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 
 export interface IUploadedMediaInfo {
-  createdDate: DateTime; // DateTimeOffset;
+  createdDate: DateTime; // DateTimeOffset
 
   mediaId: number;
   mediaIdStr: string;

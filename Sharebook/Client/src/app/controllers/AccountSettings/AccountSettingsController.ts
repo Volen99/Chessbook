@@ -8,8 +8,12 @@ import {IUpdateProfileImageParameters} from "../../core/Public/Parameters/Accoun
 import {IUpdateProfileBannerParameters} from "../../core/Public/Parameters/AccountSettingsClient/UpdateProfileBannerParameters";
 import {IRemoveProfileBannerParameters} from "../../core/Public/Parameters/AccountSettingsClient/RemoveProfileBannerParameters";
 import {IUserDTO} from "../../core/Public/Models/Interfaces/DTO/IUserDTO";
-import {IAccountSettingsQueryExecutor} from "./AccountSettingsQueryExecutor";
-import {InjectionToken} from "@angular/core";
+import {
+  AccountSettingsQueryExecutor,
+  IAccountSettingsQueryExecutor,
+  IAccountSettingsQueryExecutorToken
+} from "./AccountSettingsQueryExecutor";
+import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 export interface IAccountSettingsController {
   getAccountSettingsAsync(parameters: IGetAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>>;
@@ -27,13 +31,14 @@ export interface IAccountSettingsController {
 
 export const IAccountSettingsControllerToken = new InjectionToken<IAccountSettingsController>('IAccountSettingsController', {
   providedIn: 'root',
-  factory: () => new AccountSettingsController(),
+  factory: () => new AccountSettingsController(Inject(AccountSettingsQueryExecutor)),
 });
 
+@Injectable()
 export class AccountSettingsController implements IAccountSettingsController {
   private readonly _accountSettingsQueryExecutor: IAccountSettingsQueryExecutor;
 
-  constructor(accountSettingsQueryExecutor: IAccountSettingsQueryExecutor) {
+  constructor(@Inject(IAccountSettingsQueryExecutorToken) accountSettingsQueryExecutor: IAccountSettingsQueryExecutor) {
     this._accountSettingsQueryExecutor = accountSettingsQueryExecutor;
   }
 

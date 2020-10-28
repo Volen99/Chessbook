@@ -1,3 +1,5 @@
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+
 import {IGetAuthenticatedUserParameters} from "../../../Public/Parameters/AccountClient/GetAuthenticatedUserParameters";
 import {IGetUserParameters} from "../../../Public/Parameters/UsersClient/GetUserParameters";
 import {IGetUsersParameters} from "../../../Public/Parameters/UsersClient/GetUsersParameters";
@@ -25,12 +27,15 @@ import {IGetMutedUserIdsParameters} from "../../../Public/Parameters/AccountClie
 import {IGetMutedUsersParameters} from "../../../Public/Parameters/AccountClient/GetMutedUsersParameters";
 import {IMuteUserParameters} from "../../../Public/Parameters/AccountClient/MuteUserParameters";
 import {IUnmuteUserParameters} from "../../../Public/Parameters/AccountClient/UnMuteUserParameters";
-import {ITwitterClient} from "../../../Public/ITwitterClient";
-import {IUsersClientRequiredParametersValidator} from './UsersClientRequiredParametersValidator';
+import {ITwitterClient, ITwitterClientToken} from "../../../Public/ITwitterClient";
+import {
+  IUsersClientRequiredParametersValidator,
+  IUsersClientRequiredParametersValidatorToken, UsersClientRequiredParametersValidator
+} from './UsersClientRequiredParametersValidator';
 import {TwitterLimits} from 'src/app/core/Public/Settings/TwitterLimits';
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
 import {UserParameters} from "./parameters-types";
-import {InjectionToken} from "@angular/core";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface IUsersClientParametersValidator {
   validate(parameters: IGetAuthenticatedUserParameters): void;
@@ -93,14 +98,16 @@ export interface IUsersClientParametersValidator {
 
 export const IUsersClientParametersValidatorToken = new InjectionToken<IUsersClientParametersValidator>('IUsersClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new UsersClientParametersValidator(),
+  factory: () => new UsersClientParametersValidator(Inject(TwitterClient), Inject(UsersClientRequiredParametersValidator)),
 });
 
+@Injectable()
 export class UsersClientParametersValidator implements IUsersClientParametersValidator {
   private readonly _usersClientRequiredParametersValidator: IUsersClientRequiredParametersValidator;
   private readonly _client: ITwitterClient;
 
-  constructor(client: ITwitterClient, usersClientRequiredParametersValidator: IUsersClientRequiredParametersValidator) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(IUsersClientRequiredParametersValidatorToken) usersClientRequiredParametersValidator: IUsersClientRequiredParametersValidator) {
     this._client = client;
     this._usersClientRequiredParametersValidator = usersClientRequiredParametersValidator;
   }

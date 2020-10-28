@@ -1,3 +1,5 @@
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+
 import {ICreateAccountActivityWebhookParameters} from "../../../Public/Parameters/AccountActivity/RegisterAccountActivityWebhookParameters";
 import {IGetAccountActivityWebhookEnvironmentsParameters} from "../../../Public/Parameters/AccountActivity/GetAccountActivityWebhookEnvironmentsParameters";
 import {IGetAccountActivityEnvironmentWebhooksParameters} from "../../../Public/Parameters/AccountActivity/GetAccountActivityEnvironmentWebhooksParameters";
@@ -8,9 +10,11 @@ import {ICountAccountActivitySubscriptionsParameters} from "../../../Public/Para
 import {IIsAccountSubscribedToAccountActivityParameters} from "../../../Public/Parameters/AccountActivity/IsAccountSubscribedToAppAccountActivityParameters";
 import {IGetAccountActivitySubscriptionsParameters} from "../../../Public/Parameters/AccountActivity/GetListOfSubscriptionsParameters";
 import {IUnsubscribeFromAccountActivityParameters} from "../../../Public/Parameters/AccountActivity/UnsubscribeFromAccountActivityParameters";
-import {IAccountActivityClientRequiredParametersValidator} from "./AccountActivityClientRequiredParameterValidator";
+import {
+  IAccountActivityClientRequiredParametersValidator,
+  IAccountActivityClientRequiredParametersValidatorToken
+} from "./AccountActivityClientRequiredParameterValidator";
 import {AccountActivityParameters} from "./parameters-types";
-import {InjectionToken} from "@angular/core";
 
 export interface IAccountActivityClientParametersValidator {
   validate(parameters: ICreateAccountActivityWebhookParameters): void;
@@ -36,14 +40,14 @@ export interface IAccountActivityClientParametersValidator {
 
 export const IAccountActivityClientParametersValidatorToken = new InjectionToken<IAccountActivityClientParametersValidator>('IAccountActivityClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new AccountActivityClientParametersValidator(),
+  factory: () => new AccountActivityClientParametersValidator(Inject(IAccountActivityClientRequiredParametersValidatorToken)),
 });
 
-
+@Injectable()
 export class AccountActivityClientParametersValidator implements IAccountActivityClientParametersValidator {
   private readonly _activityClientRequiredParametersValidator: IAccountActivityClientRequiredParametersValidator;
 
-  constructor(activityClientRequiredParametersValidator: IAccountActivityClientRequiredParametersValidator) {
+  constructor(@Inject(IAccountActivityClientRequiredParametersValidatorToken) activityClientRequiredParametersValidator: IAccountActivityClientRequiredParametersValidator) {
     this._activityClientRequiredParametersValidator = activityClientRequiredParametersValidator;
   }
 

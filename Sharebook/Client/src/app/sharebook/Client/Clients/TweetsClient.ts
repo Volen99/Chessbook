@@ -1,7 +1,7 @@
 ﻿import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
 import {IUserIdentifier} from "../../../core/Public/Models/Interfaces/IUserIdentifier";
 import {ITweetsClient} from "../../../core/Public/Client/Clients/ITweetsClient";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {ITweetsRequester} from "../../../core/Public/Client/Requesters/ITweetsRequester";
 import {ITweetsClientParametersValidator} from "../../../core/Core/Client/Validators/TweetsClientParametersValidator";
 import {ITweet} from "../../../core/Public/Models/Interfaces/ITweet";
@@ -33,12 +33,14 @@ import {
 import {IOEmbedTweet} from "../../../core/Public/Models/Interfaces/IOEmbedTweet";
 import {GetOEmbedTweetParameters, IGetOEmbedTweetParameters} from "../../../core/Public/Parameters/TweetsClient/GetOEmbedTweetParameters";
 import {TwitterException} from "../../../core/Public/Exceptions/TwitterException";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class TweetsClient implements ITweetsClient {
   private readonly _client: ITwitterClient;
   private readonly _tweetsRequester: ITweetsRequester;
 
-  constructor(client: ITwitterClient) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient) {
     this._client = client;
     this._tweetsRequester = client.raw.tweets;
   }

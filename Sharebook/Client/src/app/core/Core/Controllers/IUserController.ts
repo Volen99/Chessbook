@@ -1,4 +1,6 @@
-﻿import {ITwitterResult} from "../Web/TwitterResult";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterResult} from "../Web/TwitterResult";
 import {ITwitterRequest} from '../../Public/Models/Interfaces/ITwitterRequest';
 import {Stream} from "stream";
 import {IGetAuthenticatedUserParameters} from "../../Public/Parameters/AccountClient/GetAuthenticatedUserParameters";
@@ -30,8 +32,8 @@ import {IGetMutedUsersParameters} from "../../Public/Parameters/AccountClient/Ge
 import {IMuteUserParameters} from "../../Public/Parameters/AccountClient/MuteUserParameters";
 import {IUnmuteUserParameters} from "../../Public/Parameters/AccountClient/UnMuteUserParameters";
 import {IGetProfileImageParameters} from "../../Public/Parameters/UsersClient/GetProfileImageParameters";
-import {InjectionToken} from "@angular/core";
 import {UserController} from "../../../controllers/User/UserController";
+import {IUserQueryExecutor, UserQueryExecutor} from "../../../controllers/User/UserQueryExecutor";
 
 export interface IUserController {
   getAuthenticatedUserAsync(parameters: IGetAuthenticatedUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
@@ -90,6 +92,6 @@ export interface IUserController {
 
 export const IUserControllerToken = new InjectionToken<IUserController>('IUserController', {
   providedIn: 'root',
-  factory: () => new UserController(),
+  factory: () => new UserController(Inject(UserQueryExecutor)),
 });
 

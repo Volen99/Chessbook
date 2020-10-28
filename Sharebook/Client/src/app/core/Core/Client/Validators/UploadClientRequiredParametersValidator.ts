@@ -1,8 +1,9 @@
+import {Injectable, InjectionToken} from "@angular/core";
+
 import {IUploadParameters} from "../../../Public/Parameters/Upload/UploadBinaryParameters";
 import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
 import {IAddMediaMetadataParameters} from "../../../Public/Parameters/Upload/AddMediaMetadataParameters";
 import {IUploadClientParametersValidator} from "./UploadClientParametersValidator";
-import {InjectionToken} from "@angular/core";
 
 export interface IUploadClientRequiredParametersValidator extends IUploadClientParametersValidator {
 }
@@ -12,8 +13,8 @@ export const IUploadClientRequiredParametersValidatorToken = new InjectionToken<
   factory: () => new UploadClientRequiredParametersValidator(),
 });
 
+@Injectable()
 export class UploadClientRequiredParametersValidator implements IUploadClientRequiredParametersValidator {
-
   public validate(parameters: IUploadParameters | IAddMediaMetadataParameters): void {
     if (parameters == null) {
       throw new ArgumentNullException(nameof(parameters));

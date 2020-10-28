@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {IGetTrendsAtResult} from "../../Models/Interfaces/IGetTrendsAtResult";
 import {IGetTrendsAtParameters} from "../../Parameters/TrendsClient/GetTrendsAtParameters";
 import {ITrendLocation} from "../../Models/Interfaces/ITrendLocation";
@@ -5,7 +7,8 @@ import {IGetTrendsLocationParameters} from "../../Parameters/TrendsClient/GetTre
 import {ICoordinates} from "../../Models/Interfaces/ICoordinates";
 import {IGetTrendsLocationCloseToParameters} from "../../Parameters/TrendsClient/GetTrendsLocationCloseToParameters";
 import {ITrendsClientParametersValidator} from "../../../Core/Client/Validators/TrendsClientParametersValidator";
-import {InjectionToken} from "@angular/core";
+import {TrendsClient} from "../../../../sharebook/Client/Clients/TrendsClient";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface ITrendsClient {
   // Validate all the Trends client parameters
@@ -44,5 +47,5 @@ export interface ITrendsClient {
 
 export const ITrendsClientToken = new InjectionToken<ITrendsClient>('ITrendsClient', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new TrendsClient(Inject(TwitterClient)),
 });

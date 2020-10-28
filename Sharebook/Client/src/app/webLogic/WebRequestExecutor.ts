@@ -6,14 +6,17 @@ import {ITwitterRequest} from "../core/Public/Models/Interfaces/ITwitterRequest"
 import {ITwitterClientHandler} from "../core/Core/Web/ITwitterClientHandler";
 import {HttpResponseMessage} from "../core/Core/Web/HttpResponseMessage";
 import {Stream} from "stream";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 // Generate a Token that can be used to perform OAuth queries
 export class WebRequestExecutor implements IWebRequestExecutor {
   private readonly _twitterExceptionFactory: ITwitterExceptionFactory;
   private readonly _httpClientWebHelper: IHttpClientWebHelper;
   private readonly _webRequestResultFactory: IFactory<ITwitterResponse>;
 
-  constructor(twitterExceptionFactory: ITwitterExceptionFactory, httpClientWebHelper: IHttpClientWebHelper,
+  constructor(twitterExceptionFactory: ITwitterExceptionFactory,
+              httpClientWebHelper: IHttpClientWebHelper,
               webRequestResultFactory: IFactory<ITwitterResponse>) {
     this._twitterExceptionFactory = twitterExceptionFactory;
     this._httpClientWebHelper = httpClientWebHelper;

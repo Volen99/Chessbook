@@ -1,4 +1,6 @@
-﻿import {ITwitterIterator} from "../../Iterators/ITwitterIterator";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterIterator} from "../../Iterators/ITwitterIterator";
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
 import {ITweet} from "../../Models/Interfaces/ITweet";
 import {IGetTweetParameters} from "../../Parameters/TweetsClient/GetTweetParameters";
@@ -17,7 +19,8 @@ import {IUnfavoriteTweetParameters} from "../../Parameters/TweetsClient/UnFavori
 import {IOEmbedTweet} from "../../Models/Interfaces/IOEmbedTweet";
 import {IGetOEmbedTweetParameters} from "../../Parameters/TweetsClient/GetOEmbedTweetParameters";
 import {ITweetsClientParametersValidator} from "../../../Core/Client/Validators/TweetsClientParametersValidator";
-import {InjectionToken} from "@angular/core";
+import {TweetsClient} from "../../../../sharebook/Client/Clients/TweetsClient";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface ITweetsClient {
   // Validate all the Tweets client parameters
@@ -186,5 +189,5 @@ export interface ITweetsClient {
 
 export const ITweetsClientToken = new InjectionToken<ITweetsClient>('ITweetsClient', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new TweetsClient(Inject(TwitterClient)),
 });

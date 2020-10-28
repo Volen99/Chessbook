@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {IAccountSettingsClientParametersValidator} from "../../../Core/Client/Validators/AccountSettingsClientParametersValidator";
 import {IAccountSettings} from "../../Models/Interfaces/IAccountSettings";
 import {IGetAccountSettingsParameters} from "../../Parameters/AccountSettingsClient/GetAccountSettingsParameters";
@@ -8,7 +10,8 @@ import {IUpdateProfileImageParameters} from "../../Parameters/AccountSettingsCli
 import {IUpdateProfileBannerParameters} from "../../Parameters/AccountSettingsClient/UpdateProfileBannerParameters";
 import {IRemoveProfileBannerParameters} from "../../Parameters/AccountSettingsClient/RemoveProfileBannerParameters";
 import {IUser} from "../../Models/Interfaces/IUser";
-import {InjectionToken} from "@angular/core";
+import {AccountSettingsClient} from "../../../../sharebook/Client/Clients/AccountSettingsClient";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 // A client providing all the actions relative to the account settings
 export interface IAccountSettingsClient {
@@ -65,5 +68,5 @@ export interface IAccountSettingsClient {
 
 export const IAccountSettingsClientToken = new InjectionToken<IAccountSettingsClient>('IAccountSettingsClient', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new AccountSettingsClient(Inject(TwitterClient)),
 });

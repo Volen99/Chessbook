@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import Uri from "../../../../c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri";
 import {IAuthClientParametersValidator} from "../../../Core/Client/Validators/AuthClientParametersValidator";
 import {ICreateBearerTokenParameters} from "../../Parameters/Auth/CreateBearerTokenParameters";
@@ -8,7 +10,8 @@ import {IRequestCredentialsParameters} from "../../Parameters/Auth/RequestCreden
 import {InvalidateTokenResponse} from "../../Models/Authentication/InvalidateTokenResponse";
 import {IInvalidateBearerTokenParameters} from "../../Parameters/Auth/InvalidateBearerTokenParameters";
 import {IInvalidateAccessTokenParameters} from "../../Parameters/Auth/InvalidateAccessTokenParameters";
-import {InjectionToken} from "@angular/core";
+import {AuthClient} from "../../../../sharebook/Client/Clients/AuthClient";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface IAuthClient {
   // Validate all the Account activity client parameters
@@ -94,5 +97,5 @@ export interface IAuthClient {
 
 export const IAuthClientToken = new InjectionToken<IAuthClient>('IAuthClient', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new AuthClient(Inject(TwitterClient)),
 });

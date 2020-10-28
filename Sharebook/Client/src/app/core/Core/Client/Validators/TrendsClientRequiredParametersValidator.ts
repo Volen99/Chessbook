@@ -1,7 +1,8 @@
+import {Injectable, InjectionToken} from "@angular/core";
+
 import {ITrendsClientParametersValidator} from "./TrendsClientParametersValidator";
 import {TrendsParameters} from "./parameters-types";
 import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
-import {InjectionToken} from "@angular/core";
 
 export interface ITrendsClientRequiredParametersValidator extends ITrendsClientParametersValidator {
 }
@@ -11,6 +12,7 @@ export const ITrendsClientRequiredParametersValidatorToken = new InjectionToken<
   factory: () => new TrendsClientRequiredParametersValidator(),
 });
 
+@Injectable()
 export class TrendsClientRequiredParametersValidator implements ITrendsClientRequiredParametersValidator {
   public validate(parameters: TrendsParameters): void {
     if (parameters == null) {

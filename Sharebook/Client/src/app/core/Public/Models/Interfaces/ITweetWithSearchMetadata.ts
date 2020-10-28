@@ -1,7 +1,10 @@
 ﻿import {ITweet} from "./ITweet";
 import {ITweetFromSearchMetadata} from "./DTO/ITweetFromSearchMetadata";
-import {InjectionToken} from "@angular/core";
+import {Inject, InjectionToken} from "@angular/core";
 import {TweetWithSearchMetadata} from "../../../../logic/TweetWithSearchMetadata";
+import {TweetMode} from "../../Settings/TweetinviSettings";
+import {TweetWithSearchMetadataDTO} from "../../../Core/DTO/TweetWithSearchMetadataDTO";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface ITweetWithSearchMetadata extends ITweet {
   // Property containing search metadata.
@@ -10,5 +13,5 @@ export interface ITweetWithSearchMetadata extends ITweet {
 
 export const ITweetWithSearchMetadataToken = new InjectionToken<ITweetWithSearchMetadata>('ITweetWithSearchMetadata', {
   providedIn: 'root',
-  factory: () => new TweetWithSearchMetadata(),
+  factory: () => new TweetWithSearchMetadata(Inject(TweetWithSearchMetadataDTO), Inject(TweetMode), Inject(TwitterClient)),
 });

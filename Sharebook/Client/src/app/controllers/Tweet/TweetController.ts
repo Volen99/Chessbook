@@ -1,10 +1,10 @@
 ﻿import {ITweetController} from "../../core/Core/Controllers/ITweetController";
-import {IUploadQueryExecutor} from "../Upload/UploadQueryExecutor";
+import {IUploadQueryExecutor, IUploadQueryExecutorToken} from "../Upload/UploadQueryExecutor";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import { ITwitterRequest } from 'src/app/core/Public/Models/Interfaces/ITwitterRequest';
 import {TwitterRequest} from "../../core/Public/TwitterRequest";
-import {ITweetQueryExecutor} from "./TweetQueryExecutor";
-import {IPageCursorIteratorFactories} from "../../core/Core/Iterators/PageCursorIteratorFactories";
+import {ITweetQueryExecutor, ITweetQueryExecutorToken} from "./TweetQueryExecutor";
+import {IPageCursorIteratorFactories, IPageCursorIteratorFactoriesToken} from "../../core/Core/Iterators/PageCursorIteratorFactories";
 import {IGetTweetParameters} from "../../core/Public/Parameters/TweetsClient/GetTweetParameters";
 import {IGetTweetsParameters} from "../../core/Public/Parameters/TweetsClient/GetTweetsParameters";
 import {IPublishTweetParameters, PublishTweetParameters} from "../../core/Public/Parameters/TweetsClient/PublishTweetParameters";
@@ -25,14 +25,17 @@ import {
 } from "../../core/Public/Parameters/TweetsClient/GetFavoriteTweetsParameters";
 import {IDestroyTweetParameters} from "../../core/Public/Parameters/TweetsClient/DestroyTweetParameters";
 import {GetRetweeterIdsParameters, IGetRetweeterIdsParameters} from "../../core/Public/Parameters/TweetsClient/GetRetweeterIdsParameters";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class TweetController implements ITweetController {
   private readonly _tweetQueryExecutor: ITweetQueryExecutor;
   private readonly _uploadQueryExecutor: IUploadQueryExecutor;
   private readonly _pageCursorIteratorFactories: IPageCursorIteratorFactories;
 
-  constructor(tweetQueryExecutor: ITweetQueryExecutor, uploadQueryExecutor: IUploadQueryExecutor,
-              pageCursorIteratorFactories: IPageCursorIteratorFactories) {
+  constructor(@Inject(ITweetQueryExecutorToken) tweetQueryExecutor: ITweetQueryExecutor,
+              @Inject(IUploadQueryExecutorToken) uploadQueryExecutor: IUploadQueryExecutor,
+              @Inject(IPageCursorIteratorFactoriesToken) pageCursorIteratorFactories: IPageCursorIteratorFactories) {
     this._tweetQueryExecutor = tweetQueryExecutor;
     this._uploadQueryExecutor = uploadQueryExecutor;
     this._pageCursorIteratorFactories = pageCursorIteratorFactories;
@@ -47,20 +50,18 @@ export class TweetController implements ITweetController {
   }
 
   public async publishTweetAsync(parameters: IPublishTweetParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO>> {
-    parameters.mediaIds.AddRange(parameters.medias.map(x => x.uploadedMediaInfo.mediaId));
+    parameters.mediaIds = parameters.mediaIds.concat(parameters.medias.map(x => x.uploadedMediaInfo.mediaId)); // .AddRange()
     return await this._tweetQueryExecutor.publishTweetAsync(parameters, request); // .ConfigureAwait(false);
   }
 
-  public canBePublished(publishTweetParameters: IPublishTweetParameters): boolean {
+  public canBePublished(textOrParameters: string | IPublishTweetParameters): boolean {
     return true;
 
-    // return SharebookConsts.MAX_TWEET_SIZE >= EstimateTweetLength(publishTweetParameters);
-  }
-
-  public canBePublished(text: string): boolean {
-    return true;
-
+    // for string
     // return SharebookConsts.MAX_TWEET_SIZE >= EstimateTweetLength(text);
+
+    // for parameters
+    // return SharebookConsts.MAX_TWEET_SIZE >= EstimateTweetLength(publishTweetParameters);
   }
 
   public static estimateTweetLength(textOrParameters: string | IPublishTweetParameters): number {

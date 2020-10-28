@@ -1,12 +1,13 @@
 import {BaseRequester} from "../BaseRequester";
 import {ITwitterListsRequester} from "../../../core/Public/Client/Requesters/ITwitterListsRequester";
-import {ITwitterResult, ITwitterResultFactory} from "../../../core/Core/Web/TwitterResult";
-import {ITwitterListsClientRequiredParametersValidator} from "../../../core/Core/Client/Validators/TwitterListsClientRequiredParametersValidator";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
-import {ITwitterListController} from "../../../core/Core/Controllers/ITwitterListController";
-import {ITwitterClientFactories} from "../../../core/Public/Client/Tools/ITwitterClientFactories";
-import Tweetinvi from "../../../core/Core/Events/TweetinviGlobalEvents";
-import ITwitterClientEvents = Tweetinvi.Core.Events.ITwitterClientEvents;
+import {ITwitterResult, ITwitterResultFactory, ITwitterResultFactoryToken} from "../../../core/Core/Web/TwitterResult";
+import {
+  ITwitterListsClientRequiredParametersValidator,
+  ITwitterListsClientRequiredParametersValidatorToken
+} from "../../../core/Core/Client/Validators/TwitterListsClientRequiredParametersValidator";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
+import {ITwitterListController, ITwitterListControllerToken} from "../../../core/Core/Controllers/ITwitterListController";
+import {ITwitterClientFactories, ITwitterClientFactoriesToken} from "../../../core/Public/Client/Tools/ITwitterClientFactories";
 import {ICreateListParameters} from "../../../core/Public/Parameters/ListsClient/CreateListParameters";
 import {ITwitterListDTO} from "../../../core/Public/Models/Interfaces/DTO/ITwitterListDTO";
 import {IGetListParameters} from "../../../core/Public/Parameters/ListsClient/GetListParameters";
@@ -45,7 +46,10 @@ import {IUserCursorQueryResultDTO} from "../../../core/Public/Models/Interfaces/
 import {ITweetDTO} from "../../../core/Public/Models/Interfaces/DTO/ITweetDTO";
 import {ITwitterList} from "../../../core/Public/Models/Interfaces/ITwitterList";
 import {ITwitterRequest} from "../../../core/Public/Models/Interfaces/ITwitterRequest";
+import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class TwitterListsRequester extends BaseRequester implements ITwitterListsRequester {
   private readonly _twitterResultFactory: ITwitterResultFactory;
   private readonly _factories: ITwitterClientFactories;
@@ -53,13 +57,14 @@ export class TwitterListsRequester extends BaseRequester implements ITwitterList
   private readonly _validator: ITwitterListsClientRequiredParametersValidator;
 
   constructor(
-    client: ITwitterClient,
-    clientEvents: ITwitterClientEvents,
-    twitterResultFactory: ITwitterResultFactory,
-    factories: ITwitterClientFactories,
-    twitterListController: ITwitterListController,
-    validator: ITwitterListsClientRequiredParametersValidator) {
+    @Inject(ITwitterClientToken) client: ITwitterClient,
+    @Inject(ITwitterClientEventsToken) clientEvents: ITwitterClientEvents,
+    @Inject(ITwitterResultFactoryToken) twitterResultFactory: ITwitterResultFactory,
+    @Inject(ITwitterClientFactoriesToken) factories: ITwitterClientFactories,
+    @Inject(ITwitterListControllerToken) twitterListController: ITwitterListController,
+    @Inject(ITwitterListsClientRequiredParametersValidatorToken) validator: ITwitterListsClientRequiredParametersValidator) {
     super(client, clientEvents);
+
     this._twitterResultFactory = twitterResultFactory;
     this._factories = factories;
     this._twitterListController = twitterListController;

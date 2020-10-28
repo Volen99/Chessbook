@@ -13,7 +13,17 @@ import {IGetAccountActivitySubscriptionsParameters} from "../../Parameters/Accou
 import {IWebhookEnvironmentSubscriptionsDTO} from "../../Models/Interfaces/DTO/Webhooks/IWebhookEnvironmentSubscriptionsDTO";
 import {IUnsubscribeFromAccountActivityParameters} from "../../Parameters/AccountActivity/UnsubscribeFromAccountActivityParameters";
 import {IGetAccountActivityWebhookEnvironmentsResultDTO} from "../../Models/Interfaces/DTO/Webhooks/IGetAccountActivityWebhookEnvironmentsResultDTO";
-import {InjectionToken} from "@angular/core";
+import {Inject, InjectionToken} from "@angular/core";
+import {AccountActivityRequester} from "../../../../sharebook/Client/Requesters/AccountActivityRequester";
+import {ITwitterClient} from "../../ITwitterClient";
+import {ITwitterClientEvents, TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
+import {
+  AccountActivityClientRequiredParametersValidator,
+  IAccountActivityClientRequiredParametersValidator
+} from "../../../Core/Client/Validators/AccountActivityClientRequiredParameterValidator";
+import {IAccountActivityController} from "../../../Core/Controllers/IAccountActivityController";
+import {AccountActivityController} from "../../../../controllers/AccountActivity/AccountActivityController";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface IAccountActivityRequester {
   // <summary>
@@ -84,5 +94,6 @@ export interface IAccountActivityRequester {
 
 export const IAccountActivityRequesterToken = new InjectionToken<IAccountActivityRequester>('IAccountActivityRequester', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new AccountActivityRequester(Inject(TwitterClient), Inject(TwitterClientEvents),
+    Inject(AccountActivityClientRequiredParametersValidator), Inject(AccountActivityController)),
 });

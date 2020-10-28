@@ -1,6 +1,6 @@
 ﻿import {ITimelineRequestParameters, TimelineRequestParameters} from "../TimelineRequestParameters";
 import {TwitterLimits} from "../../Settings/TwitterLimits";
-import {InjectionToken} from "@angular/core";
+import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 // For more information visit: https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-retweets_of_me
 export interface IGetRetweetsOfMeTimelineParameters extends ITimelineRequestParameters {
@@ -13,8 +13,9 @@ export const IGetRetweetsOfMeTimelineParametersToken = new InjectionToken<IGetRe
   factory: () => new GetRetweetsOfMeTimelineParameters(),
 });
 
+@Injectable()
 export class GetRetweetsOfMeTimelineParameters extends TimelineRequestParameters implements IGetRetweetsOfMeTimelineParameters {
-  constructor(source?: IGetRetweetsOfMeTimelineParameters) {
+  constructor(@Inject(IGetRetweetsOfMeTimelineParametersToken) source?: IGetRetweetsOfMeTimelineParameters) {
     if (source) {
       super(source);
 

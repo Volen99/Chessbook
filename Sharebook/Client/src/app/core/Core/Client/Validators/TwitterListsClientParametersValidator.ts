@@ -1,3 +1,5 @@
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+
 import {ICreateListParameters} from "../../../Public/Parameters/ListsClient/CreateListParameters";
 import {IGetListParameters} from "../../../Public/Parameters/ListsClient/GetListParameters";
 import {IGetListsSubscribedByUserParameters} from "../../../Public/Parameters/ListsClient/GetListsSubscribedByUserParameters";
@@ -20,13 +22,16 @@ import {IGetListSubscribersParameters} from "../../../Public/Parameters/ListsCli
 import {IGetAccountListSubscriptionsParameters} from "../../../Public/Parameters/ListsClient/Subscribers/GetAccountListSubscriptionsParameters";
 import {IGetUserListSubscriptionsParameters} from "../../../Public/Parameters/ListsClient/Subscribers/GetUserListSubscriptionsParameters";
 import {ICheckIfUserIsSubscriberOfListParameters} from "../../../Public/Parameters/ListsClient/Subscribers/CheckIfUserIsSubscriberOfListParameters";
-import {ITwitterClient} from "../../../Public/ITwitterClient";
+import {ITwitterClient, ITwitterClientToken} from "../../../Public/ITwitterClient";
 import {TwitterLimits} from 'src/app/core/Public/Settings/TwitterLimits';
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
 import ArgumentOutOfRangeException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentOutOfRangeException";
-import {ITwitterListsClientRequiredParametersValidator} from "./TwitterListsClientRequiredParametersValidator";
+import {
+  ITwitterListsClientRequiredParametersValidator,
+  ITwitterListsClientRequiredParametersValidatorToken, TwitterListsClientRequiredParametersValidator
+} from "./TwitterListsClientRequiredParametersValidator";
 import {TwitterListParameters} from "./parameters-types";
-import {InjectionToken} from "@angular/core";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface ITwitterListsClientParametersValidator {
   validate(parameters: ICreateListParameters): void;
@@ -78,16 +83,18 @@ export interface ITwitterListsClientParametersValidator {
 
 export const ITwitterListsClientParametersValidatorToken = new InjectionToken<ITwitterListsClientParametersValidator>('ITwitterListsClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new TwitterListsClientParametersValidator(),
+  factory: () => new TwitterListsClientParametersValidator(Inject(TwitterClient), Inject(TwitterListsClientRequiredParametersValidator)),
 });
 
 type GetListsParameters = IGetListsOwnedByAccountParameters | IGetListsOwnedByUserParameters;
 
+@Injectable()
 export class TwitterListsClientParametersValidator implements ITwitterListsClientParametersValidator {
   private readonly _client: ITwitterClient;
   private readonly _twitterListsClientRequiredParametersValidator: ITwitterListsClientRequiredParametersValidator;
 
-  constructor(client: ITwitterClient, twitterListsClientRequiredParametersValidator: ITwitterListsClientRequiredParametersValidator) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(ITwitterListsClientRequiredParametersValidatorToken) twitterListsClientRequiredParametersValidator: ITwitterListsClientRequiredParametersValidator) {
     this._client = client;
     this._twitterListsClientRequiredParametersValidator = twitterListsClientRequiredParametersValidator;
   }

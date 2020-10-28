@@ -1,17 +1,67 @@
-import {IAccountActivityClientParametersValidator} from "./AccountActivityClientParametersValidator";
-import {IAccountSettingsClientParametersValidator} from "./AccountSettingsClientParametersValidator";
-import {IAuthClientParametersValidator} from "./AuthClientParametersValidator";
-import {IHelpClientParametersValidator} from "./HelpClientParametersValidator";
-import {IMessagesClientParametersValidator} from "./MessageClientParametersValidator";
-import {ITwitterListsClientParametersValidator} from "./TwitterListsClientParametersValidator";
-import {IUploadClientParametersValidator} from "./UploadClientParametersValidator";
-import {IUsersClientParametersValidator} from "./UsersClientParametersValidator";
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+
+import {
+  AccountActivityClientParametersValidator,
+  IAccountActivityClientParametersValidator,
+  IAccountActivityClientParametersValidatorToken
+} from "./AccountActivityClientParametersValidator";
+import {
+  AccountSettingsClientParametersValidator,
+  IAccountSettingsClientParametersValidator,
+  IAccountSettingsClientParametersValidatorToken
+} from "./AccountSettingsClientParametersValidator";
+import {
+  AuthClientParametersValidator,
+  IAuthClientParametersValidator,
+  IAuthClientParametersValidatorToken
+} from "./AuthClientParametersValidator";
+import {
+  HelpClientParametersValidator,
+  IHelpClientParametersValidator,
+  IHelpClientParametersValidatorToken
+} from "./HelpClientParametersValidator";
+import {
+  IMessagesClientParametersValidator,
+  IMessagesClientParametersValidatorToken,
+  MessagesClientParametersValidator
+} from "./MessageClientParametersValidator";
+import {
+  ITwitterListsClientParametersValidator,
+  ITwitterListsClientParametersValidatorToken,
+  TwitterListsClientParametersValidator
+} from "./TwitterListsClientParametersValidator";
+import {
+  IUploadClientParametersValidator,
+  IUploadClientParametersValidatorToken,
+  UploadClientParametersValidator
+} from "./UploadClientParametersValidator";
+import {
+  IUsersClientParametersValidator,
+  IUsersClientParametersValidatorToken,
+  UsersClientParametersValidator
+} from "./UsersClientParametersValidator";
 import {IUploadParameters} from "../../../Public/Parameters/Upload/UploadBinaryParameters";
 import {AddMediaMetadataParameters} from "../../../Public/Parameters/Upload/AddMediaMetadataParameters";
-import {ISearchClientParametersValidator} from "./SearchClientParametersValidator";
-import {ITrendsClientParametersValidator} from "./TrendsClientParametersValidator";
-import {ITimelineClientParametersValidator} from "./TimelineClientParametersValidator";
-import {ITweetsClientParametersValidator} from "./TweetsClientParametersValidator";
+import {
+  ISearchClientParametersValidator,
+  ISearchClientParametersValidatorToken,
+  SearchClientParametersValidator
+} from "./SearchClientParametersValidator";
+import {
+  ITrendsClientParametersValidator,
+  ITrendsClientParametersValidatorToken,
+  TrendsClientParametersValidator
+} from "./TrendsClientParametersValidator";
+import {
+  ITimelineClientParametersValidator,
+  ITimelineClientParametersValidatorToken,
+  TimelineClientParametersValidator
+} from "./TimelineClientParametersValidator";
+import {
+  ITweetsClientParametersValidator,
+  ITweetsClientParametersValidatorToken,
+  TweetsClientParametersValidator
+} from "./TweetsClientParametersValidator";
 import {ITwitterRequest} from 'src/app/core/Public/Models/Interfaces/ITwitterRequest';
 import {TwitterListParameters} from "../../../Public/Parameters/ListsClient/TwitterListParameters";
 import {
@@ -22,7 +72,6 @@ import {
   MessagesParameters,
   SearchParameters, TimelineParameters, TrendsParameters, TweetsParameters, UploadParameters, UserParameters
 } from "./parameters-types";
-import {InjectionToken} from "@angular/core";
 
 export interface IParametersValidator extends IAccountActivityClientParametersValidator,
   IAccountSettingsClientParametersValidator,
@@ -40,9 +89,22 @@ export interface IParametersValidator extends IAccountActivityClientParametersVa
 
 export const IParametersValidatorToken = new InjectionToken<IParametersValidator>('IParametersValidator', {
   providedIn: 'root',
-  factory: () => new ParametersValidator(),
+  factory: () => new ParametersValidator(
+    Inject(AccountActivityClientParametersValidator),
+    Inject(AccountSettingsClientParametersValidator),
+    Inject(AuthClientParametersValidator),
+    Inject(HelpClientParametersValidator),
+    Inject(MessagesClientParametersValidator),
+    Inject(SearchClientParametersValidator),
+    Inject(TwitterListsClientParametersValidator),
+    Inject(TrendsClientParametersValidator),
+    Inject(TimelineClientParametersValidator),
+    Inject(TweetsClientParametersValidator),
+    Inject(UploadClientParametersValidator),
+    Inject(UsersClientParametersValidator)),
 });
 
+@Injectable()
 export class ParametersValidator implements IParametersValidator {
   private readonly _accountActivityClientParametersValidator: IAccountActivityClientParametersValidator;
   private readonly _accountSettingsClientParametersValidator: IAccountSettingsClientParametersValidator;
@@ -58,18 +120,18 @@ export class ParametersValidator implements IParametersValidator {
   private readonly _usersClientParametersValidator: IUsersClientParametersValidator;
 
   constructor(
-    accountActivityClientParametersValidator: IAccountActivityClientParametersValidator,
-    accountSettingsClientParametersValidator: IAccountSettingsClientParametersValidator,
-    authClientParametersValidator: IAuthClientParametersValidator,
-    helpClientParametersValidator: IHelpClientParametersValidator,
-    messagesClientParametersValidator: IMessagesClientParametersValidator,
-    searchClientParametersValidator: ISearchClientParametersValidator,
-    twitterListsClientParametersValidator: ITwitterListsClientParametersValidator,
-    trendsClientParametersValidator: ITrendsClientParametersValidator,
-    timelineClientParametersValidator: ITimelineClientParametersValidator,
-    tweetsClientParametersValidator: ITweetsClientParametersValidator,
-    uploadClientParametersValidator: IUploadClientParametersValidator,
-    usersClientParametersValidator: IUsersClientParametersValidator) {
+    @Inject(IAccountActivityClientParametersValidatorToken) accountActivityClientParametersValidator: IAccountActivityClientParametersValidator,
+    @Inject(IAccountSettingsClientParametersValidatorToken) accountSettingsClientParametersValidator: IAccountSettingsClientParametersValidator,
+    @Inject(IAuthClientParametersValidatorToken) authClientParametersValidator: IAuthClientParametersValidator,
+    @Inject(IHelpClientParametersValidatorToken) helpClientParametersValidator: IHelpClientParametersValidator,
+    @Inject(IMessagesClientParametersValidatorToken) messagesClientParametersValidator: IMessagesClientParametersValidator,
+    @Inject(ISearchClientParametersValidatorToken) searchClientParametersValidator: ISearchClientParametersValidator,
+    @Inject(ITwitterListsClientParametersValidatorToken) twitterListsClientParametersValidator: ITwitterListsClientParametersValidator,
+    @Inject(ITrendsClientParametersValidatorToken) trendsClientParametersValidator: ITrendsClientParametersValidator,
+    @Inject(ITimelineClientParametersValidatorToken) timelineClientParametersValidator: ITimelineClientParametersValidator,
+    @Inject(ITweetsClientParametersValidatorToken) tweetsClientParametersValidator: ITweetsClientParametersValidator,
+    @Inject(IUploadClientParametersValidatorToken) uploadClientParametersValidator: IUploadClientParametersValidator,
+    @Inject(IUsersClientParametersValidatorToken) usersClientParametersValidator: IUsersClientParametersValidator) {
     this._accountActivityClientParametersValidator = accountActivityClientParametersValidator;
     this._accountSettingsClientParametersValidator = accountSettingsClientParametersValidator;
     this._authClientParametersValidator = authClientParametersValidator;

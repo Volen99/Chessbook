@@ -1,9 +1,12 @@
 ﻿import {BaseRequester} from "../BaseRequester";
 import {IUsersRequester} from "../../../core/Public/Client/Requesters/IUsersRequester";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
-import {IUserController} from "../../../core/Core/Controllers/IUserController";
-import {IUsersClientRequiredParametersValidator} from "../../../core/Core/Client/Validators/UsersClientRequiredParametersValidator";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {IUserController, IUserControllerToken} from "../../../core/Core/Controllers/IUserController";
+import {
+  IUsersClientRequiredParametersValidator,
+  IUsersClientRequiredParametersValidatorToken
+} from "../../../core/Core/Client/Validators/UsersClientRequiredParametersValidator";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {IGetAuthenticatedUserParameters} from "../../../core/Public/Parameters/AccountClient/GetAuthenticatedUserParameters";
 import {IUserDTO} from "../../../core/Public/Models/Interfaces/DTO/IUserDTO";
 import {IGetUserParameters} from "../../../core/Public/Parameters/UsersClient/GetUserParameters";
@@ -34,13 +37,18 @@ import {IMuteUserParameters} from "../../../core/Public/Parameters/AccountClient
 import {IUnmuteUserParameters} from "../../../core/Public/Parameters/AccountClient/UnMuteUserParameters";
 import {IGetProfileImageParameters} from "../../../core/Public/Parameters/UsersClient/GetProfileImageParameters";
 import {Stream} from "stream";
+import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class UsersRequester extends BaseRequester implements IUsersRequester {
   private readonly _userController: IUserController;
   private readonly _validator: IUsersClientRequiredParametersValidator;
 
-  constructor(client: ITwitterClient, clientEvents: ITwitterClientEvents, userController: IUserController,
-              validator: IUsersClientRequiredParametersValidator) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(ITwitterClientEventsToken) clientEvents: ITwitterClientEvents,
+              @Inject(IUserControllerToken) userController: IUserController,
+              @Inject(IUsersClientRequiredParametersValidatorToken) validator: IUsersClientRequiredParametersValidator) {
     super(client, clientEvents);
 
     this._userController = userController;

@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {IGetAuthenticatedUserParameters} from "../../Parameters/AccountClient/GetAuthenticatedUserParameters";
 import {IUserDTO} from "../../Models/Interfaces/DTO/IUserDTO";
@@ -29,7 +31,11 @@ import {IMuteUserParameters} from "../../Parameters/AccountClient/MuteUserParame
 import {IUnmuteUserParameters} from "../../Parameters/AccountClient/UnMuteUserParameters";
 import {IGetProfileImageParameters} from "../../Parameters/UsersClient/GetProfileImageParameters";
 import {Stream} from "stream";
-import {InjectionToken} from "@angular/core";
+import {UsersRequester} from "../../../../sharebook/Client/Requesters/UsersRequester";
+import {UsersClientRequiredParametersValidator} from "../../../Core/Client/Validators/UsersClientRequiredParametersValidator";
+import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
+import {UserController} from "../../../../controllers/User/UserController";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 /// <summary>
 /// A client providing all the methods related with users.
@@ -202,5 +208,5 @@ export interface IUsersRequester {
 
 export const IUsersRequesterToken = new InjectionToken<IUsersRequester>('IUsersRequester', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new UsersRequester(Inject(TwitterClient), Inject(TwitterClientEvents), Inject(UserController), Inject(UsersClientRequiredParametersValidator)),
 });

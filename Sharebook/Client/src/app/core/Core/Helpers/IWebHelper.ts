@@ -1,8 +1,9 @@
-﻿import Uri from "../../../c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri";
+﻿import {InjectionToken} from "@angular/core";
+
+import Uri from "../../../c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri";
 import Dictionary from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
 import {Stream} from "stream";
 import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
-import {InjectionToken} from "@angular/core";
 import {WebHelper} from "../../../webLogic/WebHelper";
 
 export interface IWebHelper {

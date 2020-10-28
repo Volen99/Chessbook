@@ -35,5 +35,5 @@ export interface IStreamsClient {
 
 export const IStreamsClientToken = new InjectionToken<IStreamsClient>('IStreamsClient', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new StreamsClient(),
 });

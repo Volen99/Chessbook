@@ -1,9 +1,12 @@
 import {BaseRequester} from "../BaseRequester";
 import {IMessageRequester} from "../../../core/Public/Client/Requesters/IMessageRequester";
-import {IMessagesClientParametersValidator} from "../../../core/Core/Client/Validators/MessageClientParametersValidator";
+import {
+  IMessagesClientParametersValidator,
+  IMessagesClientParametersValidatorToken
+} from "../../../core/Core/Client/Validators/MessageClientParametersValidator";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
-import {IMessageController} from "../../../core/Core/Controllers/IMessageController";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {IMessageController, IMessageControllerToken} from "../../../core/Core/Controllers/IMessageController";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
 import {IPublishMessageParameters} from "../../../core/Public/Parameters/MessageClient/PublishMessageParameters";
 import {ICreateMessageDTO} from "../../../core/Public/Models/Interfaces/DTO/ICreateMessageDTO";
@@ -13,14 +16,17 @@ import {IGetMessageParameters} from "../../../core/Public/Parameters/MessageClie
 import {IGetMessagesParameters} from "../../../core/Public/Parameters/MessageClient/GetMessagesParameters";
 import {ITwitterPageIterator} from "../../../core/Core/Iterators/TwitterPageIterator";
 import {IMessageCursorQueryResultDTO} from "../../../core/Public/Models/Interfaces/DTO/QueryDTO/IMessageCursorQueryResultDTO";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class MessageRequester extends BaseRequester implements IMessageRequester {
   private readonly _messageController: IMessageController;
   private readonly _messagesClientParametersValidator: IMessagesClientParametersValidator;
 
-  constructor(client: ITwitterClient, messageController: IMessageController,
-              messagesClientParametersValidator: IMessagesClientParametersValidator,
-              twitterClientEvents: ITwitterClientEvents) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(IMessageControllerToken) messageController: IMessageController,
+              @Inject(IMessagesClientParametersValidatorToken) messagesClientParametersValidator: IMessagesClientParametersValidator,
+              @Inject(ITwitterClientEventsToken) twitterClientEvents: ITwitterClientEvents) {
     super(client, twitterClientEvents);
     this._messageController = messageController;
     this._messagesClientParametersValidator = messagesClientParametersValidator;

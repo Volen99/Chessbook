@@ -1,5 +1,5 @@
 import {ITrendsClient} from "../../../core/Public/Client/Clients/ITrendsClient";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {ITrendsClientParametersValidator} from "../../../core/Core/Client/Validators/TrendsClientParametersValidator";
 import {IGetTrendsAtResult} from "../../../core/Public/Models/Interfaces/IGetTrendsAtResult";
 import {GetTrendsAtParameters, IGetTrendsAtParameters} from "../../../core/Public/Parameters/TrendsClient/GetTrendsAtParameters";
@@ -14,11 +14,13 @@ import {
 } from "../../../core/Public/Parameters/TrendsClient/GetTrendsLocationCloseToParameters";
 import {ICoordinates} from "../../../core/Public/Models/Interfaces/ICoordinates";
 import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class TrendsClient implements ITrendsClient {
   private readonly _client: ITwitterClient;
 
-  constructor(client: ITwitterClient) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient) {
     this._client = client;
   }
 

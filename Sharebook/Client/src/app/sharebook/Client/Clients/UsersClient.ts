@@ -1,9 +1,9 @@
 ﻿import {IUserIdentifier} from "../../../core/Public/Models/Interfaces/IUserIdentifier";
 import {UserIdentifier} from "../../../core/Public/Models/UserIdentifier";
 import {IUsersClient} from "../../../core/Public/Client/Clients/IUsersClient";
-import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {IUsersRequester} from "../../../core/Public/Client/Requesters/IUsersRequester";
-import {IMultiLevelCursorIteratorFactory} from "../../../core/Core/Iterators/MultiLevelCursorIteratorFactory";
+import {IMultiLevelCursorIteratorFactory, IMultiLevelCursorIteratorFactoryToken} from "../../../core/Core/Iterators/MultiLevelCursorIteratorFactory";
 import {IAuthenticatedUser} from "../../../core/Public/Models/Interfaces/IAuthenticatedUser";
 import {
   GetAuthenticatedUserParameters,
@@ -85,13 +85,16 @@ import {GetMutedUsersParameters, IGetMutedUsersParameters} from "../../../core/P
 import {IMuteUserParameters} from "../../../core/Public/Parameters/AccountClient/MuteUserParameters";
 import {IUnmuteUserParameters, UnmuteUserParameters} from "../../../core/Public/Parameters/AccountClient/UnMuteUserParameters";
 import {Stream} from "stream";
+import {Inject, Injectable} from "@angular/core";
 
+@Injectable()
 export class UsersClient implements IUsersClient {
   private readonly _client: ITwitterClient;
   private readonly _usersRequester: IUsersRequester;
   private readonly _multiLevelCursorIteratorFactory: IMultiLevelCursorIteratorFactory;
 
-  constructor(client: ITwitterClient, multiLevelCursorIteratorFactory: IMultiLevelCursorIteratorFactory) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+              @Inject(IMultiLevelCursorIteratorFactoryToken) multiLevelCursorIteratorFactory: IMultiLevelCursorIteratorFactory) {
     this._client = client;
     this._usersRequester = client.raw.users;
     this._multiLevelCursorIteratorFactory = multiLevelCursorIteratorFactory;
