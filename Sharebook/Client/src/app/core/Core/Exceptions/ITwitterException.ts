@@ -3,12 +3,12 @@
 import {ITwitterExceptionInfo} from "./ITwitterExceptionInfo";
 import {ITwitterQuery} from "../../Public/Models/Interfaces/ITwitterQuery";
 import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {TwitterException} from "../../Public/Exceptions/TwitterException";
+import {SharebookException} from "../../Public/Exceptions/SharebookException";
 import {TwitterRequest} from "../../Public/TwitterRequest";
-import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
+import Exception from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exception";
 
 export interface ITwitterException {
-  webException: WebException;
+  webException: Exception; // WebException;
 
   URL: string;
   statusCode: number;
@@ -20,5 +20,5 @@ export interface ITwitterException {
 
 export const ITwitterExceptionToken = new InjectionToken<ITwitterException>('ITwitterException', {
   providedIn: 'root',
-  factory: () => new TwitterException(Inject(TwitterRequest), Inject(String), Inject(Number)),
+  factory: () => new SharebookException(Inject(TwitterRequest), Inject(String), Inject(Number)),
 });

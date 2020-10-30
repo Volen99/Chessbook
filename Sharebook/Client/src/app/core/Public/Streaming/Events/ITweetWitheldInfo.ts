@@ -3,5 +3,5 @@
 export interface ITweetWitheldInfo {
   Id: number;
   UserId: number;
-  WitheldInCountries: IEnumerable<string>;
+  WitheldInCountries: Iterable<string>;
 }

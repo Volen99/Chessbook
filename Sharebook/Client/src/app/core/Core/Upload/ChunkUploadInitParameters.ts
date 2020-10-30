@@ -1,5 +1,6 @@
-﻿import {CustomRequestParameters, ICustomRequestParameters} from "../../Public/Parameters/CustomRequestParameters";
-import {Injectable, InjectionToken} from "@angular/core";
+﻿import {Injectable, InjectionToken} from "@angular/core";
+
+import {CustomRequestParameters, ICustomRequestParameters} from "../../Public/Parameters/CustomRequestParameters";
 
 export interface IChunkUploadInitParameters {
   mediaType: string;

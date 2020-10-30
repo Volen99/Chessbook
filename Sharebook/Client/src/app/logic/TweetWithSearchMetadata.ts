@@ -1,7 +1,7 @@
 ﻿import {Tweet} from "../core/Core/Models/Tweet";
 import {ITweetWithSearchMetadata} from "../core/Public/Models/Interfaces/ITweetWithSearchMetadata";
 import {ITweetWithSearchMetadataDTO} from "../core/Public/Models/Interfaces/DTO/ITweetWithSearchMetadataDTO";
-import {TweetMode} from "../core/Public/Settings/TweetinviSettings";
+import {TweetMode} from "../core/Public/Settings/SharebookSettings";
 import {ITwitterClient} from "../core/Public/ITwitterClient";
 import {ITweetFromSearchMetadata} from '../core/Public/Models/Interfaces/DTO/ITweetFromSearchMetadata';
 

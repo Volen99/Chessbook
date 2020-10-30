@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {ICreateBearerTokenParameters} from "../../Parameters/Auth/CreateBearerTokenParameters";
 import {CreateTokenResponseDTO} from "../../../Core/DTO/CreateTokenResponseDTO";
@@ -8,15 +10,9 @@ import {ITwitterCredentials} from "../../Models/Authentication/TwitterCredential
 import {IInvalidateBearerTokenParameters} from "../../Parameters/Auth/InvalidateBearerTokenParameters";
 import {InvalidateTokenResponse} from "../../Models/Authentication/InvalidateTokenResponse";
 import {IInvalidateAccessTokenParameters} from "../../Parameters/Auth/InvalidateAccessTokenParameters";
-import {Inject, InjectionToken} from "@angular/core";
 import {AuthRequester} from "../../../../sharebook/Client/Requesters/AuthRequester";
-import {ITwitterClient} from "../../ITwitterClient";
-import {ITwitterClientEvents, TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
-import {IAuthController} from "../../../Core/Controllers/IAuthController";
-import {
-  AuthClientRequiredParametersValidator,
-  IAuthClientRequiredParametersValidator
-} from "../../../Core/Client/Validators/AuthClientRequiredParametersValidator";
+import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
+import {AuthClientRequiredParametersValidator} from "../../../Core/Client/Validators/AuthClientRequiredParametersValidator";
 import {AuthController} from "../../../../controllers/Auth/AuthController";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
 

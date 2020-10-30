@@ -1,4 +1,4 @@
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {GetCursorUsersOptionalParameters, IGetCursorUsersOptionalParameters} from "../Optionals/GetCursorUsersOptionalParameters";
 import {IGetUserIdsYouRequestedToFollowParameters} from "./GetUserIdsYouRequestedToFollowParameters";
 
@@ -16,7 +16,7 @@ export class GetUsersYouRequestedToFollowParameters extends GetCursorUsersOption
       return;
     }
 
-    this.getUsersPageSize = TwitterLimits.DEFAULTS.USERS_GET_USERS_MAX_SIZE;
+    this.getUsersPageSize = SharebookLimits.DEFAULTS.USERS_GET_USERS_MAX_SIZE;
   }
 
   public getUsersPageSize: number;

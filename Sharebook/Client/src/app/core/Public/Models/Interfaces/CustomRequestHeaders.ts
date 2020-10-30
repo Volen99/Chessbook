@@ -1,4 +1,3 @@
-import IEnumerable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable";
 import {Dictionary} from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary';
 import {IEnumerator} from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerator';
 
@@ -27,7 +26,7 @@ export class CustomHeader {
   public behaviour: CustomHeaderWill;
 }
 
-export class CustomRequestHeaders { // : IEnumerable<CustomHeader>
+export class CustomRequestHeaders implements Iterable<CustomHeader> { // : IEnumerable<CustomHeader>
   private _customHeaders: Dictionary<string, CustomHeader>;
 
   constructor() {
@@ -36,7 +35,7 @@ export class CustomRequestHeaders { // : IEnumerable<CustomHeader>
 
   isEndless?: boolean;
 
-  public add(keyOrCustomHeader: string | CustomHeader, valueOrValues: string | Array<string> | IEnumerable<string>,
+  public add(keyOrCustomHeader: string | CustomHeader, valueOrValues: string | Array<string> | Iterable<string>,
              behaviour?: CustomHeaderWill): void {
     if (CustomRequestHeaders.isCustomHeader(keyOrCustomHeader)) {
       if (keyOrCustomHeader.values == null) {
@@ -57,7 +56,7 @@ export class CustomRequestHeaders { // : IEnumerable<CustomHeader>
       if (behaviour) {
         behaviourCurrent = behaviour;
       } else {
-        behaviour = CustomHeaderWill.OverrideGeneratedHeaders;
+        behaviourCurrent = CustomHeaderWill.OverrideGeneratedHeaders;
       }
 
       let currentValue: CustomHeader;
@@ -65,7 +64,7 @@ export class CustomRequestHeaders { // : IEnumerable<CustomHeader>
         currentValue = new CustomHeader(keyOrCustomHeader);
       }
 
-      currentValue.behaviour = behaviour;
+      currentValue.behaviour = behaviourCurrent;
       currentValue.values = currentValue.values.concat(values);     // AddRange
       this._customHeaders[keyOrCustomHeader] = currentValue;
     }
@@ -80,6 +79,10 @@ export class CustomRequestHeaders { // : IEnumerable<CustomHeader>
   }
 
   // public CustomHeader this[string key] => Get(key);
+
+  [Symbol.iterator](): Iterator<CustomHeader, any, undefined> {
+    throw new Error("Method not implemented.");
+  }
 
   getEnumerator(): IEnumerator<CustomHeader> {
     return; // this._customHeaders.values.getEnumerator();

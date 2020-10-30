@@ -1,6 +1,7 @@
-﻿import {ITimelineRequestParameters, TimelineRequestParameters} from "../TimelineRequestParameters";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
-import {Inject, InjectionToken} from "@angular/core";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITimelineRequestParameters, TimelineRequestParameters} from "../TimelineRequestParameters";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 
 // For more information visit : https://developer.twitter.com/en/docs/tweets/timelines/api-reference/get-statuses-mentions_timeline
 export interface IGetMentionsTimelineParameters extends ITimelineRequestParameters {
@@ -18,7 +19,7 @@ export class GetMentionsTimelineParameters extends TimelineRequestParameters imp
     } else {
       super();
 
-      super.pageSize = TwitterLimits.DEFAULTS.TIMELINE_MENTIONS_PAGE_MAX_PAGE_SIZE;
+      super.pageSize = SharebookLimits.DEFAULTS.TIMELINE_MENTIONS_PAGE_MAX_PAGE_SIZE;
     }
   }
 

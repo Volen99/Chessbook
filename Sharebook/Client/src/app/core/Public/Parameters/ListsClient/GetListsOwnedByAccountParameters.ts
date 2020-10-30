@@ -1,5 +1,5 @@
 import {CursorQueryParameters, ICursorQueryParameters} from "../CursorQueryParameters";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 
 // For more information visit : https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-ownerships
 export interface IGetListsOwnedByAccountParameters extends ICursorQueryParameters {
@@ -11,7 +11,7 @@ export class GetListsOwnedByAccountParameters extends CursorQueryParameters impl
       super(parameters);
     } else {
       super();
-      super.pageSize = TwitterLimits.DEFAULTS.LISTS_GET_USER_OWNED_LISTS_MAX_SIZE;
+      super.pageSize = SharebookLimits.DEFAULTS.LISTS_GET_USER_OWNED_LISTS_MAX_SIZE;
     }
   }
 }

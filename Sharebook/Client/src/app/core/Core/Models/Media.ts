@@ -14,8 +14,8 @@ export class Media implements IMedia {
   public contentType: string;
 
   get id(): number {    // long?
-    // Once the media has been uploaded there is no possible way for developers to change the value of the
-    // media Id. The _mediaId parameter is therefore ignored
+    // Once the media has been uploaded there is no possible way for developers to change the value of the media Id.
+    // The _mediaId parameter is therefore ignored
     if (this.hasBeenUploaded) {
       return this.uploadedMediaInfo.mediaId;
     }

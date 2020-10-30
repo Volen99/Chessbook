@@ -32,7 +32,7 @@ import {
 } from "../../../core/Public/Parameters/TweetsClient/UnFavoriteTweetParameters";
 import {IOEmbedTweet} from "../../../core/Public/Models/Interfaces/IOEmbedTweet";
 import {GetOEmbedTweetParameters, IGetOEmbedTweetParameters} from "../../../core/Public/Parameters/TweetsClient/GetOEmbedTweetParameters";
-import {TwitterException} from "../../../core/Public/Exceptions/TwitterException";
+import {SharebookException} from "../../../core/Public/Exceptions/SharebookException";
 import {Inject, Injectable} from "@angular/core";
 
 @Injectable()
@@ -220,7 +220,7 @@ export class TweetsClient implements ITweetsClient {
         tweetDTOCurrent.favorited = true;
 
         return;
-      } catch (ex: TwitterException) {
+      } catch (ex: SharebookException) {
         let tweetWasAlreadyFavorited = ex.twitterExceptionInfos != null && ex.twitterExceptionInfos.Any() && ex.twitterExceptionInfos.First().Code === 139;
         if (tweetWasAlreadyFavorited) {
           tweetDTOCurrent.favorited = true;

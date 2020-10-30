@@ -33,7 +33,7 @@
     ],
     "member-access": false,
     "member-ordering": [
-      true,
+      false,
       {
         "order": [
           "static-field",
@@ -90,7 +90,8 @@
     "prefer-const": false,
     "semicolon": true,
     "no-trailing-whitespace": false, // muhahahaha
-    "no-empty-interface": false
+    "no-empty-interface": false,
+    "unified-signatures": false
   },
   "rulesDirectory": [
     "codelyzer"

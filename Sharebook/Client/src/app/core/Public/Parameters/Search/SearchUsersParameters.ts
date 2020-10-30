@@ -1,7 +1,8 @@
-﻿import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+﻿import {Inject, Injectable, InjectionToken} from "@angular/core";
+
+import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 import ArgumentOutOfRangeException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentOutOfRangeException";
-import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 // For more information read : https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-search
 export interface ISearchUsersParameters extends ICustomRequestParameters {
@@ -18,7 +19,7 @@ export interface ISearchUsersParameters extends ICustomRequestParameters {
   includeEntities?: boolean;
 }
 
-export const ISearchUsersParametersToken = new InjectionToken<ISearchUsersParametersToken>('ISearchUsersParametersToken', {
+export const ISearchUsersParametersToken = new InjectionToken<ISearchUsersParameters>('ISearchUsersParameters', {
   providedIn: 'root',
   factory: () => new SearchUsersParameters(Inject([String, SearchUsersParameters])),
 });
@@ -35,7 +36,7 @@ export class SearchUsersParameters extends CustomRequestParameters implements IS
       this.includeEntities = queryOrParameters.includeEntities;
       this.page = queryOrParameters.page;
     } else {
-      this.pageSize = TwitterLimits.DEFAULTS.SEARCH_USERS_MAX_PAGE_SIZE;
+      this.pageSize = SharebookLimits.DEFAULTS.SEARCH_USERS_MAX_PAGE_SIZE;
       this.query = queryOrParameters;
       this.includeEntities = true;
       this.page = 1;

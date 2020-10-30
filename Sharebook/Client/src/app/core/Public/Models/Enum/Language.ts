@@ -1,5 +1,5 @@
 ﻿
-    // Languages available on Twitter. Some codes returned by Twitter are not documented and will return Undefined.
+    // Languages available on Sharebook. Some codes returned by Sharebook are not documented and will return Undefined.
     // If a language code is not supported but you know which language it represents, please to open an issue.
     export enum Language
     {

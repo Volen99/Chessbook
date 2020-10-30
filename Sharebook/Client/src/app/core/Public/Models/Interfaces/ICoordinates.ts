@@ -1,7 +1,7 @@
-﻿// Coordinates of a geographical location.
-import {InjectionToken} from "@angular/core";
+﻿import {InjectionToken} from "@angular/core";
 import {CoordinatesDTO} from "../../../Core/DTO/CoordinatesDTO";
 
+// Coordinates of a geographical location.
 export interface ICoordinates {
   // Longitude of the coordinate (X).
   longitude: number;

@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {IUploadRequester} from "./Requesters/IUploadRequester";
 import {IAccountActivityRequester} from "./Requesters/IAccountActivityRequester";
 import {IAccountSettingsRequester} from "./Requesters/IAccountSettingsRequester";
@@ -9,7 +11,6 @@ import {ITimelinesRequester} from "./Requesters/ITimelinesRequester";
 import {ITrendsRequester} from "./Requesters/ITrendsRequester";
 import {ITweetsRequester} from "./Requesters/ITweetsRequester";
 import {IUsersRequester} from "./Requesters/IUsersRequester";
-import {Inject, InjectionToken} from "@angular/core";
 import {RawExecutors} from "../../../sharebook/Client/RawExecutors";
 import {AccountActivityRequester} from "../../../sharebook/Client/Requesters/AccountActivityRequester";
 import {AuthRequester} from "../../../sharebook/Client/Requesters/AuthRequester";

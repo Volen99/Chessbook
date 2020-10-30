@@ -1,6 +1,7 @@
-﻿import {ITweetWithSearchMetadata} from "./ITweetWithSearchMetadata";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITweetWithSearchMetadata} from "./ITweetWithSearchMetadata";
 import {ISearchMetadata} from "./DTO/ISearchMetadata";
-import {Inject, InjectionToken} from "@angular/core";
 import { SearchResults } from 'src/app/core/Core/Models/Properties/SearchResults';
 import {SearchMetadata} from "../../../Core/DTO/SearchMetadata";
 import {TweetWithSearchMetadata} from "../../../../logic/TweetWithSearchMetadata";

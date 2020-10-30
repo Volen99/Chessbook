@@ -1,5 +1,5 @@
 import {CursorQueryParameters, ICursorQueryParameters} from "../CursorQueryParameters";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 
 // For more information visit : https://dev.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-friendships-incoming
 export interface IGetUserIdsRequestingFriendshipParameters extends ICursorQueryParameters {
@@ -13,7 +13,7 @@ export class GetUserIdsRequestingFriendshipParameters extends CursorQueryParamet
       return;
     }
 
-    super.pageSize = TwitterLimits.DEFAULTS.ACCOUNT_GET_USER_IDS_REQUESTING_FRIENDSHIP_MAX_PAGE_SIZE;
+    super.pageSize = SharebookLimits.DEFAULTS.ACCOUNT_GET_USER_IDS_REQUESTING_FRIENDSHIP_MAX_PAGE_SIZE;
   }
 }
 

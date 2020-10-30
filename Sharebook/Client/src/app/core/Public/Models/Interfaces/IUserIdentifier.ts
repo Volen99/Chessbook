@@ -1,5 +1,6 @@
-﻿import {ITwitterIdentifier} from "./ITwitterIdentifier";
-import {InjectionToken} from "@angular/core";
+﻿import {InjectionToken} from "@angular/core";
+
+import {ITwitterIdentifier} from "./ITwitterIdentifier";
 import {UserIdentifier} from "../UserIdentifier";
 
 // Object containing information to uniquely identify a user.

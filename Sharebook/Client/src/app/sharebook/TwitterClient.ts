@@ -1,4 +1,4 @@
-﻿import {ITweetinviSettings, TweetinviSettings} from "../core/Public/Settings/TweetinviSettings";
+﻿import {ITweetinviSettings, SharebookSettings} from "../core/Public/Settings/SharebookSettings";
 import {IRateLimitCache} from "../core/Core/RateLimit/IRateLimitCache";
 import {TweetinviContainerEventArgs} from "../core/Public/Events/TweetinviContainerEventArgs";
 import {ITwitterClient} from "../core/Public/ITwitterClient";
@@ -37,12 +37,12 @@ import {Injectable} from "@angular/core";
 @Injectable()
 export class TwitterClientParameters {
   constructor() {
-    this.Settings = new TweetinviSettings();
+    this.settings = new SharebookSettings();
   }
 
   public RateLimitCache: IRateLimitCache;
   // public Container: ITweetinviContainer;
-  public Settings: ITweetinviSettings;
+  public settings: ITweetinviSettings;
 
   // public event BeforeRegistrationCompletes: EventHandler<TweetinviContainerEventArgs>;
 
@@ -59,18 +59,18 @@ export class TwitterClient implements ITwitterClient {
   // IMPORTANT NOTE: The setter is for convenience. It is strongly recommended to create a new TwitterClient instead.
   // As using this setter could result in unexpected concurrency between the time of set and the execution of previous
   // non awaited async operations.
-  // get credentials(): IReadOnlyTwitterCredentials {
-  //   return this._credentials;
-  // }
-  //
-  // set credentials(value: IReadOnlyTwitterCredentials) {
-  //   this._credentials = new ReadOnlyTwitterCredentials(value);
-  // }
+  get credentials(): IReadOnlyTwitterCredentials {
+    return this._credentials;
+  }
+
+  set credentials(value: IReadOnlyTwitterCredentials) {
+    this._credentials = new ReadOnlyTwitterCredentials(value);
+  }
 
 
         constructor (parameters?: TwitterClientParameters) {
           // this.credentials = credentials;
-          this.config = parameters?.Settings ?? new TweetinviSettings();
+          this.config = parameters?.settings ?? new SharebookSettings();
 
           // if (parameters?.Container == null) {
           //   if (!TweetinviContainer.Container.IsInitialized) {

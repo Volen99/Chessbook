@@ -3,7 +3,7 @@ import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMo
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {Resources} from "../../properties/resources";
 import {ITweetIdentifier} from "../../core/Public/Models/Interfaces/ITweetIdentifier";
-import {TweetMode} from "../../core/Public/Settings/TweetinviSettings";
+import {TweetMode} from "../../core/Public/Settings/SharebookSettings";
 import {IQueryParameterGenerator, IQueryParameterGeneratorToken} from "../Shared/QueryParameterGenerator";
 import {
   IUserQueryParameterGenerator,

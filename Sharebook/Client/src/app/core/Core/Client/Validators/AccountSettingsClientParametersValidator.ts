@@ -1,7 +1,7 @@
 import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
-import {TwitterLimits} from "../../../Public/Settings/TwitterLimits";
+import {SharebookLimits} from "../../../Public/Settings/SharebookLimits";
 import {IGetAccountSettingsParameters} from "../../../Public/Parameters/AccountSettingsClient/GetAccountSettingsParameters";
 import {IUpdateAccountSettingsParameters} from "../../../Public/Parameters/AccountSettingsClient/UpdateAccountSettingsParameters";
 import {IUpdateProfileParameters} from "../../../Public/Parameters/AccountSettingsClient/UpdateProfileParameters";
@@ -47,7 +47,7 @@ export class AccountSettingsClientParametersValidator implements IAccountSetting
     this._accountSettingsClientRequiredParametersValidator = accountSettingsClientRequiredParametersValidator;
   }
 
-  private get Limits(): TwitterLimits {
+  private get Limits(): SharebookLimits {
     return this._client.config.limits;
   }
 

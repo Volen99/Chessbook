@@ -89,7 +89,7 @@ export interface IUsersClient {
   /// </summary>
   /// <para>Read more : https://dev.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-lookup </para>
   /// <returns>Returns the list of users requested</returns>
-  getUsersAsync(parameters: IGetUsersParameters): Promise<IUser[]>
+  getUsersAsync(parameters: IGetUsersParameters): Promise<IUser[]>;
 
   // #endregion
 
@@ -180,7 +180,7 @@ export interface IUsersClient {
   /// <para>Read more : https://dev.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-followers-ids </para>
   /// </summary>
   /// <returns>List of a user's followers</returns>
-  getFollowersAsync(parameters: IGetFollowersParameters): Promise<IUser[]>
+  getFollowersAsync(parameters: IGetFollowersParameters): Promise<IUser[]>;
 
   /// <summary>
   /// Get the followers from a specific user
@@ -218,7 +218,7 @@ export interface IUsersClient {
   /// <para>Read more : https://dev.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-friendships-show </para>
   /// </summary>
   /// <returns>Returns relationship information seen from a source user</returns>
-  getRelationshipBetweenAsync(parameters: IGetRelationshipBetweenParameters): Promise<IRelationshipDetails>
+  getRelationshipBetweenAsync(parameters: IGetRelationshipBetweenParameters): Promise<IRelationshipDetails>;
 
   // #endregion
 
@@ -267,7 +267,7 @@ export interface IUsersClient {
   /// <para>Read more : https://dev.twitter.com/en/docs/accounts-and-users/mute-block-report-users/api-reference/get-blocks-ids </para>
   /// </summary>
   /// <returns>List of the blocked user ids</returns>
-  getBlockedUserIdsAsync(parameters: IGetBlockedUserIdsParameters): Promise<number[]>
+  getBlockedUserIdsAsync(parameters: IGetBlockedUserIdsParameters): Promise<number[]>;
 
   getBlockedUserIdsIterator(): ITwitterIterator<number>;
 
@@ -322,7 +322,7 @@ export interface IUsersClient {
   /// Stops following a user
   /// <para>Read more : https://dev.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/post-friendships-destroy </para>
   /// </summary>
-  unfollowUserAsync(parameters: IUnfollowUserParameters): Promise<IUser>
+  unfollowUserAsync(parameters: IUnfollowUserParameters): Promise<IUser>;
 
   // #endregion
 
@@ -336,9 +336,9 @@ export interface IUsersClient {
   /// <para>Protected accounts : https://help.twitter.com/en/safety-and-security/public-and-protected-tweets </para>
   /// </summary>
   /// <returns>List the user ids who requested to follow the client's account</returns>
-  getUserIdsRequestingFriendshipAsync(parameters: IGetUserIdsRequestingFriendshipParameters): Promise<number[]>
+  getUserIdsRequestingFriendshipAsync(parameters: IGetUserIdsRequestingFriendshipParameters): Promise<number[]>;
 
-  getUserIdsRequestingFriendshipIterator(): ITwitterIterator<number>
+  getUserIdsRequestingFriendshipIterator(): ITwitterIterator<number>;
 
   /// <summary>
   /// Get the pending follower ids requests for protected accounts.
@@ -346,7 +346,7 @@ export interface IUsersClient {
   /// <para>Protected accounts : https://help.twitter.com/en/safety-and-security/public-and-protected-tweets </para>
   /// </summary>
   /// <returns>An iterator to list the user ids who requested to follow the client's account</returns>
-  getUserIdsRequestingFriendshipIterator(parameters: IGetUserIdsRequestingFriendshipParameters): ITwitterIterator<number>
+  getUserIdsRequestingFriendshipIterator(parameters: IGetUserIdsRequestingFriendshipParameters): ITwitterIterator<number>;
 
   getUsersRequestingFriendshipAsync(): Promise<IUser[]>;
 
@@ -355,7 +355,7 @@ export interface IUsersClient {
   /// <para>Read more : https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-friendships-incoming </para>
   /// <para>Protected accounts : https://help.twitter.com/en/safety-and-security/public-and-protected-tweets </para>
   /// </summary>
-  getUsersRequestingFriendshipAsync(parameters: IGetUsersRequestingFriendshipParameters): Promise<IUser[]>
+  getUsersRequestingFriendshipAsync(parameters: IGetUsersRequestingFriendshipParameters): Promise<IUser[]>;
 
   getUsersRequestingFriendshipIterator(): IMultiLevelCursorIterator<number, IUser>;
 
@@ -365,7 +365,7 @@ export interface IUsersClient {
   /// <para>Protected accounts : https://help.twitter.com/en/safety-and-security/public-and-protected-tweets </para>
   /// </summary>
   /// <returns>An iterator to list the users who requested to follow the client's account</returns>
-  getUsersRequestingFriendshipIterator(parameters: IGetUsersRequestingFriendshipParameters): IMultiLevelCursorIterator<number, IUser>
+  getUsersRequestingFriendshipIterator(parameters: IGetUsersRequestingFriendshipParameters): IMultiLevelCursorIterator<number, IUser>;
 
   getUserIdsYouRequestedToFollowAsync(): Promise<number[]>;
 
@@ -431,7 +431,7 @@ export interface IUsersClient {
   /// <para>Read more : https://dev.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-friendships-lookup </para>
   /// </summary>
   /// <returns>Returns a dictionary of user and their relationship with the client's user</returns>
-  getRelationshipsWithAsync(parameters: IGetRelationshipsWithParameters): Promise<IUserDictionary<IRelationshipState>>
+  getRelationshipsWithAsync(parameters: IGetRelationshipsWithParameters): Promise<IUserDictionary<IRelationshipState>>;
 
   // #endregion
 

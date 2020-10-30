@@ -9,7 +9,7 @@ import {
   ITimelineClientRequiredParametersValidator,
   ITimelineClientRequiredParametersValidatorToken, TimelineClientRequiredParametersValidator
 } from "./TimelineClientRequiredParametersValidator";
-import {TwitterLimits} from "../../../Public/Settings/TwitterLimits";
+import {SharebookLimits} from "../../../Public/Settings/SharebookLimits";
 import {TimelineParameters} from "./parameters-types";
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
@@ -40,7 +40,7 @@ export class TimelineClientParametersValidator implements ITimelineClientParamet
     this._timelineClientRequiredParametersValidator = timelineClientRequiredParametersValidator;
   }
 
-  get Limits(): TwitterLimits {
+  get Limits(): SharebookLimits {
     return this._client.config.limits;
   }
 

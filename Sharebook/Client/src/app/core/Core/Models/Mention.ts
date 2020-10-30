@@ -1,4 +1,4 @@
-﻿import {TweetMode} from "../../Public/Settings/TweetinviSettings";
+﻿import {TweetMode} from "../../Public/Settings/SharebookSettings";
 import {Tweet} from "./Tweet";
 import {IMention} from "../../Public/Models/Interfaces/IMention";
 import {ITwitterClient} from "../../Public/ITwitterClient";

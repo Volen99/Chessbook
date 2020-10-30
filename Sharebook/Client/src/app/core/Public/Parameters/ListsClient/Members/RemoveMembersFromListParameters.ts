@@ -12,7 +12,7 @@ export interface IRemoveMembersFromListParameters extends IListParameters {
 
 export class RemoveMembersFromListParameters extends TwitterListParameters implements IRemoveMembersFromListParameters {
   // @ts-ignore
-  constructor(listIdOrListIdentifier: number | ITwitterListIdentifier, userIdsOrUsernamesOrUsers: Array<number | string | IUserIdentifier>) {
+  constructor(listIdOrListIdentifier: number | ITwitterListIdentifier, userIdsOrUsernamesOrUsers: Iterable<number | string | IUserIdentifier>) {
     let list: ITwitterListIdentifier;
     if (typeof listIdOrListIdentifier !== 'number') {
       list = listIdOrListIdentifier;
@@ -26,9 +26,9 @@ export class RemoveMembersFromListParameters extends TwitterListParameters imple
       users = userIdsOrUsernamesOrUsers;
     } else {
       if (typeof userIdsOrUsernamesOrUsers[0] === 'string') {
-        users = userIdsOrUsernamesOrUsers.map(x => new UserIdentifier(x as string));
+        users = [...userIdsOrUsernamesOrUsers].map(x => new UserIdentifier(x as string));
       } else {
-        users = userIdsOrUsernamesOrUsers.map(x => new UserIdentifier(x as number));
+        users = [...userIdsOrUsernamesOrUsers].map(x => new UserIdentifier(x as number));
       }
     }
 
@@ -38,7 +38,7 @@ export class RemoveMembersFromListParameters extends TwitterListParameters imple
 
   public users: Array<IUserIdentifier> = new Array<IUserIdentifier>();
 
-  private static isIEnumerableFromIUserIdentifier(userIdsOrUsernamesOrUsers: Array<number | string | IUserIdentifier>):
+  private static isIEnumerableFromIUserIdentifier(userIdsOrUsernamesOrUsers: Iterable<number | string | IUserIdentifier>):
     userIdsOrUsernamesOrUsers is Array<IUserIdentifier> {
     return (userIdsOrUsernamesOrUsers as Array<IUserIdentifier>)[0].screenName !== undefined;
   }

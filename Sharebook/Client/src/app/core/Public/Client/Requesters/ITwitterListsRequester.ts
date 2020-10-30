@@ -30,9 +30,7 @@ import {ICheckIfUserIsSubscriberOfListParameters} from "../../Parameters/ListsCl
 import {IGetTweetsFromListParameters} from "../../Parameters/ListsClient/GetTweetsFromListParameters";
 import {ITweetDTO} from "../../Models/Interfaces/DTO/ITweetDTO";
 import {TwitterListsRequester} from "../../../../sharebook/Client/Requesters/TwitterListsRequester";
-import {
-  TwitterListsClientRequiredParametersValidator
-} from "../../../Core/Client/Validators/TwitterListsClientRequiredParametersValidator";
+import {TwitterListsClientRequiredParametersValidator} from "../../../Core/Client/Validators/TwitterListsClientRequiredParametersValidator";
 import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
 import {TwitterListController} from "../../../../controllers/TwitterLists/TwitterListController";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";

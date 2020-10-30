@@ -1,3 +1,5 @@
+import {Inject, Injectable, InjectionToken} from "@angular/core";
+
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
 import {IGetAccountSettingsParameters} from "../../core/Public/Parameters/AccountSettingsClient/GetAccountSettingsParameters";
@@ -13,7 +15,6 @@ import {
   IAccountSettingsQueryExecutor,
   IAccountSettingsQueryExecutorToken
 } from "./AccountSettingsQueryExecutor";
-import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 export interface IAccountSettingsController {
   getAccountSettingsAsync(parameters: IGetAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>>;

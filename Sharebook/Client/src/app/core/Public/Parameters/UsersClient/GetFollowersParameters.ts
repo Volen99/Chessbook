@@ -1,10 +1,9 @@
 ﻿import {GetFollowerIdsParameters, IGetFollowerIdsParameters} from "./GetFollowerIdsParameters";
 import {IGetUsersOptionalParameters} from "../Optionals/GetUsersOptionalParameters";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {UserIdentifier} from "../../Models/UserIdentifier";
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
 import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
-import {IUser} from "../../Models/Interfaces/IUser";
 
 // For more information visit : https://dev.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-followers-ids
 export interface IGetFollowersParameters extends IGetFollowerIdsParameters, IGetUsersOptionalParameters {
@@ -28,7 +27,7 @@ export class GetFollowersParameters extends GetFollowerIdsParameters implements 
       }
       super(userCurrent);
 
-      this.GetUsersPageSize = TwitterLimits.DEFAULTS.USERS_GET_USERS_MAX_SIZE;
+      this.GetUsersPageSize = SharebookLimits.DEFAULTS.USERS_GET_USERS_MAX_SIZE;
       this.User = userCurrent;
     }
   }

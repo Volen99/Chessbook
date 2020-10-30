@@ -1,6 +1,6 @@
 import {Inject, Injectable, InjectionToken} from "@angular/core";
 
-import {TwitterLimits} from "../../../Public/Settings/TwitterLimits";
+import {SharebookLimits} from "../../../Public/Settings/SharebookLimits";
 import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import {IPublishMessageParameters} from "../../../Public/Parameters/MessageClient/PublishMessageParameters";
 import {IDeleteMessageParameters} from "../../../Public/Parameters/MessageClient/DestroyMessageParameters";
@@ -42,11 +42,12 @@ export class MessagesClientParametersValidator implements IMessagesClientParamet
     this._messagesClientRequiredParametersValidator = messagesClientRequiredParametersValidator;
   }
 
-  private get Limits(): TwitterLimits {
+  private get Limits(): SharebookLimits {
     return this._client.config.limits;
   }
 
-  public validate(parameters: MessagesParameters): void {
+  public validate(parameters: IPublishMessageParameters | IDeleteMessageParameters |
+    IGetMessageParameters | IGetMessagesParameters): void {
     this._messagesClientRequiredParametersValidator.validate(parameters);
 
     if (MessagesClientParametersValidator.isIPublishMessageParameters(parameters)) {
@@ -62,7 +63,7 @@ export class MessagesClientParametersValidator implements IMessagesClientParamet
         }
 
         // If one option has a description, then they all must: https://developer.twitter.com/en/docs/direct-messages/quick-replies/api-reference/options
-        let numberOfOptionsWithDescription = parameters.quickReplyOptions.count(x => !string.IsNullOrEmpty(x.Description));
+        let numberOfOptionsWithDescription = parameters.quickReplyOptions.filter(x => x.description).length;   // tested it works ;)
         if (numberOfOptionsWithDescription > 0 && numberOfOptionsWithDescription !== parameters.quickReplyOptions.length) {
           throw new ArgumentException("If one Quick Reply Option has a description, then they all must", `${nameof(parameters.quickReplyOptions)}`);
         }

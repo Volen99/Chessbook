@@ -20,6 +20,7 @@ import {AccountActivityController} from "../../../controllers/AccountActivity/Ac
 import {
   AccountActivityQueryGenerator,
 } from "../../../controllers/AccountActivity/AccountActivityQueryGenerator";
+import {TwitterAccessor} from "../../../Tweetinvi.Credentials/TwitterAccessor";
 
 export interface IAccountActivityController {
   createAccountActivityWebhookAsync(parameters: ICreateAccountActivityWebhookParameters, request: ITwitterRequest): Promise<ITwitterResult<IWebhookDTO>>;

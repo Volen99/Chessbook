@@ -33,7 +33,7 @@ import {IMuteUserParameters} from "../../Public/Parameters/AccountClient/MuteUse
 import {IUnmuteUserParameters} from "../../Public/Parameters/AccountClient/UnMuteUserParameters";
 import {IGetProfileImageParameters} from "../../Public/Parameters/UsersClient/GetProfileImageParameters";
 import {UserController} from "../../../controllers/User/UserController";
-import {IUserQueryExecutor, UserQueryExecutor} from "../../../controllers/User/UserQueryExecutor";
+import {UserQueryExecutor} from "../../../controllers/User/UserQueryExecutor";
 
 export interface IUserController {
   getAuthenticatedUserAsync(parameters: IGetAuthenticatedUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;

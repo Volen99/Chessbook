@@ -7,7 +7,7 @@ import {
   IUploadClientRequiredParametersValidatorToken, UploadClientRequiredParametersValidator
 } from './UploadClientRequiredParametersValidator';
 import {MediaCategory} from "../../../Public/Models/Enum/MediaCategory";
-import {TwitterLimits} from "../../../Public/Settings/TwitterLimits";
+import {SharebookLimits} from "../../../Public/Settings/SharebookLimits";
 import {ITwitterClient, ITwitterClientToken} from "../../../Public/ITwitterClient";
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
@@ -34,7 +34,7 @@ export class UploadClientParametersValidator implements IUploadClientParametersV
     this._uploadClientRequiredParametersValidator = uploadClientRequiredParametersValidator;
   }
 
-  get Limits(): TwitterLimits {
+  get Limits(): SharebookLimits {
     return this._client.config.limits;
   }
 

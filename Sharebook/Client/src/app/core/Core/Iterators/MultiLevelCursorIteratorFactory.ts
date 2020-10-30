@@ -22,6 +22,11 @@ export interface IMultiLevelCursorIteratorFactory {
     maxPageSize: number): IMultiLevelCursorIterator<number, IUser>;
 }
 
+export const IMultiLevelCursorIteratorFactoryToken = new InjectionToken<IMultiLevelCursorIteratorFactory>('IMultiLevelCursorIteratorFactory', {
+  providedIn: 'root',
+  factory: () => new MultiLevelCursorIteratorFactory(),
+});
+
 export class MultiLevelCursorIteratorFactory implements IMultiLevelCursorIteratorFactory {
   public create<TDTO, TInput, TOutput>(
     pageIterator: ITwitterPageIterator<ITwitterResult<TDTO>>,
@@ -32,9 +37,9 @@ export class MultiLevelCursorIteratorFactory implements IMultiLevelCursorIterato
       let userIdsPage = await pageIterator.nextPageAsync(); // .ConfigureAwait(false);
 
       let result = new CursorPageResult<TInput, string>();
-      result.items = transform(userIdsPage.result.Content.Model);
-      result.nextCursor = userIdsPage.result.NextCursor;
-      result.isLastPage = userIdsPage.result.IsLastPage;
+      result.items = transform(userIdsPage.content.model);
+      result.nextCursor = userIdsPage.nextCursor;
+      result.isLastPage = userIdsPage.isLastPage;
 
       return result;
     }, async inputs => {
@@ -55,9 +60,3 @@ export class MultiLevelCursorIteratorFactory implements IMultiLevelCursorIterato
     return this.create(iterator, dtoIds => dtoIds.ids, client.users.getUsersAsync, maxPageSize);
   }
 }
-
-
-export const IMultiLevelCursorIteratorFactoryToken = new InjectionToken<IMultiLevelCursorIteratorFactory>('IMultiLevelCursorIteratorFactory', {
-  providedIn: 'root',
-  factory: () => new,
-});

@@ -9,6 +9,7 @@ export interface IGetPlaceParameters extends ICustomRequestParameters {
 export class GetPlaceParameters extends CustomRequestParameters implements IGetPlaceParameters {
   constructor(placeId: string) {
     super();
+
     this.placeId = placeId;
   }
 

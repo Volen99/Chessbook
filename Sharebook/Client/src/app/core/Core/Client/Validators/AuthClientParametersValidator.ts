@@ -46,7 +46,7 @@ export class AuthClientParametersValidator implements IAuthClientParametersValid
 
     if (AuthClientParametersValidator.isIRequestAuthUrlParameters(parameters)) {
       if (parameters.callbackUrl != null) {
-        if (parameters.callbackUrl !== "oob" && !Uri.IsWellFormedUriString(parameters.callbackUrl, UriKind.Absolute)) {
+        if (parameters.callbackUrl !== "oob" && !Uri.isWellFormedUriString(parameters.callbackUrl, UriKind.Absolute)) {
           throw new ArgumentException("Invalid format, must be absolute uri or have a value of 'oob'", `${nameof(parameters)}${nameof(parameters.callbackUrl)}`);
         }
       }

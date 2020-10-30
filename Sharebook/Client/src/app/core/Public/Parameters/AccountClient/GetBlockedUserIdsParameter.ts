@@ -1,5 +1,5 @@
 ﻿import {CursorQueryParameters, ICursorQueryParameters} from "../CursorQueryParameters";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 
 // For more information visit: https://dev.twitter.com/en/docs/accounts-and-users/mute-block-report-users/api-reference/get-blocks-ids
 export interface IGetBlockedUserIdsParameters extends ICursorQueryParameters {
@@ -14,7 +14,7 @@ export class GetBlockedUserIdsParameters extends CursorQueryParameters implement
     } else {
       super();
 
-      super.pageSize = TwitterLimits.DEFAULTS.ACCOUNT_GET_BLOCKED_USER_IDS_MAX_PAGE_SIZE;
+      super.pageSize = SharebookLimits.DEFAULTS.ACCOUNT_GET_BLOCKED_USER_IDS_MAX_PAGE_SIZE;
     }
   }
 }

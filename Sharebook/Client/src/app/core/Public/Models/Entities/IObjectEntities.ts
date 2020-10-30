@@ -1,9 +1,10 @@
-﻿import {IHashtagEntity} from "./IHashTagEntity";
+﻿import {InjectionToken} from "@angular/core";
+
+import {IHashtagEntity} from "./IHashTagEntity";
 import {IUrlEntity} from "./IUrlEntity";
 import {IMediaEntity} from "./IMediaEntity";
 import {ISymbolEntity} from "./ISymbolEntity";
 import {IUserMentionEntity} from "./IUserMentionEntity";
-import {InjectionToken} from "@angular/core";
 import {ObjectEntitiesDTO} from "../../../Core/DTO/ObjectEntitiesDTO";
 
 export interface IObjectEntities {

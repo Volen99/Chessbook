@@ -1,5 +1,5 @@
 ﻿import {ITwitterRequest} from "src/app/core/Public/Models/Interfaces/ITwitterRequest";
-import {TwitterException} from "../../core/Public/Exceptions/TwitterException";
+import {SharebookException} from "../../core/Public/Exceptions/SharebookException";
 import {ITwitterClient} from "../../core/Public/ITwitterClient";
 import Tweetinvi from "../../core/Core/Events/TweetinviGlobalEvents";
 import ITwitterClientEvents = Tweetinvi.Core.Events.ITwitterClientEvents;
@@ -33,7 +33,7 @@ export abstract class BaseRequester implements IBaseRequester {
         let requestNew: ITwitterRequest = this.TwitterClient.createRequest();
         await action(requestNew);
       }
-    } catch (ex: TwitterException) {
+    } catch (ex: SharebookException) {
       this._twitterClientEvents.RaiseOnTwitterException(ex);
       throw;
     }

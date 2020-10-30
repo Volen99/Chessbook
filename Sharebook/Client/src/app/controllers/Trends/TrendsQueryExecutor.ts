@@ -1,14 +1,16 @@
-﻿import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
-import {ITwitterAccessor} from 'src/app/core/Core/Web/ITwitterAccessor';
+import {ITwitterAccessor, ITwitterAccessorToken} from 'src/app/core/Core/Web/ITwitterAccessor';
 import {HttpMethod} from 'src/app/core/Public/Models/Enum/HttpMethod';
 import {IGetTrendsAtParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsAtParameters";
 import {IGetTrendsLocationParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsLocationParameters";
 import {IGetTrendsLocationCloseToParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsLocationCloseToParameters";
 import {IGetTrendsAtResult} from "../../core/Public/Models/Interfaces/IGetTrendsAtResult";
 import {ITrendLocation} from "../../core/Public/Models/Interfaces/ITrendLocation";
-import {ITrendsQueryGenerator} from "./TrendsQueryGenerator";
-import {InjectionToken} from "@angular/core";
+import {ITrendsQueryGenerator, ITrendsQueryGeneratorToken, TrendsQueryGenerator} from "./TrendsQueryGenerator";
+import {TwitterAccessor} from "../../Tweetinvi.Credentials/TwitterAccessor";
 
 export interface ITrendsQueryExecutor {
   getPlaceTrendsAtAsync(parameters: IGetTrendsAtParameters, request: ITwitterRequest): Promise<ITwitterResult<IGetTrendsAtResult[]>>;
@@ -20,14 +22,15 @@ export interface ITrendsQueryExecutor {
 
 export const ITrendsQueryExecutorToken = new InjectionToken<ITrendsQueryExecutor>('ITrendsQueryExecutor', {
   providedIn: 'root',
-  factory: () => new TrendsQueryExecutor(),
+  factory: () => new TrendsQueryExecutor(Inject(TrendsQueryGenerator), Inject(TwitterAccessor)),
 });
 
 export class TrendsQueryExecutor implements ITrendsQueryExecutor {
   private readonly _trendsQueryGenerator: ITrendsQueryGenerator;
   private readonly _twitterAccessor: ITwitterAccessor;
 
-  constructor(trendsQueryGenerator: ITrendsQueryGenerator, twitterAccessor: ITwitterAccessor) {
+  constructor(@Inject(ITrendsQueryGeneratorToken) trendsQueryGenerator: ITrendsQueryGenerator,
+              @Inject(ITwitterAccessorToken) twitterAccessor: ITwitterAccessor) {
     this._trendsQueryGenerator = trendsQueryGenerator;
     this._twitterAccessor = twitterAccessor;
   }

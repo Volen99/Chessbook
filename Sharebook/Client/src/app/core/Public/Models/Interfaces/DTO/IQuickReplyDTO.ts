@@ -1,6 +1,7 @@
-﻿import {IQuickReplyOption} from "../IQuickReplyOption";
+﻿import {InjectionToken} from "@angular/core";
+
+import {IQuickReplyOption} from "../IQuickReplyOption";
 import {QuickReplyType} from "../../Enum/QuickReplyType";
-import {InjectionToken} from "@angular/core";
 import {QuickReplyDTO} from "../../../../Core/DTO/QuickReplyDTO";
 
 export interface IQuickReplyDTO {

@@ -1,11 +1,11 @@
-﻿import IEnumerable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable";
+﻿import {InjectionToken} from "@angular/core";
+
 import {IUrlEntity} from "./IUrlEntity";
-import {InjectionToken} from "@angular/core";
 import {DescriptionEntity} from "../../../Core/Models/TwitterEntities/DescriptionEntity";
 
 export interface IDescriptionEntity {
   // URLs found in a description.
-  urls: IEnumerable<IUrlEntity>;
+  urls: Iterable<IUrlEntity>;
 }
 
 export const IDescriptionEntityToken = new InjectionToken<IDescriptionEntity>('IDescriptionEntity', {

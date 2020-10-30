@@ -1,5 +1,5 @@
 ﻿import {ITwitterRequest} from "../core/Public/Models/Interfaces/ITwitterRequest";
-import {ITwitterExceptionFactory} from "../core/Public/Exceptions/TwitterException";
+import {ITwitterExceptionFactory} from "../core/Public/Exceptions/SharebookException";
 import {IHttpClientWebHelper} from "../core/Core/Helpers/IHttpClientWebHelper";
 import {StreamState} from "../core/Public/Streaming/StreamState";
 import Exception from '../c#-objects/TypeScript.NET-Core/packages/Core/source/Exception';
@@ -203,7 +203,7 @@ export class StreamTaskStateChangedEventArgs {
             {
                 let twitterQuery = request.query;
                 let uri = new Uri(twitterQuery.url);
-                let endpoint = uri.GetEndpointURL();
+                let endpoint = uri.getEndpointURL();
                 let queryParameters = "";
 
                 if (uri.Query.Length >  0)

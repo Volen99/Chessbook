@@ -1,4 +1,6 @@
-﻿import {IHelpQueryGenerator} from "../../core/Core/QueryGenerators/IHelpQueryGenerator";
+﻿import {Injectable} from "@angular/core";
+
+import {IHelpQueryGenerator} from "../../core/Core/QueryGenerators/IHelpQueryGenerator";
 import {Resources} from "../../properties/resources";
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {ICoordinates} from "../../core/Public/Models/Interfaces/ICoordinates";
@@ -10,7 +12,7 @@ import {IGetSupportedLanguagesParameters} from "../../core/Public/Parameters/Hel
 import {IGetPlaceParameters} from "../../core/Public/Parameters/HelpClient/GetPlaceParameters";
 import {AccuracyMeasure, Granularity, IGeoSearchParameters} from "../../core/Public/Parameters/HelpClient/GeoSearchParameters";
 import {IGeoSearchReverseParameters} from "../../core/Public/Parameters/HelpClient/GeoSearchReverseParameters";
-import {Injectable} from "@angular/core";
+import {format} from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/Utility";
 
 @Injectable()
 export class HelpQueryGenerator implements IHelpQueryGenerator {
@@ -33,7 +35,7 @@ export class HelpQueryGenerator implements IHelpQueryGenerator {
   }
 
   public getPlaceQuery(parameters: IGetPlaceParameters): string {
-    let query = new StringBuilder(string.Format(Resources.Geo_GetPlaceFromId, parameters.placeId));
+    let query = new StringBuilder(format(Resources.Geo_GetPlaceFromId, parameters.placeId));
     query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
     return query.toString();
   }
@@ -43,10 +45,10 @@ export class HelpQueryGenerator implements IHelpQueryGenerator {
       throw new ArgumentNullException(nameof(coordinates));
     }
 
-    let latitudeValue: string = coordinates.latitude.toString(CultureInfo.InvariantCulture);
-    let longitudeValue: string = coordinates.longitude.toString(CultureInfo.InvariantCulture);
+    let latitudeValue: string = coordinates.latitude.toString(/*CultureInfo.InvariantCulture*/);
+    let longitudeValue: string = coordinates.longitude.toString(/*CultureInfo.InvariantCulture*/);
 
-    return string.Format(Resources.Geo_CoordinatesParameter, longitudeValue, latitudeValue);
+    return format(Resources.Geo_CoordinatesParameter, longitudeValue, latitudeValue);
   }
 
   public getSearchGeoQuery(parameters: IGeoSearchParameters): string {
@@ -64,12 +66,12 @@ export class HelpQueryGenerator implements IHelpQueryGenerator {
       query.addParameterToQuery("long", parameters.coordinates.longitude);
     }
 
-    for (let attribute of parameters.attributes) {
-      query.addParameterToQuery(`attribute:${attribute.Key}`, attribute.Value);
+    for (let attribute of parameters.attributes) {     // TODO: might bug like never before
+      query.addParameterToQuery(`attribute:${attribute.key}`, attribute.value);
     }
 
     if (parameters.granularity !== Granularity.Undefined) {
-      query.addParameterToQuery("granularity", parameters.granularity.ToString().ToLowerInvariant());
+      query.addParameterToQuery("granularity", parameters.granularity.toString().toLocaleLowerCase());
     }
 
     if (parameters.accuracy != null) {
@@ -120,6 +122,6 @@ export class HelpQueryGenerator implements IHelpQueryGenerator {
       throw new ArgumentException("Cannot be empty", nameof(placeId));
     }
 
-    return string.Format(Resources.Geo_GetPlaceFromId, placeId);
+    return format(Resources.Geo_GetPlaceFromId, placeId);
   }
 }

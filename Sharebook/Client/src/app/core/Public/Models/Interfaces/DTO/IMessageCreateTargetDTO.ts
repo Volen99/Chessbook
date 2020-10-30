@@ -1,4 +1,5 @@
 ﻿import {InjectionToken} from "@angular/core";
+
 import {MessageCreateTargetDTO} from "../../../../Core/DTO/MessageCreateTargetDTO";
 
 export interface IMessageCreateTargetDTO {

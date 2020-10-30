@@ -14,6 +14,7 @@ export interface IUploadMessageImageParameters extends IUploadParameters {
 export class UploadMessageImageParameters extends UploadBinaryParameters implements IUploadMessageImageParameters {
   constructor(binary: number[]) {
     super(binary);
+
     super.mediaType = MediaType.Media;
     super.mediaCategory = MediaCategory.DmImage;
   }

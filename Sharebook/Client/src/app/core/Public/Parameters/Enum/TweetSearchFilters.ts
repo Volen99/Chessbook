@@ -5,7 +5,7 @@ export enum TweetSearchFilters {
   Hashtags = 2,
   Links = 4,
   Images = 8,
-  [TweetSearchFilter("native_video")]
+  // [TweetSearchFilter("native_video")]
   NativeVideo = 16,
   News = 32,
   Periscope = 64,

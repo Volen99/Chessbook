@@ -1,4 +1,6 @@
-﻿import {ITweetController} from "../../core/Core/Controllers/ITweetController";
+﻿import {Inject, Injectable} from "@angular/core";
+
+import {ITweetController} from "../../core/Core/Controllers/ITweetController";
 import {IUploadQueryExecutor, IUploadQueryExecutorToken} from "../Upload/UploadQueryExecutor";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import { ITwitterRequest } from 'src/app/core/Public/Models/Interfaces/ITwitterRequest';
@@ -25,7 +27,8 @@ import {
 } from "../../core/Public/Parameters/TweetsClient/GetFavoriteTweetsParameters";
 import {IDestroyTweetParameters} from "../../core/Public/Parameters/TweetsClient/DestroyTweetParameters";
 import {GetRetweeterIdsParameters, IGetRetweeterIdsParameters} from "../../core/Public/Parameters/TweetsClient/GetRetweeterIdsParameters";
-import {Inject, Injectable} from "@angular/core";
+import {StringExtension} from "../../core/Core/Extensions/StringExtension";
+import {IOEmbedTweetDTO} from "../../core/Public/Models/Interfaces/DTO/IOembedTweetDTO";
 
 @Injectable()
 export class TweetController implements ITweetController {
@@ -65,25 +68,25 @@ export class TweetController implements ITweetController {
   }
 
   public static estimateTweetLength(textOrParameters: string | IPublishTweetParameters): number {
-    let parameters: IPublishTweetParameters;
+    let parametersCurrent: IPublishTweetParameters;
     if (Type.isString(textOrParameters)) {
-      parameters = new PublishTweetParameters(textOrParameters);
+      parametersCurrent = new PublishTweetParameters(textOrParameters);
     } else {
-      parameters = textOrParameters;
+      parametersCurrent = textOrParameters;
     }
 
-    let text = parameters.text ?? "";
+    let text = parametersCurrent.text ?? "";
 // #pragma warning disable 618
-    let textLength = StringExtension.EstimateTweetLength(text);
+    let textLength = StringExtension.estimateTweetLength(text);
 
-    if (parameters.quotedTweet != null) {
-      textLength = StringExtension.EstimateTweetLength(text.trim()) +
+    if (parametersCurrent.quotedTweet != null) {
+      textLength = StringExtension.estimateTweetLength(text.trim()) +
         1 + // for the space that needs to be added before the link to quoted tweet.
         SharebookConsts.MEDIA_CONTENT_SIZE;
 // #pragma warning restore 618
     }
 
-    if (parameters.hasMedia) {
+    if (parametersCurrent.hasMedia) {
       textLength += SharebookConsts.MEDIA_CONTENT_SIZE;
     }
 
@@ -144,7 +147,7 @@ export class TweetController implements ITweetController {
     return this._tweetQueryExecutor.unfavoriteTweetAsync(parameters, request);
   }
 
-  public getOEmbedTweetAsync(parameters: IGetOEmbedTweetParameters, request: ITwitterRequest): Promise<ITwitterResult<IOEmbdTweetDTO>> {
+  public getOEmbedTweetAsync(parameters: IGetOEmbedTweetParameters, request: ITwitterRequest): Promise<ITwitterResult<IOEmbedTweetDTO>> {
     return this._tweetQueryExecutor.getOEmbedTweetAsync(parameters, request);
   }
 }

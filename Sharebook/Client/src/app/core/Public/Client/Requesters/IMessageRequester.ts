@@ -10,10 +10,8 @@ import {IGetMessagesParameters} from "../../Parameters/MessageClient/GetMessages
 import {IMessageCursorQueryResultDTO} from "../../Models/Interfaces/DTO/QueryDTO/IMessageCursorQueryResultDTO";
 import {ITwitterPageIterator} from "../../../Core/Iterators/TwitterPageIterator";
 import {MessageRequester} from "../../../../sharebook/Client/Requesters/MessageRequester";
-import {
-  MessagesClientParametersValidator
-} from "../../../Core/Client/Validators/MessageClientParametersValidator";
-import {ITwitterClientEvents, TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
+import {MessagesClientParametersValidator} from "../../../Core/Client/Validators/MessageClientParametersValidator";
+import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
 import {MessageController} from "../../../../controllers/Messages/MessageController";
 

@@ -1,4 +1,6 @@
-﻿import {ITwitterRequest} from "src/app/core/Public/Models/Interfaces/ITwitterRequest";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterRequest} from "src/app/core/Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {FilteredTwitterResult, IFilteredTwitterResult} from "../../core/Core/Web/FilteredTwitterResult";
 import {ISearchTweetsParameters, SearchTweetsParameters} from "../../core/Public/Parameters/Search/SearchTweetsParameters";
@@ -14,7 +16,6 @@ import {IDestroySavedSearchParameters} from "../../core/Public/Parameters/Search
 import {ISearchQueryExecutor, ISearchQueryExecutorToken, SearchQueryExecutor} from "./SearchQueryExecutor";
 import {TwitterRequest} from "../../core/Public/TwitterRequest";
 import HashSet from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/HashSet";
-import {Inject, InjectionToken} from "@angular/core";
 
 export interface ISearchController {
   getSearchTweetsIterator(parameters: ISearchTweetsParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<ISearchResultsDTO>, number>; // long?
@@ -85,7 +86,7 @@ export class SearchController implements ISearchController {
 
         let page = await this._searchQueryExecutor.searchUsersAsync(cursoredParameters, new TwitterRequest(request)); // .ConfigureAwait(false);
         let result = new FilteredTwitterResult<UserDTO[]>(page);
-        result.FilteredDTO = page.Model.Where(x => !previousResultIds.contains(x.Id)); // .ToArray();
+        result.FilteredDTO = page.model.filter(x => !previousResultIds.contains(x.id)); // .ToArray();
 
         return result;
       },

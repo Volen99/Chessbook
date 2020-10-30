@@ -1,12 +1,13 @@
-﻿import TimeSpan from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
+﻿import {InjectionToken} from "@angular/core";
+
+import TimeSpan from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
 import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {ITweetinviSettings} from "../../Settings/TweetinviSettings";
+import {ITweetinviSettings} from "../../Settings/SharebookSettings";
 import {ITwitterRequestParameters} from "./ITwitterRequestParameters";
 import {IProxyConfig} from "../../Settings/ProxyConfig";
 import {ITwitterCredentials} from "../Authentication/TwitterCredentials";
 import {IOAuthQueryParameter} from "../../../Core/Web/IOAuthQueryParameter";
 import {IEndpointRateLimit} from "../RateLimits/IEndpointRateLimit";
-import {InjectionToken} from "@angular/core";
 import {TwitterQuery} from "../../TwitterQuery";
 
 // All the information necessary for an http request to be executed.

@@ -1,6 +1,6 @@
 import {CursorQueryParameters, ICursorQueryParameters} from "../CursorQueryParameters";
 import {ITweetIdentifier} from "../../Models/Interfaces/ITweetIdentifier";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {TweetIdentifier} from "../../Models/TweetIdentifier";
 import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
 
@@ -20,7 +20,7 @@ export class GetRetweeterIdsParameters extends CursorQueryParameters implements 
       } else {
         super();
 
-        this.pageSize = TwitterLimits.DEFAULTS.TWEETS_GET_RETWEETS_MAX_SIZE;
+        this.pageSize = SharebookLimits.DEFAULTS.TWEETS_GET_RETWEETS_MAX_SIZE;
 
         if (Type.isNumber(tweetIdOrTweetOrParameters)) {
           this.tweet = new TweetIdentifier(tweetIdOrTweetOrParameters);
@@ -29,7 +29,7 @@ export class GetRetweeterIdsParameters extends CursorQueryParameters implements 
         }
       }
     } else {
-      this.pageSize = TwitterLimits.DEFAULTS.TWEETS_GET_RETWEETS_MAX_SIZE;
+      this.pageSize = SharebookLimits.DEFAULTS.TWEETS_GET_RETWEETS_MAX_SIZE;
     }
   }
 

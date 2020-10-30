@@ -14,9 +14,7 @@ import {IGeoSearchReverseParameters} from "../../Parameters/HelpClient/GeoSearch
 import {CredentialsRateLimitsDTO} from "../../../Core/DTO/CredentialsRateLimitsDTO";
 import {HelpRequester} from "../../../../sharebook/Client/Requesters/HelpRequester";
 import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
-import {
-  HelpClientRequiredParametersValidator,
-} from "../../../Core/Client/Validators/HelpClientRequiredParametersValidator";
+import {HelpClientRequiredParametersValidator} from "../../../Core/Client/Validators/HelpClientRequiredParametersValidator";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
 import {HelpController} from "../../../../controllers/Help/HelpController";
 

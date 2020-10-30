@@ -1,5 +1,5 @@
 import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
-import {TweetMode} from '../../Settings/TweetinviSettings';
+import {TweetMode} from '../../Settings/SharebookSettings';
 
 export interface ICreateTweetStreamParameters extends ICustomRequestParameters {
   // Decide whether to use Extended or Compat mode

@@ -1,6 +1,7 @@
-﻿import {IReadOnlyConsumerCredentials} from "../../../Core/Models/Authentication/ReadOnlyConsumerCredentials";
+﻿import {InjectionToken} from "@angular/core";
+
+import {IReadOnlyConsumerCredentials} from "../../../Core/Models/Authentication/ReadOnlyConsumerCredentials";
 import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
-import {InjectionToken} from "@angular/core";
 
 export interface IConsumerOnlyCredentials extends IReadOnlyConsumerCredentials {
   // Key identifying a specific consumer application
@@ -34,9 +35,9 @@ export class ConsumerOnlyCredentials implements IConsumerOnlyCredentials {
         }
       }
     } else {
-      this.consumerKey = consumerKeyOrCredentials?.ConsumerKey;
-      this.consumerSecret = consumerKeyOrCredentials?.ConsumerSecret;
-      this.bearerToken = consumerKeyOrCredentials?.BearerToken;
+      this.consumerKey = consumerKeyOrCredentials?.consumerKey;
+      this.consumerSecret = consumerKeyOrCredentials?.consumerSecret;
+      this.bearerToken = consumerKeyOrCredentials?.bearerToken;
     }
   }
 

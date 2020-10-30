@@ -1,7 +1,7 @@
-﻿export class TwitterLimits {
-  public static DEFAULTS: TwitterLimits = new TwitterLimits();
+﻿export class SharebookLimits {
+  public static DEFAULTS: SharebookLimits = new SharebookLimits();
 
-  constructor(source?: TwitterLimits) {
+  constructor(source?: SharebookLimits) {
     if (source) {
       this.ACCOUNT_GET_RELATIONSHIPS_WITH_MAX_SIZE = source.ACCOUNT_GET_RELATIONSHIPS_WITH_MAX_SIZE;
       this.ACCOUNT_GET_BLOCKED_USER_IDS_MAX_PAGE_SIZE = source.ACCOUNT_GET_BLOCKED_USER_IDS_MAX_PAGE_SIZE;

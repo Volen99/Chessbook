@@ -1,3 +1,5 @@
+import {Inject, Injectable} from "@angular/core";
+
 import {IAuthController} from "../../core/Core/Controllers/IAuthController";
 import Regex from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Text/RegularExpressions';
 import {Resources} from "../../properties/resources";
@@ -16,7 +18,6 @@ import {IRequestCredentialsParameters} from "../../core/Public/Parameters/Auth/R
 import {ITwitterCredentials, TwitterCredentials} from "../../core/Public/Models/Authentication/TwitterCredentials";
 import {IInvalidateBearerTokenParameters} from "../../core/Public/Parameters/Auth/InvalidateBearerTokenParameters";
 import {IInvalidateAccessTokenParameters} from "../../core/Public/Parameters/Auth/InvalidateAccessTokenParameters";
-import {Inject, Injectable} from "@angular/core";
 
 @Injectable()
 export class AuthController implements IAuthController {

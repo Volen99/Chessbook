@@ -1,4 +1,5 @@
 ﻿import {InjectionToken} from "@angular/core";
+
 import {EventInitiatedViaDTO} from "../../../../Core/DTO/EventInitiatedViaDTO";
 
 export interface IEventInitiatedViaDTO {

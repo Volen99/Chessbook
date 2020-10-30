@@ -40,6 +40,7 @@ import {IConsumerOnlyCredentials} from "../../Models/Authentication/ConsumerOnly
 import {CredentialsRateLimitsDTO} from "../../../Core/DTO/CredentialsRateLimitsDTO";
 import {TwitterClientFactories} from "../../../../sharebook/Client/Tools/TwitterClientFactories";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {IRelationshipDetails} from "../../Models/Interfaces/IRelationshipDetails";
 
 export interface ITwitterClientFactories {
   // ACCOUNT SETTINGS
@@ -87,9 +88,9 @@ export interface ITwitterClientFactories {
 
   createRelationshipStates(relationshipStateDTOs: IRelationshipStateDTO[]): IRelationshipState[];
 
-  createRelationshipDetails(json: string): IRelationshipState;
+  createRelationshipDetails(json: string): IRelationshipDetails;
 
-  createRelationshipDetails(dto: IRelationshipDetailsDTO): IRelationshipState;
+  createRelationshipDetails(dto: IRelationshipDetailsDTO): IRelationshipDetails;
 
   // SAVED SEARCH
 

@@ -1,4 +1,6 @@
-﻿import {ITweetIdentifier} from "./ITweetIdentifier";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITweetIdentifier} from "./ITweetIdentifier";
 import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
 import {IPlace} from "./IPlace";
 import {IUrlEntity} from "../Entities/IUrlEntity";
@@ -6,9 +8,8 @@ import {IHashtagEntity} from "../Entities/IHashTagEntity";
 import {IMediaEntity} from "../Entities/IMediaEntity";
 import {IUserMentionEntity} from "../Entities/IUserMentionEntity";
 import {ICoordinates} from "./ICoordinates";
-import IEnumerable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable";
 import Dictionary from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
-import {TweetMode} from '../../Settings/TweetinviSettings';
+import {TweetMode} from '../../Settings/SharebookSettings';
 import {ITweetEntities} from "../Entities/ITweetEntities";
 import {ITwitterClient} from "../../ITwitterClient";
 import {IExtendedTweet} from "./DTO/IExtendedTweet";
@@ -17,7 +18,6 @@ import {Language} from '../Enum/Language';
 import {ITweetDTO} from "./DTO/ITweetDTO";
 import {IOEmbedTweet} from "./IOEmbedTweet";
 import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {Inject, InjectionToken} from "@angular/core";
 import {Tweet} from "../../../Core/Models/Tweet";
 import {TweetDTO} from "../../../Core/DTO/TweetDTO";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
@@ -95,7 +95,7 @@ export interface ITweet extends ITweetIdentifier, IEquatable<ITweet> {
   contributorsIds: number[];
 
   // Users who contributed to the authorship of the tweet, on behalf of the official tweet author.
-  contributors: IEnumerable<number>;
+  contributors: Iterable<number>;
 
   // Number of retweets related with this tweet
   retweetCount: number;
@@ -131,7 +131,7 @@ export interface ITweet extends ITweetIdentifier, IEquatable<ITweet> {
   withheldCopyright: boolean;
 
   // Countries in which the tweet will be withheld
-  withheldInCountries: IEnumerable<string>;
+  withheldInCountries: Iterable<string>;
 
   // When present, indicates whether the content being withheld is the "status" or a "user."
   withheldScope: string;

@@ -37,7 +37,7 @@ export class MultiLevelCursorIteratorBase<TParent, TItem, TCursor> implements IM
 
     let childItemsPage = await this._getChildItemsPageFromParent(this._itemsLeftToProcess.toArray()); // .ConfigureAwait(false);
     let processedParentItems = childItemsPage.associatedParentItems;
-    processedParentItems.ForEach<TParent>(item => { this._itemsLeftToProcess.remove(item); });
+    processedParentItems.forEach(item => { this._itemsLeftToProcess.remove(item); }); // TODO: might bug
 
     let pageResult = new MultiLevelCursorIteratorPage<TParent, TItem, TCursor>();
     pageResult.items = childItemsPage.items;

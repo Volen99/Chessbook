@@ -1,7 +1,8 @@
-﻿import {ITweet} from "./ITweet";
-import {Inject, InjectionToken} from "@angular/core";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITweet} from "./ITweet";
 import {Mention} from "../../../Core/Models/Mention";
-import {TweetMode} from "../../Settings/TweetinviSettings";
+import {TweetMode} from "../../Settings/SharebookSettings";
 import {TweetDTO} from "../../../Core/DTO/TweetDTO";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
 

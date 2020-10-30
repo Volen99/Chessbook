@@ -1,7 +1,4 @@
-﻿import {InjectionToken} from "@angular/core";
-import {IMessageEventDTO} from "../Events/IMessageEventDTO";
-
-export interface IBaseCursorQueryDTO<T = any> {
+﻿export interface IBaseCursorQueryDTO<T = any> {
   previousCursor: number;
   nextCursor: number;
 

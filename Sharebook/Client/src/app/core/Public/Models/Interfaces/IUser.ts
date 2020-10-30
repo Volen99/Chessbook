@@ -1,4 +1,6 @@
-﻿import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
 import {IUserIdentifier} from "./IUserIdentifier";
 import {ITwitterIterator} from "../../Iterators/ITwitterIterator";
 import {ITwitterList} from "./ITwitterList";
@@ -7,13 +9,11 @@ import {Stream} from "stream";
 import {IMultiLevelCursorIterator} from "../../Iterators/IMultiLevelCursorIterator";
 import {ImageSize} from "../Enum/ImageSize";
 import {IRelationshipDetails} from "./IRelationshipDetails";
-import IEnumerable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable";
 import {IUserDTO} from "./DTO/IUserDTO";
 import {ITwitterClient} from "../../ITwitterClient";
 import {ITweetDTO} from "./DTO/ITweetDTO";
 import {IUserEntities} from "../Entities/IUserEntities";
 import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {Inject, InjectionToken} from "@angular/core";
 import {User} from "../../../Core/Models/User";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
 import {UserDTO} from "../../../Core/DTO/UserDTO";
@@ -146,7 +146,7 @@ export interface IUser extends IUserIdentifier, IEquatable<IUser> {
   // The withheld properties are not always provided in the json result
 
   // If a user is withheld in a country, the information will be listed there
-  withheldInCountries: IEnumerable<string>;
+  withheldInCountries: Iterable<string>;
 
   // States whether the user or his tweets are being withheld in a specific country
   withheldScope: string;
@@ -196,15 +196,15 @@ export interface IUser extends IUserIdentifier, IEquatable<IUser> {
   // Block
 
   // Make the authenticated user block the user.
-  blockUserAsync(): Promise<void>;
+  blockUserAsync(): Promise<any>;
 
   // Make the authenticated user unblock the user.
-  unblockUserAsync(): Promise<void>;
+  unblockUserAsync(): Promise<any>;
 
   // Spam
 
   // Report the user for spam.
-  reportUserForSpamAsync(): Promise<void>;
+  reportUserForSpamAsync(): Promise<any>;
 
   // Stream Profile Image
 
@@ -214,7 +214,6 @@ export interface IUser extends IUserIdentifier, IEquatable<IUser> {
   // Get a stream to get the profile image of this user.
   getProfileImageStreamAsync(imageSize: ImageSize): Promise<Stream>;
 }
-
 
 export const IUserToken = new InjectionToken<IUser>('IUser', {
   providedIn: 'root',

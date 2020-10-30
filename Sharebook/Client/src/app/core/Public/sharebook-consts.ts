@@ -1,5 +1,5 @@
 ﻿// Application wide constants.
-export abstract class SharebookConsts {         // https://stackoverflow.com/questions/13212521/typescript-static-classes
+export abstract class SharebookConsts { // https://stackoverflow.com/questions/13212521/typescript-static-classes
   public static MEDIA_CONTENT_SIZE: number = 24;
   public static HTTP_LINK_SIZE: number = 23;
   public static HTTPS_LINK_SIZE: number = 23;

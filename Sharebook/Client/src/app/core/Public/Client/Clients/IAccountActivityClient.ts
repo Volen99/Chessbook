@@ -18,6 +18,7 @@ import {IGetAccountActivitySubscriptionsParameters} from "../../Parameters/Accou
 import {IUnsubscribeFromAccountActivityParameters} from "../../Parameters/AccountActivity/UnsubscribeFromAccountActivityParameters";
 import {AccountActivityRequester} from "../../../../sharebook/Client/Requesters/AccountActivityRequester";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {AccountActivityClient} from "../../../../sharebook/Client/Clients/AccountActivityClient";
 
 // A client providing all the actions related with the account activity api
 export interface IAccountActivityClient {
@@ -57,32 +58,32 @@ export interface IAccountActivityClient {
   /// <returns>The account activity registered webhooks of a specific environment</returns>
   getAccountActivityEnvironmentWebhooksAsync(parameters: IGetAccountActivityEnvironmentWebhooksParameters): Promise<IWebhook[]>
 
-  deleteAccountActivityWebhookAsync(environment: string, webhookId: string): Promise<void>;
+  deleteAccountActivityWebhookAsync(environment: string, webhookId: string): Promise<any>;
 
-  deleteAccountActivityWebhookAsync(environment: string, webhook: IWebhook): Promise<void>;
+  deleteAccountActivityWebhookAsync(environment: string, webhook: IWebhook): Promise<any>;
 
   /// <summary>
   /// Remove the specified account activity webhook
   /// <para>Read more : https://developer.twitter.com/en/docs/accounts-and-users/subscribe-account-activity/api-reference/aaa-premium#delete-account-activity-all-env-name-webhooks-webhook-id </para>
   /// </summary>
-  deleteAccountActivityWebhookAsync(parameters: IDeleteAccountActivityWebhookParameters): Promise<void>;
+  deleteAccountActivityWebhookAsync(parameters: IDeleteAccountActivityWebhookParameters): Promise<any>;
 
   /// <inheritdoc cref="IAccountActivityClient.TriggerAccountActivityWebhookCRCAsync(ITriggerAccountActivityWebhookCRCParameters)" />
-  triggerAccountActivityWebhookCRCAsync(environment: string, webhookId: string): Promise<void>;
+  triggerAccountActivityWebhookCRCAsync(environment: string, webhookId: string): Promise<any>;
 
   /// <summary>
   /// Challenges a webhook and reenable it when it was disabled
   /// <para>Read more : https://developer.twitter.com/en/docs/accounts-and-users/subscribe-account-activity/api-reference/aaa-premium#put-account-activity-all-env-name-webhooks-webhook-id </para>
   /// </summary>
-  triggerAccountActivityWebhookCRCAsync(parameters: ITriggerAccountActivityWebhookCRCParameters): Promise<void>;
+  triggerAccountActivityWebhookCRCAsync(parameters: ITriggerAccountActivityWebhookCRCParameters): Promise<any>;
 
-  subscribeToAccountActivityAsync(environment: string): Promise<void>;
+  subscribeToAccountActivityAsync(environment: string): Promise<any>;
 
   /// <summary>
   /// Subscribes the provided application to all events for the provided environment for all message types. After activation, all events for the requesting user will be sent to the application’s webhook via POST request.
   /// <para>Read more : https://developer.twitter.com/en/docs/accounts-and-users/subscribe-account-activity/api-reference/aaa-premium#post-account-activity-all-env-name-subscriptions </para>
   /// </summary>
-  subscribeToAccountActivityAsync(parameters: ISubscribeToAccountActivityParameters): Promise<void>;
+  subscribeToAccountActivityAsync(parameters: ISubscribeToAccountActivityParameters): Promise<any>;
 
   countAccountActivitySubscriptionsAsync(): Promise<IWebhookSubscriptionsCount>;
 
@@ -120,5 +121,5 @@ export interface IAccountActivityClient {
 
 export const IAccountActivityClientToken = new InjectionToken<IAccountActivityClient>('IAccountActivityClient', {
   providedIn: 'root',
-  factory: () => new AccountActiv ityClient(Inject(AccountActivityRequester), Inject(TwitterClient)),
+  factory: () => new AccountActivityClient(Inject(AccountActivityRequester), Inject(TwitterClient)),
 });

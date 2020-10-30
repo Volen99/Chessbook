@@ -1,5 +1,5 @@
 import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
-import {RateLimitTrackerMode} from "../../Settings/TweetinviSettings";
+import {RateLimitTrackerMode} from "../../Settings/SharebookSettings";
 
 export enum RateLimitsSource {
   // Gets the rate limits from the cache if they exists.

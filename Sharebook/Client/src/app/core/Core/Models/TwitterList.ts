@@ -9,6 +9,7 @@ import {GetMembersOfListParameters} from "../../Public/Parameters/ListsClient/Me
 import {UpdateListParameters} from "../../Public/Parameters/ListsClient/UpdateListParameters";
 import {IListMetadataParameters} from "../../Public/Parameters/ListsClient/IListMetadataParameters";
 import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
 
 export class TwitterList implements ITwitterList {
   private _twitterListDTO: ITwitterListDTO;
@@ -103,64 +104,51 @@ export class TwitterList implements ITwitterList {
     return this.client.lists.getMembersOfListAsync(new GetMembersOfListParameters(this));
   }
 
-  public addMemberAsync(userId: number): Promise<void> {
-    return this.client.lists.addMemberToListAsync(this, userId);
+  public addMemberAsync(userIdOrUsernameOrIdentifier: number | string | IUserIdentifier): Promise<any> {
+    let typeCurrent;
+    if (Type.isNumber(userIdOrUsernameOrIdentifier)) {
+      typeCurrent = userIdOrUsernameOrIdentifier as number;
+    } else if (Type.isString(userIdOrUsernameOrIdentifier)) {
+      typeCurrent = userIdOrUsernameOrIdentifier as string;
+    } else {
+      typeCurrent = userIdOrUsernameOrIdentifier as IUserIdentifier;
+    }
+
+    return this.client.lists.addMemberToListAsync(this, typeCurrent);
   }
 
-  public addMemberAsync(username: string): Promise<void> {
-    return this.client.lists.addMemberToListAsync(this, username);
+  public addMembersAsync(userIdsOrUsernamesOrUsers: Array<number | string | IUserIdentifier>): Promise<any> {
+    return this.client.lists.addMembersToListAsync(this, userIdsOrUsernamesOrUsers);
   }
 
-  public addMemberAsync(user: IUserIdentifier): Promise<void> {
-    return this.client.lists.addMemberToListAsync(this, user);
+  public removeMemberAsync(userIdOrUsernameOrIdentifier: number | string | IUserIdentifier): Promise<boolean> {
+    let typeCurrent;
+    if (Type.isNumber(userIdOrUsernameOrIdentifier)) {
+      typeCurrent = userIdOrUsernameOrIdentifier as number;
+    } else if (Type.isString(userIdOrUsernameOrIdentifier)) {
+      typeCurrent = userIdOrUsernameOrIdentifier as string;
+    } else {
+      typeCurrent = userIdOrUsernameOrIdentifier as IUserIdentifier;
+    }
+
+    return this.client.lists.checkIfUserIsMemberOfListAsync(this, typeCurrent);
   }
 
-  public addMembersAsync(userIds: Array<number>): Promise<void> {
-    return this.client.lists.addMembersToListAsync(this, userIds);
+  public removeMembersAsync(userIdsOrUsernamesOrUsers: Array<number | string | IUserIdentifier>): Promise<any> {
+    return this.client.lists.removeMembersFromListAsync(this, userIdsOrUsernamesOrUsers);
   }
 
-  public addMembersAsync(usernames: Array<string>): Promise<void> {
-    return this.client.lists.addMembersToListAsync(this, usernames);
-  }
+  public checkUserMembershipAsync(userIdOrScreenNameOrIdentifier: number | string | IUserIdentifier): Promise<boolean> {
+    let typeCurrent;
+    if (Type.isNumber(userIdOrScreenNameOrIdentifier)) {
+      typeCurrent = userIdOrScreenNameOrIdentifier as number;
+    } else if (Type.isString(userIdOrScreenNameOrIdentifier)) {
+      typeCurrent = userIdOrScreenNameOrIdentifier as string;
+    } else {
+      typeCurrent = userIdOrScreenNameOrIdentifier as IUserIdentifier;
+    }
 
-  public addMembersAsync(users: Array<IUserIdentifier>): Promise<void> {
-    return this.client.lists.addMembersToListAsync(this, users);
-  }
-
-  public removeMemberAsync(userId: number): Promise<boolean> {
-    return this.client.lists.checkIfUserIsMemberOfListAsync(this, userId);
-  }
-
-  public removeMemberAsync(username: string): Promise<boolean> {
-    return this.client.lists.checkIfUserIsMemberOfListAsync(this, username);
-  }
-
-  public removeMemberAsync(user: IUserIdentifier): Promise<boolean> {
-    return this.client.lists.checkIfUserIsMemberOfListAsync(this, user);
-  }
-
-  public removeMembersAsync(userIds: Array<number>): Promise<void> {
-    return this.client.lists.removeMembersFromListAsync(this, userIds);
-  }
-
-  public removeMembersAsync(usernames: Array<string>): Promise<void> {
-    return this.client.lists.removeMembersFromListAsync(this, usernames);
-  }
-
-  public removeMembersAsync(users: Array<IUserIdentifier>): Promise<void> {
-    return this.client.lists.removeMembersFromListAsync(this, users);
-  }
-
-  public checkUserMembershipAsync(userId: number): Promise<boolean> {
-    return this.client.lists.checkIfUserIsMemberOfListAsync(this, userId);
-  }
-
-  public checkUserMembershipAsync(userScreenName: string): Promise<boolean> {
-    return this.client.lists.checkIfUserIsMemberOfListAsync(this, userScreenName);
-  }
-
-  public checkUserMembershipAsync(user: IUserIdentifier): Promise<boolean> {
-    return this.client.lists.checkIfUserIsMemberOfListAsync(this, user);
+    return this.client.lists.checkIfUserIsMemberOfListAsync(this, typeCurrent);
   }
 
   // Subscribers
@@ -176,16 +164,17 @@ export class TwitterList implements ITwitterList {
     return this.client.lists.unsubscribeFromListAsync(this);
   }
 
-  public checkUserSubscriptionAsync(userId: number): Promise<boolean> {
-    return this.client.lists.checkIfUserIsSubscriberOfListAsync(this, userId);
-  }
+  public checkUserSubscriptionAsync(userIdOrUsernameOrIdentifier: number | string | IUserIdentifier): Promise<boolean> {
+    let typeCurrent;
+    if (Type.isNumber(userIdOrUsernameOrIdentifier)) {
+      typeCurrent = userIdOrUsernameOrIdentifier as number;
+    } else if (Type.isString(userIdOrUsernameOrIdentifier)) {
+      typeCurrent = userIdOrUsernameOrIdentifier as string;
+    } else {
+      typeCurrent = userIdOrUsernameOrIdentifier as IUserIdentifier;
+    }
 
-  public checkUserSubscriptionAsync(username: string): Promise<boolean> {
-    return this.client.lists.checkIfUserIsSubscriberOfListAsync(this, username);
-  }
-
-  public checkUserSubscriptionAsync(user: IUserIdentifier): Promise<boolean> {
-    return this.client.lists.checkIfUserIsSubscriberOfListAsync(this, user);
+    return this.client.lists.checkIfUserIsSubscriberOfListAsync(this, typeCurrent);
   }
 
   public async updateAsync(parameters: IListMetadataParameters): Promise<void> {

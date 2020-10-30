@@ -2,7 +2,7 @@
 import {MediaCategory} from "../../Models/Enum/MediaCategory";
 import TimeSpan from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
 import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {IMediaUploadProgressChangedEventArgs} from "../../Events/MediaUploadProgressChangedEventArgs";
 import {CursorQueryParameters} from "../CursorQueryParameters";
 
@@ -54,7 +54,7 @@ export interface IUploadOptionalParameters {
 export class UploadOptionalParameters implements IUploadOptionalParameters {
   constructor() {
     this.queryMediaType = "media";
-    this.maxChunkSize = TwitterLimits.DEFAULTS.UPLOAD_MAX_CHUNK_SIZE;
+    this.maxChunkSize = SharebookLimits.DEFAULTS.UPLOAD_MAX_CHUNK_SIZE;
     this.additionalOwnerIds = new Array<number>();
     this.waitForTwitterProcessing = true;
 

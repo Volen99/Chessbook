@@ -1,8 +1,7 @@
 import {BaseGetUsersOfListParameters, IBaseGetUsersOfListParameters} from "../../../../Core/Parameters/BaseGetUsersOfListParameters";
 import {ITwitterListIdentifier} from "../../../Models/Interfaces/ITwitterListIdentifier";
 import {TwitterListIdentifier} from '../../../Models/TwitterListIdentifier';
-import {TwitterLimits} from "../../../Settings/TwitterLimits";
-import {IGetMembersOfListParameters} from "../Members/GetMembersOfListParameters";
+import {SharebookLimits} from "../../../Settings/SharebookLimits";
 import Type from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
 
 // For more information visit: https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-subscribers
@@ -15,7 +14,7 @@ export class GetListSubscribersParameters extends BaseGetUsersOfListParameters i
       super(listIdOrListOrParameters);
 
       if (listIdOrListOrParameters == null) {
-        super.pageSize = TwitterLimits.DEFAULTS.LISTS_GET_SUBSCRIBERS_MAX_PAGE_SIZE;
+        super.pageSize = SharebookLimits.DEFAULTS.LISTS_GET_SUBSCRIBERS_MAX_PAGE_SIZE;
       }
     } else {
       let list: ITwitterListIdentifier;
@@ -24,10 +23,10 @@ export class GetListSubscribersParameters extends BaseGetUsersOfListParameters i
       } else {
         list = listIdOrListOrParameters;
       }
-      
+
       super(list);
 
-      super.pageSize = TwitterLimits.DEFAULTS.LISTS_GET_SUBSCRIBERS_MAX_PAGE_SIZE;
+      super.pageSize = SharebookLimits.DEFAULTS.LISTS_GET_SUBSCRIBERS_MAX_PAGE_SIZE;
     }
   }
 

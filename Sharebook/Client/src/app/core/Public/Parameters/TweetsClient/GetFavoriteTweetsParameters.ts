@@ -2,8 +2,8 @@
 import {ITweetModeParameter} from "../ITweetModeParameter";
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
 import {UserIdentifier} from "../../Models/UserIdentifier";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
-import {TweetMode} from '../../Settings/TweetinviSettings';
+import {SharebookLimits} from "../../Settings/SharebookLimits";
+import {TweetMode} from '../../Settings/SharebookSettings';
 import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
 
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-favorites-list
@@ -25,7 +25,7 @@ export class GetUserFavoriteTweetsParameters extends MinMaxQueryParameters imple
     } else {
       super();
 
-      super.pageSize = TwitterLimits.DEFAULTS.TWEETS_GET_FAVORITE_TWEETS_MAX_SIZE;
+      super.pageSize = SharebookLimits.DEFAULTS.TWEETS_GET_FAVORITE_TWEETS_MAX_SIZE;
 
       let userCurrent: IUserIdentifier;
       if (Type.isString(usernameOrIdOrUserOrParameters) || Type.isNumber(usernameOrIdOrUserOrParameters)) {

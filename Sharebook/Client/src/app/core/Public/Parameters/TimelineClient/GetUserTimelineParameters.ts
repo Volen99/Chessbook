@@ -1,7 +1,7 @@
 ﻿import {ITimelineRequestParameters, TimelineRequestParameters} from "../TimelineRequestParameters";
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
 import {UserIdentifier} from '../../Models/UserIdentifier';
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
 
 // For more information visit : https://developer.twitter.com/en/docs/tweets/timelines/api-reference/get-statuses-user_timeline
@@ -33,7 +33,7 @@ export class GetUserTimelineParameters extends TimelineRequestParameters impleme
     } else {
       super();
 
-      super.pageSize = TwitterLimits.DEFAULTS.TIMELINE_USER_PAGE_MAX_PAGE_SIZE;
+      super.pageSize = SharebookLimits.DEFAULTS.TIMELINE_USER_PAGE_MAX_PAGE_SIZE;
 
       let userCurrent: IUserIdentifier;
       if (Type.isNumber(userIdOrUsernameOrUserIdentifierOrParameters) || Type.isString(userIdOrUsernameOrUserIdentifierOrParameters)) {

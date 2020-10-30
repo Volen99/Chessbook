@@ -1,5 +1,6 @@
-﻿import StringBuilder from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+﻿import {Inject, Injectable, InjectionToken} from "@angular/core";
+
+import StringBuilder from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 
 // Allow developers to enhance default requests with additional query parameters
 export interface ICustomRequestParameters {
@@ -38,10 +39,10 @@ export class CustomRequestParameters implements ICustomRequestParameters {
       return "";
     }
 
-    let queryParameters = new StringBuilder(`${this._customQueryParameters[0].Item1}=${this._customQueryParameters[0].Item2}`);
+    let queryParameters = new StringBuilder(`${this._customQueryParameters[0][0]}=${this._customQueryParameters[0][1]}`);
 
     for (let i = 1; i < this._customQueryParameters.length; ++i) {
-      queryParameters.append(`&${this._customQueryParameters[i].Item1}=${this._customQueryParameters[i].Item2}`);
+      queryParameters.append(`&${this._customQueryParameters[i][0]}=${this._customQueryParameters[i][1]}`);
     }
 
     return queryParameters.toString();

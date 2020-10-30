@@ -73,7 +73,8 @@ import {
   SearchParameters, TimelineParameters, TrendsParameters, TweetsParameters, UploadParameters, UserParameters
 } from "./parameters-types";
 
-export interface IParametersValidator extends IAccountActivityClientParametersValidator,
+export interface IParametersValidator extends
+  IAccountActivityClientParametersValidator,
   IAccountSettingsClientParametersValidator,
   IAuthClientParametersValidator,
   IHelpClientParametersValidator,

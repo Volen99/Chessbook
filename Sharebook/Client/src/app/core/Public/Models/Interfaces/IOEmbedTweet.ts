@@ -1,5 +1,6 @@
-﻿import {IOEmbedTweetDTO} from "./DTO/IOembedTweetDTO";
-import {Inject, InjectionToken} from "@angular/core";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {IOEmbedTweetDTO} from "./DTO/IOembedTweetDTO";
 import {OEmbedTweet} from "../../../Core/Models/OEmbedTweet";
 import {OEmbedTweetDTO} from "../../../Core/DTO/OembedTweetDTO";
 

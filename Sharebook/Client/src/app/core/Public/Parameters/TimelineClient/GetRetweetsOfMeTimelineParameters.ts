@@ -1,6 +1,7 @@
-﻿import {ITimelineRequestParameters, TimelineRequestParameters} from "../TimelineRequestParameters";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+﻿import {Inject, Injectable, InjectionToken} from "@angular/core";
+
+import {ITimelineRequestParameters, TimelineRequestParameters} from "../TimelineRequestParameters";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 
 // For more information visit: https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-retweets_of_me
 export interface IGetRetweetsOfMeTimelineParameters extends ITimelineRequestParameters {
@@ -23,7 +24,7 @@ export class GetRetweetsOfMeTimelineParameters extends TimelineRequestParameters
     } else {
       super();
 
-      super.pageSize = TwitterLimits.DEFAULTS.TIMELINE_RETWEETS_OF_ME_MAX_PAGE_SIZE;
+      super.pageSize = SharebookLimits.DEFAULTS.TIMELINE_RETWEETS_OF_ME_MAX_PAGE_SIZE;
     }
   }
 

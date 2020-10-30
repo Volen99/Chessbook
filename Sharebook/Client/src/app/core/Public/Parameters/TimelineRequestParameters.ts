@@ -1,6 +1,6 @@
 ﻿import {IMinMaxQueryParameters, MinMaxQueryParameters} from "./MaxAndMinBaseQueryParameters";
 import {ITweetModeParameter} from "./ITweetModeParameter";
-import {TweetMode} from '../Settings/TweetinviSettings';
+import {TweetMode} from '../Settings/SharebookSettings';
 
 export interface ITimelineRequestParameters extends IMinMaxQueryParameters, ITweetModeParameter {
   // If set to true, the creator property (IUser) will only contain the id.

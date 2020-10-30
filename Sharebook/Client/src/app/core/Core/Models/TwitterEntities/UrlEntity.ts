@@ -12,7 +12,7 @@ export class UrlEntity implements IUrlEntity {
   public expandedURL: string;
 
   // [JsonProperty("indices")]
-  public indices: number[];
+  public indices: Array<number>;
 
   public equals(other: IUrlEntity) {
     if (other == null) {
@@ -31,7 +31,7 @@ export class UrlEntity implements IUrlEntity {
       return this.indices === other.indices;
     }
 
-    return this.indices.ContainsSameObjectsAs(other.indices, true);
+    return this.indices.containsSameObjectsAs(other.indices, true);
   }
 
   public ToString(): string {

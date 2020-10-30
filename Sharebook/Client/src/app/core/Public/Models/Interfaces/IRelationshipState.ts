@@ -1,5 +1,6 @@
-﻿import {IRelationshipStateDTO} from "./DTO/IRelationshipStateDTO";
-import {Inject, InjectionToken} from "@angular/core";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {IRelationshipStateDTO} from "./DTO/IRelationshipStateDTO";
 import {RelationshipState} from "../../../Core/Models/TwitterEntities/RelationshipState";
 import {RelationshipStateDTO} from "../../../Core/DTO/RelationshipStateDTO";
 

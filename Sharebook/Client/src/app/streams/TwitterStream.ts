@@ -5,7 +5,7 @@ import Dictionary from "../c#-objects/TypeScript.NET-Core/packages/Core/source/C
 import {Action} from "../c#-objects/TypeScript.NET-Core/packages/Core/source/FunctionTypes";
 import {ICustomRequestParameters} from "../core/Public/Parameters/CustomRequestParameters";
 import {ITwitterExecutionContext} from "../core/Core/Client/TwitterExecutionContext";
-import { TweetMode } from '../core/Public/Settings/TweetinviSettings';
+import { TweetMode } from '../core/Public/Settings/SharebookSettings';
 import {StreamState} from "../core/Public/Streaming/StreamState";
 import InvalidOperationException from "../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/InvalidOperationException";
 import {StreamFilterLevel} from "../core/Public/Streaming/Parameters/StreamFilterLevel";

@@ -1,14 +1,14 @@
-﻿import {ITwitterListIdentifier} from "./ITwitterListIdentifier";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterListIdentifier} from "./ITwitterListIdentifier";
 import {PrivacyMode} from '../Enum/PrivacyMode';
 import {ITweet} from "./ITweet";
 import {IUserIdentifier} from "./IUserIdentifier";
-import IEnumerable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable";
 import {ITwitterListDTO} from "./DTO/ITwitterListDTO";
 import {IUser} from "./IUser";
 import {ITwitterClient} from "../../ITwitterClient";
 import {IListMetadataParameters} from "../../Parameters/ListsClient/IListMetadataParameters";
 import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {Inject, InjectionToken} from "@angular/core";
 import {TwitterList} from "../../../Core/Models/TwitterList";
 import {TwitterListDTO} from "../../../Core/DTO/TwitterListDTO";
 
@@ -57,22 +57,22 @@ export interface ITwitterList extends ITwitterListIdentifier {
   getMembersAsync(): Promise<IUser[]>;
 
   // Add a member to this list. You must be the owner of the list to do so.
-  addMemberAsync(userId: number): Promise<void>;
+  addMemberAsync(userId: number): Promise<any>;
 
   // Add a member to this list. You must be the owner of the list to do so.
-  addMemberAsync(username: string): Promise<void>;
+  addMemberAsync(username: string): Promise<any>;
 
   // Add a member to this list. You must be the owner of the list to do so.
-  addMemberAsync(user: IUserIdentifier): Promise<void>;
+  addMemberAsync(user: IUserIdentifier): Promise<any>;
 
   // Add a list of members to this list. You must be the owner of the list to do so.
-  addMembersAsync(userIds: IEnumerable<number>): Promise<void>;
+  addMembersAsync(userIds: Iterable<number>): Promise<any>;
 
   // Add a list of members to this list. You must be the owner of the list to do so.
-  addMembersAsync(userScreenNames: IEnumerable<string>): Promise<void>;
+  addMembersAsync(userScreenNames: Iterable<string>): Promise<any>;
 
   // Add a list of members to this list. You must be the owner of the list to do so.
-  addMembersAsync(users: IEnumerable<IUserIdentifier>): Promise<void>;
+  addMembersAsync(users: Iterable<IUserIdentifier>): Promise<any>;
 
   // Remove a member from this list. You must be the owner of the list to do so.
   removeMemberAsync(userId: number): Promise<boolean>;
@@ -84,13 +84,13 @@ export interface ITwitterList extends ITwitterListIdentifier {
   removeMemberAsync(user: IUserIdentifier): Promise<boolean>;
 
   // Remove a list of members from this list. You must be the owner of the list to do so.
-  removeMembersAsync(userIds: IEnumerable<number>): Promise<void>;
+  removeMembersAsync(userIds: Iterable<number>): Promise<any>;   // was void
 
   // Remove a list of members from this list. You must be the owner of the list to do so.
-  removeMembersAsync(usernames: IEnumerable<string>): Promise<void>;
+  removeMembersAsync(usernames: Iterable<string>): Promise<any>;
 
   // Remove a list of members from this list. You must be the owner of the list to do so.
-  removeMembersAsync(users: IEnumerable<IUserIdentifier>): Promise<void>;
+  removeMembersAsync(users: Iterable<IUserIdentifier>): Promise<any>;
 
   // Test if a user is a member of the list.
   checkUserMembershipAsync(userId: number): Promise<boolean>;

@@ -1,5 +1,5 @@
 ﻿import {GetUsersOptionalParameters, IGetUsersOptionalParameters} from "../Optionals/GetUsersOptionalParameters";
-import {TweetMode} from '../../Settings/TweetinviSettings';
+import {TweetMode} from '../../Settings/SharebookSettings';
 
 // For more information visit : https://dev.twitter.com/rest/reference/get/account/verify_credentials
 export interface IGetAuthenticatedUserParameters extends IGetUsersOptionalParameters {

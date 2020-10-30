@@ -57,7 +57,7 @@ export interface ISearchClient {
   /// <param name="filter">What type of tweets you wish to get</param>
   /// <param name="tweetsMustContainGeoInformation">Whether or not the tweet should contain geo information</param>
   /// <returns>Filtered set of tweets</returns>
-  filterTweets(tweets: ITweet[], filter?: OnlyGetTweetsThatAre, tweetsMustContainGeoInformation: boolean): ITweet[];
+  filterTweets(tweets: ITweet[], filter/*?*/: OnlyGetTweetsThatAre | null, tweetsMustContainGeoInformation: boolean): ITweet[];
 
   searchUsersAsync(query: string): Promise<IUser[]>;
 

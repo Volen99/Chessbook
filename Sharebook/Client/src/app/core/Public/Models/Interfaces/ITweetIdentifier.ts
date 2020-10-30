@@ -1,5 +1,6 @@
-﻿import {ITwitterIdentifier} from "./ITwitterIdentifier";
-import {Inject, InjectionToken} from "@angular/core";
+﻿import {InjectionToken} from "@angular/core";
+
+import {ITwitterIdentifier} from "./ITwitterIdentifier";
 import {TweetIdentifier} from "../TweetIdentifier";
 
 // Identifier allowing to identify a unique tweet.

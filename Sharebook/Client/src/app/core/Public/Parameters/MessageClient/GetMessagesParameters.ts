@@ -1,5 +1,5 @@
 import {CursorQueryParameters, ICursorQueryParameters} from "../CursorQueryParameters";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 
 // For more information visit : https://developer.twitter.com/en/docs/direct-messages/sending-and-receiving/api-reference/list-events
 export interface IGetMessagesParameters extends ICursorQueryParameters {
@@ -12,7 +12,7 @@ export class GetMessagesParameters extends CursorQueryParameters implements IGet
     } else {
       super();
 
-      super.pageSize = TwitterLimits.DEFAULTS.MESSAGES_GET_MAX_PAGE_SIZE;
+      super.pageSize = SharebookLimits.DEFAULTS.MESSAGES_GET_MAX_PAGE_SIZE;
     }
   }
 }

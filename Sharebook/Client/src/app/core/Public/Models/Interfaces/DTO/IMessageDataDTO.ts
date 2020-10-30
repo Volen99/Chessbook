@@ -1,8 +1,9 @@
-﻿import {IQuickReplyResponse} from "../IQuickReplyResponse";
+﻿import {InjectionToken} from "@angular/core";
+
+import {IQuickReplyResponse} from "../IQuickReplyResponse";
 import {IAttachmentDTO} from "./IAttachmentDTO";
 import {IMessageEntities} from "../../Entities/IMessageEntities";
 import {IQuickReplyDTO} from "./IQuickReplyDTO";
-import {InjectionToken} from "@angular/core";
 import {MessageDataDTO} from "../../../../Core/DTO/MessageDataDTO";
 
 export interface IMessageDataDTO {

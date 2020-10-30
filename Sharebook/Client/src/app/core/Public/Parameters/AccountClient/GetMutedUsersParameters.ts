@@ -1,4 +1,4 @@
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {GetCursorUsersOptionalParameters, IGetCursorUsersOptionalParameters} from "../Optionals/GetCursorUsersOptionalParameters";
 
 // For more information visit: https://dev.twitter.com/en/docs/accounts-and-users/mute-block-report-users/api-reference/get-mutes-users-list
@@ -13,7 +13,7 @@ export class GetMutedUsersParameters extends GetCursorUsersOptionalParameters im
       return;
     }
 
-    super.pageSize = TwitterLimits.DEFAULTS.ACCOUNT_GET_MUTED_USERS_MAX_PAGE_SIZE;
+    super.pageSize = SharebookLimits.DEFAULTS.ACCOUNT_GET_MUTED_USERS_MAX_PAGE_SIZE;
   }
 }
 

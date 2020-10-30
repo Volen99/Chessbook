@@ -1,4 +1,5 @@
 ﻿import {InjectionToken} from "@angular/core";
+
 import {QuickReplyOption} from "../../../Core/Models/Properties/QuickReplyOption";
 
 export interface IQuickReplyOption {

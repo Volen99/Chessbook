@@ -7,10 +7,10 @@ import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/sourc
 // Parameters to download an profile image from Twitter.
 export interface IGetProfileImageParameters extends ICustomRequestParameters {
   // Url of the profile image
-  ImageUrl: string;
+  imageUrl: string;
 
   // Size of the image
-  ImageSize: ImageSize;
+  imageSize: ImageSize;
 }
 
 export class GetProfileImageParameters extends CustomRequestParameters implements IGetProfileImageParameters {
@@ -18,28 +18,28 @@ export class GetProfileImageParameters extends CustomRequestParameters implement
     if (GetProfileImageParameters.isIGetProfileImageParameters(imageUrlOrUserOrUserOrParameters)) {
            super(imageUrlOrUserOrUserOrParameters);
 
-           this.ImageSize = ImageSize.Normal;
-           this.ImageSize = imageUrlOrUserOrUserOrParameters.ImageSize;
-           this.ImageUrl = imageUrlOrUserOrUserOrParameters.ImageUrl;
+           this.imageSize = ImageSize.Normal;
+           this.imageSize = imageUrlOrUserOrUserOrParameters.imageSize;
+           this.imageUrl = imageUrlOrUserOrUserOrParameters.imageUrl;
     } else {
       super();
 
       if (Type.isString(imageUrlOrUserOrUserOrParameters)) {
-        this.ImageUrl = imageUrlOrUserOrUserOrParameters;
+        this.imageUrl = imageUrlOrUserOrUserOrParameters;
       } else if (GetProfileImageParameters.isIUser(imageUrlOrUserOrUserOrParameters)) {
-        this.ImageUrl = imageUrlOrUserOrUserOrParameters.profileImageUrl;
+        this.imageUrl = imageUrlOrUserOrUserOrParameters.profileImageUrl;
       } else if (GetProfileImageParameters.isIUserDTO(imageUrlOrUserOrUserOrParameters)) {
-        this.ImageUrl = imageUrlOrUserOrUserOrParameters.profileImageUrl;
+        this.imageUrl = imageUrlOrUserOrUserOrParameters.profileImageUrl;
       }
     }
   }
 
-  public ImageUrl: string;
-  public ImageSize: ImageSize;
+  public imageUrl: string;
+  public imageSize: ImageSize;
 
   private static isIGetProfileImageParameters(imageUrlOrUserOrUserOrParameters: string | IUser | IUserDTO | IGetProfileImageParameters):
     imageUrlOrUserOrUserOrParameters is IGetProfileImageParameters {
-    return (imageUrlOrUserOrUserOrParameters as IGetProfileImageParameters).ImageSize !== undefined;
+    return (imageUrlOrUserOrUserOrParameters as IGetProfileImageParameters).imageSize !== undefined;
   }
 
   private static isIUser(imageUrlOrUserOrUserOrParameters: string | IUser | IUserDTO | IGetProfileImageParameters):

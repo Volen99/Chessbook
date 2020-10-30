@@ -1,6 +1,7 @@
-﻿import {IUserIdentifier} from "./Interfaces/IUserIdentifier";
+﻿import {Injectable} from "@angular/core";
+
+import {IUserIdentifier} from "./Interfaces/IUserIdentifier";
 import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
-import {Injectable} from "@angular/core";
 
 @Injectable()
 export class UserIdentifier implements IUserIdentifier {

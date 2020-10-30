@@ -18,13 +18,10 @@ export class HashtagEntity implements IHashtagEntity {
       return this.indices === other.indices;
     }
 
-    let arr = ["1", "two"];
-    let q = arr.toAddPostfix("fd");
-
     return this.indices.containsSameObjectsAs(other.indices, true);
   }
 
-  public ToString(): string {
+  public toString(): string {
     return `#${this.text}`;
   }
 }

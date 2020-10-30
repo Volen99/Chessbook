@@ -1,9 +1,9 @@
-﻿import {IUserIdentifier} from "../IUserIdentifier";
+﻿import {InjectionToken} from "@angular/core";
+
+import {IUserIdentifier} from "../IUserIdentifier";
 import {ITweetDTO} from "./ITweetDTO";
-import IEnumerable from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable";
 import {IUserEntities} from "../../Entities/IUserEntities";
 import DateTime from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {InjectionToken} from "@angular/core";
 import {UserDTO} from "../../../../Core/DTO/UserDTO";
 
 export interface IUserDTO extends IUserIdentifier {
@@ -82,7 +82,7 @@ export interface IUserDTO extends IUserIdentifier {
   timeZone: string;
 
   // The withheld properties are not always provided in the json result
-  withheldInCountries: IEnumerable<string>;
+  withheldInCountries: Iterable<string>;
 
   withheldScope: string;
 }

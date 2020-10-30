@@ -1,8 +1,9 @@
-﻿import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
+﻿import {InjectionToken} from "@angular/core";
+
+import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
 import Dictionary from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
 import {IVideoInformationEntity} from "./ExtendedEntities/IVideoInformationEntity";
 import {IMediaEntitySize} from "./IMediaEntitySize";
-import {InjectionToken} from "@angular/core";
 import {MediaEntity} from "../../../Core/Models/TwitterEntities/MediaEntity";
 
 // Media element posted in Twitter

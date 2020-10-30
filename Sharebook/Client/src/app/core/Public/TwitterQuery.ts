@@ -1,7 +1,9 @@
-﻿import TimeSpan from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
+﻿import {Inject, Injectable} from "@angular/core";
+
+import TimeSpan from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
 import {HttpMethod} from "./Models/Enum/HttpMethod";
 import DateTime from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {ITweetinviSettings} from "./Settings/TweetinviSettings";
+import {ITweetinviSettings} from "./Settings/SharebookSettings";
 import {CustomRequestHeaders} from "./Models/Interfaces/CustomRequestHeaders";
 import {ITwitterQuery, ITwitterQueryToken} from "./Models/Interfaces/ITwitterQuery";
 import {TwitterRequestParameters} from "./TwitterRequestParameters";
@@ -10,7 +12,7 @@ import {ITwitterCredentials} from "./Models/Authentication/TwitterCredentials";
 import {IOAuthQueryParameter} from "../Core/Web/IOAuthQueryParameter";
 import {IEndpointRateLimit} from "./Models/RateLimits/IEndpointRateLimit";
 import {SharebookConsts} from "./sharebook-consts";
-import {Inject, Injectable} from "@angular/core";
+import TimeQuantity from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeQuantity";
 
 @Injectable()
 export class TwitterQuery extends TwitterRequestParameters implements ITwitterQuery {
@@ -67,7 +69,7 @@ export class TwitterQuery extends TwitterRequestParameters implements ITwitterQu
   }
 
   get timeToWaitBeforeExecutingTheQuery(): TimeSpan {
-    let diff = this.dateWhenCredentialsWillHaveTheRequiredRateLimits?.subtract(DateTime.now);     // 1000% bug
+    let diff: TimeSpan = this.dateWhenCredentialsWillHaveTheRequiredRateLimits?.subtract(DateTime.now); // 1000% bug
     if (diff == null) {
       return null;
     }

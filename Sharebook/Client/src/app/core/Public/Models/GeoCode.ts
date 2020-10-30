@@ -1,8 +1,9 @@
-﻿import {Coordinates} from "./Coordinates";
+﻿import {Inject, Injectable} from "@angular/core";
+
+import {Coordinates} from "./Coordinates";
 import {ICoordinates, ICoordinatesToken} from "./Interfaces/ICoordinates";
 import {DistanceMeasure} from './Enum/DistanceMeasure';
 import {IGeoCode, IGeoCodeToken} from "./Interfaces/IGeoCode";
-import {Inject, Injectable} from "@angular/core";
 
 @Injectable()
 export class GeoCode implements IGeoCode {

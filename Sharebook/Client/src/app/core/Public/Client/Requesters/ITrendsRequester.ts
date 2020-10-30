@@ -7,9 +7,7 @@ import {IGetTrendsLocationParameters} from "../../Parameters/TrendsClient/GetTre
 import {ITrendLocation} from "../../Models/Interfaces/ITrendLocation";
 import {IGetTrendsLocationCloseToParameters} from "../../Parameters/TrendsClient/GetTrendsLocationCloseToParameters";
 import {TrendsRequester} from "../../../../sharebook/Client/Requesters/TrendsRequester";
-import {
-  TrendsClientRequiredParametersValidator
-} from "../../../Core/Client/Validators/TrendsClientRequiredParametersValidator";
+import {TrendsClientRequiredParametersValidator} from "../../../Core/Client/Validators/TrendsClientRequiredParametersValidator";
 import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
 import {TrendsController} from "../../../../controllers/Trends/TrendsController";

@@ -1,4 +1,6 @@
-﻿import {ITimelineController} from "../../core/Core/Controllers/ITimelineController";
+﻿import {Inject, Injectable} from "@angular/core";
+
+import {ITimelineController} from "../../core/Core/Controllers/ITimelineController";
 import {TwitterRequest} from "../../core/Public/TwitterRequest";
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
 import {ITimelineQueryExecutor, ITimelineQueryExecutorToken} from "./TimelineQueryExecutor";
@@ -16,7 +18,6 @@ import {
   GetRetweetsOfMeTimelineParameters,
   IGetRetweetsOfMeTimelineParameters
 } from "../../core/Public/Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
-import {Inject, Injectable} from "@angular/core";
 
 @Injectable()
 export class TimelineController implements ITimelineController {
@@ -30,7 +31,6 @@ export class TimelineController implements ITimelineController {
   }
 
   // Home Timeline
-
   public getHomeTimelineIterator(parameters: IGetHomeTimelineParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number> {        // long?
     return this._pageCursorIteratorFactories.create(parameters, cursor => {
       let cursoredParameters = new GetHomeTimelineParameters(parameters);

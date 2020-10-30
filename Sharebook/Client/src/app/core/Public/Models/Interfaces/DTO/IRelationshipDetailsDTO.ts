@@ -1,4 +1,5 @@
 ﻿import {InjectionToken} from "@angular/core";
+
 import {RelationshipDetailsDTO} from "../../../../Core/DTO/RelationshipDetailsDTO.TS";
 
 export interface IRelationshipDetailsDTO {

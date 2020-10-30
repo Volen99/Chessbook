@@ -1,3 +1,5 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {IGetAccountSettingsParameters} from "../../Parameters/AccountSettingsClient/GetAccountSettingsParameters";
 import {IAccountSettingsDTO} from "../../Models/Interfaces/DTO/IAccountSettingsDTO";
@@ -7,15 +9,12 @@ import {IUserDTO} from "../../Models/Interfaces/DTO/IUserDTO";
 import {IUpdateProfileImageParameters} from "../../Parameters/AccountSettingsClient/UpdateProfileImageParameters";
 import {IUpdateProfileBannerParameters} from "../../Parameters/AccountSettingsClient/UpdateProfileBannerParameters";
 import {IRemoveProfileBannerParameters} from "../../Parameters/AccountSettingsClient/RemoveProfileBannerParameters";
-import {Inject, InjectionToken} from "@angular/core";
 import {AccountSettingsRequester} from "../../../../sharebook/Client/Requesters/AccountSettingsRequester";
-import {ITwitterClient} from "../../ITwitterClient";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
-import {ITwitterClientEvents, TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
-import {AccountSettingsController, IAccountSettingsController} from "../../../../controllers/AccountSettings/AccountSettingsController";
+import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
+import {AccountSettingsController} from "../../../../controllers/AccountSettings/AccountSettingsController";
 import {
   AccountSettingsClientRequiredParametersValidator,
-  IAccountSettingsClientRequiredParametersValidator
 } from "../../../Core/Client/Validators/AccountSettingsClientRequiredParametersValidator";
 
 // A client providing all the actions relative to the account settings

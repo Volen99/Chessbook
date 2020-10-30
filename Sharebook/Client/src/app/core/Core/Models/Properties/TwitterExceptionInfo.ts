@@ -1,5 +1,6 @@
-﻿import {ITwitterExceptionInfo} from "../../Exceptions/ITwitterExceptionInfo";
-import {Injectable} from "@angular/core";
+﻿import {Injectable} from "@angular/core";
+
+import {ITwitterExceptionInfo} from "../../Exceptions/ITwitterExceptionInfo";
 
 @Injectable()
 export class TwitterExceptionInfo implements ITwitterExceptionInfo {

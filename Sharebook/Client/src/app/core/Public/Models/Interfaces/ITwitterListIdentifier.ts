@@ -1,7 +1,7 @@
-﻿// Identifier allowing to identify a unique list on Twitter.
-import {InjectionToken} from "@angular/core";
+﻿import {InjectionToken} from "@angular/core";
 import {TwitterListIdentifier} from "../TwitterListIdentifier";
 
+// Identifier allowing to identify a unique list on Twitter.
 export interface ITwitterListIdentifier {
   // Id of the list.
   id: number;

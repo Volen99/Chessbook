@@ -1,11 +1,12 @@
-﻿import {ITweetIdentifier} from "./Interfaces/ITweetIdentifier";
-import {Injectable} from "@angular/core";
+﻿import {Injectable} from "@angular/core";
+
+import {ITweetIdentifier} from "./Interfaces/ITweetIdentifier";
 
 @Injectable()
 export class TweetIdentifier implements ITweetIdentifier {
   constructor(tweetId: number) {
     this.id = tweetId;
-    this.idStr = tweetId.toString(CultureInfo.InvariantCulture);
+    this.idStr = tweetId.toString(/*CultureInfo.InvariantCulture)*/;
   }
 
   public id: number;

@@ -1,5 +1,5 @@
 ﻿import TimeSpan from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
-import {TwitterLimits} from "./TwitterLimits";
+import {SharebookLimits} from "./SharebookLimits";
 import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {IProxyConfig, ProxyConfig} from "./ProxyConfig";
 
@@ -43,25 +43,25 @@ export interface ITweetinviSettings {
   tweetMode?: TweetMode;
 
   // A method allowing developers to specify how to retrieve the current DateTime.
-  // The DateTime must be valid for the HttpRequest signature to be accepted by Twitter.
+  // The DateTime must be valid for the HttpRequest signature to be accepted by Sharebook.
   getUtcDateTime: () => DateTime;
 
-  // Converters used by Tweetinvi to transform json received from Twitter
+  // Converters used by Tweetinvi to transform json received from Sharebook
   // into models understandable by Tweetinvi.
   converters: JsonConverter[];
 
-  // Limits that Tweetinvi will use to communicate with Twitter
-  limits: TwitterLimits;
+  // Limits that Tweetinvi will use to communicate with Sharebook
+  limits: SharebookLimits;
 
   // Initialize a setting from another one.
   initialize(other: ITweetinviSettings): void;
 }
 
-export class TweetinviSettings implements ITweetinviSettings {
+export class SharebookSettings implements ITweetinviSettings {
   constructor(source?: ITweetinviSettings) {
     if (!source) {
       this.getUtcDateTime = () => DateTime.now; /*UtcNow*/
-      this.limits = new TwitterLimits();
+      this.limits = new SharebookLimits();
       this.httpRequestTimeout = TimeSpan.fromSeconds(10);
       this.tweetMode = TweetMode.Extended;
     } else {
@@ -72,7 +72,7 @@ export class TweetinviSettings implements ITweetinviSettings {
       this.tweetMode = source.tweetMode;
       this.getUtcDateTime = source.getUtcDateTime;
       this.converters = source.converters;
-      this.limits = new TwitterLimits(source.limits);
+      this.limits = new SharebookLimits(source.limits);
     }
   }
 
@@ -82,7 +82,7 @@ export class TweetinviSettings implements ITweetinviSettings {
   public rateLimitWaitFudge: TimeSpan;
   public tweetMode?: TweetMode;
   public getUtcDateTime: () => DateTime;
-  public limits: TwitterLimits;
+  public limits: SharebookLimits;
 
   public converters: JsonConverter[];
 
@@ -94,6 +94,6 @@ export class TweetinviSettings implements ITweetinviSettings {
     this.tweetMode = other.tweetMode;
     this.getUtcDateTime = other.getUtcDateTime;
     this.converters = other.converters;
-    this.limits = new TwitterLimits(other.limits);
+    this.limits = new SharebookLimits(other.limits);
   }
 }

@@ -4,7 +4,7 @@ import {TweetIdentifier} from '../../Models/TweetIdentifier';
 
 // For more information visit : https://developer.twitter.com/en/docs/tweets/post-and-engage/api-reference/post-favorites-destroy
 export interface IUnfavoriteTweetParameters extends ICustomRequestParameters {
-  /// The identifier of the tweet you no longer want to be a favorite
+  // The identifier of the tweet you no longer want to be a favorite
   tweet: ITweetIdentifier;
 
   // Include the tweet entities
@@ -18,7 +18,7 @@ export class UnfavoriteTweetParameters extends CustomRequestParameters implement
     let tweetCurrent: ITweetIdentifier;
     if (typeof tweetIdOrTweet === 'number') {
       tweetCurrent = new TweetIdentifier(tweetIdOrTweet);
-    } else if (tweetIdOrTweet instanceof TweetIdentifier) {
+    } else {
       tweetCurrent = tweetIdOrTweet;
     }
 

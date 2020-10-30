@@ -1,7 +1,9 @@
-﻿import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
 import {TwitterRequest} from "../../core/Public/TwitterRequest";
-import {ITwitterAccessor} from "../../core/Core/Web/ITwitterAccessor";
+import {ITwitterAccessor, ITwitterAccessorToken} from "../../core/Core/Web/ITwitterAccessor";
 import {HttpMethod} from 'src/app/core/Public/Models/Enum/HttpMethod';
 import {IPublishMessageParameters} from "../../core/Public/Parameters/MessageClient/PublishMessageParameters";
 import {IDeleteMessageParameters} from "../../core/Public/Parameters/MessageClient/DestroyMessageParameters";
@@ -10,8 +12,8 @@ import {IGetMessagesParameters} from "../../core/Public/Parameters/MessageClient
 import {IGetMessageDTO} from "../../core/Public/Models/Interfaces/DTO/IGetMessageDTO";
 import {IMessageCursorQueryResultDTO} from "../../core/Public/Models/Interfaces/DTO/QueryDTO/IMessageCursorQueryResultDTO";
 import {ICreateMessageDTO} from "../../core/Public/Models/Interfaces/DTO/ICreateMessageDTO";
-import {IMessageQueryGenerator} from "./MessageQueryGenerator";
-import {InjectionToken} from "@angular/core";
+import {IMessageQueryGenerator, IMessageQueryGeneratorToken, MessageQueryGenerator} from "./MessageQueryGenerator";
+import {TwitterAccessor} from "../../Tweetinvi.Credentials/TwitterAccessor";
 
 export interface IMessageQueryExecutor {
   // Publish Message
@@ -26,14 +28,15 @@ export interface IMessageQueryExecutor {
 
 export const IMessageQueryExecutorToken = new InjectionToken<IMessageQueryExecutor>('IMessageQueryExecutor', {
   providedIn: 'root',
-  factory: () => new MessageQueryExecutor(),
+  factory: () => new MessageQueryExecutor(Inject(TwitterAccessor), Inject(MessageQueryGenerator)),
 });
 
 export class MessageQueryExecutor implements IMessageQueryExecutor {
   private readonly _twitterAccessor: ITwitterAccessor;
   private readonly _messageQueryGenerator: IMessageQueryGenerator;
 
-  constructor(twitterAccessor: ITwitterAccessor, messageQueryGenerator: IMessageQueryGenerator) {
+  constructor(@Inject(ITwitterAccessorToken) twitterAccessor: ITwitterAccessor,
+              @Inject(IMessageQueryGeneratorToken) messageQueryGenerator: IMessageQueryGenerator) {
     this._twitterAccessor = twitterAccessor;
     this._messageQueryGenerator = messageQueryGenerator;
   }

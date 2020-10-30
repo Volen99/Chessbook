@@ -74,7 +74,7 @@ export class AccountActivityClient implements IAccountActivityClient {
   }
 
   public async createAccountActivityWebhookAsync(environmentOrParameters: string | ICreateAccountActivityWebhookParameters,
-                                                 webhookUrl: string): Promise<IWebhook> {
+                                                 webhookUrl?: string): Promise<IWebhook> {
     let parameters: ICreateAccountActivityWebhookParameters;
     if (Type.isString(environmentOrParameters)) {
       parameters = new CreateAccountActivityWebhookParameters(environmentOrParameters, webhookUrl);
@@ -111,7 +111,7 @@ export class AccountActivityClient implements IAccountActivityClient {
   }
 
   public deleteAccountActivityWebhookAsync(environmentOrParameters: string | IDeleteAccountActivityWebhookParameters,
-                                           webhookIdOrWebhook: string | IWebhook): Promise<void> {
+                                           webhookIdOrWebhook?: string | IWebhook): Promise<any> {
     let parameters: IDeleteAccountActivityWebhookParameters;
     if (Type.isString(environmentOrParameters)) {
       let webhookId: string;
@@ -129,7 +129,7 @@ export class AccountActivityClient implements IAccountActivityClient {
   }
 
   public triggerAccountActivityWebhookCRCAsync(environmentOrParameters: string | ITriggerAccountActivityWebhookCRCParameters,
-                                               webhookId: string): Promise<void> {
+                                               webhookId?: string): Promise<any> {
     let parameters: ITriggerAccountActivityWebhookCRCParameters;
     if (Type.isString(environmentOrParameters)) {
       parameters = new TriggerAccountActivityWebhookCRCParameters(environmentOrParameters, webhookId);
@@ -140,7 +140,7 @@ export class AccountActivityClient implements IAccountActivityClient {
     return this._accountActivityRequester.triggerAccountActivityWebhookCRCAsync(parameters);
   }
 
-  public subscribeToAccountActivityAsync(environmentOrParameters: string | ISubscribeToAccountActivityParameters): Promise<void> {
+  public subscribeToAccountActivityAsync(environmentOrParameters: string | ISubscribeToAccountActivityParameters): Promise<any> {
     let parameters: ISubscribeToAccountActivityParameters;
     if (Type.isString(environmentOrParameters)) {
       parameters = new SubscribeToAccountActivityParameters(environmentOrParameters);
@@ -191,7 +191,7 @@ export class AccountActivityClient implements IAccountActivityClient {
   }
 
   public unsubscribeFromAccountActivityAsync(environmentOrParameters: string | IUnsubscribeFromAccountActivityParameters,
-                                             userId: number): Promise<void> {
+                                             userId?: number): Promise<any> {
     let parameters: IUnsubscribeFromAccountActivityParameters;
     if (Type.isString(environmentOrParameters)) {
       parameters = new UnsubscribeFromAccountActivityParameters(environmentOrParameters, userId);

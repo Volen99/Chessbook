@@ -2,8 +2,8 @@ import {CustomRequestParameters, ICustomRequestParameters} from "../CustomReques
 import {ITweetModeParameter} from "../ITweetModeParameter";
 import {ITweetIdentifier} from "../../Models/Interfaces/ITweetIdentifier";
 import {TweetIdentifier} from "../../Models/TweetIdentifier";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
-import { TweetMode } from '../../Settings/TweetinviSettings';
+import {SharebookLimits} from "../../Settings/SharebookLimits";
+import { TweetMode } from '../../Settings/SharebookSettings';
 
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-retweets-id
 export interface IGetRetweetsParameters extends ICustomRequestParameters, ITweetModeParameter {
@@ -20,7 +20,7 @@ export interface IGetRetweetsParameters extends ICustomRequestParameters, ITweet
 export class GetRetweetsParameters extends CustomRequestParameters implements IGetRetweetsParameters {
   constructor(tweetIdOrTweet: | number | ITweetIdentifier) {
     super();
-    this.pageSize = TwitterLimits.DEFAULTS.TWEETS_GET_RETWEETS_MAX_SIZE;
+    this.pageSize = SharebookLimits.DEFAULTS.TWEETS_GET_RETWEETS_MAX_SIZE;
 
     let tweetCurrent: ITweetIdentifier;
     if (tweetIdOrTweet instanceof TweetIdentifier) {

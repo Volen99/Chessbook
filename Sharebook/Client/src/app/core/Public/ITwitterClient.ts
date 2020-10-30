@@ -1,7 +1,7 @@
 ﻿import {Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterClientFactories} from "./Client/Tools/ITwitterClientFactories";
-import {ITweetinviSettings} from "./Settings/TweetinviSettings";
+import {ITweetinviSettings} from "./Settings/SharebookSettings";
 import {IRawExecutors} from "./Client/IRawExecutors";
 import {ITwitterRequest} from "./Models/Interfaces/ITwitterRequest";
 import {ITwitterExecutionContext} from "../Core/Client/TwitterExecutionContext";
@@ -23,6 +23,7 @@ import {IAccountSettingsClient} from "./Client/Clients/IAccountSettingsClient";
 import {IExternalClientEvents} from "../Core/Events/TweetinviGlobalEvents";
 import {IParametersValidator} from "../Core/Client/Validators/ParametersValidator";
 import {TwitterClient, TwitterClientParameters} from "../../sharebook/TwitterClient";
+import {IReadOnlyTwitterCredentials} from "../Core/Models/Authentication/ReadOnlyTwitterCredentials";
 
 export interface ITwitterClient {
   // Client to execute all actions related with the account associated with the clients' credentials
@@ -77,7 +78,7 @@ export interface ITwitterClient {
   config: ITweetinviSettings;
 
   // Client's credentials
-  // credentials: IReadOnlyTwitterCredentials;
+  credentials: IReadOnlyTwitterCredentials;
 
   // Listen to events raised by actions performed by the client
   events: IExternalClientEvents;

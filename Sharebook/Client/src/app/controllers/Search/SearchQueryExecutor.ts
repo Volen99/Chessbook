@@ -1,4 +1,6 @@
-﻿import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterAccessor} from "../../core/Core/Web/ITwitterAccessor";
 import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMode";
@@ -13,7 +15,6 @@ import {ISearchResultsDTO} from "../../core/Public/Models/Interfaces/DTO/ISearch
 import {UserDTO} from "../../core/Core/DTO/UserDTO";
 import {SavedSearchDTO} from "../../core/Core/DTO/SavedSearchDTO";
 import {ISearchQueryGenerator, SearchQueryGenerator} from "./SearchQueryGenerator";
-import {Inject, InjectionToken} from "@angular/core";
 import {TwitterAccessor} from "../../Tweetinvi.Credentials/TwitterAccessor";
 
 export interface ISearchQueryExecutor {

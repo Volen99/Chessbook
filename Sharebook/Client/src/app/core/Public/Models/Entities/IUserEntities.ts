@@ -1,6 +1,7 @@
-﻿import {IDescriptionEntity} from "./IDescriptionEntity";
+﻿import {InjectionToken} from "@angular/core";
+
+import {IDescriptionEntity} from "./IDescriptionEntity";
 import {IWebsiteEntity} from "./IWebsiteEntity";
-import {InjectionToken} from "@angular/core";
 import {UserEntities} from "../../../Core/Models/TwitterEntities/UserEntities";
 
 export interface IUserEntities {

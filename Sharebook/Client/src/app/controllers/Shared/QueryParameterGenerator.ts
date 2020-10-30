@@ -1,4 +1,6 @@
-﻿import {ITweetIdentifier} from "../../core/Public/Models/Interfaces/ITweetIdentifier";
+﻿import {Injectable, InjectionToken} from "@angular/core";
+
+import {ITweetIdentifier} from "../../core/Public/Models/Interfaces/ITweetIdentifier";
 import {ICursorQueryParameters} from "../../core/Public/Parameters/CursorQueryParameters";
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {IMinMaxQueryParameters} from "../../core/Public/Parameters/MaxAndMinBaseQueryParameters";
@@ -7,7 +9,6 @@ import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMo
 import {OEmbedTweetAlignment, OEmbedTweetTheme} from "../../core/Public/Parameters/TweetsClient/GetOEmbedTweetParameters";
 import {Language} from "../../core/Public/Models/Enum/Language";
 import {SharebookConsts} from "../../core/Public/sharebook-consts";
-import {Injectable, InjectionToken} from "@angular/core";
 
 export interface IQueryParameterGenerator {
   appendCursorParameters(query: StringBuilder, parameters: ICursorQueryParameters): void;
@@ -130,7 +131,7 @@ export class QueryParameterGenerator implements IQueryParameterGenerator {
   }
 
   public addTimelineParameters(query: StringBuilder, parameters: ITimelineRequestParameters, tweetMode: ComputedTweetMode): void {
-    query.addMinMaxQueryParameters(query, parameters);
+    this.addMinMaxQueryParameters(query, parameters);
     query.addParameterToQuery("include_entities", parameters.includeEntities);
     query.addParameterToQuery("trim_user", parameters.trimUser);
     query.addParameterToQuery("tweet_mode", tweetMode);

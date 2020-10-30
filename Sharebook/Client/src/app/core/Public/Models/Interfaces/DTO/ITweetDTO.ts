@@ -1,6 +1,7 @@
-﻿import {ITweetIdentifier} from "../ITweetIdentifier";
+﻿import {InjectionToken} from "@angular/core";
+
+import {ITweetIdentifier} from "../ITweetIdentifier";
 import Dictionary from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
-import IEnumerable from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable';
 import {IPlace} from "../IPlace";
 import {IExtendedTweet} from './IExtendedTweet';
 import {ICoordinates} from "../ICoordinates";
@@ -8,7 +9,6 @@ import {ITweetEntities} from "../../Entities/ITweetEntities";
 import {IUserDTO} from "./IUserDTO";
 import { Language } from '../../Enum/Language';
 import DateTime from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {InjectionToken} from "@angular/core";
 import {TweetDTO} from "../../../../Core/DTO/TweetDTO";
 
 export interface ITweetDTO extends ITweetIdentifier {
@@ -72,7 +72,7 @@ export interface ITweetDTO extends ITweetIdentifier {
 
   contributorsIds: number[];
 
-  contributors: IEnumerable<number>;
+  contributors: Iterable<number>;
 
   source: string;
 
@@ -82,7 +82,7 @@ export interface ITweetDTO extends ITweetIdentifier {
 
   withheldCopyright: boolean;
 
-  withheldInCountries: IEnumerable<string>;
+  withheldInCountries: Iterable<string>;
 
   withheldScope: string;
 

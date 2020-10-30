@@ -109,12 +109,12 @@ export class UsersClientRequiredParametersValidator implements IUsersClientRequi
         this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.SourceUser, `${nameof(parameters.SourceUser)}`);
         this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.TargetUser, `${nameof(parameters.TargetUser)}`);
       } else if (UsersClientRequiredParametersValidator.isIGetProfileImageParameters(parameters)) {
-        if (parameters.ImageUrl == null) {
-          throw new ArgumentNullException(`${nameof(parameters.ImageUrl)}`);
+        if (parameters.imageUrl == null) {
+          throw new ArgumentNullException(`${nameof(parameters.imageUrl)}`);
         }
 
-        if (!Uri.IsWellFormedUriString(parameters.ImageUrl, UriKind.Absolute)) {
-          throw new ArgumentException("ImageUrl has to be valid absolute url", `${nameof(parameters.ImageUrl)}`);
+        if (!Uri.isWellFormedUriString(parameters.imageUrl, UriKind.Absolute)) {
+          throw new ArgumentException("ImageUrl has to be valid absolute url", `${nameof(parameters.imageUrl)}`);
         }
       } else if (UsersClientRequiredParametersValidator.isIGetAuthenticatedUserParameters(parameters)
         || UsersClientRequiredParametersValidator.isIGetBlockedUserIdsParameters(parameters)
@@ -170,7 +170,7 @@ export class UsersClientRequiredParametersValidator implements IUsersClientRequi
   }
 
   private static isIGetProfileImageParameters(parameters: IGetUserParameters | IGetUsersParameters | IGetFollowerIdsParameters | IGetFollowersParameters | IGetFriendIdsParameters | IGetFriendsParameters | IGetRelationshipBetweenParameters | IGetProfileImageParameters | IGetAuthenticatedUserParameters | IBlockUserParameters | IUnblockUserParameters | IReportUserForSpamParameters | IGetBlockedUserIdsParameters | IGetBlockedUsersParameters | IFollowUserParameters | IUnfollowUserParameters | IGetUserIdsRequestingFriendshipParameters | IGetUsersRequestingFriendshipParameters | IGetUserIdsYouRequestedToFollowParameters | IGetUsersYouRequestedToFollowParameters | IUpdateRelationshipParameters | IGetRelationshipsWithParameters | IGetUserIdsWhoseRetweetsAreMutedParameters | IGetMutedUserIdsParameters | IGetMutedUsersParameters | IMuteUserParameters | IUnmuteUserParameters): parameters is IGetProfileImageParameters {
-    return (parameters as IGetProfileImageParameters).ImageUrl !== undefined;
+    return (parameters as IGetProfileImageParameters).imageUrl !== undefined;
   }
 
   private static isIGetAuthenticatedUserParameters(parameters: IGetUserParameters | IGetUsersParameters | IGetFollowerIdsParameters | IGetFollowersParameters | IGetFriendIdsParameters | IGetFriendsParameters | IGetRelationshipBetweenParameters | IGetProfileImageParameters | IGetAuthenticatedUserParameters | IBlockUserParameters | IUnblockUserParameters | IReportUserForSpamParameters | IGetBlockedUserIdsParameters | IGetBlockedUsersParameters | IFollowUserParameters | IUnfollowUserParameters | IGetUserIdsRequestingFriendshipParameters | IGetUsersRequestingFriendshipParameters | IGetUserIdsYouRequestedToFollowParameters | IGetUsersYouRequestedToFollowParameters | IUpdateRelationshipParameters | IGetRelationshipsWithParameters | IGetUserIdsWhoseRetweetsAreMutedParameters | IGetMutedUserIdsParameters | IGetMutedUsersParameters | IMuteUserParameters | IUnmuteUserParameters): parameters is IGetAuthenticatedUserParameters {

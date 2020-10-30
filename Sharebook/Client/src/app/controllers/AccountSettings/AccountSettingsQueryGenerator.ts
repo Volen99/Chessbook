@@ -1,3 +1,5 @@
+import {Injectable, InjectionToken} from "@angular/core";
+
 import {Resources} from "../../properties/resources";
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {IGetAccountSettingsParameters} from "../../core/Public/Parameters/AccountSettingsClient/GetAccountSettingsParameters";
@@ -7,7 +9,6 @@ import {IUpdateProfileImageParameters} from "../../core/Public/Parameters/Accoun
 import {IRemoveProfileBannerParameters} from "../../core/Public/Parameters/AccountSettingsClient/RemoveProfileBannerParameters";
 import {IUpdateProfileBannerParameters} from "../../core/Public/Parameters/AccountSettingsClient/UpdateProfileBannerParameters";
 import {Language} from "../../core/Public/Models/Enum/Language";
-import {Injectable, InjectionToken} from "@angular/core";
 
 export interface IAccountSettingsQueryGenerator {
   getAccountSettingsQuery(parameters: IGetAccountSettingsParameters): string;
@@ -40,13 +41,13 @@ export class AccountSettingsQueryGenerator implements IAccountSettingsQueryGener
   public getUpdateAccountSettingsQuery(parameters: IUpdateAccountSettingsParameters): string {
     let baseQuery = new StringBuilder(Resources.Account_UpdateSettings);
 
-    let langParameterValue = parameters.displayLanguage === Language.Undefined ? null : parameters.displayLanguage?.GetLanguageCode();
+    let langParameterValue = parameters.displayLanguage === Language.Undefined ? null : parameters.displayLanguage?.getLanguageCode();
 
     baseQuery.addParameterToQuery("lang", langParameterValue);
     baseQuery.addParameterToQuery("time_zone", parameters.timeZone);
     baseQuery.addParameterToQuery("sleep_time_enabled", parameters?.sleepTimeEnabled);
-    baseQuery.addParameterToQuery("start_sleep_time", SleepHourToString(parameters.startSleepHour));
-    baseQuery.addParameterToQuery("end_sleep_time", SleepHourToString(parameters.endSleepHour));
+    baseQuery.addParameterToQuery("start_sleep_time", AccountSettingsQueryGenerator.sleepHourToString(parameters.startSleepHour));
+    baseQuery.addParameterToQuery("end_sleep_time", AccountSettingsQueryGenerator.sleepHourToString(parameters.endSleepHour));
     baseQuery.addParameterToQuery("trend_location_woeid", parameters.trendLocationWoeid);
 
     baseQuery.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
@@ -70,7 +71,7 @@ export class AccountSettingsQueryGenerator implements IAccountSettingsQueryGener
     return query.toString();
   }
 
-  private static SleepHourToString(hour?: number): string {
+  private static sleepHourToString(hour?: number): string {
     if (hour == null) {
       return null;
     }

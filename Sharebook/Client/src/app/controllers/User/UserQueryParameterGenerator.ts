@@ -14,7 +14,7 @@ export class UserQueryParameterGenerator implements IUserQueryParameterGenerator
         return null;
       }
 
-      return `${parameterName}=${userIdAsNumberOrString.toString(CultureInfo.InvariantCulture)}`;
+      return `${parameterName}=${userIdAsNumberOrString.toString(/*CultureInfo.InvariantCulture*/)}`;
     } else {
       if (userIdAsNumberOrString == null) {
         return null;
@@ -29,7 +29,7 @@ export class UserQueryParameterGenerator implements IUserQueryParameterGenerator
   }
 
   public generateIdOrScreenNameParameter(user: IUserIdentifier, idParameterName: string = "user_id",
-                                         screenNameParameterName: string = "screen_name"): string {
+                                         screenNameParameterName: string = "screen_name"): string {   // TODO: the last 2 parameters should be :?
     if (user == null) {
       return null;
     }
@@ -53,8 +53,7 @@ export class UserQueryParameterGenerator implements IUserQueryParameterGenerator
     query.addFormattedParameterToQuery(this.generateListOfUserIdentifiersParameter(users));
   }
 
-        private  GenerateCollectionParameter(screenNames: string[]): string
-        {
+        private GenerateCollectionParameter(screenNames: string[]): string {
             return screenNames.filter(x => x != null).join(', '); // string.Join(",", screenNames.Where(x => x != null));
         }
 
@@ -74,7 +73,7 @@ export class UserQueryParameterGenerator implements IUserQueryParameterGenerator
 
             usersList.ForEach(user => {
               if (user.Id > 0) {
-                userIds.push(user.Id.ToString(CultureInfo.InvariantCulture));
+                userIds.push(user.Id.ToString(/*CultureInfo.InvariantCulture*/));
               } else if (user.IdStr) {
                 userIds.push(user.IdStr);
               } else if (user.ScreenName != null) {

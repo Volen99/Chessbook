@@ -1,3 +1,5 @@
+import {Injectable, InjectionToken} from "@angular/core";
+
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {Resources} from "../../properties/resources";
 import {ICreateAccountActivityWebhookParameters} from "../../core/Public/Parameters/AccountActivity/RegisterAccountActivityWebhookParameters";
@@ -10,7 +12,6 @@ import {IUnsubscribeFromAccountActivityParameters} from "../../core/Public/Param
 import {ICountAccountActivitySubscriptionsParameters} from "../../core/Public/Parameters/AccountActivity/CountNumberOfSubscriptionsParameters";
 import {IIsAccountSubscribedToAccountActivityParameters} from "../../core/Public/Parameters/AccountActivity/IsAccountSubscribedToAppAccountActivityParameters";
 import {IGetAccountActivitySubscriptionsParameters} from "../../core/Public/Parameters/AccountActivity/GetListOfSubscriptionsParameters";
-import {Injectable, InjectionToken} from "@angular/core";
 
 export interface IAccountActivityQueryGenerator {
   getCreateAccountActivityWebhookQuery(parameters: ICreateAccountActivityWebhookParameters): string;

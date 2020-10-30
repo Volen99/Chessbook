@@ -23,7 +23,8 @@ export class UpdateListParameters extends ListMetadataParameters implements IUpd
       this.list = list;
     } else if (slug && userId) {
       super();
-      this.list = new TwitterListIdentifier(undefined, slug, undefined, undefined, userId);
+
+      this.list = new TwitterListIdentifier(slug, userId);
     } else if (parameters) {
       super(parameters);
       this.list = parameters?.list;

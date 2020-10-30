@@ -1,6 +1,7 @@
-﻿import {IMediaEntity} from "./IMediaEntity";
+﻿import {InjectionToken} from "@angular/core";
+
+import {IMediaEntity} from "./IMediaEntity";
 import {IObjectEntities} from "./IObjectEntities";
-import {InjectionToken} from "@angular/core";
 import {MessageEntitiesDTO} from "../../../Core/DTO/MessageEntitiesDTO";
 
 export interface IMessageEntities extends IObjectEntities {

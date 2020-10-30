@@ -1,6 +1,7 @@
 ﻿import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
 import {UserIdentifier} from "../../Models/UserIdentifier";
+import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
 
 // For more information visit : https://dev.twitter.com/en/docs/accounts-and-users/mute-block-report-users/api-reference/post-blocks-destroy
 export interface IUnblockUserParameters extends ICustomRequestParameters {
@@ -9,20 +10,31 @@ export interface IUnblockUserParameters extends ICustomRequestParameters {
 }
 
 export class UnblockUserParameters extends CustomRequestParameters implements IUnblockUserParameters {
-  constructor(userId?: number, username?: string, user?: IUserIdentifier, source?: IUnblockUserParameters) {
-    if (source) {
-      super(source);
-      this.user = source?.user;
-    } else if (userId) {
-      this.user = new UserIdentifier(userId);
-    } else if (username) {
-      this.user = new UserIdentifier(username);
-    } else if (user) {
-      this.user = user;
+  constructor(userIdOrUsernameOrUserIdentifierOrParameters: number | string | IUserIdentifier | IUnblockUserParameters) {
+    if (UnblockUserParameters.isIUnblockUserParameters(userIdOrUsernameOrUserIdentifierOrParameters)) {
+      super(userIdOrUsernameOrUserIdentifierOrParameters);
+
+      this.user = userIdOrUsernameOrUserIdentifierOrParameters?.user;
+    } else {
+      super();
+
+      let userCurrent: IUserIdentifier;
+      if (Type.isNumber(userIdOrUsernameOrUserIdentifierOrParameters) || Type.isString(userIdOrUsernameOrUserIdentifierOrParameters)) {
+        userCurrent = new UserIdentifier(userIdOrUsernameOrUserIdentifierOrParameters);
+      } else {
+        userCurrent = userIdOrUsernameOrUserIdentifierOrParameters;
+      }
+
+      this.user = userCurrent;
     }
   }
 
   public user: IUserIdentifier;
+
+  private static isIUnblockUserParameters(userIdOrUsernameOrUserIdentifierOrParameters: any):
+    userIdOrUsernameOrUserIdentifierOrParameters is IUnblockUserParameters {
+    return (userIdOrUsernameOrUserIdentifierOrParameters as IUnblockUserParameters).user !== undefined;
+  }
 }
 
 // public UnblockUserParameters(string username) : this(new UserIdentifier(username))

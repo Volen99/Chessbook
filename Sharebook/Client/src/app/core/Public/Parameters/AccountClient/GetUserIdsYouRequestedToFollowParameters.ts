@@ -1,5 +1,5 @@
 import {CursorQueryParameters, ICursorQueryParameters} from "../CursorQueryParameters";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 
 export interface IGetUserIdsYouRequestedToFollowParameters extends ICursorQueryParameters {
 
@@ -13,7 +13,7 @@ export class GetUserIdsYouRequestedToFollowParameters extends CursorQueryParamet
       return;
     }
 
-    super.pageSize = TwitterLimits.DEFAULTS.ACCOUNT_GET_REQUESTED_USER_IDS_TO_FOLLOW_MAX_PAGE_SIZE;
+    super.pageSize = SharebookLimits.DEFAULTS.ACCOUNT_GET_REQUESTED_USER_IDS_TO_FOLLOW_MAX_PAGE_SIZE;
   }
 }
 

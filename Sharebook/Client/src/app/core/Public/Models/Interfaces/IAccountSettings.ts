@@ -1,11 +1,12 @@
-﻿import {ITimeZone} from "./ITimeZone";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITimeZone} from "./ITimeZone";
 import {PrivacyMode} from '../Enum/PrivacyMode';
 import {IAccountSettingsDTO} from "./DTO/IAccountSettingsDTO";
 import { Language } from '../Enum/Language';
 import { AllowDirectMessagesFrom } from '../Enum/AllowDirectMessagesFrom';
 import {AllowContributorRequestMode} from "../Enum/AllowContributorRequestMode";
 import {ITrendLocation} from "./ITrendLocation";
-import {Inject, InjectionToken} from "@angular/core";
 import {AccountSettings} from "../../../Core/Models/AccountSettings";
 import {AccountSettingsDTO} from "../../../Core/DTO/AccountSettingsDTO";
 

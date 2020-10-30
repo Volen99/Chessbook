@@ -48,6 +48,6 @@ export class MediaEntity implements IMediaEntity {
       return this.indices === other.indices;
     }
 
-    return this.indices.ContainsSameObjectsAs(other.indices, true);
+    return this.indices.containsSameObjectsAs(other.indices, true);
   }
 }

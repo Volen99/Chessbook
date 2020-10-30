@@ -1,3 +1,5 @@
+import {InjectionToken} from "@angular/core";
+
 import {ISampleStream} from "../../Streaming/ISampleStream";
 import {ICreateSampleStreamParameters} from "../../Parameters/StreamsClient/CreateSampleStreamParameters";
 import {IFilteredStream} from "../../Streaming/IFilteredStream";
@@ -6,7 +8,7 @@ import {ITweetStream} from "../../../Core/Streaming/ITweetStream";
 import {ICreateTweetStreamParameters} from "../../Parameters/StreamsClient/CreateTweetStreamParameters";
 import {ITrackedStream} from "../../../Core/Streaming/ITrackedStream";
 import {ICreateTrackedTweetStreamParameters} from "../../Parameters/StreamsClient/CreateTrackedStreamParameters";
-import {InjectionToken} from "@angular/core";
+import {StreamsClient} from "../../../../sharebook/Client/Clients/StreamsClient";
 
 export interface IStreamsClient {
   createSampleStream(): ISampleStream;

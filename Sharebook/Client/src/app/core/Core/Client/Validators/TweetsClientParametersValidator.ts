@@ -17,7 +17,7 @@ import {
   ITweetsClientRequiredParametersValidatorToken, TweetsClientRequiredParametersValidator
 } from "./TweetsClientRequiredParametersValidator";
 import {ITwitterClient, ITwitterClientToken} from "../../../Public/ITwitterClient";
-import {TwitterLimits} from 'src/app/core/Public/Settings/TwitterLimits';
+import {SharebookLimits} from 'src/app/core/Public/Settings/SharebookLimits';
 import {TweetsParameters} from "./parameters-types";
 import {TwitterArgumentLimitException} from 'src/app/core/Public/Exceptions/TwitterArgumentLimitException';
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
@@ -64,11 +64,14 @@ export class TweetsClientParametersValidator implements ITweetsClientParametersV
     this._tweetsClientRequiredParametersValidator = tweetsClientRequiredParametersValidator;
   }
 
-  private get Limits(): TwitterLimits {
+  private get Limits(): SharebookLimits {
     return this._client.config.limits;
   }
 
-  public validate(parameters: TweetsParameters): void {
+  public validate(parameters: IGetTweetParameters | IGetTweetsParameters | IPublishTweetParameters
+  | IDestroyTweetParameters | IGetUserFavoriteTweetsParameters | IGetRetweetsParameters
+  | IPublishRetweetParameters | IDestroyRetweetParameters | IGetRetweeterIdsParameters
+  | IFavoriteTweetParameters | IUnfavoriteTweetParameters | IGetOEmbedTweetParameters): void {
     this._tweetsClientRequiredParametersValidator.validate(parameters);
 
     if (this.isIGetTweetsParameters(parameters)) {

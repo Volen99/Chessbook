@@ -1,9 +1,10 @@
-﻿import {Resources} from "../../properties/resources";
+﻿import {Injectable, InjectionToken} from "@angular/core";
+
+import {Resources} from "../../properties/resources";
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {GetTrendsExclude, IGetTrendsAtParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsAtParameters";
 import {IGetTrendsLocationParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsLocationParameters";
 import {IGetTrendsLocationCloseToParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsLocationCloseToParameters";
-import {Injectable, InjectionToken} from "@angular/core";
 
 export interface ITrendsQueryGenerator {
   getTrendsAtQuery(parameters: IGetTrendsAtParameters): string;

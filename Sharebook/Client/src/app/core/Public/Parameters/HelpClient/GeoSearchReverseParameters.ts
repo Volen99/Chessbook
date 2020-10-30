@@ -35,4 +35,3 @@ export class GeoSearchReverseParameters extends CustomRequestParameters implemen
   public maximumNumberOfResults?: number;
   public callback: string;
 }
-

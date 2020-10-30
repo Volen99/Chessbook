@@ -32,7 +32,7 @@ import {
   IUsersClientRequiredParametersValidator,
   IUsersClientRequiredParametersValidatorToken, UsersClientRequiredParametersValidator
 } from './UsersClientRequiredParametersValidator';
-import {TwitterLimits} from 'src/app/core/Public/Settings/TwitterLimits';
+import {SharebookLimits} from 'src/app/core/Public/Settings/SharebookLimits';
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
 import {UserParameters} from "./parameters-types";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
@@ -112,7 +112,7 @@ export class UsersClientParametersValidator implements IUsersClientParametersVal
     this._usersClientRequiredParametersValidator = usersClientRequiredParametersValidator;
   }
 
-  private get Limits(): TwitterLimits {
+  private get Limits(): SharebookLimits {
     return this._client.config.limits;
   }
 

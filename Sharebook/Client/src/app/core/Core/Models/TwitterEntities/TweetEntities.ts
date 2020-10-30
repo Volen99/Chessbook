@@ -1,5 +1,5 @@
 ﻿import {ITweetEntities} from "../../../Public/Models/Entities/ITweetEntities";
-import {TweetMode} from "../../../Public/Settings/TweetinviSettings";
+import {TweetMode} from "../../../Public/Settings/SharebookSettings";
 import {IMediaEntity} from 'src/app/core/Public/Models/Entities/IMediaEntity';
 import {IUrlEntity} from "../../../Public/Models/Entities/IUrlEntity";
 import {IUserMentionEntity} from "../../../Public/Models/Entities/IUserMentionEntity";

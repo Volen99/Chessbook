@@ -1,5 +1,5 @@
 import {CursorQueryParameters, ICursorQueryParameters} from "../../CursorQueryParameters";
-import {TwitterLimits} from "../../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../../Settings/SharebookLimits";
 
 // For more information visit : https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-subscriptions
 export interface IGetAccountListSubscriptionsParameters extends ICursorQueryParameters {
@@ -10,7 +10,7 @@ export class GetAccountListSubscriptionsParameters extends CursorQueryParameters
     if (parameters) {
       super(parameters);
     } else {
-      super.pageSize = TwitterLimits.DEFAULTS.LISTS_GET_USER_SUBSCRIPTIONS_MAX_PAGE_SIZE;
+      super.pageSize = SharebookLimits.DEFAULTS.LISTS_GET_USER_SUBSCRIPTIONS_MAX_PAGE_SIZE;
     }
   }
 }

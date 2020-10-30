@@ -141,7 +141,7 @@
 
             this._uniqueKeywordsHashSet.ForEach(x =>
             {
-              let isUnicode: boolean = UnicodeHelper.AnyUnicode(x);
+              let isUnicode: boolean = UnicodeHelper.anyUnicode(x);
 
                 if (isUnicode)
                 {

@@ -1,6 +1,6 @@
 ﻿import {CursorQueryParameters, ICursorQueryParameters} from "../CursorQueryParameters";
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {UserIdentifier} from "../../Models/UserIdentifier";
 import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
 
@@ -19,7 +19,7 @@ export class GetFriendIdsParameters extends CursorQueryParameters implements IGe
     } else {
       super();
 
-      super.pageSize = TwitterLimits.DEFAULTS.USERS_GET_FRIEND_IDS_PAGE_MAX_SIZE;
+      super.pageSize = SharebookLimits.DEFAULTS.USERS_GET_FRIEND_IDS_PAGE_MAX_SIZE;
 
       if (Type.isString(usernameOrUserIdOrUserOrParameters) || Type.isNumber(usernameOrUserIdOrUserOrParameters)) {
         this.User = new UserIdentifier(usernameOrUserIdOrUserOrParameters);

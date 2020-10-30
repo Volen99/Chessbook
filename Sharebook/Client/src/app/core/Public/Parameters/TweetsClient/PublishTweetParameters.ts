@@ -1,12 +1,13 @@
-﻿import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
+﻿import {Injectable, InjectionToken} from "@angular/core";
+
+import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {ITweetModeParameter} from "../ITweetModeParameter";
 import {ITweet} from "../../Models/Interfaces/ITweet";
 import {ITweetIdentifier} from "../../Models/Interfaces/ITweetIdentifier";
 import {ICoordinates} from "../../Models/Interfaces/ICoordinates";
 import {IMedia} from "../../Models/Interfaces/IMedia";
 import {TweetIdentifier} from "../../Models/TweetIdentifier";
-import { TweetMode } from '../../Settings/TweetinviSettings';
-import {Injectable, InjectionToken} from "@angular/core";
+import { TweetMode } from '../../Settings/SharebookSettings';
 
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-show-id
 export interface IPublishTweetParameters extends ICustomRequestParameters, ITweetModeParameter {
@@ -133,7 +134,7 @@ export class PublishTweetParameters extends CustomRequestParameters implements I
   public medias: Array<IMedia> /*{ get; set; }*/ = new Array<IMedia>();
 
   get hasMedia(): boolean {
-    return this.mediaIds?.count > 0 || this.medias?.count > 0;
+    return this.mediaIds?.length > 0 || this.medias?.length > 0;
   }
 
   public placeId: string;

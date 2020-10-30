@@ -1,4 +1,6 @@
-﻿import {ComputedTweetMode} from 'src/app/core/Core/QueryGenerators/ComputedTweetMode';
+﻿import {Inject, Injectable, InjectionToken} from "@angular/core";
+
+import {ComputedTweetMode} from 'src/app/core/Core/QueryGenerators/ComputedTweetMode';
 import {
   IUserQueryParameterGenerator,
   IUserQueryParameterGeneratorToken
@@ -10,7 +12,6 @@ import {IGetUserTimelineParameters} from "../../core/Public/Parameters/TimelineC
 import {IGetMentionsTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetMentionsTimelineParameters";
 import {IGetRetweetsOfMeTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
 import {IQueryParameterGenerator, IQueryParameterGeneratorToken, QueryParameterGenerator} from "../Shared/QueryParameterGenerator";
-import {Inject, Injectable, InjectionToken} from "@angular/core";
 import {UserQueryParameterGenerator} from "../User/UserQueryParameterGenerator";
 
 export interface ITimelineQueryGenerator {

@@ -1,6 +1,6 @@
 ﻿import {ITweetEntities} from "../../Public/Models/Entities/ITweetEntities";
 import {TweetEntities} from "./TwitterEntities/TweetEntities";
-import {TweetMode} from "../../Public/Settings/TweetinviSettings";
+import {TweetMode} from "../../Public/Settings/SharebookSettings";
 import {UnicodeHelper} from '../Helpers/UnicodeHelper';
 import {ICoordinates} from "../../Public/Models/Interfaces/ICoordinates";
 import {ITweetIdentifier} from "../../Public/Models/Interfaces/ITweetIdentifier";
@@ -362,7 +362,7 @@ export class Tweet implements ITweet {
   // #region Tweetinvi API Attributes
 
   get url(): string {
-    return `https://twitter.com/${this.createdBy?.screenName}/status/${this.id.toString(CultureInfo.InvariantCulture).toLocaleLowerCase()}`;
+    return `https://twitter.com/${this.createdBy?.screenName}/status/${this.id.toString(/*CultureInfo.InvariantCulture*/).toLocaleLowerCase()}`;
   }
 
   public tweetMode: TweetMode;
@@ -410,7 +410,6 @@ export class Tweet implements ITweet {
 
     // Equals is currently used to compare only if 2 tweets are the same
     // We do not look for the tweet version (DateTime)
-
-    return this._tweetDTO.equals(other.tweetDTO);
+    return this._tweetDTO === other.tweetDTO;   // return _tweetDTO.Equals(other.TweetDTO);
   }
 }

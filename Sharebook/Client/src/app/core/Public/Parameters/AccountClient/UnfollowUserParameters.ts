@@ -1,6 +1,8 @@
 import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
 import {UserIdentifier} from "../../Models/UserIdentifier";
+import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import {IReportUserForSpamParameters} from "./ReportUserForSpamParameters";
 
 // For more information visit : https://dev.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/post-friendships-destroy
 export interface IUnfollowUserParameters extends ICustomRequestParameters {
@@ -9,20 +11,31 @@ export interface IUnfollowUserParameters extends ICustomRequestParameters {
 }
 
 export class UnfollowUserParameters extends CustomRequestParameters implements IUnfollowUserParameters {
-  constructor(userId?: number, username?: string, user?: IUserIdentifier, parameters?: IUnfollowUserParameters) {
-    if (parameters) {
-      super(parameters);
-      this.user = parameters?.user;
-    } else if (userId) {
-      this.user = new UserIdentifier(userId);
-    } else if (username) {
-      this.user = new UserIdentifier(username);
-    } else if (user) {
-      this.user = user;
+  constructor(userIdOrUsernameOrUserIdentifierOrParameters: number | string | IUserIdentifier | IUnfollowUserParameters) {
+    if (UnfollowUserParameters.isIUnfollowUserParameters(userIdOrUsernameOrUserIdentifierOrParameters)) {
+      super(userIdOrUsernameOrUserIdentifierOrParameters);
+
+      this.user = userIdOrUsernameOrUserIdentifierOrParameters?.user;
+    } else {
+      super();
+
+      let userCurrent: IUserIdentifier;
+      if (Type.isNumber(userIdOrUsernameOrUserIdentifierOrParameters) || Type.isString(userIdOrUsernameOrUserIdentifierOrParameters)) {
+        userCurrent = new UserIdentifier(userIdOrUsernameOrUserIdentifierOrParameters);
+      } else {
+        userCurrent = userIdOrUsernameOrUserIdentifierOrParameters;
+      }
+
+      this.user = userCurrent;
     }
   }
 
   public user: IUserIdentifier;
+
+  private static isIUnfollowUserParameters(userIdOrUsernameOrUserIdentifierOrParameters: any):
+    userIdOrUsernameOrUserIdentifierOrParameters is IUnfollowUserParameters {
+    return (userIdOrUsernameOrUserIdentifierOrParameters as IUnfollowUserParameters).user !== undefined;
+  }
 }
 
 

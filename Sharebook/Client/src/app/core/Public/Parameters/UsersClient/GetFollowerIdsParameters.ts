@@ -1,7 +1,7 @@
 ﻿import {CursorQueryParameters, ICursorQueryParameters} from "../CursorQueryParameters";
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
 import {UserIdentifier} from "../../Models/UserIdentifier";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
 
 // For more information visit : https://dev.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-followers-ids
@@ -19,7 +19,7 @@ export class GetFollowerIdsParameters extends CursorQueryParameters implements I
     } else {
       super();
 
-      super.pageSize = TwitterLimits.DEFAULTS.USERS_GET_FOLLOWER_IDS_PAGE_MAX_SIZE;
+      super.pageSize = SharebookLimits.DEFAULTS.USERS_GET_FOLLOWER_IDS_PAGE_MAX_SIZE;
 
       if (Type.isString(usernameOrUserIdOrUserOrParameters) || Type.isNumber(usernameOrUserIdOrUserOrParameters)) {
         this.User = new UserIdentifier(usernameOrUserIdOrUserOrParameters);

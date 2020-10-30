@@ -1,6 +1,6 @@
-﻿import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
-import {ITweetIdentifier} from "../Interfaces/ITweetIdentifier";
-import {InjectionToken} from "@angular/core";
+﻿import {InjectionToken} from "@angular/core";
+
+import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
 import {SymbolEntity} from "../../../Core/Models/TwitterEntities/SymbolEntity";
 
 // https://dev.twitter.com/overview/api/entities-in-twitter-objects#symbols

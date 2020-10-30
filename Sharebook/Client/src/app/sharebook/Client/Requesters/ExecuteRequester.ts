@@ -5,7 +5,7 @@ import {ITwitterRequest} from "../../../core/Public/Models/Interfaces/ITwitterRe
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
 import {ITwitterQuery} from "../../../core/Public/Models/Interfaces/ITwitterQuery";
 import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
-import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
+import {ITwitterClientEvents, ITwitterClientEventsToken} from "../../../core/Core/Events/TweetinviGlobalEvents";
 import {Inject, Injectable} from "@angular/core";
 
 @Injectable()

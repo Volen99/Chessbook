@@ -1,5 +1,6 @@
+import {Inject, Injectable} from "@angular/core";
+
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
-import IEnumerable from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable';
 import {IUserIdentifier} from "../../../core/Public/Models/Interfaces/IUserIdentifier";
 import {ITwitterListIdentifier} from 'src/app/core/Public/Models/Interfaces/ITwitterListIdentifier';
 import {IListsClient} from 'src/app/core/Public/Client/Clients/IListsClient';
@@ -95,12 +96,10 @@ import {
   IGetTweetsFromListParameters
 } from "../../../core/Public/Parameters/ListsClient/GetTweetsFromListParameters";
 import {ITweet} from "../../../core/Public/Models/Interfaces/ITweet";
-import {TwitterListParameters} from "../../../core/Core/Client/Validators/parameters-types";
 import {ITweetDTO} from "../../../core/Public/Models/Interfaces/DTO/ITweetDTO";
 import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
-import {TwitterException} from "../../../core/Public/Exceptions/TwitterException";
-import {IGetUserFavoriteTweetsParameters} from "../../../core/Public/Parameters/TweetsClient/GetFavoriteTweetsParameters";
-import {Inject, Injectable} from "@angular/core";
+import {SharebookException} from "../../../core/Public/Exceptions/SharebookException";
+import {ITwitterListDTO} from "../../../core/Public/Models/Interfaces/DTO/ITwitterListDTO";
 
 @Injectable()
 export class ListsClient implements IListsClient {
@@ -132,8 +131,8 @@ export class ListsClient implements IListsClient {
     return this._client.factories.createTwitterList(twitterResult?.model);
   }
 
-  public async getListAsync(listIdOrSlugOrListIdentifierOrParameters: number | string
-    | ITwitterListIdentifier | IGetListParameters, user?: IUserIdentifier): Promise<ITwitterList> {
+  public async getListAsync(listIdOrSlugOrListIdentifierOrParameters: number | string | ITwitterListIdentifier | IGetListParameters,
+                            user?: IUserIdentifier): Promise<ITwitterList> {
     let parameters: IGetListParameters;
     if (this.isIGetListParameters(listIdOrSlugOrListIdentifierOrParameters)) {
       parameters = listIdOrSlugOrListIdentifierOrParameters;
@@ -151,7 +150,7 @@ export class ListsClient implements IListsClient {
   public getListsSubscribedByAccountAsync(parameters?: IGetListsSubscribedByAccountParameters): Promise<ITwitterList[]> {
     let parametersCurrent: IGetListsSubscribedByAccountParameters;
     if (!parameters) {
-      parametersCurrent = new GetListsSubscribedByUserParameters();
+      parametersCurrent = new GetListsSubscribedByAccountParameters();
     } else {
       parametersCurrent = parameters;
     }
@@ -177,8 +176,8 @@ export class ListsClient implements IListsClient {
     return this._client.factories.createTwitterList(twitterResult?.model);
   }
 
-  public async destroyListAsync(listIdOrSlugOrListIdentifierOrParameters: number | string
-    | ITwitterListIdentifier | IDestroyListParameters, user?: IUserIdentifier): Promise<ITwitterList> {
+  public async destroyListAsync(listIdOrSlugOrListIdentifierOrParameters: number | string | ITwitterListIdentifier | IDestroyListParameters,
+                                user?: IUserIdentifier): Promise<ITwitterList> {
     let parameters: IDestroyListParameters;
     if (this.isIDestroyListParameters(listIdOrSlugOrListIdentifierOrParameters)) {
       parameters = listIdOrSlugOrListIdentifierOrParameters;
@@ -203,7 +202,7 @@ export class ListsClient implements IListsClient {
     }
 
     let iterator = this.getListsOwnedByAccountIterator(parametersCurrent);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())];      // I am the luckiest person in the world
   }
 
 
@@ -217,7 +216,7 @@ export class ListsClient implements IListsClient {
 
     let iterator = this._twitterListsRequester.getListsOwnedByAccountIterator(parametersCurrent);
     return new TwitterIteratorProxy<ITwitterResult<ITwitterListCursorQueryResultDTO>, ITwitterList>(iterator, pageResult => {
-      let listDtos = pageResult?.model?.TwitterLists;
+      let listDtos = pageResult?.model?.twitterLists;
       return listDtos?.map(dto => this._client.factories.createTwitterList(dto)); // .ToArray();
     });
   }
@@ -232,7 +231,7 @@ export class ListsClient implements IListsClient {
     }
 
     let iterator = this.getListsOwnedByUserIterator(parameters);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())];
   }
 
   public getListsOwnedByUserIterator(userIdOrUsernameOrUserOrParameters: number | string
@@ -246,13 +245,13 @@ export class ListsClient implements IListsClient {
 
     let iterator = this._twitterListsRequester.getListsOwnedByUserIterator(parameters);
     return new TwitterIteratorProxy<ITwitterResult<ITwitterListCursorQueryResultDTO>, ITwitterList>(iterator, pageResult => {
-      let listDtos = pageResult?.model?.TwitterLists;
+      let listDtos = pageResult?.model?.twitterLists;
       return listDtos?.map(dto => this._client.factories.createTwitterList(dto)); // .ToArray();
     });
   }
 
-  public async addMemberToListAsync(listIdOrListIdentifierOrParameters: number | ITwitterListIdentifier
-    | IAddMemberToListParameters, userIdOrUsernameOrUserIdentifier?: number | string
+  public async addMemberToListAsync(listIdOrListIdentifierOrParameters: number | ITwitterListIdentifier | IAddMemberToListParameters,
+                                    userIdOrUsernameOrUserIdentifier?: number | string
     | IUserIdentifier): Promise<ITwitterList> {
     let parameters: IAddMemberToListParameters;
     if (this.isIAddMemberToListParameters(listIdOrListIdentifierOrParameters)) {
@@ -269,11 +268,12 @@ export class ListsClient implements IListsClient {
     }
 
     let twitterResult = await this._twitterListsRequester.addMemberToListAsync(parameters); // .ConfigureAwait(false);
+    // @ts-ignore
     return twitterResult?.result;
   }
 
   public async addMembersToListAsync(listIdOrListIdentifierOrParameters: number | ITwitterListIdentifier | IAddMembersToListParameters,
-                                     userIdsOrUsernamesOrUserIdentifiers: Array<number | string | IUserIdentifier>): Promise<ITwitterList> {
+                                     userIdsOrUsernamesOrUserIdentifiers?: Iterable<number | string | IUserIdentifier>): Promise<ITwitterList> {
     let parameters: IAddMembersToListParameters;
     if (this.isIAddMembersToListParameters(listIdOrListIdentifierOrParameters)) {
       parameters = listIdOrListIdentifierOrParameters;
@@ -281,11 +281,12 @@ export class ListsClient implements IListsClient {
       parameters = new AddMembersToListParameters(listIdOrListIdentifierOrParameters, userIdsOrUsernamesOrUserIdentifiers);
     }
 
-    let twitterResult = await this._twitterListsRequester.addMembersToListAsync(parameters); // .ConfigureAwait(false);
+    let twitterResult: ITwitterResult<ITwitterListDTO, ITwitterList> = await this._twitterListsRequester.addMembersToListAsync(parameters); // .ConfigureAwait(false);
+    // @ts-ignore
     return twitterResult?.result;
   }
 
-  public async getAccountListMembershipsAsync(parameters?: IGetAccountListMembershipsParameters):  Promise<ITwitterList[]> {
+  public async getAccountListMembershipsAsync(parameters?: IGetAccountListMembershipsParameters): Promise<ITwitterList[]> {
     let parametersCurrent: IGetAccountListMembershipsParameters;
     if (!parameters) {
       parametersCurrent = new GetAccountListMembershipsParameters();
@@ -294,7 +295,7 @@ export class ListsClient implements IListsClient {
     }
 
     let iterator = this.getAccountListMembershipsIterator(parametersCurrent);
-    return (await iterator.nextPageAsync()); //.ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())];
   }
 
   public getAccountListMembershipsIterator(parameters?: IGetAccountListMembershipsParameters): ITwitterIterator<ITwitterList> {
@@ -322,7 +323,7 @@ export class ListsClient implements IListsClient {
     }
 
     let iterator = this.getUserListMembershipsIterator(parameters);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())];
   }
   public getUserListMembershipsIterator(userIdOrUsernameOrUserIdentifierOrParameters: number | string
     | IUserIdentifier |IGetUserListMembershipsParameters): ITwitterIterator<ITwitterList> {
@@ -350,7 +351,7 @@ export class ListsClient implements IListsClient {
     }
 
     let iterator = this.getMembersOfListIterator(parameters);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())];
   }
 
   public getMembersOfListIterator(listIdOrListIdentifierOrParameters: number
@@ -364,7 +365,7 @@ export class ListsClient implements IListsClient {
 
     let iterator = this._twitterListsRequester.getMembersOfListIterator(parameters);
     return new TwitterIteratorProxy<ITwitterResult<IUserCursorQueryResultDTO>, IUser>(iterator, pageResult => {
-      return this._client.factories.createUsers(pageResult?.model?.Users);
+      return this._client.factories.createUsers(pageResult?.model?.users);
     });
   }
 
@@ -379,14 +380,14 @@ export class ListsClient implements IListsClient {
     try {
       await this._twitterListsRequester.checkIfUserIsAListMemberAsync(parameters); // .ConfigureAwait(false);
       return true;
-    } catch (e: TwitterException) {
+    } catch (e/*: SharebookException*/) {
       if (e.statusCode === 404) {
         // This is a special case where the request actually throws expectedly
         // When a user is not a member of a list this operation returns a 404.
         return false;
       }
 
-      throw;
+      throw e;
     }
   }
   public async removeMemberFromListAsync(listIdOrListIdentifierOrParameters: number | ITwitterListIdentifier | IRemoveMemberFromListParameters,
@@ -403,7 +404,7 @@ export class ListsClient implements IListsClient {
   }
 
   public async removeMembersFromListAsync(listIdOrListIdentifierOrParameters: number | ITwitterListIdentifier | IRemoveMembersFromListParameters,
-                                          userIdsOrUsernamesOrUserIdentifiers: Array<number>): Promise<ITwitterList> {
+                                          userIdsOrUsernamesOrUserIdentifiers?: Iterable<number | string | IUserIdentifier>): Promise<ITwitterList> {
     let parameters: IRemoveMembersFromListParameters;
     if (this.isIRemoveMembersFromListParameters(listIdOrListIdentifierOrParameters)) {
       parameters = listIdOrListIdentifierOrParameters;
@@ -452,7 +453,7 @@ export class ListsClient implements IListsClient {
     }
 
     let iterator = this.getListSubscribersIterator(parameters);
-    return (await iterator.nextPageAsync());
+    return [...(await iterator.nextPageAsync())];
   }
 
   public getListSubscribersIterator(listIdOrListIdentifierOrParameters: number | ITwitterListIdentifier | IGetListSubscribersParameters): ITwitterIterator<IUser> {
@@ -465,7 +466,7 @@ export class ListsClient implements IListsClient {
 
     let pageIterator = this._twitterListsRequester.getListSubscribersIterator(parameters);
     return new TwitterIteratorProxy<ITwitterResult<IUserCursorQueryResultDTO>, IUser>(pageIterator, pageResult => {
-      return this._client.factories.createUsers(pageResult?.model?.Users);
+      return this._client.factories.createUsers(pageResult?.model?.users);
     });
   }
 
@@ -477,7 +478,7 @@ export class ListsClient implements IListsClient {
       iterator = this.getAccountListSubscriptionsIterator(parameters);
     }
 
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())];
   }
   public getAccountListSubscriptionsIterator(parameters?: IGetAccountListSubscriptionsParameters): ITwitterIterator<ITwitterList> {
     let parametersCurrent: IGetAccountListSubscriptionsParameters;
@@ -504,7 +505,7 @@ export class ListsClient implements IListsClient {
     }
 
     let iterator = this.getUserListSubscriptionsIterator(parameters);
-    return (await iterator.nextPageAsync());
+    return [...(await iterator.nextPageAsync())];
   }
 
   public getUserListSubscriptionsIterator(userIdOrUsernameOrUserIdentifierOrParameters: number | string
@@ -523,26 +524,25 @@ export class ListsClient implements IListsClient {
     });
   }
 
-  async IListsClient.checkIfUserIsSubscriberOfListAsync(listIdOrListIdentifierOrParameters: number | ITwitterListIdentifier | ICheckIfUserIsSubscriberOfListParameters,
-                                                        userIdOrUsernameOrUserIdentifier: number): Promise<boolean> {
+  async checkIfUserIsSubscriberOfListAsync(listIdOrListIdentifierOrParameters: number | ITwitterListIdentifier | ICheckIfUserIsSubscriberOfListParameters,
+                                           userIdOrUsernameOrUserIdentifier?: number | string | IUserIdentifier): Promise<boolean> {
     let parameters: ICheckIfUserIsSubscriberOfListParameters;
     if (this.isICheckIfUserIsSubscriberOfListParameters(listIdOrListIdentifierOrParameters)) {
       parameters = listIdOrListIdentifierOrParameters;
     } else {
       parameters = new CheckIfUserIsSubscriberOfListParameters(listIdOrListIdentifierOrParameters, userIdOrUsernameOrUserIdentifier);
     }
-
     try {
       await this._twitterListsRequester.checkIfUserIsSubscriberOfListAsync(parameters); // .ConfigureAwait(false);
       return true;
-    } catch (e: TwitterException) {
+    } catch (e) {
       if (e.statusCode === 404) {
         // This is a special case where the request actually throws expectedly
         // When a user is not a member of a list this operation returns a 404.
         return false;
       }
 
-      throw;
+      throw e;  // throw; => re-throws the exception
     }
   }
 
@@ -559,7 +559,7 @@ export class ListsClient implements IListsClient {
     }
 
     let iterator = this.getTweetsFromListIterator(parameters);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public getTweetsFromListIterator(listIdOrListIdentifierOrParameters: number | ITwitterListIdentifier | IGetTweetsFromListParameters): ITwitterIterator<ITweet, number> {      // number

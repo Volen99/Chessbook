@@ -1,7 +1,9 @@
-﻿import {ITwitterResult} from 'src/app/core/Core/Web/TwitterResult';
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterResult} from 'src/app/core/Core/Web/TwitterResult';
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
-import {ITwitterAccessor} from "../../core/Core/Web/ITwitterAccessor";
-import {IHelpQueryGenerator} from "../../core/Core/QueryGenerators/IHelpQueryGenerator";
+import {ITwitterAccessor, ITwitterAccessorToken} from "../../core/Core/Web/ITwitterAccessor";
+import {IHelpQueryGenerator, IHelpQueryGeneratorToken} from "../../core/Core/QueryGenerators/IHelpQueryGenerator";
 import {HttpMethod} from 'src/app/core/Public/Models/Enum/HttpMethod';
 import {SupportedLanguage} from "../../core/Core/Models/SupportedLanguage";
 import {IGetRateLimitsParameters} from "../../core/Public/Parameters/HelpClient/GetRateLimitsParameters";
@@ -14,7 +16,8 @@ import {SearchGeoSearchResultDTO} from "../../core/Public/Models/Interfaces/DTO/
 import {CredentialsRateLimitsDTO} from "../../core/Core/DTO/CredentialsRateLimitsDTO";
 import {IPlace} from "../../core/Public/Models/Interfaces/IPlace";
 import {ITwitterConfiguration} from "../../core/Public/Models/Interfaces/DTO/ITwitterConfiguration";
-import {InjectionToken} from "@angular/core";
+import {HelpQueryGenerator} from "./HelpQueryGenerator";
+import {TwitterAccessor} from "../../Tweetinvi.Credentials/TwitterAccessor";
 
 export interface IHelpQueryExecutor {
   getRateLimitsAsync(parameters: IGetRateLimitsParameters, request: ITwitterRequest): Promise<ITwitterResult<CredentialsRateLimitsDTO>>;
@@ -32,14 +35,15 @@ export interface IHelpQueryExecutor {
 
 export const IHelpQueryExecutorToken = new InjectionToken<IHelpQueryExecutor>('IHelpQueryExecutor', {
   providedIn: 'root',
-  factory: () => new HelpQueryExecutor(),
+  factory: () => new HelpQueryExecutor(Inject(HelpQueryGenerator), Inject(TwitterAccessor)),
 });
 
 export class HelpQueryExecutor implements IHelpQueryExecutor {
   private readonly _helpQueryGenerator: IHelpQueryGenerator;
   private readonly _twitterAccessor: ITwitterAccessor;
 
-  constructor(helpQueryGenerator: IHelpQueryGenerator, twitterAccessor: ITwitterAccessor) {
+  constructor(@Inject(IHelpQueryGeneratorToken) helpQueryGenerator: IHelpQueryGenerator,
+              @Inject(ITwitterAccessorToken) twitterAccessor: ITwitterAccessor) {
     this._helpQueryGenerator = helpQueryGenerator;
     this._twitterAccessor = twitterAccessor;
   }

@@ -37,7 +37,7 @@ export class AccountActivityController implements IAccountActivityController {
   }
 
   public getAccountActivityWebhookEnvironmentsAsync(parameters: IGetAccountActivityWebhookEnvironmentsParameters, request: ITwitterRequest): Promise<ITwitterResult<IGetAccountActivityWebhookEnvironmentsResultDTO>> {
-    let consumerCredentials = new ConsumerOnlyCredentials(undefined, undefined, undefined, request.query.twitterCredentials);
+    let consumerCredentials = new ConsumerOnlyCredentials(request.query.twitterCredentials);
 
     request.query.url = this._accountActivityQueryGenerator.getAccountActivityWebhookEnvironmentsQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;

@@ -1,4 +1,6 @@
-﻿import {IMinMaxQueryParameters, MinMaxQueryParameters} from "../MaxAndMinBaseQueryParameters";
+﻿import {Inject, Injectable, InjectionToken} from "@angular/core";
+
+import {IMinMaxQueryParameters, MinMaxQueryParameters} from "../MaxAndMinBaseQueryParameters";
 import {ITweetModeParameter} from "../ITweetModeParameter";
 import {IGeoCode, IGeoCodeToken} from "../../Models/Interfaces/IGeoCode";
 import {SearchResultType} from "../../Models/Enum/SearchResultType";
@@ -6,12 +8,11 @@ import DateTime from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/sourc
 import {TweetSearchFilters} from "../Enum/TweetSearchFilters";
 import {DistanceMeasure} from "../../Models/Enum/DistanceMeasure";
 import {ICoordinates, ICoordinatesToken} from "../../Models/Interfaces/ICoordinates";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {GeoCode} from "../../Models/GeoCode";
-import {TweetMode} from '../../Settings/TweetinviSettings';
+import {TweetMode} from '../../Settings/SharebookSettings';
 import {LanguageFilter} from "../../Models/Enum/LanguageFilter";
 import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
-import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 /// <summary>
 /// For more information read : https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets
@@ -61,39 +62,37 @@ export const ISearchTweetsParametersToken = new InjectionToken<ISearchTweetsPara
 @Injectable()
 // https://dev.twitter.com/rest/reference/get/search/tweets
 export class SearchTweetsParameters extends MinMaxQueryParameters implements ISearchTweetsParameters {
-  constructor(@Inject([IGeoCodeToken, ISearchTweetsParametersToken]) searchQueryOrGeoCodeOrParameters?: string | IGeoCode | ISearchTweetsParameters,
-              latitude?: number,
+  constructor(searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters: string | IGeoCode | ICoordinates | number | ISearchTweetsParameters,
               longitude?: number,
-              @Inject(ICoordinatesToken) coordinates?: ICoordinates,
               radius?: number,
               measure?: DistanceMeasure) {
-    if (SearchTweetsParameters.isISearchTweetsParameters(searchQueryOrGeoCodeOrParameters)) {
-      super(searchQueryOrGeoCodeOrParameters);
+    if (SearchTweetsParameters.isISearchTweetsParameters(searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters)) {
+      super(searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters);
 
-      this.query = searchQueryOrGeoCodeOrParameters.query;
-      this.locale = searchQueryOrGeoCodeOrParameters.locale;
-      this.lang = searchQueryOrGeoCodeOrParameters.lang;
-      this.geoCode = new GeoCode(undefined, undefined, undefined, undefined, undefined, searchQueryOrGeoCodeOrParameters.geoCode);
-      this.searchType = searchQueryOrGeoCodeOrParameters.searchType;
-      this.since = searchQueryOrGeoCodeOrParameters.since;
-      this.until = searchQueryOrGeoCodeOrParameters.until;
-      this.filters = searchQueryOrGeoCodeOrParameters.filters;
-      this.includeEntities = searchQueryOrGeoCodeOrParameters.includeEntities;
-      this.tweetMode = searchQueryOrGeoCodeOrParameters.tweetMode;
+      this.query = searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters.query;
+      this.locale = searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters.locale;
+      this.lang = searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters.lang;
+      this.geoCode = new GeoCode(undefined, undefined, undefined, undefined, undefined, searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters.geoCode);
+      this.searchType = searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters.searchType;
+      this.since = searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters.since;
+      this.until = searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters.until;
+      this.filters = searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters.filters;
+      this.includeEntities = searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters.includeEntities;
+      this.tweetMode = searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters.tweetMode;
     } else {
       super();
 
       this.filters = TweetSearchFilters.None;
-      this.pageSize = TwitterLimits.DEFAULTS.SEARCH_TWEETS_MAX_PAGE_SIZE;
+      this.pageSize = SharebookLimits.DEFAULTS.SEARCH_TWEETS_MAX_PAGE_SIZE;
 
-      if (Type.isString(searchQueryOrGeoCodeOrParameters)) {
-        this.query = searchQueryOrGeoCodeOrParameters;
-      } else if (SearchTweetsParameters.isIGeoCode(searchQueryOrGeoCodeOrParameters)) {
-        this.geoCode = searchQueryOrGeoCodeOrParameters;
-      } else if (latitude && longitude) {
-        this.geoCode = new GeoCode(latitude, longitude, undefined, radius, measure);
-      } else if (coordinates) {
-        this.geoCode = new GeoCode(undefined, undefined, coordinates, radius, measure);
+      if (Type.isString(searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters)) {
+        this.query = searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters;
+      } else if (SearchTweetsParameters.isIGeoCode(searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters)) {
+        this.geoCode = searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters;
+      } else if (Type.isNumber(searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters)) {
+        this.geoCode = new GeoCode(searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters, longitude, undefined, radius, measure);
+      } else {
+        this.geoCode = new GeoCode(undefined, undefined, searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters, radius, measure);
       }
     }
   }

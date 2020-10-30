@@ -55,15 +55,15 @@ export interface IAccountSettingsClient {
   /// Update the profile banner of the account
   /// <para>Read more : https://dev.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/post-account-update_profile_banner </para>
   /// </summary>
-  updateProfileBannerAsync(parameters: IUpdateProfileBannerParameters): Promise<void>;
+  updateProfileBannerAsync(parameters: IUpdateProfileBannerParameters): Promise<any>;
 
-  removeProfileBannerAsync(): Promise<void>;
+  removeProfileBannerAsync(): Promise<any>;
 
   /// <summary>
   /// Remove the profile banner of the account
   /// <para>Read more : https://dev.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/post-account-remove_profile_banner </para>
   /// </summary>
-  removeProfileBannerAsync(parameters: IRemoveProfileBannerParameters): Promise<void>;
+  removeProfileBannerAsync(parameters: IRemoveProfileBannerParameters): Promise<any>;
 }
 
 export const IAccountSettingsClientToken = new InjectionToken<IAccountSettingsClient>('IAccountSettingsClient', {

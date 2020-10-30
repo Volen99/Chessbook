@@ -1,5 +1,5 @@
 import {CursorQueryParameters, ICursorQueryParameters} from "../../CursorQueryParameters";
-import {TwitterLimits} from "../../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../../Settings/SharebookLimits";
 
 // For more information visit: https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-memberships
 export interface IGetAccountListMembershipsParameters extends ICursorQueryParameters {
@@ -16,7 +16,7 @@ export class GetAccountListMembershipsParameters extends CursorQueryParameters i
       return;
     }
 
-    super.pageSize = TwitterLimits.DEFAULTS.LISTS_GET_USER_MEMBERSHIPS_MAX_PAGE_SIZE;
+    super.pageSize = SharebookLimits.DEFAULTS.LISTS_GET_USER_MEMBERSHIPS_MAX_PAGE_SIZE;
   }
 
   public onlyRetrieveAccountLists?: boolean;

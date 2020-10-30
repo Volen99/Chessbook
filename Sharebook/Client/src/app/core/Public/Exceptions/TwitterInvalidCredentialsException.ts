@@ -6,6 +6,7 @@ export class TwitterInvalidCredentialsException extends Exception {
   constructor(message: string, credentials?: IReadOnlyConsumerCredentials) {
     if (credentials) {
       super("The consumer key and consumer secret must be defined!");
+
       this.credentials = credentials;
     } else {
       super(message);

@@ -1,7 +1,7 @@
 import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {ITimelineClientParametersValidator} from "./TimelineClientParametersValidator";
-import {IUserQueryValidator, IUserQueryValidatorToken} from "./UserQueryValidator";
+import {IUserQueryValidator, IUserQueryValidatorToken, UserQueryValidator} from "./UserQueryValidator";
 import {TimelineParameters} from "./parameters-types";
 import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
 import {IGetUserTimelineParameters} from "../../../Public/Parameters/TimelineClient/GetUserTimelineParameters";

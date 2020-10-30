@@ -10,6 +10,7 @@ export class GetEndpointRateLimitsParameters extends GetRateLimitsParameters imp
   constructor(url?: string, from?: RateLimitsSource, source?: IGetEndpointRateLimitsParameters) {
     if (source) {
       super(source);
+
       this.url = source?.url;
     } else if (url) {
       this.url = url;

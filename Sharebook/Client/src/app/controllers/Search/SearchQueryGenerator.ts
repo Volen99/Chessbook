@@ -1,4 +1,6 @@
-﻿import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMode";
+﻿import {Inject, Injectable, InjectionToken} from "@angular/core";
+
+import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMode";
 import {IQueryParameterGenerator, IQueryParameterGeneratorToken, QueryParameterGenerator} from "../Shared/QueryParameterGenerator";
 import IEnumerable from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable';
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
@@ -15,7 +17,7 @@ import {
   ISearchQueryParameterGeneratorToken,
   SearchQueryParameterGenerator
 } from "./SearchQueryParameterGenerator";
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {format} from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/Utility";
 
 export interface ISearchQueryGenerator {
   getSearchTweetsQuery(parameters: ISearchTweetsParameters, tweetMode: ComputedTweetMode): string;
@@ -55,7 +57,7 @@ export class SearchQueryGenerator implements ISearchQueryGenerator {
 
     query.addParameterToQuery("lang", parameters.lang?.getLanguageCode());
     query.addParameterToQuery("locale", parameters.locale);
-    query.addParameterToQuery("result_type", parameters.searchType?.ToString().ToLowerInvariant());
+    query.addParameterToQuery("result_type", parameters.searchType?.toString().toLocaleLowerCase());
 
     this._queryParameterGenerator.addMinMaxQueryParameters(query, parameters);
 
@@ -64,7 +66,7 @@ export class SearchQueryGenerator implements ISearchQueryGenerator {
     query.addParameterToQuery("include_entities", parameters.includeEntities);
     query.addParameterToQuery("tweet_mode", tweetMode);
 
-    query.addFormattedParameterToQuery(parameters.FormattedCustomQueryParameters);
+    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -118,7 +120,7 @@ export class SearchQueryGenerator implements ISearchQueryGenerator {
   }
 
   public getSavedSearchQuery(parameters: IGetSavedSearchParameters): string {
-    let query = new StringBuilder(string.Format(Resources.SavedSearch_Get, parameters.savedSearchId));
+    let query = new StringBuilder(format(Resources.SavedSearch_Get, parameters.savedSearchId));
 
     query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 
@@ -134,7 +136,7 @@ export class SearchQueryGenerator implements ISearchQueryGenerator {
   }
 
   public getDestroySavedSearchQuery(parameters: IDestroySavedSearchParameters): string {
-    let query = new StringBuilder(string.Format(Resources.SavedSearch_Destroy, parameters.savedSearchId));
+    let query = new StringBuilder(format(Resources.SavedSearch_Destroy, parameters.savedSearchId));
 
     query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
 

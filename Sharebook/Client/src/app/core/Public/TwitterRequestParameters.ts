@@ -12,8 +12,8 @@ export class TwitterRequestParameters implements ITwitterRequestParameters {
     this.httpMethod = source.httpMethod;
     this.acceptHeaders = source.acceptHeaders;
     this.customHeaders = new CustomRequestHeaders();
-    source.customHeaders.ForEach(customHeader => {
-      CustomHeaders.Add(customHeader.Key, customHeader.Values, customHeader.Behaviour);
+    [...source.customHeaders].forEach(customHeader => {       // TODO: Might buuug 🐛
+      this.customHeaders.add(customHeader.key, customHeader.values, customHeader.behaviour);
     });
 
     this.authorizationHeader = source.authorizationHeader;

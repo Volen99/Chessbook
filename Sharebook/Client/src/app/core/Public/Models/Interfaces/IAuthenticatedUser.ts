@@ -1,4 +1,6 @@
-﻿import {IReadOnlyTwitterCredentials} from "../../../Core/Models/Authentication/ReadOnlyTwitterCredentials";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {IReadOnlyTwitterCredentials} from "../../../Core/Models/Authentication/ReadOnlyTwitterCredentials";
 import {IUserIdentifier} from "./IUserIdentifier";
 import {ITwitterListIdentifier} from "./ITwitterListIdentifier";
 import {IAccountSettings} from "./IAccountSettings";
@@ -11,12 +13,9 @@ import {IUpdateRelationshipParameters} from "../../Parameters/AccountClient/Upda
 import {ISavedSearch} from "./ISavedSearch";
 import {ITwitterList} from "./ITwitterList";
 import {IUpdateAccountSettingsParameters} from "../../Parameters/AccountSettingsClient/UpdateAccountSettingsParameters";
-import {Inject, InjectionToken} from "@angular/core";
 import {AuthenticatedUser} from "../../../Core/Models/AuthenticatedUser";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
 import {UserDTO} from "../../../Core/DTO/UserDTO";
-import {IUserDTO} from "./DTO/IUserDTO";
-import {ITwitterClient} from "../../ITwitterClient";
 
 // User associated with a Token, this "privileged" user has access private information like messages, timeline...
 export interface IAuthenticatedUser extends IUser {
@@ -70,53 +69,48 @@ export interface IAuthenticatedUser extends IUser {
   getUsersYouRequestedToFollowAsync(): Promise<IUser[]>;
 
   // Follow a specific user.
-  followUserAsync(user: IUserIdentifier): Promise<void>;
+  followUserAsync(user: IUserIdentifier): Promise<any>;    // plz check c# code, and below methods too, as you change "void" to "any"
+  // Follow a specific user.
+  followUserAsync(userId: number): Promise<any>;
 
   // Follow a specific user.
-  followUserAsync(userId: number): Promise<void>;
-
-  // Follow a specific user.
-  followUserAsync(screenName: string): Promise<void>;
+  followUserAsync(screenName: string): Promise<any>;
 
   // Unfollow a specific user.
-  unfollowUserAsync(user: IUserIdentifier): Promise<void>;
+  unfollowUserAsync(user: IUserIdentifier): Promise<any>;
 
   // Unfollow a specific user.
-  unfollowUserAsync(userId: number): Promise<void>;
+  unfollowUserAsync(userId: number): Promise<any>;
 
   // Unfollow a specific user.
-  unfollowUserAsync(username: string): Promise<void>;
+  unfollowUserAsync(username: string): Promise<any>;
 
   // Saved Searches
 
   // Get the authenticated user saved searches.
-  listSavedSearchesAsync(): Promise<ISavedSearch[]>;
+  listSavedSearchesAsync(): Promise<Array<ISavedSearch>>;
 
   // Block
 
   // Block a specific user.
-  blockUserAsync(): Promise<void>;      // by mi
-
-  blockUserAsync(user: IUserIdentifier): Promise<void>;
+  blockUserAsync(user: IUserIdentifier): Promise<any>;
 
   // Block a specific user.
-  blockUserAsync(userId: number): Promise<void>;
+  blockUserAsync(userId: number): Promise<any>;
 
   // Block a specific user.
-  blockUserAsync(username: string): Promise<void>;
+  blockUserAsync(username: string): Promise<any>;
 
   // Unblock
 
   // Unblock a specific user.
-  unblockUserAsync(): Promise<void>;      // by mi
-
-  unblockUserAsync(user: IUserIdentifier): Promise<void>;
+  unblockUserAsync(user: IUserIdentifier): Promise<any>;
 
   // Unblock a specific user.
-  unblockUserAsync(userId: number): Promise<void>;
+  unblockUserAsync(userId: number): Promise<any>;
 
   // Unblock a specific user.
-  unblockUserAsync(username: string): Promise<void>;
+  unblockUserAsync(username: string): Promise<any>;
 
   // Get the ids of the user you blocked.
   getBlockedUserIdsAsync(): Promise<number[]>;
@@ -127,15 +121,13 @@ export interface IAuthenticatedUser extends IUser {
   // Spam
 
   // Report a specific user for being a spammer.
-  reportUserForSpamAsync(): Promise<void>;      // by mi
-
-  reportUserForSpamAsync(user: IUserIdentifier): Promise<void>;
+  reportUserForSpamAsync(user: IUserIdentifier): Promise<any>;
 
   // Report a specific user for being a spammer.
-  reportUserForSpamAsync(userId: number): Promise<void>;
+  reportUserForSpamAsync(userId: number): Promise<any>;
 
   // Report a specific user for being a spammer.
-  reportUserForSpamAsync(userName: string): Promise<void>;
+  reportUserForSpamAsync(userName: string): Promise<any>;
 
   // Mute
 
@@ -146,22 +138,22 @@ export interface IAuthenticatedUser extends IUser {
   getMutedUsersAsync(): Promise<IUser[]>;
 
   // Mute a specific user.
-  muteUserAsync(user: IUserIdentifier): Promise<void>;
+  muteUserAsync(user: IUserIdentifier): Promise<any>;
 
   // Mute a specific user.
-  muteUserAsync(userId: number): Promise<void>;
+  muteUserAsync(userId: number): Promise<any>;
 
   // Mute a specific user.
-  muteUserAsync(username: string): Promise<void>;
+  muteUserAsync(username: string): Promise<any>;
 
   // Unmute a specific user.
-  unmuteUserAsync(user: IUserIdentifier): Promise<void>;
+  unmuteUserAsync(user: IUserIdentifier): Promise<any>;
 
   // Unmute a specific user.
-  unmuteUserAsync(userId: number): Promise<void>;
+  unmuteUserAsync(userId: number): Promise<any>;
 
   // Unmute a specific user.
-  unmuteUserAsync(username: string): Promise<void>;
+  unmuteUserAsync(username: string): Promise<any>;
 
   // Subscribe the authenticated user to a list.
   subscribeToListAsync(list: ITwitterListIdentifier): Promise<ITwitterList>;

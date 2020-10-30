@@ -23,7 +23,7 @@ import {IGetAccountListSubscriptionsParameters} from "../../../Public/Parameters
 import {IGetUserListSubscriptionsParameters} from "../../../Public/Parameters/ListsClient/Subscribers/GetUserListSubscriptionsParameters";
 import {ICheckIfUserIsSubscriberOfListParameters} from "../../../Public/Parameters/ListsClient/Subscribers/CheckIfUserIsSubscriberOfListParameters";
 import {ITwitterClient, ITwitterClientToken} from "../../../Public/ITwitterClient";
-import {TwitterLimits} from 'src/app/core/Public/Settings/TwitterLimits';
+import {SharebookLimits} from 'src/app/core/Public/Settings/SharebookLimits';
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
 import ArgumentOutOfRangeException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentOutOfRangeException";
 import {
@@ -99,7 +99,7 @@ export class TwitterListsClientParametersValidator implements ITwitterListsClien
     this._twitterListsClientRequiredParametersValidator = twitterListsClientRequiredParametersValidator;
   }
 
-  private get Limits(): TwitterLimits {
+  private get Limits(): SharebookLimits {
     return this._client.config.limits;
   }
 

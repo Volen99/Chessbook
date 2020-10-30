@@ -1,6 +1,8 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {ITwitterRequest} from 'src/app/core/Public/Models/Interfaces/ITwitterRequest';
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
-import {ITwitterAccessor} from "../../core/Core/Web/ITwitterAccessor";
+import {ITwitterAccessor, ITwitterAccessorToken} from "../../core/Core/Web/ITwitterAccessor";
 import {HttpMethod} from 'src/app/core/Public/Models/Enum/HttpMethod';
 import {ICreateBearerTokenParameters} from "../../core/Public/Parameters/Auth/CreateBearerTokenParameters";
 import {RequestAuthUrlInternalParameters} from "./RequestAuthUrlInternalParameters";
@@ -10,9 +12,8 @@ import {IInvalidateAccessTokenParameters} from "../../core/Public/Parameters/Aut
 import {TwitterCredentials} from "../../core/Public/Models/Authentication/TwitterCredentials";
 import {InvalidateTokenResponse} from "../../core/Public/Models/Authentication/InvalidateTokenResponse";
 import {CreateTokenResponseDTO} from "../../core/Core/DTO/CreateTokenResponseDTO";
-import {IAuthQueryGenerator} from "./AuthQueryGenerator";
-import {IOAuthWebRequestGeneratorFactory} from "../../webLogic/OAuthWebRequestGenerator";
-import {InjectionToken} from "@angular/core";
+import {IAuthQueryGenerator, IAuthQueryGeneratorToken} from "./AuthQueryGenerator";
+import {IOAuthWebRequestGeneratorFactory, IOAuthWebRequestGeneratorFactoryToken} from "../../webLogic/OAuthWebRequestGenerator";
 
 export interface IAuthQueryExecutor {
   createBearerTokenAsync(parameters: ICreateBearerTokenParameters, request: ITwitterRequest): Promise<ITwitterResult<CreateTokenResponseDTO>>;
@@ -36,8 +37,9 @@ export class AuthQueryExecutor implements IAuthQueryExecutor {
   private readonly _oAuthWebRequestGeneratorFactory: IOAuthWebRequestGeneratorFactory;
   private readonly _twitterAccessor: ITwitterAccessor;
 
-  constructor(queryGenerator: IAuthQueryGenerator, oAuthWebRequestGeneratorFactory: IOAuthWebRequestGeneratorFactory,
-              twitterAccessor: ITwitterAccessor) {
+  constructor(@Inject(IAuthQueryGeneratorToken) queryGenerator: IAuthQueryGenerator,
+              @Inject(IOAuthWebRequestGeneratorFactoryToken) oAuthWebRequestGeneratorFactory: IOAuthWebRequestGeneratorFactory,
+              @Inject(ITwitterAccessorToken) twitterAccessor: ITwitterAccessor) {
     this._queryGenerator = queryGenerator;
     this._oAuthWebRequestGeneratorFactory = oAuthWebRequestGeneratorFactory;
     this._twitterAccessor = twitterAccessor;
@@ -63,7 +65,7 @@ export class AuthQueryExecutor implements IAuthQueryExecutor {
 
   public requestCredentialsAsync(parameters: IRequestCredentialsParameters, request: ITwitterRequest): Promise<ITwitterResult> {
     let oAuthWebRequestGenerator = this._oAuthWebRequestGeneratorFactory.create();
-    let callbackParameter = oAuthWebRequestGenerator.GenerateParameter("oauth_verifier", parameters.verifierCode, true, true, false);
+    let callbackParameter = oAuthWebRequestGenerator.generateParameter("oauth_verifier", parameters.verifierCode, true, true, false);
 
     request.query.url = this._queryGenerator.getRequestCredentialsQuery(parameters);
     request.query.httpMethod = HttpMethod.POST;

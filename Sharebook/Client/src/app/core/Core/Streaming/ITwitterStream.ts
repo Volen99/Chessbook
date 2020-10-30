@@ -1,5 +1,4 @@
-﻿import List from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/List";
-import { TweetMode } from '../../Public/Settings/TweetinviSettings';
+﻿import { TweetMode } from '../../Public/Settings/SharebookSettings';
 
 export interface ITwitterStream
     {

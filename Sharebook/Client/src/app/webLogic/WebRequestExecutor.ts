@@ -1,5 +1,5 @@
 ﻿import {IWebRequestExecutor} from "../core/Core/Web/IWebRequestExecutor";
-import {ITwitterExceptionFactory} from "../core/Public/Exceptions/TwitterException";
+import {ITwitterExceptionFactory} from "../core/Public/Exceptions/SharebookException";
 import {IHttpClientWebHelper} from '../core/Core/Helpers/IHttpClientWebHelper';
 import {ITwitterResponse} from "../core/Core/Web/ITwitterResponse";
 import {ITwitterRequest} from "../core/Public/Models/Interfaces/ITwitterRequest";

@@ -8,6 +8,7 @@ export interface ITwitterIteratorPageResult</*out*/ TPageContent, /*out*/ TCurso
 export class TwitterIteratorPageResult<TPageContent extends ITwitterResult, TCursor> extends IteratorPageResult<TPageContent, TCursor> implements ITwitterIteratorPageResult<TPageContent, TCursor> {
   constructor(content: TPageContent, nextCursor: TCursor, isLastPage: boolean) {
     super(content, nextCursor, isLastPage);
+
     this.rawResult = content.content;
   }
 

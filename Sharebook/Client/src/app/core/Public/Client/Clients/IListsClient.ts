@@ -3,9 +3,7 @@ import {Inject, InjectionToken} from "@angular/core";
 import {ITwitterListIdentifier} from "../../Models/Interfaces/ITwitterListIdentifier";
 import {PrivacyMode} from "../../Models/Enum/PrivacyMode";
 import {IUserIdentifier} from '../../Models/Interfaces/IUserIdentifier';
-import IEnumerable from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable';
 import {ITwitterIterator} from '../../Iterators/ITwitterIterator';
-import {Promise} from 'src/app/c#-objects/TypeScript.NET-Core/packages/Promises/source/Promise';
 import {ITwitterList} from "../../Models/Interfaces/ITwitterList";
 import {ICreateListParameters} from "../../Parameters/ListsClient/CreateListParameters";
 import {IGetListParameters} from "../../Parameters/ListsClient/GetListParameters";
@@ -73,7 +71,7 @@ export interface IListsClient {
   /// </summary>
   /// <para> https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-list </para>
   /// <returns>Account user's lists</returns>
-  getListsSubscribedByAccountAsync(parameters: IGetListsSubscribedByAccountParameters): Promise<ITwitterList[]>
+  getListsSubscribedByAccountAsync(parameters: IGetListsSubscribedByAccountParameters): Promise<ITwitterList[]>;
 
   getListsSubscribedByUserAsync(userId: number): Promise<ITwitterList[]>;
 
@@ -124,7 +122,7 @@ export interface IListsClient {
   /// </summary>
   /// <para> https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-ownerships </para>
   /// <returns>An iterator over the lists owned by the account</returns>
-  getListsOwnedByAccountIterator(parameters: IGetListsOwnedByAccountParameters): ITwitterIterator<ITwitterList>
+  getListsOwnedByAccountIterator(parameters: IGetListsOwnedByAccountParameters): ITwitterIterator<ITwitterList>;
 
   getListsOwnedByUserAsync(userId: number);
 
@@ -150,7 +148,7 @@ export interface IListsClient {
   /// </summary>
   /// <para> https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-ownerships </para>
   /// <returns>An iterator over the lists owned by the user</returns>
-  getListsOwnedByUserIterator(parameters: IGetListsOwnedByUserParameters): ITwitterIterator<ITwitterList>
+  getListsOwnedByUserIterator(parameters: IGetListsOwnedByUserParameters): ITwitterIterator<ITwitterList>;
 
   // ***********
   // MEMBERSHIP
@@ -170,17 +168,17 @@ export interface IListsClient {
   /// <para> https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-create </para>
   addMemberToListAsync(parameters: IAddMemberToListParameters): Promise<ITwitterList>;
 
-  addMembersToListAsync(listId: number, userIds: IEnumerable<number>): Promise<ITwitterList>;
+  addMembersToListAsync(listId: number, userIds: Iterable<number>): Promise<ITwitterList>;
 
-  addMembersToListAsync(listId: number, usernames: IEnumerable<string>): Promise<ITwitterList>;
+  addMembersToListAsync(listId: number, usernames: Iterable<string>): Promise<ITwitterList>;
 
-  addMembersToListAsync(listId: number, users: IEnumerable<IUserIdentifier>): Promise<ITwitterList>;
+  addMembersToListAsync(listId: number, users: Iterable<IUserIdentifier>): Promise<ITwitterList>;
 
-  addMembersToListAsync(list: ITwitterListIdentifier, userIds: IEnumerable<number>): Promise<ITwitterList>;
+  addMembersToListAsync(list: ITwitterListIdentifier, userIds: Iterable<number>): Promise<ITwitterList>;
 
-  addMembersToListAsync(list: ITwitterListIdentifier, usernames: IEnumerable<string>): Promise<ITwitterList>;
+  addMembersToListAsync(list: ITwitterListIdentifier, usernames: Iterable<string>): Promise<ITwitterList>;
 
-  addMembersToListAsync(list: ITwitterListIdentifier, users: IEnumerable<IUserIdentifier>): Promise<ITwitterList>;
+  addMembersToListAsync(list: ITwitterListIdentifier, users: Iterable<IUserIdentifier>): Promise<ITwitterList>;
 
   /// <summary>
   /// Add multiple members to a list
@@ -230,7 +228,7 @@ export interface IListsClient {
   /// <para>Read more : https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-memberships </para>
   /// </summary>
   /// <returns>An iterator to retrieve all the lists a user is member of</returns>
-  getUserListMembershipsIterator(parameters: IGetUserListMembershipsParameters): ITwitterIterator<ITwitterList>
+  getUserListMembershipsIterator(parameters: IGetUserListMembershipsParameters): ITwitterIterator<ITwitterList>;
 
   getMembersOfListAsync(listId: number): Promise<IUser[]>;
 
@@ -291,23 +289,23 @@ export interface IListsClient {
   /// </summary>
   removeMemberFromListAsync(parameters: IRemoveMemberFromListParameters): Promise<ITwitterList>;
 
-  removeMembersFromListAsync(listId: number, userIds: IEnumerable<number>): Promise<ITwitterList>;
+  removeMembersFromListAsync(listId: number, userIds: Iterable<number>): Promise<ITwitterList>;
 
-  removeMembersFromListAsync(listId: number, usernames: IEnumerable<string>): Promise<ITwitterList>;
+  removeMembersFromListAsync(listId: number, usernames: Iterable<string>): Promise<ITwitterList>;
 
-  removeMembersFromListAsync(listId: number, users: IEnumerable<IUserIdentifier>): Promise<ITwitterList>;
+  removeMembersFromListAsync(listId: number, users: Iterable<IUserIdentifier>): Promise<ITwitterList>;
 
-  removeMembersFromListAsync(list: ITwitterListIdentifier, userIds: IEnumerable<number>): Promise<ITwitterList>;
+  removeMembersFromListAsync(list: ITwitterListIdentifier, userIds: Iterable<number>): Promise<ITwitterList>;
 
-  removeMembersFromListAsync(list: ITwitterListIdentifier, usernames: IEnumerable<string>): Promise<ITwitterList>;
+  removeMembersFromListAsync(list: ITwitterListIdentifier, usernames: Iterable<string>): Promise<ITwitterList>;
 
-  removeMembersFromListAsync(list: ITwitterListIdentifier, users: IEnumerable<IUserIdentifier>): Promise<ITwitterList>;
+  removeMembersFromListAsync(list: ITwitterListIdentifier, users: Iterable<IUserIdentifier>): Promise<ITwitterList>;
 
   /// <summary>
   /// Remove multiple members from a list
   /// <para>Read more : https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-destroy_all </para>
   /// </summary>
-  removeMembersFromListAsync(parameters: IRemoveMembersFromListParameters): Promise<ITwitterList>
+  removeMembersFromListAsync(parameters: IRemoveMembersFromListParameters): Promise<ITwitterList>;
 
   // ***********
   // SUBSCRIBERS
@@ -333,7 +331,7 @@ export interface IListsClient {
   /// <para>Read more : https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-subscribers-destroy </para>
   /// </summary>
   /// <returns>The latest version of the list</returns>
-  unsubscribeFromListAsync(parameters: IUnsubscribeFromListParameters): Promise<ITwitterList>
+  unsubscribeFromListAsync(parameters: IUnsubscribeFromListParameters): Promise<ITwitterList>;
 
   getListSubscribersAsync(listId: number): Promise<IUser[]>;
 
@@ -344,18 +342,18 @@ export interface IListsClient {
   /// <para>Read more : https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-subscribers </para>
   /// </summary>
   /// <returns>Subscribers of the list</returns>
-  getListSubscribersAsync(parameters: IGetListSubscribersParameters): Promise<IUser[]>
+  getListSubscribersAsync(parameters: IGetListSubscribersParameters): Promise<IUser[]>;
 
-  getListSubscribersIterator(listId: number): ITwitterIterator<IUser>
+  getListSubscribersIterator(listId: number): ITwitterIterator<IUser>;
 
-  getListSubscribersIterator(list: ITwitterListIdentifier): ITwitterIterator<IUser>
+  getListSubscribersIterator(list: ITwitterListIdentifier): ITwitterIterator<IUser>;
 
   /// <summary>
   /// Returns the users subscribed to a list
   /// <para>Read more : https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-subscribers </para>
   /// </summary>
   /// <returns>An iterator to get through the subscribers of the list</returns>
-  getListSubscribersIterator(parameters: IGetListSubscribersParameters): ITwitterIterator<IUser>
+  getListSubscribersIterator(parameters: IGetListSubscribersParameters): ITwitterIterator<IUser>;
 
   getAccountListSubscriptionsAsync(): Promise<ITwitterList[]>;
 
@@ -373,7 +371,7 @@ export interface IListsClient {
   /// <para>Read more : https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-subscriptions </para>
   /// </summary>
   /// <returns>An iterator the get though the lists the account subscribed to</returns>
-  getAccountListSubscriptionsIterator(parameters: IGetAccountListSubscriptionsParameters): ITwitterIterator<ITwitterList>
+  getAccountListSubscriptionsIterator(parameters: IGetAccountListSubscriptionsParameters): ITwitterIterator<ITwitterList>;
 
   getUserListSubscriptionsAsync(userId: number): Promise<ITwitterList[]>;
 
@@ -388,18 +386,18 @@ export interface IListsClient {
   /// <returns>Lists a user subscribed to</returns>
   getUserListSubscriptionsAsync(parameters: IGetUserListSubscriptionsParameters): Promise<ITwitterList[]>;
 
-  getUserListSubscriptionsIterator(userId: number): ITwitterIterator<ITwitterList>
+  getUserListSubscriptionsIterator(userId: number): ITwitterIterator<ITwitterList>;
 
-  getUserListSubscriptionsIterator(username: string): ITwitterIterator<ITwitterList>
+  getUserListSubscriptionsIterator(username: string): ITwitterIterator<ITwitterList>;
 
-  getUserListSubscriptionsIterator(user: IUserIdentifier): ITwitterIterator<ITwitterList>
+  getUserListSubscriptionsIterator(user: IUserIdentifier): ITwitterIterator<ITwitterList>;
 
   /// <summary>
   /// Returns the lists a user subscribed to
   /// <para>Read more : https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-subscriptions </para>
   /// </summary>
   /// <returns>An iterator the get though the lists a user subscribed to</returns>
-  getUserListSubscriptionsIterator(parameters: IGetUserListSubscriptionsParameters): ITwitterIterator<ITwitterList>
+  getUserListSubscriptionsIterator(parameters: IGetUserListSubscriptionsParameters): ITwitterIterator<ITwitterList>;
 
   checkIfUserIsSubscriberOfListAsync(listId: number, userId: number): Promise<boolean>;
 
@@ -435,7 +433,7 @@ export interface IListsClient {
   /// <returns>Tweets of a list</returns>
   getTweetsFromListAsync(parameters: IGetTweetsFromListParameters): Promise<ITweet[]>;
 
-  getTweetsFromListIterator(listId: number): ITwitterIterator<ITweet, number>;               // long?
+  getTweetsFromListIterator(listId: number): ITwitterIterator<ITweet, number>;                // long?
   getTweetsFromListIterator(list: ITwitterListIdentifier): ITwitterIterator<ITweet, number>;  // long?
 
   /// <summary>
@@ -445,7 +443,6 @@ export interface IListsClient {
   /// <returns>An iterator to get through the tweets of a list</returns>
   getTweetsFromListIterator(parameters: IGetTweetsFromListParameters): ITwitterIterator<ITweet, number>; // long?
 }
-
 
 export const IListsClientToken = new InjectionToken<IListsClient>('IListsClient', {
   providedIn: 'root',

@@ -82,7 +82,7 @@ import {
   IGetMutedUserIdsParameters
 } from "../../../core/Public/Parameters/AccountClient/GetMutedUserIdsParameters";
 import {GetMutedUsersParameters, IGetMutedUsersParameters} from "../../../core/Public/Parameters/AccountClient/GetMutedUsersParameters";
-import {IMuteUserParameters} from "../../../core/Public/Parameters/AccountClient/MuteUserParameters";
+import {IMuteUserParameters, MuteUserParameters} from "../../../core/Public/Parameters/AccountClient/MuteUserParameters";
 import {IUnmuteUserParameters, UnmuteUserParameters} from "../../../core/Public/Parameters/AccountClient/UnMuteUserParameters";
 import {Stream} from "stream";
 import {Inject, Injectable} from "@angular/core";
@@ -197,7 +197,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let iterator: ITwitterIterator<number> = this.getFriendIdsIterator(parameters);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public getFriendIdsIterator(userIdOrUsernameOrUserOrParameters: number | string | IUserIdentifier | IGetFriendIdsParameters): ITwitterIterator<number> {
@@ -222,7 +222,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let iterator: IMultiLevelCursorIterator<number, IUser> = this.getFriendsIterator(parameters);
-    return (await iterator.nextPageAsync().ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())];      // .ConfigureAwait(false)).ToArray();
   }
 
 
@@ -242,7 +242,7 @@ export class UsersClient implements IUsersClient {
 
   // #region GetFollowers
 
-  public getFollowerIdsAsync(userIdOrUsernameOrUserOrParameters: number | string | IUserIdentifier | IGetFollowerIdsParameters): Promise<number[]> {
+  public async getFollowerIdsAsync(userIdOrUsernameOrUserOrParameters: number | string | IUserIdentifier | IGetFollowerIdsParameters): Promise<number[]> {
     let parameters: IGetFollowerIdsParameters;
     if (UsersClient.isIGetFollowerIdsParameters(userIdOrUsernameOrUserOrParameters)) {
       parameters = userIdOrUsernameOrUserOrParameters;
@@ -251,7 +251,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let iterator: ITwitterIterator<number> = this.getFollowerIdsIterator(parameters);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public getFollowerIdsIterator(userIdOrUsernameOrUserOrParameters: number | string | IUserIdentifier | IGetFollowerIdsParameters): ITwitterIterator<number> {
@@ -274,7 +274,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let iterator = this.getFollowersIterator(parameters);
-    return (await iterator.nextPageAsync().ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public getFollowersIterator(parameters: IGetFollowersParameters): IMultiLevelCursorIterator<number, IUser> {
@@ -339,7 +339,7 @@ export class UsersClient implements IUsersClient {
 
 
     let iterator = this.getBlockedUserIdsIterator(parametersCurrent);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public getBlockedUserIdsIterator(parameters?: IGetBlockedUserIdsParameters): ITwitterIterator<number> {
@@ -363,7 +363,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let iterator = this.getBlockedUsersIterator(parametersCurrent);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public getBlockedUsersIterator(parameters?: IGetBlockedUsersParameters): ITwitterIterator<IUser> {
@@ -430,7 +430,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let iterator = this.getUserIdsRequestingFriendshipIterator(parametersCurrent);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public getUserIdsRequestingFriendshipIterator(parameters?: IGetUserIdsRequestingFriendshipParameters): ITwitterIterator<number> {
@@ -454,7 +454,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let iterator = this.getUsersRequestingFriendshipIterator(parametersCurrent);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public getUsersRequestingFriendshipIterator(parameters?: IGetUsersRequestingFriendshipParameters): IMultiLevelCursorIterator<number, IUser> {
@@ -484,7 +484,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let iterator = this.getUserIdsYouRequestedToFollowIterator(parametersCurrent);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public getUserIdsYouRequestedToFollowIterator(parameters?: IGetUserIdsYouRequestedToFollowParameters): ITwitterIterator<number> {
@@ -508,7 +508,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let iterator = this.getUsersYouRequestedToFollowIterator(parametersCurrent);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public getUsersYouRequestedToFollowIterator(parameters?: IGetUsersYouRequestedToFollowParameters): IMultiLevelCursorIterator<number, IUser> {
@@ -532,7 +532,8 @@ export class UsersClient implements IUsersClient {
 
   // #region Relationships With
 
-  public async getRelationshipsWithAsync(userIdsOrUsernamesOrUsersIdentifiersUsersOrParameters: number[] | string[] | IUserIdentifier[] | IUser[] | IGetRelationshipsWithParameters): Promise<IUserDictionary<IRelationshipState>> {
+  public async getRelationshipsWithAsync(userIdsOrUsernamesOrUsersIdentifiersUsersOrParameters: number[] | string[] | IUserIdentifier[] | IUser[] | IGetRelationshipsWithParameters):
+    Promise<IUserDictionary<IRelationshipState>> {
     let parametersCurrent: IGetRelationshipsWithParameters;
     if (UsersClient.isArrayFromNumber(userIdsOrUsernamesOrUsersIdentifiersUsersOrParameters)
       || UsersClient.isArrayFromString(userIdsOrUsernamesOrUsersIdentifiersUsersOrParameters)
@@ -555,7 +556,7 @@ export class UsersClient implements IUsersClient {
     for (let user of parametersCurrent.users) {
       let userRelationship: IRelationshipState = relationshipsWith.filter(x => x.targetId === user.id || x.targetScreenName.toLocaleLowerCase() === user.screenName.toLocaleLowerCase())[0];
       if (userRelationship != null) {
-        userRelationshipState.AddOrUpdate(user, userRelationship);
+        userRelationshipState.addOrUpdate(user, userRelationship);
       }
     }
 
@@ -578,7 +579,7 @@ export class UsersClient implements IUsersClient {
     return twitterResult?.model;
   }
 
-  public async getMutedUserIdsAsync(parameters: IGetMutedUserIdsParameters): Promise<number[]> {
+  public async getMutedUserIdsAsync(parameters?: IGetMutedUserIdsParameters): Promise<number[]> {
     let parametersCurrent: IGetMutedUserIdsParameters;
     if (!parameters) {
       parametersCurrent = new GetMutedUserIdsParameters();
@@ -586,8 +587,8 @@ export class UsersClient implements IUsersClient {
       parametersCurrent = parameters;
     }
 
-    let iterator = this.getMutedUserIdsIterator(parameters);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    let iterator = this.getMutedUserIdsIterator(parametersCurrent);
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public getMutedUserIdsIterator(parameters?: IGetMutedUserIdsParameters): ITwitterIterator<number> {
@@ -602,7 +603,7 @@ export class UsersClient implements IUsersClient {
     return new TwitterIteratorProxy<ITwitterResult<IIdsCursorQueryResultDTO>, number>(iterator, dto => dto.model.ids);
   }
 
-  public async getMutedUsersAsync(parameters: IGetMutedUsersParameters): Promise<IUser[]> {
+  public async getMutedUsersAsync(parameters?: IGetMutedUsersParameters): Promise<IUser[]> {
     let parametersCurrent: IGetMutedUsersParameters;
     if (!parameters) {
       parametersCurrent = new GetMutedUsersParameters();
@@ -611,10 +612,10 @@ export class UsersClient implements IUsersClient {
     }
 
     let iterator = this.getMutedUsersIterator(parametersCurrent);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
-  public getMutedUsersIterator(parameters: IGetMutedUsersParameters): ITwitterIterator<IUser> {
+  public getMutedUsersIterator(parameters?: IGetMutedUsersParameters): ITwitterIterator<IUser> {
     let parametersCurrent: IGetMutedUsersParameters;
     if (!parameters) {
       parametersCurrent = new GetMutedUsersParameters();
@@ -622,7 +623,7 @@ export class UsersClient implements IUsersClient {
       parametersCurrent = parameters;
     }
 
-    let iterator = this._usersRequester.getMutedUsersIterator(parameters);
+    let iterator = this._usersRequester.getMutedUsersIterator(parametersCurrent);
     return new TwitterIteratorProxy<ITwitterResult<IUserCursorQueryResultDTO>, IUser>(iterator, pageResult => {
       let userDTOs = pageResult.model.users;
       return this._client.factories.createUsers(userDTOs);
@@ -634,7 +635,7 @@ export class UsersClient implements IUsersClient {
     if (UsersClient.isIMuteUserParameters(userIdOrUsernameOrUserOrParameters)) {
       parameters = userIdOrUsernameOrUserOrParameters;
     } else {
-      parameters = new GetFollowerIdsParameters(userIdOrUsernameOrUserOrParameters);
+      parameters = new MuteUserParameters(userIdOrUsernameOrUserOrParameters);
     }
 
     let twitterResult = await this._usersRequester.muteUserAsync(parameters); // .ConfigureAwait(false);
@@ -737,29 +738,28 @@ export class UsersClient implements IUsersClient {
 
   private static isIGetProfileImageParameters(urlOrUserOrUserDTOOrParameters: string | IUser | IUserDTO | IGetProfileImageParameters):
     urlOrUserOrUserDTOOrParameters is IGetProfileImageParameters {
-    return (urlOrUserOrUserDTOOrParameters as IGetProfileImageParameters).ImageUrl !== undefined;
+    return (urlOrUserOrUserDTOOrParameters as IGetProfileImageParameters).imageUrl !== undefined;
   }
 
-  private static isArrayFromNumber(userIdsOrUsernamesOrUsersOrParameters: | Array<number> | Array<string> | Array<IUserIdentifier> | IGetUsersParameters):
+  private static isArrayFromNumber(userIdsOrUsernamesOrUsersOrParameters: any):
     userIdsOrUsernamesOrUsersOrParameters is Array<number> {
     return Type.isNumber((userIdsOrUsernamesOrUsersOrParameters as Array<number>)[0]);
   }
 
-  private static isArrayFromString(userIdsOrUsernamesOrUsersOrParameters: | Array<number> | Array<string> | Array<IUserIdentifier> | IGetUsersParameters):
+  private static isArrayFromString(userIdsOrUsernamesOrUsersOrParameters: any):
     userIdsOrUsernamesOrUsersOrParameters is Array<string> {
     return Type.isString((userIdsOrUsernamesOrUsersOrParameters as Array<string>)[0]);
   }
 
-  private static isArrayFromUserIdentifier(userIdsOrUsernamesOrUsersOrParameters: | Array<number> | Array<string> | Array<IUserIdentifier> | IGetUsersParameters):
+  private static isArrayFromUserIdentifier(userIdsOrUsernamesOrUsersOrParameters: any):
     userIdsOrUsernamesOrUsersOrParameters is Array<IUserIdentifier> {
     return (userIdsOrUsernamesOrUsersOrParameters as Array<IUserIdentifier>)[0].id !== undefined;
   }
 
-  private static isArrayFromUsers(userIdsOrUsernamesOrUsersOrParameters: | Array<number> | Array<string> | Array<IUserIdentifier> | IGetUsersParameters):
+  private static isArrayFromUsers(userIdsOrUsernamesOrUsersOrParameters: any):
     userIdsOrUsernamesOrUsersOrParameters is Array<IUser> {
     return (userIdsOrUsernamesOrUsersOrParameters as Array<IUser>)[0].id !== undefined;
   }
-
 }
 
 // 748

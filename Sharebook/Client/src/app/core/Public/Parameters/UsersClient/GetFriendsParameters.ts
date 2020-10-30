@@ -1,7 +1,7 @@
 ﻿import {GetFriendIdsParameters, IGetFriendIdsParameters} from "./GetFriendIdsParameters";
 import {IGetUsersOptionalParameters} from "../Optionals/GetUsersOptionalParameters";
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {UserIdentifier} from "../../Models/UserIdentifier";
 import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
 
@@ -29,7 +29,7 @@ export class GetFriendsParameters extends GetFriendIdsParameters implements IGet
 
       super(userCurrent);
 
-      this.GetUsersPageSize = TwitterLimits.DEFAULTS.USERS_GET_USERS_MAX_SIZE;
+      this.GetUsersPageSize = SharebookLimits.DEFAULTS.USERS_GET_USERS_MAX_SIZE;
       this.User = userCurrent;
     }
   }

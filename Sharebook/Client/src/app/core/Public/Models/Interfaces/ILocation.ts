@@ -1,6 +1,7 @@
-﻿import {ICoordinates} from "./ICoordinates";
-import {Inject, InjectionToken} from "@angular/core";
-import { Location } from '../../../Public/Models/Location';
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ICoordinates} from "./ICoordinates";
+import { Location } from '../Location';
 import {Coordinates} from "../Coordinates";
 
 // A rectangle box area defined by two coordinates.

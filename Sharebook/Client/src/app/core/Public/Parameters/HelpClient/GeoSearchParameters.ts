@@ -55,6 +55,7 @@ export interface IGeoSearchParameters extends ICustomRequestParameters {
 export class GeoSearchParameters extends CustomRequestParameters implements IGeoSearchParameters {
   constructor() {
     super();
+
     this.attributes = new Dictionary<string, string>();
   }
 

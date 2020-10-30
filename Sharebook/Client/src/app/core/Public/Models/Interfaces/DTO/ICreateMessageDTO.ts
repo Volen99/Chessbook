@@ -1,5 +1,6 @@
-﻿import {IMessageEventDTO} from "./Events/IMessageEventDTO";
-import {InjectionToken} from "@angular/core";
+﻿import {InjectionToken} from "@angular/core";
+
+import {IMessageEventDTO} from "./Events/IMessageEventDTO";
 import {CreateMessageDTO} from "../../../../Core/DTO/CreateMessageDTO";
 
 // DTO for both the request and response when creating a message

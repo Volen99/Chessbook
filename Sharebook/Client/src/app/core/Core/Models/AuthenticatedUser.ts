@@ -1,4 +1,6 @@
-﻿import {IUserIdentifier} from "../../Public/Models/Interfaces/IUserIdentifier";
+﻿import {Injectable} from "@angular/core";
+
+import {IUserIdentifier} from "../../Public/Models/Interfaces/IUserIdentifier";
 import InvalidOperationException from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/InvalidOperationException";
 import {ITwitterListIdentifier} from "../../Public/Models/Interfaces/ITwitterListIdentifier";
 import {IUserDTO} from "../../Public/Models/Interfaces/DTO/IUserDTO";
@@ -23,6 +25,7 @@ import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/T
 
 // A token user is unique to a Token and provides action that will be executed from the connected user
 // and that are not available from another user like (read my messages)
+@Injectable()
 export class AuthenticatedUser extends User implements IAuthenticatedUser {
   constructor(userDTO: IUserDTO, client: ITwitterClient) {
     super(userDTO, client);
@@ -69,8 +72,7 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
 
 
   // Follow
-
-  public followUserAsync(userIdOrUsernameOrUser: | number | string | IUserIdentifier): Promise<IUser> /*<void>*/ {
+  public followUserAsync(userIdOrUsernameOrUser: | number | string | IUserIdentifier): Promise<any> {
     let typeCurrent;
     if (Type.isNumber(userIdOrUsernameOrUser)) {
       typeCurrent = userIdOrUsernameOrUser as number;
@@ -83,7 +85,7 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
     return super.client.users.followUserAsync(typeCurrent);
   }
 
-  public unfollowUserAsync(userIdOrUsernameOrUser: number | string | IUserIdentifier): Promise<IUser> {
+  public unfollowUserAsync(userIdOrUsernameOrUser: number | string | IUserIdentifier): Promise<any> {
     let typeCurrent;
     if (Type.isNumber(userIdOrUsernameOrUser)) {
       typeCurrent = userIdOrUsernameOrUser as number;
@@ -102,7 +104,7 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
 
   // Block
 
-  public blockUserAsync(userIdOrUsernameOrUser?: number | string | IUserIdentifier): Promise<IUser> {
+  public blockUserAsync(userIdOrUsernameOrUser?: number | string | IUserIdentifier): Promise<any> {
     if (!userIdOrUsernameOrUser) {
       throw new InvalidOperationException("You cannot block yourself... 🤣🤣🤣");
     }
@@ -121,7 +123,7 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
 
   // Unblock
 
-  public unblockUserAsync(userIdOrUsernameOrUser?: number | string | IUserIdentifier): Promise<IUser> {
+  public unblockUserAsync(userIdOrUsernameOrUser?: number | string | IUserIdentifier): Promise<any> {
     if (!userIdOrUsernameOrUser) {
       throw new InvalidOperationException("You cannot unblock yourself... 🤑🤑🤑");
     }
@@ -148,8 +150,7 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
   }
 
   // Spam
-
-  public reportUserForSpamAsync(userIdOrUsernameOrUser?: number | string | IUserIdentifier): Promise<IUser> {
+  public /*override*/ reportUserForSpamAsync(userIdOrUsernameOrUser?: number | string | IUserIdentifier): Promise<any> {
     if (!userIdOrUsernameOrUser) {
       throw new InvalidOperationException("You cannot report yourself for spam... 🥵🤬😡");
     }
@@ -214,7 +215,7 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
       typeCurrent = listOrList as ITwitterListIdentifier;
     }
 
-    return super.client.lists.unsubscribeFromListAsync(listOrList);
+    return super.client.lists.unsubscribeFromListAsync(typeCurrent);
   }
 
   // Mute
@@ -226,7 +227,7 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
     return super.client.users.getMutedUsersAsync();
   }
 
-  public muteUserAsync(userIdOrUsernameOrUser: number | string | IUserIdentifier): Promise<IUser> {
+  public muteUserAsync(userIdOrUsernameOrUser: number | string | IUserIdentifier): Promise<any> {
     let typeCurrent;
     if (Type.isNumber(userIdOrUsernameOrUser)) {
       typeCurrent = userIdOrUsernameOrUser as number;
@@ -239,7 +240,7 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
     return super.client.users.muteUserAsync(typeCurrent);
   }
 
-  public unmuteUserAsync(userIdOrUsernameOrUser: number | string | IUserIdentifier): Promise<IUser> {
+  public unmuteUserAsync(userIdOrUsernameOrUser: number | string | IUserIdentifier): Promise<any> {
     let typeCurrent;
     if (Type.isNumber(userIdOrUsernameOrUser)) {
       typeCurrent = userIdOrUsernameOrUser as number;
@@ -249,6 +250,6 @@ export class AuthenticatedUser extends User implements IAuthenticatedUser {
       typeCurrent = userIdOrUsernameOrUser as IUserIdentifier;
     }
 
-    return super.client.users.unmuteUserAsync(user);
+    return super.client.users.unmuteUserAsync(typeCurrent);
   }
 }

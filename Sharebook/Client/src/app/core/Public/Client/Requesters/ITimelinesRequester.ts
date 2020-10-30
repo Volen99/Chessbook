@@ -9,9 +9,7 @@ import {IGetRetweetsOfMeTimelineParameters} from "../../Parameters/TimelineClien
 import {IGetMentionsTimelineParameters} from "../../Parameters/TimelineClient/GetMentionsTimelineParameters";
 import {TimelinesRequester} from "../../../../sharebook/Client/Requesters/TimelinesRequester";
 import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
-import {
-  TimelineClientRequiredParametersValidator
-} from "../../../Core/Client/Validators/TimelineClientRequiredParametersValidator";
+import {TimelineClientRequiredParametersValidator} from "../../../Core/Client/Validators/TimelineClientRequiredParametersValidator";
 import {TimelineController} from "../../../../controllers/Timeline/TimelineController";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
 

@@ -10,7 +10,7 @@ import {WebExceptionInfoExtractor} from "../../../logic/Exceptions/WebExceptionI
 
 export interface ITwitterExceptionFactory {
   create(exceptionInfosOrTwitterResponseOrWebException: ITwitterExceptionInfo[] | ITwitterResponse | WebException,
-         urlOrRequest: string | ITwitterRequest, statusCode: number): TwitterException;
+         urlOrRequest: string | ITwitterRequest, statusCode: number): SharebookException;
 }
 
 export const ITwitterExceptionFactoryToken = new InjectionToken<ITwitterExceptionFactory>('ITwitterExceptionFactory', {
@@ -27,16 +27,16 @@ export class TwitterExceptionFactory implements ITwitterExceptionFactory {
   }
 
   create(exceptionInfosOrTwitterResponseOrWebException: ITwitterExceptionInfo[] | ITwitterResponse | WebException,
-         urlOrRequest: string | ITwitterRequest, statusCode: number): TwitterException {
+         urlOrRequest: string | ITwitterRequest, statusCode: number): SharebookException {
     if (this.isExceptionInfos(exceptionInfosOrTwitterResponseOrWebException)) {
-      return new TwitterException(exceptionInfosOrTwitterResponseOrWebException, urlOrRequest);
+      return new SharebookException(exceptionInfosOrTwitterResponseOrWebException, urlOrRequest);
     } else if (this.isITwitterResponse(exceptionInfosOrTwitterResponseOrWebException)) {
-      return new TwitterException(this._webExceptionInfoExtractor, exceptionInfosOrTwitterResponseOrWebException, urlOrRequest as ITwitterRequest);
+      return new SharebookException(this._webExceptionInfoExtractor, exceptionInfosOrTwitterResponseOrWebException, urlOrRequest as ITwitterRequest);
     } else if (this.isWebException(exceptionInfosOrTwitterResponseOrWebException)) {
       if (statusCode) {
-        return new TwitterException(this._webExceptionInfoExtractor, exceptionInfosOrTwitterResponseOrWebException, urlOrRequest as ITwitterRequest, statusCode);
+        return new SharebookException(this._webExceptionInfoExtractor, exceptionInfosOrTwitterResponseOrWebException, urlOrRequest as ITwitterRequest, statusCode);
       }
-      return new TwitterException(this._webExceptionInfoExtractor, exceptionInfosOrTwitterResponseOrWebException, urlOrRequest as ITwitterRequest);
+      return new SharebookException(this._webExceptionInfoExtractor, exceptionInfosOrTwitterResponseOrWebException, urlOrRequest as ITwitterRequest);
     }
   }
 
@@ -57,15 +57,15 @@ export class TwitterExceptionFactory implements ITwitterExceptionFactory {
 }
 
 // Exception raised by the Twitter API.
-export class TwitterException extends WebException implements ITwitterException {
+export class SharebookException extends WebException implements ITwitterException {
   public webException: WebException;
   public URL: string;
   public statusCode: number;
   public twitterDescription: string;
-  public creationDate: DateTimeOffset;
+  public creationDate: DateTime; // DateTimeOffset;
   public twitterExceptionInfos: ITwitterExceptionInfo[];
   public twitterQuery: ITwitterQuery;
-  public Request: ITwitterRequest;
+  public request: ITwitterRequest;
 
 
   constructor(
@@ -115,7 +115,7 @@ export class TwitterException extends WebException implements ITwitterException 
   }
 
   private init(request: ITwitterRequest): void {
-    this.Request = request;
+    this.request = request;
     this.creationDate = DateTime.now;
     this.URL = request.query.url;
     this.twitterQuery = request.query;

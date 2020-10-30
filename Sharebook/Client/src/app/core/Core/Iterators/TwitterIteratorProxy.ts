@@ -26,11 +26,11 @@ export class TwitterIteratorProxy<TInput, TOutput, TCursor = any> implements ITw
 
   public async nextPageAsync(): Promise<ITwitterIteratorPage<TOutput, TCursor>> {
     let page = await this._source.nextPageAsync(); // .ConfigureAwait(false);
-    let items = this._transform(page.result.Content);
+    let items = this._transform(page.content);
 
-    this.nextCursor = page.result.NextCursor;
-    this.completed = page.result.IsLastPage;
+    this.nextCursor = page.nextCursor;
+    this.completed = page.isLastPage;
 
-    return new TwitterIteratorPage<TOutput[], TOutput, TCursor>(items, NextCursor, Completed);
+    return new TwitterIteratorPage<TOutput[], TOutput, TCursor>(items, this.nextCursor, this.completed);
   }
 }

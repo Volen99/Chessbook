@@ -43,9 +43,9 @@ declare global {
 
     isMatchingJsonFormat(json: string): boolean;
 
-    estimateTweetLength(tweet: string, willBePublishedWithMedia: boolean): number;
-
     tweetParts(tweetText: string): ITweetTextParts;
+
+    UTF32Length(this: string): number;
   }
 }
 
@@ -151,7 +151,14 @@ String.prototype.tweetParts = (tweetText: string): ITweetTextParts => {
   return new TweetTextParts(tweetText);
 };
 
+// Get the UTF32 length of a string
+String.prototype.UTF32Length = function(this: string): number {
+  if (this == null) {
+    return 0;
+  }
 
+  return this.length;       // new StringInfo(str).LengthInTextElements;
+};
 
 
 export {};

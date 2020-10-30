@@ -1,5 +1,6 @@
-﻿import {IObjectEntities} from "./IObjectEntities";
-import {InjectionToken} from "@angular/core";
+﻿import {InjectionToken} from "@angular/core";
+
+import {IObjectEntities} from "./IObjectEntities";
 import {TweetEntitiesDTO} from "../../../Core/DTO/TweetEntitiesDTO";
 
 // Entities are special elements that can be given to an ITweet

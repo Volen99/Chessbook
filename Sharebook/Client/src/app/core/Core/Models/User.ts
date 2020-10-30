@@ -288,16 +288,16 @@ export class User implements IUser {
   }
 
   // Block User
-  public blockUserAsync(): Promise<IUser> {
+  public blockUserAsync(): Promise<any> {
     return this.client.users.blockUserAsync(this);
   }
 
-  public unblockUserAsync(): Promise<IUser> {
+  public unblockUserAsync(): Promise<any> {
     return this.client.users.unblockUserAsync(this);
   }
 
   // Spam
-  public reportUserForSpamAsync(): Promise<IUser> {
+  public reportUserForSpamAsync(): Promise<any> {
     return this.client.users.reportUserForSpamAsync(this);
   }
 
@@ -311,10 +311,10 @@ export class User implements IUser {
       imageSizeCurrent = imageSize;
     }
 
-    let result = this.client.users.getProfileImageStreamAsync(new GetProfileImageParameters(this));
-    result.ImageSize = imageSizeCurrent;
+    let parameters = new GetProfileImageParameters(this);  // TODO: might bug
+    parameters.imageSize = imageSizeCurrent;
 
-    return result;
+    return this.client.users.getProfileImageStreamAsync(parameters);
   }
 
   public equals(other: IUser): boolean {

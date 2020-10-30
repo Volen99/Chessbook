@@ -39,7 +39,7 @@ export class AccountSettingsClient implements IAccountSettingsClient {
     return this._client.parametersValidator;
   }
 
-  public async getAccountSettingsAsync(parameters: IGetAccountSettingsParameters): Promise<IAccountSettings> {
+  public async getAccountSettingsAsync(parameters?: IGetAccountSettingsParameters): Promise<IAccountSettings> {
     let parametersCurrent: IGetAccountSettingsParameters;
     if (!parameters) {
       parametersCurrent = new GetAccountSettingsParameters();
@@ -73,7 +73,7 @@ export class AccountSettingsClient implements IAccountSettingsClient {
     return this._client.factories.createUser(twitterResult?.model);
   }
 
-  public updateProfileBannerAsync(binaryOrParameters: number[] | IUpdateProfileBannerParameters): Promise<void> {
+  public updateProfileBannerAsync(binaryOrParameters: number[] | IUpdateProfileBannerParameters): Promise<any> {
     let parameters: IUpdateProfileBannerParameters;
     if (this.isIUpdateProfileBannerParameters(binaryOrParameters)) {
       parameters = binaryOrParameters;
@@ -84,7 +84,7 @@ export class AccountSettingsClient implements IAccountSettingsClient {
     return this._accountRequester.updateProfileBannerAsync(parameters);
   }
 
-  public removeProfileBannerAsync(parameters?: IRemoveProfileBannerParameters): Promise<void> {
+  public removeProfileBannerAsync(parameters?: IRemoveProfileBannerParameters): Promise<any> {
     let parametersCurrent: IRemoveProfileBannerParameters;
     if (!parameters) {
       parametersCurrent = new RemoveProfileBannerParameters();

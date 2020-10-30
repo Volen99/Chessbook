@@ -1,9 +1,10 @@
-﻿import {IListParameters} from "./TwitterListParameters";
+﻿import {Inject, Injectable, InjectionToken} from "@angular/core";
+
+import {IListParameters} from "./TwitterListParameters";
 import {ITimelineRequestParameters, TimelineRequestParameters} from "../TimelineRequestParameters";
 import {ITwitterListIdentifier, ITwitterListIdentifierToken} from "../../Models/Interfaces/ITwitterListIdentifier";
-import {TwitterLimits} from "../../Settings/TwitterLimits";
+import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {TwitterListIdentifier} from '../../Models/TwitterListIdentifier';
-import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 // For more information visit: https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-statuses
 export interface IGetTweetsFromListParameters extends IListParameters, ITimelineRequestParameters {
@@ -28,7 +29,7 @@ export class GetTweetsFromListParameters extends TimelineRequestParameters imple
     } else {
       super();
 
-      super.pageSize = TwitterLimits.DEFAULTS.LISTS_GET_TWEETS_MAX_PAGE_SIZE;
+      super.pageSize = SharebookLimits.DEFAULTS.LISTS_GET_TWEETS_MAX_PAGE_SIZE;
 
       if (typeof listIdOrListOrSource === 'number') {
         this.list = new TwitterListIdentifier(listIdOrListOrSource);

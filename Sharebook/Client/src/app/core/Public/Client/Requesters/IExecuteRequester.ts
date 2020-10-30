@@ -1,13 +1,12 @@
+import {Inject, InjectionToken} from "@angular/core";
+
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {ITwitterRequest} from "../../Models/Interfaces/ITwitterRequest";
 import {ITwitterQuery} from "../../Models/Interfaces/ITwitterQuery";
-import {IBaseCursorQueryDTO} from "../../Models/Interfaces/DTO/QueryDTO/IBaseCursorQueryDTO";
-import {Inject, InjectionToken} from "@angular/core";
 import {ExecuteRequester} from "../../../../sharebook/Client/Requesters/ExecuteRequester";
-import {ITwitterClient} from "../../ITwitterClient";
-import {ITwitterClientEvents, TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
-import {ITwitterAccessor} from "../../../Core/Web/ITwitterAccessor";
+import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {TwitterAccessor} from "../../../../Tweetinvi.Credentials/TwitterAccessor";
 
 export interface IExecuteRequester {
   // Execute a custom request

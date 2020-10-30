@@ -2,7 +2,7 @@
 import Dictionary from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
 import IEnumerable from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable";
 import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {TwitterException} from "../Exceptions/TwitterException";
+import {SharebookException} from "../Exceptions/SharebookException";
 import {QueryExecutionEventArgs} from "./QueryExecutionEventArgs";
 
 // Event raised to inform that a request completed its execution
@@ -30,5 +30,5 @@ export class AfterExecutingQueryEventArgs extends QueryExecutionEventArgs {
   }
 
   // Exception Raised by Twitter
-  public Exception: TwitterException;
+  public Exception: SharebookException;
 }

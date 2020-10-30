@@ -1,7 +1,7 @@
-﻿import {IMediaEntity} from "../../Entities/IMediaEntity";
+﻿import {InjectionToken} from "@angular/core";
+
+import {IMediaEntity} from "../../Entities/IMediaEntity";
 import {AttachmentType} from "../../Enum/AttachmentType";
-import {ITweetIdentifier} from "../ITweetIdentifier";
-import {InjectionToken} from "@angular/core";
 import {AttachmentDTO} from "../../../../Core/DTO/AttachmentDTO";
 
 export interface IAttachmentDTO {

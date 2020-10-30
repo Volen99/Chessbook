@@ -1,10 +1,12 @@
-﻿import {Resources} from "../../properties/resources";
+﻿import {Inject, Injectable, InjectionToken} from "@angular/core";
+
+import {Resources} from "../../properties/resources";
 import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {IPublishMessageParameters} from "../../core/Public/Parameters/MessageClient/PublishMessageParameters";
 import {IDeleteMessageParameters} from "../../core/Public/Parameters/MessageClient/DestroyMessageParameters";
 import {IGetMessageParameters} from "../../core/Public/Parameters/MessageClient/GetMessageParameters";
 import {IGetMessagesParameters} from "../../core/Public/Parameters/MessageClient/GetMessagesParameters";
-import {IQueryParameterGenerator, IQueryParameterGeneratorToken} from "../Shared/QueryParameterGenerator";
+import {IQueryParameterGenerator, IQueryParameterGeneratorToken, QueryParameterGenerator} from "../Shared/QueryParameterGenerator";
 import {ICreateMessageDTO} from "../../core/Public/Models/Interfaces/DTO/ICreateMessageDTO";
 import {CreateMessageDTO} from "../../core/Core/DTO/CreateMessageDTO";
 import {MessageEventDTO} from "../../core/Core/DTO/Events/MessageEventDTO";
@@ -19,7 +21,6 @@ import {AttachmentType} from "../../core/Public/Models/Enum/AttachmentType";
 import {MediaEntity} from "../../core/Core/Models/TwitterEntities/MediaEntity";
 import {QuickReplyDTO} from "../../core/Core/DTO/QuickReplyDTO";
 import {QuickReplyType} from "../../core/Public/Models/Enum/QuickReplyType";
-import {Inject, Injectable} from "@angular/core";
 
 export class RequestWithPayload {
   public url: string;
@@ -35,6 +36,11 @@ export interface IMessageQueryGenerator {
 
   getMessagesQuery(parameters: IGetMessagesParameters): string;
 }
+
+export const IMessageQueryGeneratorToken = new InjectionToken<IMessageQueryGenerator>('IMessageQueryGenerator', {
+  providedIn: 'root',
+  factory: () => new MessageQueryGenerator(Inject(JsonContentFactory), Inject(QueryParameterGenerator));
+});
 
 @Injectable()
 export class MessageQueryGenerator implements IMessageQueryGenerator {

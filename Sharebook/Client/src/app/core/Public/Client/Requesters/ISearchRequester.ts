@@ -14,10 +14,9 @@ import {IListSavedSearchesParameters} from "../../Parameters/Search/ListSavedSea
 import {IDestroySavedSearchParameters} from "../../Parameters/Search/DestroySavedSearchParameters";
 import {SearchRequester} from "../../../../sharebook/Client/Requesters/SearchRequester";
 import {SearchController} from "../../../../controllers/Search/SearchController";
-import {
-  SearchClientRequiredParametersValidator
-} from "../../../Core/Client/Validators/SearchClientRequiredParametersValidator";
+import {SearchClientRequiredParametersValidator} from "../../../Core/Client/Validators/SearchClientRequiredParametersValidator";
 import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
 
 export interface ISearchRequester {
   /// <summary>

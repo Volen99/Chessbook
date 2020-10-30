@@ -1,4 +1,4 @@
-import {Injectable, InjectionToken} from "@angular/core";
+import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {ITwitterListsClientParametersValidator} from "./TwitterListsClientParametersValidator";
 import {IUserQueryValidator} from "./UserQueryValidator";
@@ -30,7 +30,7 @@ export interface ITwitterListsClientRequiredParametersValidator extends ITwitter
 
 export const ITwitterListsClientRequiredParametersValidatorToken = new InjectionToken<ITwitterListsClientRequiredParametersValidator>('ITwitterListsClientRequiredParametersValidator', {
   providedIn: 'root',
-  factory: () => new TwitterListsClientRequiredParametersValidator(),
+  factory: () => new TwitterListsClientRequiredParametersValidator(Inject(UserQueryValidator)),
 });
 
 type ThrowIfParameters = IGetListParameters

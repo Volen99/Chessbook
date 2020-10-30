@@ -14,7 +14,7 @@ export interface IAddMembersToListParameters extends IListParameters {
 
 export class AddMembersToListParameters extends TwitterListParameters implements IAddMembersToListParameters {
   // @ts-ignore // TODO: BUG! 🐜
-  constructor(listIdOrListIdentifier: number | ITwitterListIdentifier, userIdsOrUsernamesOrUsers: Array<number | string | IUserIdentifier>) {
+  constructor(listIdOrListIdentifier: number | ITwitterListIdentifier, userIdsOrUsernamesOrUsers: Iterable<number | string | IUserIdentifier>) {
     let list: ITwitterListIdentifier;
     if (Type.isNumber(listIdOrListIdentifier)) {
       list = new TwitterListIdentifier(listIdOrListIdentifier);
@@ -29,9 +29,9 @@ export class AddMembersToListParameters extends TwitterListParameters implements
       users = userIdsOrUsernamesOrUsers;
     } else {
       if (typeof userIdsOrUsernamesOrUsers[0] === 'string') {
-        users = userIdsOrUsernamesOrUsers.map(x => new UserIdentifier(x as string));
+        users = [...userIdsOrUsernamesOrUsers].map(x => new UserIdentifier(x as string));
       } else {
-        users = userIdsOrUsernamesOrUsers.map(x => new UserIdentifier(x as number));
+        users = [...userIdsOrUsernamesOrUsers].map(x => new UserIdentifier(x as number));
       }
     }
 
@@ -41,7 +41,7 @@ export class AddMembersToListParameters extends TwitterListParameters implements
 
   public users: Array<IUserIdentifier> = new Array<IUserIdentifier>();
 
-  private static isArrayFromIUserIdentifier(userIdsOrUsernamesOrUsers: Array<number | string | IUserIdentifier>):
+  private static isArrayFromIUserIdentifier(userIdsOrUsernamesOrUsers: Iterable<number | string | IUserIdentifier>):
     userIdsOrUsernamesOrUsers is Array<IUserIdentifier> {
     return (userIdsOrUsernamesOrUsers as Array<IUserIdentifier>)[0].screenName !== undefined;
   }

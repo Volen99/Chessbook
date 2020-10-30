@@ -1,4 +1,6 @@
-﻿import {ITwitterAccessor} from "../../core/Core/Web/ITwitterAccessor";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterAccessor, ITwitterAccessorToken} from "../../core/Core/Web/ITwitterAccessor";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
 import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMode";
@@ -8,8 +10,7 @@ import {IGetUserTimelineParameters} from "../../core/Public/Parameters/TimelineC
 import {IGetMentionsTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetMentionsTimelineParameters";
 import {IGetRetweetsOfMeTimelineParameters} from "../../core/Public/Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
 import {ITweetDTO} from "../../core/Public/Models/Interfaces/DTO/ITweetDTO";
-import {ITimelineQueryGenerator} from "./TimelineQueryGenerator";
-import {InjectionToken} from "@angular/core";
+import {ITimelineQueryGenerator, ITimelineQueryGeneratorToken} from "./TimelineQueryGenerator";
 
 export interface ITimelineQueryExecutor {
   // Home Timeline
@@ -27,14 +28,15 @@ export interface ITimelineQueryExecutor {
 
 export const ITimelineQueryExecutorToken = new InjectionToken<ITimelineQueryExecutor>('ITimelineQueryExecutor', {
   providedIn: 'root',
-  factory: () => new TimelineQueryExecutor(),
+  factory: () => new TimelineQueryExecutor(Inject(ITwitterAccessorToken), Inject(ITimelineQueryGeneratorToken)),
 });
 
 export class TimelineQueryExecutor implements ITimelineQueryExecutor {
   private readonly _twitterAccessor: ITwitterAccessor;
   private readonly _timelineQueryGenerator: ITimelineQueryGenerator;
 
-  constructor(twitterAccessor: ITwitterAccessor, timelineQueryGenerator: ITimelineQueryGenerator) {
+  constructor(@Inject(ITwitterAccessorToken) twitterAccessor: ITwitterAccessor,
+              @Inject(ITimelineQueryGeneratorToken) timelineQueryGenerator: ITimelineQueryGenerator) {
     this._twitterAccessor = twitterAccessor;
     this._timelineQueryGenerator = timelineQueryGenerator;
   }
@@ -44,6 +46,7 @@ export class TimelineQueryExecutor implements ITimelineQueryExecutor {
     let query = this._timelineQueryGenerator.getHomeTimelineQuery(parameters, new ComputedTweetMode(parameters, request));
     request.query.url = query;
     request.query.httpMethod = HttpMethod.GET;
+
     return this._twitterAccessor.executeRequestAsync<ITweetDTO[]>(request);
   }
 
@@ -51,6 +54,7 @@ export class TimelineQueryExecutor implements ITimelineQueryExecutor {
     let query = this._timelineQueryGenerator.getUserTimelineQuery(parameters, new ComputedTweetMode(parameters, request));
     request.query.url = query;
     request.query.httpMethod = HttpMethod.GET;
+
     return this._twitterAccessor.executeRequestAsync<ITweetDTO[]>(request);
   }
 
@@ -59,6 +63,7 @@ export class TimelineQueryExecutor implements ITimelineQueryExecutor {
     let query = this._timelineQueryGenerator.getMentionsTimelineQuery(parameters, new ComputedTweetMode(parameters, request));
     request.query.url = query;
     request.query.httpMethod = HttpMethod.GET;
+
     return this._twitterAccessor.executeRequestAsync<ITweetDTO[]>(request);
   }
 
@@ -67,6 +72,7 @@ export class TimelineQueryExecutor implements ITimelineQueryExecutor {
     let query = this._timelineQueryGenerator.getRetweetsOfMeTimelineQuery(parameters, new ComputedTweetMode(parameters, request));
     request.query.url = query;
     request.query.httpMethod = HttpMethod.GET;
+
     return this._twitterAccessor.executeRequestAsync<ITweetDTO[]>(request);
   }
 }

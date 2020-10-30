@@ -1,4 +1,4 @@
-﻿import {ITweetinviSettings, TweetinviSettings} from "../../Public/Settings/TweetinviSettings";
+﻿import {ITweetinviSettings, SharebookSettings} from "../../Public/Settings/SharebookSettings";
 import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import InvalidOperationException from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/InvalidOperationException";
 import {ITwitterClientEvents} from "../Events/TweetinviGlobalEvents";
@@ -9,7 +9,7 @@ export interface ITwitterExecutionContext extends ITweetinviSettings {
   events: ITwitterClientEvents;
 }
 
-export class TwitterExecutionContext extends TweetinviSettings implements ITwitterExecutionContext {
+export class TwitterExecutionContext extends SharebookSettings implements ITwitterExecutionContext {
   constructor(context?: ITwitterExecutionContext) {
     if (!context) {
       super();

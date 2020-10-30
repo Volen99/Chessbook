@@ -5,13 +5,13 @@ import StringBuilder from "../../../c#-objects/TypeScript.NET-Core/packages/Core
 import {UserQueryParameterGenerator} from "../../../controllers/User/UserQueryParameterGenerator";
 
 export interface IUserQueryParameterGenerator {
-  generateIdOrScreenNameParameter(user: IUserIdentifier, idParameterName, screenNameParameterName): string;
+  generateIdOrScreenNameParameter(user: IUserIdentifier, idParameterName?: string, screenNameParameterName?: string): string;
 
-  generateListOfUserIdentifiersParameter(usersIdentifiers: Array<IUserIdentifier>): string;
+  generateListOfUserIdentifiersParameter(usersIdentifiers: Iterable<IUserIdentifier>): string;
 
   appendUser(query: StringBuilder, user: IUserIdentifier): void;
 
-  appendUsers(query: StringBuilder, users: Array<IUserIdentifier>): void;
+  appendUsers(query: StringBuilder, users: Iterable<IUserIdentifier>): void;
 }
 
 export const IUserQueryParameterGeneratorToken = new InjectionToken<IUserQueryParameterGenerator>('IUserQueryParameterGenerator', {

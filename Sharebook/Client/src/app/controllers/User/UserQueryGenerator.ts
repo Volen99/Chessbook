@@ -113,7 +113,7 @@ export class UserQueryGenerator implements IUserQueryGenerator {
 
   // Download Profile Image
   public downloadProfileImageURL(parameters: IGetProfileImageParameters): string {
-    let query = new StringBuilder(parameters.ImageUrl.replace("_normal", `_${parameters.ImageSize.toString().toLocaleLowerCase()}`));
+    let query = new StringBuilder(parameters.imageUrl.replace("_normal", `_${parameters.imageSize.toString().toLocaleLowerCase()}`));
     query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
     return query.toString();
   }

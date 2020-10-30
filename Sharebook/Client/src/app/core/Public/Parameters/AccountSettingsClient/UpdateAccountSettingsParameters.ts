@@ -1,5 +1,4 @@
 ﻿import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
-import {TimeZone} from 'src/app/core/Core/Models/Properties/TimeZone';
 import {Language} from "../../Models/Enum/Language";
 
 // For more description visit: https://dev.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/post-account-settings

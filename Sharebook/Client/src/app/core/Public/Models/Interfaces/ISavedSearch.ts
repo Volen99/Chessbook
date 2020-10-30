@@ -1,6 +1,7 @@
-﻿import {ISavedSearchDTO} from "./DTO/ISavedSearchDTO";
+﻿import {Inject, InjectionToken} from "@angular/core";
+
+import {ISavedSearchDTO} from "./DTO/ISavedSearchDTO";
 import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {Inject, InjectionToken} from "@angular/core";
 import {SavedSearch} from "../../../Core/Models/SavedSearch";
 import {SavedSearchDTO} from "../../../Core/DTO/SavedSearchDTO";
 

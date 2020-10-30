@@ -1,4 +1,6 @@
-﻿import {ITrendsController} from "../../core/Core/Controllers/ITrendsController";
+﻿import {Inject, Injectable} from "@angular/core";
+
+import {ITrendsController} from "../../core/Core/Controllers/ITrendsController";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
 import {ITrendsQueryExecutor, ITrendsQueryExecutorToken} from "./TrendsQueryExecutor";
@@ -7,7 +9,6 @@ import {IGetTrendsLocationParameters} from "../../core/Public/Parameters/TrendsC
 import {IGetTrendsLocationCloseToParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsLocationCloseToParameters";
 import {IGetTrendsAtResult} from "../../core/Public/Models/Interfaces/IGetTrendsAtResult";
 import {ITrendLocation} from "../../core/Public/Models/Interfaces/ITrendLocation";
-import {Inject, Injectable} from "@angular/core";
 
 @Injectable()
 export class TrendsController implements ITrendsController {

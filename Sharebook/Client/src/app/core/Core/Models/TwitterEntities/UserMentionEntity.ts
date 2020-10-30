@@ -27,13 +27,13 @@ export class UserMentionEntity implements IUserMentionEntity {
     }
 
     if (this.indices == null || other.indices == null) {
-      return this.equals(Indices, other.indices);
+      return this.indices === other.indices;      // this.Equals(this.indices, other.indices);
     }
 
-    return this.indices.ContainsSameObjectsAs(other.indices, true);
+    return this.indices.containsSameObjectsAs(other.indices, true);
   }
 
-  public ToString(): string {
+  public toString(): string {
     return `@${(this.screenName)}`;
   }
 }

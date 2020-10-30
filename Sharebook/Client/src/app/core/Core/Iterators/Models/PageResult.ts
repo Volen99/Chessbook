@@ -1,6 +1,6 @@
 import IEnumerator from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerator';
 
-export interface IPageResult<TItem> extends Array<TItem> {
+export interface IPageResult<TItem> extends Iterable<TItem> {  // IEnumerable<TItem>
   // Items returned during for a specific cursor iteration
   items: TItem[];
 
@@ -18,8 +18,13 @@ export class PageResult<TItem> implements IPageResult<TItem> {
   public items: TItem[];
   public isLastPage: boolean;
 
-  getEnumerator(): IEnumerator<TItem> {
+  [Symbol.iterator](): Iterator<TItem> {
     let items = this.items ?? new Array<TItem>(0); //  new TItem[0];
-    return (items as unknown as (Array<TItem>)).getEnumerator();
+    return (items as (Array<TItem>)).getEnumerator();
   }
+
+  // getEnumerator(): IEnumerator<TItem> {
+  //   let items = this.items ?? new Array<TItem>(0); //  new TItem[0];
+  //   return (items as unknown as (Array<TItem>)).getEnumerator();
+  // }
 }
