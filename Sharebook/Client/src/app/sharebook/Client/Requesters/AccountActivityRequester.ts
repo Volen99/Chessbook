@@ -1,3 +1,5 @@
+import {Inject, Injectable} from "@angular/core";
+
 import {BaseRequester} from "../BaseRequester";
 import {IAccountActivityRequester} from "../../../core/Public/Client/Requesters/IAccountActivityRequester";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
@@ -22,9 +24,10 @@ import {IWebhookEnvironmentSubscriptionsDTO} from "../../../core/Public/Models/I
 import {IWebhookSubscriptionsCount} from "../../../core/Public/Models/Interfaces/IWebhookSubscriptionsCount";
 import {IWebhookDTO} from "../../../core/Public/Models/Interfaces/DTO/Webhooks/IWebhookDTO";
 import {IGetAccountActivityWebhookEnvironmentsResultDTO} from "../../../core/Public/Models/Interfaces/DTO/Webhooks/IGetAccountActivityWebhookEnvironmentsResultDTO";
-import {Inject, Injectable} from "@angular/core";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AccountActivityRequester extends BaseRequester implements IAccountActivityRequester {
   private readonly _validator: IAccountActivityClientRequiredParametersValidator;
   private readonly _accountActivityController: IAccountActivityController;
@@ -41,51 +44,51 @@ export class AccountActivityRequester extends BaseRequester implements IAccountA
 
   public createAccountActivityWebhookAsync(parameters: ICreateAccountActivityWebhookParameters): Promise<ITwitterResult<IWebhookDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountActivityController.createAccountActivityWebhookAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountActivityController.createAccountActivityWebhookAsync(parameters, request));
   }
 
   public getAccountActivityWebhookEnvironmentsAsync(parameters: IGetAccountActivityWebhookEnvironmentsParameters): Promise<ITwitterResult<IGetAccountActivityWebhookEnvironmentsResultDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountActivityController.getAccountActivityWebhookEnvironmentsAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountActivityController.getAccountActivityWebhookEnvironmentsAsync(parameters, request));
   }
 
   public getAccountActivityEnvironmentWebhooksAsync(parameters: IGetAccountActivityEnvironmentWebhooksParameters): Promise<ITwitterResult<IWebhookDTO[]>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountActivityController.getAccountActivityEnvironmentWebhooksAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountActivityController.getAccountActivityEnvironmentWebhooksAsync(parameters, request));
   }
 
   public deleteAccountActivityWebhookAsync(parameters: IDeleteAccountActivityWebhookParameters): Promise<ITwitterResult> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountActivityController.deleteAccountActivityWebhookAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountActivityController.deleteAccountActivityWebhookAsync(parameters, request));
   }
 
   public triggerAccountActivityWebhookCRCAsync(parameters: ITriggerAccountActivityWebhookCRCParameters): Promise<ITwitterResult> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountActivityController.triggerAccountActivityWebhookCRCAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountActivityController.triggerAccountActivityWebhookCRCAsync(parameters, request));
   }
 
   public subscribeToAccountActivityAsync(parameters: ISubscribeToAccountActivityParameters): Promise<ITwitterResult> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountActivityController.subscribeToAccountActivityAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountActivityController.subscribeToAccountActivityAsync(parameters, request));
   }
 
   public countAccountActivitySubscriptionsAsync(parameters: ICountAccountActivitySubscriptionsParameters): Promise<ITwitterResult<IWebhookSubscriptionsCount>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountActivityController.countAccountActivitySubscriptionsAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountActivityController.countAccountActivitySubscriptionsAsync(parameters, request));
   }
 
   public isAccountSubscribedToAccountActivityAsync(parameters: IIsAccountSubscribedToAccountActivityParameters): Promise<ITwitterResult> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountActivityController.isAccountSubscribedToAccountActivityAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountActivityController.isAccountSubscribedToAccountActivityAsync(parameters, request));
   }
 
   public getAccountActivitySubscriptionsAsync(parameters: IGetAccountActivitySubscriptionsParameters): Promise<ITwitterResult<IWebhookEnvironmentSubscriptionsDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountActivityController.getAccountActivitySubscriptionsAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountActivityController.getAccountActivitySubscriptionsAsync(parameters, request));
   }
 
   public unsubscribeFromAccountActivityAsync(parameters: IUnsubscribeFromAccountActivityParameters): Promise<ITwitterResult> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountActivityController.unsubscribeFromAccountActivityAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountActivityController.unsubscribeFromAccountActivityAsync(parameters, request));
   }
 }

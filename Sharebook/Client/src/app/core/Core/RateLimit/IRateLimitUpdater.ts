@@ -1,12 +1,20 @@
-﻿import {IRateLimitCacheManager} from "./IRateLimitCacheManager";
-import Dictionary from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
+
+import {IRateLimitCacheManager} from "./IRateLimitCacheManager";
 import {IReadOnlyTwitterCredentials} from "../Models/Authentication/ReadOnlyTwitterCredentials";
 import {ITwitterCredentials} from "../../Public/Models/Authentication/TwitterCredentials";
-import {InjectionToken} from "@angular/core";
+import {RateLimitUpdater, RateLimitUpdaterFactory} from "../../../Tweetinvi.Credentials/RateLimit/RateLimitUpdater";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
 
 export interface IRateLimitUpdaterFactory {
   create(rateLimitCacheManager: IRateLimitCacheManager): IRateLimitUpdater;
 }
+
+export const IRateLimitUpdaterFactoryToken = new InjectionToken<IRateLimitUpdaterFactory>('IRateLimitUpdaterFactory', {
+  providedIn: 'root',
+  factory: () => new RateLimitUpdaterFactory(),
+});
+
 
 // Update the rate limit cached information.
 export interface IRateLimitUpdater {
@@ -20,7 +28,7 @@ export interface IRateLimitUpdater {
   clearRateLimitsForQueryAsync(query: string, credentials: IReadOnlyTwitterCredentials): Promise<void>;
 }
 
-export const ITweetIdentifierToken = new InjectionToken<IRateLimitUpdater>('IRateLimitUpdater', {
+export const IRateLimitUpdaterToken = new InjectionToken<IRateLimitUpdater>('IRateLimitUpdater', {
   providedIn: 'root',
-  factory: () => new RateLimitUpdaterFactory(),
+  factory: () => new RateLimitUpdater(inject(RateLimitUpdater)),
 });

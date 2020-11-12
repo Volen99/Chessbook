@@ -1,4 +1,4 @@
-import IDictionary from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/IDictionary";
+import IDictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/IDictionary";
 
 export interface IWebhooksRequestInfoRetriever {
   getPath(): string;

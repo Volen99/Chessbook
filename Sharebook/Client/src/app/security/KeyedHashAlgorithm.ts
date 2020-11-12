@@ -17,38 +17,38 @@ export abstract class KeyedHashAlgorithm extends HashAlgorithm
         //     }
         // }
 
-        get Key(): number[] {
-          return (byte[])_keyValue.Clone();
-        }
-
-        set Key(value: number[]) {
-          if (_state === 0)
-          {
-            _keyValue = (byte[])value.Clone();
-          }
-        }
-
-        protected override  Dispose(disposing: boolean ): void
-        {
-            if (disposing)
-            {
-                if (_keyValue != null)
-                {
-                    Array.Clear(_keyValue, 0, _keyValue.Length);
-                }
-
-                _keyValue = null;
-            }
-            base.Dispose(disposing);
-        }
-
-        public new static KeyedHashAlgorithm Create()
-        {
-            return Create("System.Security.Cryptography.KeyedHashAlgorithm");
-        }
-
-        public new static KeyedHashAlgorithm Create(algName: string)
-        {
-            return Activator.CreateInstance<KeyedHashAlgorithm>();
-        }
+        // get Key(): number[] {
+        //   return (byte[])_keyValue.Clone();
+        // }
+        //
+        // set Key(value: number[]) {
+        //   if (_state === 0)
+        //   {
+        //     _keyValue = (byte[])value.Clone();
+        //   }
+        // }
+        //
+        // protected override  Dispose(disposing: boolean ): void
+        // {
+        //     if (disposing)
+        //     {
+        //         if (_keyValue != null)
+        //         {
+        //             Array.Clear(_keyValue, 0, _keyValue.Length);
+        //         }
+        //
+        //         _keyValue = null;
+        //     }
+        //     base.Dispose(disposing);
+        // }
+        //
+        // public new static KeyedHashAlgorithm Create()
+        // {
+        //     return Create("System.Security.Cryptography.KeyedHashAlgorithm");
+        // }
+        //
+        // public new static KeyedHashAlgorithm Create(algName: string)
+        // {
+        //     return Activator.CreateInstance<KeyedHashAlgorithm>();
+        // }
     }

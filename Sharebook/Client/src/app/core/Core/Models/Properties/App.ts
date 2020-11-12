@@ -1,12 +1,14 @@
-﻿import {IApp} from "../../../Public/Models/Interfaces/IApp";
+﻿import {JsonProperty} from "json2typescript";
+
+import {IApp} from "../../../Public/Models/Interfaces/IApp";
 
 export class App implements IApp {
-  // [JsonProperty("id")]
+  @JsonProperty("id", Number)
   public id: number;
 
-  // [JsonProperty("name")]
+  @JsonProperty("name", String)
   public name: string;
 
-  // [JsonProperty("url")]
+  @JsonProperty("url", String)
   public url: string;
 }

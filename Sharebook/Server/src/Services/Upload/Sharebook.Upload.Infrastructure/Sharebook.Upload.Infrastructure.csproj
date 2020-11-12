@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sharebook.Upload.Application\WorldFeed.Upload.Application.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,8 +3,8 @@
 import {IUserIdentifier} from "../IUserIdentifier";
 import {ITweetDTO} from "./ITweetDTO";
 import {IUserEntities} from "../../Entities/IUserEntities";
-import DateTime from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {UserDTO} from "../../../../Core/DTO/UserDTO";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 export interface IUserDTO extends IUserIdentifier {
   name: string;
@@ -82,7 +82,7 @@ export interface IUserDTO extends IUserIdentifier {
   timeZone: string;
 
   // The withheld properties are not always provided in the json result
-  withheldInCountries: Iterable<string>;
+  withheldInCountries: Array<string>;
 
   withheldScope: string;
 }

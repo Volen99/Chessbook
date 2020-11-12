@@ -58,7 +58,6 @@ export class ProfileComponent implements OnInit {
     this.user = this.storageService.retrieve('userData');
 
     this.accountSettingsService.getSettings().subscribe(settings => {
-      this.settings = settings;
     });
   }
 }

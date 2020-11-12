@@ -1,5 +1,8 @@
-﻿import {IReadOnlyTwitterCredentials} from "../Models/Authentication/ReadOnlyTwitterCredentials";
-import {InjectionToken} from "@angular/core";
+﻿import {InjectionToken} from "@angular/core";
+
+import {IReadOnlyTwitterCredentials} from "../Models/Authentication/ReadOnlyTwitterCredentials";
+import {RateLimitCache} from "../../../Tweetinvi.Credentials/RateLimit/RateLimitCache";
+import {ICredentialsRateLimits} from "../../Public/Models/RateLimits/ICredentialsRateLimits";
 
 // Cache storing the RateLimits to reduce the number of access to the Twitter API rate limits.
 // Access to the rate limit cache should be done via the RateLimitCacheManager.

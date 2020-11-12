@@ -1,4 +1,4 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {ICreateListParameters} from "../../../Public/Parameters/ListsClient/CreateListParameters";
 import {IGetListParameters} from "../../../Public/Parameters/ListsClient/GetListParameters";
@@ -25,13 +25,13 @@ import {ICheckIfUserIsSubscriberOfListParameters} from "../../../Public/Paramete
 import {ITwitterClient, ITwitterClientToken} from "../../../Public/ITwitterClient";
 import {SharebookLimits} from 'src/app/core/Public/Settings/SharebookLimits';
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
-import ArgumentOutOfRangeException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentOutOfRangeException";
 import {
   ITwitterListsClientRequiredParametersValidator,
   ITwitterListsClientRequiredParametersValidatorToken, TwitterListsClientRequiredParametersValidator
 } from "./TwitterListsClientRequiredParametersValidator";
 import {TwitterListParameters} from "./parameters-types";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import ArgumentOutOfRangeException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentOutOfRangeException";
 
 export interface ITwitterListsClientParametersValidator {
   validate(parameters: ICreateListParameters): void;
@@ -83,12 +83,14 @@ export interface ITwitterListsClientParametersValidator {
 
 export const ITwitterListsClientParametersValidatorToken = new InjectionToken<ITwitterListsClientParametersValidator>('ITwitterListsClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new TwitterListsClientParametersValidator(Inject(TwitterClient), Inject(TwitterListsClientRequiredParametersValidator)),
+  factory: () => new TwitterListsClientParametersValidator(inject(ITwitterClientToken), inject(ITwitterListsClientRequiredParametersValidatorToken)),
 });
 
 type GetListsParameters = IGetListsOwnedByAccountParameters | IGetListsOwnedByUserParameters;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TwitterListsClientParametersValidator implements ITwitterListsClientParametersValidator {
   private readonly _client: ITwitterClient;
   private readonly _twitterListsClientRequiredParametersValidator: ITwitterListsClientRequiredParametersValidator;
@@ -109,78 +111,78 @@ export class TwitterListsClientParametersValidator implements ITwitterListsClien
 
       let maxNameSize = this.Limits.LISTS_CREATE_NAME_MAX_SIZE;
       if (parameters.name.length > maxNameSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.name)}`, maxNameSize, nameof(this.Limits.LISTS_CREATE_NAME_MAX_SIZE), "characters");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.name)`}`, maxNameSize, `nameof(this.Limits.LISTS_CREATE_NAME_MAX_SIZE)`, "characters");
       }
     } else if (this.isGetListsParameters(parameters)) {
       this._twitterListsClientRequiredParametersValidator.validate(parameters);
 
       let maxPageSize = this.Limits.LISTS_GET_USER_OWNED_LISTS_MAX_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.LISTS_GET_USER_OWNED_LISTS_MAX_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.LISTS_GET_USER_OWNED_LISTS_MAX_SIZE)`, "page size");
       }
     } else if (this.isIGetTweetsFromListParameters(parameters)) {
       this._twitterListsClientRequiredParametersValidator.validate(parameters);
 
       let maxPageSize = this.Limits.LISTS_GET_TWEETS_MAX_PAGE_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.LISTS_GET_TWEETS_MAX_PAGE_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.LISTS_GET_TWEETS_MAX_PAGE_SIZE)`, "page size");
       }
     } else if (this.isIAddMembersToListParameters(parameters)) {
       this._twitterListsClientRequiredParametersValidator.validate(parameters);
 
       if (parameters.users.length === 0) {
-        throw new ArgumentOutOfRangeException(`${nameof(parameters.users)}", "You must have at least 1 user`);
+        throw new ArgumentOutOfRangeException(`${`nameof(parameters.users)`}`, `You must have at least 1 user`);
       }
 
       let maxUsers = this.Limits.LISTS_ADD_MEMBERS_MAX_USERS;
       if (parameters.users.length > maxUsers) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.users)}`, maxUsers, nameof(this.Limits.LISTS_ADD_MEMBERS_MAX_USERS), "users");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.users)`}`, maxUsers, `nameof(this.Limits.LISTS_ADD_MEMBERS_MAX_USERS)`, "users");
       }
     } else if (this.isIGetUserListMembershipsParameters(parameters)) {
       this._twitterListsClientRequiredParametersValidator.validate(parameters);
 
       let maxPageSize = this.Limits.LISTS_GET_USER_MEMBERSHIPS_MAX_PAGE_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.LISTS_GET_USER_MEMBERSHIPS_MAX_PAGE_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.LISTS_GET_USER_MEMBERSHIPS_MAX_PAGE_SIZE)`, "page size");
       }
     } else if (this.isIGetMembersOfListParameters(parameters)) {
       this._twitterListsClientRequiredParametersValidator.validate(parameters);
 
       let maxPageSize = this.Limits.LISTS_GET_MEMBERS_MAX_PAGE_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.LISTS_GET_MEMBERS_MAX_PAGE_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.LISTS_GET_MEMBERS_MAX_PAGE_SIZE)`, "page size");
       }
     } else if (this.isIRemoveMembersFromListParameters(parameters)) {
       this._twitterListsClientRequiredParametersValidator.validate(parameters);
 
       if (parameters.users.length === 0) {
-        throw new ArgumentOutOfRangeException(`${nameof(parameters.users)}`, "You must have at least 1 user");
+        throw new ArgumentOutOfRangeException(`${`nameof(parameters.users)`}`, "You must have at least 1 user");
       }
 
       let maxUsers = this.Limits.LISTS_REMOVE_MEMBERS_MAX_USERS;
       if (parameters.users.length > maxUsers) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.users)}`, maxUsers, nameof(this.Limits.LISTS_REMOVE_MEMBERS_MAX_USERS), "users");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.users)`}`, maxUsers, `nameof(this.Limits.LISTS_REMOVE_MEMBERS_MAX_USERS)`, "users");
       }
     } else if (this.isIGetListSubscribersParameters(parameters)) {
       this._twitterListsClientRequiredParametersValidator.validate(parameters);
 
       let maxPageSize = this.Limits.LISTS_GET_SUBSCRIBERS_MAX_PAGE_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.LISTS_GET_SUBSCRIBERS_MAX_PAGE_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.LISTS_GET_SUBSCRIBERS_MAX_PAGE_SIZE)`, "page size");
       }
     } else if (this.isIGetAccountListSubscriptionsParameters(parameters)) {
       this._twitterListsClientRequiredParametersValidator.validate(parameters);
 
       let maxPageSize = this.Limits.LISTS_GET_USER_SUBSCRIPTIONS_MAX_PAGE_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.LISTS_GET_USER_SUBSCRIPTIONS_MAX_PAGE_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.LISTS_GET_USER_SUBSCRIPTIONS_MAX_PAGE_SIZE)`, "page size");
       }
     } else if (this.isIGetUserListSubscriptionsParameters(parameters)) {
       this._twitterListsClientRequiredParametersValidator.validate(parameters);
 
       let maxPageSize = this.Limits.LISTS_GET_USER_SUBSCRIPTIONS_MAX_PAGE_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.LISTS_GET_USER_SUBSCRIPTIONS_MAX_PAGE_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.LISTS_GET_USER_SUBSCRIPTIONS_MAX_PAGE_SIZE)`, "page size");
       }
     }
   }

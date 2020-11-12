@@ -34,7 +34,6 @@ import {IMuteUserParameters} from "../../Parameters/AccountClient/MuteUserParame
 import {IUnmuteUserParameters} from "../../Parameters/AccountClient/UnMuteUserParameters";
 import {IUserDTO} from "../../Models/Interfaces/DTO/IUserDTO";
 import {IGetProfileImageParameters} from "../../Parameters/UsersClient/GetProfileImageParameters";
-import {Stream} from "stream";
 import {IGetUsersParameters} from "../../Parameters/UsersClient/GetUsersParameters";
 import {IUserDictionary} from "../../Models/UserDictionary";
 import {IUsersClientParametersValidator} from "../../../Core/Client/Validators/UsersClientParametersValidator";
@@ -511,17 +510,17 @@ export interface IUsersClient {
 
   // #region Profile Image
 
-  getProfileImageStreamAsync(url: string): Promise<Stream>;
+  getProfileImageStreamAsync(url: string): Promise<any>;
 
-  getProfileImageStreamAsync(user: IUser): Promise<Stream>;
+  getProfileImageStreamAsync(user: IUser): Promise<any>;
 
-  getProfileImageStreamAsync(user: IUserDTO): Promise<Stream>;
+  getProfileImageStreamAsync(user: IUserDTO): Promise<any>;
 
   /// <summary>
   /// Get the profile image of a user
   /// </summary>
   /// <returns>A stream of the image file</returns>
-  getProfileImageStreamAsync(parameters: IGetProfileImageParameters): Promise<Stream>;
+  getProfileImageStreamAsync(parameters: IGetProfileImageParameters): Promise<any>;
 
   // #endregion
 }

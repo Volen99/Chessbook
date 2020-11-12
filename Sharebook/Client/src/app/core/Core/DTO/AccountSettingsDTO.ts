@@ -1,10 +1,10 @@
 ﻿import {PrivacyMode} from '../../Public/Models/Enum/PrivacyMode';
 import {ITimeZone} from "../../Public/Models/Interfaces/ITimeZone";
 import {IAccountSettingsDTO} from "../../Public/Models/Interfaces/DTO/IAccountSettingsDTO";
-import {Language} from '../../Public/Models/Enum/Language';
 import {AllowContributorRequestMode} from "../../Public/Models/Enum/AllowContributorRequestMode";
 import {AllowDirectMessagesFrom} from '../../Public/Models/Enum/AllowDirectMessagesFrom';
 import {ITrendLocation} from "../../Public/Models/Interfaces/ITrendLocation";
+import {Language} from "../Attributes/Language";
 
 export class AccountSettingsDTO implements IAccountSettingsDTO {
   // private class SleepTimeDTO

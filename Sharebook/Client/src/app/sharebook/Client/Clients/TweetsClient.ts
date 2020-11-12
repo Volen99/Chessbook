@@ -1,4 +1,6 @@
-﻿import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
+﻿import {Inject, Injectable} from "@angular/core";
+
+import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
 import {IUserIdentifier} from "../../../core/Public/Models/Interfaces/IUserIdentifier";
 import {ITweetsClient} from "../../../core/Public/Client/Clients/ITweetsClient";
 import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
@@ -32,17 +34,17 @@ import {
 } from "../../../core/Public/Parameters/TweetsClient/UnFavoriteTweetParameters";
 import {IOEmbedTweet} from "../../../core/Public/Models/Interfaces/IOEmbedTweet";
 import {GetOEmbedTweetParameters, IGetOEmbedTweetParameters} from "../../../core/Public/Parameters/TweetsClient/GetOEmbedTweetParameters";
-import {SharebookException} from "../../../core/Public/Exceptions/SharebookException";
-import {Inject, Injectable} from "@angular/core";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TweetsClient implements ITweetsClient {
   private readonly _client: ITwitterClient;
   private readonly _tweetsRequester: ITweetsRequester;
 
   constructor(@Inject(ITwitterClientToken) client: ITwitterClient) {
     this._client = client;
-    this._tweetsRequester = client.raw.tweets;
+    this._tweetsRequester = client.raw?.tweets;
   }
 
   get parametersValidator(): ITweetsClientParametersValidator {
@@ -114,7 +116,7 @@ export class TweetsClient implements ITweetsClient {
 
   public async getRetweetsAsync(tweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IGetRetweetsParameters): Promise<ITweet[]> {
     let parameters: IGetRetweetsParameters;
-    if (this.isIGetRetw♦eetsParameters(tweetIdOrTweetIdentifierOrParameters)) {
+    if (this.isIGetRetweetsParameters(tweetIdOrTweetIdentifierOrParameters)) {
       parameters = tweetIdOrTweetIdentifierOrParameters;
     } else {
       parameters = new GetRetweetsParameters(tweetIdOrTweetIdentifierOrParameters);
@@ -136,7 +138,7 @@ export class TweetsClient implements ITweetsClient {
     return this._client.factories.createTweet(requestResult?.model);
   }
 
-  public destroyRetweetAsync(retweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IDestroyRetweetParameters): Promise<void> {
+  public async destroyRetweetAsync(retweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IDestroyRetweetParameters): Promise<void> {
     let parameters: IDestroyRetweetParameters;
     if (this.isIDestroyRetweetParameters(retweetIdOrTweetIdentifierOrParameters)) {
       parameters = retweetIdOrTweetIdentifierOrParameters;
@@ -144,7 +146,7 @@ export class TweetsClient implements ITweetsClient {
       parameters = new DestroyRetweetParameters(retweetIdOrTweetIdentifierOrParameters);
     }
 
-    await this._tweetsRequester.destroyRetweetAsync(parameters); // .ConfigureAwait(false);
+    await this._tweetsRequester.destroyRetweetAsync(parameters);
   }
 
   public async getRetweeterIdsAsync(tweetIdOrTweetIdentifierOrParametersOr: number | ITweetIdentifier | IGetRetweeterIdsParameters): Promise<number[]> {
@@ -156,7 +158,7 @@ export class TweetsClient implements ITweetsClient {
     }
 
     let iterator = this.getRetweeterIdsIterator(parameters);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())];
   }
 
   public getRetweeterIdsIterator(tweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IGetRetweeterIdsParameters): ITwitterIterator<number> {
@@ -181,7 +183,7 @@ export class TweetsClient implements ITweetsClient {
     }
 
     let iterator = this.getUserFavoriteTweetsIterator(parameters);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   // #region Favorite Tweets
@@ -197,7 +199,7 @@ export class TweetsClient implements ITweetsClient {
     let favoriteTweetsIterator = this._tweetsRequester.getUserFavoriteTweetsIterator(parameters);
     return new TwitterIteratorProxy<ITwitterResult<ITweetDTO[]>, ITweet, number>(favoriteTweetsIterator,            // long?
       twitterResult => {
-        return twitterResult.model.map(x => this._client.factories.createTweet(x)); // .ToArray();
+        return twitterResult.model.map(x => this._client.factories.createTweet(x));
       });
   }
 
@@ -220,14 +222,14 @@ export class TweetsClient implements ITweetsClient {
         tweetDTOCurrent.favorited = true;
 
         return;
-      } catch (ex: SharebookException) {
+      } catch (ex) {
         let tweetWasAlreadyFavorited = ex.twitterExceptionInfos != null && ex.twitterExceptionInfos.Any() && ex.twitterExceptionInfos.First().Code === 139;
         if (tweetWasAlreadyFavorited) {
           tweetDTOCurrent.favorited = true;
-          return;
+          return ex;
         }
 
-        throw;
+        throw ex;
       }
     } else {
       parameters = new FavoriteTweetParameters(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters);
@@ -236,7 +238,7 @@ export class TweetsClient implements ITweetsClient {
     await this._tweetsRequester.favoriteTweetAsync(parameters); // .ConfigureAwait(false);
   }
 
-  public unfavoriteTweetAsync(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters: number
+  public async unfavoriteTweetAsync(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters: number
     | ITweetIdentifier | ITweet | ITweetDTO | IUnfavoriteTweetParameters): Promise<void> {
     let parameters: IUnfavoriteTweetParameters;
     if (this.isIUnfavoriteTweetParameters(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters)) {
@@ -333,6 +335,4 @@ export class TweetsClient implements ITweetsClient {
   private isIGetOEmbedTweetParameters(tweetIdOrTweetIdentifierOrParameters: any): tweetIdOrTweetIdentifierOrParameters is IGetOEmbedTweetParameters {
     return (tweetIdOrTweetIdentifierOrParameters as IGetOEmbedTweetParameters).alignment !== undefined;
   }
-
 }
-

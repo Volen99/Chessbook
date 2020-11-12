@@ -1,5 +1,4 @@
-﻿import InvalidOperationException from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/InvalidOperationException";
-import {IApp} from "../../Public/Models/Interfaces/IApp";
+﻿import {IApp} from "../../Public/Models/Interfaces/IApp";
 import {IMessageEntities} from "../../Public/Models/Entities/IMessageEntities";
 import {IMediaEntity} from '../../Public/Models/Entities/IMediaEntity';
 import {IMessage} from "../../Public/Models/Interfaces/IMessage";
@@ -7,7 +6,8 @@ import {IMessageEventDTO} from "../../Public/Models/Interfaces/DTO/Events/IMessa
 import {ITwitterClient} from "../../Public/ITwitterClient";
 import {IQuickReplyOption} from "../../Public/Models/Interfaces/IQuickReplyOption";
 import {IQuickReplyResponse} from "../../Public/Models/Interfaces/IQuickReplyResponse";
-import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import InvalidOperationException from "typescript-dotnet-commonjs/System/Exceptions/InvalidOperationException";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 // Message that can be sent privately between Twitter users
 export class Message implements IMessage {

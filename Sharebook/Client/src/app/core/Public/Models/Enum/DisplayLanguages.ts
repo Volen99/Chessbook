@@ -1,197 +1,198 @@
-import {Language} from './Language';
+import {Language} from "../../../Core/Attributes/Language";
+import {Languages} from "./Languages";
 
 // Current set of languages that can be used for Twitter UI.
 // They can be used in the UpdateAccountSettings action.
 export abstract class DisplayLanguages {
-  static get Undefined(): Language {
-    return Language.Undefined;
+  static get Undefined(): Languages {
+    return Languages.Undefined;
   }
 
   static get Arabic(): Language {
-    return Language.Arabic;
+    return Languages.Arabic;
   }
 
   static get Basque(): Language {
-    return Language.Basque;
+    return Languages.Basque;
   }
 
   static get Bengali(): Language {
-    return Language.Bengali;
+    return Languages.Bengali;
   }
 
   static get British(): Language {
-    return Language.British;
+    return Languages.British;
   }
 
   static get Bulgarian(): Language {
-    return Language.Bulgarian;
+    return Languages.Bulgarian;
   }
 
   static get Catalan(): Language {
-    return Language.Catalan;
+    return Languages.Catalan;
   }
 
   static get ChineseSimplified(): Language {
-    return Language.ChineseSimplified;
+    return Languages.ChineseSimplified;
   }
 
   static get ChineseTraditional(): Language {
-    return Language.ChineseTraditional;
+    return Languages.ChineseTraditional;
   }
 
   static get Croatian(): Language {
-    return Language.Croatian;
+    return Languages.Croatian;
   }
 
   static get Czech(): Language {
-    return Language.Czech;
+    return Languages.Czech;
   }
 
   static get Danish(): Language {
-    return Language.Danish;
+    return Languages.Danish;
   }
 
   static get Dutch(): Language {
-    return Language.Dutch;
+    return Languages.Dutch;
   }
 
   static get English(): Language {
-    return Language.English;
+    return Languages.English;
   }
 
   static get Filipino(): Language {
-    return Language.Filipino;
+    return Languages.Filipino;
   }
 
   static get Finnish(): Language {
-    return Language.Finnish;
+    return Languages.Finnish;
   }
 
   static get French(): Language {
-    return Language.French;
+    return Languages.French;
   }
 
   static get Galician(): Language {
-    return Language.Galician;
+    return Languages.Galician;
   }
 
   static get German(): Language {
-    return Language.German;
+    return Languages.German;
   }
 
   static get Greek(): Language {
-    return Language.Greek;
+    return Languages.Greek;
   }
 
   static get Gujarati(): Language {
-    return Language.Gujarati;
+    return Languages.Gujarati;
   }
 
   static get Hebrew(): Language {
-    return Language.Hebrew;
+    return Languages.Hebrew;
   }
 
   static get Hindi(): Language {
-    return Language.Hindi;
+    return Languages.Hindi;
   }
 
   static get Hungarian(): Language {
-    return Language.Hungarian;
+    return Languages.Hungarian;
   }
 
   static get Indonesian(): Language {
-    return Language.Indonesian;
+    return Languages.Indonesian;
   }
 
   static get Irish(): Language {
-    return Language.Irish;
+    return Languages.Irish;
   }
 
   static get Italian(): Language {
-    return Language.Italian;
+    return Languages.Italian;
   }
 
   static get Japanese(): Language {
-    return Language.Japanese;
+    return Languages.Japanese;
   }
 
   static get Kannada(): Language {
-    return Language.Kannada;
+    return Languages.Kannada;
   }
 
   static get Korean(): Language {
-    return Language.Korean;
+    return Languages.Korean;
   }
 
   static get Malay(): Language {
-    return Language.Malay;
+    return Languages.Malay;
   }
 
   static get Marathi(): Language {
-    return Language.Marathi;
+    return Languages.Marathi;
   }
 
   static get Norwegian(): Language {
-    return Language.Norwegian;
+    return Languages.Norwegian;
   }
 
   static get Persian(): Language {
-    return Language.Persian;
+    return Languages.Persian;
   }
 
   static get Polish(): Language {
-    return Language.Polish;
+    return Languages.Polish;
   }
 
   static get Portuguese(): Language {
-    return Language.Portuguese;
+    return Languages.Portuguese;
   }
 
   static get Romanian(): Language {
-    return Language.Romanian;
+    return Languages.Romanian;
   }
 
   static get Russian(): Language {
-    return Language.Russian;
+    return Languages.Russian;
   }
 
   static get Serbian(): Language {
-    return Language.Serbian;
+    return Languages.Serbian;
   }
 
   static get Slovak(): Language {
-    return Language.Slovak;
+    return Languages.Slovak;
   }
 
   static get Spanish(): Language {
-    return Language.Spanish;
+    return Languages.Spanish;
   }
 
   static get Swedish(): Language {
-    return Language.Swedish;
+    return Languages.Swedish;
   }
 
   static get Tamil(): Language {
-    return Language.Tamil;
+    return Languages.Tamil;
   }
 
   static get Thai(): Language {
-    return Language.Thai;
+    return Languages.Thai;
   }
 
   static get Turkish(): Language {
-    return Language.Turkish;
+    return Languages.Turkish;
   }
 
   static get Ukrainian(): Language {
-    return Language.Ukrainian;
+    return Languages.Ukrainian;
   }
 
   static get Urdu(): Language {
-    return Language.Urdu;
+    return Languages.Urdu;
   }
 
   static get Vietnamese(): Language {
-    return Language.Vietnamese;
+    return Languages.Vietnamese;
   }
 }

@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {IGetUserTimelineParameters} from "../../Parameters/TimelineClient/GetUserTimelineParameters";
@@ -53,6 +53,6 @@ export interface ITimelinesRequester {
 
 export const ITimelinesRequesterToken = new InjectionToken<ITimelinesRequester>('ITimelinesRequester', {
   providedIn: 'root',
-  factory: () => new TimelinesRequester(Inject(TwitterClient), Inject(TwitterClientEvents),
-    Inject(TimelineController), Inject(TimelineClientRequiredParametersValidator)),
+  factory: () => new TimelinesRequester(inject(TwitterClient), inject(TwitterClientEvents),
+    inject(TimelineController), inject(TimelineClientRequiredParametersValidator)),
 });

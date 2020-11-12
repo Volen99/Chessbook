@@ -1,11 +1,9 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {ITwitterListsClientParametersValidator} from "./TwitterListsClientParametersValidator";
-import {IUserQueryValidator} from "./UserQueryValidator";
+import {IUserQueryValidator, IUserQueryValidatorToken, UserQueryValidator} from "./UserQueryValidator";
 import {TwitterListParameters} from "./parameters-types";
-import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
 import {ICreateListParameters} from "../../../Public/Parameters/ListsClient/CreateListParameters";
-import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import {IUpdateListParameters} from "../../../Public/Parameters/ListsClient/UpdateListParameters";
 import {IGetListParameters} from "../../../Public/Parameters/ListsClient/GetListParameters";
 import {IDestroyListParameters} from "../../../Public/Parameters/ListsClient/DestroyListParameters";
@@ -24,13 +22,15 @@ import {IAddMemberToListParameters} from "../../../Public/Parameters/ListsClient
 import {ICheckIfUserIsMemberOfListParameters} from "../../../Public/Parameters/ListsClient/Members/CheckIfUserIsMemberOfListParameters";
 import {IRemoveMemberFromListParameters} from "../../../Public/Parameters/ListsClient/Members/RemoveMemberFromListParameters";
 import {ICheckIfUserIsSubscriberOfListParameters} from "../../../Public/Parameters/ListsClient/Subscribers/CheckIfUserIsSubscriberOfListParameters";
+import ArgumentNullException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentNullException";
+import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
 
 export interface ITwitterListsClientRequiredParametersValidator extends ITwitterListsClientParametersValidator {
 }
 
 export const ITwitterListsClientRequiredParametersValidatorToken = new InjectionToken<ITwitterListsClientRequiredParametersValidator>('ITwitterListsClientRequiredParametersValidator', {
   providedIn: 'root',
-  factory: () => new TwitterListsClientRequiredParametersValidator(Inject(UserQueryValidator)),
+  factory: () => new TwitterListsClientRequiredParametersValidator(inject(UserQueryValidator)),
 });
 
 type ThrowIfParameters = IGetListParameters
@@ -53,22 +53,24 @@ type ParametersForBothAbove = IAddMemberToListParameters      // best naming eve
   | IRemoveMemberFromListParameters
   | ICheckIfUserIsSubscriberOfListParameters;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TwitterListsClientRequiredParametersValidator implements ITwitterListsClientRequiredParametersValidator {
   private readonly _userQueryValidator: IUserQueryValidator;
 
-  constructor(userQueryValidator: IUserQueryValidator) {
+  constructor(@Inject(IUserQueryValidatorToken) userQueryValidator: IUserQueryValidator) {
     this._userQueryValidator = userQueryValidator;
   }
 
   public validate(parameters: TwitterListParameters): void {
     if (parameters == null) {
-      throw new ArgumentNullException(nameof(parameters));
+      throw new ArgumentNullException(`nameof(parameters)`);
     }
 
     if (this.isICreateListParameters(parameters)) {
       if (!(parameters.name)) {
-        throw new ArgumentNullException(`${nameof(parameters.name)}`);
+        throw new ArgumentNullException(`${`nameof(parameters.name)`}`);
       }
     } else if (this.isThrowIfListParameters(parameters)) {
       this.throwIfListIdentifierIsNotValid(parameters.list);
@@ -76,7 +78,7 @@ export class TwitterListsClientRequiredParametersValidator implements ITwitterLi
       this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.user);
     } else if (this.isParametersForBothAbove(parameters)) {
       this.throwIfListIdentifierIsNotValid(parameters.list);
-      this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.users);
+      this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.user);
     }
   }
 
@@ -92,13 +94,13 @@ export class TwitterListsClientRequiredParametersValidator implements ITwitterLi
     return (parameters as UserQueryParameters).formattedCustomQueryParameters !== undefined;
   }
 
-  private isParametersForBothAbove(parameters: TwitterListParameters): parameters is ParametersForBothAbove {
+  private isParametersForBothAbove(parameters: any): parameters is ParametersForBothAbove {
     return (parameters as ParametersForBothAbove).formattedCustomQueryParameters !== undefined;
   }
 
   public throwIfListIdentifierIsNotValid(twitterListIdentifier: ITwitterListIdentifier): void {
     if (twitterListIdentifier == null) {
-      throw new ArgumentNullException(nameof(twitterListIdentifier), `${nameof(twitterListIdentifier)} cannot be null`);
+      throw new ArgumentNullException(`nameof(twitterListIdentifier)`, `${`nameof(twitterListIdentifier)`} cannot be null`);
     }
 
     let isIdValid = twitterListIdentifier.id > 0;

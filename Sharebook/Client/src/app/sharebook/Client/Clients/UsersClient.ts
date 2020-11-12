@@ -1,4 +1,6 @@
-﻿import {IUserIdentifier} from "../../../core/Public/Models/Interfaces/IUserIdentifier";
+﻿import {Inject, Injectable} from "@angular/core";
+
+import {IUserIdentifier} from "../../../core/Public/Models/Interfaces/IUserIdentifier";
 import {UserIdentifier} from "../../../core/Public/Models/UserIdentifier";
 import {IUsersClient} from "../../../core/Public/Client/Clients/IUsersClient";
 import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
@@ -12,7 +14,6 @@ import {
 import {IUser} from "../../../core/Public/Models/Interfaces/IUser";
 import {GetUserParameters, IGetUserParameters} from "../../../core/Public/Parameters/UsersClient/GetUserParameters";
 import {IUsersClientParametersValidator} from "../../../core/Core/Client/Validators/UsersClientParametersValidator";
-import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
 import {GetProfileImageParameters, IGetProfileImageParameters} from "../../../core/Public/Parameters/UsersClient/GetProfileImageParameters";
 import {IUserDTO} from "../../../core/Public/Models/Interfaces/DTO/IUserDTO";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
@@ -84,10 +85,11 @@ import {
 import {GetMutedUsersParameters, IGetMutedUsersParameters} from "../../../core/Public/Parameters/AccountClient/GetMutedUsersParameters";
 import {IMuteUserParameters, MuteUserParameters} from "../../../core/Public/Parameters/AccountClient/MuteUserParameters";
 import {IUnmuteUserParameters, UnmuteUserParameters} from "../../../core/Public/Parameters/AccountClient/UnMuteUserParameters";
-import {Stream} from "stream";
-import {Inject, Injectable} from "@angular/core";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UsersClient implements IUsersClient {
   private readonly _client: ITwitterClient;
   private readonly _usersRequester: IUsersRequester;
@@ -96,7 +98,7 @@ export class UsersClient implements IUsersClient {
   constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
               @Inject(IMultiLevelCursorIteratorFactoryToken) multiLevelCursorIteratorFactory: IMultiLevelCursorIteratorFactory) {
     this._client = client;
-    this._usersRequester = client.raw.users;
+    this._usersRequester = client.raw?.users;
     this._multiLevelCursorIteratorFactory = multiLevelCursorIteratorFactory;
   }
 
@@ -222,6 +224,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let iterator: IMultiLevelCursorIterator<number, IUser> = this.getFriendsIterator(parameters);
+    // @ts-ignore
     return [...(await iterator.nextPageAsync())];      // .ConfigureAwait(false)).ToArray();
   }
 
@@ -231,7 +234,7 @@ export class UsersClient implements IUsersClient {
 
     let maxPageSize = this._client.config.limits.USERS_GET_USERS_MAX_SIZE;
     if (parameters.GetUsersPageSize > maxPageSize) {
-      throw new TwitterArgumentLimitException(`${nameof(parameters.GetUsersPageSize)}`, maxPageSize, nameof(this._client.config.limits.USERS_GET_USERS_MAX_SIZE),
+      throw new TwitterArgumentLimitException(`${`nameof(parameters.GetUsersPageSize)`}`, maxPageSize, `nameof(this._client.config.limits.USERS_GET_USERS_MAX_SIZE)`,
         "page size");
     }
 
@@ -274,6 +277,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let iterator = this.getFollowersIterator(parameters);
+    // @ts-ignore
     return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
@@ -282,8 +286,8 @@ export class UsersClient implements IUsersClient {
 
     let maxPageSize = this._client.config.limits.USERS_GET_USERS_MAX_SIZE;
     if (parameters.GetUsersPageSize > maxPageSize) {
-      throw new TwitterArgumentLimitException(`${nameof(parameters.GetUsersPageSize)}`, maxPageSize,
-        nameof(this._client.config.limits.USERS_GET_USERS_MAX_SIZE), "page size");
+      throw new TwitterArgumentLimitException(`${`nameof(parameters.GetUsersPageSize)`}`, maxPageSize,
+        `nameof(this._client.config.limits.USERS_GET_USERS_MAX_SIZE)`, "page size");
     }
 
     return this._multiLevelCursorIteratorFactory.createUserMultiLevelIterator(this._client, followerPageIterator, maxPageSize);
@@ -454,6 +458,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let iterator = this.getUsersRequestingFriendshipIterator(parametersCurrent);
+    // @ts-ignore
     return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
@@ -469,7 +474,7 @@ export class UsersClient implements IUsersClient {
 
     let maxPageSize = this._client.config.limits.USERS_GET_USERS_MAX_SIZE;
     if (parametersCurrent.getUsersPageSize > maxPageSize) {
-      throw new TwitterArgumentLimitException(`${nameof(parametersCurrent.getUsersPageSize)}`, maxPageSize, nameof(this._client.config.limits.USERS_GET_USERS_MAX_SIZE), "page size");
+      throw new TwitterArgumentLimitException(`${`nameof(parametersCurrent.getUsersPageSize)`}`, maxPageSize, `nameof(this._client.config.limits.USERS_GET_USERS_MAX_SIZE)`, "page size");
     }
 
     return this._multiLevelCursorIteratorFactory.createUserMultiLevelIterator(this._client, iterator, maxPageSize);
@@ -508,6 +513,7 @@ export class UsersClient implements IUsersClient {
     }
 
     let iterator = this.getUsersYouRequestedToFollowIterator(parametersCurrent);
+    // @ts-ignore
     return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
@@ -522,7 +528,7 @@ export class UsersClient implements IUsersClient {
 
     let maxPageSize = this._client.config.limits.USERS_GET_USERS_MAX_SIZE;
     if (parametersCurrent.getUsersPageSize > maxPageSize) {
-      throw new TwitterArgumentLimitException(`${nameof(parametersCurrent.getUsersPageSize)}`, maxPageSize, nameof(this._client.config.limits.USERS_GET_USERS_MAX_SIZE), "page size");
+      throw new TwitterArgumentLimitException(`${`nameof(parametersCurrent.getUsersPageSize)`}`, maxPageSize, `nameof(this._client.config.limits.USERS_GET_USERS_MAX_SIZE)`, "page size");
     }
 
     return this._multiLevelCursorIteratorFactory.createUserMultiLevelIterator(this._client, iterator, maxPageSize);
@@ -658,7 +664,7 @@ export class UsersClient implements IUsersClient {
 
   // #region Profile Image
 
-  public getProfileImageStreamAsync(urlOrUserOrUserDTOOrParameters: string | IUser | IUserDTO | IGetProfileImageParameters): Promise<Stream> {
+  public getProfileImageStreamAsync(urlOrUserOrUserDTOOrParameters: string | IUser | IUserDTO | IGetProfileImageParameters): Promise<any> {
     let parameters: IGetProfileImageParameters;
     if (UsersClient.isIGetProfileImageParameters(urlOrUserOrUserDTOOrParameters)) {
       parameters = urlOrUserOrUserDTOOrParameters;
@@ -673,7 +679,7 @@ export class UsersClient implements IUsersClient {
 
   private static isIGetUserParameters(userIdOrUsernameOrUserOrParameters: number | string | IUserIdentifier | IGetUserParameters):
     userIdOrUsernameOrUserOrParameters is IGetUserParameters {
-    return (userIdOrUsernameOrUserOrParameters as IGetUserParameters).User !== undefined;
+    return (userIdOrUsernameOrUserOrParameters as IGetUserParameters).user !== undefined;
   }
 
   private static isIGetUsersParameters(userIdsOrUsernamesOrUsersOrParameters: | Array<number> | Array<string> | Array<IUserIdentifier> | IGetUsersParameters):
@@ -688,22 +694,22 @@ export class UsersClient implements IUsersClient {
 
   private static isIGetFriendIdsParameters(userIdOrUsernameOrUserOrParameter: number | string | IUserIdentifier | IGetFriendIdsParameters):
     userIdOrUsernameOrUserOrParameter is IGetFriendIdsParameters {
-    return (userIdOrUsernameOrUserOrParameter as IGetFriendIdsParameters).User !== undefined;
+    return (userIdOrUsernameOrUserOrParameter as IGetFriendIdsParameters).user !== undefined;
   }
 
   private static isIGetFriendsParameters(userIdOrUsernameOrUserOrParameters: number | string | IUserIdentifier | IGetFriendsParameters):
     userIdOrUsernameOrUserOrParameters is IGetFriendsParameters {
-    return (userIdOrUsernameOrUserOrParameters as IGetFriendsParameters).User !== undefined;
+    return (userIdOrUsernameOrUserOrParameters as IGetFriendsParameters).user !== undefined;
   }
 
   private static isIGetFollowerIdsParameters(userIdOrUsernameOrUserOrParameters: number | string | IUserIdentifier | IGetFollowerIdsParameters):
     userIdOrUsernameOrUserOrParameters is IGetFollowerIdsParameters {
-    return (userIdOrUsernameOrUserOrParameters as IGetFollowerIdsParameters).User !== undefined;
+    return (userIdOrUsernameOrUserOrParameters as IGetFollowerIdsParameters).user !== undefined;
   }
 
   private static isIGetFollowersParameters(userIdOrUsernameOrUserOrParameters: number | string | IUserIdentifier | IGetFollowersParameters):
     userIdOrUsernameOrUserOrParameters is IGetFollowersParameters {
-    return (userIdOrUsernameOrUserOrParameters as IGetFollowersParameters).User !== undefined;
+    return (userIdOrUsernameOrUserOrParameters as IGetFollowersParameters).user !== undefined;
   }
 
   private static isIBlockUserParameters(userIdOrUsernameOrUserOrParameters: number | string | IUserIdentifier | IBlockUserParameters):

@@ -1,9 +1,8 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {ITweetsClientParametersValidator} from "./TweetsClientParametersValidator";
 import {IUserQueryValidator, IUserQueryValidatorToken, UserQueryValidator} from "./UserQueryValidator";
 import {TweetsParameters} from "./parameters-types";
-import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
 import {IDestroyTweetParameters} from "../../../Public/Parameters/TweetsClient/DestroyTweetParameters";
 import {IGetRetweetsParameters} from "../../../Public/Parameters/TweetsClient/GetRetweetsParameters";
 import {IPublishRetweetParameters} from "../../../Public/Parameters/TweetsClient/PublishRetweetParameters";
@@ -13,16 +12,17 @@ import {IUnfavoriteTweetParameters} from "../../../Public/Parameters/TweetsClien
 import {IGetOEmbedTweetParameters} from "../../../Public/Parameters/TweetsClient/GetOEmbedTweetParameters";
 import {ITweetIdentifier} from "../../../Public/Models/Interfaces/ITweetIdentifier";
 import {IGetTweetsParameters} from "../../../Public/Parameters/TweetsClient/GetTweetsParameters";
-import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import {IPublishTweetParameters} from "../../../Public/Parameters/TweetsClient/PublishTweetParameters";
 import {IGetUserFavoriteTweetsParameters} from "../../../Public/Parameters/TweetsClient/GetFavoriteTweetsParameters";
+import ArgumentNullException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentNullException";
+import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
 
 export interface ITweetsClientRequiredParametersValidator extends ITweetsClientParametersValidator {
 }
 
 export const ITweetsClientRequiredParametersValidatorToken = new InjectionToken<ITweetsClientRequiredParametersValidator>('ITweetsClientRequiredParametersValidator', {
   providedIn: 'root',
-  factory: () => new TweetsClientRequiredParametersValidator(Inject(UserQueryValidator)),
+  factory: () => new TweetsClientRequiredParametersValidator(inject(UserQueryValidator)),
 });
 
 type ParametersForThrowIfTweetBad = IDestroyTweetParameters
@@ -33,7 +33,9 @@ type ParametersForThrowIfTweetBad = IDestroyTweetParameters
   | IUnfavoriteTweetParameters
   | IGetOEmbedTweetParameters;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TweetsClientRequiredParametersValidator implements ITweetsClientRequiredParametersValidator {
   private readonly _userQueryValidator: IUserQueryValidator;
 
@@ -43,24 +45,24 @@ export class TweetsClientRequiredParametersValidator implements ITweetsClientReq
 
   public validate(parameters: TweetsParameters): void {
     if (parameters == null) {
-      throw new ArgumentNullException(nameof(parameters));
+      throw new ArgumentNullException(`nameof(parameters)`);
     }
 
     if (this.isParametersForThrowIfTweetBad(parameters)) {
-      this.throwIfTweetCannotBeUsed(parameters.tweet, `${nameof(parameters.tweet)}`);
+      this.throwIfTweetCannotBeUsed(parameters.tweet, `${`nameof(parameters.tweet)`}`);
     } else if (this.isIGetTweetsParameters(parameters)) {
       if (parameters.tweets == null) {
         throw new ArgumentNullException('ArgumentNull_Generic');
       }
 
       if (parameters.tweets.length === 0) {
-        throw new ArgumentException("You need at least 1 tweet id", `${nameof(parameters.tweets)}`);
+        throw new ArgumentException("You need at least 1 tweet id", `${`nameof(parameters.tweets)`}`);
       }
 
       let validTweetIdentifiers = parameters.tweets.filter(x => x?.id != null || !!x?.idStr);
 
       if (!(validTweetIdentifiers.length > 0)) {
-        throw new ArgumentException("There are no valid tweet identifiers", `${nameof(parameters.tweets)}`);
+        throw new ArgumentException("There are no valid tweet identifiers", `${`nameof(parameters.tweets)`}`);
       }
     } else if (this.isIPublishTweetParameters(parameters)) {
       if (parameters.inReplyToTweet != null) {
@@ -72,20 +74,20 @@ export class TweetsClientRequiredParametersValidator implements ITweetsClientReq
       }
 
       if (parameters.medias.some(x => !x.hasBeenUploaded)) {
-        throw new ArgumentException("Some media were not uploaded", `${nameof(parameters.medias)}`);
+        throw new ArgumentException("Some media were not uploaded", `${`nameof(parameters.medias)`}`);
       }
     } else if (this.isIGetUserFavoriteTweetsParameters(parameters)) {
-      this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.user, `${nameof(parameters.user)}`);
+      this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.user, `${`nameof(parameters.user)`}`);
     }
   }
 
   public throwIfTweetCannotBeUsed(tweet: ITweetIdentifier, parameterName?: string): void {
     if (!parameterName) {
-      parameterName = `${nameof(tweet)}.${nameof(tweet.id)}`;
+      parameterName = `${`nameof(tweet)`}.${`nameof(tweet.id)`}`;
     }
 
     if (tweet == null) {
-      throw new ArgumentNullException(`${nameof(tweet)}`);
+      throw new ArgumentNullException(`${`nameof(tweet)`}`);
     }
 
     if (!this.isValidTweetIdentifier(tweet)) {

@@ -1,7 +1,7 @@
 ﻿import {InjectionToken} from "@angular/core";
 
-import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
 import {SymbolEntity} from "../../../Core/Models/TwitterEntities/SymbolEntity";
+import IEquatable from "typescript-dotnet-commonjs/System/IEquatable";
 
 // https://dev.twitter.com/overview/api/entities-in-twitter-objects#symbols
 export interface ISymbolEntity extends IEquatable<ISymbolEntity> {

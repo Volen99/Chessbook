@@ -1,7 +1,9 @@
-﻿import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
-import {ITweetQueryGenerator} from "../../core/Core/QueryGenerators/ITweetQueryGenerator";
-import {ITwitterAccessor} from 'src/app/core/Core/Web/ITwitterAccessor';
+import {ITweetQueryGenerator, ITweetQueryGeneratorToken} from "../../core/Core/QueryGenerators/ITweetQueryGenerator";
+import {ITwitterAccessor, ITwitterAccessorToken} from 'src/app/core/Core/Web/ITwitterAccessor';
 import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMode";
 import {HttpMethod} from "../../core/Public/Models/Enum/HttpMethod";
 import {IGetOEmbedTweetParameters} from "../../core/Public/Parameters/TweetsClient/GetOEmbedTweetParameters";
@@ -19,7 +21,8 @@ import {IGetTweetParameters} from "../../core/Public/Parameters/TweetsClient/Get
 import {ITweetDTO} from "../../core/Public/Models/Interfaces/DTO/ITweetDTO";
 import {IIdsCursorQueryResultDTO} from "../../core/Public/Models/Interfaces/DTO/QueryDTO/IIdsCursorQueryResultDTO";
 import {IOEmbedTweetDTO} from "../../core/Public/Models/Interfaces/DTO/IOembedTweetDTO";
-import {InjectionToken} from "@angular/core";
+import {TweetQueryGenerator} from "./TweetQueryGenerator";
+import {TwitterAccessor} from "../../Tweetinvi.Credentials/TwitterAccessor";
 
 export interface ITweetQueryExecutor {
   getTweetAsync(parameters: IGetTweetParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO>>;
@@ -56,14 +59,15 @@ export interface ITweetQueryExecutor {
 
 export const ITweetQueryExecutorToken = new InjectionToken<ITweetQueryExecutor>('ITweetQueryExecutor', {
   providedIn: 'root',
-  factory: () => new TweetQueryExecutor(),
+  factory: () => new TweetQueryExecutor(inject(TweetQueryGenerator), inject(TwitterAccessor)),
 });
 
 export class TweetQueryExecutor implements ITweetQueryExecutor {
   private readonly _tweetQueryGenerator: ITweetQueryGenerator;
   private readonly _twitterAccessor: ITwitterAccessor;
 
-  constructor(tweetQueryGenerator: ITweetQueryGenerator, twitterAccessor: ITwitterAccessor) {
+  constructor(@Inject(ITweetQueryGeneratorToken) tweetQueryGenerator: ITweetQueryGenerator,
+              @Inject(ITwitterAccessorToken) twitterAccessor: ITwitterAccessor) {
     this._tweetQueryGenerator = tweetQueryGenerator;
     this._twitterAccessor = twitterAccessor;
   }
@@ -132,7 +136,7 @@ export class TweetQueryExecutor implements ITweetQueryExecutor {
   }
 
   // Favorite Tweet
-  public getFavoriteTweetsAsync(parameters: IGetUserFavoriteTweetsParameters, request: ITwitterRequest): Task<ITwitterResult<ITweetDTO[]>> {
+  public getFavoriteTweetsAsync(parameters: IGetUserFavoriteTweetsParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO[]>> {
     let query = this._tweetQueryGenerator.getFavoriteTweetsQuery(parameters, new ComputedTweetMode(parameters, request));
     request.query.url = query;
     request.query.httpMethod = HttpMethod.GET;

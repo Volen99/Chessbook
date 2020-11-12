@@ -1,4 +1,6 @@
-﻿import {BaseRequester} from "../BaseRequester";
+﻿import {Inject, Injectable} from "@angular/core";
+
+import {BaseRequester} from "../BaseRequester";
 import {ITweetsRequester} from "../../../core/Public/Client/Requesters/ITweetsRequester";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
 import {IOEmbedTweetDTO} from "../../../core/Public/Models/Interfaces/DTO/IOembedTweetDTO";
@@ -24,10 +26,12 @@ import {
 } from "../../../core/Core/Client/Validators/TweetsClientRequiredParametersValidator";
 import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {ITwitterRequest} from "../../../core/Public/Models/Interfaces/ITwitterRequest";
-import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
-import {Inject, Injectable} from "@angular/core";
+import {ITwitterClientEvents, ITwitterClientEventsToken} from "../../../core/Core/Events/TweetinviGlobalEvents";
+import {JsonQueryConverterRepository} from "../../../core/Core/JsonConverters/JsonQueryConverterRepository";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TweetsRequester extends BaseRequester implements ITweetsRequester {
   private readonly _tweetController: ITweetController;
   private readonly _tweetsClientRequiredParametersValidator: ITweetsClientRequiredParametersValidator;
@@ -45,42 +49,42 @@ export class TweetsRequester extends BaseRequester implements ITweetsRequester {
   // Tweets
   public getTweetAsync(parameters: IGetTweetParameters): Promise<ITwitterResult<ITweetDTO>> {
     this._tweetsClientRequiredParametersValidator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._tweetController.getTweetAsync(parameters, request));
+    return super.executeRequestAsync(request => this._tweetController.getTweetAsync(parameters, request));
   }
 
   public getTweetsAsync(parameters: IGetTweetsParameters): Promise<ITwitterResult<ITweetDTO[]>> {
     this._tweetsClientRequiredParametersValidator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._tweetController.getTweetsAsync(parameters, request));
+    return super.executeRequestAsync(request => this._tweetController.getTweetsAsync(parameters, request));
   }
 
   // Tweets - Publish
   public publishTweetAsync(parameters: IPublishTweetParameters): Promise<ITwitterResult<ITweetDTO>> {
     this._tweetsClientRequiredParametersValidator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._tweetController.publishTweetAsync(parameters, request));
+    return super.executeRequestAsync(request => this._tweetController.publishTweetAsync(parameters, request));
   }
 
   // Tweets - Destroy
   public destroyTweetAsync(parameters: IDestroyTweetParameters): Promise<ITwitterResult<ITweetDTO>> {
     this._tweetsClientRequiredParametersValidator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._tweetController.destroyTweetAsync(parameters, request));
+    return super.executeRequestAsync(request => this._tweetController.destroyTweetAsync(parameters, request));
   }
 
   // Retweets
   public getRetweetsAsync(parameters: IGetRetweetsParameters): Promise<ITwitterResult<ITweetDTO[]>> {
     this._tweetsClientRequiredParametersValidator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._tweetController.getRetweetsAsync(parameters, request));
+    return super.executeRequestAsync(request => this._tweetController.getRetweetsAsync(parameters, request));
   }
 
   // Retweets - Publish
   public gublishRetweetAsync(parameters: IPublishRetweetParameters): Promise<ITwitterResult<ITweetDTO>> {
     this._tweetsClientRequiredParametersValidator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._tweetController.publishRetweetAsync(parameters, request));
+    return super.executeRequestAsync(request => this._tweetController.publishRetweetAsync(parameters, request));
   }
 
   // Retweets - Destroy
   public destroyRetweetAsync(parameters: IDestroyRetweetParameters): Promise<ITwitterResult<ITweetDTO>> {
     this._tweetsClientRequiredParametersValidator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._tweetController.destroyRetweetAsync(parameters, request));
+    return super.executeRequestAsync(request => this._tweetController.destroyRetweetAsync(parameters, request));
   }
 
   public getRetweeterIdsIterator(parameters: IGetRetweeterIdsParameters): ITwitterPageIterator<ITwitterResult<IIdsCursorQueryResultDTO>> {
@@ -99,16 +103,16 @@ export class TweetsRequester extends BaseRequester implements ITweetsRequester {
 
   public favoriteTweetAsync(parameters: IFavoriteTweetParameters): Promise<ITwitterResult<ITweetDTO>> {
     this._tweetsClientRequiredParametersValidator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._tweetController.favoriteTweetAsync(parameters, request));
+    return super.executeRequestAsync(request => this._tweetController.favoriteTweetAsync(parameters, request));
   }
 
   public unfavoriteTweetAsync(parameters: IUnfavoriteTweetParameters): Promise<ITwitterResult<ITweetDTO>> {
     this._tweetsClientRequiredParametersValidator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._tweetController.unfavoriteTweetAsync(parameters, request));
+    return super.executeRequestAsync(request => this._tweetController.unfavoriteTweetAsync(parameters, request));
   }
 
   public getOEmbedTweetAsync(parameters: IGetOEmbedTweetParameters): Promise<ITwitterResult<IOEmbedTweetDTO>> {
     this._tweetsClientRequiredParametersValidator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._tweetController.getOEmbedTweetAsync(parameters, request));
+    return super.executeRequestAsync(request => this._tweetController.getOEmbedTweetAsync(parameters, request));
   }
 }

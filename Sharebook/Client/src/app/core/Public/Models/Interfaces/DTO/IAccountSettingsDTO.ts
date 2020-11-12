@@ -3,7 +3,7 @@ import {ITimeZone} from "../ITimeZone";
 import {ITrendLocation} from "../ITrendLocation";
 import { AllowDirectMessagesFrom } from '../../Enum/AllowDirectMessagesFrom';
 import {AllowContributorRequestMode} from "../../Enum/AllowContributorRequestMode";
-import { Language } from '../../Enum/Language';
+import {Language} from "../../../../Core/Attributes/Language";
 
 export interface IAccountSettingsDTO {
   screenName: string;

@@ -4,10 +4,10 @@ import {PlaceType} from '../../Public/Models/Enum/PlaceType';
 export class TrendLocation implements ITrendLocation {
   private PlaceTypeDTO = class PlaceTypeDTO {
     // [JsonProperty("name")]
-    public Name: string;
+    public name: string;
 
     // [JsonProperty("code")]
-    public Code: number;
+    public code: number;
   };
 
   // [JsonProperty("woeid")]

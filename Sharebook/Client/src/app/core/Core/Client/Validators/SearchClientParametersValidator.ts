@@ -1,4 +1,4 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {ISearchTweetsParameters} from "../../../Public/Parameters/Search/SearchTweetsParameters";
 import {ISearchUsersParameters} from "../../../Public/Parameters/Search/SearchUsersParameters";
@@ -13,10 +13,10 @@ import {
 } from './SearchClientRequiredParametersValidator';
 import {SearchParameters} from "./parameters-types";
 import {TweetSearchFilters} from "../../../Public/Parameters/Enum/TweetSearchFilters";
-import ArgumentException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException';
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
 import {IGeoCode} from "../../../Public/Models/Interfaces/IGeoCode";
 import { TwitterClient } from 'src/app/sharebook/TwitterClient';
+import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
 
 export interface ISearchClientParametersValidator {
   validate(parameters: ISearchTweetsParameters): void;
@@ -34,10 +34,12 @@ export interface ISearchClientParametersValidator {
 
 export const ISearchClientParametersValidatorToken = new InjectionToken<ISearchClientParametersValidator>('ISearchClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new SearchClientParametersValidator(Inject(TwitterClient), Inject(SearchClientRequiredParametersValidator)),
+  factory: () => new SearchClientParametersValidator(inject(TwitterClient), inject(SearchClientRequiredParametersValidator)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class SearchClientParametersValidator implements ISearchClientParametersValidator {
   private readonly _client: ITwitterClient;
   private readonly _searchClientRequiredParametersValidator: ISearchClientRequiredParametersValidator;
@@ -64,12 +66,12 @@ export class SearchClientParametersValidator implements ISearchClientParametersV
 
       let maxPageSize = this._client.config.limits.SEARCH_TWEETS_MAX_PAGE_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this._client.config.limits.SEARCH_TWEETS_MAX_PAGE_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this._client.config.limits.SEARCH_TWEETS_MAX_PAGE_SIZE)`, "page size");
       }
     } else if (this.isISearchUsersParameters(parameters)) {
       let maxPageSize = this._client.config.limits.SEARCH_USERS_MAX_PAGE_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this._client.config.limits.SEARCH_USERS_MAX_PAGE_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this._client.config.limits.SEARCH_USERS_MAX_PAGE_SIZE)`, "page size");
       }
     }
   }

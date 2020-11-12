@@ -1,4 +1,4 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterResult} from "../Web/TwitterResult";
@@ -20,5 +20,5 @@ export interface ITrendsController {
 
 export const ITrendsControllerToken = new InjectionToken<ITrendsController>('ITrendsController', {
   providedIn: 'root',
-  factory: () => new TrendsController(Inject(TrendsQueryExecutor)),
+  factory: () => new TrendsController(inject(TrendsQueryExecutor)),
 });

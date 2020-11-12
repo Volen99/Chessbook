@@ -1,7 +1,7 @@
 import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {IMessageEventDTO} from "../../Models/Interfaces/DTO/Events/IMessageEventDTO";
 import {IMessage} from "../../Models/Interfaces/IMessage";
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 // For more information visit : https://developer.twitter.com/en/docs/direct-messages/sending-and-receiving/guides/direct-message-migration
 export interface IDeleteMessageParameters extends ICustomRequestParameters {

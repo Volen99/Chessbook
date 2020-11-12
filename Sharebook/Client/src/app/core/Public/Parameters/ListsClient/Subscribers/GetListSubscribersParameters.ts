@@ -2,7 +2,7 @@ import {BaseGetUsersOfListParameters, IBaseGetUsersOfListParameters} from "../..
 import {ITwitterListIdentifier} from "../../../Models/Interfaces/ITwitterListIdentifier";
 import {TwitterListIdentifier} from '../../../Models/TwitterListIdentifier';
 import {SharebookLimits} from "../../../Settings/SharebookLimits";
-import Type from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 // For more information visit: https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-subscribers
 export interface IGetListSubscribersParameters extends IBaseGetUsersOfListParameters {

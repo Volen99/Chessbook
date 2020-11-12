@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {IMessagesClientParametersValidator} from "../../../Core/Client/Validators/MessageClientParametersValidator";
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
@@ -54,18 +54,18 @@ export interface IMessagesClient {
   /// <returns>An iterator to list the recent messages of the user</returns>
   getMessagesIterator(parameters: IGetMessagesParameters): ITwitterIterator<IMessage>;
 
-  destroyMessageAsync(messageId: number): Promise<void>;
+  destroyMessageAsync(messageId: number): Promise<any>;
 
-  destroyMessageAsync(message: IMessage): Promise<void>;
+  destroyMessageAsync(message: IMessage): Promise<any>;
 
   /// <summary>
   /// Destroy a specific message
   /// </summary>
   /// <para> https://developer.twitter.com/en/docs/direct-messages/sending-and-receiving/guides/direct-message-migration </para>
-  destroyMessageAsync(parameters: IDeleteMessageParameters): Promise<void>;
+  destroyMessageAsync(parameters: IDeleteMessageParameters): Promise<any>;
 }
 
 export const IMessagesClientToken = new InjectionToken<IMessagesClient>('IMessagesClient', {
   providedIn: 'root',
-  factory: () => new MessagesClient(Inject(TwitterClient), Inject(MessageRequester)),
+  factory: () => new MessagesClient(inject(TwitterClient), inject(MessageRequester)),
 });

@@ -43,7 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Web\WorldFeed.Web.Shared\WorldFeed.Web.Common.csproj" />
   </ItemGroup>
 
 </Project>

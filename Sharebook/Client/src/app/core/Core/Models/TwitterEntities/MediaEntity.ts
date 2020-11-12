@@ -1,7 +1,7 @@
 ﻿import {IMediaEntity} from "../../../Public/Models/Entities/IMediaEntity";
-import Dictionary from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
 import {IMediaEntitySize} from "../../../Public/Models/Entities/IMediaEntitySize";
 import {IVideoInformationEntity} from "../../../Public/Models/Entities/ExtendedEntities/IVideoInformationEntity";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
 
 // Object storing information related with a Media on Twitter
 export class MediaEntity implements IMediaEntity {
@@ -48,6 +48,7 @@ export class MediaEntity implements IMediaEntity {
       return this.indices === other.indices;
     }
 
-    return this.indices.containsSameObjectsAs(other.indices, true);
+    // @ts-ignore
+    return this.indices.containsSameObjectsAs<number>(other.indices, true);
   }
 }

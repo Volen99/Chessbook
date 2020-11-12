@@ -2,7 +2,7 @@
 import {ImageSize} from '../../Models/Enum/ImageSize';
 import {IUser} from "../../Models/Interfaces/IUser";
 import {IUserDTO} from "../../Models/Interfaces/DTO/IUserDTO";
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 // Parameters to download an profile image from Twitter.
 export interface IGetProfileImageParameters extends ICustomRequestParameters {

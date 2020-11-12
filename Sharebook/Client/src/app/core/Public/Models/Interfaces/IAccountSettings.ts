@@ -1,14 +1,14 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITimeZone} from "./ITimeZone";
 import {PrivacyMode} from '../Enum/PrivacyMode';
 import {IAccountSettingsDTO} from "./DTO/IAccountSettingsDTO";
-import { Language } from '../Enum/Language';
 import { AllowDirectMessagesFrom } from '../Enum/AllowDirectMessagesFrom';
 import {AllowContributorRequestMode} from "../Enum/AllowContributorRequestMode";
 import {ITrendLocation} from "./ITrendLocation";
 import {AccountSettings} from "../../../Core/Models/AccountSettings";
 import {AccountSettingsDTO} from "../../../Core/DTO/AccountSettingsDTO";
+import { Language } from 'src/app/core/Core/Attributes/Language';
 
 export interface IAccountSettings {
   // Account settings backend properties.
@@ -74,5 +74,5 @@ export interface IAccountSettings {
 
 export const IAccountSettingsToken = new InjectionToken<IAccountSettings>('IAccountSettings', {
   providedIn: 'root',
-  factory: () => new AccountSettings(Inject(AccountSettingsDTO)),
+  factory: () => new AccountSettings(inject(AccountSettingsDTO)),
 });

@@ -1,3 +1,5 @@
+import {Inject, Injectable} from "@angular/core";
+
 import {BaseRequester} from "../BaseRequester";
 import {ITimelinesRequester} from "../../../core/Public/Client/Requesters/ITimelinesRequester";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
@@ -13,10 +15,11 @@ import {ITweetDTO} from "../../../core/Public/Models/Interfaces/DTO/ITweetDTO";
 import {IGetHomeTimelineParameters} from "../../../core/Public/Parameters/TimelineClient/GetHomeTimelineParameters";
 import {IGetRetweetsOfMeTimelineParameters} from "../../../core/Public/Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
 import {IGetMentionsTimelineParameters} from "../../../core/Public/Parameters/TimelineClient/GetMentionsTimelineParameters";
-import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
-import {Inject, Injectable} from "@angular/core";
+import {ITwitterClientEvents, ITwitterClientEventsToken} from "../../../core/Core/Events/TweetinviGlobalEvents";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TimelinesRequester extends BaseRequester implements ITimelinesRequester {
   private readonly _timelineController: ITimelineController;
   private readonly _validator: ITimelineClientRequiredParametersValidator;

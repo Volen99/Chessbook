@@ -5,7 +5,9 @@ import {ICoordinates, ICoordinatesToken} from "./Interfaces/ICoordinates";
 import {DistanceMeasure} from './Enum/DistanceMeasure';
 import {IGeoCode, IGeoCodeToken} from "./Interfaces/IGeoCode";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class GeoCode implements IGeoCode {
   constructor(latitude?: number,
               longitude?: number,

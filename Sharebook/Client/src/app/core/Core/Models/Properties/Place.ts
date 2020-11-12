@@ -1,7 +1,7 @@
-﻿import Dictionary from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
-import {IPlace} from "../../../Public/Models/Interfaces/IPlace";
+﻿import {IPlace} from "../../../Public/Models/Interfaces/IPlace";
 import { PlaceType } from 'src/app/components/models/settings/place-type.model';
 import {IGeo} from "../../../Public/Models/Interfaces/IGeo";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
 
 export class Place implements IPlace {
   // [JsonProperty("id")]

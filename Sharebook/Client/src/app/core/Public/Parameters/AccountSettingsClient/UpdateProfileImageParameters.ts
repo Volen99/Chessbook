@@ -1,6 +1,6 @@
 ﻿import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
-import TimeSpan from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
 import {IUploadProgressChanged} from "../../Events/UploadProgressChangedEventArgs";
+import TimeSpan from "typescript-dotnet-commonjs/System/Time/TimeSpan";
 
 // For more information visit : https://dev.twitter.com/rest/reference/post/account/update_profile_image
 export interface IUpdateProfileImageParameters extends ICustomRequestParameters {

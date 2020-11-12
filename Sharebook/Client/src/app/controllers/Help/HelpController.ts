@@ -16,7 +16,9 @@ import {IPlace} from "../../core/Public/Models/Interfaces/IPlace";
 import {SupportedLanguage} from "../../core/Core/Models/SupportedLanguage";
 import {ITwitterConfiguration} from "../../core/Public/Models/Interfaces/DTO/ITwitterConfiguration";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class HelpController implements IHelpController {
   private readonly _helpQueryExecutor: IHelpQueryExecutor;
 

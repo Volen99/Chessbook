@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthorizeService } from '../../../core/api-authorization/authorize.service';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
@@ -12,10 +11,10 @@ export class LoginMenuComponent implements OnInit {
   public isAuthenticated: Observable<boolean>;
   public userName: Observable<string>;
 
-  constructor(private authorizeService: AuthorizeService) { }
+  constructor(/*private authorizeService: AuthorizeService*/) { }
 
   ngOnInit() {
-    this.isAuthenticated = this.authorizeService.isAuthenticated();
-    this.userName = this.authorizeService.getUser().pipe(map(u => u && u.name));
+    // this.isAuthenticated = this.authorizeService.isAuthenticated();
+    // this.userName = this.authorizeService.getUser().pipe(map(u => u && u.name));
   }
 }

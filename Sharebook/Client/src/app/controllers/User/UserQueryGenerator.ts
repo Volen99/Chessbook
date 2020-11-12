@@ -5,7 +5,6 @@ import {
   IUserQueryParameterGenerator,
   IUserQueryParameterGeneratorToken
 } from "../../core/Core/QueryGenerators/IUserQueryParameterGenerator";
-import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {Resources} from "../../properties/resources";
 import {IQueryParameterGenerator, IQueryParameterGeneratorToken} from "../Shared/QueryParameterGenerator";
 import {IGetAuthenticatedUserParameters} from "../../core/Public/Parameters/AccountClient/GetAuthenticatedUserParameters";
@@ -31,8 +30,12 @@ import {IGetMutedUserIdsParameters} from "../../core/Public/Parameters/AccountCl
 import {IGetMutedUsersParameters} from "../../core/Public/Parameters/AccountClient/GetMutedUsersParameters";
 import {IMuteUserParameters} from "../../core/Public/Parameters/AccountClient/MuteUserParameters";
 import {IUnmuteUserParameters} from "../../core/Public/Parameters/AccountClient/UnMuteUserParameters";
+import StringBuilder from "typescript-dotnet-commonjs/System/Text/StringBuilder";
+import {StringBuilderExtensions} from "../../core/Core/Extensions/stringBuilder-extensions";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UserQueryGenerator implements IUserQueryGenerator {
   private readonly _userQueryParameterGenerator: IUserQueryParameterGenerator;
   private readonly _queryParameterGenerator: IQueryParameterGenerator;
@@ -46,10 +49,10 @@ export class UserQueryGenerator implements IUserQueryGenerator {
   public getAuthenticatedUserQuery(parameters: IGetAuthenticatedUserParameters): string {
     let query = new StringBuilder(Resources.User_GetCurrentUser);
 
-    query.addParameterToQuery("skip_status", parameters.skipStatus);
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
-    query.addParameterToQuery("include_email", parameters.includeEmail);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addParameterToQuery(query, "skip_status", parameters.skipStatus);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addParameterToQuery(query, "include_email", parameters.includeEmail);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -57,10 +60,10 @@ export class UserQueryGenerator implements IUserQueryGenerator {
   public getUserQuery(parameters: IGetUserParameters): string {
     let query = new StringBuilder(Resources.User_GetUser);
 
-    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.User));
-    query.addParameterToQuery("skip_status", parameters.skipStatus);
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
+    StringBuilderExtensions.addParameterToQuery(query, "skip_status", parameters.skipStatus);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -69,10 +72,10 @@ export class UserQueryGenerator implements IUserQueryGenerator {
     let userIdsParameter = this._userQueryParameterGenerator.generateListOfUserIdentifiersParameter(parameters.Users);
     let query = new StringBuilder(Resources.User_GetUsers);
 
-    query.addFormattedParameterToQuery(userIdsParameter);
-    query.addParameterToQuery("skip_status", parameters.skipStatus);
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, userIdsParameter);
+    StringBuilderExtensions.addParameterToQuery(query, "skip_status", parameters.skipStatus);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -81,9 +84,9 @@ export class UserQueryGenerator implements IUserQueryGenerator {
   public getFriendIdsQuery(parameters: IGetFriendIdsParameters): string {
     let query = new StringBuilder(Resources.User_GetFriends);
 
-    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.User));
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
     this._queryParameterGenerator.appendCursorParameters(query, parameters);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -91,9 +94,9 @@ export class UserQueryGenerator implements IUserQueryGenerator {
   public getFollowerIdsQuery(parameters: IGetFollowerIdsParameters): string {
     let query = new StringBuilder(Resources.User_GetFollowers);
 
-    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.User));
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
     this._queryParameterGenerator.appendCursorParameters(query, parameters);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -104,9 +107,9 @@ export class UserQueryGenerator implements IUserQueryGenerator {
 
     let query = new StringBuilder(Resources.Friendship_GetRelationship);
 
-    query.addFormattedParameterToQuery(sourceParameter);
-    query.addFormattedParameterToQuery(targetParameter);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, sourceParameter);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, targetParameter);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -114,7 +117,7 @@ export class UserQueryGenerator implements IUserQueryGenerator {
   // Download Profile Image
   public downloadProfileImageURL(parameters: IGetProfileImageParameters): string {
     let query = new StringBuilder(parameters.imageUrl.replace("_normal", `_${parameters.imageSize.toString().toLocaleLowerCase()}`));
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
@@ -122,8 +125,8 @@ export class UserQueryGenerator implements IUserQueryGenerator {
   public getBlockUserQuery(parameters: IBlockUserParameters): string {
     let query = new StringBuilder(Resources.User_Block_Create);
 
-    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -131,8 +134,8 @@ export class UserQueryGenerator implements IUserQueryGenerator {
   public getUnblockUserQuery(parameters: IUnblockUserParameters): string {
     let query = new StringBuilder(Resources.User_Block_Destroy);
 
-    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -140,9 +143,9 @@ export class UserQueryGenerator implements IUserQueryGenerator {
   public getReportUserForSpamQuery(parameters: IReportUserForSpamParameters): string {
     let query = new StringBuilder(Resources.User_Report_Spam);
 
-    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
-    query.addParameterToQuery("perform_block", parameters.performBlock);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
+    StringBuilderExtensions.addParameterToQuery(query, "perform_block", parameters.performBlock);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -151,7 +154,7 @@ export class UserQueryGenerator implements IUserQueryGenerator {
     let query = new StringBuilder(Resources.User_Block_List_Ids);
 
     this._queryParameterGenerator.appendCursorParameters(query, parameters);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -160,9 +163,9 @@ export class UserQueryGenerator implements IUserQueryGenerator {
     let query = new StringBuilder(Resources.User_Block_List);
 
     this._queryParameterGenerator.appendCursorParameters(query, parameters);
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
-    query.addParameterToQuery("skip_status", parameters.skipStatus);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addParameterToQuery(query, "skip_status", parameters.skipStatus);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -171,9 +174,9 @@ export class UserQueryGenerator implements IUserQueryGenerator {
   public getFollowUserQuery(parameters: IFollowUserParameters): string {
     let query = new StringBuilder(Resources.Friendship_Create);
 
-    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
-    query.addParameterToQuery("follow", parameters.enableNotifications);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
+    StringBuilderExtensions.addParameterToQuery(query, "follow", parameters.enableNotifications);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -181,10 +184,10 @@ export class UserQueryGenerator implements IUserQueryGenerator {
   public getUpdateRelationshipQuery(parameters: IUpdateRelationshipParameters): string {
     let query = new StringBuilder(Resources.Friendship_Update);
 
-    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
-    query.addParameterToQuery("device", parameters.enableDeviceNotifications);
-    query.addParameterToQuery("retweets", parameters.enableRetweets);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
+    StringBuilderExtensions.addParameterToQuery(query, "device", parameters.enableDeviceNotifications);
+    StringBuilderExtensions.addParameterToQuery(query, "retweets", parameters.enableRetweets);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -192,8 +195,8 @@ export class UserQueryGenerator implements IUserQueryGenerator {
   public getUnfollowUserQuery(parameters: IUnfollowUserParameters): string {
     let query = new StringBuilder(Resources.Friendship_Destroy);
 
-    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -202,7 +205,7 @@ export class UserQueryGenerator implements IUserQueryGenerator {
     let query = new StringBuilder(Resources.Friendship_GetIncomingIds);
 
     this._queryParameterGenerator.appendCursorParameters(query, parameters);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -211,7 +214,7 @@ export class UserQueryGenerator implements IUserQueryGenerator {
     let query = new StringBuilder(Resources.Friendship_GetOutgoingIds);
 
     this._queryParameterGenerator.appendCursorParameters(query, parameters);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -219,8 +222,8 @@ export class UserQueryGenerator implements IUserQueryGenerator {
   public getRelationshipsWithQuery(parameters: IGetRelationshipsWithParameters): string {
     let query = new StringBuilder(Resources.Friendship_GetRelationships);
 
-    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateListOfUserIdentifiersParameter(parameters.users));
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._userQueryParameterGenerator.generateListOfUserIdentifiersParameter(parameters.users));
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -228,7 +231,7 @@ export class UserQueryGenerator implements IUserQueryGenerator {
   // MUTE
   public getUserIdsWhoseRetweetsAreMutedQuery(parameters: IGetUserIdsWhoseRetweetsAreMutedParameters): string {
     let query = new StringBuilder(Resources.Friendship_FriendIdsWithNoRetweets);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
@@ -236,7 +239,7 @@ export class UserQueryGenerator implements IUserQueryGenerator {
     let query = new StringBuilder(Resources.Account_Mute_GetUserIds);
 
     this._queryParameterGenerator.appendCursorParameters(query, parameters);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -245,10 +248,10 @@ export class UserQueryGenerator implements IUserQueryGenerator {
     let query = new StringBuilder(Resources.Account_Mute_GetUsers);
 
     this._queryParameterGenerator.appendCursorParameters(query, parameters);
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
-    query.addParameterToQuery("skip_status", parameters.skipStatus);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addParameterToQuery(query, "skip_status", parameters.skipStatus);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -256,8 +259,8 @@ export class UserQueryGenerator implements IUserQueryGenerator {
   public getMuteUserQuery(parameters: IMuteUserParameters): string {
     let query = new StringBuilder(Resources.Account_Mute_Create);
 
-    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -265,8 +268,8 @@ export class UserQueryGenerator implements IUserQueryGenerator {
   public getUnmuteUserQuery(parameters: IUnmuteUserParameters): string {
     let query = new StringBuilder(Resources.Account_Mute_Destroy);
 
-    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }

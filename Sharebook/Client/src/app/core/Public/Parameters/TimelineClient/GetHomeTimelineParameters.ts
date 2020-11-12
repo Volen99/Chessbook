@@ -15,7 +15,9 @@ export const IGetHomeTimelineParametersToken = new InjectionToken<IGetHomeTimeli
   factory: () => new GetHomeTimelineParameters(),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class GetHomeTimelineParameters extends TimelineRequestParameters implements IGetHomeTimelineParameters {
   constructor(@Inject(IGetHomeTimelineParametersToken) source?: IGetHomeTimelineParameters) {
     if (source) {

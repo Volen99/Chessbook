@@ -1,4 +1,4 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {ICreateAccountActivityWebhookParameters} from "../../../Public/Parameters/AccountActivity/RegisterAccountActivityWebhookParameters";
 import {IGetAccountActivityWebhookEnvironmentsParameters} from "../../../Public/Parameters/AccountActivity/GetAccountActivityWebhookEnvironmentsParameters";
@@ -40,10 +40,12 @@ export interface IAccountActivityClientParametersValidator {
 
 export const IAccountActivityClientParametersValidatorToken = new InjectionToken<IAccountActivityClientParametersValidator>('IAccountActivityClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new AccountActivityClientParametersValidator(Inject(IAccountActivityClientRequiredParametersValidatorToken)),
+  factory: () => new AccountActivityClientParametersValidator(inject(IAccountActivityClientRequiredParametersValidatorToken)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AccountActivityClientParametersValidator implements IAccountActivityClientParametersValidator {
   private readonly _activityClientRequiredParametersValidator: IAccountActivityClientRequiredParametersValidator;
 

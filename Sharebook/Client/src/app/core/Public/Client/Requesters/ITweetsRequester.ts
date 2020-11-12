@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {IGetTweetParameters} from "../../Parameters/TweetsClient/GetTweetParameters";
@@ -114,6 +114,6 @@ export interface ITweetsRequester {
 
 export const ITweetsRequesterToken = new InjectionToken<ITweetsRequester>('ITweetsRequester', {
   providedIn: 'root',
-  factory: () => new TweetsRequester(Inject(TwitterClient), Inject(TwitterClientEvents),
-    Inject(TweetController), Inject(TweetsClientRequiredParametersValidator)),
+  factory: () => new TweetsRequester(inject(TwitterClient), inject(TwitterClientEvents),
+    inject(TweetController), inject(TweetsClientRequiredParametersValidator)),
 });

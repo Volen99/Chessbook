@@ -5,14 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
-    <ProjectReference Include="..\..\..\Sharebook.Common\WorldFeed.Common.csproj" />
-    <ProjectReference Include="..\..\..\Sharebook.WebLogic\WorldFeed.WebLogic.csproj" />
-    <ProjectReference Include="..\..\..\Sharebook\WorldFeed.csproj" />
-    <ProjectReference Include="..\Sharebook.Upload.Application\WorldFeed.Upload.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.1.3" />
@@ -26,5 +18,11 @@
     <Folder Include="Infrastructure\Factories\" />
   </ItemGroup>
 
-
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
+    <ProjectReference Include="..\..\..\Sharebook.Common\Sharebook.Common.csproj" />
+    <ProjectReference Include="..\..\Post\Sharebook.Post.Domain\Sharebook.Post.Domain.csproj" />
+    <ProjectReference Include="..\..\Post\Sharebook.Post.Infrastructure\Sharebook.Post.Infrastructure.csproj" />
+    <ProjectReference Include="..\Sharebook.Upload.Domain\Sharebook.Upload.Domain.csproj" />
+  </ItemGroup>
 </Project>

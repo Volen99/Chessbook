@@ -1,7 +1,7 @@
 import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {ITwitterListIdentifier} from "../../Models/Interfaces/ITwitterListIdentifier";
 import {TwitterListIdentifier} from '../../Models/TwitterListIdentifier';
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 export interface IListParameters extends ICustomRequestParameters {
   // Identifier of a twitter list

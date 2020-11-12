@@ -1,3 +1,5 @@
+import {Inject, Injectable} from "@angular/core";
+
 import {BaseRequester} from "../BaseRequester";
 import {IAccountSettingsRequester} from "../../../core/Public/Client/Requesters/IAccountSettingsRequester";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
@@ -6,7 +8,7 @@ import {
   IAccountSettingsClientRequiredParametersValidator,
   IAccountSettingsClientRequiredParametersValidatorToken
 } from "../../../core/Core/Client/Validators/AccountSettingsClientRequiredParametersValidator";
-import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
+import {ITwitterClientEvents, ITwitterClientEventsToken} from "../../../core/Core/Events/TweetinviGlobalEvents";
 import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {IGetAccountSettingsParameters} from "../../../core/Public/Parameters/AccountSettingsClient/GetAccountSettingsParameters";
 import {IAccountSettingsDTO} from "../../../core/Public/Models/Interfaces/DTO/IAccountSettingsDTO";
@@ -16,9 +18,10 @@ import {IUserDTO} from "../../../core/Public/Models/Interfaces/DTO/IUserDTO";
 import {IUpdateProfileImageParameters} from "../../../core/Public/Parameters/AccountSettingsClient/UpdateProfileImageParameters";
 import {IUpdateProfileBannerParameters} from "../../../core/Public/Parameters/AccountSettingsClient/UpdateProfileBannerParameters";
 import {IRemoveProfileBannerParameters} from "../../../core/Public/Parameters/AccountSettingsClient/RemoveProfileBannerParameters";
-import {Inject, Injectable} from "@angular/core";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AccountSettingsRequester extends BaseRequester implements IAccountSettingsRequester {
   private readonly _accountSettingsController: IAccountSettingsController;
   private readonly _validator: IAccountSettingsClientRequiredParametersValidator;
@@ -34,31 +37,31 @@ export class AccountSettingsRequester extends BaseRequester implements IAccountS
 
   public getAccountSettingsAsync(parameters: IGetAccountSettingsParameters): Promise<ITwitterResult<IAccountSettingsDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountSettingsController.getAccountSettingsAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountSettingsController.getAccountSettingsAsync(parameters, request));
   }
 
   public updateAccountSettingsAsync(parameters: IUpdateAccountSettingsParameters): Promise<ITwitterResult<IAccountSettingsDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountSettingsController.updateAccountSettingsAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountSettingsController.updateAccountSettingsAsync(parameters, request));
   }
 
   public updateProfileAsync(parameters: IUpdateProfileParameters): Promise<ITwitterResult<IUserDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountSettingsController.updateProfileAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountSettingsController.updateProfileAsync(parameters, request));
   }
 
   public updateProfileImageAsync(parameters: IUpdateProfileImageParameters): Promise<ITwitterResult<IUserDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountSettingsController.updateProfileImageAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountSettingsController.updateProfileImageAsync(parameters, request));
   }
 
   public updateProfileBannerAsync(parameters: IUpdateProfileBannerParameters): Promise<ITwitterResult> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountSettingsController.updateProfileBannerAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountSettingsController.updateProfileBannerAsync(parameters, request));
   }
 
   public removeProfileBannerAsync(parameters: IRemoveProfileBannerParameters): Promise<ITwitterResult> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._accountSettingsController.removeProfileBannerAsync(parameters, request));
+    return super.executeRequestAsync(request => this._accountSettingsController.removeProfileBannerAsync(parameters, request));
   }
 }

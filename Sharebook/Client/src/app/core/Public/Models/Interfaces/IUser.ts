@@ -1,6 +1,5 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
-import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
 import {IUserIdentifier} from "./IUserIdentifier";
 import {ITwitterIterator} from "../../Iterators/ITwitterIterator";
 import {ITwitterList} from "./ITwitterList";
@@ -13,10 +12,11 @@ import {IUserDTO} from "./DTO/IUserDTO";
 import {ITwitterClient} from "../../ITwitterClient";
 import {ITweetDTO} from "./DTO/ITweetDTO";
 import {IUserEntities} from "../Entities/IUserEntities";
-import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {User} from "../../../Core/Models/User";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
 import {UserDTO} from "../../../Core/DTO/UserDTO";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
+import IEquatable from "typescript-dotnet-commonjs/System/IEquatable";
 
 // Contract defining what a user on twitter can do. For more information visit : https://dev.twitter.com/overview/api/users
 export interface IUser extends IUserIdentifier, IEquatable<IUser> {
@@ -217,5 +217,5 @@ export interface IUser extends IUserIdentifier, IEquatable<IUser> {
 
 export const IUserToken = new InjectionToken<IUser>('IUser', {
   providedIn: 'root',
-  factory: () => new User(Inject(UserDTO), Inject(TwitterClient)),
+  factory: () => new User(inject(UserDTO), inject(TwitterClient)),
 });

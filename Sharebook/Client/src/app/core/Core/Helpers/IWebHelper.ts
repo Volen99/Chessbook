@@ -1,13 +1,13 @@
-﻿import {InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 
-import Uri from "../../../c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri";
-import Dictionary from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
-import {Stream} from "stream";
 import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import {WebHelper} from "../../../webLogic/WebHelper";
+import Uri from "typescript-dotnet-commonjs/System/Uri/Uri";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
 
 export interface IWebHelper {
-  getResponseStreamAsync(request: ITwitterRequest): Promise<Stream>;
+  getResponseStreamAsync(request: ITwitterRequest): Promise<any>; // Task<Stream>;
 
   getUriParameters(uri: Uri): Dictionary<string, string>;
 
@@ -22,5 +22,5 @@ export interface IWebHelper {
 
 export const IWebHelperToken = new InjectionToken<IWebHelper>('IWebHelper', {
   providedIn: 'root',
-  factory: () => new WebHelper(),
+  factory: () => new WebHelper(inject(HttpClient)),
 });

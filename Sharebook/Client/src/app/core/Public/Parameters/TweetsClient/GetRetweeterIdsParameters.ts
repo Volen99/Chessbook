@@ -2,7 +2,7 @@ import {CursorQueryParameters, ICursorQueryParameters} from "../CursorQueryParam
 import {ITweetIdentifier} from "../../Models/Interfaces/ITweetIdentifier";
 import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {TweetIdentifier} from "../../Models/TweetIdentifier";
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-retweeters-ids
 export interface IGetRetweeterIdsParameters extends ICursorQueryParameters {

@@ -1,10 +1,10 @@
 import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {IAuthenticationRequest} from "../../Models/Authentication/IAuthenticationRequest";
-import Uri from "../../../../c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri";
 import {IAuthenticationRequestStore} from "../../Auth/LocalAuthenticationRequestStore";
-import Exception from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exception";
-import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
+import Uri from "typescript-dotnet-commonjs/System/Uri/Uri";
+import Exception from "typescript-dotnet-commonjs/System/Exception";
+import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
 
 // For more information visit: https://developer.twitter.com/en/docs/basics/authentication/api-reference/access_token
 export interface IRequestCredentialsParameters extends ICustomRequestParameters {
@@ -40,6 +40,7 @@ export class RequestCredentialsParameters extends CustomRequestParameters implem
       callbackUrl = callbackUriOrUrl.absoluteUri;
     }
 
+    // @ts-ignore
     let oAuthVerifier = callbackUrl.getURLParameter("oauth_verifier");
     return new RequestCredentialsParameters(oAuthVerifier, authRequest);
   }
@@ -60,9 +61,10 @@ export class RequestCredentialsParameters extends CustomRequestParameters implem
 
     await authenticationRequestStore.removeAuthenticationTokenAsync(tokenId); // .ConfigureAwait(false);
 
+    // @ts-ignore
     let oAuthVerifier = callbackUrl.getURLParameter("oauth_verifier");
     if (oAuthVerifier == null) {
-      throw new ArgumentException(`oauth_verifier query parameter not found, this is required to authenticate the user`, nameof(callbackUrl));
+      throw new ArgumentException(`oauth_verifier query parameter not found, this is required to authenticate the user`, `nameof(callbackUrl)`);
     }
 
     return new RequestCredentialsParameters(oAuthVerifier, authToken);

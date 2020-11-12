@@ -1,8 +1,6 @@
 ﻿import {ITwitterRequest} from "src/app/core/Public/Models/Interfaces/ITwitterRequest";
-import {SharebookException} from "../../core/Public/Exceptions/SharebookException";
 import {ITwitterClient} from "../../core/Public/ITwitterClient";
-import Tweetinvi from "../../core/Core/Events/TweetinviGlobalEvents";
-import ITwitterClientEvents = Tweetinvi.Core.Events.ITwitterClientEvents;
+import {ITwitterClientEvents} from "../../core/Core/Events/TweetinviGlobalEvents";
 
 export interface IBaseRequester {
 }
@@ -16,12 +14,12 @@ export abstract class BaseRequester implements IBaseRequester {
     this.TwitterClient = client;
   }
 
-  public CreateRequest(): ITwitterRequest {
+  public createRequest(): ITwitterRequest {
     return this.TwitterClient.createRequest();
   }
 
   // 101% buggy
-  protected async ExecuteRequestAsync<T = void>(action: (request?: ITwitterRequest) => Promise<T>, request?: ITwitterRequest): Promise<T> {
+  protected async executeRequestAsync<T = any>(action: (request?: ITwitterRequest) => Promise<T | void>, request?: ITwitterRequest): Promise<T> {
     try {
       if (request) {
         let result: void | T = await action();
@@ -33,9 +31,9 @@ export abstract class BaseRequester implements IBaseRequester {
         let requestNew: ITwitterRequest = this.TwitterClient.createRequest();
         await action(requestNew);
       }
-    } catch (ex: SharebookException) {
+    } catch (ex) {
       this._twitterClientEvents.RaiseOnTwitterException(ex);
-      throw;
+      throw ex;
     }
   }
 

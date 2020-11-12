@@ -91,7 +91,8 @@
     "semicolon": true,
     "no-trailing-whitespace": false, // muhahahaha
     "no-empty-interface": false,
-    "unified-signatures": false
+    "unified-signatures": false,
+    "no-string-literal": false
   },
   "rulesDirectory": [
     "codelyzer"

@@ -1,43 +1,43 @@
-﻿import {EventArgs} from "../../../c#-objects/TypeScript.NET-Core/packages/Events/source/EventArgs";
-import {ITwitterQuery} from "../Models/Interfaces/ITwitterQuery";
+﻿import {ITwitterQuery} from "../Models/Interfaces/ITwitterQuery";
 import {ITwitterCredentials} from '../Models/Authentication/TwitterCredentials';
 import {IEndpointRateLimit} from '../Models/RateLimits/IEndpointRateLimit';
-import DateTime from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime';
-import TimeSpan from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan';
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
+import TimeSpan from "typescript-dotnet-commonjs/System/Time/TimeSpan";
 
-export class QueryExecutionEventArgs extends EventArgs {
+export class QueryExecutionEventArgs /*extends EventArgs*/ {
   constructor(twitterQuery: ITwitterQuery) {
-    super();
-    this.TwitterQuery = twitterQuery;
+    // super();
+
+    this.twitterQuery = twitterQuery;
   }
 
   // Contains all the required information to execute a request on the Twitter REST API.
-  public TwitterQuery: ITwitterQuery;
+  public twitterQuery: ITwitterQuery;
 
   // Endpoint URL.
-  get Url(): string {
-    return this.TwitterQuery.url;
+  get url(): string {
+    return this.twitterQuery.url;
   }
 
   // Credentials used to execute the query.
-  get Credentials(): ITwitterCredentials {
-    return this.TwitterQuery.twitterCredentials;
+  get credentials(): ITwitterCredentials {
+    return this.twitterQuery.twitterCredentials;
   }
 
   // Endpoint Rate Limits information.
-  get QueryRateLimit(): IEndpointRateLimit {
-    return this.TwitterQuery.queryRateLimit;
+  get queryRateLimit(): IEndpointRateLimit {
+    return this.twitterQuery.queryRateLimit;
   }
 
   // Date at which the Twitter query will be ready to be executed.
-  get DateOfQueryExecution(): DateTime/*?*/ {
-    return this.TwitterQuery.dateWhenCredentialsWillHaveTheRequiredRateLimits;
+  get dateOfQueryExecution(): DateTime /*?*/ {
+    return this.twitterQuery.dateWhenCredentialsWillHaveTheRequiredRateLimits;
   }
 
   // Recommended time to wait before executing such a query, in order to ensure that the twitter
   // limitations won't be retuning an error.
-  get TimeToWaitBeforeExecutingTheQuery(): TimeSpan/*?*/ {
-    return this.TwitterQuery.timeToWaitBeforeExecutingTheQuery;
+  get timeToWaitBeforeExecutingTheQuery(): TimeSpan/*?*/ {
+    return this.twitterQuery.timeToWaitBeforeExecutingTheQuery;
   }
 }
 

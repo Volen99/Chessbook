@@ -30,16 +30,15 @@
 
 import {HashAlgorithm} from "./HashAlgorithm";
 
-export abstract class SHA1 extends HashAlgorithm
-    {
-        protected constructor()
-        {
-           super._hashSizeValue = 160;
-        }
+export abstract class SHA1 extends HashAlgorithm {
+  protected constructor() {
+    super();
 
-        public static new SHA1 Create(hashName: string)
-        {
-            return Activator.CreateInstance<SHA1CryptoServiceProvider>();
-        }
-    }
+    super._hashSizeValue = 160;
+  }
+
+  // public static new SHA1 Create(hashName: string)
+  // {
+  //     return Activator.CreateInstance<SHA1CryptoServiceProvider>();
+  // }
 }

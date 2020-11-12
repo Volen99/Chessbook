@@ -1,63 +1,70 @@
-﻿import Task from "../c#-objects/TypeScript.NET-Core/packages/Threading/source/Tasks/Task";
+﻿import {HttpClient} from '@angular/common/http';
+
 import {ITwitterRequest} from "../core/Public/Models/Interfaces/ITwitterRequest";
 import {IWebHelper} from "../core/Core/Helpers/IWebHelper";
-import {Stream} from "stream";
-import Uri from "../c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri";
-import Dictionary from "../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
+import {UriKind} from "../core/Public/Models/Enum/uri-kind";
+import {SharebookConsts} from "../core/Public/sharebook-consts";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
+import Uri from "typescript-dotnet-commonjs/System/Uri/Uri";
+import Type from "typescript-dotnet-commonjs/System/Types";
+import Regex from "typescript-dotnet-commonjs/System/Text/RegularExpressions";
+import {Injectable} from "@angular/core";
 
+@Injectable({
+  providedIn: 'root',
+})
 export class WebHelper implements IWebHelper {
-  constructor(request: ITwitterRequest): Task<Stream> {
-    let httpClient = new HttpClient();
-    return httpClient.GetStreamAsync(request.query.url);
+  private _httpClient: HttpClient;
+
+  constructor(httpClient: HttpClient) {
+    this._httpClient = httpClient;
   }
 
-        public getURLParameters(url: string): Dictionary<string, string>
-  {
-            return GetUriParameters(new Uri(url));
-        }
+  public getResponseStreamAsync(request: ITwitterRequest): Promise<any> {
+    // @ts-ignore
+    return this._httpClient.get(request.query.url);
+  }
 
-        public  getUriParameters(uri: Uri): Dictionary<string, string>
-        {
-            return GetQueryParameters(uri.Query);
-        }
+  public getURLParameters(url: string): Dictionary<string, string> {
+    return this.getUriParameters(Uri.from(url));
+  }
 
-        public getQueryParameters(queryUrl: string):  Dictionary<string, string>
-  {
-            var uriParameters = new Dictionary<string, string>();
+  public getUriParameters(uri: Uri): Dictionary<string, string> {
+    return this.getQueryParameters(uri.query);
+  }
 
-            if (!string.IsNullOrEmpty(queryUrl))
-            {
-                foreach (Match variable in Regex.Matches(queryUrl, @"(?<varName>[^&?=]+)=(?<value>[^&?=]*)"))
-                {
-                    uriParameters.Add(variable.Groups["varName"].Value, variable.Groups["value"].Value);
-                }
-            }
+  public getQueryParameters(queryUrl: string): Dictionary<string, string> {
+    let uriParameters = new Dictionary<string, string>();
 
-            return uriParameters;
-        }
-
-        public  getBaseURL(url: string): string
-        {
-            if (string.IsNullOrWhiteSpace(url))
-            {
-                return null;
-            }
-
-            if (Uri.TryCreate(url, UriKind.Absolute, out var uri))
-            {
-                return GetBaseURL(uri);
-            }
-
-            return null;
-        }
-
-        public  getBaseURL(uri: Uri): string
-        {
-            if (string.IsNullOrEmpty(uri.Query))
-            {
-                return uri.AbsoluteUri;
-            }
-
-            return uri.AbsoluteUri.Replace(uri.Query, string.Empty);
-        }
+    if (queryUrl) {
+      let regex = new Regex("(?<varName>[^&?=]+)=(?<value>[^&?=]*)"); // escape?
+      for (let variable/*: Match*/ of regex.matches(queryUrl)) {
+        uriParameters.addByKeyValue(variable.groups[`varName`].value, variable.groups[`value`].value);
+      }
     }
+
+    return uriParameters;
+  }
+
+  public getBaseURL(urlOrUri: string | Uri): string {
+    let uriCurrent: Uri;
+    if (Type.isString(urlOrUri) || Type.isNullOrUndefined(urlOrUri)) {
+      if (!urlOrUri) {
+        return null;
+      }
+
+      uriCurrent = Uri.from(urlOrUri);
+      if (!uriCurrent) {
+        return null;
+      }
+    } else {
+      uriCurrent = urlOrUri;
+    }
+
+    if (!uriCurrent.query) {
+      return uriCurrent.absoluteUri;
+    }
+
+    return uriCurrent.absoluteUri.replace(uriCurrent.query, SharebookConsts.EMPTY);
+  }
+}

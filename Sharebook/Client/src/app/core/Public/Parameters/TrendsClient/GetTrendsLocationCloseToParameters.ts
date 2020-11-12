@@ -1,7 +1,7 @@
 import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {ICoordinates} from "../../Models/Interfaces/ICoordinates";
 import {Coordinates} from '../../Models/Coordinates';
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 // For more information read : https://developer.twitter.com/en/docs/trends/locations-with-trending-topics/api-reference/get-trends-closest
 export interface IGetTrendsLocationCloseToParameters extends ICustomRequestParameters {

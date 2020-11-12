@@ -37,8 +37,8 @@ namespace Sharebook.Upload
 
         public virtual IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddDomain()
-                .AddApplication(this.Configuration);
+            //services.AddDomain()
+            //    .AddApplication(this.Configuration);
 
             services
                 .AddCustomMvc()

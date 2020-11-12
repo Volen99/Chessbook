@@ -1,6 +1,4 @@
-﻿import InvalidOperationException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/InvalidOperationException';
-import Regex from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/RegularExpressions";
-import {ITwitterIterator} from "../../Public/Iterators/ITwitterIterator";
+﻿import {ITwitterIterator} from "../../Public/Iterators/ITwitterIterator";
 import {IUserIdentifier} from "../../Public/Models/Interfaces/IUserIdentifier";
 import {Stream} from "stream";
 import {ImageSize} from "../../Public/Models/Enum/ImageSize";
@@ -9,7 +7,6 @@ import {IUserDTO} from "../../Public/Models/Interfaces/DTO/IUserDTO";
 import {ITwitterClient} from "../../Public/ITwitterClient";
 import {IUser} from "../../Public/Models/Interfaces/IUser";
 import {ITweetDTO} from "../../Public/Models/Interfaces/DTO/ITweetDTO";
-import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {SharebookConsts} from "../../Public/sharebook-consts";
 import {GetFriendIdsParameters} from "../../Public/Parameters/UsersClient/GetFriendIdsParameters";
 import {IMultiLevelCursorIterator} from "../../Public/Iterators/IMultiLevelCursorIterator";
@@ -21,7 +18,10 @@ import {ITweet} from "../../Public/Models/Interfaces/ITweet";
 import {ITwitterList} from "../../Public/Models/Interfaces/ITwitterList";
 import {GetListsOwnedByAccountByUserParameters} from "../../Public/Parameters/ListsClient/GetListsOwnedByUserParameters";
 import {GetProfileImageParameters} from "../../Public/Parameters/UsersClient/GetProfileImageParameters";
-import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import InvalidOperationException from "typescript-dotnet-commonjs/System/Exceptions/InvalidOperationException";
+import Regex from "typescript-dotnet-commonjs/System/Text/RegularExpressions";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 // Tweetinvi User.
 export class User implements IUser {

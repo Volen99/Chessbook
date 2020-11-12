@@ -1,4 +1,4 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterResult} from "../Web/TwitterResult";
@@ -21,5 +21,5 @@ export interface ITimelineController {
 
 export const ITimelineControllerToken = new InjectionToken<ITimelineController>('ITimelineController', {
   providedIn: 'root',
-  factory: () => new TimelineController(Inject(TimelineQueryExecutor), Inject(PageCursorIteratorFactories)),
+  factory: () => new TimelineController(inject(TimelineQueryExecutor), inject(PageCursorIteratorFactories)),
 });

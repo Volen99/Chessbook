@@ -1,7 +1,7 @@
 import {GetAccountListMembershipsParameters, IGetAccountListMembershipsParameters} from "./GetAccountListMembershipsParameters";
 import {IUserIdentifier} from "../../../Models/Interfaces/IUserIdentifier";
 import {UserIdentifier} from '../../../Models/UserIdentifier';
-import Type from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 // For more information visit: https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-memberships
 export interface IGetUserListMembershipsParameters extends IGetAccountListMembershipsParameters {

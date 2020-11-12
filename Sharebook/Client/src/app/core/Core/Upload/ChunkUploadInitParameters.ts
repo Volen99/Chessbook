@@ -15,7 +15,9 @@ export const IChunkUploadInitParametersToken = new InjectionToken<IChunkUploadIn
   factory: () => new ChunkUploadInitParameters(),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ChunkUploadInitParameters implements IChunkUploadInitParameters {
   constructor() {
     this.mediaType = "media";

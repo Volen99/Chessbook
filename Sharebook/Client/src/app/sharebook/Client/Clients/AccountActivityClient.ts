@@ -37,11 +37,6 @@ import {
   IUnsubscribeFromAccountActivityParameters,
   UnsubscribeFromAccountActivityParameters
 } from "../../../core/Public/Parameters/AccountActivity/UnsubscribeFromAccountActivityParameters";
-import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
-import {
-  IRemoveProfileBannerParameters,
-  RemoveProfileBannerParameters
-} from "../../../core/Public/Parameters/AccountSettingsClient/RemoveProfileBannerParameters";
 import {
   DeleteAccountActivityWebhookParameters,
   IDeleteAccountActivityWebhookParameters
@@ -53,8 +48,11 @@ import {
   IGetAccountActivitySubscriptionsParameters
 } from "../../../core/Public/Parameters/AccountActivity/GetListOfSubscriptionsParameters";
 import {Inject, Injectable} from "@angular/core";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AccountActivityClient implements IAccountActivityClient {
   private readonly _accountActivityRequester: IAccountActivityRequester;
   private readonly _client: ITwitterClient;
@@ -70,7 +68,9 @@ export class AccountActivityClient implements IAccountActivityClient {
   }
 
   public createRequestHandler(): IAccountActivityRequestHandler {
-    return this._client.createTwitterExecutionContext().container.Resolve<IAccountActivityRequestHandler>();
+   // return this._client.createTwitterExecutionContext().container.Resolve<IAccountActivityRequestHandler>();
+
+    return null;
   }
 
   public async createAccountActivityWebhookAsync(environmentOrParameters: string | ICreateAccountActivityWebhookParameters,

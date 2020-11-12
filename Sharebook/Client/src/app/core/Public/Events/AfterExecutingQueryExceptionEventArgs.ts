@@ -7,6 +7,6 @@ export class AfterExecutingQueryExceptionEventArgs extends AfterExecutingQueryEv
   constructor(twitterQuery: ITwitterQuery, exception: SharebookException) {
     super(twitterQuery, null, null);
 
-    super.Exception = exception;
+    super.exception = exception;
   }
 }

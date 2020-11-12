@@ -1,8 +1,6 @@
 import {Injectable, InjectionToken} from "@angular/core";
 
 import {IAuthClientParametersValidator} from "./AuthClientParametersValidator";
-import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
-import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import {IReadOnlyConsumerCredentialsWithoutBearer} from "../../Models/Authentication/ReadOnlyConsumerCredentials";
 import {IReadOnlyTwitterCredentials} from "../../Models/Authentication/ReadOnlyTwitterCredentials";
 import {ICreateBearerTokenParameters} from "../../../Public/Parameters/Auth/CreateBearerTokenParameters";
@@ -10,6 +8,8 @@ import {ITwitterRequest} from 'src/app/core/Public/Models/Interfaces/ITwitterReq
 import {RequestCredentialsParameters} from "../../../Public/Parameters/Auth/RequestCredentialsParameters";
 import {AuthParameters} from "./parameters-types";
 import {IInvalidateAccessTokenParameters} from "../../../Public/Parameters/Auth/InvalidateAccessTokenParameters";
+import ArgumentNullException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentNullException";
+import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
 
 export interface IAuthClientRequiredParametersValidator extends IAuthClientParametersValidator {
 }
@@ -19,11 +19,13 @@ export const IAuthClientRequiredParametersValidatorToken = new InjectionToken<IA
   factory: () => new AuthClientRequiredParametersValidator(),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthClientRequiredParametersValidator implements IAuthClientRequiredParametersValidator {
   public validate(parameters: AuthParameters, request?: ITwitterRequest): void {
     if (parameters == null) {
-      throw new ArgumentNullException(nameof(parameters));
+      throw new ArgumentNullException(`nameof(parameters)`);
     }
 
     if (this.isICreateBearerTokenParameters(parameters)) {
@@ -31,14 +33,14 @@ export class AuthClientRequiredParametersValidator implements IAuthClientRequire
 
       if (parameters instanceof RequestCredentialsParameters) {
         if (!parameters.verifierCode) {
-          throw new ArgumentNullException(`${nameof(parameters.verifierCode)}", "If you received a null verifier code, the authentication failed`);
+          throw new ArgumentNullException(`${`nameof(parameters.verifierCode)`}", "If you received a null verifier code, the authentication failed`);
         }
 
         if (parameters.authRequest == null) {
-          throw new ArgumentNullException(`${nameof(parameters.authRequest)}`);
+          throw new ArgumentNullException(`${`nameof(parameters.authRequest)`}`);
         }
 
-        AuthClientRequiredParametersValidator.throwIfInvalidConsumerCredentials(`${nameof(parameters.authRequest)}`, parameters.authRequest);
+        AuthClientRequiredParametersValidator.throwIfInvalidConsumerCredentials(`${`nameof(parameters.authRequest)`}`, parameters.authRequest);
       } else {
         AuthClientRequiredParametersValidator.throwIfInvalidConsumerCredentials("client.Credentials", credentials);
       }
@@ -55,28 +57,28 @@ export class AuthClientRequiredParametersValidator implements IAuthClientRequire
       AuthClientRequiredParametersValidator.throwIfInvalidConsumerCredentials(credentialsParameterName, credentials);
 
       if (!credentials?.bearerToken) {
-        throw new ArgumentException("Cannot be null or empty", `${credentialsParameterName}.${nameof(credentials.bearerToken)}`);
+        throw new ArgumentException("Cannot be null or empty", `${credentialsParameterName}.${`nameof(credentials.bearerToken)`}`);
       }
     }
   }
 
   public static throwIfInvalidConsumerCredentials(credentialsParameterName: string, credentials: IReadOnlyConsumerCredentialsWithoutBearer): void {
     if (!(credentials?.consumerKey)) {
-      throw new ArgumentException("Cannot be null or empty", `${credentialsParameterName}.${nameof(credentials.consumerKey)}`);
+      throw new ArgumentException("Cannot be null or empty", `${credentialsParameterName}.${`nameof(credentials.consumerKey)`}`);
     }
 
     if (!(credentials.consumerSecret)) {
-      throw new ArgumentException("Cannot be null or empty", `${credentialsParameterName}.${nameof(credentials.consumerSecret)}`);
+      throw new ArgumentException("Cannot be null or empty", `${credentialsParameterName}.${`nameof(credentials.consumerSecret)`}`);
     }
   }
 
   public static throwIfInvalidAccessCredentials(credentialsParameterName: string, credentials: IReadOnlyTwitterCredentials): void {
     if (!(credentials?.accessToken)) {
-      throw new ArgumentException("Cannot be null or empty", `${credentialsParameterName}.${nameof(credentials.accessToken)}`);
+      throw new ArgumentException("Cannot be null or empty", `${credentialsParameterName}.${`nameof(credentials.accessToken)`}`);
     }
 
     if (!(credentials.accessTokenSecret)) {
-      throw new ArgumentException("Cannot be null or empty", `${credentialsParameterName}.${nameof(credentials.accessTokenSecret)}`);
+      throw new ArgumentException("Cannot be null or empty", `${credentialsParameterName}.${`nameof(credentials.accessTokenSecret)`}`);
     }
   }
 

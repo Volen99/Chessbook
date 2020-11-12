@@ -1,6 +1,6 @@
 ﻿import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {ICoordinates} from "../../Models/Interfaces/ICoordinates";
-import Dictionary from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
 
 export enum Granularity {
   Undefined,

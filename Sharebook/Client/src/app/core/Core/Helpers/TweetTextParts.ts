@@ -1,5 +1,5 @@
 ﻿import {ITweetTextParts} from "../../Public/Models/Interfaces/ITweetTextParts";
-import Regex from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/RegularExpressions";
+import Regex from "typescript-dotnet-commonjs/System/Text/RegularExpressions";
 
 export class TweetTextParts implements ITweetTextParts {
   constructor(text: string) {
@@ -7,13 +7,13 @@ export class TweetTextParts implements ITweetTextParts {
 
     let stringMatches = regex.match(text);
 
-    let prefix = stringMatches.groups["prefix"];
-    let content = stringMatches.groups["content"];
+    let prefix = stringMatches.groups[`prefix`];
+    let content = stringMatches.groups[`content`];
 
     this.prefix = prefix.Value;
     this.content = content.Value;
 
-    let mentionCaptures = stringMatches.groups["mention"].Captures;
+    let mentionCaptures = stringMatches.groups[`mention`].Captures;
 
     let mentions = new Array<string>();
     for (let mention of mentionCaptures) {

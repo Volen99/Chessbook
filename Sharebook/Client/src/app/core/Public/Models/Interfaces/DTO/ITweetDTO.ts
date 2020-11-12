@@ -1,15 +1,15 @@
 ﻿import {InjectionToken} from "@angular/core";
 
 import {ITweetIdentifier} from "../ITweetIdentifier";
-import Dictionary from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
 import {IPlace} from "../IPlace";
 import {IExtendedTweet} from './IExtendedTweet';
 import {ICoordinates} from "../ICoordinates";
 import {ITweetEntities} from "../../Entities/ITweetEntities";
 import {IUserDTO} from "./IUserDTO";
-import { Language } from '../../Enum/Language';
-import DateTime from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {TweetDTO} from "../../../../Core/DTO/TweetDTO";
+import {Language} from "../../../../Core/Attributes/Language";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
 
 export interface ITweetDTO extends ITweetIdentifier {
   text: string;
@@ -72,7 +72,7 @@ export interface ITweetDTO extends ITweetIdentifier {
 
   contributorsIds: number[];
 
-  contributors: Iterable<number>;
+  contributors: Array<number>;
 
   source: string;
 
@@ -82,7 +82,7 @@ export interface ITweetDTO extends ITweetIdentifier {
 
   withheldCopyright: boolean;
 
-  withheldInCountries: Iterable<string>;
+  withheldInCountries: Array<string>;
 
   withheldScope: string;
 

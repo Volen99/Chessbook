@@ -1,6 +1,7 @@
-﻿import Dictionary from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
-import {IUserIdentifier} from "./Interfaces/IUserIdentifier";
-import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+﻿import {IUserIdentifier} from "./Interfaces/IUserIdentifier";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
+import Type from "typescript-dotnet-commonjs/System/Types";
+import {DictionaryExtensions} from "../../Core/Extensions/DictionaryExtensions";
 
 // export interface IUserDictionary<T>
 //     {
@@ -41,18 +42,18 @@ export class UserDictionary<T> implements IUserDictionary<T> {
   }
 
   public addOrUpdate(user: IUserIdentifier, element: T): void {
-    this._userIdentifierDictionary.addOrUpdate(user, element);
+    DictionaryExtensions.addOrUpdate(this._userIdentifierDictionary, user, element);
 
     if (user.id > 0) {
-      this._userIdDictionary.addOrUpdate(user.id.toString(/*CultureInfo.InvariantCulture*/), element);
+      DictionaryExtensions.addOrUpdate(this._userIdDictionary, user.id.toString(/*CultureInfo.InvariantCulture*/), element);
     }
 
     if (user.idStr) {
-      this._userIdDictionary.addOrUpdate(user.idStr, element);
+      DictionaryExtensions.addOrUpdate(this._userIdDictionary, user.idStr, element);
     }
 
     if (user.screenName != null) {
-      this._usernameDictionary.addOrUpdate(user.screenName, element);
+      DictionaryExtensions.addOrUpdate(this._usernameDictionary, user.screenName, element);
     }
   }
 

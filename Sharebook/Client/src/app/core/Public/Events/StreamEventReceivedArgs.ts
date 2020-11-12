@@ -1,8 +1,8 @@
 ﻿// Event informing that a message was received
 export class StreamEventReceivedArgs {
   constructor(json: string) {
-    this.Json = json;
+    this.json = json;
   }
 
-  public Json: string;
+  public json: string;
 }

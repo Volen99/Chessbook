@@ -1,7 +1,7 @@
 ﻿import {IGetTrendsAtResult} from "../../Public/Models/Interfaces/IGetTrendsAtResult";
 import {IWoeIdLocation} from "../../Public/Models/Interfaces/IWoeIdLocation";
 import {ITrend} from "../../Public/Models/Interfaces/ITrend";
-import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 export class GetTrendsAtResult implements IGetTrendsAtResult {
   // [JsonProperty("as_of")]

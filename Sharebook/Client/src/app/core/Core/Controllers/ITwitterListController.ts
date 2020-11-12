@@ -1,4 +1,4 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterResult} from "../Web/TwitterResult";
@@ -76,5 +76,5 @@ export interface ITwitterListController {
 
 export const ITwitterListControllerToken = new InjectionToken<ITwitterListController>('ITwitterListController', {
   providedIn: 'root',
-  factory: () => new TwitterListController(Inject(TwitterListQueryExecutor), Inject(PageCursorIteratorFactories)),
+  factory: () => new TwitterListController(inject(TwitterListQueryExecutor), inject(PageCursorIteratorFactories)),
 });

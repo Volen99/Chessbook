@@ -1,4 +1,4 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {
   AccountActivityClientParametersValidator,
@@ -73,6 +73,7 @@ import {
   SearchParameters, TimelineParameters, TrendsParameters, TweetsParameters, UploadParameters, UserParameters
 } from "./parameters-types";
 
+// @ts-ignore
 export interface IParametersValidator extends
   IAccountActivityClientParametersValidator,
   IAccountSettingsClientParametersValidator,
@@ -91,21 +92,23 @@ export interface IParametersValidator extends
 export const IParametersValidatorToken = new InjectionToken<IParametersValidator>('IParametersValidator', {
   providedIn: 'root',
   factory: () => new ParametersValidator(
-    Inject(AccountActivityClientParametersValidator),
-    Inject(AccountSettingsClientParametersValidator),
-    Inject(AuthClientParametersValidator),
-    Inject(HelpClientParametersValidator),
-    Inject(MessagesClientParametersValidator),
-    Inject(SearchClientParametersValidator),
-    Inject(TwitterListsClientParametersValidator),
-    Inject(TrendsClientParametersValidator),
-    Inject(TimelineClientParametersValidator),
-    Inject(TweetsClientParametersValidator),
-    Inject(UploadClientParametersValidator),
-    Inject(UsersClientParametersValidator)),
+    inject(AccountActivityClientParametersValidator),
+    inject(AccountSettingsClientParametersValidator),
+    inject(AuthClientParametersValidator),
+    inject(HelpClientParametersValidator),
+    inject(MessagesClientParametersValidator),
+    inject(SearchClientParametersValidator),
+    inject(TwitterListsClientParametersValidator),
+    inject(TrendsClientParametersValidator),
+    inject(TimelineClientParametersValidator),
+    inject(TweetsClientParametersValidator),
+    inject(UploadClientParametersValidator),
+    inject(UsersClientParametersValidator)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ParametersValidator implements IParametersValidator {
   private readonly _accountActivityClientParametersValidator: IAccountActivityClientParametersValidator;
   private readonly _accountSettingsClientParametersValidator: IAccountSettingsClientParametersValidator;
@@ -158,7 +161,8 @@ export class ParametersValidator implements IParametersValidator {
     | TimelineParameters
     | TweetsParameters
     | UploadParameters
-    | UserParameters, request?: ITwitterRequest): void {
+    | UserParameters,
+                  request?: ITwitterRequest): void {
     if (parameters instanceof AddMediaMetadataParameters) {                    // TODO: might bug
       this._uploadClientParametersValidator.validate(parameters);
     } else if (ParametersValidator.isAccountActivityParameters(parameters)) {
@@ -167,6 +171,7 @@ export class ParametersValidator implements IParametersValidator {
       this._accountSettingsClientParametersValidator.validate(parameters);
     } else if (ParametersValidator.isAuthParameters(parameters)) {
       if (!request) {
+        // @ts-ignore
         this._authClientParametersValidator.validate(parameters);
       } else {
         this._authClientParametersValidator.validate(parameters, request);
@@ -174,6 +179,7 @@ export class ParametersValidator implements IParametersValidator {
     } else if (ParametersValidator.isHelpParameters(parameters)) {
       this._helpClientParametersValidator.validate(parameters);
     } else if (ParametersValidator.isMessagesParameters(parameters)) {
+      // @ts-ignore
       this._messagesClientParametersValidator.validate(parameters);
     } else if (ParametersValidator.isSearchParameters(parameters)) {
       this._searchClientParametersValidator.validate(parameters);
@@ -184,6 +190,7 @@ export class ParametersValidator implements IParametersValidator {
     } else if (ParametersValidator.isTimelineParameters(parameters)) {
       this._timelineClientParametersValidator.validate(parameters);
     } else if (ParametersValidator.isTweetsParameters(parameters)) {
+      // @ts-ignore
       this._tweetsClientParametersValidator.validate(parameters);
     } else if (ParametersValidator.isUploadParameters(parameters)) {
       this._uploadClientParametersValidator.validate(parameters);

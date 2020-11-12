@@ -4,7 +4,7 @@ import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
 import {UserIdentifier} from "../../Models/UserIdentifier";
 import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {TweetMode} from '../../Settings/SharebookSettings';
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-favorites-list
 export interface IGetUserFavoriteTweetsParameters extends IMinMaxQueryParameters, ITweetModeParameter {

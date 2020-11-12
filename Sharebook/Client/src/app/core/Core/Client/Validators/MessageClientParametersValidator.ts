@@ -1,7 +1,6 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {SharebookLimits} from "../../../Public/Settings/SharebookLimits";
-import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import {IPublishMessageParameters} from "../../../Public/Parameters/MessageClient/PublishMessageParameters";
 import {IDeleteMessageParameters} from "../../../Public/Parameters/MessageClient/DestroyMessageParameters";
 import {IGetMessageParameters} from "../../../Public/Parameters/MessageClient/GetMessageParameters";
@@ -15,6 +14,7 @@ import {MessagesParameters} from "./parameters-types";
 import {TwitterArgumentLimitException} from "../../../Public/Exceptions/TwitterArgumentLimitException";
 import {QuickReplyOption} from "../../Models/Properties/QuickReplyOption";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
 
 export interface IMessagesClientParametersValidator {
   validate(parameters: IPublishMessageParameters): void;
@@ -28,10 +28,12 @@ export interface IMessagesClientParametersValidator {
 
 export const IMessagesClientParametersValidatorToken = new InjectionToken<IMessagesClientParametersValidator>('IMessagesClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new MessagesClientParametersValidator(Inject(TwitterClient), Inject(MessagesClientRequiredParametersValidator)),
+  factory: () => new MessagesClientParametersValidator(inject(TwitterClient), inject(MessagesClientRequiredParametersValidator)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MessagesClientParametersValidator implements IMessagesClientParametersValidator {
   private readonly _client: ITwitterClient;
   private readonly _messagesClientRequiredParametersValidator: IMessagesClientRequiredParametersValidator;
@@ -48,50 +50,55 @@ export class MessagesClientParametersValidator implements IMessagesClientParamet
 
   public validate(parameters: IPublishMessageParameters | IDeleteMessageParameters |
     IGetMessageParameters | IGetMessagesParameters): void {
+    // @ts-ignore
     this._messagesClientRequiredParametersValidator.validate(parameters);
 
     if (MessagesClientParametersValidator.isIPublishMessageParameters(parameters)) {
+      // @ts-ignore
       if (parameters.text.UTF32Length() > this.Limits.MESSAGE_MAX_SIZE) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.text)}`, this.Limits.MESSAGE_MAX_SIZE,
-          nameof(this.Limits.MESSAGE_MAX_SIZE), "characters");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.text)`}`, this.Limits.MESSAGE_MAX_SIZE,
+          `nameof(this.Limits.MESSAGE_MAX_SIZE)`, "characters");
       }
 
       if (parameters.quickReplyOptions != null && parameters.quickReplyOptions.length > 0) {
         if (parameters.quickReplyOptions.length > this.Limits.MESSAGE_QUICK_REPLY_MAX_OPTIONS) {
-          throw new TwitterArgumentLimitException(`${nameof(parameters.quickReplyOptions)}`,
-            this.Limits.MESSAGE_QUICK_REPLY_MAX_OPTIONS, nameof(this.Limits.MESSAGE_QUICK_REPLY_MAX_OPTIONS), "options");
+          throw new TwitterArgumentLimitException(`${`nameof(parameters.quickReplyOptions)`}`,
+            this.Limits.MESSAGE_QUICK_REPLY_MAX_OPTIONS, `nameof(this.Limits.MESSAGE_QUICK_REPLY_MAX_OPTIONS)`, "options");
         }
 
         // If one option has a description, then they all must: https://developer.twitter.com/en/docs/direct-messages/quick-replies/api-reference/options
         let numberOfOptionsWithDescription = parameters.quickReplyOptions.filter(x => x.description).length;   // tested it works ;)
         if (numberOfOptionsWithDescription > 0 && numberOfOptionsWithDescription !== parameters.quickReplyOptions.length) {
-          throw new ArgumentException("If one Quick Reply Option has a description, then they all must", `${nameof(parameters.quickReplyOptions)}`);
+          throw new ArgumentException("If one Quick Reply Option has a description, then they all must", `${`nameof(parameters.quickReplyOptions)`}`);
         }
 
+        // @ts-ignore
         if (numberOfOptionsWithDescription > 0 && parameters.quickReplyOptions.some(x => x.description.UTF32Length() > this.Limits.MESSAGE_QUICK_REPLY_DESCRIPTION_MAX_LENGTH)) {
-          throw new TwitterArgumentLimitException(`${nameof(parameters.quickReplyOptions)}.${nameof(QuickReplyOption.prototype.description)}`,
-            this.Limits.MESSAGE_QUICK_REPLY_DESCRIPTION_MAX_LENGTH, nameof(this.Limits.MESSAGE_QUICK_REPLY_DESCRIPTION_MAX_LENGTH), "characters per quick option description");
+          throw new TwitterArgumentLimitException(`${`nameof(parameters.quickReplyOptions)`}.${`nameof(QuickReplyOption.prototype.description)`}`,
+            this.Limits.MESSAGE_QUICK_REPLY_DESCRIPTION_MAX_LENGTH, `nameof(this.Limits.MESSAGE_QUICK_REPLY_DESCRIPTION_MAX_LENGTH)`, "characters per quick option description");
         }
 
         if (parameters.quickReplyOptions.some(x => !(x.label))) {
           throw new ArgumentException("Quick Reply Option Label is a required field",
-            `${nameof(parameters)}${nameof(parameters.quickReplyOptions)}.${nameof(QuickReplyOption.prototype.label)}`);
+            `${`nameof(parameters)`}${`nameof(parameters.quickReplyOptions)`}.${`nameof(QuickReplyOption.prototype.label)`}`);
         }
 
+        // @ts-ignore
         if (parameters.quickReplyOptions.some(x => x.label.UTF32Length() > this.Limits.MESSAGE_QUICK_REPLY_LABEL_MAX_LENGTH)) {
-          throw new TwitterArgumentLimitException(`${nameof(parameters.quickReplyOptions)}.${nameof(QuickReplyOption.prototype.label)}`,
-            this.Limits.MESSAGE_QUICK_REPLY_LABEL_MAX_LENGTH, nameof(this.Limits.MESSAGE_QUICK_REPLY_LABEL_MAX_LENGTH), "characters per quick option label");
+          throw new TwitterArgumentLimitException(`${`nameof(parameters.quickReplyOptions)`}.${`nameof(QuickReplyOption.prototype.label)`}`,
+            this.Limits.MESSAGE_QUICK_REPLY_LABEL_MAX_LENGTH, `nameof(this.Limits.MESSAGE_QUICK_REPLY_LABEL_MAX_LENGTH)`, "characters per quick option label");
         }
 
+        // @ts-ignore
         if (parameters.quickReplyOptions.some(x => x.metadata.UTF32Length() > this.Limits.MESSAGE_QUICK_REPLY_METADATA_MAX_LENGTH)) {
-          throw new TwitterArgumentLimitException(`${nameof(parameters.quickReplyOptions)}`,
-            this.Limits.MESSAGE_QUICK_REPLY_METADATA_MAX_LENGTH, nameof(this.Limits.MESSAGE_QUICK_REPLY_METADATA_MAX_LENGTH), "characters per quick option metadata ");
+          throw new TwitterArgumentLimitException(`${`nameof(parameters.quickReplyOptions)`}`,
+            this.Limits.MESSAGE_QUICK_REPLY_METADATA_MAX_LENGTH, `nameof(this.Limits.MESSAGE_QUICK_REPLY_METADATA_MAX_LENGTH)`, "characters per quick option metadata ");
         }
       }
     } else if (MessagesClientParametersValidator.isIGetMessagesParameters(parameters)) {
       let maxPageSize = this.Limits.MESSAGES_GET_MAX_PAGE_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.MESSAGES_GET_MAX_PAGE_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.MESSAGES_GET_MAX_PAGE_SIZE)`, "page size");
       }
     }
   }

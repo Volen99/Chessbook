@@ -3,11 +3,11 @@
 import {DistanceMeasure} from 'src/app/core/Public/Models/Enum/DistanceMeasure';
 import {ICoordinates} from "../../core/Public/Models/Interfaces/ICoordinates";
 import {IGeoCode} from "../../core/Public/Models/Interfaces/IGeoCode";
-import DateTime from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {ISearchTweetsParameters, SearchTweetsParameters} from "../../core/Public/Parameters/Search/SearchTweetsParameters";
 import {ISearchUsersParameters, SearchUsersParameters} from "../../core/Public/Parameters/Search/SearchUsersParameters";
 import {SharebookConsts} from "../../core/Public/sharebook-consts";
-import Type from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 export interface ISearchQueryParameterGenerator {
   createSearchTweetParameter(query: string): ISearchTweetsParameters;
@@ -32,7 +32,9 @@ export const ISearchQueryParameterGeneratorToken = new InjectionToken<ISearchQue
   factory: () => new SearchQueryParameterGenerator(),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class SearchQueryParameterGenerator implements ISearchQueryParameterGenerator {
   public createSearchTweetParameter(queryOrGeoCodeOrCoordinatesOrLatitude: string | IGeoCode | ICoordinates | number,
                                     longitude?: number, radius?: number, measure?: DistanceMeasure): ISearchTweetsParameters {

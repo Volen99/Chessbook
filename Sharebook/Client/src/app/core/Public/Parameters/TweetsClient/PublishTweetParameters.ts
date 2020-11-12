@@ -1,4 +1,4 @@
-﻿import {Injectable, InjectionToken} from "@angular/core";
+﻿import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {ITweetModeParameter} from "../ITweetModeParameter";
@@ -79,7 +79,9 @@ export const IPublishTweetParametersToken = new InjectionToken<IPublishTweetPara
   factory: () => new PublishTweetParameters(),    // TODO: might bug kk
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class PublishTweetParameters extends CustomRequestParameters implements IPublishTweetParameters {
   // @ts-ignore
   constructor(@Inject(IPublishTweetParametersToken) textOrSource?: string | IPublishTweetParameters) {

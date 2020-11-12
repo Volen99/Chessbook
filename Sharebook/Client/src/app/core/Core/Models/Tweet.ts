@@ -4,7 +4,6 @@ import {TweetMode} from "../../Public/Settings/SharebookSettings";
 import {UnicodeHelper} from '../Helpers/UnicodeHelper';
 import {ICoordinates} from "../../Public/Models/Interfaces/ICoordinates";
 import {ITweetIdentifier} from "../../Public/Models/Interfaces/ITweetIdentifier";
-import Dictionary from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary';
 import {IHashtagEntity} from "../../Public/Models/Entities/IHashTagEntity";
 import {IUrlEntity} from "../../Public/Models/Entities/IUrlEntity";
 import {IMediaEntity} from "../../Public/Models/Entities/IMediaEntity";
@@ -14,10 +13,11 @@ import {ITweetDTO} from "../../Public/Models/Interfaces/DTO/ITweetDTO";
 import {ITwitterClient} from "../../Public/ITwitterClient";
 import {IUser} from "../../Public/Models/Interfaces/IUser";
 import {IExtendedTweet} from "../../Public/Models/Interfaces/DTO/IExtendedTweet";
-import {Language} from '../../Public/Models/Enum/Language';
 import {IPlace} from "../../Public/Models/Interfaces/IPlace";
 import {IOEmbedTweet} from "../../Public/Models/Interfaces/IOEmbedTweet";
-import DateTime from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime';
+import {Language} from "../Attributes/Language";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
 
 // Class representing a Tweet. https://dev.twitter.com/docs/api/1/get/statuses/show/%3Aid
 export class Tweet implements ITweet {

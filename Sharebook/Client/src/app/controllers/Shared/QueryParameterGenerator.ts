@@ -2,13 +2,15 @@
 
 import {ITweetIdentifier} from "../../core/Public/Models/Interfaces/ITweetIdentifier";
 import {ICursorQueryParameters} from "../../core/Public/Parameters/CursorQueryParameters";
-import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {IMinMaxQueryParameters} from "../../core/Public/Parameters/MaxAndMinBaseQueryParameters";
 import {ITimelineRequestParameters} from "../../core/Public/Parameters/TimelineRequestParameters";
 import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMode";
 import {OEmbedTweetAlignment, OEmbedTweetTheme} from "../../core/Public/Parameters/TweetsClient/GetOEmbedTweetParameters";
-import {Language} from "../../core/Public/Models/Enum/Language";
 import {SharebookConsts} from "../../core/Public/sharebook-consts";
+import {Languages} from "../../core/Public/Models/Enum/Languages";
+import {Language} from "../../core/Core/Attributes/Language";
+import StringBuilder from "typescript-dotnet-commonjs/System/Text/StringBuilder";
+import {StringBuilderExtensions} from "../../core/Core/Extensions/stringBuilder-extensions";
 
 export interface IQueryParameterGenerator {
   appendCursorParameters(query: StringBuilder, parameters: ICursorQueryParameters): void;
@@ -33,11 +35,13 @@ export const IQueryParameterGeneratorToken = new InjectionToken<IQueryParameterG
   factory: () => new QueryParameterGenerator(),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class QueryParameterGenerator implements IQueryParameterGenerator {
   public appendCursorParameters(query: StringBuilder, parameters: ICursorQueryParameters): void {
-    query.addParameterToQuery("cursor", parameters.cursor);
-    query.addParameterToQuery("count", parameters.pageSize);
+    StringBuilderExtensions.addParameterToQuery(query, "cursor", parameters.cursor);
+    StringBuilderExtensions.addParameterToQuery(query, "count", parameters.pageSize);
   }
 
   public generateCountParameter(count: number): string {
@@ -96,10 +100,10 @@ export class QueryParameterGenerator implements IQueryParameterGenerator {
     return `&include_rts=${includeRetweets}`;
   }
 
-  public generateLanguageParameter(language?: Language): string {
+  public generateLanguageParameter(language: Language): string {
     let languageParameter = SharebookConsts.EMPTY;
-    if (language != null && language !== Language.Undefined) {
-      let languageCode = language.GetLanguageCode();
+    if (language != null && language !== Languages.Undefined) {
+      let languageCode = language.getLanguageCode();
       if (languageCode) {
         languageParameter = `lang=${languageCode}`;
       }
@@ -125,16 +129,16 @@ export class QueryParameterGenerator implements IQueryParameterGenerator {
   }
 
   public addMinMaxQueryParameters(query: StringBuilder, parameters: IMinMaxQueryParameters): void {
-    query.addParameterToQuery("count", parameters.pageSize);
-    query.addParameterToQuery("since_id", parameters.sinceId);
-    query.addParameterToQuery("max_id", parameters.maxId);
+    StringBuilderExtensions.addParameterToQuery(query, "count", parameters.pageSize);
+    StringBuilderExtensions.addParameterToQuery(query, "since_id", parameters.sinceId);
+    StringBuilderExtensions.addParameterToQuery(query, "max_id", parameters.maxId);
   }
 
   public addTimelineParameters(query: StringBuilder, parameters: ITimelineRequestParameters, tweetMode: ComputedTweetMode): void {
     this.addMinMaxQueryParameters(query, parameters);
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
-    query.addParameterToQuery("trim_user", parameters.trimUser);
-    query.addParameterToQuery("tweet_mode", tweetMode);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addParameterToQuery(query, "trim_user", parameters.trimUser);
+    StringBuilderExtensions.addParameterToQuery(query, "tweet_mode", tweetMode);
   }
 
   public generateOEmbedAlignmentParameter(alignment?: OEmbedTweetAlignment): string {

@@ -1,5 +1,5 @@
 {
-  "name": "world-feed",
+  "name": "sharebook",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -22,16 +22,19 @@
     "@aspnet/signalr": "^1.1.4",
     "@ngrx/store": "^9.2.0",
     "angular-custom-modal": "^1.2.0",
+    "json2typescript": "^1.4.1",
     "ngx-strongly-typed-forms": "^8.0.1",
     "ngx-toastr": "^12.1.0",
     "oidc-client": "^1.10.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
+    "typescript-dotnet-commonjs": "^4.11.2",
+    "utf8": "^3.0.0",
     "valid-url": "^1.0.9",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.1000.7",
+    "@angular-devkit/build-angular": "^0.1002.0",
     "@angular/cli": "^10.0.7",
     "@angular/compiler-cli": "^10.0.11",
     "@angular/language-service": "^10.0.11",

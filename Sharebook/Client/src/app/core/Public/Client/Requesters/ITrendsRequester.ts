@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {IGetTrendsAtParameters} from "../../Parameters/TrendsClient/GetTrendsAtParameters";
@@ -37,6 +37,6 @@ export interface ITrendsRequester {
 
 export const ITrendsRequesterToken = new InjectionToken<ITrendsRequester>('ITrendsRequester', {
   providedIn: 'root',
-  factory: () => new TrendsRequester(Inject(TrendsController), Inject(TrendsClientRequiredParametersValidator),
-    Inject(TwitterClient), Inject(TwitterClientEvents)),
+  factory: () => new TrendsRequester(inject(TrendsController), inject(TrendsClientRequiredParametersValidator),
+    inject(TwitterClient), inject(TwitterClientEvents)),
 });

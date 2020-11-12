@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {ICreateBearerTokenParameters} from "../../Parameters/Auth/CreateBearerTokenParameters";
@@ -59,6 +59,6 @@ export interface IAuthRequester {
 
 export const IAuthRequesterToken = new InjectionToken<IAuthRequester>('IAuthRequester', {
   providedIn: 'root',
-  factory: () => new AuthRequester(Inject(TwitterClient), Inject(TwitterClientEvents),
-    Inject(AuthController), Inject(AuthClientRequiredParametersValidator)),
+  factory: () => new AuthRequester(inject(TwitterClient), inject(TwitterClientEvents),
+    inject(AuthController), inject(AuthClientRequiredParametersValidator)),
 });

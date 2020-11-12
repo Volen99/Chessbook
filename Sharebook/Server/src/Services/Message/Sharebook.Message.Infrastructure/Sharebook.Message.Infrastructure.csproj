@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sharebook.Message.Domain\WorldFeed.Message.Domain.csproj" />
+    <ProjectReference Include="..\Sharebook.Message.Domain\Sharebook.Message.Domain.csproj" />
   </ItemGroup>
 
 </Project>

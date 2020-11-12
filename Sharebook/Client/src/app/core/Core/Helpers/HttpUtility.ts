@@ -1,5 +1,5 @@
-﻿import Regex, {Match} from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/RegularExpressions";
-import {InjectionToken} from "@angular/core";
+﻿import {InjectionToken} from "@angular/core";
+import Regex, {Match} from "typescript-dotnet-commonjs/System/Text/RegularExpressions";
 
 export interface IHttpUtility {
   htmlEncode(unicodeText: string): string;
@@ -13,11 +13,12 @@ export interface IHttpUtility {
 
 export const IHttpUtilityToken = new InjectionToken<IHttpUtility>('IHttpUtility', {
   providedIn: 'root',
-  factory: () => new,
+  factory: () => new HttpUtility(),
 });
 
 export class HttpUtility implements IHttpUtility {
-  private readonly _entityResolver: Regex = new Regex("([&][#](?'decimal'[0-9]+);)|([&][#][(x|X)](?'hex'[0-9a-fA-F]+);)|([&](?'html'\\w+);)");
+  // private readonly _entityResolver: Regex = new Regex("([&][#](?'decimal'[0-9]+);)|([&][#][(x|X)](?'hex'[0-9a-fA-F]+);)|([&](?'html'\\\\w+);)");
+  private readonly _entityResolver: Regex = new Regex("^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$"); // TOOD: The top one is correct !!
 
   // public  HtmlEncode(unicodeText: string, encodeTagsToo?: boolean): string {
   //   return HtmlEncode(unicodeText, true);
@@ -70,12 +71,12 @@ export class HttpUtility implements IHttpUtility {
 
   private resolveEntityNotAngleAmp(matchToProcess: Match): string {
     let str: string;
-    if (matchToProcess.groups["decimal"].Success) {
-      str = String.fromCharCode(Number(matchToProcess.groups["decimal"].Value)).toString();
-    } else if (matchToProcess.groups["hex"].Success) {
-      str = String.fromCharCode(this.hexToInt(matchToProcess.groups["hex"].Value)).toString();
-    } else if (matchToProcess.groups["html"].Success) {
-      let entity: string = matchToProcess.groups["html"].Value;
+    if (matchToProcess.groups[`decimal`].Success) {
+      str = String.fromCharCode(Number(matchToProcess.groups[`decimal`].Value)).toString();
+    } else if (matchToProcess.groups[`hex`].Success) {
+      str = String.fromCharCode(this.hexToInt(matchToProcess.groups[`hex`].Value)).toString();
+    } else if (matchToProcess.groups[`html`].Success) {
+      let entity: string = matchToProcess.groups[`html`].Value;
       switch (entity.toLocaleLowerCase()) {
         case "lt":
         case "gt":
@@ -94,7 +95,7 @@ export class HttpUtility implements IHttpUtility {
   }
 
   private resolveEntityAngleAmp(matchToProcess: Match): string {
-    return !matchToProcess.groups["decimal"].Success ? (!matchToProcess.groups["hex"].Success ? (!matchToProcess.groups["html"].Success ? "Y" : this.entityLookup(matchToProcess.groups["html"].Value)) : String.fromCharCode(this.hexToInt(matchToProcess.groups["hex"].Value)).toString()) : String.fromCharCode(Number(matchToProcess.groups["decimal"].Value)).toString();
+    return !matchToProcess.groups[`decimal`].Success ? (!matchToProcess.groups[`hex`].Success ? (!matchToProcess.groups["html"].Success ? "Y" : this.entityLookup(matchToProcess.groups[`html`].Value)) : String.fromCharCode(this.hexToInt(matchToProcess.groups[`hex`].Value)).toString()) : String.fromCharCode(Number(matchToProcess.groups[`decimal`].Value)).toString();
   }
 
   private hexToInt(hexstr: string): number {

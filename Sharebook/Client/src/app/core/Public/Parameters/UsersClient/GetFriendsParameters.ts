@@ -3,7 +3,7 @@ import {IGetUsersOptionalParameters} from "../Optionals/GetUsersOptionalParamete
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
 import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {UserIdentifier} from "../../Models/UserIdentifier";
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";;
 
 // For more information visit : https://dev.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-friends-ids
 export interface IGetFriendsParameters extends IGetFriendIdsParameters, IGetUsersOptionalParameters {
@@ -30,7 +30,7 @@ export class GetFriendsParameters extends GetFriendIdsParameters implements IGet
       super(userCurrent);
 
       this.GetUsersPageSize = SharebookLimits.DEFAULTS.USERS_GET_USERS_MAX_SIZE;
-      this.User = userCurrent;
+      this.user = userCurrent;
     }
   }
 
@@ -42,7 +42,7 @@ export class GetFriendsParameters extends GetFriendIdsParameters implements IGet
 
   private static isIGetFriendsParameters(usernameOrUserIdOrUserParameters: | string | number | IUserIdentifier | IGetFriendsParameters):
     usernameOrUserIdOrUserParameters is IGetFriendsParameters {
-    return (usernameOrUserIdOrUserParameters as IGetFriendsParameters).User !== undefined;
+    return (usernameOrUserIdOrUserParameters as IGetFriendsParameters).user !== undefined;
   }
 }
 

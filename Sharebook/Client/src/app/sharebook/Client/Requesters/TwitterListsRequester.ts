@@ -1,3 +1,5 @@
+import {Inject, Injectable} from "@angular/core";
+
 import {BaseRequester} from "../BaseRequester";
 import {ITwitterListsRequester} from "../../../core/Public/Client/Requesters/ITwitterListsRequester";
 import {ITwitterResult, ITwitterResultFactory, ITwitterResultFactoryToken} from "../../../core/Core/Web/TwitterResult";
@@ -46,10 +48,12 @@ import {IUserCursorQueryResultDTO} from "../../../core/Public/Models/Interfaces/
 import {ITweetDTO} from "../../../core/Public/Models/Interfaces/DTO/ITweetDTO";
 import {ITwitterList} from "../../../core/Public/Models/Interfaces/ITwitterList";
 import {ITwitterRequest} from "../../../core/Public/Models/Interfaces/ITwitterRequest";
-import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
-import {Inject, Injectable} from "@angular/core";
+import {ITwitterClientEvents, ITwitterClientEventsToken} from "../../../core/Core/Events/TweetinviGlobalEvents";
+import {JsonQueryConverterRepository} from "../../../core/Core/JsonConverters/JsonQueryConverterRepository";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TwitterListsRequester extends BaseRequester implements ITwitterListsRequester {
   private readonly _twitterResultFactory: ITwitterResultFactory;
   private readonly _factories: ITwitterClientFactories;
@@ -73,27 +77,27 @@ export class TwitterListsRequester extends BaseRequester implements ITwitterList
 
   public createListAsync(parameters: ICreateListParameters): Promise<ITwitterResult<ITwitterListDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._twitterListController.createListAsync(parameters, request));
+    return super.executeRequestAsync(request => this._twitterListController.createListAsync(parameters, request));
   }
 
   public getListAsync(parameters: IGetListParameters): Promise<ITwitterResult<ITwitterListDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._twitterListController.getListAsync(parameters, request));
+    return super.executeRequestAsync(request => this._twitterListController.getListAsync(parameters, request));
   }
 
   public getListsSubscribedByUserAsync(parameters: IGetListsSubscribedByUserParameters): Promise<ITwitterResult<ITwitterListDTO[]>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._twitterListController.getListsSubscribedByUserAsync(parameters, request));
+    return super.executeRequestAsync(request => this._twitterListController.getListsSubscribedByUserAsync(parameters, request));
   }
 
   public updateListAsync(parameters: IUpdateListParameters): Promise<ITwitterResult<ITwitterListDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._twitterListController.updateListAsync(parameters, request));
+    return super.executeRequestAsync(request => this._twitterListController.updateListAsync(parameters, request));
   }
 
   public destroyListAsync(parameters: IDestroyListParameters): Promise<ITwitterResult<ITwitterListDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._twitterListController.destroyListAsync(parameters, request));
+    return super.executeRequestAsync(request => this._twitterListController.destroyListAsync(parameters, request));
   }
 
   public getListsOwnedByAccountIterator(parameters: IGetListsOwnedByAccountParameters): ITwitterPageIterator<ITwitterResult<ITwitterListCursorQueryResultDTO>> {
@@ -114,16 +118,16 @@ export class TwitterListsRequester extends BaseRequester implements ITwitterList
 
   public addMemberToListAsync(parameters: IAddMemberToListParameters): Promise<ITwitterResult<ITwitterListDTO, ITwitterList>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(async request => {
-      let twitterResult: ITwitterRequest = await this._twitterListController.addMemberToListAsync(parameters, request); // .ConfigureAwait(false);
+    return super.executeRequestAsync(async request => {
+      let twitterResult: ITwitterResult<ITwitterListDTO> = await this._twitterListController.addMemberToListAsync(parameters, request); // .ConfigureAwait(false);
       return this._twitterResultFactory.create(twitterResult, dto => this._factories.createTwitterList(dto));
     });
   }
 
   public addMembersToListAsync(parameters: IAddMembersToListParameters): Promise<ITwitterResult<ITwitterListDTO, ITwitterList>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(async request => {
-      let twitterResult: ITwitterRequest = await this._twitterListController.addMembersToListAsync(parameters, request); // .ConfigureAwait(false);
+    return super.executeRequestAsync(async request => {
+      let twitterResult: ITwitterResult<ITwitterListDTO> = await this._twitterListController.addMembersToListAsync(parameters, request); // .ConfigureAwait(false);
       return this._twitterResultFactory.create(twitterResult, dto => this._factories.createTwitterList(dto));
     });
   }
@@ -154,27 +158,27 @@ export class TwitterListsRequester extends BaseRequester implements ITwitterList
 
   public checkIfUserIsAListMemberAsync(parameters: ICheckIfUserIsMemberOfListParameters): Promise<ITwitterResult<ITwitterListDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._twitterListController.checkIfUserIsAListMemberAsync(parameters, request));
+    return super.executeRequestAsync(request => this._twitterListController.checkIfUserIsAListMemberAsync(parameters, request));
   }
 
   public removeMemberFromListAsync(parameters: IRemoveMemberFromListParameters): Promise<ITwitterResult<ITwitterListDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._twitterListController.removeMemberFromListAsync(parameters, request));
+    return super.executeRequestAsync(request => this._twitterListController.removeMemberFromListAsync(parameters, request));
   }
 
   public removeMembersFromListAsync(parameters: IRemoveMembersFromListParameters): Promise<ITwitterResult<ITwitterListDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._twitterListController.removeMembersFromListAsync(parameters, request));
+    return super.executeRequestAsync(request => this._twitterListController.removeMembersFromListAsync(parameters, request));
   }
 
   public subscribeToListAsync(parameters: ISubscribeToListParameters): Promise<ITwitterResult<ITwitterListDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._twitterListController.subscribeToListAsync(parameters, request));
+    return super.executeRequestAsync(request => this._twitterListController.subscribeToListAsync(parameters, request));
   }
 
   public unsubscribeFromListAsync(parameters: IUnsubscribeFromListParameters): Promise<ITwitterResult<ITwitterListDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._twitterListController.unsubscribeFromListAsync(parameters, request));
+    return super.executeRequestAsync(request => this._twitterListController.unsubscribeFromListAsync(parameters, request));
   }
 
   public getListSubscribersIterator(parameters: IGetListSubscribersParameters): ITwitterPageIterator<ITwitterResult<IUserCursorQueryResultDTO>> {
@@ -204,7 +208,7 @@ export class TwitterListsRequester extends BaseRequester implements ITwitterList
 
   public checkIfUserIsSubscriberOfListAsync(parameters: ICheckIfUserIsSubscriberOfListParameters): Promise<ITwitterResult<ITwitterListDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._twitterListController.checkIfUserIsSubscriberOfListAsync(parameters, request));
+    return super.executeRequestAsync(request => this._twitterListController.checkIfUserIsSubscriberOfListAsync(parameters, request));
   }
 
   public getTweetsFromListIterator(parameters: IGetTweetsFromListParameters): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number> {    // long?

@@ -1,4 +1,4 @@
-import StringBuilder from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
+import StringBuilder from "typescript-dotnet-commonjs/System/Text/StringBuilder";
 
 export class StringFormatter {
   private static readonly UNRESERVED_CHARS: string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";

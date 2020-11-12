@@ -1,4 +1,4 @@
-import {Media} from "../../shared/Feed/Entities/media/media.model";
+import {Media} from "../../core/Core/Models/Media";
 
 export interface PostModel {
   id?: number;

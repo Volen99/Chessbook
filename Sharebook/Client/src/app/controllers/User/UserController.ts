@@ -44,7 +44,9 @@ import {IMuteUserParameters} from "../../core/Public/Parameters/AccountClient/Mu
 import {IUnmuteUserParameters} from "../../core/Public/Parameters/AccountClient/UnMuteUserParameters";
 import {Inject, Injectable} from "@angular/core";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UserController implements IUserController {
   private readonly _userQueryExecutor: IUserQueryExecutor;
 
@@ -98,7 +100,7 @@ export class UserController implements IUserController {
   }
 
   // Profile Image
-  public getProfileImageStreamAsync(parameters: IGetProfileImageParameters, request: ITwitterRequest): Promise<Stream> {
+  public getProfileImageStreamAsync(parameters: IGetProfileImageParameters, request: ITwitterRequest): Promise<any> /*Promise<Stream>*/ {
     return this._userQueryExecutor.getProfileImageStreamAsync(parameters, request);
   }
 

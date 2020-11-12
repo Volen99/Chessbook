@@ -3,11 +3,11 @@ import {Injectable, InjectionToken} from "@angular/core";
 import {ISearchClientParametersValidator} from "./SearchClientParametersValidator";
 import {SearchParameters} from "./parameters-types";
 import {ISearchUsersParameters} from "../../../Public/Parameters/Search/SearchUsersParameters";
-import ArgumentNullException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException";
 import {ICreateSavedSearchParameters} from "../../../Public/Parameters/Search/CreateSavedSearchParameters";
-import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import {IGetSavedSearchParameters} from "../../../Public/Parameters/Search/GetSavedSearchParameters";
 import {IDestroySavedSearchParameters} from "../../../Public/Parameters/Search/DestroySavedSearchParameters";
+import ArgumentNullException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentNullException";
+import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
 
 export interface ISearchClientRequiredParametersValidator extends ISearchClientParametersValidator {
 }
@@ -17,28 +17,30 @@ export const ISearchClientRequiredParametersValidatorToken = new InjectionToken<
   factory: () => new SearchClientRequiredParametersValidator(),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class SearchClientRequiredParametersValidator implements ISearchClientRequiredParametersValidator {
   public validate(parameters: SearchParameters): void {
     if (parameters == null) {
-      throw new ArgumentNullException(nameof(parameters));
+      throw new ArgumentNullException(`nameof(parameters)`);
     }
 
     if (this.isISearchUsersParameters(parameters)) {
       if (parameters.query == null) {
-        throw new ArgumentNullException(`${nameof(parameters.query)}`);
+        throw new ArgumentNullException(`${`nameof(parameters.query)`}`);
       }
     } else if (this.isICreateSavedSearchParameters(parameters)) {
       if (!(parameters.query)) {
-        throw new ArgumentException(`${nameof(parameters.query)}`);
+        throw new ArgumentException(`${`nameof(parameters.query)`}`);
       }
     } else if (this.isIGetSavedSearchParameters(parameters)) {
       if (parameters.savedSearchId <= 0) {
-        throw new ArgumentNullException(`${nameof(parameters.savedSearchId)}`);
+        throw new ArgumentNullException(`${`nameof(parameters.savedSearchId)`}`);
       }
     } else if (this.isIDestroySavedSearchParameters(parameters)) {
       if (parameters.savedSearchId <= 0) {
-        throw new ArgumentNullException(`${nameof(parameters.savedSearchId)}`);
+        throw new ArgumentNullException(`${`nameof(parameters.savedSearchId)`}`);
       }
     }
   }

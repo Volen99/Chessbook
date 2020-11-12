@@ -5,7 +5,7 @@ import {UserIdentifier} from "../../Models/UserIdentifier";
 // For more information visit : https://dev.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-show
 export interface IGetUserParameters extends IGetUsersOptionalParameters {
   // User identifier
-  User: IUserIdentifier;
+  user: IUserIdentifier;
 }
 
 export class GetUserParameters extends GetUsersOptionalParameters implements IGetUserParameters {
@@ -20,15 +20,15 @@ export class GetUserParameters extends GetUsersOptionalParameters implements IGe
         userCurrent = userIdOrUsernameOrUser;
       }
 
-      this.User = userCurrent;
+      this.user = userCurrent;
     } else if (source) {
       super(source);
 
-      this.User = source?.User;
+      this.user = source?.user;
     }
   }
 
-  public User: IUserIdentifier;
+  public user: IUserIdentifier;
 }
 
 // public GetUserParameters(long userId) : this(new UserIdentifier(userId))

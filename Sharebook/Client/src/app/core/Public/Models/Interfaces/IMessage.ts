@@ -1,6 +1,5 @@
 ﻿import {Inject, InjectionToken} from "@angular/core";
 
-import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
 import {IMediaEntity} from "../Entities/IMediaEntity";
 import {IMessageEntities} from "../Entities/IMessageEntities";
 import {IApp} from "./IApp";
@@ -8,11 +7,12 @@ import {IMessageEventDTO} from "./DTO/Events/IMessageEventDTO";
 import {ITwitterClient} from "../../ITwitterClient";
 import {IQuickReplyOption} from "./IQuickReplyOption";
 import {IQuickReplyResponse} from "./IQuickReplyResponse";
-import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {Message} from "../../../Core/Models/Message";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
 import {MessageEventDTO} from "../../../Core/DTO/Events/MessageEventDTO";
 import {App} from "../../../Core/Models/Properties/App";
+import IEquatable from "typescript-dotnet-commonjs/System/IEquatable";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 // Message that can be sent privately between Twitter users privately.
 // https://developer.twitter.com/en/docs/direct-messages/sending-and-receiving/api-reference/new-event

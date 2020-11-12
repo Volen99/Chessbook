@@ -1,6 +1,6 @@
 import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 import {UserIdentifier} from "../../Models/UserIdentifier";
 
 // For more information visit : https://dev.twitter.com/en/docs/accounts-and-users/mute-block-report-users/api-reference/post-mutes-users-destroy

@@ -1,4 +1,4 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {IGetUserTimelineParameters} from "../../../Public/Parameters/TimelineClient/GetUserTimelineParameters";
 import {IGetMentionsTimelineParameters} from "../../../Public/Parameters/TimelineClient/GetMentionsTimelineParameters";
@@ -26,10 +26,12 @@ export interface ITimelineClientParametersValidator {
 
 export const ITimelineClientParametersValidatorToken = new InjectionToken<ITimelineClientParametersValidator>('ITimelineClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new TimelineClientParametersValidator(Inject(TwitterClient), Inject(TimelineClientRequiredParametersValidator)),
+  factory: () => new TimelineClientParametersValidator(inject(TwitterClient), inject(TimelineClientRequiredParametersValidator)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TimelineClientParametersValidator implements ITimelineClientParametersValidator {
   private readonly _timelineClientRequiredParametersValidator: ITimelineClientRequiredParametersValidator;
   private readonly _client: ITwitterClient;
@@ -59,7 +61,7 @@ export class TimelineClientParametersValidator implements ITimelineClientParamet
     }
 
     if (parameters.pageSize > maxPageSize) {
-      throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.TIMELINE_RETWEETS_OF_ME_MAX_PAGE_SIZE), "page size");
+      throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.TIMELINE_RETWEETS_OF_ME_MAX_PAGE_SIZE)`, "page size");
     }
 
   }

@@ -1,6 +1,6 @@
 ﻿import {ISavedSearchDTO} from "../../Public/Models/Interfaces/DTO/ISavedSearchDTO";
 import {ISavedSearch} from "../../Public/Models/Interfaces/ISavedSearch";
-import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 export class SavedSearch implements ISavedSearch {
   private _savedSearchDTO: ISavedSearchDTO;

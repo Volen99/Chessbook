@@ -1,9 +1,10 @@
-﻿import {EventArgs} from 'src/app/c#-objects/TypeScript.NET-Core/packages/Events/source/EventArgs';
+﻿import {IDisconnectMessage} from "../Streaming/Events/IDisconnectMessage";
 
 // The stream was disconnected
-export class DisconnectedEventArgs extends EventArgs {
+export class DisconnectedEventArgs /*extends EventArgs*/ {
   constructor(disconnectMessage: IDisconnectMessage) {
-    super();
+    // super();
+
     this.DisconnectMessage = disconnectMessage;
   }
 

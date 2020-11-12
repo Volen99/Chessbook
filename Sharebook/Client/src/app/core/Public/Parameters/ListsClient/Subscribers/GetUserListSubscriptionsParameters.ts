@@ -3,7 +3,7 @@ import {IUserIdentifier} from "../../../Models/Interfaces/IUserIdentifier";
 import {CursorQueryParameters} from "../../CursorQueryParameters";
 import {UserIdentifier} from '../../../Models/UserIdentifier';
 import {IGetAccountListMembershipsParameters} from "../Members/GetAccountListMembershipsParameters";
-import Type from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 import {IGetUserListMembershipsParameters} from "../Members/GetUserListMembershipsParameters";
 
 // For more information visit: https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-subscriptions

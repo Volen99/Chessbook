@@ -1,10 +1,10 @@
-﻿import Uri from 'src/app/c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri';
-import {HttpMethod} from '../../Public/Models/Enum/HttpMethod';
+﻿import {HttpMethod} from '../../Public/Models/Enum/HttpMethod';
 import {IOAuthQueryParameter} from './IOAuthQueryParameter';
 import {IReadOnlyConsumerCredentials} from "../Models/Authentication/ReadOnlyConsumerCredentials";
 import {IReadOnlyTwitterCredentials} from "../Models/Authentication/ReadOnlyTwitterCredentials";
 import {ITwitterQuery} from "../../Public/Models/Interfaces/ITwitterQuery";
 import {IAuthenticationRequest} from "../../Public/Models/Authentication/IAuthenticationRequest";
+import Uri from "typescript-dotnet-commonjs/System/Uri/Uri";
 
 // Generator of HttpWebRequest using OAuth specification
 export interface IOAuthWebRequestGenerator {
@@ -24,6 +24,6 @@ export interface IOAuthWebRequestGenerator {
   // Generate authorization headers for a query with the specified OAuth fields.
   setTwitterQueryAuthorizationHeaderAsync(twitterQuery: ITwitterQuery): Promise<string>;
 
-  generateAuthorizationHeaderAsync(uri: Uri, queryContent: HttpContent, httpMethod: HttpMethod,
+  generateAuthorizationHeaderAsync(uri: Uri, queryContent: any /*HttpContent*/, httpMethod: HttpMethod,
                                    parameters: Array<IOAuthQueryParameter>): Promise<string>;
 }

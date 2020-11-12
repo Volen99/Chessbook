@@ -4,25 +4,28 @@ import {TweetMode} from '../Settings/SharebookSettings';
 
 export interface ITimelineRequestParameters extends IMinMaxQueryParameters, ITweetModeParameter {
   // If set to true, the creator property (IUser) will only contain the id.
-  trimUser?: boolean;
+  trimUser: boolean | null;
 
   // Include tweet entities.
-  includeEntities?: boolean;
+  includeEntities: boolean | null;
 }
 
 export abstract class TimelineRequestParameters extends MinMaxQueryParameters implements ITimelineRequestParameters {
   protected constructor(source?: ITimelineRequestParameters) {
     if (source) {
       super(source);
+
       this.trimUser = source?.trimUser;
       this.includeEntities = source?.includeEntities;
       this.tweetMode = source?.tweetMode;
+    } else {
+      super();
     }
   }
 
-  public trimUser?: boolean;
-  public includeEntities?: boolean;
-  public tweetMode?: TweetMode;
+  public trimUser: boolean | null;
+  public includeEntities: boolean | null;
+  public tweetMode: TweetMode | null;
 }
 
 // protected TimelineRequestParameters()

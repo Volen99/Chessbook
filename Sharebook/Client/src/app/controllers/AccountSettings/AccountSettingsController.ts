@@ -1,4 +1,4 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
@@ -32,10 +32,12 @@ export interface IAccountSettingsController {
 
 export const IAccountSettingsControllerToken = new InjectionToken<IAccountSettingsController>('IAccountSettingsController', {
   providedIn: 'root',
-  factory: () => new AccountSettingsController(Inject(AccountSettingsQueryExecutor)),
+  factory: () => new AccountSettingsController(inject(AccountSettingsQueryExecutor)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AccountSettingsController implements IAccountSettingsController {
   private readonly _accountSettingsQueryExecutor: IAccountSettingsQueryExecutor;
 

@@ -19,11 +19,14 @@ export const IGetTweetsFromListParametersToken = new InjectionToken<IGetTweetsFr
   factory: () => new GetTweetsFromListParameters(),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class GetTweetsFromListParameters extends TimelineRequestParameters implements IGetTweetsFromListParameters {
-  constructor(@Inject([ITwitterListIdentifierToken, IGetTweetsFromListParametersToken]) listIdOrListOrSource?: number | ITwitterListIdentifier | IGetTweetsFromListParameters) {
+  constructor(@Inject(ITwitterListIdentifierToken/*[ITwitterListIdentifierToken, IGetTweetsFromListParametersToken]*/) listIdOrListOrSource?: number | ITwitterListIdentifier | IGetTweetsFromListParameters) {
     if (GetTweetsFromListParameters.isIGetTweetsFromListParameters(listIdOrListOrSource)) {
       super(listIdOrListOrSource);
+
       this.list = listIdOrListOrSource.list;
       this.includeRetweets = listIdOrListOrSource.includeRetweets;
     } else {

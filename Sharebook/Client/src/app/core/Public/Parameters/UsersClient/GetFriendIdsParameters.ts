@@ -2,12 +2,12 @@
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
 import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {UserIdentifier} from "../../Models/UserIdentifier";
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 // For more information visit : https://dev.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-friends-ids
 export interface IGetFriendIdsParameters extends ICursorQueryParameters {
   // User for who you want to get the friends from.
-  User: IUserIdentifier;
+  user: IUserIdentifier;
 }
 
 export class GetFriendIdsParameters extends CursorQueryParameters implements IGetFriendIdsParameters {
@@ -15,25 +15,25 @@ export class GetFriendIdsParameters extends CursorQueryParameters implements IGe
     if (GetFriendIdsParameters.isIGetFriendIdsParameters(usernameOrUserIdOrUserOrParameters)) {
       super(usernameOrUserIdOrUserOrParameters);
 
-      this.User = usernameOrUserIdOrUserOrParameters.User;
+      this.user = usernameOrUserIdOrUserOrParameters.user;
     } else {
       super();
 
       super.pageSize = SharebookLimits.DEFAULTS.USERS_GET_FRIEND_IDS_PAGE_MAX_SIZE;
 
       if (Type.isString(usernameOrUserIdOrUserOrParameters) || Type.isNumber(usernameOrUserIdOrUserOrParameters)) {
-        this.User = new UserIdentifier(usernameOrUserIdOrUserOrParameters);
+        this.user = new UserIdentifier(usernameOrUserIdOrUserOrParameters);
       } else {
-        this.User = usernameOrUserIdOrUserOrParameters;
+        this.user = usernameOrUserIdOrUserOrParameters;
       }
     }
   }
 
-  public User: IUserIdentifier;
+  public user: IUserIdentifier;
 
   private static isIGetFriendIdsParameters(usernameOrUserIdOrUserOrParameters: | string | number | IUserIdentifier | IGetFriendIdsParameters):
     usernameOrUserIdOrUserOrParameters is IGetFriendIdsParameters {
-    return (usernameOrUserIdOrUserOrParameters as IGetFriendIdsParameters).User !== undefined;
+    return (usernameOrUserIdOrUserOrParameters as IGetFriendIdsParameters).user !== undefined;
   }
 }
 

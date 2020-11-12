@@ -1,6 +1,5 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
-import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import {SharebookLimits} from "../../../Public/Settings/SharebookLimits";
 import {IGetAccountSettingsParameters} from "../../../Public/Parameters/AccountSettingsClient/GetAccountSettingsParameters";
 import {IUpdateAccountSettingsParameters} from "../../../Public/Parameters/AccountSettingsClient/UpdateAccountSettingsParameters";
@@ -16,6 +15,7 @@ import {
 import {ITwitterClient, ITwitterClientToken} from "../../../Public/ITwitterClient";
 import {AccountActivityParameters} from "./parameters-types";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
 
 export interface IAccountSettingsClientParametersValidator {
   validate(parameters: IGetAccountSettingsParameters): void;
@@ -33,10 +33,12 @@ export interface IAccountSettingsClientParametersValidator {
 
 export const IAccountSettingsClientParametersValidatorToken = new InjectionToken<IAccountSettingsClientParametersValidator>('IAccountSettingsClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new AccountSettingsClientParametersValidator(Inject(TwitterClient), Inject(AccountSettingsClientRequiredParametersValidator)),
+  factory: () => new AccountSettingsClientParametersValidator(inject(TwitterClient), inject(AccountSettingsClientRequiredParametersValidator)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AccountSettingsClientParametersValidator implements IAccountSettingsClientParametersValidator {
   private readonly _accountSettingsClientRequiredParametersValidator: IAccountSettingsClientRequiredParametersValidator;
   private readonly _client: ITwitterClient;
@@ -55,10 +57,10 @@ export class AccountSettingsClientParametersValidator implements IAccountSetting
     this._accountSettingsClientRequiredParametersValidator.validate(parameters);
 
     if (AccountSettingsClientParametersValidator.isIUpdateProfileParameters(parameters)) {
-      AccountSettingsClientParametersValidator.throwIfParameterSizeIsInvalid(parameters.name, `${nameof(parameters.name)}`, this.Limits.ACCOUNT_SETTINGS_PROFILE_NAME_MAX_LENGTH);
-      AccountSettingsClientParametersValidator.throwIfParameterSizeIsInvalid(parameters.description, `${nameof(parameters.description)}`, this.Limits.ACCOUNT_SETTINGS_PROFILE_DESCRIPTION_MAX_LENGTH);
-      AccountSettingsClientParametersValidator.throwIfParameterSizeIsInvalid(parameters.location, `${nameof(parameters.location)}`, this.Limits.ACCOUNT_SETTINGS_PROFILE_LOCATION_MAX_LENGTH);
-      AccountSettingsClientParametersValidator.throwIfParameterSizeIsInvalid(parameters.websiteUrl, `${nameof(parameters.websiteUrl)}`, this.Limits.ACCOUNT_SETTINGS_PROFILE_WEBSITE_URL_MAX_LENGTH);
+      AccountSettingsClientParametersValidator.throwIfParameterSizeIsInvalid(parameters.name, `${`nameof(parameters.name)`}`, this.Limits.ACCOUNT_SETTINGS_PROFILE_NAME_MAX_LENGTH);
+      AccountSettingsClientParametersValidator.throwIfParameterSizeIsInvalid(parameters.description, `${`nameof(parameters.description)`}`, this.Limits.ACCOUNT_SETTINGS_PROFILE_DESCRIPTION_MAX_LENGTH);
+      AccountSettingsClientParametersValidator.throwIfParameterSizeIsInvalid(parameters.location, `${`nameof(parameters.location)`}`, this.Limits.ACCOUNT_SETTINGS_PROFILE_LOCATION_MAX_LENGTH);
+      AccountSettingsClientParametersValidator.throwIfParameterSizeIsInvalid(parameters.websiteUrl, `${`nameof(parameters.websiteUrl)`}`, this.Limits.ACCOUNT_SETTINGS_PROFILE_WEBSITE_URL_MAX_LENGTH);
     }
   }
 

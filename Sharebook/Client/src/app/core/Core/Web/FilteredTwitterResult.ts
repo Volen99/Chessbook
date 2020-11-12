@@ -5,8 +5,8 @@ import {ITwitterResult, TwitterResult} from "./TwitterResult";
 // }
 
 export interface IFilteredTwitterResult<TDTO, TFilterResultDTO = any> extends ITwitterResult<TDTO> {
-  FilteredDTO?: TDTO;
-  FilteredResultsDTO?: TFilterResultDTO;
+  filteredDTO?: TDTO;
+  filteredResultsDTO?: TFilterResultDTO;
 }
 
 export class FilteredTwitterResult<TDTO, TFilteredResultDTO = any> extends TwitterResult<TDTO> implements IFilteredTwitterResult<TDTO, TFilteredResultDTO> {
@@ -17,12 +17,12 @@ export class FilteredTwitterResult<TDTO, TFilteredResultDTO = any> extends Twitt
     super.response = source.response;
     super.model = source.model;
     if (filteredResultsResultDTO) {
-      this.FilteredResultsDTO = filteredResultsResultDTO;
+      this.filteredResultsDTO = filteredResultsResultDTO;
     } else {
-      this.FilteredDTO = source.model;
+      this.filteredDTO = source.model;
     }
   }
 
-  public FilteredDTO?: TDTO;
-  public FilteredResultsDTO?: TFilteredResultDTO;
+  public filteredDTO?: TDTO;
+  public filteredResultsDTO?: TFilteredResultDTO;
 }

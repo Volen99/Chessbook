@@ -3,24 +3,26 @@
 import {ITwitterListIdentifier} from "./Interfaces/ITwitterListIdentifier";
 import {IUserIdentifier, IUserIdentifierToken} from "./Interfaces/IUserIdentifier";
 import {UserIdentifier} from "./UserIdentifier";
-import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TwitterListIdentifier implements ITwitterListIdentifier {
   constructor(listIdOrSlug?: number | string,
               @Inject(IUserIdentifierToken) ownerIdOrScreenNameOrOwner?: number | string | IUserIdentifier) {
     if (TwitterListIdentifier.isIUserIdentifier(ownerIdOrScreenNameOrOwner)) {
       this.slug = listIdOrSlug as string;
-      this.Owner = ownerIdOrScreenNameOrOwner;
+      this.owner = ownerIdOrScreenNameOrOwner;
     } else {
-      this.Owner = new UserIdentifier();
+      this.owner = new UserIdentifier();
 
       if (listIdOrSlug) {
         if (Type.isNumber(listIdOrSlug)) {
           this.id = listIdOrSlug;
         } else {
           this.slug = listIdOrSlug;
-          this.Owner = new UserIdentifier(ownerIdOrScreenNameOrOwner);
+          this.owner = new UserIdentifier(ownerIdOrScreenNameOrOwner);
         }
       }
     }
@@ -29,18 +31,18 @@ export class TwitterListIdentifier implements ITwitterListIdentifier {
   public id: number;
   public slug: string;
 
-  public Owner: IUserIdentifier;
+  public owner: IUserIdentifier;
 
   get ownerId(): number {
-    return this.Owner?.id ?? 0;
+    return this.owner?.id ?? 0;
   }
 
   get ownerScreenName(): string {
-    return this.Owner?.screenName;
+    return this.owner?.screenName;
   }
 
-  private static isIUserIdentifier(ownerIdOrScreenNameOrOwner: any): ownerIdOrScreenNameOrOwner is IUserIdentifier {
-    return (ownerIdOrScreenNameOrOwner as IUserIdentifier).screenName !== undefined;
+  private static isIUserIdentifier(ownerIdOrScreenNameOrOwner: number | string | IUserIdentifier): ownerIdOrScreenNameOrOwner is IUserIdentifier {
+    return (ownerIdOrScreenNameOrOwner as IUserIdentifier)?.id !== undefined;
   }
 }
 

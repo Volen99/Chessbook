@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {IGetAccountSettingsParameters} from "../../Parameters/AccountSettingsClient/GetAccountSettingsParameters";
@@ -65,6 +65,6 @@ export interface IAccountSettingsRequester {
 
 export const IAccountSettingsRequesterToken = new InjectionToken<IAccountSettingsRequester>('IAccountSettingsRequester', {
   providedIn: 'root',
-  factory: () => new AccountSettingsRequester(Inject(TwitterClient), Inject(TwitterClientEvents),
-    Inject(AccountSettingsController), Inject(AccountSettingsClientRequiredParametersValidator)),
+  factory: () => new AccountSettingsRequester(inject(TwitterClient), inject(TwitterClientEvents),
+    inject(AccountSettingsController), inject(AccountSettingsClientRequiredParametersValidator)),
 });

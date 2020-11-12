@@ -1,3 +1,5 @@
+import {Inject, Injectable} from "@angular/core";
+
 import {IHelpClient} from "../../../core/Public/Client/Clients/IHelpClient";
 import {ITwitterConfiguration} from "../../../core/Public/Models/Interfaces/DTO/ITwitterConfiguration";
 import {SupportedLanguage} from "../../../core/Core/Models/SupportedLanguage";
@@ -20,9 +22,10 @@ import {
   GeoSearchReverseParameters,
   IGeoSearchReverseParameters
 } from "../../../core/Public/Parameters/HelpClient/GeoSearchReverseParameters";
-import {Inject, Injectable} from "@angular/core";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class HelpClient implements IHelpClient {
   private readonly _client: ITwitterClient;
   private readonly _helpRequester: IHelpRequester;
@@ -73,10 +76,9 @@ export class HelpClient implements IHelpClient {
     return result?.model;
   }
 
-
   public async searchGeoAsync(parameters: IGeoSearchParameters): Promise<IPlace[]> {
     let result = await this._helpRequester.searchGeoAsync(parameters); // .ConfigureAwait(false);
-    return result?.model?.Result.Places;
+    return result?.model?.result.Places;
   }
 
   public async searchGeoReverseAsync(coordinatesOrParameters: ICoordinates | IGeoSearchReverseParameters): Promise<IPlace[]> {
@@ -88,7 +90,7 @@ export class HelpClient implements IHelpClient {
     }
 
     let result = await this._helpRequester.searchGeoReverseAsync(parameters); // .ConfigureAwait(false);
-    return result?.model?.Result.Places;
+    return result?.model?.result.Places;
   }
 
   private isIGetPlaceParameters(placeIdOrParameters: any): placeIdOrParameters is IGetPlaceParameters {

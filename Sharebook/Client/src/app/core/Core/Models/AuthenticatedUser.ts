@@ -1,7 +1,6 @@
 ﻿import {Injectable} from "@angular/core";
 
 import {IUserIdentifier} from "../../Public/Models/Interfaces/IUserIdentifier";
-import InvalidOperationException from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/InvalidOperationException";
 import {ITwitterListIdentifier} from "../../Public/Models/Interfaces/ITwitterListIdentifier";
 import {IUserDTO} from "../../Public/Models/Interfaces/DTO/IUserDTO";
 import {ITwitterClient} from "../../Public/ITwitterClient";
@@ -21,11 +20,14 @@ import {IPublishTweetParameters} from "../../Public/Parameters/TweetsClient/Publ
 import {IUpdateAccountSettingsParameters} from "../../Public/Parameters/AccountSettingsClient/UpdateAccountSettingsParameters";
 import {IAccountSettings} from "../../Public/Models/Interfaces/IAccountSettings";
 import {ITwitterList} from "../../Public/Models/Interfaces/ITwitterList";
-import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
+import InvalidOperationException from "typescript-dotnet-commonjs/System/Exceptions/InvalidOperationException";
 
 // A token user is unique to a Token and provides action that will be executed from the connected user
 // and that are not available from another user like (read my messages)
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthenticatedUser extends User implements IAuthenticatedUser {
   constructor(userDTO: IUserDTO, client: ITwitterClient) {
     super(userDTO, client);

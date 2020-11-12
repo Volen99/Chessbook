@@ -1,4 +1,4 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
@@ -33,7 +33,7 @@ export interface ISearchQueryExecutor {
 
 export const ISearchQueryExecutorToken = new InjectionToken<ISearchQueryExecutor>('ISearchQueryExecutor', {
   providedIn: 'root',
-  factory: () => new SearchQueryExecutor(Inject(SearchQueryGenerator), Inject(TwitterAccessor)),
+  factory: () => new SearchQueryExecutor(inject(SearchQueryGenerator), inject(TwitterAccessor)),
 });
 
 export class SearchQueryExecutor implements ISearchQueryExecutor {

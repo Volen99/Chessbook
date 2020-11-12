@@ -11,6 +11,7 @@ export class GetListsOwnedByAccountParameters extends CursorQueryParameters impl
       super(parameters);
     } else {
       super();
+
       super.pageSize = SharebookLimits.DEFAULTS.LISTS_GET_USER_OWNED_LISTS_MAX_SIZE;
     }
   }

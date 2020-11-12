@@ -3,8 +3,8 @@
 import {ITwitterListIdentifier} from "../ITwitterListIdentifier";
 import {IUserDTO} from "./IUserDTO";
 import { PrivacyMode } from '../../Enum/PrivacyMode';
-import DateTime from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {TwitterListDTO} from "../../../../Core/DTO/TwitterListDTO";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 export interface ITwitterListDTO extends ITwitterListIdentifier {
   idStr: string;

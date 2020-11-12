@@ -2,14 +2,16 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from 'rxjs';
 
-import {AccountSettings} from "../../core/models/settings/settings.model";
 import {ConfigurationService} from "../../shared/services/configuration.service";
 import {DataService} from "../../shared/services/data.service";
 import {tap} from "rxjs/operators";
+import {AccountSettings} from "../../core/Core/Models/AccountSettings";
 
 // Implementing a Retry-Circuit breaker policy
 // is pending to do for the SPA app
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ProfileService {
   private http: HttpClient;
   private dataService: DataService;
@@ -23,9 +25,9 @@ export class ProfileService {
     this.configurationService = configurationService;
 
     if (this.configurationService.isReady) {
-      this.apiGatewayUrl = this.configurationService.serverSettings.apiGatewayUrl;
+      this.apiGatewayUrl = this.configurationService.serverSettings.uploadUrl;
     } else {
-      this.configurationService.settingsLoaded$.subscribe(x => this.apiGatewayUrl = this.configurationService.serverSettings.apiGatewayUrl);
+      this.configurationService.settingsLoaded$.subscribe(x => this.apiGatewayUrl = this.configurationService.serverSettings.uploadUrl);
     }
   }
 
@@ -41,7 +43,6 @@ export class ProfileService {
     const url = this.apiGatewayUrl + 'account/settings';
 
     return this.dataService.post(url, param).pipe<AccountSettings>(tap((response: any) => {
-      debugger
       return response;
     }));
   }

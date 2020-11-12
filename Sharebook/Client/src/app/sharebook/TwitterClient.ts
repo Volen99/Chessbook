@@ -1,16 +1,16 @@
-﻿import {ITweetinviSettings, SharebookSettings} from "../core/Public/Settings/SharebookSettings";
+﻿import {Inject, Injectable, Injector, Optional, ReflectiveInjector} from "@angular/core";
+
+import {ISharebookSettings, SharebookSettings} from "../core/Public/Settings/SharebookSettings";
 import {IRateLimitCache} from "../core/Core/RateLimit/IRateLimitCache";
-import {TweetinviContainerEventArgs} from "../core/Public/Events/TweetinviContainerEventArgs";
-import {ITwitterClient} from "../core/Public/ITwitterClient";
+import {ITwitterClient, ITwitterClientToken} from "../core/Public/ITwitterClient";
 import {
   IReadOnlyTwitterCredentials,
   ReadOnlyTwitterCredentials
 } from '../core/Core/Models/Authentication/ReadOnlyTwitterCredentials';
 import {ITwitterClientFactories} from "../core/Public/Client/Tools/ITwitterClientFactories";
-import {IParametersValidator} from "../core/Core/Client/Validators/ParametersValidator";
+import {IParametersValidator, ParametersValidator} from "../core/Core/Client/Validators/ParametersValidator";
 import {ITwitterExecutionContext, TwitterExecutionContext} from "../core/Core/Client/TwitterExecutionContext";
-import InvalidOperationException from "../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/InvalidOperationException";
-import {IRawExecutors} from "../core/Public/Client/IRawExecutors";
+import {IRawExecutors, IRawExecutorsToken} from "../core/Public/Client/IRawExecutors";
 import {IAuthClient} from "../core/Public/Client/Clients/IAuthClient";
 import {IAccountSettingsClient} from "../core/Public/Client/Clients/IAccountSettingsClient";
 import {IExecuteClient} from "../core/Public/Client/Clients/IExecuteClient";
@@ -26,23 +26,59 @@ import {ITweetsClient} from "../core/Public/Client/Clients/ITweetsClient";
 import {IUploadClient} from "../core/Public/Client/Clients/IUploadClient";
 import {IUsersClient} from "../core/Public/Client/Clients/IUsersClient";
 import {IAccountActivityClient} from "../core/Public/Client/Clients/IAccountActivityClient";
-import {IRateLimitCacheManager} from "../core/Core/RateLimit/IRateLimitCacheManager";
 import {ITwitterRequest} from "../core/Public/Models/Interfaces/ITwitterRequest";
 import {TwitterRequest} from "../core/Public/TwitterRequest";
 import {TwitterQuery} from "../core/Public/TwitterQuery";
 import {TwitterCredentials} from "../core/Public/Models/Authentication/TwitterCredentials";
-import {ITwitterClientEvents} from "../core/Core/Events/TweetinviGlobalEvents";
-import {Injectable} from "@angular/core";
+import {IExternalClientEvents, ITwitterClientEvents} from "../core/Core/Events/TweetinviGlobalEvents";
+import {IJsonClient} from "../core/Public/Client/Clients/IJsonClient";
+import {UploadClient} from "./Client/Clients/UploadClient";
+import {RawExecutors} from "./Client/RawExecutors";
+import {IAccountActivityRequester} from "../core/Public/Client/Requesters/IAccountActivityRequester";
+import {AccountActivityRequester} from "./Client/Requesters/AccountActivityRequester";
+import {IAccountSettingsRequester} from "../core/Public/Client/Requesters/IAccountSettingsRequester";
+import {IHelpRequester} from "../core/Public/Client/Requesters/IHelpRequester";
+import {ISearchRequester} from "../core/Public/Client/Requesters/ISearchRequester";
+import {ITwitterListsRequester} from "../core/Public/Client/Requesters/ITwitterListsRequester";
+import {AuthRequester} from "./Client/Requesters/AuthRequester";
+import {AccountSettingsRequester} from "./Client/Requesters/AccountSettingsRequester";
+import {HelpRequester} from "./Client/Requesters/HelpRequester";
+import {SearchRequester} from "./Client/Requesters/SearchRequester";
+import {TwitterListsRequester} from "./Client/Requesters/TwitterListsRequester";
+import {TimelinesRequester} from "./Client/Requesters/TimelinesRequester";
+import {TrendsRequester} from "./Client/Requesters/TrendsRequester";
+import {TweetsRequester} from "./Client/Requesters/TweetsRequester";
+import {UploadRequester} from "./Client/Requesters/UploadRequester";
+import {UsersRequester} from "./Client/Requesters/UsersRequester";
+import {AuthClient} from "./Client/Clients/AuthClient";
+import {AccountSettingsClient} from "./Client/Clients/AccountSettingsClient";
+import {ExecuteClient} from "./Client/Clients/ExecuteClient";
+import {HelpClient} from "./Client/Clients/HelpClient";
+import {ListsClient} from "./Client/Clients/ListsClient";
+import {MessagesClient} from "./Client/Clients/MessagesClient";
+import {RateLimitsClient} from "./Client/Clients/RateLimitsClient";
+import {SearchClient} from "./Client/Clients/SearchClient";
+import {TimelinesClient} from "./Client/Clients/TimelinesClient";
+import {TrendsClient} from "./Client/Clients/TrendsClient";
+import {TweetsClient} from "./Client/Clients/TweetsClient";
+import {UsersClient} from "./Client/Clients/UsersClient";
+import {AccountActivityClient} from "./Client/Clients/AccountActivityClient";
+import {AppInjector} from "./Injectinvi/app-injector";
+import {IRateLimitCacheManager} from "../core/Core/RateLimit/IRateLimitCacheManager";
+import {RateLimitCacheManager} from "../Tweetinvi.Credentials/RateLimit/RateLimitCacheManager";
+import {App} from "../core/Core/Models/Properties/App";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TwitterClientParameters {
   constructor() {
     this.settings = new SharebookSettings();
   }
 
-  public RateLimitCache: IRateLimitCache;
-  // public Container: ITweetinviContainer;
-  public settings: ITweetinviSettings;
+  public rateLimitCache: IRateLimitCache;
+
+  public settings: ISharebookSettings;
 
   // public event BeforeRegistrationCompletes: EventHandler<TweetinviContainerEventArgs>;
 
@@ -51,10 +87,66 @@ export class TwitterClientParameters {
   // }
 }
 
+@Injectable({
+  providedIn: 'root',
+})
 export class TwitterClient implements ITwitterClient {
   private _credentials: IReadOnlyTwitterCredentials;
   // private readonly _tweetinviContainer: ITweetinviContainer;
   private readonly _twitterClientEvents: ITwitterClientEvents;
+
+  constructor(parameters?: TwitterClientParameters) {
+    // this.credentials = credentials;
+    this.config = parameters?.settings ?? new SharebookSettings();
+
+    // if (parameters?.rateLimitCache != null) {
+    //   _tweetinviContainer.RegisterInstance(typeof(IRateLimitCache), parameters.RateLimitCache);
+    // }
+
+    // Injector.create({
+    //   providers: [{provide: TwitterClient, useValue: this}]
+    // });
+    // Injector.create({
+    //   providers: [{provide: ITwitterClientToken, useValue: this}]
+    // });
+    // _tweetinviContainer.RegisterInstance(typeof(TwitterClient), this);
+    // _tweetinviContainer.RegisterInstance(typeof(ITwitterClient), this);
+
+    // Injector.create({providers: [{provide: TwitterClient, useValue: this}]});
+
+    // debugger
+    // let requestExecutor = this.injector.get(IRawExecutorsToken); // _tweetinviContainer.Resolve<IRawExecutors>();
+    // this.raw = requestExecutor;
+
+    // let parametersValidator = this._tweetinviContainer.Resolve<IParametersValidator>();
+    // this.parametersValidator = parametersValidator;
+
+    // this.auth = this._tweetinviContainer.Resolve<IAuthClient>();
+    // this.accountSettings = this._tweetinviContainer.Resolve<IAccountSettingsClient>();
+    // this.execute = this._tweetinviContainer.Resolve<IExecuteClient>();
+    // this.help = this._tweetinviContainer.Resolve<IHelpClient>();
+    // this.lists = this._tweetinviContainer.Resolve<IListsClient>();
+    // this.messages = this._tweetinviContainer.Resolve<IMessagesClient>();
+    // this.rateLimits = AppInjector.get(RateLimitsClient); // this._tweetinviContainer.Resolve<IRateLimitsClient>();
+    // this.search = this._tweetinviContainer.Resolve<ISearchClient>();
+    // this.streams = this._tweetinviContainer.Resolve<IStreamsClient>();
+    // this.timelines = this._tweetinviContainer.Resolve<ITimelinesClient>();
+    // this.trends = this._tweetinviContainer.Resolve<ITrendsClient>();
+    // this.tweets = this._tweetinviContainer.Resolve<ITweetsClient>();
+    // this.upload = new UploadClient(this); // this._tweetinviContainer.Resolve<IUploadClient>();
+    // this.users = this._tweetinviContainer.Resolve<IUsersClient>();
+    // this.accountActivity = this._tweetinviContainer.Resolve<IAccountActivityClient>();
+
+    // this._tweetinviContainer.AssociatedClient = this;
+
+    // this._twitterClientEvents = this._tweetinviContainer.Resolve<ITwitterClientEvents>();
+    // this.factories = this._tweetinviContainer.Resolve<ITwitterClientFactories>();
+    // this.json = this._tweetinviContainer.Resolve<IJsonClient>();
+
+    // debugger
+    // let rateLimitCacheManager = AppInjector.get(RateLimitCacheManager);
+    // rateLimitCacheManager.rateLimitsClient = this.rateLimits;
+  }
 
   // IMPORTANT NOTE: The setter is for convenience. It is strongly recommended to create a new TwitterClient instead.
   // As using this setter could result in unexpected concurrency between the time of set and the execution of previous
@@ -64,124 +156,60 @@ export class TwitterClient implements ITwitterClient {
   }
 
   set credentials(value: IReadOnlyTwitterCredentials) {
-    this._credentials = new ReadOnlyTwitterCredentials(value);
+    this._credentials = new ReadOnlyTwitterCredentials(value, null);
   }
 
 
-        constructor (parameters?: TwitterClientParameters) {
-          // this.credentials = credentials;
-          this.config = parameters?.settings ?? new SharebookSettings();
+  public config: ISharebookSettings;
 
-          // if (parameters?.Container == null) {
-          //   if (!TweetinviContainer.Container.IsInitialized) {
-          //     TweetinviContainer.Container.Initialize();
-          //   }
-          // } else {
-          //   if (!parameters.Container.IsInitialized) {
-          //     throw new InvalidOperationException("Cannot create a client with a non initialized container!");
-          //   }
-          // }
+  public auth: IAuthClient;
+  public accountSettings: IAccountSettingsClient;
+  public execute: IExecuteClient;
+  public help: IHelpClient;
+  public lists: IListsClient;
+  public messages: IMessagesClient;
+  public rateLimits: IRateLimitsClient;
+  public search: ISearchClient;
+  public streams: IStreamsClient;
+  public timelines: ITimelinesClient;
+  public trends: ITrendsClient;
+  public tweets: ITweetsClient;
+  public upload: IUploadClient;
+  public users: IUsersClient;
+  public accountActivity: IAccountActivityClient;
 
-          // this._tweetinviContainer = new TweetinviContainer(parameters?.Container ?? TweetinviContainer.Container);
-          // this._tweetinviContainer.RegisterInstance(typeof(ITweetinviContainer), this._tweetinviContainer);
-          //
-          // if (parameters?.RateLimitCache != null) {
-          //   this._tweetinviContainer.RegisterInstance(typeof(IRateLimitCache), parameters.RateLimitCache);
-          // }
+  get events(): IExternalClientEvents {
+    return this._twitterClientEvents;
+  }
 
-          // this._tweetinviContainer.RegisterInstance(typeof(TwitterClient), this);
-          // this._tweetinviContainer.RegisterInstance(typeof(ITwitterClient), this);
-          //
-          // void BeforeRegistrationDelegate(sender: object, args: TweetinviContainerEventArgs)
-          // {
-          //   parameters?.RaiseBeforeRegistrationCompletes(args);
-          // }
-          //
-          // this._tweetinviContainer.BeforeRegistrationCompletes += BeforeRegistrationDelegate;
-          // this._tweetinviContainer.Initialize();
-          // this._tweetinviContainer.BeforeRegistrationCompletes -= BeforeRegistrationDelegate;
+  public factories: ITwitterClientFactories;
+  public json: IJsonClient;
 
-          let requestExecutor = this._tweetinviContainer.Resolve<IRawExecutors>();
-          this.raw = requestExecutor;
+  public parametersValidator: IParametersValidator;
+  public raw: IRawExecutors;
 
-          let parametersValidator = this._tweetinviContainer.Resolve<IParametersValidator>();
-          this.parametersValidator = parametersValidator;
+  public createTwitterExecutionContext(): ITwitterExecutionContext {
+    let result = new TwitterExecutionContext();
+    result.requestFactory = this.createRequest;
+    // result.container = this._tweetinviContainer;
+    result.events = this._twitterClientEvents;
 
-          this.auth = this._tweetinviContainer.Resolve<IAuthClient>();
-          this.accountSettings = this._tweetinviContainer.Resolve<IAccountSettingsClient>();
-          this.execute = this._tweetinviContainer.Resolve<IExecuteClient>();
-          this.help = this._tweetinviContainer.Resolve<IHelpClient>();
-          this.lists = this._tweetinviContainer.Resolve<IListsClient>();
-          this.messages = this._tweetinviContainer.Resolve<IMessagesClient>();
-          this.rateLimits = this._tweetinviContainer.Resolve<IRateLimitsClient>();
-          this.search = this._tweetinviContainer.Resolve<ISearchClient>();
-          this.streams = this._tweetinviContainer.Resolve<IStreamsClient>();
-          this.timelines = this._tweetinviContainer.Resolve<ITimelinesClient>();
-          this.trends = this._tweetinviContainer.Resolve<ITrendsClient>();
-          this.tweets = this._tweetinviContainer.Resolve<ITweetsClient>();
-          this.upload = this._tweetinviContainer.Resolve<IUploadClient>();
-          this.users = this._tweetinviContainer.Resolve<IUsersClient>();
-          this.accountActivity = this._tweetinviContainer.Resolve<IAccountActivityClient>();
+    return result;
+  }
 
-          this._tweetinviContainer.AssociatedClient = this;
+  public createRequest(): ITwitterRequest {
+    let twitterQuery = new TwitterQuery();
+    // we are cloning here to ensure that the context will never be modified regardless of concurrency
+    // @ts-ignore
+    twitterQuery.twitterCredentials = new TwitterCredentials(this.credentials);
 
-          this._twitterClientEvents = this._tweetinviContainer.Resolve<ITwitterClientEvents>();
-          this.factories = this._tweetinviContainer.Resolve<ITwitterClientFactories>();
-          this.json = this._tweetinviContainer.Resolve<IJsonClient>();
+    let request = new TwitterRequest();
+    request.executionContext = this.createTwitterExecutionContext();
+    request.query = twitterQuery;
 
-          let rateLimitCacheManager = this._tweetinviContainer.Resolve<IRateLimitCacheManager>();
-          rateLimitCacheManager.RateLimitsClient = this.rateLimits;
-        }
+    request.query.initialize(this.config);
+    request.executionContext.initialize(this.config);
 
-      public config: ITweetinviSettings;
-
-      public auth: IAuthClient;
-      public accountSettings: IAccountSettingsClient;
-      public execute: IExecuteClient;
-      public help: IHelpClient;
-      public lists: IListsClient;
-      public messages: IMessagesClient;
-      public rateLimits: IRateLimitsClient;
-      public search: ISearchClient;
-      public streams: IStreamsClient;
-      public timelines: ITimelinesClient;
-      public trends: ITrendsClient;
-      public tweets: ITweetsClient;
-      public upload: IUploadClient;
-      public users: IUsersClient;
-      public accountActivity: IAccountActivityClient;
-
-        get events(): IExternalClientEvents {
-          return this._twitterClientEvents;
-        }
-
-        public factories: ITwitterClientFactories;
-        public json: IJsonClient;
-
-        public parametersValidator: IParametersValidator;
-        public raw: IRawExecutor;
-
-      public createTwitterExecutionContext(): ITwitterExecutionContext {
-        let result = new TwitterExecutionContext();
-        result.requestFactory = this.createRequest;
-        result.container = this._tweetinviContainer;
-        result.events = this._twitterClientEvents;
-
-        return result;
-      }
-
-      public createRequest(): ITwitterRequest {
-        let twitterQuery = new TwitterQuery();
-        // we are cloning here to ensure that the context will never be modified regardless of concurrency
-        twitterQuery.twitterCredentials = new TwitterCredentials(this.credentials);
-
-        let request = new TwitterRequest();
-        request.executionContext = this.createTwitterExecutionContext();
-        request.query = twitterQuery;
-
-        request.query.initialize(this.config);
-        request.executionContext.initialize(this.config);
-
-        return request;
-      }
-    }
+    return request;
+  }
+}

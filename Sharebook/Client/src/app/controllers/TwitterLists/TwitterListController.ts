@@ -1,6 +1,8 @@
-﻿import {ITwitterListController} from "../../core/Core/Controllers/ITwitterListController";
-import { TwitterRequest } from 'src/app/core/Public/TwitterRequest';
-import { ITwitterResult } from 'src/app/core/Core/Web/TwitterResult';
+﻿import {Inject, Injectable} from "@angular/core";
+
+import {ITwitterListController} from "../../core/Core/Controllers/ITwitterListController";
+import {TwitterRequest} from 'src/app/core/Public/TwitterRequest';
+import {ITwitterResult} from 'src/app/core/Core/Web/TwitterResult';
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
 import {IPageCursorIteratorFactories, IPageCursorIteratorFactoriesToken} from "../../core/Core/Iterators/PageCursorIteratorFactories";
 import {ITwitterListQueryExecutor, ITwitterListQueryExecutorToken} from "./TwitterListQueryExecutor";
@@ -45,9 +47,11 @@ import {
   IGetTweetsFromListParameters
 } from "../../core/Public/Parameters/ListsClient/GetTweetsFromListParameters";
 import {ITweetDTO} from "../../core/Public/Models/Interfaces/DTO/ITweetDTO";
-import {Inject, Injectable} from "@angular/core";
+import {IUserCursorQueryResultDTO} from "../../core/Public/Models/Interfaces/DTO/QueryDTO/IUserCursorQueryResultDTO";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TwitterListController implements ITwitterListController {
   private readonly _twitterListQueryExecutor: ITwitterListQueryExecutor;
   private readonly _pageCursorIteratorFactories: IPageCursorIteratorFactories;
@@ -66,20 +70,18 @@ export class TwitterListController implements ITwitterListController {
     return this._twitterListQueryExecutor.getListAsync(parameters, request);
   }
 
-        public  getListsSubscribedByUserAsync(parameters: IGetListsSubscribedByUserParameters, request: ITwitterRequest): Promise<ITwitterResult<ITwitterListDTO[]>>
-        {
-            return this._twitterListQueryExecutor.getListsSubscribedByUserAsync(parameters, request);
-        }
+  public getListsSubscribedByUserAsync(parameters: IGetListsSubscribedByUserParameters, request: ITwitterRequest): Promise<ITwitterResult<ITwitterListDTO[]>> {
+    return this._twitterListQueryExecutor.getListsSubscribedByUserAsync(parameters, request);
+  }
 
-        public  updateListAsync(parameters: IUpdateListParameters, request: ITwitterRequest): Promise<ITwitterResult<ITwitterListDTO>>
-        {
-            return this._twitterListQueryExecutor.updateListAsync(parameters, request);
-        }
+  public updateListAsync(parameters: IUpdateListParameters, request: ITwitterRequest): Promise<ITwitterResult<ITwitterListDTO>> {
+    return this._twitterListQueryExecutor.updateListAsync(parameters, request);
+  }
 
-         ITwitterListController.destroyListAsync(parameters: IDestroyListParameters, request: ITwitterRequest): Promise<ITwitterResult<ITwitterListDTO>>
-        {
-            return this._twitterListQueryExecutor.destroyListAsync(parameters, request);
-        }
+  /*ITwitterListController.*/
+  destroyListAsync(parameters: IDestroyListParameters, request: ITwitterRequest): Promise<ITwitterResult<ITwitterListDTO>> {
+    return this._twitterListQueryExecutor.destroyListAsync(parameters, request);
+  }
 
   public getListsOwnedByUserIterator(parameters: IGetListsOwnedByUserParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<ITwitterListCursorQueryResultDTO>> {
     return this._pageCursorIteratorFactories.createCursor(parameters, cursor => {
@@ -90,15 +92,13 @@ export class TwitterListController implements ITwitterListController {
     });
   }
 
-        public addMemberToListAsync(parameters: IAddMemberToListParameters, request: ITwitterRequest):  Promise<ITwitterResult<ITwitterListDTO>>
-{
-            return this._twitterListQueryExecutor.addMemberToListAsync(parameters, request);
-        }
+  public addMemberToListAsync(parameters: IAddMemberToListParameters, request: ITwitterRequest): Promise<ITwitterResult<ITwitterListDTO>> {
+    return this._twitterListQueryExecutor.addMemberToListAsync(parameters, request);
+  }
 
-        public addMembersToListAsync(parameters: IAddMembersToListParameters, request: ITwitterRequest):  Promise<ITwitterResult<ITwitterListDTO>>
-        {
-            return this._twitterListQueryExecutor.addMembersToListAsync(parameters, request);
-        }
+  public addMembersToListAsync(parameters: IAddMembersToListParameters, request: ITwitterRequest): Promise<ITwitterResult<ITwitterListDTO>> {
+    return this._twitterListQueryExecutor.addMembersToListAsync(parameters, request);
+  }
 
   public getUserListMembershipsIterator(parameters: IGetUserListMembershipsParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<ITwitterListCursorQueryResultDTO>> {
     return this._pageCursorIteratorFactories.createCursor(parameters, cursor => {
@@ -160,13 +160,12 @@ export class TwitterListController implements ITwitterListController {
     return this._twitterListQueryExecutor.checkIfUserIsSubscriberOfListAsync(parameters, request);
   }
 
-        public getTweetsFromListIterator(parameters: IGetTweetsFromListParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number> { // long?
-            return this._pageCursorIteratorFactories.create(parameters, cursor => {
-                let cursoredParameters = new GetTweetsFromListParameters(parameters);
-                cursoredParameters.maxId = cursor;
+  public getTweetsFromListIterator(parameters: IGetTweetsFromListParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number> { // long?
+    return this._pageCursorIteratorFactories.create(parameters, cursor => {
+      let cursoredParameters = new GetTweetsFromListParameters(parameters);
+      cursoredParameters.maxId = cursor;
 
-                return this._twitterListQueryExecutor.getTweetsFromListAsync(cursoredParameters, new TwitterRequest(request));
-            });
-        }
-    }
+      return this._twitterListQueryExecutor.getTweetsFromListAsync(cursoredParameters, new TwitterRequest(request));
+    });
+  }
 }

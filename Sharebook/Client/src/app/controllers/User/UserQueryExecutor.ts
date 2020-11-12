@@ -1,8 +1,10 @@
-﻿import {ITwitterResult, TwitterResult} from "../../core/Core/Web/TwitterResult";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
+import {map, delay} from 'rxjs/operators'; // LOOOOOL!!! 02.11.2020 ♥♥♥
+
+import {ITwitterResult, TwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
-import {Stream} from "stream";
-import {ITwitterAccessor} from 'src/app/core/Core/Web/ITwitterAccessor';
-import {IUserQueryGenerator} from "../../core/Core/QueryGenerators/IUserQueryGenerator";
+import {ITwitterAccessor, ITwitterAccessorToken} from 'src/app/core/Core/Web/ITwitterAccessor';
+import {IUserQueryGenerator, IUserQueryGeneratorToken} from "../../core/Core/QueryGenerators/IUserQueryGenerator";
 import {HttpMethod} from 'src/app/core/Public/Models/Enum/HttpMethod';
 import {IGetAuthenticatedUserParameters} from "../../core/Public/Parameters/AccountClient/GetAuthenticatedUserParameters";
 import {IGetUserParameters} from "../../core/Public/Parameters/UsersClient/GetUserParameters";
@@ -32,8 +34,11 @@ import {IRelationshipDetailsDTO} from "../../core/Public/Models/Interfaces/DTO/I
 import {IUserCursorQueryResultDTO} from "../../core/Public/Models/Interfaces/DTO/QueryDTO/IUserCursorQueryResultDTO";
 import {IIdsCursorQueryResultDTO} from "../../core/Public/Models/Interfaces/DTO/QueryDTO/IIdsCursorQueryResultDTO";
 import {IRelationshipStateDTO} from "../../core/Public/Models/Interfaces/DTO/IRelationshipStateDTO";
-import {IWebHelper} from "../../core/Core/Helpers/IWebHelper";
-import {InjectionToken} from "@angular/core";
+import {IWebHelper, IWebHelperToken} from "../../core/Core/Helpers/IWebHelper";
+import {UserQueryGenerator} from "./UserQueryGenerator";
+import {TwitterAccessor} from "../../Tweetinvi.Credentials/TwitterAccessor";
+import {WebHelper} from "../../webLogic/WebHelper";
+import {Observable} from "rxjs";
 
 export interface IUserQueryExecutor {
   getAuthenticatedUserAsync(parameters: IGetAuthenticatedUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
@@ -87,12 +92,12 @@ export interface IUserQueryExecutor {
 
   getUserIdsWhoseRetweetsAreMutedAsync(parameters: IGetUserIdsWhoseRetweetsAreMutedParameters, request: ITwitterRequest): Promise<ITwitterResult<number[]>>;
 
-  getProfileImageStreamAsync(parameters: IGetProfileImageParameters, request: ITwitterRequest): Promise<Stream>;
+  getProfileImageStreamAsync(parameters: IGetProfileImageParameters, request: ITwitterRequest): Promise<any>; // Promise<Stream>;
 }
 
 export const IUserQueryExecutorToken = new InjectionToken<IUserQueryExecutor>('IUserQueryExecutor', {
   providedIn: 'root',
-  factory: () => new UserQueryExecutor(),
+  factory: () => new UserQueryExecutor(inject(UserQueryGenerator), inject(TwitterAccessor), inject(WebHelper)),
 });
 
 export class UserQueryExecutor implements IUserQueryExecutor {
@@ -100,7 +105,9 @@ export class UserQueryExecutor implements IUserQueryExecutor {
   private readonly _twitterAccessor: ITwitterAccessor;
   private readonly _webHelper: IWebHelper;
 
-  constructor(userQueryGenerator: IUserQueryGenerator, twitterAccessor: ITwitterAccessor, webHelper: IWebHelper) {
+  constructor(@Inject(IUserQueryGeneratorToken) userQueryGenerator: IUserQueryGenerator,
+              @Inject(ITwitterAccessorToken) twitterAccessor: ITwitterAccessor,
+              @Inject(IWebHelperToken) webHelper: IWebHelper) {
     this._userQueryGenerator = userQueryGenerator;
     this._twitterAccessor = twitterAccessor;
     this._webHelper = webHelper;
@@ -131,7 +138,7 @@ export class UserQueryExecutor implements IUserQueryExecutor {
       result.response = null;
       result.model = Array<IUserDTO>(0); // new IUserDTO[0];
 
-      return Task.FromResult(result);
+      return Promise.resolve(result); // Task.FromResult(result); // https://stackoverflow.com/questions/19568280/what-is-the-use-for-task-fromresulttresult-in-c-sharp
     }
 
     let query = this._userQueryGenerator.getUsersQuery(parameters);
@@ -170,7 +177,7 @@ export class UserQueryExecutor implements IUserQueryExecutor {
   }
 
   // Stream Profile Image
-  public getProfileImageStreamAsync(parameters: IGetProfileImageParameters, request: ITwitterRequest): Promise<Stream> {
+  public getProfileImageStreamAsync(parameters: IGetProfileImageParameters, request: ITwitterRequest): Promise<any> {
     let url = this._userQueryGenerator.downloadProfileImageURL(parameters);
 
     request.query.url = url;

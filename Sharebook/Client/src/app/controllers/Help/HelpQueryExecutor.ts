@@ -1,4 +1,4 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterResult} from 'src/app/core/Core/Web/TwitterResult';
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
@@ -35,7 +35,7 @@ export interface IHelpQueryExecutor {
 
 export const IHelpQueryExecutorToken = new InjectionToken<IHelpQueryExecutor>('IHelpQueryExecutor', {
   providedIn: 'root',
-  factory: () => new HelpQueryExecutor(Inject(HelpQueryGenerator), Inject(TwitterAccessor)),
+  factory: () => new HelpQueryExecutor(inject(HelpQueryGenerator), inject(TwitterAccessor)),
 });
 
 export class HelpQueryExecutor implements IHelpQueryExecutor {

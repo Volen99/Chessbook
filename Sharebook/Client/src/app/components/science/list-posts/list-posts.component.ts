@@ -16,7 +16,7 @@ export class ListPostsComponent implements OnInit {
   private store: Store<AppState>;
 
   private scienceService: ScienceService;
-  private microservicePath: string = environment.scienceApiUrl;
+  private microservicePath: string = environment.identityApiUrl;
 
   constructor(store: Store<AppState>, scienceService: ScienceService) {
     this.store = store;

@@ -10,7 +10,7 @@ export interface IUploadTweetImageParameters extends IUploadParameters {
 }
 
 export class UploadTweetImageParameters extends UploadBinaryParameters implements IUploadTweetImageParameters {
-  constructor(binary: number[]) {
+  constructor(binary: ArrayBuffer) {
     super(binary);
 
     super.mediaType = MediaType.Media;

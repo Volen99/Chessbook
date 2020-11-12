@@ -1,4 +1,4 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterListIdentifier} from "./ITwitterListIdentifier";
 import {PrivacyMode} from '../Enum/PrivacyMode';
@@ -8,9 +8,10 @@ import {ITwitterListDTO} from "./DTO/ITwitterListDTO";
 import {IUser} from "./IUser";
 import {ITwitterClient} from "../../ITwitterClient";
 import {IListMetadataParameters} from "../../Parameters/ListsClient/IListMetadataParameters";
-import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {TwitterList} from "../../../Core/Models/TwitterList";
 import {TwitterListDTO} from "../../../Core/DTO/TwitterListDTO";
+import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 export interface ITwitterList extends ITwitterListIdentifier {
   twitterListDTO: ITwitterListDTO;
@@ -66,13 +67,13 @@ export interface ITwitterList extends ITwitterListIdentifier {
   addMemberAsync(user: IUserIdentifier): Promise<any>;
 
   // Add a list of members to this list. You must be the owner of the list to do so.
-  addMembersAsync(userIds: Iterable<number>): Promise<any>;
+  addMembersAsync(userIds: Array<number>): Promise<any>;
 
   // Add a list of members to this list. You must be the owner of the list to do so.
-  addMembersAsync(userScreenNames: Iterable<string>): Promise<any>;
+  addMembersAsync(userScreenNames: Array<string>): Promise<any>;
 
   // Add a list of members to this list. You must be the owner of the list to do so.
-  addMembersAsync(users: Iterable<IUserIdentifier>): Promise<any>;
+  addMembersAsync(users: Array<IUserIdentifier>): Promise<any>;
 
   // Remove a member from this list. You must be the owner of the list to do so.
   removeMemberAsync(userId: number): Promise<boolean>;
@@ -84,13 +85,13 @@ export interface ITwitterList extends ITwitterListIdentifier {
   removeMemberAsync(user: IUserIdentifier): Promise<boolean>;
 
   // Remove a list of members from this list. You must be the owner of the list to do so.
-  removeMembersAsync(userIds: Iterable<number>): Promise<any>;   // was void
+  removeMembersAsync(userIds: Array<number>): Promise<any>;   // was void
 
   // Remove a list of members from this list. You must be the owner of the list to do so.
-  removeMembersAsync(usernames: Iterable<string>): Promise<any>;
+  removeMembersAsync(usernames: Array<string>): Promise<any>;
 
   // Remove a list of members from this list. You must be the owner of the list to do so.
-  removeMembersAsync(users: Iterable<IUserIdentifier>): Promise<any>;
+  removeMembersAsync(users: Array<IUserIdentifier>): Promise<any>;
 
   // Test if a user is a member of the list.
   checkUserMembershipAsync(userId: number): Promise<boolean>;
@@ -129,5 +130,5 @@ export interface ITwitterList extends ITwitterListIdentifier {
 
 export const ITwitterListToken = new InjectionToken<ITwitterList>('ITwitterList', {
   providedIn: 'root',
-  factory: () => new TwitterList(Inject(TwitterListDTO), Inject(TwitterClient)),
+  factory: () => new TwitterList(inject(TwitterListDTO), inject(TwitterClient)),
 });

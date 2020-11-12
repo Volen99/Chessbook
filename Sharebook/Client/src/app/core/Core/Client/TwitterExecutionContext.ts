@@ -1,11 +1,10 @@
-﻿import {ITweetinviSettings, SharebookSettings} from "../../Public/Settings/SharebookSettings";
+﻿import {ISharebookSettings, SharebookSettings} from "../../Public/Settings/SharebookSettings";
 import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
-import InvalidOperationException from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/InvalidOperationException";
 import {ITwitterClientEvents} from "../Events/TweetinviGlobalEvents";
+import InvalidOperationException from "typescript-dotnet-commonjs/System/Exceptions/InvalidOperationException";
 
-export interface ITwitterExecutionContext extends ITweetinviSettings {
+export interface ITwitterExecutionContext extends ISharebookSettings {
   requestFactory: () => ITwitterRequest;
-  container: ITweetinviContainer;
   events: ITwitterClientEvents;
 }
 
@@ -15,18 +14,16 @@ export class TwitterExecutionContext extends SharebookSettings implements ITwitt
       super();
 
       this.requestFactory = () => {
-        throw new InvalidOperationException(`You cannot run contextual operations without configuring the ${nameof(this.requestFactory)} of the ExecutionContext`);
+        throw new InvalidOperationException(`You cannot run contextual operations without configuring the ${`nameof(this.requestFactory)`} of the ExecutionContext`);
       };
     } else {
       super(context);
 
       this.requestFactory = context.requestFactory;
-      this.container = context.container;
       this.events = context.events;
     }
   }
 
   public requestFactory: () => ITwitterRequest;
-  public container: ITweetinviContainer;
   public events: ITwitterClientEvents;
 }

@@ -1,8 +1,9 @@
+import Uri from "typescript-dotnet-commonjs/System/Uri/Uri";
+import Type from "typescript-dotnet-commonjs/System/Types";
+
 import {CustomRequestParameters} from "../CustomRequestParameters";
 import {IRequestAuthUrlParameters} from "./IRequestAuthUrlParameters";
-import Uri from "../../../../c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri";
 import {AuthAccessType} from './AuthAccessType';
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
 
 export class RequestUrlAuthUrlParameters extends CustomRequestParameters implements IRequestAuthUrlParameters {
 

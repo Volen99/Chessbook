@@ -1,7 +1,7 @@
-import Uri from 'src/app/c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri';
 import { IWebhook } from '../../Public/Models/Interfaces/IWebhook';
 import {IWebhookDTO} from "../../Public/Models/Interfaces/DTO/Webhooks/IWebhookDTO";
-import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
+import Uri from "typescript-dotnet-commonjs/System/Uri/Uri";
 
 export class Webhook implements IWebhook {
   constructor(dto: IWebhookDTO) {

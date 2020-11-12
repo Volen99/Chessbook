@@ -1,4 +1,4 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterAccessor, ITwitterAccessorToken} from "../../core/Core/Web/ITwitterAccessor";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
@@ -28,7 +28,7 @@ export interface ITimelineQueryExecutor {
 
 export const ITimelineQueryExecutorToken = new InjectionToken<ITimelineQueryExecutor>('ITimelineQueryExecutor', {
   providedIn: 'root',
-  factory: () => new TimelineQueryExecutor(Inject(ITwitterAccessorToken), Inject(ITimelineQueryGeneratorToken)),
+  factory: () => new TimelineQueryExecutor(inject(ITwitterAccessorToken), inject(ITimelineQueryGeneratorToken)),
 });
 
 export class TimelineQueryExecutor implements ITimelineQueryExecutor {

@@ -1,6 +1,9 @@
-﻿import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
+﻿import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
+
+import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterResponse} from "./ITwitterResponse";
-import {Injectable, InjectionToken} from "@angular/core";
+import {IJsonObjectConverter, IJsonObjectConverterToken} from "../Helpers/IJsonObjectConverter";
+import {JsonObjectConverter} from "../JsonConverters/JsonObjectConverter";
 
 export interface ITwitterResultFactory {
   create<T = any, TDTO = any, TModel = any>(requestOrResult: ITwitterRequest | ITwitterResult<TDTO>, response: ITwitterResponse | ((tDTO: TDTO) => TModel),
@@ -11,14 +14,16 @@ export interface ITwitterResultFactory {
 
 export const ITwitterResultFactoryToken = new InjectionToken<ITwitterResultFactory>('ITwitterResultFactory', {
   providedIn: 'root',
-  factory: () => new TwitterResultFactory(),
+  factory: () => new TwitterResultFactory(inject(JsonObjectConverter))
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TwitterResultFactory implements ITwitterResultFactory {
   private readonly _jsonObjectConverter: IJsonObjectConverter;
 
-  constructor(jsonObjectConverter: IJsonObjectConverter) {
+  constructor(@Inject(IJsonObjectConverterToken) jsonObjectConverter: IJsonObjectConverter) {
     this._jsonObjectConverter = jsonObjectConverter;
   }
 
@@ -36,15 +41,17 @@ export class TwitterResultFactory implements ITwitterResultFactory {
       twitterResult = new TwitterResult<T>(this._jsonObjectConverter);
     }
 
-    // @ts-ignore
-    if (!T) {         // TODO: BUUUUUUUUUUG!!! 🐛🐜🐛🐜
-      twitterResult = new TwitterResult();
-    } else {
-      twitterResult = new TwitterResult<T>(this._jsonObjectConverter);
-    }
+    // if (!T) {         // TODO: BUUUUUUUUUUG!!! 🐛🐜🐛🐜
+    //   twitterResult = new TwitterResult();
+    // } else {
+    //   twitterResult = new TwitterResult<T>(this._jsonObjectConverter);
+    // }
 
-    twitterResult.Response = response;
-    twitterResult.Request = requestOrResult;
+    twitterResult = new TwitterResult<T>(this._jsonObjectConverter);
+
+
+    twitterResult.response = response;
+    twitterResult.request = requestOrResult;
 
     return twitterResult;
   }
@@ -64,7 +71,9 @@ export const ITwitterResultToken = new InjectionToken<ITwitterResult>('ITwitterR
   factory: () => new TwitterResult(),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TwitterResult<TDTO = any, TModel = any> implements ITwitterResult {
   private readonly IJsonObjectConverter;
   _jsonObjectConverter;
@@ -74,7 +83,8 @@ export class TwitterResult<TDTO = any, TModel = any> implements ITwitterResult {
 
   private _initialized?: boolean;
 
-  constructor(jsonObjectConverter?: IJsonObjectConverter, convert?: (tDTO: TDTO) => TModel) {
+  constructor(@Inject(IJsonObjectConverterToken) jsonObjectConverter?: IJsonObjectConverter,
+              convert?: (tDTO: TDTO) => TModel) {
     if (jsonObjectConverter && !convert) {
       this._jsonObjectConverter = jsonObjectConverter;
     } else if (convert) {

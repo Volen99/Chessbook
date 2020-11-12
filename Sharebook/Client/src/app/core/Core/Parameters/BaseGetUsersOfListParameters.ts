@@ -1,17 +1,23 @@
 import {CursorQueryParameters, ICursorQueryParameters} from "../../Public/Parameters/CursorQueryParameters";
 import {IListParameters} from "../../Public/Parameters/ListsClient/TwitterListParameters";
-import {ITwitterListIdentifier} from '../../Public/Models/Interfaces/ITwitterListIdentifier';
+import {ITwitterListIdentifier, ITwitterListIdentifierToken} from '../../Public/Models/Interfaces/ITwitterListIdentifier';
+import {Inject, InjectionToken} from "@angular/core";
 
 export interface IBaseGetUsersOfListParameters extends IListParameters, ICursorQueryParameters {
   // Users will include their entities when set to true
-  IncludeEntities?: boolean;
+  includeEntities?: boolean;
 
   // When set to true statuses will not be included in the returned user objects.
-  SkipStatus?: boolean;
+  skipStatus?: boolean;
 }
 
+export const IBaseGetUsersOfListParametersToken = new InjectionToken<IBaseGetUsersOfListParameters>('IBaseGetUsersOfListParameters', {
+  providedIn: 'root',
+  factory: () => null,
+});
+
 export abstract class BaseGetUsersOfListParameters extends CursorQueryParameters implements IBaseGetUsersOfListParameters {
-  constructor(listOrParameters: ITwitterListIdentifier | IBaseGetUsersOfListParameters) {
+  protected constructor(@Inject([ITwitterListIdentifierToken, IBaseGetUsersOfListParametersToken]) listOrParameters: ITwitterListIdentifier | IBaseGetUsersOfListParameters) {
     if (BaseGetUsersOfListParameters.isITwitterListIdentifier(listOrParameters)) {
       super();
 
@@ -20,14 +26,14 @@ export abstract class BaseGetUsersOfListParameters extends CursorQueryParameters
       super(listOrParameters);
 
       this.list = listOrParameters?.list;
-      this.IncludeEntities = listOrParameters?.IncludeEntities;
-      this.SkipStatus = listOrParameters?.SkipStatus;
+      this.includeEntities = listOrParameters?.includeEntities;
+      this.skipStatus = listOrParameters?.skipStatus;
     }
   }
 
   public list: ITwitterListIdentifier;
-  public IncludeEntities: boolean;
-  public SkipStatus: boolean;
+  public includeEntities: boolean;
+  public skipStatus: boolean;
 
   private static isITwitterListIdentifier(listOrParameters: ITwitterListIdentifier | IBaseGetUsersOfListParameters):
     listOrParameters is ITwitterListIdentifier {

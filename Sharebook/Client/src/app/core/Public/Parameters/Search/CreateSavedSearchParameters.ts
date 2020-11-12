@@ -9,6 +9,7 @@ export interface ICreateSavedSearchParameters extends ICustomRequestParameters {
 export class CreateSavedSearchParameters extends CustomRequestParameters implements ICreateSavedSearchParameters {
   constructor(query: string) {
     super();
+
     this.query = query;
   }
 

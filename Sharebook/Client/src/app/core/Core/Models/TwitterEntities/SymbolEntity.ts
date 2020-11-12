@@ -20,6 +20,7 @@ export class SymbolEntity implements ISymbolEntity {
       return this.indices === other.indices;
     }
 
+    // @ts-ignore
     return this.indices.containsSameObjectsAs(other.indices, true);
   }
 

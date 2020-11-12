@@ -19,7 +19,9 @@ import {
   IGetRetweetsOfMeTimelineParameters
 } from "../../core/Public/Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TimelineController implements ITimelineController {
   private readonly _timelineQueryExecutor: ITimelineQueryExecutor;
   private readonly _pageCursorIteratorFactories: IPageCursorIteratorFactories;

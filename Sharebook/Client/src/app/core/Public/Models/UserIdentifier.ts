@@ -1,15 +1,17 @@
 ﻿import {Injectable} from "@angular/core";
 
 import {IUserIdentifier} from "./Interfaces/IUserIdentifier";
-import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UserIdentifier implements IUserIdentifier {
   constructor(userIdOrScreenName?: number | string) {
     if (Type.isNumber(userIdOrScreenName)) {
       this.id = userIdOrScreenName;
       this.idStr = userIdOrScreenName.toString(/*CultureInfo.InvariantCulture*/);
-    } else {
+    } else if (Type.isString(userIdOrScreenName)) {
       this.screenName = userIdOrScreenName;
     }
   }
@@ -30,13 +32,13 @@ export class UserIdentifier implements IUserIdentifier {
     return this.id.toString();
   }
 
-        public static implicit operator UserIdentifier (userId: number) {
-            return new UserIdentifier(userId);
-        }
-
-        public static implicit operator UserIdentifier (username: string) {
-            return new UserIdentifier(username);
-        }
+        // public static implicit operator UserIdentifier (userId: number) {
+        //     return new UserIdentifier(userId);
+        // }
+        //
+        // public static implicit operator UserIdentifier (username: string) {
+        //     return new UserIdentifier(username);
+        // }
     }
 
 

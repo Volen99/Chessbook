@@ -36,6 +36,7 @@ import {UsersClientRequiredParametersValidator} from "../../../Core/Client/Valid
 import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
 import {UserController} from "../../../../controllers/User/UserController";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {Observable} from "rxjs";
 
 /// <summary>
 /// A client providing all the methods related with users.
@@ -203,7 +204,7 @@ export interface IUsersRequester {
   /// Get the profile image of a user
   /// </summary>
   /// <returns>A stream of the image file</returns>
-  getProfileImageStream(parameters: IGetProfileImageParameters): Promise<Stream>;
+  getProfileImageStream(parameters: IGetProfileImageParameters): Promise<any>;
 }
 
 export const IUsersRequesterToken = new InjectionToken<IUsersRequester>('IUsersRequester', {

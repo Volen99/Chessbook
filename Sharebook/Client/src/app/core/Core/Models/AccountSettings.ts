@@ -2,10 +2,10 @@
 import {ITimeZone} from "../../Public/Models/Interfaces/ITimeZone";
 import {IAccountSettings} from "../../Public/Models/Interfaces/IAccountSettings";
 import {IAccountSettingsDTO} from "../../Public/Models/Interfaces/DTO/IAccountSettingsDTO";
-import { Language } from '../../Public/Models/Enum/Language';
 import { AllowDirectMessagesFrom } from '../../Public/Models/Enum/AllowDirectMessagesFrom';
 import {AllowContributorRequestMode} from "../../Public/Models/Enum/AllowContributorRequestMode";
 import {ITrendLocation} from "../../Public/Models/Interfaces/ITrendLocation";
+import {Language} from "../Attributes/Language";
 
 export class AccountSettings implements IAccountSettings {
   private _accountSettingsDTO: IAccountSettingsDTO;

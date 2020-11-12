@@ -1,8 +1,8 @@
 ﻿import {Injectable, InjectionToken} from "@angular/core";
 
 import {IUserIdentifier} from "../../../Public/Models/Interfaces/IUserIdentifier";
-import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
-import ArgumentNullException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException";
+import ArgumentNullException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentNullException";
+import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
 
 export interface IUserQueryValidator {
   throwIfUserCannotBeIdentified(user: IUserIdentifier): void;
@@ -15,7 +15,9 @@ export const IUserQueryValidatorToken = new InjectionToken<IUserQueryValidator>(
   factory: () => new UserQueryValidator(),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UserQueryValidator implements IUserQueryValidator {
   public throwIfUserCannotBeIdentified(user: IUserIdentifier, parameterName?: string): void {
     if (!parameterName) {

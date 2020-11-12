@@ -1,4 +1,4 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ComputedTweetMode} from "./ComputedTweetMode";
 import {IGetTweetParameters} from "../../Public/Parameters/TweetsClient/GetTweetParameters";
@@ -45,5 +45,5 @@ export interface ITweetQueryGenerator {
 
 export const ITweetQueryGeneratorToken = new InjectionToken<ITweetQueryGenerator>('ITweetQueryGenerator', {
   providedIn: 'root',
-  factory: () => new TweetQueryGenerator(Inject(QueryParameterGenerator), Inject(UserQueryParameterGenerator)),
+  factory: () => new TweetQueryGenerator(inject(QueryParameterGenerator), inject(UserQueryParameterGenerator)),
 });

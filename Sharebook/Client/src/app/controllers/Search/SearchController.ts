@@ -1,4 +1,4 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {ITwitterRequest} from "src/app/core/Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
@@ -15,7 +15,7 @@ import {IListSavedSearchesParameters} from "../../core/Public/Parameters/Search/
 import {IDestroySavedSearchParameters} from "../../core/Public/Parameters/Search/DestroySavedSearchParameters";
 import {ISearchQueryExecutor, ISearchQueryExecutorToken, SearchQueryExecutor} from "./SearchQueryExecutor";
 import {TwitterRequest} from "../../core/Public/TwitterRequest";
-import HashSet from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/HashSet";
+import HashSet from "typescript-dotnet-commonjs/System/Collections/HashSet";
 
 export interface ISearchController {
   getSearchTweetsIterator(parameters: ISearchTweetsParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<ISearchResultsDTO>, number>; // long?
@@ -31,9 +31,12 @@ export interface ISearchController {
 
 export const ISearchControllerToken = new InjectionToken<ISearchController>('ISearchController', {
   providedIn: 'root',
-  factory: () => new SearchController(Inject(SearchQueryExecutor)),
+  factory: () => new SearchController(inject(SearchQueryExecutor)),
 });
 
+@Injectable({
+  providedIn: 'root',
+})
 export class SearchController implements ISearchController {
   private readonly _searchQueryExecutor: ISearchQueryExecutor;
 
@@ -41,8 +44,7 @@ export class SearchController implements ISearchController {
     this._searchQueryExecutor = searchQueryExecutor;
   }
 
-  public getSearchTweetsIterator(parameters: ISearchTweetsParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<ISearchResultsDTO>, number> // long?
-  {
+  public getSearchTweetsIterator(parameters: ISearchTweetsParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<ISearchResultsDTO>, number> { // long?
     let lastCursor: number = -1;
 
     function getNextCursor(page: ITwitterResult<ISearchResultsDTO>): number { // long?
@@ -78,7 +80,7 @@ export class SearchController implements ISearchController {
 
   public getSearchUsersIterator(parameters: ISearchUsersParameters, request: ITwitterRequest): ITwitterPageIterator<IFilteredTwitterResult<UserDTO[]>, number> {  // int?
     let pageNumber = parameters.page ?? 1;
-    let previousResultIds = new HashSet<number>();
+    let previousResultIds = new HashSet<number>(undefined);
     return new TwitterPageIterator<IFilteredTwitterResult<UserDTO[]>, number>(parameters.page,  // int?
       async cursor => {
         let cursoredParameters = new SearchUsersParameters(parameters);
@@ -86,7 +88,7 @@ export class SearchController implements ISearchController {
 
         let page = await this._searchQueryExecutor.searchUsersAsync(cursoredParameters, new TwitterRequest(request)); // .ConfigureAwait(false);
         let result = new FilteredTwitterResult<UserDTO[]>(page);
-        result.FilteredDTO = page.model.filter(x => !previousResultIds.contains(x.id)); // .ToArray();
+        result.filteredDTO = page.model.filter(x => !previousResultIds.contains(x.id)); // .ToArray();
 
         return result;
       },

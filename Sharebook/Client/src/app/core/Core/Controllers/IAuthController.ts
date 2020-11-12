@@ -1,8 +1,7 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, InjectionToken} from "@angular/core";
 
 import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterResult} from "../Web/TwitterResult";
-import {CreateBearerTokenParameters, ICreateBearerTokenParameters} from "../../Public/Parameters/Auth/CreateBearerTokenParameters";
 import {IRequestAuthUrlParameters} from "../../Public/Parameters/Auth/IRequestAuthUrlParameters";
 import {IRequestCredentialsParameters} from "../../Public/Parameters/Auth/RequestCredentialsParameters";
 import {IInvalidateAccessTokenParameters} from "../../Public/Parameters/Auth/InvalidateAccessTokenParameters";
@@ -12,6 +11,8 @@ import {ITwitterCredentials} from "../../Public/Models/Authentication/TwitterCre
 import {IAuthenticationRequest} from "../../Public/Models/Authentication/IAuthenticationRequest";
 import {CreateTokenResponseDTO} from "../DTO/CreateTokenResponseDTO";
 import {AuthController} from "../../../controllers/Auth/AuthController";
+import {AuthQueryExecutor} from "../../../controllers/Auth/AuthQueryExecutor";
+import {ICreateBearerTokenParameters} from "../../Public/Parameters/Auth/CreateBearerTokenParameters";
 
 export interface IAuthController {
   createBearerTokenAsync(parameters: ICreateBearerTokenParameters, request: ITwitterRequest): Promise<ITwitterResult<CreateTokenResponseDTO>>;
@@ -27,5 +28,5 @@ export interface IAuthController {
 
 export const IAuthControllerToken = new InjectionToken<IAuthController>('IAuthController', {
   providedIn: 'root',
-  factory: () => new AuthController(Inject(CreateBearerTokenParameters)),
+  factory: () => new AuthController(inject(AuthQueryExecutor)),
 });

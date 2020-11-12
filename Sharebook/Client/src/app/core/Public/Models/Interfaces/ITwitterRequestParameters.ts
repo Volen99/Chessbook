@@ -1,5 +1,6 @@
 ﻿import {HttpMethod} from "../Enum/HttpMethod";
 import {CustomRequestHeaders} from "./CustomRequestHeaders";
+import {HttpContent} from "../../http-content";
 
 // Contains the fields that are required to build an HttpRequest to run the query
 export interface ITwitterRequestParameters {

@@ -1,3 +1,5 @@
+import {Inject, Injectable} from "@angular/core";
+
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
 import {OnlyGetTweetsThatAre} from "../../../core/Public/Parameters/Enum/OnlyGetTweetsThatAre";
 import {ISearchClient} from "../../../core/Public/Client/Clients/ISearchClient";
@@ -25,9 +27,10 @@ import {IFilteredTwitterResult} from "../../../core/Core/Web/FilteredTwitterResu
 import {UserDTO} from "../../../core/Core/DTO/UserDTO";
 import {ICreateSavedSearchParameters} from "../../../core/Public/Parameters/Search/CreateSavedSearchParameters";
 import {GetSavedSearchParameters, IGetSavedSearchParameters} from "../../../core/Public/Parameters/Search/GetSavedSearchParameters";
-import {Inject, Injectable} from "@angular/core";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class SearchClient implements ISearchClient {
   private readonly _client: ITwitterClient;
 
@@ -48,7 +51,7 @@ export class SearchClient implements ISearchClient {
     }
 
     let iterator = this.getSearchTweetsIterator(parameters);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public async searchTweetsWithMetadataAsync(queryOrParameters: string | ISearchTweetsParameters): Promise<ISearchResults> {
@@ -77,7 +80,7 @@ export class SearchClient implements ISearchClient {
       twitterResult => this._client.factories.createTweets(twitterResult?.model?.tweetDTOs));
   }
 
-  public filterTweets(tweets: ITweet[], filter?: OnlyGetTweetsThatAre, tweetsMustContainGeoInformation: boolean): ITweet[] {
+  public filterTweets(tweets: ITweet[], filter: OnlyGetTweetsThatAre, tweetsMustContainGeoInformation: boolean): ITweet[] {
     let matchingTweets: Array<ITweet> = tweets;
 
     if (filter === OnlyGetTweetsThatAre.OriginalTweets) {
@@ -104,7 +107,7 @@ export class SearchClient implements ISearchClient {
     }
 
     let pageIterator = this.getSearchUsersIterator(parameters);
-    return (await pageIterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await pageIterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public getSearchUsersIterator(queryOrParameters: string | ISearchUsersParameters): ITwitterIterator<IUser, number> {      // number?
@@ -117,7 +120,7 @@ export class SearchClient implements ISearchClient {
 
     let pageIterator = this._client.raw.search.getSearchUsersIterator(parameters);
     return new TwitterIteratorProxy<IFilteredTwitterResult<UserDTO[]>, IUser, number>(pageIterator,    // number?
-      twitterResult => this._client.factories.createUsers(twitterResult?.FilteredDTO));
+      twitterResult => this._client.factories.createUsers(twitterResult?.filteredDTO));
   }
 
   public async createSavedSearchAsync(queryOrParameters: string | ICreateSavedSearchParameters): Promise<ISavedSearch> {

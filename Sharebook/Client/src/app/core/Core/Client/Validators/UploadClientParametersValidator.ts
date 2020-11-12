@@ -1,4 +1,4 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {IUploadParameters} from "../../../Public/Parameters/Upload/UploadBinaryParameters";
 import {IAddMediaMetadataParameters} from "../../../Public/Parameters/Upload/AddMediaMetadataParameters";
@@ -20,10 +20,12 @@ export interface IUploadClientParametersValidator {
 
 export const IUploadClientParametersValidatorToken = new InjectionToken<IUploadClientParametersValidator>('IUploadClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new UploadClientParametersValidator(Inject(TwitterClient), Inject(UploadClientRequiredParametersValidator)),
+  factory: () => new UploadClientParametersValidator(inject(TwitterClient), inject(UploadClientRequiredParametersValidator)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UploadClientParametersValidator implements IUploadClientParametersValidator {
   private readonly _client: ITwitterClient;
   private readonly _uploadClientRequiredParametersValidator: IUploadClientRequiredParametersValidator;
@@ -45,14 +47,14 @@ export class UploadClientParametersValidator implements IUploadClientParametersV
         parameters.mediaCategory === MediaCategory.DmGif || parameters.mediaCategory === MediaCategory.DmImage) {
         let maxUploadSize = this.Limits.UPLOAD_MAX_IMAGE_SIZE;
         if (parameters.binary.length > maxUploadSize) {
-          throw new TwitterArgumentLimitException(`${nameof(parameters.binary)}`, maxUploadSize, nameof(this.Limits.UPLOAD_MAX_IMAGE_SIZE), "binary size");
+          throw new TwitterArgumentLimitException(`${`nameof(parameters.binary)`}`, maxUploadSize, `nameof(this.Limits.UPLOAD_MAX_IMAGE_SIZE)`, "binary size");
         }
       }
 
       if (parameters.mediaCategory === MediaCategory.Video || parameters.mediaCategory === MediaCategory.DmVideo) {
         let maxUploadSize = this.Limits.UPLOAD_MAX_VIDEO_SIZE;
         if (parameters.binary.length > maxUploadSize) {
-          throw new TwitterArgumentLimitException(`${nameof(parameters.binary)}`, maxUploadSize, nameof(this.Limits.UPLOAD_MAX_VIDEO_SIZE), "binary size");
+          throw new TwitterArgumentLimitException(`${`nameof(parameters.binary)`}`, maxUploadSize, `nameof(this.Limits.UPLOAD_MAX_VIDEO_SIZE)`, "binary size");
         }
       }
     } else {

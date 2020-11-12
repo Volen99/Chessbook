@@ -1,13 +1,11 @@
 import {Inject, Injectable} from "@angular/core";
 
 import {IAuthController} from "../../core/Core/Controllers/IAuthController";
-import Regex from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Text/RegularExpressions';
 import {Resources} from "../../properties/resources";
 import {ITwitterResult, TwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
 import {TwitterAuthException} from "../../core/Public/Exceptions/TwitterAuthException";
 import {TwitterAuthAbortedException} from "../../core/Public/Exceptions/TwitterAuthAbortedException";
-import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {IAuthQueryExecutor, IAuthQueryExecutorToken} from "./AuthQueryExecutor";
 import {ICreateBearerTokenParameters} from "../../core/Public/Parameters/Auth/CreateBearerTokenParameters";
 import {IRequestAuthUrlParameters} from "../../core/Public/Parameters/Auth/IRequestAuthUrlParameters";
@@ -18,8 +16,15 @@ import {IRequestCredentialsParameters} from "../../core/Public/Parameters/Auth/R
 import {ITwitterCredentials, TwitterCredentials} from "../../core/Public/Models/Authentication/TwitterCredentials";
 import {IInvalidateBearerTokenParameters} from "../../core/Public/Parameters/Auth/InvalidateBearerTokenParameters";
 import {IInvalidateAccessTokenParameters} from "../../core/Public/Parameters/Auth/InvalidateAccessTokenParameters";
+import {AuthenticationRequest} from "../../Tweetinvi.Credentials/Models/AuthenticationRequest";
+import {InvalidateTokenResponse} from "../../core/Public/Models/Authentication/InvalidateTokenResponse";
+import Regex from "typescript-dotnet-commonjs/System/Text/RegularExpressions";
+import StringBuilder from "typescript-dotnet-commonjs/System/Text/StringBuilder";
+import {StringBuilderExtensions} from "../../core/Core/Extensions/stringBuilder-extensions";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthController implements IAuthController {
   private readonly _authQueryExecutor: IAuthQueryExecutor;
   private readonly _parseRequestUrlResponseRegex: Regex;
@@ -50,25 +55,20 @@ export class AuthController implements IAuthController {
 
     let tokenInformation = this._parseRequestUrlResponseRegex.match(requestTokenResponse.content);
 
-    if (!bool.TryParse(tokenInformation.Groups["oauth_callback_confirmed"].Value, out {
-      var callbackConfirmed;
-    }
-  ) ||
-    !callbackConfirmed;
-  )
-    {
+    let callbackConfirmed: boolean;
+    if (!(tokenInformation.groups["oauth_callback_confirmed"].toLocaleLowerCase() !== 'true') || !callbackConfirmed) {
       throw new TwitterAuthAbortedException(requestTokenResponse);
     }
 
-    authToken.AuthorizationKey = tokenInformation.Groups["oauth_token"].Value;
-    authToken.AuthorizationSecret = tokenInformation.Groups["oauth_token_secret"].Value;
+    authToken.authorizationKey = tokenInformation.groups["oauth_token"];
+    authToken.authorizationSecret = tokenInformation.groups["oauth_token_secret"];
 
     let authorizationUrl = new StringBuilder(Resources.Auth_AuthorizeBaseUrl);
-    authorizationUrl.addParameterToQuery("oauth_token", authToken.AuthorizationKey);
-    authorizationUrl.addParameterToQuery("force_login", parameters.forceLogin);
-    authorizationUrl.addParameterToQuery("screen_name", parameters.screenName);
+    StringBuilderExtensions.addParameterToQuery(authorizationUrl, "oauth_token", authToken.authorizationKey);
+    StringBuilderExtensions.addParameterToQuery(authorizationUrl, "force_login", parameters.forceLogin);
+    StringBuilderExtensions.addParameterToQuery(authorizationUrl, "screen_name", parameters.screenName);
 
-    authToken.AuthorizationURL = authorizationUrl.toString();
+    authToken.authorizationURL = authorizationUrl.toString();
 
     let result = new TwitterResult<IAuthenticationRequest>();
     result.request = requestTokenResponse.request;
@@ -81,8 +81,10 @@ export class AuthController implements IAuthController {
   public async requestCredentialsAsync(parameters: IRequestCredentialsParameters, request: ITwitterRequest): Promise<ITwitterResult<ITwitterCredentials>> {
     let twitterResult = await this._authQueryExecutor.requestCredentialsAsync(parameters, request); // .ConfigureAwait(false);
 
-    let oAuthToken = twitterResult.Content.GetURLParameter("oauth_token");
-    let oAuthTokenSecret = twitterResult.Content.GetURLParameter("oauth_token_secret");
+    // @ts-ignore
+    let oAuthToken = twitterResult.content.getURLParameter("oauth_token");
+    // @ts-ignore
+    let oAuthTokenSecret = twitterResult.content.getURLParameter("oauth_token_secret");
 
     if (oAuthToken == null || oAuthTokenSecret == null) {
       throw new TwitterAuthException(twitterResult, "Invalid authentication response");
@@ -102,11 +104,11 @@ export class AuthController implements IAuthController {
     return result;
   }
 
-  public invalidateBearerTokenAsync(parameters: IInvalidateBearerTokenParameters, request: ITwitterRequest): Task<ITwitterResult<InvalidateTokenResponse>> {
+  public invalidateBearerTokenAsync(parameters: IInvalidateBearerTokenParameters, request: ITwitterRequest): Promise<ITwitterResult<InvalidateTokenResponse>> {
     return this._authQueryExecutor.invalidateBearerTokenAsync(parameters, request);
   }
 
-  public invalidateAccessTokenAsync(parameters: IInvalidateAccessTokenParameters, request: ITwitterRequest): Task<ITwitterResult<InvalidateTokenResponse>> {
+  public invalidateAccessTokenAsync(parameters: IInvalidateAccessTokenParameters, request: ITwitterRequest): Promise<ITwitterResult<InvalidateTokenResponse>> {
     return this._authQueryExecutor.invalidateAccessTokenAsync(parameters, request);
   }
 }

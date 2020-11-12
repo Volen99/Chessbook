@@ -17,7 +17,6 @@
     using Microsoft.AspNetCore.Http;
 
     using Devspaces.Support;
-    using Web.Science.HttpAggregator.Filters.WorldFeed.Science.API.Infrastructure.Filters;
     using Web.Science.HttpAggregator.Config;
     using Web.Science.HttpAggregator.Infrastructure;
     using Microsoft.IdentityModel.Logging;

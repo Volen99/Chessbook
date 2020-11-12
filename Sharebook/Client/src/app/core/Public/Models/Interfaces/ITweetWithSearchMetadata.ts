@@ -14,5 +14,5 @@ export interface ITweetWithSearchMetadata extends ITweet {
 
 export const ITweetWithSearchMetadataToken = new InjectionToken<ITweetWithSearchMetadata>('ITweetWithSearchMetadata', {
   providedIn: 'root',
-  factory: () => new TweetWithSearchMetadata(Inject(TweetWithSearchMetadataDTO), Inject(TweetMode), Inject(TwitterClient)),
+  factory: () => new TweetWithSearchMetadata(inject(TweetWithSearchMetadataDTO), inject(TweetMode), inject(TwitterClient)),
 });

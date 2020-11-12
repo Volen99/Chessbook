@@ -1,3 +1,5 @@
+import {Inject, Injectable} from "@angular/core";
+
 import {IMessagesClientParametersValidator} from "../../../core/Core/Client/Validators/MessageClientParametersValidator";
 import {IUserIdentifier} from "../../../core/Public/Models/Interfaces/IUserIdentifier";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
@@ -14,10 +16,11 @@ import {TwitterIteratorProxy} from "../../../core/Core/Iterators/TwitterIterator
 import {MessageEventWithAppDTO} from "../../../core/Core/DTO/MessageEventWithAppDTO";
 import {IMessageEventWithAppDTO} from "../../../core/Public/Models/Interfaces/DTO/IMessageEventWithAppDTO";
 import {DestroyMessageParameters, IDeleteMessageParameters} from "../../../core/Public/Parameters/MessageClient/DestroyMessageParameters";
-import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
-import {Inject, Injectable} from "@angular/core";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MessagesClient implements IMessagesClient {
   private readonly _client: ITwitterClient;
   private readonly _messageRequester: IMessageRequester;
@@ -71,8 +74,8 @@ export class MessagesClient implements IMessagesClient {
       parametersCurrent = parameters;
     }
 
-    let iterator = this.getMessagesIterator(parameters);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    let iterator = this.getMessagesIterator(parametersCurrent);
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public getMessagesIterator(parameters?: IGetMessagesParameters): ITwitterIterator<IMessage> {
@@ -83,7 +86,7 @@ export class MessagesClient implements IMessagesClient {
       parametersCurrent = parameters;
     }
 
-    let pageIterator = this._messageRequester.getMessagesIterator(parameters);
+    let pageIterator = this._messageRequester.getMessagesIterator(parametersCurrent);
 
     return new TwitterIteratorProxy<ITwitterResult<IMessageCursorQueryResultDTO>, IMessage>(pageIterator, twitterResult => {
       let messageEventDtos = twitterResult.model.messageEvents;
@@ -103,7 +106,7 @@ export class MessagesClient implements IMessagesClient {
     });
   }
 
-  public destroyMessageAsync(messageIdOrMessageOrParameters: number | IMessage | IDeleteMessageParameters): Promise<void> {
+  public destroyMessageAsync(messageIdOrMessageOrParameters: number | IMessage | IDeleteMessageParameters): Promise<any> {
     let parametersCurrent: IDeleteMessageParameters;
     if (Type.isNumber(messageIdOrMessageOrParameters) || MessagesClient.isIMessage(messageIdOrMessageOrParameters)) {
       parametersCurrent = new DestroyMessageParameters(messageIdOrMessageOrParameters);

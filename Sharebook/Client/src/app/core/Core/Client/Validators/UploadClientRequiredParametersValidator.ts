@@ -1,9 +1,9 @@
 import {Injectable, InjectionToken} from "@angular/core";
 
 import {IUploadParameters} from "../../../Public/Parameters/Upload/UploadBinaryParameters";
-import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
 import {IAddMediaMetadataParameters} from "../../../Public/Parameters/Upload/AddMediaMetadataParameters";
 import {IUploadClientParametersValidator} from "./UploadClientParametersValidator";
+import ArgumentNullException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentNullException";
 
 export interface IUploadClientRequiredParametersValidator extends IUploadClientParametersValidator {
 }
@@ -13,20 +13,22 @@ export const IUploadClientRequiredParametersValidatorToken = new InjectionToken<
   factory: () => new UploadClientRequiredParametersValidator(),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UploadClientRequiredParametersValidator implements IUploadClientRequiredParametersValidator {
   public validate(parameters: IUploadParameters | IAddMediaMetadataParameters): void {
     if (parameters == null) {
-      throw new ArgumentNullException(nameof(parameters));
+      throw new ArgumentNullException(`nameof(parameters)`);
     }
 
     if (UploadClientRequiredParametersValidator.isIUploadParameters(parameters)) {
       if (parameters.binary == null) {
-        throw new ArgumentNullException(`${nameof(parameters.binary)}`);
+        throw new ArgumentNullException(`${`nameof(parameters.binary)`}`);
       }
     } else {
       if (parameters.mediaId == null) {
-        throw new ArgumentNullException(`${nameof(parameters.mediaId)}`);
+        throw new ArgumentNullException(`${`nameof(parameters.mediaId)`}`);
       }
     }
   }

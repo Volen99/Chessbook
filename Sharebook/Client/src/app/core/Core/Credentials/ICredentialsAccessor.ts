@@ -1,5 +1,7 @@
-﻿import {ITwitterCredentials} from "../../Public/Models/Authentication/TwitterCredentials";
-import {InjectionToken} from "@angular/core";
+﻿import {InjectionToken} from "@angular/core";
+
+import {ITwitterCredentials} from "../../Public/Models/Authentication/TwitterCredentials";
+import {CredentialsAccessor} from "../../../Tweetinvi.Credentials/CredentialsAccessor";
 
 export interface ICredentialsAccessor {
   applicationCredentials: ITwitterCredentials;

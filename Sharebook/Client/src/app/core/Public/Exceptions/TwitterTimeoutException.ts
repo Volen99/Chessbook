@@ -1,16 +1,16 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
-import {ITwitterException} from "../../Core/Exceptions/ITwitterException";
+import {ISharebookException} from "../../Core/Exceptions/ISharebookException";
 import {SharebookException} from "./SharebookException";
 import {ITwitterRequest} from "../Models/Interfaces/ITwitterRequest";
 import {ITwitterExceptionInfo} from "../../Core/Exceptions/ITwitterExceptionInfo";
 import {TwitterRequest} from "../TwitterRequest";
 
-export interface ITwitterTimeoutException extends ITwitterException {
+export interface ISharebookTimeoutException extends ISharebookException {
 }
 
 // Exception raised when Twitter did not manage to respond to your request on time.
-export class TwitterTimeoutException extends SharebookException implements ITwitterTimeoutException {
+export class TwitterTimeoutException extends SharebookException implements ISharebookTimeoutException {
   constructor(request: ITwitterRequest) {
     super(request, `${request.query.url} request timed out.`);
     super.twitterDescription = `Twitter was not able to perform your query within the Timeout limit of ${request.query.timeout.getTotalMilliseconds()} ms.`;
@@ -20,7 +20,7 @@ export class TwitterTimeoutException extends SharebookException implements ITwit
   }
 }
 
-export const ITwitterTimeoutExceptionToken = new InjectionToken<ITwitterTimeoutException>('ITwitterTimeoutException', {
+export const ITwitterTimeoutExceptionToken = new InjectionToken<ISharebookTimeoutException>('ITwitterTimeoutException', {
   providedIn: 'root',
-  factory: () => new TwitterTimeoutException(Inject(TwitterRequest)),
+  factory: () => new TwitterTimeoutException(inject(TwitterRequest)),
 });

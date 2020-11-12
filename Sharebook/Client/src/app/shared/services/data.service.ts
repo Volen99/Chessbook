@@ -8,7 +8,9 @@ import {Guid} from '../../../guid';
 
 // Implementing a Retry-Circuit breaker policy
 // is pending to do for the SPA app
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class DataService {
   constructor(private http: HttpClient, private securityService: SecurityService) { }
 
@@ -62,7 +64,6 @@ export class DataService {
   }
 
   private handleError(error: any) {
-    debugger
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('Client side network error occurred:', error.error.message);

@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {ISearchTweetsParameters} from "../../Parameters/Search/SearchTweetsParameters";
@@ -65,6 +65,6 @@ export interface ISearchRequester {
 
 export const ISearchRequesterToken = new InjectionToken<ISearchRequester>('ISearchRequester', {
   providedIn: 'root',
-  factory: () => new SearchRequester(Inject(SearchController), Inject(SearchClientRequiredParametersValidator),
-    Inject(TwitterClient), Inject(TwitterClientEvents)),
+  factory: () => new SearchRequester(inject(SearchController), inject(SearchClientRequiredParametersValidator),
+    inject(TwitterClient), inject(TwitterClientEvents)),
 });

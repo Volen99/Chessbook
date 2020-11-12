@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {IGetRateLimitsParameters, RateLimitsSource} from "../../Parameters/HelpClient/GetRateLimitsParameters";
 import {IEndpointRateLimit} from "../../Models/RateLimits/IEndpointRateLimit";
@@ -6,6 +6,7 @@ import {IGetEndpointRateLimitsParameters} from "../../Parameters/HelpClient/GetE
 import {IReadOnlyTwitterCredentials} from "../../../Core/Models/Authentication/ReadOnlyTwitterCredentials";
 import {RateLimitsClient} from "../../../../sharebook/Client/Clients/RateLimitsClient";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {ICredentialsRateLimits} from "../../Models/RateLimits/ICredentialsRateLimits";
 
 export interface IRateLimitsClient {
   // Load the client's rate limits in the cache
@@ -52,5 +53,5 @@ export interface IRateLimitsClient {
 
 export const IRateLimitsClientToken = new InjectionToken<IRateLimitsClient>('IRateLimitsClient', {
   providedIn: 'root',
-  factory: () => new RateLimitsClient(Inject(TwitterClient)),
+  factory: () => new RateLimitsClient(inject(TwitterClient)),
 });

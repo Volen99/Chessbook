@@ -1,5 +1,5 @@
-﻿import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {IEndpointRateLimit} from "../../Public/Models/RateLimits/IEndpointRateLimit";
+﻿import {IEndpointRateLimit} from "../../Public/Models/RateLimits/IEndpointRateLimit";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 export class EndpointRateLimit implements IEndpointRateLimit {
   // Number of operation available on the specific endpoint.
@@ -16,8 +16,8 @@ export class EndpointRateLimit implements IEndpointRateLimit {
 
   set reset(value: number) {
     this._reset = value;
-    this.resetDateTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-    this.resetDateTime = this.resetDateTime.addSeconds(this._reset).ToLocalTime();
+    // this.resetDateTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+    // this.resetDateTime = this.resetDateTime.addSeconds(this._reset).ToLocalTime();
   }
 
   // Maximum number of operations that can be performed in 15 minutes.
@@ -31,7 +31,7 @@ export class EndpointRateLimit implements IEndpointRateLimit {
       return 0;
     }
 
-    return (this.resetDateTime - DateTime.now).TotalSeconds;
+    return 0; // (this.resetDateTime - DateTime.now).TotalSeconds; // TODO: BUG
   }
 
   // Duration in milliseconds after which the endpoint rate limit will be reset.

@@ -1,8 +1,8 @@
-import StringBuilder from '../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder';
-import Regex, {Match, RegexOptions} from "../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/RegularExpressions";
 import {HttpUtility} from "../core/Core/Helpers/HttpUtility";
 import { ITweetTextParts } from '../core/Public/Models/Interfaces/ITweetTextParts';
 import {TweetTextParts} from "../core/Core/Helpers/TweetTextParts";
+import Regex, {Match, RegexOptions} from "typescript-dotnet-commonjs/System/Text/RegularExpressions";
+import StringBuilder from "typescript-dotnet-commonjs/System/Text/StringBuilder";
 
 const TWITTER_URL_REGEX: string =
       "(?<=^|\\s+)" +                                              // URL can be prefixed by space or start of line
@@ -134,7 +134,7 @@ String.prototype.getURLParameter = function(parameterName: string): string {
     return null;
   }
 
-  return urlInformation.groups["parameter_value"].value;
+  return urlInformation.groups[`parameter_value`].value;
 };
 
 // Decode a string formatted to be used within a url
@@ -142,9 +142,9 @@ String.prototype.HTMLDecode = (s: string): string => {
   return _httpUtility.htmlDecode(s);
 };
 
-String.prototype.isMatchingJsonFormat = (json: string): boolean => {
-  return json && json.length >= 2 && ((json[0] === '{' && json[json.length - 1] === '}') || (json[0] === '[' && json[json.length - 1] === ']'));
-};
+// String.prototype.isMatchingJsonFormat = function(json: string): boolean {
+//   return json && json.length >= 2 && ((json[0] === '{' && json[json.length - 1] === '}') || (json[0] === '[' && json[json.length - 1] === ']'));
+// };
 
 // Returns the different parts of an Extended Tweet string.
 String.prototype.tweetParts = (tweetText: string): ITweetTextParts => {
@@ -159,6 +159,5 @@ String.prototype.UTF32Length = function(this: string): number {
 
   return this.length;       // new StringInfo(str).LengthInTextElements;
 };
-
 
 export {};

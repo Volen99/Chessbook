@@ -1,4 +1,4 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
@@ -28,7 +28,7 @@ export interface IMessageQueryExecutor {
 
 export const IMessageQueryExecutorToken = new InjectionToken<IMessageQueryExecutor>('IMessageQueryExecutor', {
   providedIn: 'root',
-  factory: () => new MessageQueryExecutor(Inject(TwitterAccessor), Inject(MessageQueryGenerator)),
+  factory: () => new MessageQueryExecutor(inject(TwitterAccessor), inject(MessageQueryGenerator)),
 });
 
 export class MessageQueryExecutor implements IMessageQueryExecutor {

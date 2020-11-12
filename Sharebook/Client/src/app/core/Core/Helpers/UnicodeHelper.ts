@@ -1,8 +1,8 @@
-﻿import StringBuilder from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
-import {isSurrogatePair} from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Char";
+﻿import StringBuilder from "typescript-dotnet-commonjs/System/Text/StringBuilder";
+import {CharExtensions} from "../Extensions/char-extensions";
 
 export abstract class UnicodeHelper {
-  // // Some versions of the .Net framework have this functionality built in. See StringInfo.SubstringByTextElements()
+  // Some versions of the .Net framework have this functionality built in. See StringInfo.SubstringByTextElements()
   // public static  SubstringByTextElements(str: string, startingTextElement: number): string {
   //     return UnicodeHelper.SubstringByTextElements(str, startingTextElement, str?.length ?? 0);
   // }
@@ -30,7 +30,7 @@ export abstract class UnicodeHelper {
 
   public static anyUnicode(str: string): boolean {
     for (let i = 0; i < str.length; ++i) {
-      if (isSurrogatePair(str, i)) {
+      if (CharExtensions.isSurrogatePair(str, i)) {
         return true;
       }
     }
@@ -44,6 +44,6 @@ export abstract class UnicodeHelper {
       return 0;
     }
 
-    return this.length;       // new StringInfo(str).LengthInTextElements;
+    return this.length;        // new StringInfo(str).LengthInTextElements;
   }
 }

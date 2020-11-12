@@ -2,8 +2,8 @@
 
 import {IMessageEventDTO} from "./Events/IMessageEventDTO";
 import {IApp} from "../IApp";
-import Dictionary from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
 import {GetMessageDTO} from "../../../../Core/DTO/GetMessageDTO";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
 
 export interface IGetMessageDTO {
   messageEvent: IMessageEventDTO;

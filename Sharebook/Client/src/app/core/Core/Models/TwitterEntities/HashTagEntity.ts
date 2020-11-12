@@ -18,7 +18,8 @@ export class HashtagEntity implements IHashtagEntity {
       return this.indices === other.indices;
     }
 
-    return this.indices.containsSameObjectsAs(other.indices, true);
+    // @ts-ignore
+    return this.indices.containsSameObjectsAs<number>(other.indices, true);
   }
 
   public toString(): string {

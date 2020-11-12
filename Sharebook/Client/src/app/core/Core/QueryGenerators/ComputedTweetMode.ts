@@ -13,8 +13,9 @@ export class ComputedTweetMode {
     }
   }
 
-  public static implicit operator TweetMode?(computedTweetMode: ComputedTweetMode) {
-    return computedTweetMode._tweetMode;
+  // TODO: buuuuuuuug!! 🐛🐛🐛🐛🐛🐛🐛🐛🐛🐛🐛🐛
+  public implicitOperator?(this: ComputedTweetMode): TweetMode {
+    return this._tweetMode;
   }
 
   public toString(): string {

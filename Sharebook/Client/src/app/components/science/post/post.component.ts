@@ -1,16 +1,16 @@
 import {Component, OnInit, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
-import {AppState} from '../../../store/app.state';
-import {Store} from '@ngrx/store';
-import {HttpClient} from '@angular/common/http';
-import {ScienceService} from '../science.service';
-import {environment} from '../../../../environments/environment';
-import {AddPost} from '../../../store/posts/actions/posts.actions';
-import {Feed} from '../../../shared/Feed/feed.model';
 import {ActivatedRoute, Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
 import {FormGroup} from 'ngx-strongly-typed-forms';
+import {Store} from '@ngrx/store';
+
+import {AppState} from '../../../store/app.state';
+import {ScienceService} from '../science.service';
+import {AddPost} from '../../../store/posts/actions/posts.actions';
 import {MediaINITQueryParameters} from '../../models/uploads/upload-media-INIT-query-parameters.model';
 import {MediaAPPENDQueryParameters} from '../../models/uploads/upload-media-APPEND-query-parameters.model';
 import {MediaFINALIZEQueryParameters} from '../../models/uploads/upload-media-FINALIZE-query-parameters.model';
+import {PostModel} from "../../models/post.model";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -68,7 +68,7 @@ export class PostComponent implements OnInit {
     }],
   };
 
-  public feed: Feed;
+  public feed: any;
 
   ngOnInit(): void {
   }
@@ -142,19 +142,7 @@ export class PostComponent implements OnInit {
     if (file.type.includes('image')) { // :(
 
     } else if (file.type.includes('video')) {
-      this.uploadVideoService.INIT(queryStringInit, formData)
-        .subscribe(responseINIT => {
-          debugger;
-          const queryStringAppend = this.getQueryUrl(file, 'APPEND', responseINIT.mediaId, 0);
-          this.uploadVideoService.APPEND(queryStringAppend, formData)
-            .subscribe(responseAPPEND => {
-              const queryStringFinalize = this.getQueryUrl(file, 'FINALIZE', responseINIT.mediaId);
-              this.uploadVideoService.FINALIZE(queryStringFinalize, formData)
-                .subscribe(responseFINALIZE => {
 
-                });
-            });
-        });
     }
 
     // this.scienceService.upload(formData)
@@ -167,48 +155,7 @@ export class PostComponent implements OnInit {
 
 
   getQueryUrl(file: File, command: string, mediaId?: number, segmentIndex?: number) {
-    let mediaQuery = {};
 
-    if (command === 'INIT') {
-      let mediaParameters: MediaINITQueryParameters;
-      mediaParameters = {};
-
-      mediaParameters.command = 'INIT';
-      mediaParameters.totalBytes = file.size;
-      mediaParameters.mediaType = file.type;
-      mediaParameters.mediaCategory = 'tweet_' + file.type.split('/')[0];
-
-      mediaQuery = mediaParameters;
-    } else if (command === 'APPEND') {
-      let mediaParameters: MediaAPPENDQueryParameters;
-      mediaParameters = {};
-
-      mediaParameters.command = 'APPEND';
-      mediaParameters.mediaID = mediaId;
-      mediaParameters.segmentIndex = segmentIndex;
-
-      mediaQuery = mediaParameters;
-    } else if (command === 'FINALIZE') {
-      let mediaParameters: MediaFINALIZEQueryParameters;
-      mediaParameters = {};
-      mediaParameters.mediaID = mediaId;
-      mediaParameters.command = 'FINALIZE';
-      mediaParameters.allowAsync = true;
-
-      mediaQuery = mediaParameters;
-    }
-
-    const params = new URLSearchParams();
-    for (const key in mediaQuery) {
-      if (!mediaQuery[key]) {
-        continue;
-      }
-      params.append(key, mediaQuery[key]);
-    }
-
-    let query = params.toString();
-    query = '?' + params;
-    return query;
   }
 
   /**
@@ -244,33 +191,12 @@ export class PostComponent implements OnInit {
   }
 
   addPost(text: string) {
-    this.post = {
-      text,
-      media: [],
-    };
-
-    // {"errors":null,"data":{"text":"Love ♥"},"isOk":true}
-    if (this.response) {
-      for (const media of this.response.data) {
-        this.post.media.push(media);
-      }
-    }
-
-
     this.isCreate = false;
-
-    this.scienceService.createText(text, this.post.media[0]?.postId || 0).subscribe(); // TODO: image.postId bug
-
-    this.store.dispatch(new AddPost(this.post));
-
-    this.scienceService.getAllPosts().subscribe(); // TODO: this is just for test, as this reloads all the feeds!!
-
-    // this.user.post.medias[0]?.postId = undefined;
   }
 
   public createImgPath = (serverPath: string) => {
-    return `${this.microservicePath}${serverPath}`;
-  };
+    return null; // `${this.microservicePath}${serverPath}`;
+  }
 
   public incrementCounter() {
     this.count++;

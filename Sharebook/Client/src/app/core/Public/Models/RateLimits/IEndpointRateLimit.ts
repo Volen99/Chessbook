@@ -1,4 +1,4 @@
-﻿import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+﻿import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 // Give information regarding the rate limits for a specific endpoint of the Twitter API.
 export interface IEndpointRateLimit {

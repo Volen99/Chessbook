@@ -1,191 +1,415 @@
-﻿import { CredentialsRateLimitsDTO } from "../DTO/CredentialsRateLimitsDTO";
-import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import Dictionary from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
+﻿import {CredentialsRateLimitsDTO, RateLimitResources} from "../DTO/CredentialsRateLimitsDTO";
 import {IEndpointRateLimit} from "../../Public/Models/RateLimits/IEndpointRateLimit";
+import {ICredentialsRateLimits} from "../../Public/Models/RateLimits/ICredentialsRateLimits";
+import {TwitterEndpointAttribute} from "../Attributes/TwitterEndpointAttribute";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
 
-    export class CredentialsRateLimits implements ICredentialsRateLimits
-    {
-        public CredentialsRateLimitsDTO: CredentialsRateLimitsDTO;
+export class CredentialsRateLimits implements ICredentialsRateLimits {
 
-        constructor(credentialsRateLimitsDTO: CredentialsRateLimitsDTO) {
-            this.CreatedAt = DateTime.now;
-            OtherEndpointRateLimits = new Dictionary<TwitterEndpointAttribute, IEndpointRateLimit>();
-            CredentialsRateLimitsDTO = credentialsRateLimitsDTO;
-        }
+  constructor(credentialsRateLimitsDTO: CredentialsRateLimitsDTO) {
+    this.createdAt = DateTime.now;
+    this.otherEndpointRateLimits = new Dictionary<TwitterEndpointAttribute, IEndpointRateLimit>();
+    this.credentialsRateLimitsDTO = credentialsRateLimitsDTO;
+  }
 
-        public CreatedAt: DateTime; // DateTimeOffset ;
+  public createdAt: DateTime; // DateTimeOffset ;
 
-        public string RateLimitContext
-        {
-            get
-            {
-                if (CredentialsRateLimitsDTO.RateLimitContext.TryGetValue("access_token", out var jsonObj))
-                {
-                    return jsonObj.ToObject<string>();
-                }
+  public credentialsRateLimitsDTO: CredentialsRateLimitsDTO;
 
-                if (CredentialsRateLimitsDTO.rateLimitContext.TryGetValue("application", out jsonObj))
-                {
-                    return jsonObj.ToObject<string>();
-                }
-
-                return null;
-            }
-        }
-
-        public bool IsApplicationOnlyCredentials => CredentialsRateLimitsDTO.rateLimitContext.ContainsKey("application");
-
-        public Dictionary<TwitterEndpointAttribute, IEndpointRateLimit> OtherEndpointRateLimits { get; }
-
-        // Account
-        public IEndpointRateLimit AccountLoginVerificationEnrollmentLimit => GetRateLimits(r => r.AccountRateLimits, "/account/login_verification_enrollment");
-        public IEndpointRateLimit AccountSettingsLimit => GetRateLimits(r => r.AccountRateLimits, "/account/settings");
-        public IEndpointRateLimit AccountUpdateProfileLimit => GetRateLimits(r => r.AccountRateLimits, "/account/update_profile");
-        public IEndpointRateLimit AccountVerifyCredentialsLimit => GetRateLimits(r => r.AccountRateLimits, "/account/verify_credentials");
-
-        // Application
-        public IEndpointRateLimit ApplicationRateLimitStatusLimit => GetRateLimits(r => r.ApplicationRateLimits, "/application/rate_limit_status");
-
-        // Auth
-        public IEndpointRateLimit AuthCrossSiteRequestForgeryLimit => GetRateLimits(r => r.AuthRateLimits, "/auth/csrf_token");
-
-        // Block
-
-        public IEndpointRateLimit BlocksIdsLimit => GetRateLimits(r => r.BlocksRateLimits, "/blocks/ids");
-        public IEndpointRateLimit BlocksListLimit => GetRateLimits(r => r.BlocksRateLimits, "/blocks/list");
-
-        // Business Experience
-        public IEndpointRateLimit BusinessExperienceKeywordLimit => GetRateLimits(r => r.BusinessExperienceRateLimits, "/business_experience/keywords");
-
-        // Collections
-        public IEndpointRateLimit CollectionsListLimit => GetRateLimits(r => r.CollectionsRateLimits, "/collections/list");
-        public IEndpointRateLimit CollectionsEntriesLimit => GetRateLimits(r => r.CollectionsRateLimits, "/collections/entries");
-        public IEndpointRateLimit CollectionsShowLimit => GetRateLimits(r => r.CollectionsRateLimits, "/collections/show");
-
-        // Contacts
-        public IEndpointRateLimit ContactsUpdatedByLimit => GetRateLimits(r => r.ContactsRateLimits, "/contacts/uploaded_by");
-        public IEndpointRateLimit ContactsUsersLimit => GetRateLimits(r => r.ContactsRateLimits, "/contacts/users");
-        public IEndpointRateLimit ContactsAddressBookLimit => GetRateLimits(r => r.ContactsRateLimits, "/contacts/addressbook");
-        public IEndpointRateLimit ContactsUsersAndUploadedByLimit => GetRateLimits(r => r.ContactsRateLimits, "/contacts/users_and_uploaded_by");
-        public IEndpointRateLimit ContactsDeleteStatusLimit => GetRateLimits(r => r.ContactsRateLimits, "/contacts/delete/status");
-
-        // Device
-        public IEndpointRateLimit DeviceTokenLimit => GetRateLimits(r => r.DeviceRateLimits, "/device/token");
-
-        // DirectMessages
-        public IEndpointRateLimit DirectMessagesShowLimit => GetRateLimits(r => r.DirectMessagesRateLimits, "/direct_messages/events/show");
-        public IEndpointRateLimit DirectMessagesListLimit => GetRateLimits(r => r.DirectMessagesRateLimits, "/direct_messages/events/list");
-
-        // Favorites
-        public IEndpointRateLimit FavoritesListLimit => GetRateLimits(r => r.FavoritesRateLimits, "/favorites/list");
-
-        // Feedback
-        public IEndpointRateLimit FeedbackShowLimit => GetRateLimits(r => r.FeedbackRateLimits, "/feedback/show/:id");
-        public IEndpointRateLimit FeedbackEventsLimit => GetRateLimits(r => r.FeedbackRateLimits, "/feedback/events");
-
-        // Followers
-        public IEndpointRateLimit FollowersIdsLimit => GetRateLimits(r => r.FollowersRateLimits, "/followers/ids");
-        public IEndpointRateLimit FollowersListLimit => GetRateLimits(r => r.FollowersRateLimits, "/followers/list");
-
-        // Friends
-        public IEndpointRateLimit FriendsIdsLimit => GetRateLimits(r => r.FriendsRateLimits, "/friends/ids");
-        public IEndpointRateLimit FriendsListLimit => GetRateLimits(r => r.FriendsRateLimits, "/friends/list");
-        public IEndpointRateLimit FriendsFollowingIdsLimit => GetRateLimits(r => r.FriendsRateLimits, "/friends/following/ids");
-        public IEndpointRateLimit FriendsFollowingListLimit => GetRateLimits(r => r.FriendsRateLimits, "/friends/following/list");
-
-        // Friendships
-        public IEndpointRateLimit FriendshipsIncomingLimit => GetRateLimits(r => r.FriendshipsRateLimits, "/friendships/incoming");
-        public IEndpointRateLimit FriendshipsLookupLimit => GetRateLimits(r => r.FriendshipsRateLimits, "/friendships/lookup");
-        public IEndpointRateLimit FriendshipsNoRetweetsIdsLimit => GetRateLimits(r => r.FriendshipsRateLimits, "/friendships/no_retweets/ids");
-        public IEndpointRateLimit FriendshipsOutgoingLimit => GetRateLimits(r => r.FriendshipsRateLimits, "/friendships/outgoing");
-        public IEndpointRateLimit FriendshipsShowLimit => GetRateLimits(r => r.FriendshipsRateLimits, "/friendships/show");
-        public IEndpointRateLimit FriendshipsListLimit => GetRateLimits(r => r.FriendshipsRateLimits, "/friendships/list");
-
-        // Geo
-        public IEndpointRateLimit GeoGetPlaceFromIdLimit => GetRateLimits(r => r.GeoRateLimits, "/geo/id/:place_id");
-        public IEndpointRateLimit GeoReverseGeoCodeLimit => GetRateLimits(r => r.GeoRateLimits, "/geo/reverse_geocode");
-        public IEndpointRateLimit GeoSearchLimit => GetRateLimits(r => r.GeoRateLimits, "/geo/search");
-        public IEndpointRateLimit GeoSimilarPlacesLimit => GetRateLimits(r => r.GeoRateLimits, "/geo/similar_places");
-
-        // Help
-        public IEndpointRateLimit HelpConfigurationLimit => GetRateLimits(r => r.HelpRateLimits, "/help/configuration");
-        public IEndpointRateLimit HelpLanguagesLimit => GetRateLimits(r => r.HelpRateLimits, "/help/languages");
-        public IEndpointRateLimit HelpPrivacyLimit => GetRateLimits(r => r.HelpRateLimits, "/help/privacy");
-        public IEndpointRateLimit HelpSettingsLimit => GetRateLimits(r => r.HelpRateLimits, "/help/settings");
-        public IEndpointRateLimit HelpTosLimit => GetRateLimits(r => r.HelpRateLimits, "/help/tos");
-
-        // Lists
-        public IEndpointRateLimit ListsListLimit => GetRateLimits(r => r.ListsRateLimits, "/lists/list");
-        public IEndpointRateLimit ListsMembersLimit => GetRateLimits(r => r.ListsRateLimits, "/lists/members");
-        public IEndpointRateLimit ListsMembersShowLimit => GetRateLimits(r => r.ListsRateLimits, "/lists/members/show");
-        public IEndpointRateLimit ListsMembershipsLimit => GetRateLimits(r => r.ListsRateLimits, "/lists/memberships");
-        public IEndpointRateLimit ListsOwnershipsLimit => GetRateLimits(r => r.ListsRateLimits, "/lists/ownerships");
-        public IEndpointRateLimit ListsShowLimit => GetRateLimits(r => r.ListsRateLimits, "/lists/show");
-        public IEndpointRateLimit ListsStatusesLimit => GetRateLimits(r => r.ListsRateLimits, "/lists/statuses");
-        public IEndpointRateLimit ListsSubscribersLimit => GetRateLimits(r => r.ListsRateLimits, "/lists/subscribers");
-        public IEndpointRateLimit ListsSubscribersShowLimit => GetRateLimits(r => r.ListsRateLimits, "/lists/subscribers/show");
-        public IEndpointRateLimit ListsSubscriptionsLimit => GetRateLimits(r => r.ListsRateLimits, "/lists/subscriptions");
-
-        // Media
-        public IEndpointRateLimit MediaUploadLimit => GetRateLimits(r => r.MediaRateLimits, "/media/upload");
-
-        // Moments
-        public IEndpointRateLimit MomentsPermissions => GetRateLimits(r => r.MomentsRateLimits, "/moments/permissions");
-
-        // Mutes
-        public IEndpointRateLimit MutesUserList => GetRateLimits(r => r.MutesRateLimits, "/mutes/users/list");
-        public IEndpointRateLimit MutesUserIds => GetRateLimits(r => r.MutesRateLimits, "/mutes/users/ids");
-
-        // SavedSearches
-        public IEndpointRateLimit SavedSearchDestroyLimit => GetRateLimits(r => r.SavedSearchesRateLimits, "/saved_searches/destroy/:id");
-        public IEndpointRateLimit SavedSearchesListLimit => GetRateLimits(r => r.SavedSearchesRateLimits, "/saved_searches/list");
-        public IEndpointRateLimit SavedSearchesShowIdLimit => GetRateLimits(r => r.SavedSearchesRateLimits, "/saved_searches/show/:id");
-
-        // Search
-        public IEndpointRateLimit SearchTweetsLimit => GetRateLimits(r => r.SearchRateLimits, "/search/tweets");
-
-        // Statuses
-        public IEndpointRateLimit StatusesFriendsLimit => GetRateLimits(r => r.StatusesRateLimits, "/statuses/friends");
-        public IEndpointRateLimit StatusesHomeTimelineLimit => GetRateLimits(r => r.StatusesRateLimits, "/statuses/home_timeline");
-        public IEndpointRateLimit StatusesLookupLimit => GetRateLimits(r => r.StatusesRateLimits, "/statuses/lookup");
-        public IEndpointRateLimit StatusesMentionsTimelineLimit => GetRateLimits(r => r.StatusesRateLimits, "/statuses/mentions_timeline");
-        public IEndpointRateLimit StatusesOembedLimit => GetRateLimits(r => r.StatusesRateLimits, "/statuses/oembed");
-        public IEndpointRateLimit StatusesRetweetersIdsLimit => GetRateLimits(r => r.StatusesRateLimits, "/statuses/retweeters/ids");
-        public IEndpointRateLimit StatusesRetweetsIdLimit => GetRateLimits(r => r.StatusesRateLimits, "/statuses/retweets/:id");
-        public IEndpointRateLimit StatusesRetweetsOfMeLimit => GetRateLimits(r => r.StatusesRateLimits, "/statuses/retweets_of_me");
-        public IEndpointRateLimit StatusesShowIdLimit => GetRateLimits(r => r.StatusesRateLimits, "/statuses/show/:id");
-        public IEndpointRateLimit StatusesUserTimelineLimit => GetRateLimits(r => r.StatusesRateLimits, "/statuses/user_timeline");
-
-        // Trends
-        public IEndpointRateLimit TrendsAvailableLimit => GetRateLimits(r => r.TrendsRateLimits, "/trends/available");
-        public IEndpointRateLimit TrendsClosestLimit => GetRateLimits(r => r.TrendsRateLimits, "/trends/closest");
-        public IEndpointRateLimit TrendsPlaceLimit => GetRateLimits(r => r.TrendsRateLimits, "/trends/place");
-
-        // Twitter Prompts
-        public IEndpointRateLimit TweetPromptsReportInteractionLimit => GetRateLimits(r => r.TweetPromptsRateLimits, "/tweet_prompts/report_interaction");
-        public IEndpointRateLimit TweetPromptsShowLimit => GetRateLimits(r => r.TweetPromptsRateLimits, "/tweet_prompts/show");
-
-        // Users
-        public IEndpointRateLimit UsersDerivedInfoLimit => GetRateLimits(r => r.UsersRateLimits, "/users/derived_info");
-        public IEndpointRateLimit UsersLookupLimit => GetRateLimits(r => r.UsersRateLimits, "/users/lookup");
-        public IEndpointRateLimit UsersProfileBannerLimit => GetRateLimits(r => r.UsersRateLimits, "/users/profile_banner");
-        public IEndpointRateLimit UsersReportSpamLimit => GetRateLimits(r => r.UsersRateLimits, "/users/report_spam");
-        public IEndpointRateLimit UsersSearchLimit => GetRateLimits(r => r.UsersRateLimits, "/users/search");
-        public IEndpointRateLimit UsersShowIdLimit => GetRateLimits(r => r.UsersRateLimits, "/users/show/:id");
-
-        private IEndpointRateLimit GetRateLimits((cr: CredentialsRateLimitsDTO.RateLimitResources) => Dictionary<string, IEndpointRateLimit> getResources, string key)
-        {
-            var resource = getResources(CredentialsRateLimitsDTO?.resources);
-            if (resource == null)
-            {
-                return null;
-            }
-
-            if (!resource.TryGetValue(key, out var rateLimit))
-            {
-                return null;
-            }
-
-            return rateLimit;
-        }
+  get rateLimitContext(): string {
+    let jsonObj;
+    if (this.credentialsRateLimitsDTO.rateLimitContext.tryGetValue("access_token", /*out var jsonObj*/)) {
+      return null; // return jsonObj.ToObject<string>();
     }
+
+    if (this.credentialsRateLimitsDTO.rateLimitContext.tryGetValue("application", /*out jsonObj*/)) {
+      return null; // return jsonObj.ToObject<string>();
+    }
+
+    return null;
+  }
+
+  get isApplicationOnlyCredentials(): boolean {
+    return this.credentialsRateLimitsDTO.rateLimitContext.ContainsKey("application");
+  }
+
+  private getRateLimits(getResources: (rr: RateLimitResources) => Dictionary<string, IEndpointRateLimit>, key: string): IEndpointRateLimit {
+    let resource = getResources(this.credentialsRateLimitsDTO?.resources);
+    if (resource == null) {
+      return null;
+    }
+
+    let rateLimit: IEndpointRateLimit;
+    let out = (value: IEndpointRateLimit): void => {
+      rateLimit = value;
+    };
+    if (!resource.tryGetValue(key, out)) {
+      return null;
+    }
+
+    return rateLimit;
+  }
+
+  public otherEndpointRateLimits: Dictionary<TwitterEndpointAttribute, IEndpointRateLimit>;
+
+  // Account
+  get accountLoginVerificationEnrollmentLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.accountRateLimits, "/account/login_verification_enrollment");
+  }
+
+  get accountSettingsLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.accountRateLimits, "/account/settings");
+  }
+
+
+  get accountUpdateProfileLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.accountRateLimits, "/account/update_profile");
+  }
+
+  get accountVerifyCredentialsLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.accountRateLimits, "/account/verify_credentials");
+  }
+
+  // Application
+  get applicationRateLimitStatusLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.applicationRateLimits, "/application/rate_limit_status");
+  }
+
+  // Auth
+  get authCrossSiteRequestForgeryLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.authRateLimits, "/auth/csrf_token");
+  }
+
+  // Block
+  get blocksIdsLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.blocksRateLimits, "/blocks/ids");
+  }
+
+  get blocksListLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.blocksRateLimits, "/blocks/list");
+  }
+
+  // Business Experience
+  get businessExperienceKeywordLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.businessExperienceRateLimits, "/business_experience/keywords");
+  }
+
+  // Collections
+  get collectionsListLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.collectionsRateLimits, "/collections/list");
+  }
+
+  get collectionsEntriesLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.collectionsRateLimits, "/collections/entries");
+  }
+
+  get collectionsShowLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.collectionsRateLimits, "/collections/show");
+  }
+
+  // Contacts
+  get contactsUpdatedByLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.contactsRateLimits, "/contacts/uploaded_by");
+  }
+
+  get contactsUsersLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.contactsRateLimits, "/contacts/users");
+  }
+
+  get contactsAddressBookLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.contactsRateLimits, "/contacts/addressbook");
+  }
+
+  get contactsUsersAndUploadedByLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.contactsRateLimits, "/contacts/users_and_uploaded_by");
+  }
+
+  get contactsDeleteStatusLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.contactsRateLimits, "/contacts/delete/status");
+  }
+
+  // Device
+  get deviceTokenLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.deviceRateLimits, "/device/token");
+  }
+
+  // DirectMessages
+  get directMessagesShowLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.directMessagesRateLimits, "/direct_messages/events/show");
+  }
+
+  get directMessagesListLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.directMessagesRateLimits, "/direct_messages/events/list");
+  }
+
+  // Favorites
+  get favoritesListLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.favoritesRateLimits, "/favorites/list");
+  }
+
+  // Feedback
+  get feedbackShowLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.feedbackRateLimits, "/feedback/show/:id");
+  }
+
+  get feedbackEventsLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.feedbackRateLimits, "/feedback/events");
+  }
+
+  // Followers
+  get followersIdsLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.followersRateLimits, "/followers/ids");
+  }
+
+  get followersListLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.followersRateLimits, "/followers/list");
+  }
+
+  // Friends
+  get friendsIdsLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.friendsRateLimits, "/friends/ids");
+  }
+
+
+  get friendsListLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.friendsRateLimits, "/friends/list");
+  }
+
+  get friendsFollowingIdsLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.friendsRateLimits, "/friends/following/ids");
+  }
+
+  get friendsFollowingListLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.friendsRateLimits, "/friends/following/list");
+  }
+
+  // Friendships
+  get friendshipsIncomingLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.friendshipsRateLimits, "/friendships/incoming");
+  }
+
+  get friendshipsLookupLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.friendshipsRateLimits, "/friendships/lookup");
+  }
+
+  get friendshipsNoRetweetsIdsLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.friendshipsRateLimits, "/friendships/no_retweets/ids");
+  }
+
+  get friendshipsOutgoingLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.friendshipsRateLimits, "/friendships/outgoing");
+  }
+
+  get friendshipsShowLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.friendshipsRateLimits, "/friendships/show");
+  }
+
+  get friendshipsListLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.friendshipsRateLimits, "/friendships/list");
+  }
+
+  // Geo
+  get geoGetPlaceFromIdLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.geoRateLimits, "/geo/id/:place_id");
+  }
+
+  get geoReverseGeoCodeLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.geoRateLimits, "/geo/reverse_geocode");
+  }
+
+  get geoSearchLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.geoRateLimits, "/geo/search");
+  }
+
+  get geoSimilarPlacesLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.geoRateLimits, "/geo/similar_places");
+  }
+
+  // Help
+  get helpConfigurationLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.helpRateLimits, "/help/configuration");
+  }
+
+  get helpLanguagesLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.helpRateLimits, "/help/languages");
+  }
+
+  get helpPrivacyLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.helpRateLimits, "/help/privacy");
+  }
+
+  get helpSettingsLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.helpRateLimits, "/help/settings");
+  }
+
+  get helpTosLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.helpRateLimits, "/help/tos");
+  }
+
+  // Lists
+  get listsListLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.listsRateLimits, "/lists/list");
+  }
+
+  get listsMembersLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.listsRateLimits, "/lists/members");
+  }
+
+  get listsMembersShowLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.listsRateLimits, "/lists/members/show");
+  }
+
+  get listsMembershipsLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.listsRateLimits, "/lists/memberships");
+  }
+
+  get listsOwnershipsLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.listsRateLimits, "/lists/ownerships");
+  }
+
+  get listsShowLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.listsRateLimits, "/lists/show");
+  }
+
+  get listsStatusesLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.listsRateLimits, "/lists/statuses");
+  }
+
+  get listsSubscribersLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.listsRateLimits, "/lists/subscribers");
+  }
+
+  get listsSubscribersShowLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.listsRateLimits, "/lists/subscribers/show");
+  }
+
+  get listsSubscriptionsLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.listsRateLimits, "/lists/subscriptions");
+  }
+
+  // Media
+  get mediaUploadLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.mediaRateLimits, "/media/upload");
+  }
+
+  // Moments
+  get momentsPermissions(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.momentsRateLimits, "/moments/permissions");
+  }
+
+  // Mutes
+  get mutesUserList(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.mutesRateLimits, "/mutes/users/list");
+  }
+
+  get mutesUserIds(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.mutesRateLimits, "/mutes/users/ids");
+  }
+
+  // SavedSearches
+  get savedSearchDestroyLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.savedSearchesRateLimits, "/saved_searches/destroy/:id");
+  }
+
+  get savedSearchesListLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.savedSearchesRateLimits, "/saved_searches/list");
+  }
+
+  get savedSearchesShowIdLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.savedSearchesRateLimits, "/saved_searches/show/:id");
+  }
+
+  // Search
+  get searchTweetsLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.searchRateLimits, "/search/tweets");
+  }
+
+  // Statuses
+  get statusesFriendsLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.statusesRateLimits, "/statuses/friends");
+  }
+
+  get statusesHomeTimelineLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.statusesRateLimits, "/statuses/home_timeline");
+  }
+
+  get statusesLookupLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.statusesRateLimits, "/statuses/lookup");
+  }
+
+  get statusesMentionsTimelineLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.statusesRateLimits, "/statuses/mentions_timeline");
+  }
+
+  get statusesOembedLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.statusesRateLimits, "/statuses/oembed");
+  }
+
+  get statusesRetweetersIdsLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.statusesRateLimits, "/statuses/retweeters/ids");
+  }
+
+  get statusesRetweetsIdLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.statusesRateLimits, "/statuses/retweets/:id");
+  }
+
+  get statusesRetweetsOfMeLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.statusesRateLimits, "/statuses/retweets_of_me");
+  }
+
+  get statusesShowIdLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.statusesRateLimits, "/statuses/show/:id");
+  }
+
+  get statusesUserTimelineLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.statusesRateLimits, "/statuses/user_timeline");
+  }
+
+  // Trends
+  get trendsAvailableLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.trendsRateLimits, "/trends/available");
+  }
+
+  get trendsClosestLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.trendsRateLimits, "/trends/closest");
+  }
+
+  get trendsPlaceLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.trendsRateLimits, "/trends/place");
+  }
+
+  // Twitter Prompts
+  get tweetPromptsReportInteractionLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.tweetPromptsRateLimits, "/tweet_prompts/report_interaction");
+  }
+
+  get tweetPromptsShowLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.tweetPromptsRateLimits, "/tweet_prompts/show");
+  }
+
+  // Users
+  get usersDerivedInfoLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.usersRateLimits, "/users/derived_info");
+  }
+
+  get usersLookupLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.usersRateLimits, "/users/lookup");
+  }
+
+  get usersProfileBannerLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.usersRateLimits, "/users/profile_banner");
+  }
+
+  get usersReportSpamLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.usersRateLimits, "/users/report_spam");
+  }
+
+  get usersSearchLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.usersRateLimits, "/users/search");
+  }
+
+  get usersShowIdLimit(): IEndpointRateLimit {
+    return this.getRateLimits(r => r.usersRateLimits, "/users/show/:id");
+  }
+}

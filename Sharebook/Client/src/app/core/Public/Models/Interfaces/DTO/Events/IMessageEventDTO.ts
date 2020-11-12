@@ -1,9 +1,10 @@
-﻿import {EventType} from "../../../Enum/EventType";
+﻿import {InjectionToken} from "@angular/core";
+
+import {EventType} from "../../../Enum/EventType";
 import {IEventInitiatedViaDTO} from "../IEventInitiatedViaDTO";
 import {IMessageCreateDTO} from "../IMessageCreateDTO";
-import DateTime from "../../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {InjectionToken} from "@angular/core";
 import {MessageEventDTO} from "../../../../../Core/DTO/Events/MessageEventDTO";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 export interface IMessageEventDTO {
   type: EventType;

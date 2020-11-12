@@ -28,162 +28,161 @@
 //
 
 
-    import {BlockProcessor} from "./BlockProcessor";
+import {BlockProcessor} from "./BlockProcessor";
 import {HashAlgorithm} from "./HashAlgorithm";
-import Block = jasmine.Block;
-import ObjectDisposedException from "../c#-objects/TypeScript.NET-Core/packages/Core/source/Disposable/ObjectDisposedException";
 import {KeyedHashAlgorithm} from "./KeyedHashAlgorithm";
 
-public abstract class HMAC extends KeyedHashAlgorithm
-    {
-        private _disposed: boolean;
-        private _hashName: string;
-        private _algo: HashAlgorithm;
-        private _block: BlockProcessor;
-        private _blockSizeValue: number;
+// @ts-ignore
+export abstract class HMAC extends KeyedHashAlgorithm {
+  private _disposed: boolean;
+  private _hashName: string;
+  private _algo: HashAlgorithm;
+  private _block: BlockProcessor;
+  private _blockSizeValue: number;
 
-        // constructors
-        constructor()
-        {
-            this._disposed = false;
-            this._blockSizeValue = 64;
-        }
+  // constructors
+  constructor() {
+    super();
+
+    this._disposed = false;
+    this._blockSizeValue = 64;
+  }
 
         // properties
 
-        get BlockSizeValue(): number {
-          return this._blockSizeValue;
-        }
-
-        set BlockSizeValue(value: number) {
-          this._blockSizeValue = value;
-        }
-
-        get HashName(): string {
-          return this._hashName;
-        }
-
-        set HashName(value: string) {
-          this._hashName = value;
-          this._algo = HashAlgorithm.Create(this._hashName);
-        }
-
-        get Key(): number[] {
-          return (byte[])super.Key.Clone();
-        }
-
-        set Key(value: number[]) {
-          if ((value != null) && (value.length > BlockSizeValue))
-                       super.Key = _algo.ComputeHash(value);
-                   else
-            super.Key = (byte[])value.Clone();
-        }
-
-        // internal BlockProcessor Block
-        // {
-        //     get
-        //     {
-        //         if (_block == null)
-        //             _block = new BlockProcessor(_algo, (BlockSizeValue >> 3));
-        //         return _block;
-        //     }
-        // }
-
-      get BlockProcessor(): Block {
-        if (this._block == null) {
-          this._block = new BlockProcessor(this._algo, (BlockSizeValue >> 3));
-        }
-        return this._block;
-      }
-
-      // methods
-
-        private  KeySetup(key: byte[], padding: byte): byte[]
-        {
-            byte[] buf = new byte[BlockSizeValue];
-
-            for (int i = 0; i < key.Length; ++i)
-            {
-                buf[i] = (byte)(key[i] ^ padding);
-            }
-
-            for (int i = key.Length; i < BlockSizeValue; ++i)
-            {
-                buf[i] = padding;
-            }
-
-            return buf;
-        }
-
-        protected override  Dispose(disposing: boolean): void
-        {
-            if (!_disposed)
-            {
-                base.Dispose(disposing);
-            }
-        }
-
-        protected override  HashCore(rgb: number[], ib: number, cb: number): void
-        {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("HMACSHA1");
-            }
-
-            if (_state == 0)
-            {
-                Initialize();
-                _state = 1;
-            }
-
-            Block.Core(rgb, ib, cb);
-        }
-
-        protected override  HashFinal(): number[]
-        {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("HMAC");
-            }
-
-            _state = 0;
-
-            Block.Final();
-            byte[] intermediate = _algo.Hash;
-
-            byte[] buf = KeySetup(Key, 0x5C);
-            _algo.Initialize();
-            _algo.TransformBlock(buf, 0, buf.Length, buf, 0);
-            _algo.TransformFinalBlock(intermediate, 0, intermediate.Length);
-            byte[] hash = _algo.Hash;
-            _algo.Initialize();
-            // zeroize sensitive data
-            Array.Clear(buf, 0, buf.Length);
-            Array.Clear(intermediate, 0, intermediate.Length);
-            return hash;
-        }
-
-        public override  Initialize(): void
-        {
-            if (_disposed)
-                throw new ObjectDisposedException("HMAC");
-
-            _state = 0;
-            Block.Initialize();
-            byte[] buf = KeySetup(Key, 0x36);
-            _algo.Initialize();
-            Block.Core(buf);
-            // zeroize key
-            Array.Clear(buf, 0, buf.Length);
-        }
-
-        public static new HMAC Create()
-        {
-            return Create("System.Security.Cryptography.HMAC");
-        }
-
-        public static new HMAC Create(algorithmName: string)
-        {
-            return Activator.CreateInstance<HMACSHA1>();
-        }
+      //   get BlockSizeValue(): number {
+      //     return this._blockSizeValue;
+      //   }
+      //
+      //   set BlockSizeValue(value: number) {
+      //     this._blockSizeValue = value;
+      //   }
+      //
+      //   get HashName(): string {
+      //     return this._hashName;
+      //   }
+      //
+      //   set HashName(value: string) {
+      //     this._hashName = value;
+      //     this._algo = HashAlgorithm.Create(this._hashName);
+      //   }
+      //
+      //   get Key(): number[] {
+      //     return (byte[])super.Key.Clone();
+      //   }
+      //
+      //   set Key(value: number[]) {
+      //     if ((value != null) && (value.length > BlockSizeValue))
+      //                  super.Key = _algo.ComputeHash(value);
+      //              else
+      //       super.Key = (byte[])value.Clone();
+      //   }
+      //
+      //   // internal BlockProcessor Block
+      //   // {
+      //   //     get
+      //   //     {
+      //   //         if (_block == null)
+      //   //             _block = new BlockProcessor(_algo, (BlockSizeValue >> 3));
+      //   //         return _block;
+      //   //     }
+      //   // }
+      //
+      // get BlockProcessor(): Block {
+      //   if (this._block == null) {
+      //     this._block = new BlockProcessor(this._algo, (BlockSizeValue >> 3));
+      //   }
+      //   return this._block;
+      // }
+      //
+      // // methods
+      //
+      //   private  KeySetup(key: byte[], padding: byte): byte[]
+      //   {
+      //       byte[] buf = new byte[BlockSizeValue];
+      //
+      //       for (int i = 0; i < key.Length; ++i)
+      //       {
+      //           buf[i] = (byte)(key[i] ^ padding);
+      //       }
+      //
+      //       for (int i = key.Length; i < BlockSizeValue; ++i)
+      //       {
+      //           buf[i] = padding;
+      //       }
+      //
+      //       return buf;
+      //   }
+      //
+      //   protected override  Dispose(disposing: boolean): void
+      //   {
+      //       if (!_disposed)
+      //       {
+      //           base.Dispose(disposing);
+      //       }
+      //   }
+      //
+      //   protected override  HashCore(rgb: number[], ib: number, cb: number): void
+      //   {
+      //       if (_disposed)
+      //       {
+      //           throw new ObjectDisposedException("HMACSHA1");
+      //       }
+      //
+      //       if (_state == 0)
+      //       {
+      //           Initialize();
+      //           _state = 1;
+      //       }
+      //
+      //       Block.Core(rgb, ib, cb);
+      //   }
+      //
+      //   protected override  HashFinal(): number[]
+      //   {
+      //       if (_disposed)
+      //       {
+      //           throw new ObjectDisposedException("HMAC");
+      //       }
+      //
+      //       _state = 0;
+      //
+      //       Block.Final();
+      //       byte[] intermediate = _algo.Hash;
+      //
+      //       byte[] buf = KeySetup(Key, 0x5C);
+      //       _algo.Initialize();
+      //       _algo.TransformBlock(buf, 0, buf.Length, buf, 0);
+      //       _algo.TransformFinalBlock(intermediate, 0, intermediate.Length);
+      //       byte[] hash = _algo.Hash;
+      //       _algo.Initialize();
+      //       // zeroize sensitive data
+      //       Array.Clear(buf, 0, buf.Length);
+      //       Array.Clear(intermediate, 0, intermediate.Length);
+      //       return hash;
+      //   }
+      //
+      //   public override  Initialize(): void
+      //   {
+      //       if (_disposed)
+      //           throw new ObjectDisposedException("HMAC");
+      //
+      //       _state = 0;
+      //       Block.Initialize();
+      //       byte[] buf = KeySetup(Key, 0x36);
+      //       _algo.Initialize();
+      //       Block.Core(buf);
+      //       // zeroize key
+      //       Array.Clear(buf, 0, buf.Length);
+      //   }
+      //
+      //   public static new HMAC Create()
+      //   {
+      //       return Create("System.Security.Cryptography.HMAC");
+      //   }
+      //
+      //   public static new HMAC Create(algorithmName: string)
+      //   {
+      //       return Activator.CreateInstance<HMACSHA1>();
+      //   }
     }

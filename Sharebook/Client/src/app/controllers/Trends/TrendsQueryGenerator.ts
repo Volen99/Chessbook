@@ -1,10 +1,11 @@
 ﻿import {Injectable, InjectionToken} from "@angular/core";
 
 import {Resources} from "../../properties/resources";
-import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {GetTrendsExclude, IGetTrendsAtParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsAtParameters";
 import {IGetTrendsLocationParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsLocationParameters";
 import {IGetTrendsLocationCloseToParameters} from "../../core/Public/Parameters/TrendsClient/GetTrendsLocationCloseToParameters";
+import StringBuilder from "typescript-dotnet-commonjs/System/Text/StringBuilder";
+import {StringBuilderExtensions} from "../../core/Core/Extensions/stringBuilder-extensions";
 
 export interface ITrendsQueryGenerator {
   getTrendsAtQuery(parameters: IGetTrendsAtParameters): string;
@@ -19,23 +20,25 @@ export const ITrendsQueryGeneratorToken = new InjectionToken<ITrendsQueryGenerat
   factory: () => new TrendsQueryGenerator(),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TrendsQueryGenerator implements ITrendsQueryGenerator {
   public getTrendsAtQuery(parameters: IGetTrendsAtParameters): string {
     let query = new StringBuilder(Resources.Trends_GetTrendsFromWoeId);
-    query.addParameterToQuery("id", parameters.woeid);
+    StringBuilderExtensions.addParameterToQuery(query, "id", parameters.woeid);
 
     if (parameters.exclude != null && parameters.exclude !== GetTrendsExclude.Nothing) {
-      query.addParameterToQuery("exclude", parameters.exclude.toString().toLocaleLowerCase());
+      StringBuilderExtensions.addParameterToQuery(query, "exclude", parameters.exclude.toString().toLocaleLowerCase());
     }
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
   public getTrendsLocationQuery(parameters: IGetTrendsLocationParameters): string {
     let query = new StringBuilder(Resources.Trends_GetAvailableTrendsLocations);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
@@ -43,9 +46,9 @@ export class TrendsQueryGenerator implements ITrendsQueryGenerator {
     let coordinates = parameters.coordinates;
     let query = new StringBuilder(Resources.Trends_GetTrendsLocationCloseTo);
 
-    query.addParameterToQuery("lat", coordinates.latitude);
-    query.addParameterToQuery("long", coordinates.longitude);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addParameterToQuery(query, "lat", coordinates.latitude);
+    StringBuilderExtensions.addParameterToQuery(query, "long", coordinates.longitude);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }

@@ -8,7 +8,7 @@ import {ITweetFromSearchMetadata} from '../core/Public/Models/Interfaces/DTO/ITw
 export class TweetWithSearchMetadata extends Tweet implements ITweetWithSearchMetadata {
   private readonly _tweetWithSearchMetadataDTO: ITweetWithSearchMetadataDTO;
 
-  constructor(tweetDTO: ITweetWithSearchMetadataDTO, tweetMode?: TweetMode, client: ITwitterClient) {
+  constructor(tweetDTO: ITweetWithSearchMetadataDTO, tweetMode: TweetMode, client: ITwitterClient) {
     super(tweetDTO, tweetMode, client);
     this._tweetWithSearchMetadataDTO = tweetDTO;
   }

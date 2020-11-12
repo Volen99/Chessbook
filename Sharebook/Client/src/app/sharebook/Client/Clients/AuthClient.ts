@@ -1,8 +1,7 @@
-import Uri from "../../../c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri";
-import {IAuthClient} from "../../../core/Public/Client/Clients/IAuthClient";
+import {IAuthClient, IAuthClientToken} from "../../../core/Public/Client/Clients/IAuthClient";
 import {IAuthClientParametersValidator} from "../../../core/Core/Client/Validators/AuthClientParametersValidator";
 import {TwitterClient} from "../../TwitterClient";
-import {IAuthRequester} from "../../../core/Public/Client/Requesters/IAuthRequester";
+import {IAuthRequester, IAuthRequesterToken} from "../../../core/Public/Client/Requesters/IAuthRequester";
 import {CreateBearerTokenParameters, ICreateBearerTokenParameters} from "../../../core/Public/Parameters/Auth/CreateBearerTokenParameters";
 import {ITwitterCredentials, TwitterCredentials} from "../../../core/Public/Models/Authentication/TwitterCredentials";
 import {IAuthenticationRequest} from "../../../core/Public/Models/Authentication/IAuthenticationRequest";
@@ -22,16 +21,21 @@ import {
   InvalidateAccessTokenParameters
 } from "../../../core/Public/Parameters/Auth/InvalidateAccessTokenParameters";
 import {RequestUrlAuthUrlParameters} from "../../../core/Public/Parameters/Auth/RequestUrlAuthUrlParameters";
-import {Injectable} from "@angular/core";
+import {Inject, Injectable} from "@angular/core";
+import {ITwitterClientToken} from "../../../core/Public/ITwitterClient";
+import Uri from "typescript-dotnet-commonjs/System/Uri/Uri";
 
-@Injectable()
-export class AuthClient implements IAuthClient {
+@Injectable({
+  providedIn: 'root',
+})
+export
+class AuthClient implements IAuthClient {
   private readonly _client: TwitterClient;
   private readonly _authRequester: IAuthRequester;
 
-  constructor(client: TwitterClient) {
+  constructor(@Inject(ITwitterClientToken) client: TwitterClient, @Inject(IAuthRequesterToken) auth?: IAuthRequester) {
     this._client = client;
-    this._authRequester = client.raw.Auth;
+    this._authRequester = auth; // client.raw.auth;
   }
 
   get parametersValidator(): IAuthClientParametersValidator {
@@ -53,11 +57,11 @@ export class AuthClient implements IAuthClient {
   public async initializeClientBearerTokenAsync(): Promise<void> {
     let bearerToken = await this.createBearerTokenAsync(); // .ConfigureAwait(false);
 
-    this._client.credentials = new TwitterCredentials(this._client.credentials);
+    this._client.credentials = new TwitterCredentials(/*this._client.credentials*/);
     this._client.credentials.bearerToken = bearerToken;
   }
 
-  public async requestAuthenticationUrlAsync(callbackUrlOrUriOrParameters: string | Uri | IRequestAuthUrlParameters): Promise<IAuthenticationRequest> {
+  public async requestAuthenticationUrlAsync(callbackUrlOrUriOrParameters?: string | Uri | IRequestAuthUrlParameters): Promise<IAuthenticationRequest> {
     let parameters: IRequestAuthUrlParameters;
     if (callbackUrlOrUriOrParameters) {
       parameters = new RequestPinAuthUrlParameters();

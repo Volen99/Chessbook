@@ -1,7 +1,7 @@
 ﻿import {PrivacyMode} from '../../Public/Models/Enum/PrivacyMode';
 import {ITwitterListDTO} from "../../Public/Models/Interfaces/DTO/ITwitterListDTO";
 import {IUserDTO} from "../../Public/Models/Interfaces/DTO/IUserDTO";
-import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 export class TwitterListDTO implements ITwitterListDTO {
   // [JsonProperty("id")]

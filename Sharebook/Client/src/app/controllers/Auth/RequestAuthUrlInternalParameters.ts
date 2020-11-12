@@ -3,11 +3,10 @@ import {RequestUrlAuthUrlParameters} from "../../core/Public/Parameters/Auth/Req
 import {IAuthenticationRequest} from "../../core/Public/Models/Authentication/IAuthenticationRequest";
 
 export class RequestAuthUrlInternalParameters extends RequestUrlAuthUrlParameters {
-
   constructor(parameters: IRequestAuthUrlParameters, authRequest: IAuthenticationRequest) {
     super(parameters);
-    this.AuthRequest = authRequest;
+    this.authRequest = authRequest;
   }
 
-  public AuthRequest: IAuthenticationRequest;
+  public authRequest: IAuthenticationRequest;
 }

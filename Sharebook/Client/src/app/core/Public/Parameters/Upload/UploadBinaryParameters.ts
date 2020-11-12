@@ -6,17 +6,17 @@
 // <para>FINALIZE : https://dev.twitter.com/en/docs/media/upload-media/api-reference/post-media-upload-finalize</para>
 export interface IUploadParameters extends IUploadOptionalParameters {
   // Binary that you want to publish
-  binary: number[];
+  binary: ArrayBuffer;
 }
 
 // https://dev.twitter.com/rest/media/uploading-media
 export class UploadBinaryParameters extends UploadOptionalParameters implements IUploadParameters {
 
-  constructor(binary: number[]) {
+  constructor(binary: ArrayBuffer) {
     super();
 
     this.binary = binary;
   }
 
-  public binary: number[];
+  public binary: ArrayBuffer;
 }

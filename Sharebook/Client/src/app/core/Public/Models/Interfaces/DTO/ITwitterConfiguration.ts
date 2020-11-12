@@ -1,5 +1,5 @@
-﻿import Dictionary from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
-import {IMediaEntitySize} from "../../Entities/IMediaEntitySize";
+﻿import {IMediaEntitySize} from "../../Entities/IMediaEntitySize";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
 
 export interface ITwitterConfiguration {
   charactersReservedPerMedia: number;

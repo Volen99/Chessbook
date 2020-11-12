@@ -1,6 +1,5 @@
 ﻿import {ITweetQueryGenerator} from "../../core/Core/QueryGenerators/ITweetQueryGenerator";
 import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMode";
-import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {Resources} from "../../properties/resources";
 import {ITweetIdentifier} from "../../core/Public/Models/Interfaces/ITweetIdentifier";
 import {TweetMode} from "../../core/Public/Settings/SharebookSettings";
@@ -22,8 +21,13 @@ import {IGetUserFavoriteTweetsParameters} from "../../core/Public/Parameters/Twe
 import {IDestroyTweetParameters} from "../../core/Public/Parameters/TweetsClient/DestroyTweetParameters";
 import {IPublishTweetParameters} from "../../core/Public/Parameters/TweetsClient/PublishTweetParameters";
 import {Inject, Injectable} from "@angular/core";
+import StringBuilder from "typescript-dotnet-commonjs/System/Text/StringBuilder";
+import {StringBuilderExtensions} from "../../core/Core/Extensions/stringBuilder-extensions";
+import {format} from "typescript-dotnet-commonjs/System/Text/Utility";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TweetQueryGenerator implements ITweetQueryGenerator {
   private readonly _queryParameterGenerator: IQueryParameterGenerator;
   private readonly _userQueryParameterGenerator: IUserQueryParameterGenerator;
@@ -38,15 +42,15 @@ export class TweetQueryGenerator implements ITweetQueryGenerator {
   public getTweetQuery(parameters: IGetTweetParameters, tweetMode: ComputedTweetMode): string {
     let query = new StringBuilder(Resources.Tweet_Get);
 
-    query.addParameterToQuery("id", parameters.tweet?.id.toString() ?? parameters.tweet?.idStr);
-    query.addParameterToQuery("include_card_uri", parameters.includeCardUri);
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
-    query.addParameterToQuery("include_ext_alt_text", parameters.includeExtAltText);
-    query.addParameterToQuery("include_my_retweet", parameters.includeMyRetweet);
-    query.addParameterToQuery("trim_user", parameters.trimUser);
-    query.addParameterToQuery("tweet_mode", tweetMode);
+    StringBuilderExtensions.addParameterToQuery(query, "id", parameters.tweet?.id.toString() ?? parameters.tweet?.idStr);
+    StringBuilderExtensions.addParameterToQuery(query, "include_card_uri", parameters.includeCardUri);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addParameterToQuery(query, "include_ext_alt_text", parameters.includeExtAltText);
+    StringBuilderExtensions.addParameterToQuery(query, "include_my_retweet", parameters.includeMyRetweet);
+    StringBuilderExtensions.addParameterToQuery(query, "trim_user", parameters.trimUser);
+    StringBuilderExtensions.addParameterToQuery(query, "tweet_mode", tweetMode);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -57,14 +61,14 @@ export class TweetQueryGenerator implements ITweetQueryGenerator {
     let validTweetIdentifiers = parameters.tweets.filter(x => this.getTweetId(x) != null);
     let tweetIds = validTweetIdentifiers.map(this.getTweetId);
 
-    query.addParameterToQuery("id", string.Join(",", tweetIds));
-    query.addParameterToQuery("include_card_uri", parameters.includeCardUri);
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
-    query.addParameterToQuery("include_ext_alt_text", parameters.includeExtAltText);
-    query.addParameterToQuery("trim_user", parameters.trimUser);
-    query.addParameterToQuery("tweet_mode", tweetMode);
+    StringBuilderExtensions.addParameterToQuery(query, "id", tweetIds.join(', '));
+    StringBuilderExtensions.addParameterToQuery(query, "include_card_uri", parameters.includeCardUri);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addParameterToQuery(query, "include_ext_alt_text", parameters.includeExtAltText);
+    StringBuilderExtensions.addParameterToQuery(query, "trim_user", parameters.trimUser);
+    StringBuilderExtensions.addParameterToQuery(query, "tweet_mode", tweetMode);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -72,7 +76,7 @@ export class TweetQueryGenerator implements ITweetQueryGenerator {
   // Publish Tweet
   public getPublishTweetQuery(parameters: IPublishTweetParameters, tweetMode: ComputedTweetMode): string {
     let text = parameters.text;
-    let useExtendedTweetMode = tweetMode === null || tweetMode === TweetMode.Extended;
+    let useExtendedTweetMode = tweetMode === null || tweetMode.implicitOperator() === TweetMode.Extended;
 
     let quotedTweetUrl = this.getQuotedTweetUrl(parameters);
     let attachmentUrl = parameters.quotedTweetUrl;
@@ -89,31 +93,31 @@ export class TweetQueryGenerator implements ITweetQueryGenerator {
 
     let query = new StringBuilder(Resources.Tweet_Publish);
 
-    query.addParameterToQuery("status", text);
-    query.addParameterToQuery("auto_populate_reply_metadata", parameters.autoPopulateReplyMetadata);
-    query.addParameterToQuery("attachment_url", attachmentUrl);
-    query.addParameterToQuery("card_uri", parameters.cardUri);
-    query.addParameterToQuery("display_coordinates", parameters.displayExactCoordinates);
+    StringBuilderExtensions.addParameterToQuery(query, "status", text);
+    StringBuilderExtensions.addParameterToQuery(query, "auto_populate_reply_metadata", parameters.autoPopulateReplyMetadata);
+    StringBuilderExtensions.addParameterToQuery(query, "attachment_url", attachmentUrl);
+    StringBuilderExtensions.addParameterToQuery(query, "card_uri", parameters.cardUri);
+    StringBuilderExtensions.addParameterToQuery(query, "display_coordinates", parameters.displayExactCoordinates);
 
     if (parameters.excludeReplyUserIds != null) {
-      query.addParameterToQuery("exclude_reply_user_ids", parameters.excludeReplyUserIds.join(',')); // string.Join(",", parameters.excludeReplyUserIds));
+      StringBuilderExtensions.addParameterToQuery(query, "exclude_reply_user_ids", parameters.excludeReplyUserIds.join(',')); // string.Join(",", parameters.excludeReplyUserIds));
     }
 
-    query.addParameterToQuery("in_reply_to_status_id", this.getTweetId(parameters.inReplyToTweet));
-    query.addParameterToQuery("lat", parameters.coordinates?.latitude.toString(CultureInfo.InvariantCulture));
-    query.addParameterToQuery("long", parameters.coordinates?.longitude.toString(CultureInfo.InvariantCulture));
+    StringBuilderExtensions.addParameterToQuery(query, "in_reply_to_status_id", this.getTweetId(parameters.inReplyToTweet));
+    StringBuilderExtensions.addParameterToQuery(query, "lat", parameters.coordinates?.latitude.toString(/*CultureInfo.InvariantCulture*/));
+    StringBuilderExtensions.addParameterToQuery(query, "long", parameters.coordinates?.longitude.toString(/*CultureInfo.InvariantCulture*/));
 
     if (parameters.mediaIds.length > 0) {
-      let mediaIdsParameter = string.Join(",", parameters.mediaIds.map(x => x.toString(CultureInfo.InvariantCulture)));
-      query.addParameterToQuery("media_ids", mediaIdsParameter);
+      let mediaIdsParameter = parameters.mediaIds.map(x => x.toString(/*CultureInfo.InvariantCulture*/)).join(', ');
+      StringBuilderExtensions.addParameterToQuery(query, "media_ids", mediaIdsParameter);
     }
 
-    query.addParameterToQuery("place_id", parameters.placeId);
-    query.addParameterToQuery("possibly_sensitive", parameters.possiblySensitive);
-    query.addParameterToQuery("trim_user", parameters.trimUser);
-    query.addParameterToQuery("tweet_mode", tweetMode);
+    StringBuilderExtensions.addParameterToQuery(query, "place_id", parameters.placeId);
+    StringBuilderExtensions.addParameterToQuery(query, "possibly_sensitive", parameters.possiblySensitive);
+    StringBuilderExtensions.addParameterToQuery(query, "trim_user", parameters.trimUser);
+    StringBuilderExtensions.addParameterToQuery(query, "tweet_mode", tweetMode);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -128,12 +132,12 @@ export class TweetQueryGenerator implements ITweetQueryGenerator {
   }
 
   public getDestroyTweetQuery(parameters: IDestroyTweetParameters, tweetMode: ComputedTweetMode): string {
-    let query = new StringBuilder(`https://api.twitter.com/1.1/statuses/destroy/${this._queryParameterGenerator.generateTweetIdentifier(parameters.tweet)}.json`); // string.Format(Resources.Tweet_Destroy, this._queryParameterGenerator.generateTweetIdentifier(parameters.tweet)));
+    let query = new StringBuilder(format(Resources.Tweet_Destroy, this._queryParameterGenerator.generateTweetIdentifier(parameters.tweet)));
 
-    query.addParameterToQuery("trim_user", parameters.TrimUser);
-    query.addParameterToQuery("tweet_mode", tweetMode);
+    StringBuilderExtensions.addParameterToQuery(query, "trim_user", parameters.TrimUser);
+    StringBuilderExtensions.addParameterToQuery(query, "tweet_mode", tweetMode);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -142,11 +146,11 @@ export class TweetQueryGenerator implements ITweetQueryGenerator {
     let userParameter = this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user);
     let query = new StringBuilder(Resources.User_GetFavorites + userParameter);
 
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
     this._queryParameterGenerator.addMinMaxQueryParameters(query, parameters);
 
-    query.addParameterToQuery("tweet_mode", tweetMode);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addParameterToQuery(query, "tweet_mode", tweetMode);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -155,35 +159,35 @@ export class TweetQueryGenerator implements ITweetQueryGenerator {
     let tweetId = this.getTweetId(parameters.tweet);
     let query = new StringBuilder(`https://api.twitter.com/1.1/statuses/retweets/${tweetId}.json`);
 
-    query.addParameterToQuery("count", parameters.pageSize);
-    query.addParameterToQuery("trim_user", parameters.trimUser);
+    StringBuilderExtensions.addParameterToQuery(query, "count", parameters.pageSize);
+    StringBuilderExtensions.addParameterToQuery(query, "trim_user", parameters.trimUser);
 
-    query.addParameterToQuery("tweet_mode", tweetMode);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addParameterToQuery(query, "tweet_mode", tweetMode);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
 
   public getPublishRetweetQuery(parameters: IPublishRetweetParameters, tweetMode: ComputedTweetMode): string {
     let tweetId = this.getTweetId(parameters.tweet);
-    let query = new StringBuilder(`https://api.twitter.com/1.1/statuses/retweet/${tweetId}.json`);
+    let query = new StringBuilder(format(Resources.Tweet_Retweet_Publish, tweetId));
 
-    query.addParameterToQuery("trim_user", parameters.trimUser);
+    StringBuilderExtensions.addParameterToQuery(query, "trim_user", parameters.trimUser);
 
-    query.addParameterToQuery("tweet_mode", tweetMode);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addParameterToQuery(query, "tweet_mode", tweetMode);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
 
   public getDestroyRetweetQuery(parameters: IDestroyRetweetParameters, tweetMode: ComputedTweetMode): string {
     let tweetId = this.getTweetId(parameters.tweet);
-    let query = new StringBuilder(`https://api.twitter.com/1.1/statuses/unretweet/${tweetId}.json`);
+    let query = new StringBuilder(format(Resources.Tweet_DestroyRetweet, tweetId));
 
-    query.addParameterToQuery("trim_user", parameters.trimUser);
-    query.addParameterToQuery("tweet_mode", tweetMode);
+    StringBuilderExtensions.addParameterToQuery(query, "trim_user", parameters.trimUser);
+    StringBuilderExtensions.addParameterToQuery(query, "tweet_mode", tweetMode);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -191,10 +195,10 @@ export class TweetQueryGenerator implements ITweetQueryGenerator {
   public getRetweeterIdsQuery(parameters: IGetRetweeterIdsParameters): string {
     let query = new StringBuilder(Resources.Tweet_GetRetweeters);
 
-    query.addParameterToQuery("id", this.getTweetId(parameters.tweet));
+    StringBuilderExtensions.addParameterToQuery(query, "id", this.getTweetId(parameters.tweet));
     this._queryParameterGenerator.appendCursorParameters(query, parameters);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -203,9 +207,9 @@ export class TweetQueryGenerator implements ITweetQueryGenerator {
   public getCreateFavoriteTweetQuery(parameters: IFavoriteTweetParameters): string {
     let query = new StringBuilder(Resources.Tweet_Favorite_Create);
 
-    query.addParameterToQuery("id", this.getTweetId(parameters.tweet));
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addParameterToQuery(query, "id", this.getTweetId(parameters.tweet));
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -213,9 +217,9 @@ export class TweetQueryGenerator implements ITweetQueryGenerator {
   public getUnfavoriteTweetQuery(parameters: IUnfavoriteTweetParameters): string {
     let query = new StringBuilder(Resources.Tweet_Favorite_Destroy);
 
-    query.addParameterToQuery("id", this.getTweetId(parameters.tweet));
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addParameterToQuery(query, "id", this.getTweetId(parameters.tweet));
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -223,20 +227,20 @@ export class TweetQueryGenerator implements ITweetQueryGenerator {
   public getOEmbedTweetQuery(parameters: IGetOEmbedTweetParameters): string {
     let query = new StringBuilder(Resources.Tweet_GenerateOEmbed);
 
-    query.addParameterToQuery("id", this.getTweetId(parameters.tweet));
-    query.addParameterToQuery("maxwidth", parameters.maxWidth);
-    query.addParameterToQuery("hide_media", parameters.hideMedia);
-    query.addParameterToQuery("hide_thread", parameters.hideThread);
-    query.addParameterToQuery("omit_script", parameters.omitScript);
-    query.addParameterToQuery("align", this._queryParameterGenerator.generateOEmbedAlignmentParameter(parameters.alignment));
-    query.addParameterToQuery("related", parameters.relatedUsernames.join(', ') ?? new Array<string>(0).join(', ')); // string.Join(",", parameters.relatedUsernames ?? new string[0]));
-    query.addFormattedParameterToQuery(this._queryParameterGenerator.generateLanguageParameter(parameters.language));
-    query.addParameterToQuery("theme", this._queryParameterGenerator.generateOEmbedThemeParameter(parameters.theme));
-    query.addParameterToQuery("link_color", parameters.linkColor);
-    query.addParameterToQuery("widget_type", parameters.widgetType);
-    query.addParameterToQuery("dnt", parameters.enablePersonalisationAndSuggestions);
+    StringBuilderExtensions.addParameterToQuery(query, "id", this.getTweetId(parameters.tweet));
+    StringBuilderExtensions.addParameterToQuery(query, "maxwidth", parameters.maxWidth);
+    StringBuilderExtensions.addParameterToQuery(query, "hide_media", parameters.hideMedia);
+    StringBuilderExtensions.addParameterToQuery(query, "hide_thread", parameters.hideThread);
+    StringBuilderExtensions.addParameterToQuery(query, "omit_script", parameters.omitScript);
+    StringBuilderExtensions.addParameterToQuery(query, "align", this._queryParameterGenerator.generateOEmbedAlignmentParameter(parameters.alignment));
+    StringBuilderExtensions.addParameterToQuery(query, "related", parameters.relatedUsernames.join(', ') ?? new Array<string>(0).join(', ')); // string.Join(",", parameters.relatedUsernames ?? new string[0]));
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._queryParameterGenerator.generateLanguageParameter(parameters.language));
+    StringBuilderExtensions.addParameterToQuery(query, "theme", this._queryParameterGenerator.generateOEmbedThemeParameter(parameters.theme));
+    StringBuilderExtensions.addParameterToQuery(query, "link_color", parameters.linkColor);
+    StringBuilderExtensions.addParameterToQuery(query, "widget_type", parameters.widgetType);
+    StringBuilderExtensions.addParameterToQuery(query, "dnt", parameters.enablePersonalisationAndSuggestions);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -248,7 +252,7 @@ export class TweetQueryGenerator implements ITweetQueryGenerator {
 
     let tweetId = tweetIdentifier.idStr;
     if (!tweetId) {
-      tweetId = tweetIdentifier.id.toString(CultureInfo.InvariantCulture);
+      tweetId = tweetIdentifier.id.toString(/*CultureInfo.InvariantCulture*/);
     }
 
     return tweetId;

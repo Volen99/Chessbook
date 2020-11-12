@@ -1,4 +1,4 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {IRelationshipStateDTO} from "./DTO/IRelationshipStateDTO";
 import {RelationshipState} from "../../../Core/Models/TwitterEntities/RelationshipState";
@@ -35,5 +35,5 @@ export interface IRelationshipState {
 
 export const IRelationshipStateToken = new InjectionToken<IRelationshipState>('IRelationshipState', {
   providedIn: 'root',
-  factory: () => new RelationshipState(Inject(RelationshipStateDTO)),
+  factory: () => new RelationshipState(inject(RelationshipStateDTO)),
 });

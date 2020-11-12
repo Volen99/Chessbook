@@ -1,4 +1,3 @@
-import ArgumentException from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import {IRateLimitsClient} from "../../../core/Public/Client/Clients/IRateLimitsClient";
 import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {IRateLimitCacheManager} from "../../../core/Core/RateLimit/IRateLimitCacheManager";
@@ -16,10 +15,17 @@ import {
 } from "../../../core/Public/Parameters/HelpClient/GetEndpointRateLimitsParameters";
 import {WaitForCredentialsRateLimitParameters} from "../../../core/Public/Parameters/RateLimitsClient/WaitForCredentialsRateLimitParameters";
 import {IReadOnlyTwitterCredentials} from "../../../core/Core/Models/Authentication/ReadOnlyTwitterCredentials";
-import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
 import {Inject, Injectable} from "@angular/core";
+import {ICredentialsRateLimits} from "../../../core/Public/Models/RateLimits/ICredentialsRateLimits";
+import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
+import Type from "typescript-dotnet-commonjs/System/Types";
+import {AppInjector} from "../../Injectinvi/app-injector";
+import {RateLimitCacheManager} from "../../../Tweetinvi.Credentials/RateLimit/RateLimitCacheManager";
+import {RateLimitAwaiter} from "../../../Tweetinvi.Credentials/RateLimit/RateLimitAwaiter";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class RateLimitsClient implements IRateLimitsClient {
   private readonly _client: ITwitterClient;
   private readonly _rateLimitCacheManager: IRateLimitCacheManager;
@@ -30,9 +36,9 @@ export class RateLimitsClient implements IRateLimitsClient {
     let executionContext = client.createTwitterExecutionContext();
 
     this._client = client;
-    this._helpRequester = client.raw.help;
-    this._rateLimitCacheManager = executionContext.container.Resolve<IRateLimitCacheManager>();
-    this._rateLimitAwaiter = executionContext.container.Resolve<IRateLimitAwaiter>();
+    this._helpRequester = client.raw?.help;
+    this._rateLimitCacheManager = AppInjector.get(RateLimitCacheManager); // executionContext.container.Resolve<IRateLimitCacheManager>();
+    this._rateLimitAwaiter = AppInjector.get(RateLimitAwaiter); // executionContext.container.Resolve<IRateLimitAwaiter>();
   }
 
   public async initializeRateLimitsManagerAsync(): Promise<void> {
@@ -62,7 +68,7 @@ export class RateLimitsClient implements IRateLimitsClient {
       case RateLimitsSource.CacheOrTwitterApi:
         return await this._rateLimitCacheManager.getCredentialsRateLimitsAsync(this._client.credentials); // .ConfigureAwait(false);
       default:
-        throw new ArgumentException(nameof(parameters.from));
+        throw new ArgumentException(`nameof(parameters.from)`);
     }
   }
 

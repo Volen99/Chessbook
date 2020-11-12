@@ -1,9 +1,9 @@
 ﻿import {BaseCursorQueryDTO} from "./BaseCursorQueryDTO";
 import {IApp} from "../../../Public/Models/Interfaces/IApp";
-import Dictionary from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
 import {IMessageEventDTO} from "../../../Public/Models/Interfaces/DTO/Events/IMessageEventDTO";
 import {IMessageCursorQueryResultDTO} from "../../../Public/Models/Interfaces/DTO/QueryDTO/IMessageCursorQueryResultDTO";
 import {MessageEventDTO} from "../Events/MessageEventDTO";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
 
 export class MessageCursorQueryResultDTO extends BaseCursorQueryDTO<IMessageEventDTO> implements IMessageCursorQueryResultDTO {
   private _messageEvents: IMessageEventDTO[];

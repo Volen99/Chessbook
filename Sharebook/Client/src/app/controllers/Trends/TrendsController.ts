@@ -10,7 +10,9 @@ import {IGetTrendsLocationCloseToParameters} from "../../core/Public/Parameters/
 import {IGetTrendsAtResult} from "../../core/Public/Models/Interfaces/IGetTrendsAtResult";
 import {ITrendLocation} from "../../core/Public/Models/Interfaces/ITrendLocation";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TrendsController implements ITrendsController {
   private readonly _trendsQueryExecutor: ITrendsQueryExecutor;
 

@@ -1,24 +1,35 @@
-﻿import {ITwitterRequest} from '../Models/Interfaces/ITwitterRequest';
-import {IWebExceptionInfoExtractor} from "../../Core/Exceptions/IWebExceptionInfoExtractor";
+﻿import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
+
+import {ITwitterRequest} from '../Models/Interfaces/ITwitterRequest';
+import {IWebExceptionInfoExtractor, IWebExceptionInfoExtractorToken} from "../../Core/Exceptions/IWebExceptionInfoExtractor";
 import {ITwitterExceptionInfo} from "../../Core/Exceptions/ITwitterExceptionInfo";
-import {ITwitterException} from "../../Core/Exceptions/ITwitterException";
+import {ISharebookException} from "../../Core/Exceptions/ISharebookException";
 import {ITwitterResponse} from "../../Core/Web/ITwitterResponse";
 import {ITwitterQuery} from "../Models/Interfaces/ITwitterQuery";
-import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {Inject, Injectable, InjectionToken} from "@angular/core";
 import {WebExceptionInfoExtractor} from "../../../logic/Exceptions/WebExceptionInfoExtractor";
+import Exception from "typescript-dotnet-commonjs/System/Exception";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 export interface ITwitterExceptionFactory {
-  create(exceptionInfosOrTwitterResponseOrWebException: ITwitterExceptionInfo[] | ITwitterResponse | WebException,
-         urlOrRequest: string | ITwitterRequest, statusCode: number): SharebookException;
+  create(exceptionInfos: ITwitterExceptionInfo[], url: string): SharebookException;
+
+  create(exceptionInfos: ITwitterExceptionInfo[], request: ITwitterRequest): SharebookException;
+
+  create(twitterResponse: ITwitterResponse, request: ITwitterRequest): SharebookException;
+
+  create(webException: Exception, request: ITwitterRequest): SharebookException;
+
+  create(webException: Exception, request: ITwitterRequest, statusCode: number): SharebookException;
 }
 
 export const ITwitterExceptionFactoryToken = new InjectionToken<ITwitterExceptionFactory>('ITwitterExceptionFactory', {
   providedIn: 'root',
-  factory: () => new TwitterExceptionFactory(Inject(WebExceptionInfoExtractor)),
+  factory: () => new TwitterExceptionFactory(inject(WebExceptionInfoExtractor)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TwitterExceptionFactory implements ITwitterExceptionFactory {
   private readonly _webExceptionInfoExtractor: IWebExceptionInfoExtractor;
 
@@ -26,8 +37,9 @@ export class TwitterExceptionFactory implements ITwitterExceptionFactory {
     this._webExceptionInfoExtractor = webExceptionInfoExtractor;
   }
 
-  create(exceptionInfosOrTwitterResponseOrWebException: ITwitterExceptionInfo[] | ITwitterResponse | WebException,
-         urlOrRequest: string | ITwitterRequest, statusCode: number): SharebookException {
+  create(exceptionInfosOrTwitterResponseOrWebException: ITwitterExceptionInfo[] | ITwitterResponse | Exception,
+         urlOrRequest: string | ITwitterRequest,
+         statusCode?: number): SharebookException {
     if (this.isExceptionInfos(exceptionInfosOrTwitterResponseOrWebException)) {
       return new SharebookException(exceptionInfosOrTwitterResponseOrWebException, urlOrRequest);
     } else if (this.isITwitterResponse(exceptionInfosOrTwitterResponseOrWebException)) {
@@ -40,25 +52,25 @@ export class TwitterExceptionFactory implements ITwitterExceptionFactory {
     }
   }
 
-  private isExceptionInfos(exceptionInfos: ITwitterExceptionInfo[] | ITwitterResponse | WebException):
+  private isExceptionInfos(exceptionInfos: ITwitterExceptionInfo[] | ITwitterResponse | Exception):
     exceptionInfos is ITwitterExceptionInfo[] {
     return (exceptionInfos as ITwitterExceptionInfo[])[0].code !== undefined;
   }
 
-  private isITwitterResponse(exceptionInfos: ITwitterExceptionInfo[] | ITwitterResponse | WebException):
+  private isITwitterResponse(exceptionInfos: ITwitterExceptionInfo[] | ITwitterResponse | Exception):
     exceptionInfos is ITwitterResponse {
     return (exceptionInfos as ITwitterResponse).statusCode !== undefined;
   }
 
-  private isWebException(exceptionInfos: ITwitterExceptionInfo[] | ITwitterResponse | WebException):
-    exceptionInfos is WebException {
-    return (exceptionInfos as WebException).Message !== undefined;
+  private isWebException(exceptionInfos: ITwitterExceptionInfo[] | ITwitterResponse | Exception):
+    exceptionInfos is Exception {
+    return (exceptionInfos as Exception).data !== undefined;
   }
 }
 
 // Exception raised by the Twitter API.
-export class SharebookException extends WebException implements ITwitterException {
-  public webException: WebException;
+export class SharebookException extends Exception /*WebException*/ implements ISharebookException {
+  public webException: Exception;
   public URL: string;
   public statusCode: number;
   public twitterDescription: string;
@@ -74,15 +86,17 @@ export class SharebookException extends WebException implements ITwitterExceptio
       | IWebExceptionInfoExtractor,
     messageOrUrlOrRequestOrResponseOrWebException: string
       | ITwitterRequest
-      | WebException
-      | ITwitterResponse = `{request.Query.Url} request failed.`,
+      | Exception
+      | ITwitterResponse,
+    twitterRequest?: ITwitterRequest,
     statusCode?: number) {
 
 
-    if (this.isITwitterRequest(requestOrExceptionInfosOrWebExceptionInfoExtractor)) {
-      super(messageOrUrlOrRequestOrResponseOrWebException);
+    if (SharebookException.isITwitterRequest(requestOrExceptionInfosOrWebExceptionInfoExtractor)) { // private ctor
+      super(`${requestOrExceptionInfosOrWebExceptionInfoExtractor.query.url} request failed.`);
+
       this.init(requestOrExceptionInfosOrWebExceptionInfoExtractor);
-    } else if (this.isITwitterExceptionInfo(requestOrExceptionInfosOrWebExceptionInfoExtractor)) {
+    } else if (SharebookException.isITwitterExceptionInfo(requestOrExceptionInfosOrWebExceptionInfoExtractor)) {
       this.creationDate = DateTime.now;
       this.twitterExceptionInfos = requestOrExceptionInfosOrWebExceptionInfoExtractor;
       if (typeof messageOrUrlOrRequestOrResponseOrWebException === 'string') {
@@ -92,17 +106,19 @@ export class SharebookException extends WebException implements ITwitterExceptio
         super(`${requestCurrent.query.url} request failed.`);
         this.init(requestCurrent);
       }
-    } else if (this.isIWebExceptionInfoExtractor(requestOrExceptionInfosOrWebExceptionInfoExtractor)) {
-      if (this.isITwitterResponse(messageOrUrlOrRequestOrResponseOrWebException)) {
-        this.init(request);
+    } else if (SharebookException.isIWebExceptionInfoExtractor(requestOrExceptionInfosOrWebExceptionInfoExtractor)) {
+      if (SharebookException.isITwitterResponse(messageOrUrlOrRequestOrResponseOrWebException)) {
+        this.init(twitterRequest);
 
-        this.statusCode = messageOrUrlOrRequestOrResponseOrWebException.StatusCode;
-        this.twitterExceptionInfos = requestOrExceptionInfosOrWebExceptionInfoExtractor.getTwitterExceptionInfosFromStream(messageOrUrlOrRequestOrResponseOrWebException.ResultStream);
+        this.statusCode = messageOrUrlOrRequestOrResponseOrWebException.statusCode;
+        this.twitterExceptionInfos = requestOrExceptionInfosOrWebExceptionInfoExtractor.getTwitterExceptionInfosFromStream(messageOrUrlOrRequestOrResponseOrWebException.resultStream);
         this.twitterDescription = requestOrExceptionInfosOrWebExceptionInfoExtractor.getStatusCodeDescription(this.statusCode);
-      } else if (this.isWebException(messageOrUrlOrRequestOrResponseOrWebException)) {
-        this.init(request, messageOrUrlOrRequestOrResponseOrWebException.Message);
+      } else if (SharebookException.isWebException(messageOrUrlOrRequestOrResponseOrWebException)) {
+        super(messageOrUrlOrRequestOrResponseOrWebException.message);
 
-        let webException: WebException = messageOrUrlOrRequestOrResponseOrWebException;
+        this.init(twitterRequest);
+
+        let webException: Exception = messageOrUrlOrRequestOrResponseOrWebException;
         this.webException = webException;
         if (statusCode) {
           this.statusCode = requestOrExceptionInfosOrWebExceptionInfoExtractor.getWebExceptionStatusNumber(webException, statusCode);
@@ -122,11 +138,11 @@ export class SharebookException extends WebException implements ITwitterExceptio
   }
 
   public toString(): string {
-    let date = `--- Date : ${this.creationDate.ToLocalTime()}\r\n`;
+    let date = `--- Date : ${this.creationDate/*.toLocalTime()*/}\r\n`;
     let url = URL == null ? "" : `URL : ${URL}\r\n`;
     let code = `Code : ${(this.statusCode)}\r\n`;
     let description = `Error documentation description : ${(this.twitterDescription)}\r\n`;
-    let exceptionMessage = `Error message : ${super.Message}\r\n`;
+    let exceptionMessage = `Error message : ${super.message}\r\n`;
 
     let exceptionInfos: string = "";
 
@@ -139,112 +155,23 @@ export class SharebookException extends WebException implements ITwitterExceptio
     return `${date}${url}${code}${description}${exceptionMessage}${exceptionInfos}`;
   }
 
-  private isITwitterRequest(requestOrExceptionInfosOrWebExceptionInfoExtractor: ITwitterRequest | ITwitterExceptionInfo[] | IWebExceptionInfoExtractor): requestOrExceptionInfosOrWebExceptionInfoExtractor is ITwitterRequest {
+  private static isITwitterRequest(requestOrExceptionInfosOrWebExceptionInfoExtractor: ITwitterRequest | ITwitterExceptionInfo[] | IWebExceptionInfoExtractor): requestOrExceptionInfosOrWebExceptionInfoExtractor is ITwitterRequest {
     return (requestOrExceptionInfosOrWebExceptionInfoExtractor as ITwitterRequest).query !== undefined;
   }
 
-  private isITwitterExceptionInfo(requestOrExceptionInfosOrWebExceptionInfoExtractor: ITwitterRequest | ITwitterExceptionInfo[] | IWebExceptionInfoExtractor): requestOrExceptionInfosOrWebExceptionInfoExtractor is ITwitterExceptionInfo[] {
+  private static isITwitterExceptionInfo(requestOrExceptionInfosOrWebExceptionInfoExtractor: ITwitterRequest | ITwitterExceptionInfo[] | IWebExceptionInfoExtractor): requestOrExceptionInfosOrWebExceptionInfoExtractor is ITwitterExceptionInfo[] {
     return (requestOrExceptionInfosOrWebExceptionInfoExtractor as ITwitterExceptionInfo[])[0].code !== undefined;
   }
 
-  private isIWebExceptionInfoExtractor(requestOrExceptionInfosOrWebExceptionInfoExtractor: ITwitterRequest | ITwitterExceptionInfo[] | IWebExceptionInfoExtractor): requestOrExceptionInfosOrWebExceptionInfoExtractor is IWebExceptionInfoExtractor {
+  private static isIWebExceptionInfoExtractor(requestOrExceptionInfosOrWebExceptionInfoExtractor: ITwitterRequest | ITwitterExceptionInfo[] | IWebExceptionInfoExtractor): requestOrExceptionInfosOrWebExceptionInfoExtractor is IWebExceptionInfoExtractor {
     return (requestOrExceptionInfosOrWebExceptionInfoExtractor as IWebExceptionInfoExtractor).getTwitterExceptionInfosFromStream !== undefined;
   }
 
-  private isITwitterResponse(messageOrUrlOrRequestOrResponseOrWebException: string | ITwitterRequest | WebException | ITwitterResponse): requestOrExceptionInfosOrWebExceptionInfoExtractor is ITwitterResponse {
+  private static isITwitterResponse(messageOrUrlOrRequestOrResponseOrWebException: any): messageOrUrlOrRequestOrResponseOrWebException is ITwitterResponse {
     return (messageOrUrlOrRequestOrResponseOrWebException as ITwitterResponse).statusCode !== undefined;
   }
 
-  private isWebException(messageOrUrlOrRequestOrResponseOrWebException: string | ITwitterRequest | WebException | ITwitterResponse): requestOrExceptionInfosOrWebExceptionInfoExtractor is WebException {
-    return (messageOrUrlOrRequestOrResponseOrWebException as WebException).StatusCode !== undefined;
+  private static isWebException(messageOrUrlOrRequestOrResponseOrWebException: any): messageOrUrlOrRequestOrResponseOrWebException is Exception {
+    return (messageOrUrlOrRequestOrResponseOrWebException as Exception).data !== undefined;
   }
 }
-
-
-// Create(exceptionInfos: ITwitterExceptionInfo[], url: string): TwitterException;
-//
-// Create(exceptionInfos: ITwitterExceptionInfo[], request: ITwitterRequest): TwitterException;
-//
-// Create(twitterResponse: ITwitterResponse, request: ITwitterRequest): TwitterException;
-//
-// Create(webException: WebException, request: ITwitterRequest): TwitterException;
-//
-// Create(webException: WebException, request: ITwitterRequest, statusCode: number): TwitterException;
-
-
-// public Create(exceptionInfos: ITwitterExceptionInfo[], url: string): TwitterException {
-//   return new TwitterException(exceptionInfos, url);
-// }
-//
-// public Create(exceptionInfos: ITwitterExceptionInfo[], request: ITwitterRequest): TwitterException {
-//   return new TwitterException(exceptionInfos, request);
-// }
-
-// public Create(twitterResponse: ITwitterResponse, request: ITwitterRequest): TwitterException {
-//   return new TwitterException(this._webExceptionInfoExtractor, twitterResponse, request);
-// }
-
-// public Create(webException: WebException, request: ITwitterRequest): TwitterException {
-//   return new TwitterException(this._webExceptionInfoExtractor, webException, request);
-// }
-//
-// public Create(webException: WebException, request: ITwitterRequest, statusCode: number): TwitterException {
-//   return new TwitterException(this._webExceptionInfoExtractor, webException, request, statusCode);
-// }
-
-
-// protected TwitterException(ITwitterRequest request, string message) : base(message)
-// {
-//     Request = request;
-//     this.CreationDate = DateTime.Now;
-//     URL = request.Query.Url;
-//     TwitterQuery = request.Query;
-// }
-
-// private TwitterException(ITwitterRequest request) : this(request, $"{request.Query.Url} request failed.")
-// {
-// }
-
-// public TwitterException(ITwitterExceptionInfo[] exceptionInfos, string url)
-// {
-//     CreationDate = DateTime.Now;
-//     TwitterExceptionInfos = exceptionInfos;
-//     URL = url;
-// }
-
-// public TwitterException(ITwitterExceptionInfo[] exceptionInfos, ITwitterRequest request)
-//     : this(request)
-// {
-//     CreationDate = DateTime.Now;
-//     TwitterExceptionInfos = exceptionInfos;
-// }
-
-// public TwitterException(IWebExceptionInfoExtractor webExceptionInfoExtractor, ITwitterResponse twitterResponse,
-//     ITwitterRequest request)
-//     : this(request)
-// {
-//     StatusCode = twitterResponse.StatusCode;
-//     TwitterExceptionInfos = webExceptionInfoExtractor.GetTwitterExceptionInfosFromStream(twitterResponse.ResultStream);
-//     TwitterDescription = webExceptionInfoExtractor.GetStatusCodeDescription(StatusCode);
-// }
-
-// public TwitterException(IWebExceptionInfoExtractor webExceptionInfoExtractor, WebException webException,
-//     ITwitterRequest request)
-//     : this(request, webException.Message)
-// {
-//     WebException = webException;
-//     StatusCode = webExceptionInfoExtractor.GetWebExceptionStatusNumber(webException);
-//     TwitterExceptionInfos = webExceptionInfoExtractor.GetTwitterExceptionInfo(webException);
-//     TwitterDescription = webExceptionInfoExtractor.GetStatusCodeDescription(StatusCode);
-// }
-
-// public TwitterException(IWebExceptionInfoExtractor webExceptionInfoExtractor, WebException webException,
-//     ITwitterRequest request,
-//     int statusCode)
-//     : this(request, webException.Message)
-// {
-//     WebException = webException;
-//     StatusCode = webExceptionInfoExtractor.GetWebExceptionStatusNumber(webException, statusCode);
-//     TwitterExceptionInfos = webExceptionInfoExtractor.GetTwitterExceptionInfo(webException);
-//     TwitterDescription = webExceptionInfoExtractor.GetStatusCodeDescription(StatusCode);
-// }

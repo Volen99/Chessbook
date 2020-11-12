@@ -1,5 +1,4 @@
-import {CredentialsHashCodeGenerator} from "../../Helpers/CredentialsHashCodeGenerator";
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 export interface IReadOnlyConsumerCredentialsWithoutBearer {
   // ConsumerKey identifying a unique application
@@ -16,7 +15,9 @@ export interface IReadOnlyConsumerCredentials extends IReadOnlyConsumerCredentia
 
 // Readonly version of consumer credentials
 export class ReadOnlyConsumerCredentials implements IReadOnlyConsumerCredentials {
-  constructor(consumerKeyOrSource: string | IReadOnlyConsumerCredentials, consumerSecret: string, bearerToken?: string) {
+  constructor(consumerKeyOrSource: string | IReadOnlyConsumerCredentials,
+              consumerSecret?: string,
+              bearerToken?: string) {
     if (!Type.isString(consumerKeyOrSource)) {
       this.consumerKey = consumerKeyOrSource?.consumerKey;
       this.consumerSecret = consumerKeyOrSource?.consumerSecret;
@@ -36,11 +37,11 @@ export class ReadOnlyConsumerCredentials implements IReadOnlyConsumerCredentials
   public bearerToken: string;
 
   public equals(obj: object): boolean {
-    return this.getHashCode() === obj?.GetHashCode();
+    return null; // return this.getHashCode() === obj?.GetHashCode();
   }
 
   public getHashCode(): number {
-    return CredentialsHashCodeGenerator.createHash(this).GetHashCode();
+    return null; // CredentialsHashCodeGenerator.createHash(this).GetHashCode();
   }
 }
 

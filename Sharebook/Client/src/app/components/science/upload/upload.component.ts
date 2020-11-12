@@ -1,7 +1,21 @@
-import {Component, OnInit, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, ViewChild, ElementRef, Inject, inject} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ScienceService} from '../science.service';
 import {TwitterClient} from "../../../sharebook/TwitterClient";
+import {IRawExecutors, IRawExecutorsToken} from "../../../core/Public/Client/IRawExecutors";
+import {RawExecutors} from "../../../sharebook/Client/RawExecutors";
+import {ITwitterClient} from "../../../core/Public/ITwitterClient";
+import {AccountActivityRequester} from "../../../sharebook/Client/Requesters/AccountActivityRequester";
+import {AuthRequester} from "../../../sharebook/Client/Requesters/AuthRequester";
+import {AccountSettingsRequester} from "../../../sharebook/Client/Requesters/AccountSettingsRequester";
+import {HelpRequester} from "../../../sharebook/Client/Requesters/HelpRequester";
+import {SearchRequester} from "../../../sharebook/Client/Requesters/SearchRequester";
+import {TwitterListsRequester} from "../../../sharebook/Client/Requesters/TwitterListsRequester";
+import {TimelinesRequester} from "../../../sharebook/Client/Requesters/TimelinesRequester";
+import {TrendsRequester} from "../../../sharebook/Client/Requesters/TrendsRequester";
+import {TweetsRequester} from "../../../sharebook/Client/Requesters/TweetsRequester";
+import {UploadRequester} from "../../../sharebook/Client/Requesters/UploadRequester";
+import {UsersRequester} from "../../../sharebook/Client/Requesters/UsersRequester"; // I am back!! 💙 06.11.2020, Friday
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -19,9 +33,12 @@ export class UploadComponent implements OnInit {
   private http: HttpClient;
   private scienceService: ScienceService;
 
-  constructor(http: HttpClient, scienceService: ScienceService) {
+  private _client: ITwitterClient;
+
+  constructor(http: HttpClient, scienceService: ScienceService, private rawExecutor: RawExecutors, client: TwitterClient) {
     this.http = http;
     this.scienceService = scienceService;
+    this._client = client;
   }
 
   public files: any[] = [];
@@ -74,17 +91,17 @@ export class UploadComponent implements OnInit {
       return;
     }
 
-    let client = new TwitterClient();
+    let binary = await filesArray[0].arrayBuffer();
+    let res = await this._client.upload.uploadBinaryAsync(binary);
 
-    let res = await client.upload.uploadBinaryAsync(filesArray[0].);
-
+    debugger
     this.scienceService.upload(formData)
       .subscribe(event => {
-        this.files = event.data;
+        this.files = []; // event.data;
 
         this.onUploadFinished.emit(event); // Emits an event containing a given value.
       });
-  };
+  }
 
   /**
    * Delete file from files list
@@ -108,7 +125,7 @@ export class UploadComponent implements OnInit {
   }
 
   public createImgPath = (serverPath: string) => {
-    return `${this.microservicePath}${serverPath}`;
+    return null; // `${this.microservicePath}${serverPath}`;
   }
 }
 

@@ -1,3 +1,5 @@
+import {Inject, Injectable} from "@angular/core";
+
 import {BaseRequester} from "../BaseRequester";
 import {IAuthRequester} from "../../../core/Public/Client/Requesters/IAuthRequester";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
@@ -17,9 +19,10 @@ import {ITwitterCredentials} from "../../../core/Public/Models/Authentication/Tw
 import {IInvalidateBearerTokenParameters} from "../../../core/Public/Parameters/Auth/InvalidateBearerTokenParameters";
 import {InvalidateTokenResponse} from "../../../core/Public/Models/Authentication/InvalidateTokenResponse";
 import {IInvalidateAccessTokenParameters} from "../../../core/Public/Parameters/Auth/InvalidateAccessTokenParameters";
-import {Inject, Injectable} from "@angular/core";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthRequester extends BaseRequester implements IAuthRequester {
   private readonly _authController: IAuthController;
   private readonly _validator: IAuthClientRequiredParametersValidator;
@@ -33,7 +36,7 @@ export class AuthRequester extends BaseRequester implements IAuthRequester {
   }
 
   public createBearerTokenAsync(parameters: ICreateBearerTokenParameters): Promise<ITwitterResult<CreateTokenResponseDTO>> {
-    return super.ExecuteRequestAsync(request => {
+    return super.executeRequestAsync(request => {
       this._validator.validate(parameters, request);
       return this._authController.createBearerTokenAsync(parameters, request);
     });
@@ -41,23 +44,23 @@ export class AuthRequester extends BaseRequester implements IAuthRequester {
 
   public requestAuthUrlAsync(parameters: IRequestAuthUrlParameters): Promise<ITwitterResult<IAuthenticationRequest>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._authController.requestAuthUrlAsync(parameters, request));
+    return super.executeRequestAsync(request => this._authController.requestAuthUrlAsync(parameters, request));
   }
 
   public requestCredentialsAsync(parameters: IRequestCredentialsParameters): Promise<ITwitterResult<ITwitterCredentials>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._authController.requestCredentialsAsync(parameters, request));
+    return super.executeRequestAsync(request => this._authController.requestCredentialsAsync(parameters, request));
   }
 
   public invalidateBearerTokenAsync(parameters: IInvalidateBearerTokenParameters): Promise<ITwitterResult<InvalidateTokenResponse>> {
-    return super.ExecuteRequestAsync(request => {
+    return super.executeRequestAsync(request => {
       this._validator.validate(parameters, request);
       return this._authController.invalidateBearerTokenAsync(parameters, request);
     });
   }
 
   public invalidateAccessTokenAsync(parameters: IInvalidateAccessTokenParameters): Promise<ITwitterResult<InvalidateTokenResponse>> {
-    return super.ExecuteRequestAsync(request => {
+    return super.executeRequestAsync(request => {
       this._validator.validate(parameters, request);
       return this._authController.invalidateAccessTokenAsync(parameters, request);
     });

@@ -9,8 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WorldFeed.Common\WorldFeed.Common.csproj" />
-    <ProjectReference Include="..\WorldFeed\WorldFeed.csproj" />
+    <ProjectReference Include="..\Sharebook.Common\Sharebook.Common.csproj" />
+    <ProjectReference Include="..\Sharebook\Sharebook.csproj" />
   </ItemGroup>
 
 </Project>

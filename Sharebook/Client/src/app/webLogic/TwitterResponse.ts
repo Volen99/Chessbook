@@ -1,14 +1,17 @@
-﻿import {ITwitterResponse} from "../core/Core/Web/ITwitterResponse";
-import {Stream} from "stream";
-import Dictionary from "../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
-import IEnumerable from "../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable";
+﻿import {Injectable} from "@angular/core";
 
+import {ITwitterResponse} from "../core/Core/Web/ITwitterResponse";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
+
+@Injectable({
+  providedIn: 'root',
+})
 export class TwitterResponse implements ITwitterResponse {
   public URL: string;
-  public resultStream: Stream;
+  public resultStream: Promise<any>;
   public statusCode: number;
   public isSuccessStatusCode: boolean;
-  public headers: Dictionary<string, IEnumerable<string>>;
-  public binary: number[];
+  public headers: Dictionary<string, Array<string>>;
+  public binary: ArrayBuffer;
   public content: string;
 }

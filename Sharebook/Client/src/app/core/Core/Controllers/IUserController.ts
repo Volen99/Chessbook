@@ -1,8 +1,7 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterResult} from "../Web/TwitterResult";
 import {ITwitterRequest} from '../../Public/Models/Interfaces/ITwitterRequest';
-import {Stream} from "stream";
 import {IGetAuthenticatedUserParameters} from "../../Public/Parameters/AccountClient/GetAuthenticatedUserParameters";
 import {IUserDTO} from "../../Public/Models/Interfaces/DTO/IUserDTO";
 import {IGetUserParameters} from "../../Public/Parameters/UsersClient/GetUserParameters";
@@ -34,6 +33,7 @@ import {IUnmuteUserParameters} from "../../Public/Parameters/AccountClient/UnMut
 import {IGetProfileImageParameters} from "../../Public/Parameters/UsersClient/GetProfileImageParameters";
 import {UserController} from "../../../controllers/User/UserController";
 import {UserQueryExecutor} from "../../../controllers/User/UserQueryExecutor";
+import {Observable} from "rxjs";
 
 export interface IUserController {
   getAuthenticatedUserAsync(parameters: IGetAuthenticatedUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
@@ -87,11 +87,11 @@ export interface IUserController {
 
   unmuteUserAsync(parameters: IUnmuteUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>>;
 
-  getProfileImageStreamAsync(parameters: IGetProfileImageParameters, request: ITwitterRequest): Promise<Stream>;
+  getProfileImageStreamAsync(parameters: IGetProfileImageParameters, request: ITwitterRequest): Promise<any>; // Promise<Stream>;
 }
 
 export const IUserControllerToken = new InjectionToken<IUserController>('IUserController', {
   providedIn: 'root',
-  factory: () => new UserController(Inject(UserQueryExecutor)),
+  factory: () => new UserController(inject(UserQueryExecutor)),
 });
 

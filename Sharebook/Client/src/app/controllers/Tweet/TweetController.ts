@@ -11,7 +11,6 @@ import {IGetTweetParameters} from "../../core/Public/Parameters/TweetsClient/Get
 import {IGetTweetsParameters} from "../../core/Public/Parameters/TweetsClient/GetTweetsParameters";
 import {IPublishTweetParameters, PublishTweetParameters} from "../../core/Public/Parameters/TweetsClient/PublishTweetParameters";
 import {ITweetDTO} from "../../core/Public/Models/Interfaces/DTO/ITweetDTO";
-import Type from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
 import {IPublishRetweetParameters} from "../../core/Public/Parameters/TweetsClient/PublishRetweetParameters";
 import {SharebookConsts} from "../../core/Public/sharebook-consts";
 import {IDestroyRetweetParameters} from "../../core/Public/Parameters/TweetsClient/DestroyRetweetParameters";
@@ -29,8 +28,11 @@ import {IDestroyTweetParameters} from "../../core/Public/Parameters/TweetsClient
 import {GetRetweeterIdsParameters, IGetRetweeterIdsParameters} from "../../core/Public/Parameters/TweetsClient/GetRetweeterIdsParameters";
 import {StringExtension} from "../../core/Core/Extensions/StringExtension";
 import {IOEmbedTweetDTO} from "../../core/Public/Models/Interfaces/DTO/IOembedTweetDTO";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TweetController implements ITweetController {
   private readonly _tweetQueryExecutor: ITweetQueryExecutor;
   private readonly _uploadQueryExecutor: IUploadQueryExecutor;

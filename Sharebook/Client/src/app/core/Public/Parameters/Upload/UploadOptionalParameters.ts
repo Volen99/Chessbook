@@ -1,10 +1,10 @@
 ﻿import {MediaType} from "../../Models/Enum/MediaType";
 import {MediaCategory} from "../../Models/Enum/MediaCategory";
-import TimeSpan from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
 import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {IMediaUploadProgressChangedEventArgs} from "../../Events/MediaUploadProgressChangedEventArgs";
 import {CursorQueryParameters} from "../CursorQueryParameters";
+import TimeSpan from "typescript-dotnet-commonjs/System/Time/TimeSpan";
 
 export interface IUploadOptionalParameters {
   // Type of element that you want to publish.
@@ -17,10 +17,10 @@ export interface IUploadOptionalParameters {
 
   // Type of upload. `tweet_video` allows to access the STATUS of the upload processing.
   // This property will modify the QueryMediaCategory.
-  mediaCategory?: MediaCategory;
+  mediaCategory: MediaCategory | null;
 
   // Type of upload. `tweet_video` allows to access the STATUS of the upload processing.
-  queryMediaCategory: string;
+  queryMediaCategory: string | null;
 
   // Maximum size of a chunk size (in bytes) for a single upload.
   maxChunkSize: number;

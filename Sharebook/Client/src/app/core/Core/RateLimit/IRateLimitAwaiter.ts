@@ -1,11 +1,14 @@
-﻿import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import {IReadOnlyTwitterCredentials} from "../Models/Authentication/ReadOnlyTwitterCredentials";
-import TimeSpan from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan';
 import {IWaitForCredentialsRateLimitParameters} from "../../Public/Parameters/RateLimitsClient/WaitForCredentialsRateLimitParameters";
 import {IEndpointRateLimit} from "../../Public/Models/RateLimits/IEndpointRateLimit";
 import {ITwitterExecutionContext} from "../Client/TwitterExecutionContext";
-import {QueryAwaitingEventArgs} from '../../Public/Events/QueryAwaitingEventArgs';
-import {InjectionToken} from "@angular/core";
+import { RateLimitAwaiter } from 'src/app/Tweetinvi.Credentials/RateLimit/RateLimitAwaiter';
+import {TaskDelayer} from "../Helpers/TaskDelayer";
+import {RateLimitCacheManager} from "../../../Tweetinvi.Credentials/RateLimit/RateLimitCacheManager";
+import TimeSpan from "typescript-dotnet-commonjs/System/Time/TimeSpan";
 
 // Wait for the RateLimits before performing an operation.
 export interface IRateLimitAwaiter {
@@ -32,6 +35,6 @@ export interface IRateLimitAwaiter {
 
 export const IRateLimitAwaiterToken = new InjectionToken<IRateLimitAwaiter>('IRateLimitAwaiter', {
   providedIn: 'root',
-  factory: () => new RateLimitAwaiter(),
+  factory: () => new RateLimitAwaiter(inject(RateLimitCacheManager), inject(TaskDelayer), null),
 });
 

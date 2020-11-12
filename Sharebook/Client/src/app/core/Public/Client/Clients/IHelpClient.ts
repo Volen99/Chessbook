@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterConfiguration} from "../../Models/Interfaces/DTO/ITwitterConfiguration";
 import {SupportedLanguage} from "../../../Core/Models/SupportedLanguage";
@@ -65,5 +65,5 @@ export interface IHelpClient {
 
 export const IHelpClientToken = new InjectionToken<IHelpClient>('IHelpClient', {
   providedIn: 'root',
-  factory: () => new HelpClient(Inject(TwitterClient), Inject(HelpRequester)),
+  factory: () => new HelpClient(inject(TwitterClient), inject(HelpRequester)),
 });

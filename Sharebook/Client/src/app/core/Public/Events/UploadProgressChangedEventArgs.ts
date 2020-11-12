@@ -1,32 +1,31 @@
-﻿import {EventArgs} from "../../../c#-objects/TypeScript.NET-Core/packages/Events/source/EventArgs";
-
-export interface IUploadProgressChanged {
+﻿export interface IUploadProgressChanged {
   // Numbers of bytes that have been successfully sent at the current time
-  NumberOfBytesUploaded: number;
+  numberOfBytesUploaded: number;
 
   // Total number of bytes of the upload
-  TotalOfBytesToUpload: number;
+  totalOfBytesToUpload: number;
 
   // Percentage of completion of the upload
-  Percentage: number;
+  percentage: number;
 }
 
 // Event that indicates a progress change during an upload
-export class UploadProgressChangedEventArgs extends EventArgs implements IUploadProgressChanged {
+export class UploadProgressChangedEventArgs /*extends EventArgs*/ implements IUploadProgressChanged {
   constructor(numberOfBytesUploaded: number, totalOfBytesToUpload: number) {
-    super();
-    this.NumberOfBytesUploaded = numberOfBytesUploaded;
-    this.TotalOfBytesToUpload = totalOfBytesToUpload;
+    // super();
+
+    this.numberOfBytesUploaded = numberOfBytesUploaded;
+    this.totalOfBytesToUpload = totalOfBytesToUpload;
   }
 
-  public NumberOfBytesUploaded: number;
-  public TotalOfBytesToUpload: number;
+  public numberOfBytesUploaded: number;
+  public totalOfBytesToUpload: number;
 
-  get Percentage(): number {
-    if (this.TotalOfBytesToUpload === 0) {
+  get percentage(): number {
+    if (this.totalOfBytesToUpload === 0) {
       return 0;
     }
 
-    return (/*(float)*/this.NumberOfBytesUploaded / this.TotalOfBytesToUpload * 100) as number;
+    return (/*(float)*/this.numberOfBytesUploaded / this.totalOfBytesToUpload * 100) as number;
   }
 }

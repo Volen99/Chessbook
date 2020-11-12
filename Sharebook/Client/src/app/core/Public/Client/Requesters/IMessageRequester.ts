@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {IPublishMessageParameters} from "../../Parameters/MessageClient/PublishMessageParameters";
@@ -47,6 +47,6 @@ export interface IMessageRequester {
 
 export const IMessageRequesterToken = new InjectionToken<IMessageRequester>('IMessageRequester', {
   providedIn: 'root',
-  factory: () => new MessageRequester(Inject(TwitterClient), Inject(MessageController),
-    Inject(MessagesClientParametersValidator), Inject(TwitterClientEvents)),
+  factory: () => new MessageRequester(inject(TwitterClient), inject(MessageController),
+    inject(MessagesClientParametersValidator), inject(TwitterClientEvents)),
 });

@@ -1,11 +1,9 @@
 // using HttpMethod = Tweetinvi.Models.HttpMethod;
-
 import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterAccessor, ITwitterAccessorToken} from "../../core/Core/Web/ITwitterAccessor";
-import TimeSpan from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
 import {HttpMethod} from 'src/app/core/Public/Models/Enum/HttpMethod';
 import {MultipartTwitterQuery} from "../../core/Public/MultipartTwitterQuery";
 import {IGetAccountSettingsParameters} from "../../core/Public/Parameters/AccountSettingsClient/GetAccountSettingsParameters";
@@ -25,6 +23,7 @@ import {ProgressableStreamContent} from "../../core/Core/Upload/ProgressableStre
 import {SharebookConsts} from "../../core/Public/sharebook-consts";
 import {TwitterAccessor} from "../../Tweetinvi.Credentials/TwitterAccessor";
 import {StringFormatter} from "../../core/Core/Extensions/StringFormater";
+import TimeSpan from "typescript-dotnet-commonjs/System/Time/TimeSpan";
 
 export interface IAccountSettingsQueryExecutor {
   getAccountSettingsAsync(parameters: IGetAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>>;
@@ -45,7 +44,9 @@ export const IAccountSettingsQueryExecutorToken = new InjectionToken<IAccountSet
   factory: () => new AccountSettingsQueryExecutor(Inject(AccountSettingsQueryGenerator), Inject(TwitterAccessor)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AccountSettingsQueryExecutor implements IAccountSettingsQueryExecutor {
   private readonly _accountSettingsQueryGenerator: IAccountSettingsQueryGenerator;
   private readonly _twitterAccessor: ITwitterAccessor;
@@ -95,28 +96,26 @@ export class AccountSettingsQueryExecutor implements IAccountSettingsQueryExecut
     return this._twitterAccessor.executeRequestAsync<IUserDTO>(request);
   }
 
-        public  updateProfileBannerAsync(parameters: IUpdateProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>
-        {
-            let query = this._accountSettingsQueryGenerator.getUpdateProfileBannerQuery(parameters);
-            // https://stackoverflow.com/questions/9267899/arraybuffer-to-base64-encoded-string
-            let banner = StringFormatter.urlEncode(btoa(String.fromCharCode(...new Uint8Array(parameters.binary)))); // StringFormatter.urlEncode(Convert.ToBase64String(parameters.binary));
-            let bannerHttpContent = new StringContent(`banner=${banner}`, Encoding.UTF8, "application/x-www-form-urlencoded");
+  public updateProfileBannerAsync(parameters: IUpdateProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult> {
+    let query = this._accountSettingsQueryGenerator.getUpdateProfileBannerQuery(parameters);
+    // https://stackoverflow.com/questions/9267899/arraybuffer-to-base64-encoded-string
+    let banner = StringFormatter.urlEncode(btoa(String.fromCharCode(...new Uint8Array(parameters.binary)))); // StringFormatter.urlEncode(Convert.ToBase64String(parameters.binary));
+    let bannerHttpContent = null; // new StringContent(`banner=${banner}`, Encoding.UTF8, "application/x-www-form-urlencoded");
 
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.POST;
-            request.query.httpContent = new ProgressableStreamContent(bannerHttpContent, parameters.uploadProgressChanged);
-            request.query.isHttpContentPartOfQueryParams = true;
-            request.query.timeout = parameters.timeout ?? TimeSpan.fromMilliseconds(SharebookConsts.INFINITE);
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.POST;
+    request.query.httpContent = new ProgressableStreamContent(bannerHttpContent, parameters.uploadProgressChanged);
+    request.query.isHttpContentPartOfQueryParams = true;
+    request.query.timeout = parameters.timeout ?? TimeSpan.fromMilliseconds(SharebookConsts.INFINITE);
 
-            return this._twitterAccessor.executeRequestAsync(request);
-        }
+    return this._twitterAccessor.executeRequestAsync(request);
+  }
 
-        public  removeProfileBannerAsync(parameters: IRemoveProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult>
-        {
-            let query = this._accountSettingsQueryGenerator.getRemoveProfileBannerQuery(parameters);
-            request.query.url = query;
-            request.query.httpMethod = HttpMethod.POST;
+  public removeProfileBannerAsync(parameters: IRemoveProfileBannerParameters, request: ITwitterRequest): Promise<ITwitterResult> {
+    let query = this._accountSettingsQueryGenerator.getRemoveProfileBannerQuery(parameters);
+    request.query.url = query;
+    request.query.httpMethod = HttpMethod.POST;
 
-            return this._twitterAccessor.executeRequestAsync(request);
-        }
-    }
+    return this._twitterAccessor.executeRequestAsync(request);
+  }
+}

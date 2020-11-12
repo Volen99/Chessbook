@@ -1,8 +1,8 @@
 ﻿import {IUploadedMediaInfo} from "../../Public/Models/Interfaces/DTO/IUploadedMediaInfo";
-import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {IUploadedImageDetails} from "../../Public/Models/Interfaces/DTO/IUploadedImageDetails";
 import {IUploadedVideoDetails} from "../../Public/Models/Interfaces/DTO/IUploadedVideoDetails";
 import {IUploadProcessingInfo} from "../../Public/Models/Interfaces/DTO/IUploadProcessingInfo";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 export class UploadedMediaInfo implements IUploadedMediaInfo {
   constructor() {

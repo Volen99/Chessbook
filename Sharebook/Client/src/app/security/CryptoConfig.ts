@@ -35,9 +35,9 @@ export class CryptoConfig {
   public static object;
 
   CreateFromName(name: string) {
-    if (name === "SHA1") {
-      return Activator.CreateInstance<SHA1CryptoServiceProvider>();
-    }
+    // if (name === "SHA1") {
+    //   return Activator.CreateInstance<SHA1CryptoServiceProvider>();
+    // }
 
     return null;
   }

@@ -5,6 +5,7 @@ import {AuthAccessType} from './AuthAccessType';
 export class RequestPinAuthUrlParameters extends CustomRequestParameters implements IRequestAuthUrlParameters {
   constructor() {
     super();
+
     this.callbackUrl = "oob";
   }
 

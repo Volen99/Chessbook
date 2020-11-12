@@ -1,4 +1,4 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {IGetRateLimitsParameters} from "../../../Public/Parameters/HelpClient/GetRateLimitsParameters";
 import {IGetTwitterConfigurationParameters} from "../../../Public/Parameters/HelpClient/GetTwitterConfigurationParameters";
@@ -29,10 +29,12 @@ export interface IHelpClientParametersValidator {
 
 export const IHelpClientParametersValidatorToken = new InjectionToken<IHelpClientParametersValidator>('IHelpClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new HelpClientParametersValidator(Inject(HelpClientRequiredParametersValidator)),
+  factory: () => new HelpClientParametersValidator(inject(HelpClientRequiredParametersValidator)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class HelpClientParametersValidator implements IHelpClientParametersValidator {
   private readonly _helpClientRequiredParametersValidator: IHelpClientRequiredParametersValidator;
 

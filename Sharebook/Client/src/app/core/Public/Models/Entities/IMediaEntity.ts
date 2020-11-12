@@ -1,10 +1,10 @@
 ﻿import {InjectionToken} from "@angular/core";
 
-import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
-import Dictionary from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
 import {IVideoInformationEntity} from "./ExtendedEntities/IVideoInformationEntity";
 import {IMediaEntitySize} from "./IMediaEntitySize";
 import {MediaEntity} from "../../../Core/Models/TwitterEntities/MediaEntity";
+import IEquatable from "typescript-dotnet-commonjs/System/IEquatable";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
 
 // Media element posted in Twitter
 export interface IMediaEntity extends IEquatable<IMediaEntity> {

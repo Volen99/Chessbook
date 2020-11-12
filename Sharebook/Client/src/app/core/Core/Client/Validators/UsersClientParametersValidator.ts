@@ -1,4 +1,4 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {IGetAuthenticatedUserParameters} from "../../../Public/Parameters/AccountClient/GetAuthenticatedUserParameters";
 import {IGetUserParameters} from "../../../Public/Parameters/UsersClient/GetUserParameters";
@@ -98,10 +98,12 @@ export interface IUsersClientParametersValidator {
 
 export const IUsersClientParametersValidatorToken = new InjectionToken<IUsersClientParametersValidator>('IUsersClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new UsersClientParametersValidator(Inject(TwitterClient), Inject(UsersClientRequiredParametersValidator)),
+  factory: () => new UsersClientParametersValidator(inject(TwitterClient), inject(UsersClientRequiredParametersValidator)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UsersClientParametersValidator implements IUsersClientParametersValidator {
   private readonly _usersClientRequiredParametersValidator: IUsersClientRequiredParametersValidator;
   private readonly _client: ITwitterClient;
@@ -122,80 +124,80 @@ export class UsersClientParametersValidator implements IUsersClientParametersVal
     if (this.isIGetUsersParameters(parameters)) {
       let maxSize = this.Limits.USERS_GET_USERS_MAX_SIZE;
       if (parameters.Users.length > maxSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.Users)}`, maxSize, nameof(this.Limits.USERS_GET_USERS_MAX_SIZE), "users");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.Users)`}`, maxSize, `nameof(this.Limits.USERS_GET_USERS_MAX_SIZE)`, "users");
       }
     } else if (this.isIGetFollowerIdsParameters(parameters)) {
       let maxPageSize = this.Limits.USERS_GET_FOLLOWER_IDS_PAGE_MAX_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.USERS_GET_FOLLOWER_IDS_PAGE_MAX_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.USERS_GET_FOLLOWER_IDS_PAGE_MAX_SIZE)`, "page size");
       }
     } else if (this.isIGetFollowersParameters(parameters)) {
       this.validate(parameters as IGetFollowerIdsParameters);     // TODO: Beware!! Recursion!
 
       let maxUserPerPage = this.Limits.USERS_GET_USERS_MAX_SIZE;
       if (parameters.GetUsersPageSize > maxUserPerPage) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.GetUsersPageSize)}`, maxUserPerPage, nameof(this.Limits.USERS_GET_USERS_MAX_SIZE), "user ids");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.GetUsersPageSize)`}`, maxUserPerPage, `nameof(this.Limits.USERS_GET_USERS_MAX_SIZE)`, "user ids");
       }
     } else if (this.isIGetFriendIdsParameters(parameters)) {
       let maxPageSize = this.Limits.USERS_GET_FRIEND_IDS_PAGE_MAX_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.USERS_GET_FRIEND_IDS_PAGE_MAX_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.USERS_GET_FRIEND_IDS_PAGE_MAX_SIZE)`, "page size");
       }
     } else if (this.isIGetFriendsParameters(parameters)) {
       this.validate(parameters as IGetFriendIdsParameters);     // TODO: Beware!! Recursion!
 
       let maxUserPerPage = this.Limits.USERS_GET_USERS_MAX_SIZE;
       if (parameters.GetUsersPageSize > maxUserPerPage) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.GetUsersPageSize)}`, maxUserPerPage, nameof(this.Limits.USERS_GET_USERS_MAX_SIZE), "user ids");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.GetUsersPageSize)`}`, maxUserPerPage, `nameof(this.Limits.USERS_GET_USERS_MAX_SIZE)`, "user ids");
       }
     } else if (this.isIGetBlockedUserIdsParameters(parameters)) {
       let maxPageSize = this.Limits.ACCOUNT_GET_BLOCKED_USER_IDS_MAX_PAGE_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.ACCOUNT_GET_BLOCKED_USER_IDS_MAX_PAGE_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.ACCOUNT_GET_BLOCKED_USER_IDS_MAX_PAGE_SIZE)`, "page size");
       }
     } else if (this.isIGetBlockedUsersParameters(parameters)) {
       let maxPageSize = this.Limits.ACCOUNT_GET_BLOCKED_USER_MAX_PAGE_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.ACCOUNT_GET_BLOCKED_USER_MAX_PAGE_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.ACCOUNT_GET_BLOCKED_USER_MAX_PAGE_SIZE)`, "page size");
       }
     } else if (this.isIGetUserIdsRequestingFriendshipParameters(parameters)) {
       let maxPageSize = this.Limits.ACCOUNT_GET_USER_IDS_REQUESTING_FRIENDSHIP_MAX_PAGE_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.ACCOUNT_GET_USER_IDS_REQUESTING_FRIENDSHIP_MAX_PAGE_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.ACCOUNT_GET_USER_IDS_REQUESTING_FRIENDSHIP_MAX_PAGE_SIZE)`, "page size");
       }
     } else if (this.isIGetUsersRequestingFriendshipParameters(parameters)) {
       this.validate(parameters as IGetUserIdsRequestingFriendshipParameters);     // TODO: Beware!! Recursion!
 
       let maxSize = this.Limits.USERS_GET_USERS_MAX_SIZE;
       if (parameters.getUsersPageSize > maxSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.getUsersPageSize)}`, maxSize, nameof(this.Limits.USERS_GET_USERS_MAX_SIZE), "users");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.getUsersPageSize)`}`, maxSize, `nameof(this.Limits.USERS_GET_USERS_MAX_SIZE)`, "users");
       }
     } else if (this.isIGetUserIdsYouRequestedToFollowParameters(parameters)) {
       let maxPageSize = this.Limits.ACCOUNT_GET_REQUESTED_USER_IDS_TO_FOLLOW_MAX_PAGE_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.ACCOUNT_GET_REQUESTED_USER_IDS_TO_FOLLOW_MAX_PAGE_SIZE), "page size");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.ACCOUNT_GET_REQUESTED_USER_IDS_TO_FOLLOW_MAX_PAGE_SIZE)`, "page size");
       }
     } else if (this.isIGetUsersYouRequestedToFollowParameters(parameters)) {
       this.validate(parameters as IGetUserIdsYouRequestedToFollowParameters);     // TODO: Beware!! Recursion!
 
       let maxSize = this.Limits.USERS_GET_USERS_MAX_SIZE;
       if (parameters.getUsersPageSize > maxSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.getUsersPageSize)}`, maxSize, nameof(this.Limits.USERS_GET_USERS_MAX_SIZE), "users");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.getUsersPageSize)`}`, maxSize, `nameof(this.Limits.USERS_GET_USERS_MAX_SIZE)`, "users");
       }
     } else if (this.isIGetRelationshipsWithParameters(parameters)) {
       let maxUsers = this.Limits.ACCOUNT_GET_RELATIONSHIPS_WITH_MAX_SIZE;
       if (parameters.users.length > maxUsers) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.users)}`, maxUsers, nameof(this.Limits.ACCOUNT_GET_RELATIONSHIPS_WITH_MAX_SIZE), "users");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.users)`}`, maxUsers, `nameof(this.Limits.ACCOUNT_GET_RELATIONSHIPS_WITH_MAX_SIZE)`, "users");
       }
     } else if (this.isIGetMutedUserIdsParameters(parameters)) {
       let maxPageSize = this.Limits.ACCOUNT_GET_MUTED_USER_IDS_MAX_PAGE_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.ACCOUNT_GET_MUTED_USER_IDS_MAX_PAGE_SIZE), "users");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.ACCOUNT_GET_MUTED_USER_IDS_MAX_PAGE_SIZE)`, "users");
       }
     } else if (this.isIGetMutedUsersParameters(parameters)) {
       let maxPageSize = this.Limits.ACCOUNT_GET_MUTED_USERS_MAX_PAGE_SIZE;
       if (parameters.pageSize > maxPageSize) {
-        throw new TwitterArgumentLimitException(`${nameof(parameters.pageSize)}`, maxPageSize, nameof(this.Limits.ACCOUNT_GET_MUTED_USERS_MAX_PAGE_SIZE), "users");
+        throw new TwitterArgumentLimitException(`${`nameof(parameters.pageSize)`}`, maxPageSize, `nameof(this.Limits.ACCOUNT_GET_MUTED_USERS_MAX_PAGE_SIZE)`, "users");
       }
     }
   }
@@ -205,19 +207,19 @@ export class UsersClientParametersValidator implements IUsersClientParametersVal
   }
 
   private isIGetFollowerIdsParameters(parameters: UserParameters): parameters is IGetFollowerIdsParameters {
-    return (parameters as IGetFollowerIdsParameters).User !== undefined;
+    return (parameters as IGetFollowerIdsParameters).user !== undefined;
   }
 
   private isIGetFollowersParameters(parameters: UserParameters): parameters is IGetFollowersParameters {
-    return (parameters as IGetFollowersParameters).User !== undefined;
+    return (parameters as IGetFollowersParameters).user !== undefined;
   }
 
   private isIGetFriendIdsParameters(parameters: UserParameters): parameters is IGetFriendIdsParameters {
-    return (parameters as IGetFriendIdsParameters).User !== undefined;
+    return (parameters as IGetFriendIdsParameters).user !== undefined;
   }
 
   private isIGetFriendsParameters(parameters: UserParameters): parameters is IGetFriendsParameters {
-    return (parameters as IGetFriendsParameters).User !== undefined;
+    return (parameters as IGetFriendsParameters).user !== undefined;
   }
 
   private isIGetBlockedUserIdsParameters(parameters: UserParameters): parameters is IGetBlockedUserIdsParameters {

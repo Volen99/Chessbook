@@ -1,9 +1,7 @@
 ﻿import {Inject, Injectable} from "@angular/core";
 
-import TimeSpan from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
 import {HttpMethod} from "./Models/Enum/HttpMethod";
-import DateTime from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import {ITweetinviSettings} from "./Settings/SharebookSettings";
+import {ISharebookSettings} from "./Settings/SharebookSettings";
 import {CustomRequestHeaders} from "./Models/Interfaces/CustomRequestHeaders";
 import {ITwitterQuery, ITwitterQueryToken} from "./Models/Interfaces/ITwitterQuery";
 import {TwitterRequestParameters} from "./TwitterRequestParameters";
@@ -12,9 +10,13 @@ import {ITwitterCredentials} from "./Models/Authentication/TwitterCredentials";
 import {IOAuthQueryParameter} from "../Core/Web/IOAuthQueryParameter";
 import {IEndpointRateLimit} from "./Models/RateLimits/IEndpointRateLimit";
 import {SharebookConsts} from "./sharebook-consts";
-import TimeQuantity from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeQuantity";
+import {ICredentialsRateLimits} from "./Models/RateLimits/ICredentialsRateLimits";
+import TimeSpan from "typescript-dotnet-commonjs/System/Time/TimeSpan";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TwitterQuery extends TwitterRequestParameters implements ITwitterQuery {
   constructor(queryURL?: string,
               httpMethod?: HttpMethod,
@@ -69,6 +71,7 @@ export class TwitterQuery extends TwitterRequestParameters implements ITwitterQu
   }
 
   get timeToWaitBeforeExecutingTheQuery(): TimeSpan {
+    // @ts-ignore
     let diff: TimeSpan = this.dateWhenCredentialsWillHaveTheRequiredRateLimits?.subtract(DateTime.now); // 1000% bug
     if (diff == null) {
       return null;
@@ -85,7 +88,7 @@ export class TwitterQuery extends TwitterRequestParameters implements ITwitterQu
 
   public void;
 
-  initialize(settings: ITweetinviSettings) {
+  initialize(settings: ISharebookSettings) {
     this.timeout = settings.httpRequestTimeout;
     this.proxyConfig = settings.proxyConfig;
   }

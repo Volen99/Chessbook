@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WorldFeed.Programming.Quiz.Data.Common\Sharebook.Programming.Quiz.Data.Common.csproj" />
+    <ProjectReference Include="..\Sharebook.Programming.Quiz.Data.Common\Sharebook.Programming.Quiz.Data.Common.csproj" />
   </ItemGroup>
 
 </Project>

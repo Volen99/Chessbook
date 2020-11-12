@@ -1,7 +1,7 @@
 ﻿import {InjectionToken} from "@angular/core";
 
-import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
 import {HashtagEntity} from "../../../Core/Models/TwitterEntities/HashTagEntity";
+import IEquatable from "typescript-dotnet-commonjs/System/IEquatable";
 
 // A hashtag is a keyword prefixed by # and representing a category of tweet
 export interface IHashtagEntity extends IEquatable<IHashtagEntity> {

@@ -35,7 +35,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BuildingBlocks\Devspaces.Support\Devspaces.Support.csproj" />
-    <ProjectReference Include="..\..\WorldFeed.Common\Sharebook.Common.csproj" />
+    <ProjectReference Include="..\..\Sharebook.Common\Sharebook.Common.csproj" />
   </ItemGroup>
 
 </Project>

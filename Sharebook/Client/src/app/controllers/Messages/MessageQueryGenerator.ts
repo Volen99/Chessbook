@@ -1,7 +1,6 @@
-﻿import {Inject, Injectable, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {Resources} from "../../properties/resources";
-import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {IPublishMessageParameters} from "../../core/Public/Parameters/MessageClient/PublishMessageParameters";
 import {IDeleteMessageParameters} from "../../core/Public/Parameters/MessageClient/DestroyMessageParameters";
 import {IGetMessageParameters} from "../../core/Public/Parameters/MessageClient/GetMessageParameters";
@@ -11,8 +10,6 @@ import {ICreateMessageDTO} from "../../core/Public/Models/Interfaces/DTO/ICreate
 import {CreateMessageDTO} from "../../core/Core/DTO/CreateMessageDTO";
 import {MessageEventDTO} from "../../core/Core/DTO/Events/MessageEventDTO";
 import {EventType} from "../../core/Public/Models/Enum/EventType";
-import TimeSpan from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
-import DateTime from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {MessageCreateDTO} from "../../core/Core/DTO/MessageCreateDTO";
 import {MessageCreateTargetDTO} from "../../core/Core/DTO/MessageCreateTargetDTO";
 import {MessageDataDTO} from "../../core/Core/DTO/MessageDataDTO";
@@ -21,10 +18,13 @@ import {AttachmentType} from "../../core/Public/Models/Enum/AttachmentType";
 import {MediaEntity} from "../../core/Core/Models/TwitterEntities/MediaEntity";
 import {QuickReplyDTO} from "../../core/Core/DTO/QuickReplyDTO";
 import {QuickReplyType} from "../../core/Public/Models/Enum/QuickReplyType";
+import {JsonContentFactory} from "../../core/Core/Web/JsonContentFactory";
+import StringBuilder from "typescript-dotnet-commonjs/System/Text/StringBuilder";
+import {StringBuilderExtensions} from "../../core/Core/Extensions/stringBuilder-extensions";
 
 export class RequestWithPayload {
   public url: string;
-  public content: HttpContent;
+  public content: any; // HttpContent;
 }
 
 export interface IMessageQueryGenerator {
@@ -39,10 +39,12 @@ export interface IMessageQueryGenerator {
 
 export const IMessageQueryGeneratorToken = new InjectionToken<IMessageQueryGenerator>('IMessageQueryGenerator', {
   providedIn: 'root',
-  factory: () => new MessageQueryGenerator(Inject(JsonContentFactory), Inject(QueryParameterGenerator));
+  factory: () => new MessageQueryGenerator(inject(JsonContentFactory), inject(QueryParameterGenerator)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MessageQueryGenerator implements IMessageQueryGenerator {
   private readonly _jsonContentFactory: JsonContentFactory;
   private readonly _queryParameterGenerator: IQueryParameterGenerator;
@@ -55,7 +57,7 @@ export class MessageQueryGenerator implements IMessageQueryGenerator {
 
   public getPublishMessageQuery(parameters: IPublishMessageParameters): RequestWithPayload {
     let query = new StringBuilder(Resources.Message_Create);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     let content = this._jsonContentFactory.Create(this.getPublishMessageBody(parameters));
 
@@ -68,22 +70,22 @@ export class MessageQueryGenerator implements IMessageQueryGenerator {
 
   public getDestroyMessageQuery(parameters: IDeleteMessageParameters): string {
     let query = new StringBuilder(Resources.Message_Destroy);
-    query.addParameterToQuery("id", parameters.messageId);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addParameterToQuery(query, "id", parameters.messageId);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
   public getMessageQuery(parameters: IGetMessageParameters): string {
     let query = new StringBuilder(Resources.Message_Get);
-    query.addParameterToQuery("id", parameters.messageId);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addParameterToQuery(query, "id", parameters.messageId);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
   public getMessagesQuery(parameters: IGetMessagesParameters): string {
     let query = new StringBuilder(Resources.Message_GetMessages);
     this._queryParameterGenerator.appendCursorParameters(query, parameters);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
     return query.toString();
   }
 
@@ -91,7 +93,7 @@ export class MessageQueryGenerator implements IMessageQueryGenerator {
     let createMessageDTO = new CreateMessageDTO();
     createMessageDTO.messageEvent = new MessageEventDTO();
     createMessageDTO.messageEvent.type = EventType.MessageCreate;
-    createMessageDTO.messageEvent.createdAt = new DateTime(2000, 11, 22, 0, 0, 0, TimeSpan.zero);
+    // createMessageDTO.messageEvent.createdAt = new DateTime(2000, 11, 22, 0, 0, 0, TimeSpan.zero);
     createMessageDTO.messageEvent.messageCreate = new MessageCreateDTO();
     createMessageDTO.messageEvent.messageCreate.target = new MessageCreateTargetDTO();
     createMessageDTO.messageEvent.messageCreate.target.recipientId = parameters.recipientId;

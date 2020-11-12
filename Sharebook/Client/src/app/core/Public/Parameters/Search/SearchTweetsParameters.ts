@@ -1,18 +1,19 @@
-﻿import {Inject, Injectable, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {IMinMaxQueryParameters, MinMaxQueryParameters} from "../MaxAndMinBaseQueryParameters";
 import {ITweetModeParameter} from "../ITweetModeParameter";
-import {IGeoCode, IGeoCodeToken} from "../../Models/Interfaces/IGeoCode";
+import {IGeoCode} from "../../Models/Interfaces/IGeoCode";
 import {SearchResultType} from "../../Models/Enum/SearchResultType";
-import DateTime from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime';
 import {TweetSearchFilters} from "../Enum/TweetSearchFilters";
 import {DistanceMeasure} from "../../Models/Enum/DistanceMeasure";
-import {ICoordinates, ICoordinatesToken} from "../../Models/Interfaces/ICoordinates";
+import {ICoordinates} from "../../Models/Interfaces/ICoordinates";
 import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {GeoCode} from "../../Models/GeoCode";
 import {TweetMode} from '../../Settings/SharebookSettings';
 import {LanguageFilter} from "../../Models/Enum/LanguageFilter";
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import {Coordinates} from "../../Models/Coordinates";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 /// <summary>
 /// For more information read : https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets
@@ -26,7 +27,7 @@ export interface ISearchTweetsParameters extends IMinMaxQueryParameters, ITweetM
   // This is intended for language-specific consumers and the default should work in the majority of cases.
   locale: string;
 
-  // Language identified for the tweet.
+  // Languages.ts identified for the tweet.
   lang?: LanguageFilter;
 
   // Restrict your query to a given location.
@@ -56,10 +57,12 @@ export interface ISearchTweetsParameters extends IMinMaxQueryParameters, ITweetM
 
 export const ISearchTweetsParametersToken = new InjectionToken<ISearchTweetsParameters>('ISearchTweetsParameters', {
   providedIn: 'root',
-  factory: () => new SearchTweetsParameters(),
+  factory: () => new SearchTweetsParameters(null, 0, 0, null),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 // https://dev.twitter.com/rest/reference/get/search/tweets
 export class SearchTweetsParameters extends MinMaxQueryParameters implements ISearchTweetsParameters {
   constructor(searchQueryOrGeoCodeOrCoordinatesOrLatitudeParameters: string | IGeoCode | ICoordinates | number | ISearchTweetsParameters,

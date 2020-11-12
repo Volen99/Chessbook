@@ -1,9 +1,15 @@
-﻿import {IReadOnlyTwitterCredentials} from "../Models/Authentication/ReadOnlyTwitterCredentials";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
+
+import {IReadOnlyTwitterCredentials} from "../Models/Authentication/ReadOnlyTwitterCredentials";
 import {IRateLimitCache} from "./IRateLimitCache";
 import {IRateLimitsClient} from "../../Public/Client/Clients/IRateLimitsClient";
 import {IGetEndpointRateLimitsParameters} from "../../Public/Parameters/HelpClient/GetEndpointRateLimitsParameters";
 import {IEndpointRateLimit} from "../../Public/Models/RateLimits/IEndpointRateLimit";
-import {InjectionToken} from "@angular/core";
+import {ICredentialsRateLimits} from "../../Public/Models/RateLimits/ICredentialsRateLimits";
+import {RateLimitCacheManager} from "../../../Tweetinvi.Credentials/RateLimit/RateLimitCacheManager";
+import {RateLimitHelper} from "../../../Tweetinvi.Credentials/RateLimit/RateLimitHelper";
+import {RateLimitCache} from "../../../Tweetinvi.Credentials/RateLimit/RateLimitCache";
+import {AppInjector} from "../../../sharebook/Injectinvi/app-injector";
 
 // Proxy used to access and refresh the rate limits cache.
 export interface IRateLimitCacheManager {
@@ -31,5 +37,5 @@ export interface IRateLimitCacheManager {
 
 export const IRateLimitCacheManagerToken = new InjectionToken<IRateLimitCacheManager>('IRateLimitCacheManager', {
   providedIn: 'root',
-  factory: () => new RateLimitCacheManager(),
+  factory: () => AppInjector.get(RateLimitCacheManager) // new RateLimitCacheManager(inject(RateLimitCache), inject(RateLimitHelper)),
 });

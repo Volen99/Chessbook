@@ -1,3 +1,5 @@
+import {Inject, Injectable} from "@angular/core";
+
 import {BaseRequester} from "../BaseRequester";
 import {ISearchRequester} from "../../../core/Public/Client/Requesters/ISearchRequester";
 import {ITwitterResult} from 'src/app/core/Core/Web/TwitterResult';
@@ -6,7 +8,7 @@ import {
   ISearchClientRequiredParametersValidator,
   ISearchClientRequiredParametersValidatorToken
 } from "../../../core/Core/Client/Validators/SearchClientRequiredParametersValidator";
-import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
+import {ITwitterClientEvents, ITwitterClientEventsToken} from "../../../core/Core/Events/TweetinviGlobalEvents";
 import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {ISearchTweetsParameters} from "../../../core/Public/Parameters/Search/SearchTweetsParameters";
 import {ITwitterPageIterator} from "../../../core/Core/Iterators/TwitterPageIterator";
@@ -19,9 +21,10 @@ import {SavedSearchDTO} from "../../../core/Core/DTO/SavedSearchDTO";
 import {IGetSavedSearchParameters} from "../../../core/Public/Parameters/Search/GetSavedSearchParameters";
 import {IListSavedSearchesParameters} from "../../../core/Public/Parameters/Search/ListSavedSearchesParameters";
 import {IDestroySavedSearchParameters} from "../../../core/Public/Parameters/Search/DestroySavedSearchParameters";
-import {Inject, Injectable} from "@angular/core";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class SearchRequester extends BaseRequester implements ISearchRequester {
   private readonly _searchController: ISearchController;
   private readonly _validator: ISearchClientRequiredParametersValidator;
@@ -36,16 +39,14 @@ export class SearchRequester extends BaseRequester implements ISearchRequester {
     this._validator = validator;
   }
 
-  public getSearchTweetsIterator(parameters: ISearchTweetsParameters): ITwitterPageIterator<ITwitterResult<ISearchResultsDTO>, number> // long?
-  {
+  public getSearchTweetsIterator(parameters: ISearchTweetsParameters): ITwitterPageIterator<ITwitterResult<ISearchResultsDTO>, number> { // long?
     this._validator.validate(parameters);
 
     let request = super.TwitterClient.createRequest();
     return this._searchController.getSearchTweetsIterator(parameters, request);
   }
 
-  public getSearchUsersIterator(parameters: ISearchUsersParameters): ITwitterPageIterator<IFilteredTwitterResult<UserDTO[]>, number>  // int?
-  {
+  public getSearchUsersIterator(parameters: ISearchUsersParameters): ITwitterPageIterator<IFilteredTwitterResult<UserDTO[]>, number> {   // int?
     this._validator.validate(parameters);
 
     let request = super.TwitterClient.createRequest();
@@ -54,21 +55,21 @@ export class SearchRequester extends BaseRequester implements ISearchRequester {
 
   public createSavedSearchAsync(parameters: ICreateSavedSearchParameters): Promise<ITwitterResult<SavedSearchDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._searchController.createSavedSearchAsync(parameters, request));
+    return super.executeRequestAsync(request => this._searchController.createSavedSearchAsync(parameters, request));
   }
 
   public getSavedSearchAsync(parameters: IGetSavedSearchParameters): Promise<ITwitterResult<SavedSearchDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._searchController.getSavedSearchAsync(parameters, request));
+    return super.executeRequestAsync(request => this._searchController.getSavedSearchAsync(parameters, request));
   }
 
   public listSavedSearchesAsync(parameters: IListSavedSearchesParameters): Promise<ITwitterResult<SavedSearchDTO[]>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._searchController.listSavedSearchesAsync(parameters, request));
+    return super.executeRequestAsync(request => this._searchController.listSavedSearchesAsync(parameters, request));
   }
 
   public destroySavedSearchAsync(parameters: IDestroySavedSearchParameters): Promise<ITwitterResult<SavedSearchDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._searchController.destroySavedSearchAsync(parameters, request));
+    return super.executeRequestAsync(request => this._searchController.destroySavedSearchAsync(parameters, request));
   }
 }

@@ -5,10 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Sharebook.Common\WorldFeed.Common.csproj" />
-    <ProjectReference Include="..\..\..\Sharebook\WorldFeed.csproj" />
-    <ProjectReference Include="..\Sharebook.Trend.Domain\WorldFeed.Trend.Domain.csproj" />
-    <ProjectReference Include="..\Sharebook.Trend.Infrastructure\WorldFeed.Trend.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Sharebook.Common\Sharebook.Common.csproj" />
+    <ProjectReference Include="..\..\..\Sharebook\Sharebook.csproj" />
+    <ProjectReference Include="..\Sharebook.Trend.Domain\Sharebook.Trend.Domain.csproj" />
+    <ProjectReference Include="..\Sharebook.Trend.Infrastructure\Sharebook.Trend.Infrastructure.csproj" />
   </ItemGroup>
 
 

@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {IAccountActivityClientParametersValidator} from "../../../Core/Client/Validators/AccountActivityClientParametersValidator";
 import {IAccountActivityRequestHandler} from "../../Models/Webhooks/IAccountActivityRequestHandler";
@@ -121,5 +121,5 @@ export interface IAccountActivityClient {
 
 export const IAccountActivityClientToken = new InjectionToken<IAccountActivityClient>('IAccountActivityClient', {
   providedIn: 'root',
-  factory: () => new AccountActivityClient(Inject(AccountActivityRequester), Inject(TwitterClient)),
+  factory: () => new AccountActivityClient(inject(AccountActivityRequester), inject(TwitterClient)),
 });

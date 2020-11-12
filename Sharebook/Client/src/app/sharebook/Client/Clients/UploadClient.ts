@@ -1,5 +1,7 @@
+import {Inject, Injectable} from "@angular/core";
+
 import {IUploadClient} from "../../../core/Public/Client/Clients/IUploadClient";
-import {IUploadRequester} from "../../../core/Public/Client/Requesters/IUploadRequester";
+import {IUploadRequester, IUploadRequesterToken} from "../../../core/Public/Client/Requesters/IUploadRequester";
 import {IUploadClientParametersValidator} from "../../../core/Core/Client/Validators/UploadClientParametersValidator";
 import {IMedia} from "../../../core/Public/Models/Interfaces/IMedia";
 import {IUploadParameters, UploadBinaryParameters} from "../../../core/Public/Parameters/Upload/UploadBinaryParameters";
@@ -11,23 +13,27 @@ import {AddMediaMetadataParameters, IAddMediaMetadataParameters} from "../../../
 import {IUploadedMediaInfo} from "../../../core/Public/Models/Interfaces/DTO/IUploadedMediaInfo";
 import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
 import {IMediaMetadata} from "../../../core/Public/Models/Interfaces/DTO/IMediaMetadata";
-import {Inject, Injectable} from "@angular/core";
+import {RawExecutors} from "../RawExecutors";
+import {IRawExecutors, IRawExecutorsToken} from "../../../core/Public/Client/IRawExecutors";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UploadClient implements IUploadClient {
   private readonly _client: ITwitterClient;
   private readonly _uploadRequester: IUploadRequester;
 
-  constructor(@Inject(ITwitterClientToken) client: ITwitterClient) {
+  constructor(@Inject(ITwitterClientToken) client: ITwitterClient, @Inject(IUploadRequesterToken) raw?: IUploadRequester) {
     this._client = client;
-    this._uploadRequester = client.raw.upload;
+    this._uploadRequester = raw; // client.raw.upload;
   }
 
   get parametersValidator(): IUploadClientParametersValidator {
+    // @ts-ignore
     return this._client.parametersValidator;
   }
 
-  public async uploadBinaryAsync(binaryOrParameters: number[] | IUploadParameters): Promise<IMedia> {
+  public async uploadBinaryAsync(binaryOrParameters: ArrayBuffer | IUploadParameters): Promise<IMedia> {
     let parameters: IUploadParameters;
     if (this.isIUploadParameters(binaryOrParameters)) {
       parameters = binaryOrParameters;
@@ -35,11 +41,12 @@ export class UploadClient implements IUploadClient {
       parameters = new UploadBinaryParameters(binaryOrParameters);
     }
 
-    let chunkUploadResult = await this._uploadRequester.uploadBinaryAsync(parameters); // .ConfigureAwait(false);
+    let chunkUploadResult = await this._uploadRequester.uploadBinaryAsync(parameters);
+    debugger
     return chunkUploadResult.media;
   }
 
-  public uploadTweetImageAsync(binaryOrParameters: number[] | IUploadTweetImageParameters): Promise<IMedia> {
+  public uploadTweetImageAsync(binaryOrParameters: ArrayBuffer | IUploadTweetImageParameters): Promise<IMedia> {
     let parameters: IUploadTweetImageParameters;
     if (this.isIUploadTweetImageParameters(binaryOrParameters)) {
       parameters = binaryOrParameters;
@@ -47,10 +54,10 @@ export class UploadClient implements IUploadClient {
       parameters = new UploadTweetImageParameters(binaryOrParameters);
     }
 
-    return this.uploadBinaryAsync(parameters);
+    return this.uploadBinaryAsync(parameters as IUploadParameters); // TODO: might bug
   }
 
-  public uploadMessageImageAsync(binaryOrParameters: number[] | IUploadMessageImageParameters): Promise<IMedia> {
+  public uploadMessageImageAsync(binaryOrParameters: ArrayBuffer | IUploadMessageImageParameters): Promise<IMedia> {
     let parameters: IUploadMessageImageParameters;
     if (this.isIUploadMessageImageParameters(binaryOrParameters)) {
       parameters = binaryOrParameters;
@@ -61,7 +68,7 @@ export class UploadClient implements IUploadClient {
     return this.uploadBinaryAsync(parameters);
   }
 
-  public uploadTweetVideoAsync(binaryOrParameters: number[] | IUploadTweetVideoParameters): Promise<IMedia> {
+  public uploadTweetVideoAsync(binaryOrParameters: ArrayBuffer | IUploadTweetVideoParameters): Promise<IMedia> {
     let parameters: IUploadTweetVideoParameters;
     if (this.isIUploadTweetVideoParameters(binaryOrParameters)) {
       parameters = binaryOrParameters;
@@ -72,7 +79,7 @@ export class UploadClient implements IUploadClient {
     return this.uploadBinaryAsync(parameters);
   }
 
-  public uploadMessageVideoAsync(binaryOrParameters: number[] | IUploadMessageVideoParameters): Promise<IMedia> {
+  public uploadMessageVideoAsync(binaryOrParameters: ArrayBuffer | IUploadMessageVideoParameters): Promise<IMedia> {
     let parameters: IUploadMessageVideoParameters;
     if (this.isIUploadMessageVideoParameters(binaryOrParameters)) {
       parameters = binaryOrParameters;
@@ -104,23 +111,23 @@ export class UploadClient implements IUploadClient {
     return this._uploadRequester.waitForMediaProcessingToGetAllMetadataAsync(media);
   }
 
-  private isIUploadParameters(binaryOrParameters: number[] | IUploadParameters): binaryOrParameters is IUploadParameters {
+  private isIUploadParameters(binaryOrParameters: ArrayBuffer | IUploadParameters): binaryOrParameters is IUploadParameters {
     return (binaryOrParameters as IUploadParameters).binary !== undefined;
   }
 
-  private isIUploadTweetImageParameters(binaryOrParameters: number[] | IUploadTweetImageParameters): binaryOrParameters is IUploadTweetImageParameters {
+  private isIUploadTweetImageParameters(binaryOrParameters: ArrayBuffer | IUploadTweetImageParameters): binaryOrParameters is IUploadTweetImageParameters {
     return (binaryOrParameters as IUploadTweetImageParameters).binary !== undefined;
   }
 
-  private isIUploadMessageImageParameters(binaryOrParameters: number[] | IUploadMessageImageParameters): binaryOrParameters is IUploadMessageImageParameters {
+  private isIUploadMessageImageParameters(binaryOrParameters: ArrayBuffer | IUploadMessageImageParameters): binaryOrParameters is IUploadMessageImageParameters {
     return (binaryOrParameters as IUploadMessageImageParameters).binary !== undefined;
   }
 
-  private isIUploadTweetVideoParameters(binaryOrParameters: number[] | IUploadTweetVideoParameters): binaryOrParameters is IUploadTweetVideoParameters {
+  private isIUploadTweetVideoParameters(binaryOrParameters: ArrayBuffer | IUploadTweetVideoParameters): binaryOrParameters is IUploadTweetVideoParameters {
     return (binaryOrParameters as IUploadTweetVideoParameters).binary !== undefined;
   }
 
-  private isIUploadMessageVideoParameters(binaryOrParameters: number[] | IUploadMessageVideoParameters): binaryOrParameters is IUploadMessageVideoParameters {
+  private isIUploadMessageVideoParameters(binaryOrParameters: ArrayBuffer | IUploadMessageVideoParameters): binaryOrParameters is IUploadMessageVideoParameters {
     return (binaryOrParameters as IUploadMessageVideoParameters).binary !== undefined;
   }
 

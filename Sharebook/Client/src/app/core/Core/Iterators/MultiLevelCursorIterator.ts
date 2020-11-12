@@ -1,10 +1,10 @@
 import {ICursorPageResult} from "./Models/CursorPageResult";
 import {IPageProcessingResult} from "./Models/MultiLevelPageProcessingResult";
-import HashSet from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/HashSet";
 import {TwitterIteratorAlreadyCompletedException} from "../../Public/Exceptions/TwitterIteratorAlreadyCompletedException";
 import {IMultiLevelCursorIteratorPage} from "../../Public/Iterators/IMultiLevelCursorIteratorPage";
 import {MultiLevelCursorIteratorPage} from "./Models/MultiLevelCursorIteratorPage";
 import {IMultiLevelCursorIterator} from "../../Public/Iterators/IMultiLevelCursorIterator";
+import HashSet from "typescript-dotnet-commonjs/System/Collections/HashSet";
 
 // TODO: check C# code!!!!
 export class MultiLevelCursorIteratorBase<TParent, TItem, TCursor> implements IMultiLevelCursorIterator<TParent, TItem, TCursor> {
@@ -18,7 +18,7 @@ export class MultiLevelCursorIteratorBase<TParent, TItem, TCursor> implements IM
               getChildItemsPageFromParent: (TParent: TParent[]) => Promise<IPageProcessingResult<TParent, TItem>>) {
     this._iterateSubLevel = iterateSubLevel;
     this._getChildItemsPageFromParent = getChildItemsPageFromParent;
-    this._itemsLeftToProcess = new HashSet<TParent>();
+    this._itemsLeftToProcess = new HashSet<TParent>(undefined);
   }
 
   get completed(): boolean {
@@ -32,6 +32,7 @@ export class MultiLevelCursorIteratorBase<TParent, TItem, TCursor> implements IM
 
     if (this._lastParentPageResult == null || this._itemsLeftToProcess.count === 0) {
       this._lastParentPageResult = await this._iterateSubLevel(); // .ConfigureAwait(false);
+      // @ts-ignore
       this._itemsLeftToProcess = new HashSet<TParent>(this._lastParentPageResult.items);
     }
 

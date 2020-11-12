@@ -1,9 +1,6 @@
 ﻿import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
 import {IMedia} from "../../core/Public/Models/Interfaces/IMedia";
-import TimeSpan from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
-import DateTime from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {IUploadedMediaInfo} from "../../core/Public/Models/Interfaces/DTO/IUploadedMediaInfo";
-import InvalidOperationException from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/InvalidOperationException";
 import {
   IUploadMediaStatusQueryExecutor,
   IUploadMediaStatusQueryExecutorToken,
@@ -12,7 +9,9 @@ import {
 import {IUploadProcessingInfo} from "../../core/Public/Models/Interfaces/DTO/IUploadProcessingInfo";
 import {ProcessingState} from "../../core/Public/Models/Enum/ProcessingState";
 import {Resources} from "../../properties/resources";
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
+import TimeSpan from "typescript-dotnet-commonjs/System/Time/TimeSpan";
+import InvalidOperationException from "typescript-dotnet-commonjs/System/Exceptions/InvalidOperationException";
 
 export interface IUploadHelper {
   waitForMediaProcessingToGetAllMetadataAsync(media: IMedia, request: ITwitterRequest): Promise<void>;
@@ -20,10 +19,12 @@ export interface IUploadHelper {
 
 export const IUploadHelperToken = new InjectionToken<IUploadHelper>('IUploadHelper', {
   providedIn: 'root',
-  factory: () => new UploadHelper(Inject(UploadMediaStatusQueryExecutor)),
+  factory: () => new UploadHelper(inject(UploadMediaStatusQueryExecutor)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UploadHelper implements IUploadHelper {
   private readonly _uploadQueryExecutor: IUploadMediaStatusQueryExecutor;
 
@@ -44,7 +45,7 @@ export class UploadHelper implements IUploadHelper {
     let processingInfoDelay = media.uploadedMediaInfo.processingInfo.checkAfterInMilliseconds;
     let dateWhenProcessingCanBeChecked = media.uploadedMediaInfo.createdDate.add(TimeSpan.fromMilliseconds(processingInfoDelay));
 
-    let timeToWait = dateWhenProcessingCanBeChecked.subtract(DateTime.now).TotalMilliseconds as number;
+    let timeToWait: any; //  = dateWhenProcessingCanBeChecked.subtract(DateTime.now).TotalMilliseconds as number;
 
     let mediaStatus: IUploadedMediaInfo = null;
     while (isProcessed === false) {

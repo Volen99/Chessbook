@@ -1,20 +1,22 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {ITimelineClientParametersValidator} from "./TimelineClientParametersValidator";
 import {IUserQueryValidator, IUserQueryValidatorToken, UserQueryValidator} from "./UserQueryValidator";
 import {TimelineParameters} from "./parameters-types";
-import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
 import {IGetUserTimelineParameters} from "../../../Public/Parameters/TimelineClient/GetUserTimelineParameters";
+import ArgumentNullException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentNullException";
 
 export interface ITimelineClientRequiredParametersValidator extends ITimelineClientParametersValidator {
 }
 
 export const ITimelineClientRequiredParametersValidatorToken = new InjectionToken<ITimelineClientRequiredParametersValidator>('ITimelineClientRequiredParametersValidator', {
   providedIn: 'root',
-  factory: () => new TimelineClientRequiredParametersValidator(Inject(UserQueryValidator)),
+  factory: () => new TimelineClientRequiredParametersValidator(inject(UserQueryValidator)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TimelineClientRequiredParametersValidator implements ITimelineClientRequiredParametersValidator {
   private readonly _userQueryValidator: IUserQueryValidator;
 
@@ -24,11 +26,11 @@ export class TimelineClientRequiredParametersValidator implements ITimelineClien
 
   public validate(parameters: TimelineParameters): void {
     if (parameters == null) {
-      throw new ArgumentNullException(nameof(parameters));
+      throw new ArgumentNullException(`nameof(parameters)`);
     }
 
     if (this.isIGetUserTimelineParameters(parameters)) {
-      this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.user, `${nameof(parameters.user)}`);
+      this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.user, `${`nameof(parameters.user)`}`);
     }
   }
 

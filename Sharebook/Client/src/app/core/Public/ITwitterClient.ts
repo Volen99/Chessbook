@@ -1,7 +1,7 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterClientFactories} from "./Client/Tools/ITwitterClientFactories";
-import {ITweetinviSettings} from "./Settings/SharebookSettings";
+import {ISharebookSettings} from "./Settings/SharebookSettings";
 import {IRawExecutors} from "./Client/IRawExecutors";
 import {ITwitterRequest} from "./Models/Interfaces/ITwitterRequest";
 import {ITwitterExecutionContext} from "../Core/Client/TwitterExecutionContext";
@@ -24,6 +24,7 @@ import {IExternalClientEvents} from "../Core/Events/TweetinviGlobalEvents";
 import {IParametersValidator} from "../Core/Client/Validators/ParametersValidator";
 import {TwitterClient, TwitterClientParameters} from "../../sharebook/TwitterClient";
 import {IReadOnlyTwitterCredentials} from "../Core/Models/Authentication/ReadOnlyTwitterCredentials";
+import {IJsonClient} from "./Client/Clients/IJsonClient";
 
 export interface ITwitterClient {
   // Client to execute all actions related with the account associated with the clients' credentials
@@ -75,7 +76,7 @@ export interface ITwitterClient {
   raw: IRawExecutors;
 
   // Client's config
-  config: ITweetinviSettings;
+  config: ISharebookSettings;
 
   // Client's credentials
   credentials: IReadOnlyTwitterCredentials;
@@ -101,5 +102,5 @@ export interface ITwitterClient {
 
 export const ITwitterClientToken = new InjectionToken<ITwitterClient>('ITwitterClient', {
   providedIn: 'root',
-  factory: () => new TwitterClient(Inject(TwitterClientParameters)),
+  factory: () => new TwitterClient(inject(TwitterClientParameters)),
 });

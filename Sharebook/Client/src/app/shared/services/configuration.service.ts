@@ -6,7 +6,9 @@ import {StorageService} from './storage.service';
 import { environment } from '../../../environments/environment';
 import {Configuration} from "../../components/models/configuration.model";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ConfigurationService {
   // observable that is fired when settings are loaded from server
   private settingsLoadedSource = new Subject();

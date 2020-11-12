@@ -1,4 +1,4 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterConfiguration} from "../../Public/Models/Interfaces/DTO/ITwitterConfiguration";
 import {ITwitterResult} from "../Web/TwitterResult";
@@ -32,5 +32,5 @@ export interface IHelpController {
 
 export const IHelpControllerToken = new InjectionToken<IHelpController>('IHelpController', {
   providedIn: 'root',
-  factory: () => new HelpController(Inject(HelpQueryExecutor)),
+  factory: () => new HelpController(inject(HelpQueryExecutor)),
 });

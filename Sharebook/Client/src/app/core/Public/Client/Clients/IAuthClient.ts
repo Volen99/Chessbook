@@ -1,6 +1,5 @@
 import {Inject, InjectionToken} from "@angular/core";
 
-import Uri from "../../../../c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri";
 import {IAuthClientParametersValidator} from "../../../Core/Client/Validators/AuthClientParametersValidator";
 import {ICreateBearerTokenParameters} from "../../Parameters/Auth/CreateBearerTokenParameters";
 import {IAuthenticationRequest} from "../../Models/Authentication/IAuthenticationRequest";
@@ -12,6 +11,7 @@ import {IInvalidateBearerTokenParameters} from "../../Parameters/Auth/Invalidate
 import {IInvalidateAccessTokenParameters} from "../../Parameters/Auth/InvalidateAccessTokenParameters";
 import {AuthClient} from "../../../../sharebook/Client/Clients/AuthClient";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import Uri from "typescript-dotnet-commonjs/System/Uri/Uri";
 
 export interface IAuthClient {
   // Validate all the Account activity client parameters
@@ -76,7 +76,7 @@ export interface IAuthClient {
   /// </summary>
   /// <para> https://developer.twitter.com/en/docs/basics/authentication/api-reference/token </para>
   /// <returns>The requested user credentials</returns>
-  requestCredentialsFromCallbackUrlAsync(callbackUri: Uri, authenticationRequest: IAuthenticationRequest): Promise<ITwitterCredentials>
+  requestCredentialsFromCallbackUrlAsync(callbackUri: Uri, authenticationRequest: IAuthenticationRequest): Promise<ITwitterCredentials>;
 
   invalidateBearerTokenAsync(): Promise<InvalidateTokenResponse>;
 

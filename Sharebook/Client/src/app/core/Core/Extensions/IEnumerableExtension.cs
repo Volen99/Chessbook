@@ -88,7 +88,7 @@ namespace Tweetinvi.Core.Extensions
         {
             if (source == null)
             {
-                throw new ArgumentNullException(nameof(source));
+                throw new ArgumentNullException(`nameof(source)`);
             }
 
             TSource result = null;
@@ -119,7 +119,7 @@ namespace Tweetinvi.Core.Extensions
         {
             if (source == null)
             {
-                throw new ArgumentNullException(nameof(source));
+                throw new ArgumentNullException(`nameof(source)`);
             }
 
             if (source is IList<TSource> list)

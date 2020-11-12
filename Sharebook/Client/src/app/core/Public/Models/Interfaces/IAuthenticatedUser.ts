@@ -1,4 +1,4 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {IReadOnlyTwitterCredentials} from "../../../Core/Models/Authentication/ReadOnlyTwitterCredentials";
 import {IUserIdentifier} from "./IUserIdentifier";
@@ -18,6 +18,7 @@ import {TwitterClient} from "../../../../sharebook/TwitterClient";
 import {UserDTO} from "../../../Core/DTO/UserDTO";
 
 // User associated with a Token, this "privileged" user has access private information like messages, timeline...
+// @ts-ignore // coz of the override in AuthenticatedUser.ts line 107
 export interface IAuthenticatedUser extends IUser {
   // Authenticated user email. This value will be null if the application has not been verified and authorized by Twitter.
   email: string;
@@ -173,5 +174,5 @@ export interface IAuthenticatedUser extends IUser {
 
 export const IAuthenticatedUserToken = new InjectionToken<IAuthenticatedUser>('IAuthenticatedUser', {
   providedIn: 'root',
-  factory: () => new AuthenticatedUser(Inject(UserDTO), Inject(TwitterClient)),
+  factory: () => new AuthenticatedUser(inject(UserDTO), inject(TwitterClient)),
 });

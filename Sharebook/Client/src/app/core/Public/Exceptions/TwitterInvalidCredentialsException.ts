@@ -1,5 +1,5 @@
-﻿import Exception from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exception";
-import {IReadOnlyConsumerCredentials} from "../../Core/Models/Authentication/ReadOnlyConsumerCredentials";
+﻿import {IReadOnlyConsumerCredentials} from "../../Core/Models/Authentication/ReadOnlyConsumerCredentials";
+import Exception from "typescript-dotnet-commonjs/System/Exception";
 
 // Exception raised when attempting to perform operations without the proper credentials
 export class TwitterInvalidCredentialsException extends Exception {

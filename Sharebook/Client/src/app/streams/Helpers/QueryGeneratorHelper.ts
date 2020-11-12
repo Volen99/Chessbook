@@ -1,6 +1,8 @@
-﻿import StringBuilder from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder';
-import {ILocation} from "../../core/Public/Models/Interfaces/ILocation";
+﻿import {ILocation} from "../../core/Public/Models/Interfaces/ILocation";
 import {SharebookConsts} from "../../core/Public/sharebook-consts";
+import {StringFormatter} from "../../core/Core/Extensions/StringFormater";
+import {format} from "typescript-dotnet-commonjs/System/Text/Utility";
+import StringBuilder from "typescript-dotnet-commonjs/System/Text/StringBuilder";
 
 export class QueryGeneratorHelper {
   public static GenerateFilterTrackRequest(tracks: Array<string>): string {
@@ -43,10 +45,10 @@ export class QueryGeneratorHelper {
     let minLatitude = Math.min(location.coordinate1.latitude, location.coordinate2.latitude);
 
     return `
-    ${minLongitude.toString(CultureInfo.InvariantCulture)},
-    ${minLatitude.toString(CultureInfo.InvariantCulture)},
-    ${maxLongitude.toString(CultureInfo.InvariantCulture)},
-    ${maxLatitude.toString(CultureInfo.InvariantCulture)}
+    ${minLongitude.toString(/*CultureInfo.InvariantCulture*/)},
+    ${minLatitude.toString(/*CultureInfo.InvariantCulture*/)},
+    ${maxLongitude.toString(/*CultureInfo.InvariantCulture*/)},
+    ${maxLatitude.toString(/*CultureInfo.InvariantCulture*/)}
     ${isLastLocation ? "" : ","}`;
   }
 
@@ -63,6 +65,6 @@ export class QueryGeneratorHelper {
 
     queryBuilder.append(QueryGeneratorHelper.GenerateLocationParameters(locations[locations.length - 1], true));
 
-    return `locations=${queryBuilder.toString().urlEncode()}`;     // string.Format("locations={0}", StringFormater.UrlEncode(queryBuilder.toString()));
+    return format("locations={0}", StringFormatter.urlEncode(queryBuilder.toString()));
   }
 }

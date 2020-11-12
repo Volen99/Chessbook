@@ -1,13 +1,15 @@
 ﻿import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
-import {Language} from "../../Models/Enum/Language";
+import {TimeZoneFromTwitter} from "../../Models/Enum/TimeZoneFromTwitter";
+import {Language} from "../../../Core/Attributes/Language";
+import {TimeZoneFromTwitterAttribute} from "../../../Core/Attributes/TimeZoneFromTwitterAttribute";
 
 // For more description visit: https://dev.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/post-account-settings
 export interface IUpdateAccountSettingsParameters extends ICustomRequestParameters {
   /// <summary>
   /// The languages which Twitter should use for this user.
-  /// <para>PLEASE MAKE SURE this is a Language from the DisplayLanguages list</para>
-  /// <para>You can use a Language.IsADisplayLanguage() extension function to ensure it is supported</para>
-  /// <remarks>Tweetinvi will not prevent this parameter to set to any Language for future support</remarks>
+  /// <para>PLEASE MAKE SURE this is a Languages.ts from the DisplayLanguages list</para>
+  /// <para>You can use a Languages.ts.IsADisplayLanguage() extension function to ensure it is supported</para>
+  /// <remarks>Tweetinvi will not prevent this parameter to set to any Languages.ts for future support</remarks>
   /// </summary>
   displayLanguage?: Language;
 
@@ -37,7 +39,7 @@ export interface IUpdateAccountSettingsParameters extends ICustomRequestParamete
 
   // The timezone dates and times should be displayed in for the user.
   // The timezone must be one of the Rails TimeZone names.
-  SetTimeZone(timeZoneFromTwitter: TimeZoneFromTwitter): void;
+  setTimeZone(timeZoneFromTwitter: TimeZoneFromTwitter): void;
 }
 
 
@@ -49,8 +51,8 @@ export class UpdateAccountSettingsParameters extends CustomRequestParameters imp
   public startSleepHour?: number;
   public endSleepHour?: number;
 
-  public SetTimeZone(timeZoneFromTwitter: TimeZoneFromTwitter): void {
-    let tzinfo = timeZoneeFromTwitter.GetTZinfo();
+  public setTimeZone(timeZoneFromTwitter: TimeZoneFromTwitterAttribute): void {
+    let tzinfo = timeZoneFromTwitter.TZinfo; // .GetTZinfo();
     if (tzinfo != null) {
       this.timeZone = tzinfo;
     }

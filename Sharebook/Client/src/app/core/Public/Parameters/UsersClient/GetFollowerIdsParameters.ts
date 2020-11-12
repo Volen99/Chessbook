@@ -2,12 +2,12 @@
 import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
 import {UserIdentifier} from "../../Models/UserIdentifier";
 import {SharebookLimits} from "../../Settings/SharebookLimits";
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 // For more information visit : https://dev.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-followers-ids
 export interface IGetFollowerIdsParameters extends ICursorQueryParameters {
   // A unique identifier of a user
-  User: IUserIdentifier;
+  user: IUserIdentifier;
 }
 
 export class GetFollowerIdsParameters extends CursorQueryParameters implements IGetFollowerIdsParameters {
@@ -15,21 +15,21 @@ export class GetFollowerIdsParameters extends CursorQueryParameters implements I
     if (GetFollowerIdsParameters.isIGetFollowerIdsParameters(usernameOrUserIdOrUserOrParameters)) {
       super(usernameOrUserIdOrUserOrParameters);
 
-      this.User = usernameOrUserIdOrUserOrParameters.User;
+      this.user = usernameOrUserIdOrUserOrParameters.user;
     } else {
       super();
 
       super.pageSize = SharebookLimits.DEFAULTS.USERS_GET_FOLLOWER_IDS_PAGE_MAX_SIZE;
 
       if (Type.isString(usernameOrUserIdOrUserOrParameters) || Type.isNumber(usernameOrUserIdOrUserOrParameters)) {
-        this.User = new UserIdentifier(usernameOrUserIdOrUserOrParameters);
+        this.user = new UserIdentifier(usernameOrUserIdOrUserOrParameters);
       } else if (GetFollowerIdsParameters.isIUserIdentifier(usernameOrUserIdOrUserOrParameters)) {
-        this.User = usernameOrUserIdOrUserOrParameters;
+        this.user = usernameOrUserIdOrUserOrParameters;
       }
     }
   }
 
-  public User: IUserIdentifier;
+  public user: IUserIdentifier;
 
   private static isIUserIdentifier(usernameOrUserIdOrUserOrParameters: | string | number | IUserIdentifier | IGetFollowerIdsParameters):
     usernameOrUserIdOrUserOrParameters is IUserIdentifier {
@@ -38,7 +38,7 @@ export class GetFollowerIdsParameters extends CursorQueryParameters implements I
 
   private static isIGetFollowerIdsParameters(usernameOrUserIdOrUserOrParameters: | string | number | IUserIdentifier | IGetFollowerIdsParameters):
     usernameOrUserIdOrUserOrParameters is IGetFollowerIdsParameters {
-    return (usernameOrUserIdOrUserOrParameters as IGetFollowerIdsParameters).User !== undefined;
+    return (usernameOrUserIdOrUserOrParameters as IGetFollowerIdsParameters).user !== undefined;
   }
 }
 

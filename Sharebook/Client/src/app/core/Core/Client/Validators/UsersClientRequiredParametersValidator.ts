@@ -1,9 +1,8 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {IUsersClientParametersValidator} from "./UsersClientParametersValidator";
 import {IUserQueryValidator, IUserQueryValidatorToken, UserQueryValidator} from "./UserQueryValidator";
 import {IGetUserParameters} from "../../../Public/Parameters/UsersClient/GetUserParameters";
-import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
 import {IGetUsersParameters} from "../../../Public/Parameters/UsersClient/GetUsersParameters";
 import {IGetFollowerIdsParameters} from "../../../Public/Parameters/UsersClient/GetFollowerIdsParameters";
 import {IGetFollowersParameters} from "../../../Public/Parameters/UsersClient/GetFollowersParameters";
@@ -33,19 +32,22 @@ import {IGetMutedUserIdsParameters} from "../../../Public/Parameters/AccountClie
 import {IGetMutedUsersParameters} from "../../../Public/Parameters/AccountClient/GetMutedUsersParameters";
 import {IUnmuteUserParameters} from "../../../Public/Parameters/AccountClient/UnMuteUserParameters";
 import {IMuteUserParameters} from "../../../Public/Parameters/AccountClient/MuteUserParameters";
-import Uri from "../../../../c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri";
 import {UriKind} from "../../../Public/Models/Enum/uri-kind";
-import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
+import {UriExtensions} from "../../Extensions/UriExtensions";
+import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
+import ArgumentNullException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentNullException";
 
 export interface IUsersClientRequiredParametersValidator extends IUsersClientParametersValidator {
 }
 
 export const IUsersClientRequiredParametersValidatorToken = new InjectionToken<IUsersClientRequiredParametersValidator>('IUsersClientRequiredParametersValidator', {
   providedIn: 'root',
-  factory: () => new UsersClientRequiredParametersValidator(Inject(UserQueryValidator)),
+  factory: () => new UsersClientRequiredParametersValidator(inject(UserQueryValidator)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UsersClientRequiredParametersValidator implements IUsersClientRequiredParametersValidator {
   private readonly _userQueryValidator: IUserQueryValidator;
 
@@ -82,14 +84,14 @@ export class UsersClientRequiredParametersValidator implements IUsersClientRequi
     | IUnmuteUserParameters): void {
 
     if (parameters == null) {
-      throw new ArgumentNullException(nameof(parameters));
+      throw new ArgumentNullException(`nameof(parameters)`);
     }
 
     if (UsersClientRequiredParametersValidator.isIGetUserParameters(parameters)) {
-      this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.User);
+      this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.user);
     } else if (UsersClientRequiredParametersValidator.isIGetUsersParameters(parameters)) {
       if (parameters.Users == null) {
-        throw new ArgumentNullException(`${nameof(parameters.Users)}`);
+        throw new ArgumentNullException(`${`nameof(parameters.Users)`}`);
       } else if (UsersClientRequiredParametersValidator.isIGetFollowerIdsParameters(parameters)
         || UsersClientRequiredParametersValidator.isIGetFriendIdsParameters(parameters)
         || UsersClientRequiredParametersValidator.isIBlockUserParameters(parameters)
@@ -100,21 +102,22 @@ export class UsersClientRequiredParametersValidator implements IUsersClientRequi
         || UsersClientRequiredParametersValidator.isIUpdateRelationshipParameters(parameters)
         || UsersClientRequiredParametersValidator.isIMuteUserParameters(parameters)
         || UsersClientRequiredParametersValidator.isIUnmuteUserParameters(parameters)) {
+        // @ts-ignore
         this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.user, `${nameof(parameters.user)}`);
       } else if (UsersClientRequiredParametersValidator.isIGetFollowersParameters(parameters)) {
         this.validate(parameters as IGetFollowerIdsParameters);           // TODO: RECURSION!!!
       } else if (UsersClientRequiredParametersValidator.isIGetFriendsParameters(parameters)) {
         this.validate(parameters as IGetFriendIdsParameters);             // TODO: RECURSION!!!
       } else if (UsersClientRequiredParametersValidator.isIGetRelationshipBetweenParameters(parameters)) {
-        this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.SourceUser, `${nameof(parameters.SourceUser)}`);
-        this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.TargetUser, `${nameof(parameters.TargetUser)}`);
+        this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.SourceUser, `${`nameof(parameters.SourceUser)`}`);
+        this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.TargetUser, `${`nameof(parameters.TargetUser)`}`);
       } else if (UsersClientRequiredParametersValidator.isIGetProfileImageParameters(parameters)) {
         if (parameters.imageUrl == null) {
-          throw new ArgumentNullException(`${nameof(parameters.imageUrl)}`);
+          throw new ArgumentNullException(`${`nameof(parameters.imageUrl)`}`);
         }
 
-        if (!Uri.isWellFormedUriString(parameters.imageUrl, UriKind.Absolute)) {
-          throw new ArgumentException("ImageUrl has to be valid absolute url", `${nameof(parameters.imageUrl)}`);
+        if (!UriExtensions.isWellFormedUriString(parameters.imageUrl, UriKind.Absolute)) {
+          throw new ArgumentException("ImageUrl has to be valid absolute url", `${`nameof(parameters.imageUrl)`}`);
         }
       } else if (UsersClientRequiredParametersValidator.isIGetAuthenticatedUserParameters(parameters)
         || UsersClientRequiredParametersValidator.isIGetBlockedUserIdsParameters(parameters)
@@ -127,22 +130,22 @@ export class UsersClientRequiredParametersValidator implements IUsersClientRequi
         || UsersClientRequiredParametersValidator.isIGetMutedUserIdsParameters(parameters)
         || UsersClientRequiredParametersValidator.isIGetMutedUsersParameters(parameters)) {
         if (parameters == null) {
-          throw new ArgumentNullException(nameof(parameters));
+          throw new ArgumentNullException(`nameof(parameters)`);
         }
       } else if (UsersClientRequiredParametersValidator.isIGetRelationshipsWithParameters(parameters)) {
         if (parameters.Users == null) {
-          throw new ArgumentNullException(`${nameof(parameters.Users)}`);
+          throw new ArgumentNullException(`${`nameof(parameters.Users)`}`);
         }
 
         if (parameters.Users.every(user => user.id <= 0 && !user.idStr && !user.screenName)) {
-          throw new ArgumentException("At least 1 valid user identifier is required.", `${nameof(parameters.Users)}`);
+          throw new ArgumentException("At least 1 valid user identifier is required.", `${`nameof(parameters.Users)`}`);
         }
       }
     }
   }
 
   private static isIGetUserParameters(parameters: IGetUserParameters | IGetUsersParameters | IGetFollowerIdsParameters | IGetFollowersParameters | IGetFriendIdsParameters | IGetFriendsParameters | IGetRelationshipBetweenParameters | IGetProfileImageParameters | IGetAuthenticatedUserParameters | IBlockUserParameters | IUnblockUserParameters | IReportUserForSpamParameters | IGetBlockedUserIdsParameters | IGetBlockedUsersParameters | IFollowUserParameters | IUnfollowUserParameters | IGetUserIdsRequestingFriendshipParameters | IGetUsersRequestingFriendshipParameters | IGetUserIdsYouRequestedToFollowParameters | IGetUsersYouRequestedToFollowParameters | IUpdateRelationshipParameters | IGetRelationshipsWithParameters | IGetUserIdsWhoseRetweetsAreMutedParameters | IGetMutedUserIdsParameters | IGetMutedUsersParameters | IMuteUserParameters | IUnmuteUserParameters): parameters is IGetUserParameters {
-    return (parameters as IGetUserParameters).User !== undefined;
+    return (parameters as IGetUserParameters).user !== undefined;
   }
 
   private static isIGetUsersParameters(parameters: IGetUserParameters | IGetUsersParameters | IGetFollowerIdsParameters | IGetFollowersParameters | IGetFriendIdsParameters | IGetFriendsParameters | IGetRelationshipBetweenParameters | IGetProfileImageParameters | IGetAuthenticatedUserParameters | IBlockUserParameters | IUnblockUserParameters | IReportUserForSpamParameters | IGetBlockedUserIdsParameters | IGetBlockedUsersParameters | IFollowUserParameters | IUnfollowUserParameters | IGetUserIdsRequestingFriendshipParameters | IGetUsersRequestingFriendshipParameters | IGetUserIdsYouRequestedToFollowParameters | IGetUsersYouRequestedToFollowParameters | IUpdateRelationshipParameters | IGetRelationshipsWithParameters | IGetUserIdsWhoseRetweetsAreMutedParameters | IGetMutedUserIdsParameters | IGetMutedUsersParameters | IMuteUserParameters | IUnmuteUserParameters): parameters is IGetUsersParameters {
@@ -150,19 +153,19 @@ export class UsersClientRequiredParametersValidator implements IUsersClientRequi
   }
 
   private static isIGetFollowerIdsParameters(parameters: IGetUserParameters | IGetUsersParameters | IGetFollowerIdsParameters | IGetFollowersParameters | IGetFriendIdsParameters | IGetFriendsParameters | IGetRelationshipBetweenParameters | IGetProfileImageParameters | IGetAuthenticatedUserParameters | IBlockUserParameters | IUnblockUserParameters | IReportUserForSpamParameters | IGetBlockedUserIdsParameters | IGetBlockedUsersParameters | IFollowUserParameters | IUnfollowUserParameters | IGetUserIdsRequestingFriendshipParameters | IGetUsersRequestingFriendshipParameters | IGetUserIdsYouRequestedToFollowParameters | IGetUsersYouRequestedToFollowParameters | IUpdateRelationshipParameters | IGetRelationshipsWithParameters | IGetUserIdsWhoseRetweetsAreMutedParameters | IGetMutedUserIdsParameters | IGetMutedUsersParameters | IMuteUserParameters | IUnmuteUserParameters): parameters is IGetFollowerIdsParameters {
-    return (parameters as IGetFollowerIdsParameters).User !== undefined;
+    return (parameters as IGetFollowerIdsParameters).user !== undefined;
   }
 
   private static isIGetFollowersParameters(parameters: IGetUserParameters | IGetUsersParameters | IGetFollowerIdsParameters | IGetFollowersParameters | IGetFriendIdsParameters | IGetFriendsParameters | IGetRelationshipBetweenParameters | IGetProfileImageParameters | IGetAuthenticatedUserParameters | IBlockUserParameters | IUnblockUserParameters | IReportUserForSpamParameters | IGetBlockedUserIdsParameters | IGetBlockedUsersParameters | IFollowUserParameters | IUnfollowUserParameters | IGetUserIdsRequestingFriendshipParameters | IGetUsersRequestingFriendshipParameters | IGetUserIdsYouRequestedToFollowParameters | IGetUsersYouRequestedToFollowParameters | IUpdateRelationshipParameters | IGetRelationshipsWithParameters | IGetUserIdsWhoseRetweetsAreMutedParameters | IGetMutedUserIdsParameters | IGetMutedUsersParameters | IMuteUserParameters | IUnmuteUserParameters): parameters is IGetFollowersParameters {
-    return (parameters as IGetFollowersParameters).User !== undefined;
+    return (parameters as IGetFollowersParameters).user !== undefined;
   }
 
   private static isIGetFriendIdsParameters(parameters: IGetUserParameters | IGetUsersParameters | IGetFollowerIdsParameters | IGetFollowersParameters | IGetFriendIdsParameters | IGetFriendsParameters | IGetRelationshipBetweenParameters | IGetProfileImageParameters | IGetAuthenticatedUserParameters | IBlockUserParameters | IUnblockUserParameters | IReportUserForSpamParameters | IGetBlockedUserIdsParameters | IGetBlockedUsersParameters | IFollowUserParameters | IUnfollowUserParameters | IGetUserIdsRequestingFriendshipParameters | IGetUsersRequestingFriendshipParameters | IGetUserIdsYouRequestedToFollowParameters | IGetUsersYouRequestedToFollowParameters | IUpdateRelationshipParameters | IGetRelationshipsWithParameters | IGetUserIdsWhoseRetweetsAreMutedParameters | IGetMutedUserIdsParameters | IGetMutedUsersParameters | IMuteUserParameters | IUnmuteUserParameters): parameters is IGetFriendIdsParameters {
-    return (parameters as IGetFriendIdsParameters).User !== undefined;
+    return (parameters as IGetFriendIdsParameters).user !== undefined;
   }
 
   private static isIGetFriendsParameters(parameters: IGetUserParameters | IGetUsersParameters | IGetFollowerIdsParameters | IGetFollowersParameters | IGetFriendIdsParameters | IGetFriendsParameters | IGetRelationshipBetweenParameters | IGetProfileImageParameters | IGetAuthenticatedUserParameters | IBlockUserParameters | IUnblockUserParameters | IReportUserForSpamParameters | IGetBlockedUserIdsParameters | IGetBlockedUsersParameters | IFollowUserParameters | IUnfollowUserParameters | IGetUserIdsRequestingFriendshipParameters | IGetUsersRequestingFriendshipParameters | IGetUserIdsYouRequestedToFollowParameters | IGetUsersYouRequestedToFollowParameters | IUpdateRelationshipParameters | IGetRelationshipsWithParameters | IGetUserIdsWhoseRetweetsAreMutedParameters | IGetMutedUserIdsParameters | IGetMutedUsersParameters | IMuteUserParameters | IUnmuteUserParameters): parameters is IGetFriendsParameters {
-    return (parameters as IGetFriendsParameters).User !== undefined;
+    return (parameters as IGetFriendsParameters).user !== undefined;
   }
 
   private static isIGetRelationshipBetweenParameters(parameters: IGetUserParameters | IGetUsersParameters | IGetFollowerIdsParameters | IGetFollowersParameters | IGetFriendIdsParameters | IGetFriendsParameters | IGetRelationshipBetweenParameters | IGetProfileImageParameters | IGetAuthenticatedUserParameters | IBlockUserParameters | IUnblockUserParameters | IReportUserForSpamParameters | IGetBlockedUserIdsParameters | IGetBlockedUsersParameters | IFollowUserParameters | IUnfollowUserParameters | IGetUserIdsRequestingFriendshipParameters | IGetUsersRequestingFriendshipParameters | IGetUserIdsYouRequestedToFollowParameters | IGetUsersYouRequestedToFollowParameters | IUpdateRelationshipParameters | IGetRelationshipsWithParameters | IGetUserIdsWhoseRetweetsAreMutedParameters | IGetMutedUserIdsParameters | IGetMutedUsersParameters | IMuteUserParameters | IUnmuteUserParameters): parameters is IGetRelationshipBetweenParameters {

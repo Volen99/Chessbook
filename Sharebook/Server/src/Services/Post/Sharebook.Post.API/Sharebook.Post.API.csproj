@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Sharebook.Common\WorldFeed.Common.csproj" />
-    <ProjectReference Include="..\..\..\Sharebook\WorldFeed.csproj" />
-    <ProjectReference Include="..\Sharebook.Post.Application\WorldFeed.Post.Application.csproj" />
+    <ProjectReference Include="..\..\..\Sharebook.Common\Sharebook.Common.csproj" />
+    <ProjectReference Include="..\..\..\Sharebook\Sharebook.csproj" />
+    <ProjectReference Include="..\Sharebook.Post.Application\Sharebook.Post.Application.csproj" />
   </ItemGroup>
   
   <ItemGroup>

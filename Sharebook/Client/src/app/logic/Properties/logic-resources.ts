@@ -1,6 +1,6 @@
 ﻿import {ResourcesHelper} from "../../core/Core/Helpers/ResourcesHelper";
 
-export static class LogicResources {
+export abstract class LogicResources {
   //   Looks up a localized string similar to Not Modified - There was no new data to return..
   public static ExceptionDescription_44: string = "The attachment_url parameter is invalid.";
 
@@ -55,3 +55,4 @@ export static class LogicResources {
   public static GetResourceByName(resourceName: string): string {
     return ResourcesHelper.getResourceByType(typeof (LogicResources), resourceName);
   }
+}

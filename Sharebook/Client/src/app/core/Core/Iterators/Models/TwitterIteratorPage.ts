@@ -16,6 +16,10 @@ export class TwitterIteratorPage<TItemCollection extends Iterable<TItem>, TItem,
   public nextCursor: TCursor;
   public isLastPage: boolean;
 
+  [Symbol.iterator](): Iterator<TItem> {
+    return undefined;
+  }
+
   // getEnumerator(): IEnumerator<TItem> {
   //   return (this._items as (Array<TItem>)).getEnumerator();
   // }

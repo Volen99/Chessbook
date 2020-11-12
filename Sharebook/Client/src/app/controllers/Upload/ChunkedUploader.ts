@@ -1,24 +1,30 @@
-﻿import {IChunkedUploader} from "../../core/Core/Upload/IChunkedUploader";
-import {IMedia} from '../../core/Public/Models/Interfaces/IMedia';
-import {IUploadQueryGenerator} from '../../core/Core/QueryGenerators/IUploadQueryGenerator';
+﻿import {Inject, Injectable} from "@angular/core";
+
+import {IChunkedUploader} from "../../core/Core/Upload/IChunkedUploader";
+import {IMedia, IMediaToken} from '../../core/Public/Models/Interfaces/IMedia';
+import {IUploadQueryGenerator, IUploadQueryGeneratorToken} from '../../core/Core/QueryGenerators/IUploadQueryGenerator';
 import {ChunkUploadResult, IChunkUploadResult} from "../../core/Core/Upload/ChunkUploaderResult";
-import Dictionary from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
 import {IChunkUploadInitParameters} from "../../core/Core/Upload/ChunkUploadInitParameters";
 import {ITwitterRequest} from '../../core/Public/Models/Interfaces/ITwitterRequest';
 import {HttpMethod} from "../../core/Public/Models/Enum/HttpMethod";
 import {IUploadInitModel} from "../../core/Core/Upload/UploadInitModel";
-import InvalidOperationException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/InvalidOperationException';
 import {IChunkUploadAppendParameters} from "../../core/Core/Upload/ChunkUploadAppendParameters";
 import {MultipartTwitterQuery} from "../../core/Public/MultipartTwitterQuery";
 import {ICustomRequestParameters} from "../../core/Public/Parameters/CustomRequestParameters";
 import {IUploadedMediaInfo} from "../../core/Public/Models/Interfaces/DTO/IUploadedMediaInfo";
-import TimeSpan from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
 import {UploadProgressState} from "../../core/Public/Parameters/Enum/UploadProgressState";
-import {ITwitterAccessor} from "../../core/Core/Web/ITwitterAccessor";
+import {ITwitterAccessor, ITwitterAccessorToken} from "../../core/Core/Web/ITwitterAccessor";
 import {MediaUploadProgressChangedEventArgs} from "../../core/Public/Events/MediaUploadProgressChangedEventArgs";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {UploadedMediaInfo} from "../../core/Core/DTO/UploadedMediaInfo";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
+import InvalidOperationException from "typescript-dotnet-commonjs/System/Exceptions/InvalidOperationException";
+import TimeSpan from "typescript-dotnet-commonjs/System/Time/TimeSpan";
+import {SharebookConsts} from "../../core/Public/sharebook-consts";
 
+@Injectable({
+  providedIn: 'root',
+})
 export class ChunkedUploader implements IChunkedUploader {
   private readonly _media: IMedia;
   private readonly _twitterAccessor: ITwitterAccessor;
@@ -27,7 +33,9 @@ export class ChunkedUploader implements IChunkedUploader {
   private _expectedBinaryLength?: number;
   private readonly _result: ChunkUploadResult;
 
-  constructor(twitterAccessor: ITwitterAccessor, uploadQueryGenerator: IUploadQueryGenerator, media: IMedia) {
+  constructor(@Inject(ITwitterAccessorToken) twitterAccessor: ITwitterAccessor,
+              @Inject(IUploadQueryGeneratorToken) uploadQueryGenerator: IUploadQueryGenerator,
+              @Inject(IMediaToken) media: IMedia) {
     this._twitterAccessor = twitterAccessor;
     this._uploadQueryGenerator = uploadQueryGenerator;
     this._media = media;
@@ -50,15 +58,17 @@ export class ChunkedUploader implements IChunkedUploader {
   public nextSegmentIndex: number;
 
   public async initAsync(initParameters: IChunkUploadInitParameters, request: ITwitterRequest): Promise<boolean> {
+    debugger
     let initQuery = this._uploadQueryGenerator.getChunkedUploadInitQuery(initParameters);
 
     request.query.url = initQuery;
     request.query.httpMethod = HttpMethod.POST;
 
-    let twitterResult = await this._twitterAccessor.executeRequestAsync<IUploadInitModel>(request); // .ConfigureAwait(false);
+    let twitterResult = await this._twitterAccessor.executeRequestGenericAsync<IUploadInitModel>(request); // .ConfigureAwait(false);
     this._result.init = twitterResult;
 
     let initModel: IUploadInitModel = twitterResult?.model;
+
     if (initModel != null) {
       this._expectedBinaryLength = initParameters.totalBinaryLength;
       this._media.id = initModel.mediaId;
@@ -68,6 +78,7 @@ export class ChunkedUploader implements IChunkedUploader {
   }
 
   public async appendAsync(parameters: IChunkUploadAppendParameters, request: ITwitterRequest): Promise<boolean> {
+    this.mediaId = 1;   // TODO: Delete!!
     if (this.mediaId == null) {
       throw new InvalidOperationException(`You cannot append content to a non initialized chunked upload.
                  You need to invoke the initialize method OR set the MediaId property of an existing ChunkedUpload.`);
@@ -87,10 +98,10 @@ export class ChunkedUploader implements IChunkedUploader {
     multipartQuery.url = appendQuery;
     multipartQuery.httpMethod = HttpMethod.POST;
     multipartQuery.binaries = [parameters.binary];              // new[] { parameters.Binary };
-    multipartQuery.timeout = parameters.timeout ?? TimeSpan.fromMilliseconds(-1); // Timeout.Infinite
+    multipartQuery.timeout = parameters.timeout ?? TimeSpan.fromMilliseconds(SharebookConsts.INFINITE); // Timeout.Infinite
     multipartQuery.contentId = parameters.mediaType;
     multipartQuery.uploadProgressChanged = args => {
-      let progressChangedEventArgs = new MediaUploadProgressChangedEventArgs(UploadProgressState.PROGRESS_CHANGED, args.NumberOfBytesUploaded, args.TotalOfBytesToUpload);
+      let progressChangedEventArgs = new MediaUploadProgressChangedEventArgs(UploadProgressState.PROGRESS_CHANGED, args.numberOfBytesUploaded, args.totalOfBytesToUpload);
       parameters.uploadProgressChanged(progressChangedEventArgs);
     };
 
@@ -118,7 +129,7 @@ export class ChunkedUploader implements IChunkedUploader {
     request.query.url = finalizeQuery;
     request.query.httpMethod = HttpMethod.POST;
 
-    let finalizeTwitterResult = await this._twitterAccessor.executeRequestAsync<UploadedMediaInfo>(request); // .ConfigureAwait(false);
+    let finalizeTwitterResult = await this._twitterAccessor.executeRequestGenericAsync<UploadedMediaInfo>(request); // .ConfigureAwait(false);
     let uploadedMediaInfos = finalizeTwitterResult.model;
 
     this.updateMedia(uploadedMediaInfos);
@@ -137,14 +148,10 @@ export class ChunkedUploader implements IChunkedUploader {
     this._media.uploadedMediaInfo = uploadedMediaInfos;
 
     if (this._expectedBinaryLength != null) {
-      let binaryLengthCurrent;
-      for (let i = 0; i < this.uploadedSegments.count; i++) {
-        binaryLengthCurrent += this.uploadedSegments.getValue(i).length;   // TODO: might bug!!
-      }
       // If all the data has not been sent then we do not construct the data
-      if (binaryLengthCurrent === this._expectedBinaryLength) {
-        let allSegments = this.uploadedSegments.toArray().sort((a, b) => a.key - b.key); // TODO: bug debug it
-        this._media.data = allSegments.reduce((a, b) => [...a, ...b.value], []); // .ToArray();
+      if (this.uploadedSegments.toArray().reduce((acc, cur) => acc + cur.value.length, 0) === this._expectedBinaryLength) {
+        let allSegments = this.uploadedSegments.toArray().sort((a, b) => b.key - a.key);
+        this._media.data = allSegments.reduce((acc, cur) => [...acc, ...cur.value], []);
       }
     }
   }

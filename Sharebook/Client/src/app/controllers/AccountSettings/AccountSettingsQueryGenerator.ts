@@ -1,14 +1,15 @@
 import {Injectable, InjectionToken} from "@angular/core";
 
 import {Resources} from "../../properties/resources";
-import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {IGetAccountSettingsParameters} from "../../core/Public/Parameters/AccountSettingsClient/GetAccountSettingsParameters";
 import {IUpdateAccountSettingsParameters} from "../../core/Public/Parameters/AccountSettingsClient/UpdateAccountSettingsParameters";
 import {IUpdateProfileParameters} from "../../core/Public/Parameters/AccountSettingsClient/UpdateProfileParameters";
 import {IUpdateProfileImageParameters} from "../../core/Public/Parameters/AccountSettingsClient/UpdateProfileImageParameters";
 import {IRemoveProfileBannerParameters} from "../../core/Public/Parameters/AccountSettingsClient/RemoveProfileBannerParameters";
 import {IUpdateProfileBannerParameters} from "../../core/Public/Parameters/AccountSettingsClient/UpdateProfileBannerParameters";
-import {Language} from "../../core/Public/Models/Enum/Language";
+import {Languages} from "../../core/Public/Models/Enum/Languages";
+import StringBuilder from "typescript-dotnet-commonjs/System/Text/StringBuilder";
+import {StringBuilderExtensions} from "../../core/Core/Extensions/stringBuilder-extensions";
 
 export interface IAccountSettingsQueryGenerator {
   getAccountSettingsQuery(parameters: IGetAccountSettingsParameters): string;
@@ -29,11 +30,13 @@ export const IAccountSettingsQueryGeneratorToken = new InjectionToken<IAccountSe
   factory: () => new AccountSettingsQueryGenerator(),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AccountSettingsQueryGenerator implements IAccountSettingsQueryGenerator {
   public getAccountSettingsQuery(parameters: IGetAccountSettingsParameters): string {
     let query = new StringBuilder(Resources.Account_GetSettings);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -41,16 +44,16 @@ export class AccountSettingsQueryGenerator implements IAccountSettingsQueryGener
   public getUpdateAccountSettingsQuery(parameters: IUpdateAccountSettingsParameters): string {
     let baseQuery = new StringBuilder(Resources.Account_UpdateSettings);
 
-    let langParameterValue = parameters.displayLanguage === Language.Undefined ? null : parameters.displayLanguage?.getLanguageCode();
+    let langParameterValue = parameters.displayLanguage === Languages.Undefined ? null : parameters.displayLanguage?.getLanguageCode();
 
-    baseQuery.addParameterToQuery("lang", langParameterValue);
-    baseQuery.addParameterToQuery("time_zone", parameters.timeZone);
-    baseQuery.addParameterToQuery("sleep_time_enabled", parameters?.sleepTimeEnabled);
-    baseQuery.addParameterToQuery("start_sleep_time", AccountSettingsQueryGenerator.sleepHourToString(parameters.startSleepHour));
-    baseQuery.addParameterToQuery("end_sleep_time", AccountSettingsQueryGenerator.sleepHourToString(parameters.endSleepHour));
-    baseQuery.addParameterToQuery("trend_location_woeid", parameters.trendLocationWoeid);
+    StringBuilderExtensions.addParameterToQuery(baseQuery, "lang", langParameterValue);
+    StringBuilderExtensions.addParameterToQuery(baseQuery, "time_zone", parameters.timeZone);
+    StringBuilderExtensions.addParameterToQuery(baseQuery, "sleep_time_enabled", parameters?.sleepTimeEnabled);
+    StringBuilderExtensions.addParameterToQuery(baseQuery, "start_sleep_time", AccountSettingsQueryGenerator.sleepHourToString(parameters.startSleepHour));
+    StringBuilderExtensions.addParameterToQuery(baseQuery, "end_sleep_time", AccountSettingsQueryGenerator.sleepHourToString(parameters.endSleepHour));
+    StringBuilderExtensions.addParameterToQuery(baseQuery, "trend_location_woeid", parameters.trendLocationWoeid);
 
-    baseQuery.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(baseQuery, parameters.formattedCustomQueryParameters);
 
     return baseQuery.toString();
   }
@@ -58,15 +61,15 @@ export class AccountSettingsQueryGenerator implements IAccountSettingsQueryGener
   public getUpdateProfileQuery(parameters: IUpdateProfileParameters): string {
     let query = new StringBuilder(Resources.Account_UpdateProfile);
 
-    query.addParameterToQuery("name", parameters.name);
-    query.addParameterToQuery("url", parameters.websiteUrl);
-    query.addParameterToQuery("location", parameters.location);
-    query.addParameterToQuery("description", parameters.description);
-    query.addParameterToQuery("profile_link_color", parameters.profileLinkColor);
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
-    query.addParameterToQuery("skip_status", parameters.skipStatus);
+    StringBuilderExtensions.addParameterToQuery(query, "name", parameters.name);
+    StringBuilderExtensions.addParameterToQuery(query, "url", parameters.websiteUrl);
+    StringBuilderExtensions.addParameterToQuery(query, "location", parameters.location);
+    StringBuilderExtensions.addParameterToQuery(query, "description", parameters.description);
+    StringBuilderExtensions.addParameterToQuery(query, "profile_link_color", parameters.profileLinkColor);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addParameterToQuery(query, "skip_status", parameters.skipStatus);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -86,9 +89,9 @@ export class AccountSettingsQueryGenerator implements IAccountSettingsQueryGener
   public getUpdateProfileImageQuery(parameters: IUpdateProfileImageParameters): string {
     let query = new StringBuilder(Resources.Account_UpdateProfileImage);
 
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
-    query.addParameterToQuery("skip_status", parameters.skipStatus);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addParameterToQuery(query, "skip_status", parameters.skipStatus);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -96,12 +99,12 @@ export class AccountSettingsQueryGenerator implements IAccountSettingsQueryGener
   public getUpdateProfileBannerQuery(parameters: IUpdateProfileBannerParameters): string {
     let query = new StringBuilder(Resources.Account_UpdateProfileBanner);
 
-    query.addParameterToQuery("width", parameters.width);
-    query.addParameterToQuery("height", parameters.height);
-    query.addParameterToQuery("offset_left", parameters.offsetLeft);
-    query.addParameterToQuery("offset_top", parameters.offsetTop);
+    StringBuilderExtensions.addParameterToQuery(query, "width", parameters.width);
+    StringBuilderExtensions.addParameterToQuery(query, "height", parameters.height);
+    StringBuilderExtensions.addParameterToQuery(query, "offset_left", parameters.offsetLeft);
+    StringBuilderExtensions.addParameterToQuery(query, "offset_top", parameters.offsetTop);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -109,7 +112,7 @@ export class AccountSettingsQueryGenerator implements IAccountSettingsQueryGener
   public getRemoveProfileBannerQuery(parameters: IRemoveProfileBannerParameters): string {
     let query = new StringBuilder(Resources.Account_RemoveProfileBanner);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }

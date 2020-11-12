@@ -1,4 +1,6 @@
-﻿import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMode";
+﻿import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
+
+import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMode";
 import {
   IUserQueryParameterGenerator,
   IUserQueryParameterGeneratorToken
@@ -7,7 +9,6 @@ import {
   ITwitterListQueryParameterGenerator,
   ITwitterListQueryParameterGeneratorToken
 } from "../../core/Core/QueryGenerators/ITwitterListQueryParameterGenerator";
-import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {Resources} from "../../properties/resources";
 import {ICreateListParameters} from "../../core/Public/Parameters/ListsClient/CreateListParameters";
 import {IGetListParameters} from "../../core/Public/Parameters/ListsClient/GetListParameters";
@@ -28,9 +29,12 @@ import {ICheckIfUserIsSubscriberOfListParameters} from "../../core/Public/Parame
 import {IGetUserListSubscriptionsParameters} from "../../core/Public/Parameters/ListsClient/Subscribers/GetUserListSubscriptionsParameters";
 import {IUnsubscribeFromListParameters} from "../../core/Public/Parameters/ListsClient/Subscribers/UnsubscribeFromListParameters";
 import {IGetTweetsFromListParameters} from "../../core/Public/Parameters/ListsClient/GetTweetsFromListParameters";
-import {IQueryParameterGenerator, IQueryParameterGeneratorToken} from "../Shared/QueryParameterGenerator";
+import {IQueryParameterGenerator, IQueryParameterGeneratorToken, QueryParameterGenerator} from "../Shared/QueryParameterGenerator";
 import {IListMetadataParameters} from "../../core/Public/Parameters/ListsClient/IListMetadataParameters";
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {UserQueryParameterGenerator} from "../User/UserQueryParameterGenerator";
+import {TwitterListQueryParameterGenerator} from "./TwitterListQueryParameterGenerator";
+import StringBuilder from "typescript-dotnet-commonjs/System/Text/StringBuilder";
+import {StringBuilderExtensions} from "../../core/Core/Extensions/stringBuilder-extensions";
 
 export interface ITwitterListQueryGenerator {
   // list
@@ -78,10 +82,13 @@ export interface ITwitterListQueryGenerator {
 
 export const ITwitterListQueryGeneratorToken = new InjectionToken<ITwitterListQueryGenerator>('ITwitterListQueryGenerator', {
   providedIn: 'root',
-  factory: () => new TwitterListQueryGenerator(),
+  factory: () => new TwitterListQueryGenerator(inject(UserQueryParameterGenerator), inject(QueryParameterGenerator),
+    Inject(TwitterListQueryParameterGenerator)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
   private readonly _userQueryParameterGenerator: IUserQueryParameterGenerator;
   private readonly _queryParameterGenerator: IQueryParameterGenerator;
@@ -101,22 +108,22 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
 
     TwitterListQueryGenerator.appendListMetadataToQuery(parameters, query);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
 
   private static appendListMetadataToQuery(parameters: IListMetadataParameters, query: StringBuilder): void {
-    query.addParameterToQuery("name", parameters.name);
-    query.addParameterToQuery("mode", parameters.privacyMode?.toString()?.toLocaleLowerCase());
-    query.addParameterToQuery("description", parameters.description);
+    StringBuilderExtensions.addParameterToQuery(query, "name", parameters.name);
+    StringBuilderExtensions.addParameterToQuery(query, "mode", parameters.privacyMode?.toString()?.toLocaleLowerCase());
+    StringBuilderExtensions.addParameterToQuery(query, "description", parameters.description);
   }
 
   public getListQuery(parameters: IGetListParameters): string {
     let query = new StringBuilder(Resources.List_Get);
 
     this._twitterListQueryParameterGenerator.appendListIdentifierParameter(query, parameters.list);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -124,10 +131,10 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
   public getListsSubscribedByUserQuery(parameters: IGetListsSubscribedByUserParameters): string {
     let query = new StringBuilder(Resources.List_GetUserLists);
 
-    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
-    query.addParameterToQuery("reverse", parameters.reverse);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
+    StringBuilderExtensions.addParameterToQuery(query, "reverse", parameters.reverse);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -138,7 +145,7 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
     this._twitterListQueryParameterGenerator.appendListIdentifierParameter(query, parameters.list);
 
     TwitterListQueryGenerator.appendListMetadataToQuery(parameters, query);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -147,7 +154,7 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
     let query = new StringBuilder(Resources.List_Destroy);
 
     this._twitterListQueryParameterGenerator.appendListIdentifierParameter(query, parameters.list);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -155,11 +162,11 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
   public getListsOwnedByUserQuery(parameters: IGetListsOwnedByUserParameters): string {
     let query = new StringBuilder(Resources.List_OwnedByUser);
 
-    query.addFormattedParameterToQuery(this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._userQueryParameterGenerator.generateIdOrScreenNameParameter(parameters.user));
 
     this._queryParameterGenerator.appendCursorParameters(query, parameters);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -168,8 +175,8 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
     let query = new StringBuilder(Resources.List_Members_Create);
 
     this._twitterListQueryParameterGenerator.appendListIdentifierParameter(query, parameters.list);
-    this._userQueryParameterGenerator.appendUser(query, parameters.users);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    this._userQueryParameterGenerator.appendUser(query, parameters.user);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -179,7 +186,7 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
 
     this._twitterListQueryParameterGenerator.appendListIdentifierParameter(query, parameters.list);
     this._userQueryParameterGenerator.appendUsers(query, parameters.users);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -190,10 +197,10 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
     this._twitterListQueryParameterGenerator.appendListIdentifierParameter(query, parameters);
     this._userQueryParameterGenerator.appendUser(query, parameters.user);
 
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
-    query.addParameterToQuery("skip_status", parameters.skipStatus);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addParameterToQuery(query, "skip_status", parameters.skipStatus);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -203,9 +210,9 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
 
     this._userQueryParameterGenerator.appendUser(query, parameters.user);
     this._queryParameterGenerator.appendCursorParameters(query, parameters);
-    query.addParameterToQuery("filter_to_owned_lists", parameters.onlyRetrieveAccountLists);
+    StringBuilderExtensions.addParameterToQuery(query, "filter_to_owned_lists", parameters.onlyRetrieveAccountLists);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -216,21 +223,21 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
     this._twitterListQueryParameterGenerator.appendListIdentifierParameter(query, parameters.list);
     this._queryParameterGenerator.appendCursorParameters(query, parameters);
 
-    query.addParameterToQuery("include_entities", parameters.IncludeEntities);
-    query.addParameterToQuery("skip_status", parameters.SkipStatus);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addParameterToQuery(query, "skip_status", parameters.skipStatus);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
 
   public getRemoveMemberFromListQuery(parameters: IRemoveMemberFromListParameters): string {
-    var query = new StringBuilder(Resources.List_DestroyMember);
+    let query = new StringBuilder(Resources.List_DestroyMember);
 
     this._twitterListQueryParameterGenerator.appendListIdentifierParameter(query, parameters.list);
     this._userQueryParameterGenerator.appendUser(query, parameters.user);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -241,7 +248,7 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
     this._twitterListQueryParameterGenerator.appendListIdentifierParameter(query, parameters.list);
     this._userQueryParameterGenerator.appendUsers(query, parameters.users);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -251,7 +258,7 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
     let query = new StringBuilder(Resources.List_Subscribe);
 
     this._twitterListQueryParameterGenerator.appendListIdentifierParameter(query, parameters);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -262,10 +269,10 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
     this._twitterListQueryParameterGenerator.appendListIdentifierParameter(query, parameters);
     this._queryParameterGenerator.appendCursorParameters(query, parameters);
 
-    query.addParameterToQuery("include_entities", parameters.IncludeEntities);
-    query.addParameterToQuery("skip_status", parameters.SkipStatus);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addParameterToQuery(query, "skip_status", parameters.skipStatus);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -276,10 +283,10 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
     this._twitterListQueryParameterGenerator.appendListIdentifierParameter(query, parameters);
     this._userQueryParameterGenerator.appendUser(query, parameters.user);
 
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
-    query.addParameterToQuery("skip_status", parameters.skipStatus);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addParameterToQuery(query, "skip_status", parameters.skipStatus);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -290,7 +297,7 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
     this._userQueryParameterGenerator.appendUser(query, parameters.user);
     this._queryParameterGenerator.appendCursorParameters(query, parameters);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -300,7 +307,7 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
 
     this._twitterListQueryParameterGenerator.appendListIdentifierParameter(query, parameters);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -312,8 +319,8 @@ export class TwitterListQueryGenerator implements ITwitterListQueryGenerator {
     this._twitterListQueryParameterGenerator.appendListIdentifierParameter(query, parameters.list);
     this._queryParameterGenerator.addTimelineParameters(query, parameters, tweetMode);
 
-    query.addParameterToQuery("include_rts", parameters.includeRetweets);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addParameterToQuery(query, "include_rts", parameters.includeRetweets);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }

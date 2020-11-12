@@ -1,9 +1,7 @@
-﻿import {Inject, Injectable, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMode";
 import {IQueryParameterGenerator, IQueryParameterGeneratorToken, QueryParameterGenerator} from "../Shared/QueryParameterGenerator";
-import IEnumerable from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable';
-import StringBuilder from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {Resources} from "../../properties/resources";
 import {TweetSearchFilters} from "../../core/Public/Parameters/Enum/TweetSearchFilters";
 import {ISearchTweetsParameters} from "../../core/Public/Parameters/Search/SearchTweetsParameters";
@@ -17,7 +15,9 @@ import {
   ISearchQueryParameterGeneratorToken,
   SearchQueryParameterGenerator
 } from "./SearchQueryParameterGenerator";
-import {format} from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/Utility";
+import StringBuilder from "typescript-dotnet-commonjs/System/Text/StringBuilder";
+import {StringBuilderExtensions} from "../../core/Core/Extensions/stringBuilder-extensions";
+import {format} from "typescript-dotnet-commonjs/System/Text/Utility";
 
 export interface ISearchQueryGenerator {
   getSearchTweetsQuery(parameters: ISearchTweetsParameters, tweetMode: ComputedTweetMode): string;
@@ -35,10 +35,12 @@ export interface ISearchQueryGenerator {
 
 export const ISearchQueryGeneratorToken = new InjectionToken<ISearchQueryGenerator>('ISearchQueryGenerator', {
   providedIn: 'root',
-  factory: () => new SearchQueryGenerator(Inject(QueryParameterGenerator), Inject(SearchQueryParameterGenerator)),
+  factory: () => new SearchQueryGenerator(inject(QueryParameterGenerator), inject(SearchQueryParameterGenerator)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class SearchQueryGenerator implements ISearchQueryGenerator {
   private readonly _queryParameterGenerator: IQueryParameterGenerator;
   private readonly _searchQueryParameterGenerator: ISearchQueryParameterGenerator;
@@ -52,21 +54,21 @@ export class SearchQueryGenerator implements ISearchQueryGenerator {
   public getSearchTweetsQuery(parameters: ISearchTweetsParameters, tweetMode: ComputedTweetMode): string {
     let query = new StringBuilder(Resources.Search_SearchTweets);
 
-    query.addParameterToQuery("q", this.generateQueryParameter(parameters.query, parameters.filters));
-    query.addParameterToQuery("geocode", this._searchQueryParameterGenerator.generateGeoCodeParameter(parameters.geoCode));
+    StringBuilderExtensions.addParameterToQuery(query, "q", this.generateQueryParameter(parameters.query, parameters.filters));
+    StringBuilderExtensions.addParameterToQuery(query, "geocode", this._searchQueryParameterGenerator.generateGeoCodeParameter(parameters.geoCode));
 
-    query.addParameterToQuery("lang", parameters.lang?.getLanguageCode());
-    query.addParameterToQuery("locale", parameters.locale);
-    query.addParameterToQuery("result_type", parameters.searchType?.toString().toLocaleLowerCase());
+    StringBuilderExtensions.addParameterToQuery(query, "lang", parameters.lang?.getLanguageCode());
+    StringBuilderExtensions.addParameterToQuery(query, "locale", parameters.locale);
+    StringBuilderExtensions.addParameterToQuery(query, "result_type", parameters.searchType?.toString().toLocaleLowerCase());
 
     this._queryParameterGenerator.addMinMaxQueryParameters(query, parameters);
 
-    query.addFormattedParameterToQuery(this._searchQueryParameterGenerator.generateSinceParameter(parameters.since));
-    query.addFormattedParameterToQuery(this._searchQueryParameterGenerator.generateUntilParameter(parameters.until));
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
-    query.addParameterToQuery("tweet_mode", tweetMode);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._searchQueryParameterGenerator.generateSinceParameter(parameters.since));
+    StringBuilderExtensions.addFormattedParameterToQuery(query, this._searchQueryParameterGenerator.generateUntilParameter(parameters.until));
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addParameterToQuery(query, "tweet_mode", tweetMode);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -76,45 +78,45 @@ export class SearchQueryGenerator implements ISearchQueryGenerator {
       return query;
     }
 
-    for (const entitiesTypeFilter of this.getFlags(tweetSearchFilters)) {
-      if (entitiesTypeFilter !== TweetSearchFilters.None) {
-        let filter = entitiesTypeFilter.GetQueryFilterName().ToLowerInvariant();
-        query += ` filter:${filter}`;
-      }
-    }
+    // for (const entitiesTypeFilter of this.getFlags(tweetSearchFilters)) {
+    //   if (entitiesTypeFilter !== TweetSearchFilters.None) {
+    //     let filter = entitiesTypeFilter.getQueryFilterName().ToLowerInvariant();
+    //     query += ` filter:${filter}`;
+    //   }
+    // }
 
     return query;
   }
 
-        private  getFlags(tweetSearchFilters: TweetSearchFilters): IEnumerable<TweetSearchFilters>
-        {
-            for (const value: TweetSearchFilters of Enum.GetValues(tweetSearchFilters.GetType()))
-            {
-                if (tweetSearchFilters.HasFlag(value) && (tweetSearchFilters & value) === value)
-                {
-                    yield return value;
-                }
-            }
-        }
+        // private  getFlags(tweetSearchFilters: TweetSearchFilters): Iterable<TweetSearchFilters>
+        // {
+        //     for (const value: TweetSearchFilters of Enum.GetValues(tweetSearchFilters.GetType()))
+        //     {
+        //         if (tweetSearchFilters.HasFlag(value) && (tweetSearchFilters & value) === value)
+        //         {
+        //             yield return value;
+        //         }
+        //     }
+        // }
 
   public getSearchUsersQuery(parameters: ISearchUsersParameters): string {
     let query = new StringBuilder(Resources.Search_SearchUsers);
 
-    query.addParameterToQuery("q", parameters.query);
-    query.addParameterToQuery("page", parameters.page);
-    query.addParameterToQuery("count", parameters.pageSize);
-    query.addParameterToQuery("include_entities", parameters.includeEntities);
+    StringBuilderExtensions.addParameterToQuery(query, "q", parameters.query);
+    StringBuilderExtensions.addParameterToQuery(query, "page", parameters.page);
+    StringBuilderExtensions.addParameterToQuery(query, "count", parameters.pageSize);
+    StringBuilderExtensions.addParameterToQuery(query, "include_entities", parameters.includeEntities);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
-    return query.toString();
+    return StringBuilderExtensions.toString();
   }
 
   public getCreateSavedSearchQuery(parameters: ICreateSavedSearchParameters): string {
     let query = new StringBuilder(Resources.SavedSearch_Create);
 
-    query.addParameterToQuery("query", parameters.query);
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addParameterToQuery(query, "query", parameters.query);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -122,7 +124,7 @@ export class SearchQueryGenerator implements ISearchQueryGenerator {
   public getSavedSearchQuery(parameters: IGetSavedSearchParameters): string {
     let query = new StringBuilder(format(Resources.SavedSearch_Get, parameters.savedSearchId));
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -130,7 +132,7 @@ export class SearchQueryGenerator implements ISearchQueryGenerator {
   public getListSavedSearchQuery(parameters: IListSavedSearchesParameters): string {
     let query = new StringBuilder(Resources.SavedSearches_List);
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }
@@ -138,7 +140,7 @@ export class SearchQueryGenerator implements ISearchQueryGenerator {
   public getDestroySavedSearchQuery(parameters: IDestroySavedSearchParameters): string {
     let query = new StringBuilder(format(Resources.SavedSearch_Destroy, parameters.savedSearchId));
 
-    query.addFormattedParameterToQuery(parameters.formattedCustomQueryParameters);
+    StringBuilderExtensions.addFormattedParameterToQuery(query, parameters.formattedCustomQueryParameters);
 
     return query.toString();
   }

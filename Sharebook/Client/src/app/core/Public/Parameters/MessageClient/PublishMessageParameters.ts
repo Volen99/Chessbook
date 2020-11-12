@@ -1,6 +1,7 @@
-﻿import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
+﻿import {Inject, Injectable, InjectionToken} from "@angular/core";
+
+import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {IQuickReplyOption} from "../../Models/Interfaces/IQuickReplyOption";
-import {Inject, Injectable, InjectionToken} from "@angular/core";
 
 // For more information visit : https://developer.twitter.com/en/docs/direct-messages/sending-and-receiving/api-reference/new-event
 export interface IPublishMessageParameters extends ICustomRequestParameters {
@@ -19,10 +20,12 @@ export interface IPublishMessageParameters extends ICustomRequestParameters {
 
 export const IPublishMessageParametersToken = new InjectionToken<IPublishMessageParameters>('IPublishMessageParameters', {
   providedIn: 'root',
-  factory: () => new PublishMessageParameters(Inject(String), Inject(String)),
+  factory: () => new PublishMessageParameters(null, 0),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class PublishMessageParameters extends CustomRequestParameters implements IPublishMessageParameters {
   constructor(text: string, recipientId: number) {
     super();

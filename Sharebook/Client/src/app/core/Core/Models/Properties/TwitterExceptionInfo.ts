@@ -2,7 +2,9 @@
 
 import {ITwitterExceptionInfo} from "../../Exceptions/ITwitterExceptionInfo";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TwitterExceptionInfo implements ITwitterExceptionInfo {
   // [JsonProperty("message")];
   public message: string;

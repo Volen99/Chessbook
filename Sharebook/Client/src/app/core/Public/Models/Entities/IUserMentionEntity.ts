@@ -1,4 +1,4 @@
-﻿import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
+﻿import IEquatable from "typescript-dotnet-commonjs/System/IEquatable";
 
 // Basic information related with a User and provided in twitter objects like Tweets
 export interface IUserMentionEntity extends IEquatable<IUserMentionEntity> {

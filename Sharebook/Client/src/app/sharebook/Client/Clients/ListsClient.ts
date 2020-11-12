@@ -97,11 +97,12 @@ import {
 } from "../../../core/Public/Parameters/ListsClient/GetTweetsFromListParameters";
 import {ITweet} from "../../../core/Public/Models/Interfaces/ITweet";
 import {ITweetDTO} from "../../../core/Public/Models/Interfaces/DTO/ITweetDTO";
-import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
-import {SharebookException} from "../../../core/Public/Exceptions/SharebookException";
 import {ITwitterListDTO} from "../../../core/Public/Models/Interfaces/DTO/ITwitterListDTO";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ListsClient implements IListsClient {
   private readonly _twitterListsRequester: ITwitterListsRequester;
   private readonly _client: ITwitterClient;
@@ -419,7 +420,6 @@ export class ListsClient implements IListsClient {
   // ***********
   // SUBSCRIBERS
   // ***********
-
   public async subscribeToListAsync(listIdOrListIdentifierOrParameters: number | ITwitterListIdentifier | ISubscribeToListParameters): Promise<ITwitterList> {
     let parameters: ISubscribeToListParameters;
     if (this.isISubscribeToListParameters(listIdOrListIdentifierOrParameters)) {
@@ -646,5 +646,4 @@ export class ListsClient implements IListsClient {
   private isIGetTweetsFromListParameters(listIdOrListIdentifierOrParameters: any): listIdOrListIdentifierOrParameters is IGetTweetsFromListParameters  {
     return (listIdOrListIdentifierOrParameters as IGetTweetsFromListParameters).formattedCustomQueryParameters !== undefined;
   }
-
 }

@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {IUploadRequester} from "./Requesters/IUploadRequester";
 import {IAccountActivityRequester} from "./Requesters/IAccountActivityRequester";
@@ -61,10 +61,11 @@ export interface IRawExecutors {
 
 export const IRawExecutorsToken = new InjectionToken<IRawExecutors>('IRawExecutors', {
   providedIn: 'root',
-  factory: () => new RawExecutors(Inject(AccountActivityRequester), Inject(AuthRequester),
-    Inject(AccountSettingsRequester), Inject(HelpRequester),
-    Inject(SearchRequester), Inject(TwitterListsRequester),
-    Inject(TimelinesRequester), Inject(TrendsRequester),
-    Inject(TweetsRequester), Inject(UploadRequester),
-    Inject(UsersRequester)),
+  factory: () => new RawExecutors(
+    inject(AccountActivityRequester), inject(AuthRequester),
+    inject(AccountSettingsRequester), inject(HelpRequester),
+    inject(SearchRequester), inject(TwitterListsRequester),
+    inject(TimelinesRequester), inject(TrendsRequester),
+    inject(TweetsRequester), inject(UploadRequester),
+    inject(UsersRequester)),
 });

@@ -21,5 +21,5 @@ export interface IOAuthQueryParameter {
 
 export const IOAuthQueryParameterToken = new InjectionToken<IOAuthQueryParameter>('IOAuthQueryParameter', {
   providedIn: 'root',
-  factory: () => new OAuthQueryParameter(),
+  factory: () => new OAuthQueryParameter(null, null, false, false, false),
 });

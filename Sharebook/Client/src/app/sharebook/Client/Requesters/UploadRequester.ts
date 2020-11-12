@@ -19,10 +19,11 @@ import {IUploadedMediaInfo} from "../../../core/Public/Models/Interfaces/DTO/IUp
 import {IMedia} from "../../../core/Public/Models/Interfaces/IMedia";
 import {IAddMediaMetadataParameters} from 'src/app/core/Public/Parameters/Upload/AddMediaMetadataParameters';
 import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
-import Tweetinvi from "../../../core/Core/Events/TweetinviGlobalEvents";
-import ITwitterClientEvents = Tweetinvi.Core.Events.ITwitterClientEvents;
+import {ITwitterClientEvents, ITwitterClientEventsToken} from "../../../core/Core/Events/TweetinviGlobalEvents";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UploadRequester extends BaseRequester implements IUploadRequester {
   private readonly _uploadClientRequiredParametersValidator: IUploadClientRequiredParametersValidator;
   private readonly _uploadQueryExecutor: IUploadQueryExecutor;
@@ -45,19 +46,19 @@ export class UploadRequester extends BaseRequester implements IUploadRequester {
 
   public uploadBinaryAsync(parameters: IUploadParameters): Promise<IChunkUploadResult> {
     this._uploadClientRequiredParametersValidator.validate(parameters);
-    return this.ExecuteRequestAsync(request => this._uploadQueryExecutor.uploadBinaryAsync(parameters, request));
+    return this.executeRequestAsync(request => this._uploadQueryExecutor.uploadBinaryAsync(parameters, request));
   }
 
   public addMediaMetadataAsync(parameters: IAddMediaMetadataParameters): Promise<ITwitterResult> {
     this._uploadClientRequiredParametersValidator.validate(parameters);
-    return this.ExecuteRequestAsync(request => this._uploadQueryExecutor.addMediaMetadataAsync(parameters, request));
+    return this.executeRequestAsync(request => this._uploadQueryExecutor.addMediaMetadataAsync(parameters, request));
   }
 
   public getVideoProcessingStatusAsync(media: IMedia): Promise<ITwitterResult<IUploadedMediaInfo>> {
-    return this.ExecuteRequestAsync(request => this._uploadMediaStatusQueryExecutor.getMediaStatusAsync(media, request));
+    return this.executeRequestAsync(request => this._uploadMediaStatusQueryExecutor.getMediaStatusAsync(media, request));
   }
 
   public waitForMediaProcessingToGetAllMetadataAsync(media: IMedia): Promise<void> {
-    return this.ExecuteRequestAsync(request => this._uploadHelper.waitForMediaProcessingToGetAllMetadataAsync(media, request));
+    return this.executeRequestAsync(request => this._uploadHelper.waitForMediaProcessingToGetAllMetadataAsync(media, request));
   }
 }

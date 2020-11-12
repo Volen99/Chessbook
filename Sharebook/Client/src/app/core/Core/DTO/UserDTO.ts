@@ -1,9 +1,8 @@
-﻿import IEnumerable from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable";
-import {IUserEntities} from "../../Public/Models/Entities/IUserEntities";
+﻿import {IUserEntities} from "../../Public/Models/Entities/IUserEntities";
 import {UserIdentifierDTO} from "./UserIdentifierDTO";
 import {IUserDTO} from "../../Public/Models/Interfaces/DTO/IUserDTO";
 import {ITweetDTO} from "../../Public/Models/Interfaces/DTO/ITweetDTO";
-import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 export class UserDTO extends UserIdentifierDTO implements IUserDTO {
   // Verify : ProfileImageTile
@@ -123,7 +122,7 @@ export class UserDTO extends UserIdentifierDTO implements IUserDTO {
   public timeZone: string;
 
   // [JsonProperty("withheld_in_countries")]
-  public withheldInCountries: IEnumerable<string>;
+  public withheldInCountries: Array<string>;
 
   // [JsonProperty("withheld_scope")]
   public withheldScope: string;

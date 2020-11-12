@@ -1,6 +1,8 @@
-﻿import {Stream} from "stream";
+﻿import {InjectionToken} from "@angular/core";
+
 import {ITwitterExceptionInfo} from "./ITwitterExceptionInfo";
-import Exception from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exception";
+import {WebExceptionInfoExtractor} from "../../../logic/Exceptions/WebExceptionInfoExtractor";
+import Exception from "typescript-dotnet-commonjs/System/Exception";
 
 export interface IWebExceptionInfoExtractor {
   getWebExceptionStatusNumber(wex: /*WebException*/ Exception): number;
@@ -11,5 +13,10 @@ export interface IWebExceptionInfoExtractor {
 
   getTwitterExceptionInfo(wex: /*WebException*/ Exception): ITwitterExceptionInfo[];
 
-  getTwitterExceptionInfosFromStream(stream: Stream): ITwitterExceptionInfo[];
+  getTwitterExceptionInfosFromStream(stream: any): ITwitterExceptionInfo[];
 }
+
+export const IWebExceptionInfoExtractorToken = new InjectionToken<IWebExceptionInfoExtractor>('IWebExceptionInfoExtractor', {
+  providedIn: 'root',
+  factory: () => new WebExceptionInfoExtractor()
+});

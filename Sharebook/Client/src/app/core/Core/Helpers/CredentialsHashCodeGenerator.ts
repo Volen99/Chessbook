@@ -15,3 +15,4 @@ export abstract class CredentialsHashCodeGenerator {
     return (credentials as IReadOnlyTwitterCredentials).accessToken !== undefined;
   }
 }
+

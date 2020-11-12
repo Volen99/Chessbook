@@ -1,8 +1,8 @@
 ﻿import {InjectionToken} from "@angular/core";
 
 import {IUserIdentifier} from "../../Public/Models/Interfaces/IUserIdentifier";
-import StringBuilder from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder";
 import {UserQueryParameterGenerator} from "../../../controllers/User/UserQueryParameterGenerator";
+import StringBuilder from "typescript-dotnet-commonjs/System/Text/StringBuilder";
 
 export interface IUserQueryParameterGenerator {
   generateIdOrScreenNameParameter(user: IUserIdentifier, idParameterName?: string, screenNameParameterName?: string): string;

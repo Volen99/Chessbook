@@ -1,11 +1,11 @@
-﻿import Exception from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exception";
+﻿import Exception from "typescript-dotnet-commonjs/System/Exception";
 
 // An exception that could not be handled by Sharebook was thrown. Please report such errors on github
 export class UnexpectedExceptionThrownEvent {
 
   constructor(exception: Exception) {
-    this.Exception = exception;
+    this.exception = exception;
   }
 
-  public Exception: Exception;
+  public exception: Exception;
 }

@@ -1,4 +1,4 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterRequest} from "../../Public/Models/Interfaces/ITwitterRequest";
 import {ITwitterResult} from "../Web/TwitterResult";
@@ -46,5 +46,5 @@ export interface IAccountActivityController {
 
 export const IAccountActivityControllerToken = new InjectionToken<IAccountActivityController>('IAccountActivityController', {
   providedIn: 'root',
-  factory: () => new AccountActivityController(Inject(TwitterAccessor), Inject(AccountActivityQueryGenerator)),
+  factory: () => new AccountActivityController(inject(TwitterAccessor), inject(AccountActivityQueryGenerator)),
 });

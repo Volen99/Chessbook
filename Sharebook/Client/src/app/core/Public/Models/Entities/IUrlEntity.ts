@@ -1,7 +1,7 @@
 ﻿import {InjectionToken} from "@angular/core";
 
-import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
 import {UrlEntity} from "../../../Core/Models/TwitterEntities/UrlEntity";
+import IEquatable from "typescript-dotnet-commonjs/System/IEquatable";
 
 // Information related with an URL in twitter
 export interface IUrlEntity extends IEquatable<IUrlEntity> {

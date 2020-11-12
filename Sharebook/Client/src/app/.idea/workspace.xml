@@ -20,26 +20,477 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fd68ae18-2d59-4beb-954b-9411df789675" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/exam" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/solve" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder.ts" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core/packages/Core/source/Text/StringBuilder.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri.ts" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core/packages/publish.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core/packages/tsconfig-base.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/datetime-offset.js" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/datetime-offset.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/datetime-offset.js/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/datetime-offset.js/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/lib/global.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/lib/global.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/babel-plugin-ts-nameof/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/babel-plugin-ts-nameof/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/transforms-babel/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/transforms-babel/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/transforms-common/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/transforms-common/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/transforms-ts/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/transforms-ts/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof.macro/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof.macro/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/setup/custom.md" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/setup/custom.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/setup/fusebox.md" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/setup/fusebox.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/setup/gulp.md" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/setup/gulp.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/c#-objects/ts-nameof/packages/ts-nameof/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/Core/Extensions/UriExtensions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/Core/Extensions/char-extensions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/Core/Extensions/stringBuilder-extensions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/Public/Models/Enum/Languages.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/Public/Models/Enum/TimeZoneFromTwitterExtension.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../e2e/src/app.e2e-spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../e2e/src/app.e2e-spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../karma.conf.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../karma.conf.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tweetinvi.Credentials/CredentialsAccessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Tweetinvi.Credentials/CredentialsAccessor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tweetinvi.Credentials/Models/AuthenticationRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Tweetinvi.Credentials/Models/AuthenticationRequest.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tweetinvi.Credentials/RateLimit/RateLimitAwaiter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Tweetinvi.Credentials/RateLimit/RateLimitAwaiter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tweetinvi.Credentials/RateLimit/RateLimitCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Tweetinvi.Credentials/RateLimit/RateLimitCache.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tweetinvi.Credentials/RateLimit/RateLimitCacheManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Tweetinvi.Credentials/RateLimit/RateLimitCacheManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tweetinvi.Credentials/RateLimit/RateLimitHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Tweetinvi.Credentials/RateLimit/RateLimitHelper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tweetinvi.Credentials/RateLimit/RateLimitUpdater.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Tweetinvi.Credentials/RateLimit/RateLimitUpdater.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tweetinvi.Credentials/TwitterAccessor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Tweetinvi.Credentials/TwitterAccessor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/app.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/datetime-offset.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/c#-objects/ts-nameof" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/models/post.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/components/models/post.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/profile/profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/profile/profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/profile/profile.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/profile.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/profile/screen-name/screen-name.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/screen-name/screen-name.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/profile/screen-name/screen-name.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/components/profile/screen-name/screen-name.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/programming/programming.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/components/programming/programming.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/science/list-posts/list-posts.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/components/science/list-posts/list-posts.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/science/post/post.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/components/science/post/post.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/science/science.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/components/science/science.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/science/upload/upload.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/components/science/upload/upload.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/AccountActivity/AccountActivityController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/AccountActivity/AccountActivityController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/AccountActivity/AccountActivityQueryGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/AccountActivity/AccountActivityQueryGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/AccountSettings/AccountSettingsQueryExecutor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/AccountSettings/AccountSettingsQueryExecutor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/AccountSettings/AccountSettingsQueryGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/AccountSettings/AccountSettingsQueryGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Auth/AuthController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Auth/AuthController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Auth/AuthQueryExecutor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Auth/AuthQueryExecutor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Auth/AuthQueryGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Auth/AuthQueryGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Auth/RequestAuthUrlInternalParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Auth/RequestAuthUrlInternalParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Help/HelpQueryGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Help/HelpQueryGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Messages/MessageQueryGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Messages/MessageQueryGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Search/SearchController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Search/SearchController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Search/SearchQueryGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Search/SearchQueryGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Search/SearchQueryParameterGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Search/SearchQueryParameterGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Shared/QueryParameterGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Shared/QueryParameterGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Timeline/TimelineQueryGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Timeline/TimelineQueryGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Trends/TrendsQueryGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Trends/TrendsQueryGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Tweet/TweetController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Tweet/TweetController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Tweet/TweetQueryExecutor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Tweet/TweetQueryExecutor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Tweet/TweetQueryGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Tweet/TweetQueryGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Tweetinvi.Controllers.csproj.DotSettings" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/TweetinviControllersModule.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/TwitterLists/TwitterListController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/TwitterLists/TwitterListController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/TwitterLists/TwitterListQueryExecutor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/TwitterLists/TwitterListQueryExecutor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/TwitterLists/TwitterListQueryGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/TwitterLists/TwitterListQueryGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/TwitterLists/TwitterListQueryParameterGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/TwitterLists/TwitterListQueryParameterGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Upload/ChunkedUploader.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Upload/ChunkedUploader.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Upload/UploadHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Upload/UploadHelper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Upload/UploadMediaStatusQueryExecutor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Upload/UploadMediaStatusQueryExecutor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Upload/UploadQueryExecutor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Upload/UploadQueryExecutor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/Upload/UploadQueryGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/Upload/UploadQueryGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/User/UserController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/User/UserController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/User/UserQueryExecutor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/User/UserQueryExecutor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/User/UserQueryGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/User/UserQueryGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/User/UserQueryParameterGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/User/UserQueryParameterGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Attributes/JsonEnumStringAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Attributes/JsonEnumStringAttribute.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Attributes/LanguageAttribute.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Attributes/Language.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Attributes/TimeZoneFromTwitterAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Attributes/TimeZoneFromTwitterAttribute.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Attributes/TweetSearchFilterAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Attributes/TweetSearchFilterAttribute.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Attributes/TwitterEndpointAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Attributes/TwitterEndpointAttribute.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Attributes/WindowsTimeZone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Attributes/WindowsTimeZone.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/TwitterExecutionContext.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/TwitterExecutionContext.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/AccountActivityClientRequiredParameterValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/AccountActivityClientRequiredParameterValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/AccountSettingsClientParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/AccountSettingsClientParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/AccountSettingsClientRequiredParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/AccountSettingsClientRequiredParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/AuthClientParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/AuthClientParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/AuthClientRequiredParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/AuthClientRequiredParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/HelpClientRequiredParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/HelpClientRequiredParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/MessageClientParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/MessageClientParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/MessageClientRequiredParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/MessageClientRequiredParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/ParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/ParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/SearchClientParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/SearchClientParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/SearchClientRequiredParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/SearchClientRequiredParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/TimelineClientParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/TimelineClientParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/TimelineClientRequiredParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/TimelineClientRequiredParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/TrendsClientRequiredParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/TrendsClientRequiredParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/TweetsClientParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/TweetsClientParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/TweetsClientRequiredParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/TweetsClientRequiredParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/TwitterListsClientParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/TwitterListsClientParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/TwitterListsClientRequiredParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/TwitterListsClientRequiredParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/UploadClientParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/UploadClientParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/UploadClientRequiredParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/UploadClientRequiredParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/UserQueryValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/UserQueryValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/UsersClientParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/UsersClientParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Client/Validators/UsersClientRequiredParametersValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Client/Validators/UsersClientRequiredParametersValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Controllers/IUserController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Controllers/IUserController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Credentials/ICredentialsAccessor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Credentials/ICredentialsAccessor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/DTO/AccountSettingsDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/DTO/AccountSettingsDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/DTO/CredentialsRateLimitsDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/DTO/CredentialsRateLimitsDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/DTO/Cursor/MessageCursorQueryResultDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/DTO/Cursor/MessageCursorQueryResultDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/DTO/Events/MessageEventDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/DTO/Events/MessageEventDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/DTO/GetMessageDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/DTO/GetMessageDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/DTO/RelationshipDetailsDTO.TS" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/DTO/RelationshipDetailsDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/DTO/SavedSearchDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/DTO/SavedSearchDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/DTO/TweetDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/DTO/TweetDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/DTO/TwitterListDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/DTO/TwitterListDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/DTO/UploadedMediaInfo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/DTO/UploadedMediaInfo.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/DTO/UserDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/DTO/UserDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/DTO/Webhooks/WebhookDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/DTO/Webhooks/WebhookDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Events/EventHelpers.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Events/EventHelpers.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Events/TweetinviGlobalEvents.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Events/TweetinviGlobalEvents.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Exceptions/ITwitterException.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Exceptions/ISharebookException.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Exceptions/IWebExceptionInfoExtractor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Exceptions/IWebExceptionInfoExtractor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Extensions/DictionaryExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Extensions/DictionaryExtensions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Extensions/IEnumerableExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Extensions/IEnumerableExtension.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Extensions/LanguageExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Extensions/LanguageExtension.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Extensions/StringExtension.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Extensions/StringExtension.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Extensions/StringFormater.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Extensions/StringFormater.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Extensions/TweetSearchFiltersExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Extensions/TweetSearchFiltersExtension.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Extensions/UriExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Helpers/AttributeHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Helpers/AttributeHelper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Helpers/CredentialsHashCodeGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Helpers/CredentialsHashCodeGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Helpers/EnumHelpers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Helpers/EnumHelpers.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Helpers/HttpUtility.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Helpers/HttpUtility.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Helpers/IHttpClientWebHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Helpers/IHttpClientWebHelper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Helpers/IJsonObjectConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Helpers/IJsonObjectConverter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Helpers/IJsonTwitterConverterRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Helpers/IJsonTwitterConverterRepository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Helpers/IWebHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Helpers/IWebHelper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Helpers/PagedOperationsHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Helpers/PagedOperationsHelper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Helpers/ResourcesHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Helpers/ResourcesHelper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Helpers/TaskDelayer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Helpers/TaskDelayer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Helpers/TweetTextParts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Helpers/TweetTextParts.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Helpers/UnicodeHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Helpers/UnicodeHelper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Injectinvi/IFactory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Injectinvi/IFactory.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Injectinvi/ITweetinviContainer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Injectinvi/ITweetinviModule.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Injectinvi/RegistrationLifetime.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Iterators/Models/PageResult.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Iterators/Models/PageResult.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Iterators/Models/TwitterIteratorPage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Iterators/Models/TwitterIteratorPage.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Iterators/MultiLevelCursorIterator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Iterators/MultiLevelCursorIterator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Json/JsonTypeConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Json/JsonTypeConverter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Json/TweetinviJsonConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Json/TweetinviJsonConverter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/JsonConverters/JsonObjectConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/JsonConverters/JsonObjectConverter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/JsonConverters/JsonQueryConverterRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/JsonConverters/JsonQueryConverterRepository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/AccountSettings.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/AccountSettings.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/AuthenticatedUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/AuthenticatedUser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/Authentication/ReadOnlyConsumerCredentials.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/Authentication/ReadOnlyConsumerCredentials.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/Authentication/ReadOnlyTwitterCredentials.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/Authentication/ReadOnlyTwitterCredentials.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/CredentialsRateLimits.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/CredentialsRateLimits.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/EndpointRateLimit.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/EndpointRateLimit.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/GetTrendsAtResult.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/GetTrendsAtResult.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/Message.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/Message.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/Properties/App.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/Properties/App.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/Properties/Place.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/Properties/Place.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/SavedSearch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/SavedSearch.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/TrendLocation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/TrendLocation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/Tweet.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/Tweet.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/TwitterConfiguration.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/TwitterConfiguration.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/TwitterEntities/DescriptionEntity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/TwitterEntities/DescriptionEntity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/TwitterEntities/HashTagEntity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/TwitterEntities/HashTagEntity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/TwitterEntities/MediaEntity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/TwitterEntities/MediaEntity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/TwitterEntities/SymbolEntity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/TwitterEntities/SymbolEntity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/TwitterEntities/UrlEntity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/TwitterEntities/UrlEntity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/TwitterList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/TwitterList.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/User.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Models/Webhook.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Models/Webhook.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Parameters/BaseGetUsersOfListParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Parameters/BaseGetUsersOfListParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/QueryGenerators/ComputedTweetMode.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/QueryGenerators/ComputedTweetMode.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/QueryGenerators/ITwitterListQueryParameterGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/QueryGenerators/ITwitterListQueryParameterGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/QueryGenerators/IUserQueryParameterGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/QueryGenerators/IUserQueryParameterGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/RateLimit/IRateLimitAwaiter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/RateLimit/IRateLimitAwaiter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/RateLimit/IRateLimitCache.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/RateLimit/IRateLimitCache.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/RateLimit/IRateLimitCacheManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/RateLimit/IRateLimitCacheManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/RateLimit/IRateLimitHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/RateLimit/IRateLimitHelper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/RateLimit/IRateLimitUpdater.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/RateLimit/IRateLimitUpdater.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Streaming/IStreamResultGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Streaming/IStreamResultGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Streaming/IStreamTrackManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Streaming/IStreamTrackManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Streaming/IStringAnalyzer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Streaming/IStringAnalyzer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Streaming/ITrackManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Streaming/ITrackManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Streaming/ITrackableStream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Streaming/ITrackableStream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Streaming/ITrackedStream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Streaming/ITrackedStream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Streaming/ITweetStream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Streaming/ITweetStream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Streaming/ITwitterStream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Streaming/ITwitterStream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Upload/ChunkUploadAppendParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Upload/ChunkUploadAppendParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Upload/IChunkedUploader.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Upload/IChunkedUploader.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Upload/ProgressableStreamContent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Upload/ProgressableStreamContent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Web/FilteredTwitterResult.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Web/FilteredTwitterResult.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Web/HttpResponseMessage" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Web/IOAuthQueryParameter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Web/IOAuthQueryParameter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Web/IOAuthWebRequestGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Web/IOAuthWebRequestGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Web/ITwitterAccessor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Web/ITwitterAccessor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Web/ITwitterResponse.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Web/ITwitterResponse.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Web/IWebRequestExecutor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Web/IWebRequestExecutor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Web/JsonContentFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Web/JsonContentFactory.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Web/TwitterResult.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Web/TwitterResult.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Wrappers/IJConvertWrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Wrappers/IJConvertWrapper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Core/Wrappers/IJObjectStaticWrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Core/Wrappers/IJObjectStaticWrapper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Auth/LocalAuthenticationRequestStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Auth/LocalAuthenticationRequestStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Client/Clients/IAuthClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Client/Clients/IAuthClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Client/Clients/IJsonClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Client/Clients/IJsonClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Client/Clients/IListsClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Client/Clients/IListsClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Client/Clients/IMessagesClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Client/Clients/IMessagesClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Client/Clients/IRateLimitsClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Client/Clients/IRateLimitsClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Client/Clients/IStreamsClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Client/Clients/IStreamsClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Client/Clients/IUsersClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Client/Clients/IUsersClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Client/IRawExecutors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Client/IRawExecutors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Client/Requesters/IExecuteRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Client/Requesters/IExecuteRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Client/Requesters/IUsersRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Client/Requesters/IUsersRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Client/Tools/ITwitterClientFactories.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Client/Tools/ITwitterClientFactories.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/AfterExecutingQueryEventArgs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/AfterExecutingQueryEventArgs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/AfterExecutingQueryExceptionEventArgs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/AfterExecutingQueryExceptionEventArgs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/BeforeExecutingRequestEventArgs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/BeforeExecutingRequestEventArgs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/DisconnectedEventArgs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/DisconnectedEventArgs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/ExceptionEventArgs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/ExceptionEventArgs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/GenericEventArgs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/GenericEventArgs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/LimitReachedEventArgs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/LimitReachedEventArgs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/MediaUploadProgressChangedEventArgs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/MediaUploadProgressChangedEventArgs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/QueryAwaitingEventArgs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/QueryAwaitingEventArgs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/QueryExecutionEventArgs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/QueryExecutionEventArgs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/Stream/UnsupportedMessageReceivedEvent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/Stream/UnsupportedMessageReceivedEvent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/StreamEventReceivedArgs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/StreamEventReceivedArgs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/TweetEventArgs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/TweetEventArgs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/TweetinviContainerEventArgs.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/UnexpectedExceptionThrownEvent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/UnexpectedExceptionThrownEvent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/UploadProgressChangedEventArgs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/UploadProgressChangedEventArgs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/UserWitheldEventArgs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/UserWitheldEventArgs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Events/WarningMessageEventArgs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Events/warningMessageEventArgs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Exceptions/SharebookException.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Exceptions/SharebookException.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Exceptions/TwitterArgumentLimitException.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Exceptions/TwitterArgumentLimitException.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Exceptions/TwitterInvalidCredentialsException.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Exceptions/TwitterInvalidCredentialsException.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Exceptions/TwitterIteratorAlreadyCompletedException.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Exceptions/TwitterIteratorAlreadyCompletedException.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Exceptions/TwitterResponseException.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Exceptions/TwitterResponseException.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Exceptions/TwitterTimeoutException.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Exceptions/TwitterTimeoutException.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/ITwitterClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/ITwitterClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Authentication/ConsumerOnlyCredentials.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Authentication/ConsumerOnlyCredentials.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Authentication/TwitterCredentials.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Authentication/TwitterCredentials.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Entities/IHashTagEntity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Entities/IHashTagEntity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Entities/IMediaEntity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Entities/IMediaEntity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Entities/ISymbolEntity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Entities/ISymbolEntity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Entities/IUrlEntity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Entities/IUrlEntity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Entities/IUserMentionEntity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Entities/IUserMentionEntity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Enum/DisplayLanguages.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Enum/DisplayLanguages.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Enum/Language.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Enum/LanguageFilter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Enum/LanguageFilter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Enum/TimeZoneFromTwitter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Enum/TimeZoneFromTwitter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Enum/TimeZoneFromTwitterExtension.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/CustomRequestHeaders.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/CustomRequestHeaders.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/Events/IMessageEventDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/Events/IMessageEventDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/IAccountSettingsDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/IAccountSettingsDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/IGetMessageDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/IGetMessageDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/IRelationshipDetailsDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/IRelationshipDetailsDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/ISavedSearchDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/ISavedSearchDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/ITweetDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/ITweetDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/ITwitterConfiguration.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/ITwitterConfiguration.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/ITwitterListDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/ITwitterListDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/IUploadedMediaInfo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/IUploadedMediaInfo.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/IUserDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/IUserDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/QueryDTO/IMessageCursorQueryResultDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/QueryDTO/IMessageCursorQueryResultDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/Webhooks/IWebhookDTO.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/DTO/Webhooks/IWebhookDTO.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/IAccountSettings.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/IAccountSettings.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/IAuthenticatedUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/IAuthenticatedUser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/IGetTrendsAtResult.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/IGetTrendsAtResult.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/IMessage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/IMessage.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/IPlace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/IPlace.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/IRelationshipDetails.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/IRelationshipDetails.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/ISavedSearch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/ISavedSearch.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/ITweet.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/ITweet.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/ITwitterList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/ITwitterList.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/ITwitterQuery.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/ITwitterQuery.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/ITwitterRequestParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/ITwitterRequestParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/IUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/IUser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Interfaces/IWebhook.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Interfaces/IWebhook.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/RateLimits/ICredentialsRateLimits.cs" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/RateLimits/ICredentialsRateLimits.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/RateLimits/IEndpointRateLimit.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/RateLimits/IEndpointRateLimit.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/TweetIdentifier.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/TweetIdentifier.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/TwitterListIdentifier.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/TwitterListIdentifier.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/UserDictionary.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/UserDictionary.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/UserIdentifier.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/UserIdentifier.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Webhooks/IAccountActivityRequestHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Webhooks/IAccountActivityRequestHandler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Models/Webhooks/IWebhooksRequest.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Models/Webhooks/IWebhooksRequest.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/MultipartTwitterQuery.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/MultipartTwitterQuery.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/BlockUserParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/BlockUserParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/FollowUserParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/FollowUserParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/GetRelationshipsWithParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/GetRelationshipsWithParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/MuteUserParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/MuteUserParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/ReportUserForSpamParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/ReportUserForSpamParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/UnMuteUserParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/UnMuteUserParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/UnblockUserParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/UnblockUserParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/UnfollowUserParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/AccountClient/UnfollowUserParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/AccountSettingsClient/UpdateAccountSettingsParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/AccountSettingsClient/UpdateAccountSettingsParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/AccountSettingsClient/UpdateProfileBannerParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/AccountSettingsClient/UpdateProfileBannerParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/AccountSettingsClient/UpdateProfileImageParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/AccountSettingsClient/UpdateProfileImageParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/Auth/RequestCredentialsParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/Auth/RequestCredentialsParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/Auth/RequestPinAuthUrlParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/Auth/RequestPinAuthUrlParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/Auth/RequestUrlAuthUrlParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/Auth/RequestUrlAuthUrlParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/CustomRequestParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/CustomRequestParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/HelpClient/GeoSearchParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/HelpClient/GeoSearchParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/DestroyListParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/DestroyListParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/GetListParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/GetListParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/GetListsOwnedByAccountParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/GetListsOwnedByAccountParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/GetListsOwnedByUserParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/GetListsOwnedByUserParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/GetListsSubscribedByUserParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/GetListsSubscribedByUserParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Members/AddMemberToListParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Members/AddMemberToListParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Members/AddMembersToListParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Members/AddMembersToListParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Members/CheckIfUserIsMemberOfListParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Members/CheckIfUserIsMemberOfListParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Members/GetUserListMembershipsParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Members/GetUserListMembershipsParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Members/RemoveMemberFromListParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Members/RemoveMemberFromListParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Subscribers/CheckIfUserIsSubscriberOfListParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Subscribers/CheckIfUserIsSubscriberOfListParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Subscribers/GetListSubscribersParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Subscribers/GetListSubscribersParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Subscribers/GetUserListSubscriptionsParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/Subscribers/GetUserListSubscriptionsParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/TwitterListParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/ListsClient/TwitterListParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/MessageClient/DestroyMessageParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/MessageClient/DestroyMessageParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/MessageClient/PublishMessageParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/MessageClient/PublishMessageParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/Search/CreateSavedSearchParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/Search/CreateSavedSearchParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/Search/SearchTweetsParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/Search/SearchTweetsParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/Search/SearchUsersParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/Search/SearchUsersParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/TimelineClient/GetUserTimelineParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/TimelineClient/GetUserTimelineParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/TrendsClient/GetTrendsLocationCloseToParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/TrendsClient/GetTrendsLocationCloseToParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/TweetsClient/GetFavoriteTweetsParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/TweetsClient/GetFavoriteTweetsParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/TweetsClient/GetOEmbedTweetParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/TweetsClient/GetOEmbedTweetParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/TweetsClient/GetRetweeterIdsParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/TweetsClient/GetRetweeterIdsParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/TweetsClient/PublishRetweetParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/TweetsClient/PublishRetweetParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/TweetsClient/PublishTweetParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/TweetsClient/PublishTweetParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/Upload/UploadOptionalParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/Upload/UploadOptionalParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/Upload/UploadTweetVideoParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/Upload/UploadTweetVideoParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/UsersClient/GetFollowerIdsParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/UsersClient/GetFollowerIdsParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/UsersClient/GetFollowersParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/UsersClient/GetFollowersParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/UsersClient/GetFriendIdsParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/UsersClient/GetFriendIdsParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/UsersClient/GetFriendsParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/UsersClient/GetFriendsParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/UsersClient/GetProfileImageParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/UsersClient/GetProfileImageParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/UsersClient/GetRelationshipBetweenParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/UsersClient/GetRelationshipBetweenParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Parameters/UsersClient/GetUserParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Parameters/UsersClient/GetUserParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Settings/ProxyConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Settings/ProxyConfig.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Settings/SharebookSettings.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Settings/SharebookSettings.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Streaming/Events/ITweetWitheldInfo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Streaming/Events/ITweetWitheldInfo.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Streaming/Events/IUserWitheldInfo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Streaming/Events/IUserWitheldInfo.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Streaming/Events/IWarningMessage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Streaming/Events/IWarningMessage.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Streaming/IAccountActivityStream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Streaming/IAccountActivityStream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Streaming/IFilteredStream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Streaming/IFilteredStream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Streaming/ISampleStream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Streaming/ISampleStream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Streaming/MatchOn.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Streaming/MatchOn.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/Streaming/Webhooks/IWebhookDispatcher.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/Streaming/Webhooks/IWebhookDispatcher.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/TwitterQuery.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/TwitterQuery.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/TwitterRequest.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/TwitterRequest.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/TwitterRequestParameters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/TwitterRequestParameters.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Public/sharebook-consts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/Public/sharebook-consts.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extensions/array-extensions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/extensions/array-extensions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extensions/enumerable-extensions" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/extensions/string-extensions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/extensions/string-extensions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/Exceptions/WebExceptionInfoExtractor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/logic/Exceptions/WebExceptionInfoExtractor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/Helpers/TwitterStringFormatter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/logic/Helpers/TwitterStringFormatter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/Properties/logic-resources.ts" beforeDir="false" afterPath="$PROJECT_DIR$/logic/Properties/logic-resources.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/TweetWithSearchMetadata.ts" beforeDir="false" afterPath="$PROJECT_DIR$/logic/TweetWithSearchMetadata.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/Wrapper/JObjectStaticWrapper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/logic/Wrapper/JObjectStaticWrapper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/Wrapper/JsonConvertWrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/logic/Wrapper/JsonConvertWrapper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/properties/resources.ts" beforeDir="false" afterPath="$PROJECT_DIR$/properties/resources.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/BlockProcessor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/security/BlockProcessor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/CryptoClasses.ts" beforeDir="false" afterPath="$PROJECT_DIR$/security/CryptoClasses.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/CryptoConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/security/CryptoConfig.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/HMAC.ts" beforeDir="false" afterPath="$PROJECT_DIR$/security/HMAC.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/HMACSHA1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/security/HMACSHA1.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/HMACSHA1Generator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/security/HMACSHA1Generator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/HashAlgorithm.ts" beforeDir="false" afterPath="$PROJECT_DIR$/security/HashAlgorithm.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/KeyedHashAlgorithm.ts" beforeDir="false" afterPath="$PROJECT_DIR$/security/KeyedHashAlgorithm.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/SHA1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/security/SHA1.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/BaseRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/BaseRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Clients/AccountActivityClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Clients/AccountActivityClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Clients/AuthClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Clients/AuthClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Clients/ExecuteClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Clients/ExecuteClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Clients/HelpClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Clients/HelpClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Clients/JsonClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Clients/JsonClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Clients/ListsClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Clients/ListsClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Clients/MessagesClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Clients/MessagesClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Clients/RateLimitsClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Clients/RateLimitsClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Clients/SearchClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Clients/SearchClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Clients/StreamsClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Clients/StreamsClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Clients/TimelinesClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Clients/TimelinesClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Clients/TrendsClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Clients/TrendsClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Clients/TweetsClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Clients/TweetsClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Clients/UploadClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Clients/UploadClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Clients/UsersClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Clients/UsersClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/RawExecutors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/RawExecutors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Requesters/AccountActivityRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Requesters/AccountActivityRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Requesters/AccountSettingsRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Requesters/AccountSettingsRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Requesters/AuthRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Requesters/AuthRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Requesters/ExecuteRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Requesters/ExecuteRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Requesters/HelpRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Requesters/HelpRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Requesters/MessageRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Requesters/MessageRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Requesters/SearchRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Requesters/SearchRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Requesters/TimelinesRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Requesters/TimelinesRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Requesters/TrendsRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Requesters/TrendsRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Requesters/TweetsRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Requesters/TweetsRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Requesters/TwitterListsRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Requesters/TwitterListsRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Requesters/UploadRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Requesters/UploadRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Requesters/UsersRequester.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Requesters/UsersRequester.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/Client/Tools/TwitterClientFactories.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/Client/Tools/TwitterClientFactories.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/TweetinviEvents.cs" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/TweetinviEvents.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sharebook/TwitterClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/sharebook/TwitterClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/navbar/login-menu/login-menu.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shared/navbar/login-menu/login-menu.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/navbar/navbar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/shared/navbar/navbar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/services/current-user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shared/services/current-user.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/services/security.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shared/services/security.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/courses/actions/courses.actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/store/courses/actions/courses.actions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams/AccountActivityStream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/streams/AccountActivityStream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams/FilterStreamTweetMatcher.ts" beforeDir="false" afterPath="$PROJECT_DIR$/streams/FilterStreamTweetMatcher.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams/FilterStreamTweetMatcherFactory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/streams/FilterStreamTweetMatcherFactory.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams/FilteredStream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/streams/FilteredStream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams/FilteredStreamMatcherConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/streams/FilteredStreamMatcherConfig.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams/Helpers/QueryGeneratorHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/streams/Helpers/QueryGeneratorHelper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams/SampleStream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/streams/SampleStream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams/StreamTask.ts" beforeDir="false" afterPath="$PROJECT_DIR$/streams/StreamTask.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams/TrackedStream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/streams/TrackedStream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams/TweetStream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/streams/TweetStream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/streams/TwitterStream.ts" beforeDir="false" afterPath="$PROJECT_DIR$/streams/TwitterStream.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webLogic/HttpClientWebHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webLogic/HttpClientWebHelper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webLogic/HttpMethodExtensions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webLogic/HttpMethodExtensions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webLogic/OAuthQueryParameter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webLogic/OAuthQueryParameter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webLogic/OAuthWebRequestGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webLogic/OAuthWebRequestGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webLogic/TweetinviWebLogicModule.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webLogic/TwitterClientHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webLogic/TwitterClientHandler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webLogic/TwitterRequestHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/webLogic/TwitterRequestHandler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webLogic/TwitterResponse.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webLogic/TwitterResponse.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webLogic/WebHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webLogic/WebHelper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webLogic/WebRequestExecutor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/webLogic/WebRequestExecutor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../tslint.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../tslint.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/ApiGateways/Identity/Identity.HttpAggregator.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/ApiGateways/Identity/Identity.HttpAggregator.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/ApiGateways/Web.Bff/aggregator/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/ApiGateways/Web.Bff/aggregator/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/ApiGateways/Web.Bff/aggregator/Web.HttpAggregator.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/ApiGateways/Web.Bff/aggregator/Web.HttpAggregator.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Programming/Services/Quiz/WorldFeed.Programming.Quiz.Common/Sharebook.Programming.Quiz.Common.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Programming/Services/Quiz/WorldFeed.Programming.Quiz.Common/Sharebook.Programming.Quiz.Common.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Programming/Services/Quiz/WorldFeed.Programming.Quiz.Data.Models/Sharebook.Programming.Quiz.Data.Models.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Programming/Services/Quiz/WorldFeed.Programming.Quiz.Data.Models/Sharebook.Programming.Quiz.Data.Models.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Programming/Services/Quiz/WorldFeed.Programming.Quiz.Services.Data/Sharebook.Programming.Quiz.Services.Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Programming/Services/Quiz/WorldFeed.Programming.Quiz.Services.Data/Sharebook.Programming.Quiz.Services.Data.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Programming/Services/Quiz/WorldFeed.Programming.Quiz.Services.Mapping/Sharebook.Programming.Quiz.Services.Mapping.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Programming/Services/Quiz/WorldFeed.Programming.Quiz.Services.Mapping/Sharebook.Programming.Quiz.Services.Mapping.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Programming/Services/Quiz/WorldFeed.Programming.Quiz.Services/Sharebook.Programming.Quiz.Services.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Programming/Services/Quiz/WorldFeed.Programming.Quiz.Services/Sharebook.Programming.Quiz.Services.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Programming/Services/Quiz/WorldFeed.Programming.Quiz.Web/Sharebook.Programming.Quiz.Web.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Programming/Services/Quiz/WorldFeed.Programming.Quiz.Web/Sharebook.Programming.Quiz.Web.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Book/Sharebook.Book.API/Sharebook.Book.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Book/Sharebook.Book.API/Sharebook.Book.API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Identity/Sharebook.Identity.API/Migrations/ApplicationDb/20200822023602_ScreenName.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Identity/Sharebook.Identity.API/Migrations/ApplicationDb/20200822023602_ScreenName.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Identity/Sharebook.Identity.API/Sharebook.Identity.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Identity/Sharebook.Identity.API/Sharebook.Identity.API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Message/Sharebook.Message.API/Sharebook.Message.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Message/Sharebook.Message.API/Sharebook.Message.API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Message/Sharebook.Message.Domain/Sharebook.Message.Domain.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Message/Sharebook.Message.Domain/Sharebook.Message.Domain.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Message/Sharebook.Message.Infrastructure/Sharebook.Message.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Message/Sharebook.Message.Infrastructure/Sharebook.Message.Infrastructure.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Post/Sharebook.Post.API/Sharebook.Post.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Post/Sharebook.Post.API/Sharebook.Post.API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Post/Sharebook.Post.Application/Sharebook.Post.Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Post/Sharebook.Post.Application/Sharebook.Post.Application.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Post/Sharebook.Post.Domain/Sharebook.Post.Domain.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Post/Sharebook.Post.Domain/Sharebook.Post.Domain.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Post/Sharebook.Post.Infrastructure/Sharebook.Post.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Post/Sharebook.Post.Infrastructure/Sharebook.Post.Infrastructure.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Profile/Sharebook.Profile.API/Sharebook.Profile.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Profile/Sharebook.Profile.API/Sharebook.Profile.API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Profile/Sharebook.Profile.Domain/Sharebook.Profile.Domain.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Profile/Sharebook.Profile.Domain/Sharebook.Profile.Domain.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Profile/Sharebook.Profile.Infrastructure/Sharebook.Profile.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Profile/Sharebook.Profile.Infrastructure/Sharebook.Profile.Infrastructure.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Search/Sharebook.Search/Sharebook.Search.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Search/Sharebook.Search/Sharebook.Search.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Trend/Sharebook.Trend.API/Sharebook.Trend.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Trend/Sharebook.Trend.API/Sharebook.Trend.API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Trend/Sharebook.Trend.Domain/Sharebook.Trend.Domain.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Trend/Sharebook.Trend.Domain/Sharebook.Trend.Domain.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Trend/Sharebook.Trend.Infrastructure/Sharebook.Trend.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Trend/Sharebook.Trend.Infrastructure/Sharebook.Trend.Infrastructure.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Upload/Sharebook.Upload.API/Sharebook.Upload.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Upload/Sharebook.Upload.API/Sharebook.Upload.API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Upload/Sharebook.Upload.API/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Upload/Sharebook.Upload.API/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Upload/Sharebook.Upload.Application/Sharebook.Upload.Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Upload/Sharebook.Upload.Application/Sharebook.Upload.Application.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Upload/Sharebook.Upload.Domain/Sharebook.Upload.Domain.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Upload/Sharebook.Upload.Domain/Sharebook.Upload.Domain.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Services/Upload/Sharebook.Upload.Infrastructure/Sharebook.Upload.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Services/Upload/Sharebook.Upload.Infrastructure/Sharebook.Upload.Infrastructure.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Sharebook.AspNet/Sharebook.AspNet.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Sharebook.AspNet/Sharebook.AspNet.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Sharebook.Common/Sharebook.Common.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Sharebook.Common/Sharebook.Common.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Sharebook.Controllers/Sharebook.Controllers.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Sharebook.Controllers/Sharebook.Controllers.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Sharebook.Notifications/Sharebook.Notifications.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Sharebook.Notifications/Sharebook.Notifications.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Sharebook.WebLogic/Sharebook.WebLogic.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Sharebook.WebLogic/Sharebook.WebLogic.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Server/src/Sharebook/Sharebook.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Server/src/Sharebook/Sharebook.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +509,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../eshop/eShopOnContainers/src/Web/WebSPA" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -83,6 +534,8 @@
       <option name="presentableId" value="Default" />
       <updated>1603561044758</updated>
       <workItem from="1603561045823" duration="1867000" />
+      <workItem from="1604726529176" duration="22000" />
+      <workItem from="1605014070153" duration="36000" />
     </task>
     <servers />
   </component>
@@ -99,12 +552,17 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state width="553" height="466" key="DebuggerActiveHint" timestamp="1603562099512">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="553" height="466" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1603562099512" />
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1605014104947">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605014104947" />
     <state width="1515" height="261" key="GridCell.Tab.0.bottom" timestamp="1603563472455">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -160,7 +618,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/exam</url>
           <line>50</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

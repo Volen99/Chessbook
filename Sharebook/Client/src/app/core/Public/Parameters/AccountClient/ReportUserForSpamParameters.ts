@@ -1,8 +1,7 @@
 ﻿import {IUserIdentifier} from "../../Models/Interfaces/IUserIdentifier";
 import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {UserIdentifier} from "../../Models/UserIdentifier";
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
-import {IUnblockUserParameters} from "./UnblockUserParameters";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 // https://dev.twitter.com/en/docs/accounts-and-users/mute-block-report-users/api-reference/post-users-report_spam
 export interface IReportUserForSpamParameters extends ICustomRequestParameters {

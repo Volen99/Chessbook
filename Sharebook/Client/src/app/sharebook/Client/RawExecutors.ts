@@ -1,4 +1,4 @@
-﻿import {Inject} from "@angular/core";
+﻿import {Inject, Injectable} from "@angular/core";
 
 import {IUploadRequester, IUploadRequesterToken} from "src/app/core/Public/Client/Requesters/IUploadRequester";
 import {IRawExecutors} from 'src/app/core/Public/Client/IRawExecutors';
@@ -13,6 +13,9 @@ import {ITweetsRequester, ITweetsRequesterToken} from "../../core/Public/Client/
 import {IUsersRequester, IUsersRequesterToken} from "../../core/Public/Client/Requesters/IUsersRequester";
 import {IAccountActivityRequester, IAccountActivityRequesterToken} from "../../core/Public/Client/Requesters/IAccountActivityRequester";
 
+@Injectable({
+  providedIn: 'root',
+})
 export class RawExecutors implements IRawExecutors {
   private readonly _authRequester: IAuthRequester;
   private readonly _accountSettingsRequester: IAccountSettingsRequester;

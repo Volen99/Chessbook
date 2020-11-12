@@ -72,12 +72,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Sharebook.Common\WorldFeed.Common.csproj" />
-    <ProjectReference Include="..\..\..\Sharebook.Security\WorldFeed.Security.csproj" />
-    <ProjectReference Include="..\..\..\Sharebook.WebLogic\WorldFeed.WebLogic.csproj" />
-    <ProjectReference Include="..\..\..\Sharebook\WorldFeed.csproj" />
-    <ProjectReference Include="..\Sharebook.Identity.Domain\WorldFeed.Identity.Domain.csproj" />
-    <ProjectReference Include="..\Sharebook.Identity.Infrastructure\WorldFeed.Identity.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Sharebook.Common\Sharebook.Common.csproj" />
+    <ProjectReference Include="..\..\..\Sharebook.Security\Sharebook.Security.csproj" />
+    <ProjectReference Include="..\..\..\Sharebook.WebLogic\Sharebook.WebLogic.csproj" />
+    <ProjectReference Include="..\..\..\Sharebook\Sharebook.csproj" />
+    <ProjectReference Include="..\Sharebook.Identity.Domain\Sharebook.Identity.Domain.csproj" />
+    <ProjectReference Include="..\Sharebook.Identity.Infrastructure\Sharebook.Identity.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

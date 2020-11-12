@@ -152,7 +152,7 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WorldFeed.Common.Models.Entities.Description", b =>
+            modelBuilder.Entity("Sharebook.Common.Models.Entities.Description", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -164,7 +164,7 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
                     b.ToTable("Description");
                 });
 
-            modelBuilder.Entity("WorldFeed.Common.Models.Entities.Indices", b =>
+            modelBuilder.Entity("Sharebook.Common.Models.Entities.Indices", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

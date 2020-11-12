@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {ICreateAccountActivityWebhookParameters} from "../../Parameters/AccountActivity/RegisterAccountActivityWebhookParameters";
@@ -90,6 +90,6 @@ export interface IAccountActivityRequester {
 
 export const IAccountActivityRequesterToken = new InjectionToken<IAccountActivityRequester>('IAccountActivityRequester', {
   providedIn: 'root',
-  factory: () => new AccountActivityRequester(Inject(TwitterClient), Inject(TwitterClientEvents),
-    Inject(AccountActivityClientRequiredParametersValidator), Inject(AccountActivityController)),
+  factory: () => new AccountActivityRequester(inject(TwitterClient), inject(TwitterClientEvents),
+    inject(AccountActivityClientRequiredParametersValidator), inject(AccountActivityController)),
 });

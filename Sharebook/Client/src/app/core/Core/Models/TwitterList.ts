@@ -1,4 +1,6 @@
-﻿import {IUserIdentifier} from '../../Public/Models/Interfaces/IUserIdentifier';
+﻿import {Inject} from "@angular/core";
+
+import {IUserIdentifier} from '../../Public/Models/Interfaces/IUserIdentifier';
 import {PrivacyMode} from '../../Public/Models/Enum/PrivacyMode';
 import {ITwitterList} from "../../Public/Models/Interfaces/ITwitterList";
 import {ITwitterListDTO} from "../../Public/Models/Interfaces/DTO/ITwitterListDTO";
@@ -8,14 +10,15 @@ import {ITweet} from "../../Public/Models/Interfaces/ITweet";
 import {GetMembersOfListParameters} from "../../Public/Parameters/ListsClient/Members/GetMembersOfListParameters";
 import {UpdateListParameters} from "../../Public/Parameters/ListsClient/UpdateListParameters";
 import {IListMetadataParameters} from "../../Public/Parameters/ListsClient/IListMetadataParameters";
-import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
-import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import {TwitterClient} from "../../../sharebook/TwitterClient";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 export class TwitterList implements ITwitterList {
   private _twitterListDTO: ITwitterListDTO;
-  private _owner: IUser;
 
-  constructor(twitterListDTO: ITwitterListDTO, client: ITwitterClient) {
+  constructor(@Inject(TwitterList) twitterListDTO: ITwitterListDTO,
+              @Inject(TwitterClient) client: ITwitterClient) {
     // ! order is important, client should be at the top so that `UpdateOwner`
     // can use the client factories to create the owner user.
     this.client = client;
@@ -23,6 +26,8 @@ export class TwitterList implements ITwitterList {
     this._twitterListDTO = twitterListDTO;
     this.updateOwner();
   }
+
+  private _owner: IUser;
 
   get twitterListDTO(): ITwitterListDTO {
     return this._twitterListDTO;

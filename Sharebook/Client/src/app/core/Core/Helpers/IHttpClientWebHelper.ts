@@ -1,16 +1,19 @@
-﻿import {ITwitterQuery} from "../../Public/Models/Interfaces/ITwitterQuery";
+﻿import {inject, InjectionToken} from "@angular/core";
+import {HttpClient, HttpResponse} from "@angular/common/http";
+
+import {ITwitterQuery} from "../../Public/Models/Interfaces/ITwitterQuery";
 import {ITwitterClientHandler} from "../Web/ITwitterClientHandler";
-import {HttpClient} from "@aspnet/signalr";
-import {InjectionToken} from "@angular/core";
 import {HttpClientWebHelper} from "../../../webLogic/HttpClientWebHelper";
+import {OAuthWebRequestGeneratorFactory} from "../../../webLogic/OAuthWebRequestGenerator";
+import {Observable} from "rxjs";
 
 export interface IHttpClientWebHelper {
-  getHttpResponseAsync(twitterQuery: ITwitterQuery, handler: ITwitterClientHandler /*= null*/): Promise<HttpResponseMessage>;
+  getHttpResponseAsync(twitterQuery: ITwitterQuery, handler?: ITwitterClientHandler /*= null*/): Promise<Response>;
 
-  getHttpClient(twitterQuery: ITwitterQuery, handler: ITwitterClientHandler /*= null*/): HttpClient;
+  getHttpClient(twitterQuery: ITwitterQuery, handler?: ITwitterClientHandler /*= null*/): HttpClient;
 }
 
-export const ITweetIdentifierToken = new InjectionToken<IHttpClientWebHelper>('IHttpClientWebHelper', {
+export const IHttpClientWebHelperToken = new InjectionToken<IHttpClientWebHelper>('IHttpClientWebHelper', {
   providedIn: 'root',
-  factory: () => new HttpClientWebHelper(),
+  factory: () => new HttpClientWebHelper(inject(OAuthWebRequestGeneratorFactory), inject(HttpClient)),
 });

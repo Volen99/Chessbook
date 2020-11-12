@@ -2,7 +2,7 @@
 import {IMessageEventDTO} from "../../../Public/Models/Interfaces/DTO/Events/IMessageEventDTO";
 import {IEventInitiatedViaDTO} from "../../../Public/Models/Interfaces/DTO/IEventInitiatedViaDTO";
 import {IMessageCreateDTO} from "../../../Public/Models/Interfaces/DTO/IMessageCreateDTO";
-import DateTime from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime';
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 export class MessageEventDTO implements IMessageEventDTO {
   // [JsonProperty("type")]

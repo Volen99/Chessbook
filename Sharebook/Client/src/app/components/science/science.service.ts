@@ -6,7 +6,9 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../../store/app.state';
 import {ConfigurationService} from "../../shared/services/configuration.service";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ScienceService {
   private http: HttpClient;
   private store: Store<AppState>;
@@ -30,8 +32,7 @@ export class ScienceService {
   }
 
   upload(formData) {
-    debugger;
-    return this.http.post<>(this.uploadUrl + '/upload/image', formData, {
+    return this.http.post<any>(this.uploadUrl + '/upload/image', formData, {
       // reportProgress: true,
       // observe: 'events',
     });

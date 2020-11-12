@@ -1,13 +1,14 @@
-﻿import {ITwitterAccessor} from "../../core/Core/Web/ITwitterAccessor";
+﻿import {Inject, Injectable} from "@angular/core";
+
+import {ITwitterAccessor, ITwitterAccessorToken} from "../../core/Core/Web/ITwitterAccessor";
 import {IAccountActivityController} from "../../core/Core/Controllers/IAccountActivityController";
 import {ITwitterResult} from "../../core/Core/Web/TwitterResult";
 import {HttpMethod} from 'src/app/core/Public/Models/Enum/HttpMethod';
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
-import {IAccountActivityQueryGenerator} from "./AccountActivityQueryGenerator";
+import {IAccountActivityQueryGenerator, IAccountActivityQueryGeneratorToken} from "./AccountActivityQueryGenerator";
 import {ICreateAccountActivityWebhookParameters} from "../../core/Public/Parameters/AccountActivity/RegisterAccountActivityWebhookParameters";
 import {IWebhookDTO} from "../../core/Public/Models/Interfaces/DTO/Webhooks/IWebhookDTO";
 import {IGetAccountActivityWebhookEnvironmentsParameters} from "../../core/Public/Parameters/AccountActivity/GetAccountActivityWebhookEnvironmentsParameters";
-import {TwitterCredentials} from "../../core/Public/Models/Authentication/TwitterCredentials";
 import {IGetAccountActivityWebhookEnvironmentsResultDTO} from "../../core/Public/Models/Interfaces/DTO/Webhooks/IGetAccountActivityWebhookEnvironmentsResultDTO";
 import {ConsumerOnlyCredentials} from "../../core/Public/Models/Authentication/ConsumerOnlyCredentials";
 import {IGetAccountActivityEnvironmentWebhooksParameters} from "../../core/Public/Parameters/AccountActivity/GetAccountActivityEnvironmentWebhooksParameters";
@@ -21,11 +22,15 @@ import {IUnsubscribeFromAccountActivityParameters} from "../../core/Public/Param
 import {ISubscribeToAccountActivityParameters} from "../../core/Public/Parameters/AccountActivity/SubscribeToAllEnvironmentEventsParameters";
 import {ITriggerAccountActivityWebhookCRCParameters} from "../../core/Public/Parameters/AccountActivity/TriggerAccountActivityCRCParameters";
 
+@Injectable({
+  providedIn: 'root',
+})
 export class AccountActivityController implements IAccountActivityController {
   private readonly _twitterAccessor: ITwitterAccessor;
   private readonly _accountActivityQueryGenerator: IAccountActivityQueryGenerator;
 
-  constructor(twitterAccessor: ITwitterAccessor, accountActivityQueryGenerator: IAccountActivityQueryGenerator) {
+  constructor(@Inject(ITwitterAccessorToken) twitterAccessor: ITwitterAccessor,
+              @Inject(IAccountActivityQueryGeneratorToken) accountActivityQueryGenerator: IAccountActivityQueryGenerator) {
     this._twitterAccessor = twitterAccessor;
     this._accountActivityQueryGenerator = accountActivityQueryGenerator;
   }
@@ -33,7 +38,7 @@ export class AccountActivityController implements IAccountActivityController {
   public createAccountActivityWebhookAsync(parameters: ICreateAccountActivityWebhookParameters, request: ITwitterRequest): Promise<ITwitterResult<IWebhookDTO>> {
     request.query.url = this._accountActivityQueryGenerator.getCreateAccountActivityWebhookQuery(parameters);
     request.query.httpMethod = HttpMethod.POST;
-    return this._twitterAccessor.executeRequestAsync<IWebhookDTO>(request);
+    return this._twitterAccessor.executeRequestGenericAsync<IWebhookDTO>(request);
   }
 
   public getAccountActivityWebhookEnvironmentsAsync(parameters: IGetAccountActivityWebhookEnvironmentsParameters, request: ITwitterRequest): Promise<ITwitterResult<IGetAccountActivityWebhookEnvironmentsResultDTO>> {
@@ -41,9 +46,9 @@ export class AccountActivityController implements IAccountActivityController {
 
     request.query.url = this._accountActivityQueryGenerator.getAccountActivityWebhookEnvironmentsQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;
-    request.query.twitterCredentials = new TwitterCredentials(consumerCredentials);
+    // request.query.twitterCredentials = new TwitterCredentials(consumerCredentials);
 
-    return this._twitterAccessor.executeRequestAsync<IGetAccountActivityWebhookEnvironmentsResultDTO>(request);
+    return this._twitterAccessor.executeRequestGenericAsync<IGetAccountActivityWebhookEnvironmentsResultDTO>(request);
   }
 
   public getAccountActivityEnvironmentWebhooksAsync(parameters: IGetAccountActivityEnvironmentWebhooksParameters, request: ITwitterRequest): Promise<ITwitterResult<IWebhookDTO[]>> {
@@ -51,9 +56,9 @@ export class AccountActivityController implements IAccountActivityController {
 
     request.query.url = this._accountActivityQueryGenerator.getAccountActivityEnvironmentWebhooksQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;
-    request.query.twitterCredentials = new TwitterCredentials(consumerCredentials);
+    // request.query.twitterCredentials = new TwitterCredentials(consumerCredentials);
 
-    return this._twitterAccessor.executeRequestAsync<IWebhookDTO[]>(request);
+    return this._twitterAccessor.executeRequestGenericAsync<IWebhookDTO[]>(request);
   }
 
   public deleteAccountActivityWebhookAsync(parameters: IDeleteAccountActivityWebhookParameters, request: ITwitterRequest): Promise<ITwitterResult> {
@@ -79,7 +84,7 @@ export class AccountActivityController implements IAccountActivityController {
 
     request.query.url = this._accountActivityQueryGenerator.getUnsubscribeToAccountActivityQuery(parameters);
     request.query.httpMethod = HttpMethod.DELETE;
-    request.query.twitterCredentials = new TwitterCredentials(consumerCredentials);
+    // request.query.twitterCredentials = new TwitterCredentials(consumerCredentials);
 
     return this._twitterAccessor.executeRequestAsync(request);
   }
@@ -89,9 +94,9 @@ export class AccountActivityController implements IAccountActivityController {
 
     request.query.url = this._accountActivityQueryGenerator.getCountAccountActivitySubscriptionsQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;
-    request.query.twitterCredentials = new TwitterCredentials(consumerCredentials);
+    // request.query.twitterCredentials = new TwitterCredentials(consumerCredentials);
 
-    return this._twitterAccessor.executeRequestAsync<IWebhookSubscriptionsCount>(request);
+    return this._twitterAccessor.executeRequestGenericAsync<IWebhookSubscriptionsCount>(request);
   }
 
   public isAccountSubscribedToAccountActivityAsync(parameters: IIsAccountSubscribedToAccountActivityParameters, request: ITwitterRequest): Promise<ITwitterResult> {
@@ -105,8 +110,8 @@ export class AccountActivityController implements IAccountActivityController {
 
     request.query.url = this._accountActivityQueryGenerator.getAccountActivitySubscriptionsQuery(parameters);
     request.query.httpMethod = HttpMethod.GET;
-    request.query.twitterCredentials = new TwitterCredentials(consumerCredentials);
+    // request.query.twitterCredentials = new TwitterCredentials(consumerCredentials);
 
-    return this._twitterAccessor.executeRequestAsync<IWebhookEnvironmentSubscriptionsDTO>(request);
+    return this._twitterAccessor.executeRequestGenericAsync<IWebhookEnvironmentSubscriptionsDTO>(request);
   }
 }

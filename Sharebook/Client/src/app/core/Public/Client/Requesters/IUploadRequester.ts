@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {UploadRequester} from "../../../../sharebook/Client/Requesters/UploadRequester";
 import {IChunkUploadResult} from 'src/app/core/Core/Upload/ChunkUploaderResult';
@@ -48,6 +48,6 @@ export interface IUploadRequester {
 
 export const IUploadRequesterToken = new InjectionToken<IUploadRequester>('IUploadRequester', {
   providedIn: 'root',
-  factory: () => new UploadRequester(Inject(TwitterClient), Inject(TwitterClientEvents), Inject(UploadClientRequiredParametersValidator),
-    Inject(UploadQueryExecutor), Inject(UploadMediaStatusQueryExecutor), Inject(UploadHelper)),
+  factory: () => new UploadRequester(inject(TwitterClient), inject(TwitterClientEvents), inject(UploadClientRequiredParametersValidator),
+    inject(UploadQueryExecutor), inject(UploadMediaStatusQueryExecutor), inject(UploadHelper)),
 });

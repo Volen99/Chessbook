@@ -1,4 +1,4 @@
-import Exception from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exception";
+import Exception from "typescript-dotnet-commonjs/System/Exception";
 
 // Exception raised when attempting to move to a next page of an iterator that already completed its lifecycle.
 export class TwitterIteratorAlreadyCompletedException extends Exception {

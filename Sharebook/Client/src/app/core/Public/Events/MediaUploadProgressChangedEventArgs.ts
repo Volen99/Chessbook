@@ -11,8 +11,8 @@ export class MediaUploadProgressChangedEventArgs extends UploadProgressChangedEv
   constructor(state: UploadProgressState, numberOfBytesUploaded: number, totalOfBytesToUpload: number) {
     super(numberOfBytesUploaded, totalOfBytesToUpload);
     this.State = state;
-    super.NumberOfBytesUploaded = numberOfBytesUploaded;
-    super.TotalOfBytesToUpload = totalOfBytesToUpload;
+    super.numberOfBytesUploaded = numberOfBytesUploaded;
+    super.totalOfBytesToUpload = totalOfBytesToUpload;
   }
 
   public State: UploadProgressState;

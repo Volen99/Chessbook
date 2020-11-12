@@ -32,5 +32,5 @@ export interface IOEmbedTweet {
 
 export const IOEmbedTweetToken = new InjectionToken<IOEmbedTweet>('IOEmbedTweet', {
   providedIn: 'root',
-  factory: () => new OEmbedTweet(Inject(OEmbedTweetDTO)),
+  factory: () => new OEmbedTweet(inject(OEmbedTweetDTO)),
 });

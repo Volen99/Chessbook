@@ -1,19 +1,19 @@
-﻿import {EventArgs} from "../../../c#-objects/TypeScript.NET-Core/packages/Events/source/EventArgs";
-import {ITweet} from "../Models/Interfaces/ITweet";
+﻿import {ITweet} from "../Models/Interfaces/ITweet";
 import {ILocation} from "../Models/Interfaces/ILocation";
 import {MatchOn} from '../Streaming/MatchOn';
 import {ITweetLocationRemovedInfo} from "../Streaming/Events/ITweetLocationRemovedInfo";
 import {ITweetWitheldInfo} from '../Streaming/Events/ITweetWitheldInfo';
 
-export class TweetEventArgs extends EventArgs {
+export class TweetEventArgs /*extends EventArgs*/ {
   constructor(tweet: ITweet, json: string) {
-    super();
-    this.Tweet = tweet;
-    this.Json = json;
+    // super();
+
+    this.tweet = tweet;
+    this.json = json;
   }
 
-  public Tweet: ITweet;
-  public Json: string;
+  public tweet: ITweet;
+  public json: string;
 }
 
 // Event informing that a tweet was received by a stream
@@ -29,36 +29,38 @@ export class MatchedTweetReceivedEventArgs extends TweetEventArgs {
     super(tweet, json);
   }
 
-  public MatchingTracks: string[];
-  public MatchingLocations: ILocation[];
-  public MatchingFollowers: number[];
-  public MatchOn: MatchOn;
+  public matchingTracks: string[];
+  public matchingLocations: ILocation[];
+  public matchingFollowers: number[];
+  public matchOn: MatchOn;
 
-  public RetweetMatchingTracks: string[];
-  public RetweetMatchingLocations: ILocation[];
-  public RetweetMatchingFollowers: number[];
-  public RetweetMatchOn: MatchOn;
+  public retweetMatchingTracks: string[];
+  public retweetMatchingLocations: ILocation[];
+  public retweetMatchingFollowers: number[];
+  public retweetMatchOn: MatchOn;
 
-  public QuotedTweetMatchingTracks: string[];
-  public QuotedTweetMatchingLocations: ILocation[];
-  public QuotedTweetMatchingFollowers: number[];
-  public QuotedTweetMatchOn: MatchOn;
+  public quotedTweetMatchingTracks: string[];
+  public quotedTweetMatchingLocations: ILocation[];
+  public quotedTweetMatchingFollowers: number[];
+  public quotedTweetMatchOn: MatchOn;
 }
 
-export class TweetLocationDeletedEventArgs extends EventArgs {
+export class TweetLocationDeletedEventArgs /*extends EventArgs*/ {
   constructor(tweetLocationRemovedInfo: ITweetLocationRemovedInfo) {
-    super();
-    this.TweetLocationRemovedInfo = tweetLocationRemovedInfo;
+   // super();
+
+    this.tweetLocationRemovedInfo = tweetLocationRemovedInfo;
   }
 
-  public TweetLocationRemovedInfo: ITweetLocationRemovedInfo;
+  public tweetLocationRemovedInfo: ITweetLocationRemovedInfo;
 }
 
-export class TweetWitheldEventArgs extends EventArgs {
+export class TweetWitheldEventArgs /*extends EventArgs*/ {
   constructor(tweetWitheldInfo: ITweetWitheldInfo) {
-    super();
-    this.TweetWitheldInfo = tweetWitheldInfo;
+   // super();
+
+    this.tweetWitheldInfo = tweetWitheldInfo;
   }
 
-  public TweetWitheldInfo: ITweetWitheldInfo;
+  public tweetWitheldInfo: ITweetWitheldInfo;
 }

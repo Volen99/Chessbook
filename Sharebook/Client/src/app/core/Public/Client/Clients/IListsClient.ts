@@ -168,17 +168,9 @@ export interface IListsClient {
   /// <para> https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-create </para>
   addMemberToListAsync(parameters: IAddMemberToListParameters): Promise<ITwitterList>;
 
-  addMembersToListAsync(listId: number, userIds: Iterable<number>): Promise<ITwitterList>;
+  addMembersToListAsync(listId: number, userIdsOrUsernamesOrUsers: Array<number | string | IUserIdentifier>): Promise<ITwitterList>;
 
-  addMembersToListAsync(listId: number, usernames: Iterable<string>): Promise<ITwitterList>;
-
-  addMembersToListAsync(listId: number, users: Iterable<IUserIdentifier>): Promise<ITwitterList>;
-
-  addMembersToListAsync(list: ITwitterListIdentifier, userIds: Iterable<number>): Promise<ITwitterList>;
-
-  addMembersToListAsync(list: ITwitterListIdentifier, usernames: Iterable<string>): Promise<ITwitterList>;
-
-  addMembersToListAsync(list: ITwitterListIdentifier, users: Iterable<IUserIdentifier>): Promise<ITwitterList>;
+  addMembersToListAsync(list: ITwitterListIdentifier, userIdsOrUsernamesOrUsers: Array<number | string | IUserIdentifier>): Promise<ITwitterList>;
 
   /// <summary>
   /// Add multiple members to a list
@@ -289,17 +281,9 @@ export interface IListsClient {
   /// </summary>
   removeMemberFromListAsync(parameters: IRemoveMemberFromListParameters): Promise<ITwitterList>;
 
-  removeMembersFromListAsync(listId: number, userIds: Iterable<number>): Promise<ITwitterList>;
+  removeMembersFromListAsync(listId: number, userIdsOrUsernamesOrUsers: Array<number | string | IUserIdentifier>): Promise<ITwitterList>;
 
-  removeMembersFromListAsync(listId: number, usernames: Iterable<string>): Promise<ITwitterList>;
-
-  removeMembersFromListAsync(listId: number, users: Iterable<IUserIdentifier>): Promise<ITwitterList>;
-
-  removeMembersFromListAsync(list: ITwitterListIdentifier, userIds: Iterable<number>): Promise<ITwitterList>;
-
-  removeMembersFromListAsync(list: ITwitterListIdentifier, usernames: Iterable<string>): Promise<ITwitterList>;
-
-  removeMembersFromListAsync(list: ITwitterListIdentifier, users: Iterable<IUserIdentifier>): Promise<ITwitterList>;
+  removeMembersFromListAsync(list: ITwitterListIdentifier, userIdsOrUsernamesOrUsers: Array<number | string | IUserIdentifier>): Promise<ITwitterList>;
 
   /// <summary>
   /// Remove multiple members from a list

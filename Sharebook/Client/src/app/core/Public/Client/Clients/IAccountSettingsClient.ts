@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {IAccountSettingsClientParametersValidator} from "../../../Core/Client/Validators/AccountSettingsClientParametersValidator";
 import {IAccountSettings} from "../../Models/Interfaces/IAccountSettings";
@@ -68,5 +68,5 @@ export interface IAccountSettingsClient {
 
 export const IAccountSettingsClientToken = new InjectionToken<IAccountSettingsClient>('IAccountSettingsClient', {
   providedIn: 'root',
-  factory: () => new AccountSettingsClient(Inject(TwitterClient)),
+  factory: () => new AccountSettingsClient(inject(TwitterClient)),
 });

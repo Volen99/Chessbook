@@ -1,7 +1,7 @@
 ﻿import {IUploadedImageDetails} from "./IUploadedImageDetails";
 import {IUploadedVideoDetails} from "./IUploadedVideoDetails";
 import {IUploadProcessingInfo} from "./IUploadProcessingInfo";
-import DateTime from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 export interface IUploadedMediaInfo {
   createdDate: DateTime; // DateTimeOffset

@@ -2,13 +2,13 @@ import {Injectable, InjectionToken} from "@angular/core";
 
 import {IHelpClientParametersValidator} from "./HelpClientParametersValidator";
 import {IGetRateLimitsParameters} from "../../../Public/Parameters/HelpClient/GetRateLimitsParameters";
-import ArgumentNullException from 'src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentNullException';
 import {IGetTwitterConfigurationParameters} from "../../../Public/Parameters/HelpClient/GetTwitterConfigurationParameters";
 import {IGetSupportedLanguagesParameters} from "../../../Public/Parameters/HelpClient/GetSupportedLanguagesParameters";
 import {IGetPlaceParameters} from "../../../Public/Parameters/HelpClient/GetPlaceParameters";
 import {IGeoSearchParameters} from "../../../Public/Parameters/HelpClient/GeoSearchParameters";
 import {IGeoSearchReverseParameters} from "../../../Public/Parameters/HelpClient/GeoSearchReverseParameters";
-import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
+import ArgumentNullException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentNullException";
+import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
 
 export interface IHelpClientRequiredParametersValidator extends IHelpClientParametersValidator {
 }
@@ -18,7 +18,9 @@ export const IHelpClientRequiredParametersValidatorToken = new InjectionToken<IH
   factory: () => new HelpClientRequiredParametersValidator(),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class HelpClientRequiredParametersValidator implements IHelpClientRequiredParametersValidator {
 
   public validate(parameters: IGetRateLimitsParameters
@@ -28,16 +30,16 @@ export class HelpClientRequiredParametersValidator implements IHelpClientRequire
     | IGeoSearchParameters
     | IGeoSearchReverseParameters): void {
     if (parameters == null) {
-      throw new ArgumentNullException(nameof(parameters));
+      throw new ArgumentNullException(`nameof(parameters)`);
     }
 
     if (this.isIGetPlaceParameters(parameters)) {
       if (!parameters.placeId) {
-        throw new ArgumentException(`${nameof(parameters.placeId)}`);
+        throw new ArgumentException(`${`nameof(parameters.placeId)`}`);
       }
     } else if (this.isIGeoSearchReverseParameters(parameters)) {
       if (parameters.coordinates == null) {
-        throw new ArgumentNullException(`${nameof(parameters.coordinates)}`);
+        throw new ArgumentNullException(`${`nameof(parameters.coordinates)`}`);
       }
     }
 

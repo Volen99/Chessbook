@@ -31,8 +31,8 @@ export const ITwitterCredentialsToken = new InjectionToken<ITwitterCredentials>(
 // consumer to connect to a service. It does not contain any logic
 export class TwitterCredentials implements ITwitterCredentials {
   constructor(consumerKey?: string, consumerSecret?: string, bearerToken?: string, accessToken?: string,
-              accessTokenSecret?: string, sourceTwitter: IReadOnlyTwitterCredentials,
-              sourceConsumer: IReadOnlyConsumerCredentials) {
+              accessTokenSecret?: string, sourceTwitter?: IReadOnlyTwitterCredentials,
+              sourceConsumer?: IReadOnlyConsumerCredentials) {
     if (consumerKey || consumerSecret) {
       this.consumerKey = consumerKey;
       this.consumerSecret = consumerSecret;
@@ -68,11 +68,11 @@ export class TwitterCredentials implements ITwitterCredentials {
   public accessTokenSecret: string;
 
   public equals(obj: object): boolean {
-    return GetHashCode() === obj?.GetHashCode();
+    return null; // return GetHashCode() === obj?.GetHashCode();
   }
 
   public getHashCode(): number {
-    return CredentialsHashCodeGenerator.createHash(this).GetHashCode();
+   return null; // return CredentialsHashCodeGenerator.createHash(this).GetHashCode();
   }
 }
 

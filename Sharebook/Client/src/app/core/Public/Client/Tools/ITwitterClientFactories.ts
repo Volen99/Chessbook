@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {IUploadedMediaInfo} from "../../Models/Interfaces/DTO/IUploadedMediaInfo";
 import {IMedia} from "../../Models/Interfaces/IMedia";
@@ -41,6 +41,9 @@ import {CredentialsRateLimitsDTO} from "../../../Core/DTO/CredentialsRateLimitsD
 import {TwitterClientFactories} from "../../../../sharebook/Client/Tools/TwitterClientFactories";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
 import {IRelationshipDetails} from "../../Models/Interfaces/IRelationshipDetails";
+import {ICredentialsRateLimits} from "../../Models/RateLimits/ICredentialsRateLimits";
+import {IJsonObjectConverter} from "../../../Core/Helpers/IJsonObjectConverter";
+import {JsonObjectConverter} from "../../../Core/JsonConverters/JsonObjectConverter";
 
 export interface ITwitterClientFactories {
   // ACCOUNT SETTINGS
@@ -100,6 +103,10 @@ export interface ITwitterClientFactories {
   createSavedSearch(savedSearchDTO: ISavedSearchDTO): ISavedSearch;
 
   // SEARCH
+
+  // Creates search results from json
+  createSearchResult(json: string): ISearchResults;
+
   createSearchResult(searchResultsDTO: ISearchResultsDTO): ISearchResults;
 
   // TWEET
@@ -171,20 +178,15 @@ export interface ITwitterClientFactories {
 
   // MEDIA
 
-  /// Creates a media from json
+  // Creates a media from json
   createMedia(json: string): IMedia;
 
   // Creates uploaded media information from json
   createUploadedMediaInfo(json: string): IUploadedMediaInfo;
-
-  // SEARCH
-
-  // Creates search results from json
-  createSearchResult(json: string): ISearchResults;
 }
 
 
 export const ITwitterClientFactoriesToken = new InjectionToken<ITwitterClientFactories>('ITwitterClientFactories', {
   providedIn: 'root',
-  factory: () => new TwitterClientFactories(Inject(TwitterClient), Inject(JsonObjectConverter)),
+  factory: () => new TwitterClientFactories(inject(TwitterClient), inject(JsonObjectConverter)),
 });

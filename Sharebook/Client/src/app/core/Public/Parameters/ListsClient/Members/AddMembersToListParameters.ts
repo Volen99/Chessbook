@@ -3,7 +3,7 @@ import {IUserIdentifier} from "../../../Models/Interfaces/IUserIdentifier";
 import {UserIdentifier} from "../../../Models/UserIdentifier";
 import {TwitterListIdentifier} from "../../../Models/TwitterListIdentifier";
 import {ITwitterListIdentifier} from "../../../Models/Interfaces/ITwitterListIdentifier";
-import Type from "../../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 // For more information visit : https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-create_all
 export interface IAddMembersToListParameters extends IListParameters {

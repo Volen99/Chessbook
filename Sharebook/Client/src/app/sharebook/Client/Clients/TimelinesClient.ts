@@ -1,3 +1,5 @@
+import {Inject} from "@angular/core";
+
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
 import {IUserIdentifier} from "../../../core/Public/Models/Interfaces/IUserIdentifier";
 import {ITimelinesClient} from "../../../core/Public/Client/Clients/ITimelinesClient";
@@ -24,16 +26,16 @@ import {
   GetRetweetsOfMeTimelineParameters,
   IGetRetweetsOfMeTimelineParameters
 } from "../../../core/Public/Parameters/TimelineClient/GetRetweetsOfMeTimelineParameters";
-import Type from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
-import {Inject} from "@angular/core";
+import Type from "typescript-dotnet-commonjs/System/Types";
+import {TwitterClient} from "../../TwitterClient";
 
 export class TimelinesClient implements ITimelinesClient {
   private readonly _client: ITwitterClient;
   private readonly _timelinesRequester: ITimelinesRequester;
 
-  constructor(@Inject(ITwitterClientToken) client: ITwitterClient) {
-    this._client = client;
-    this._timelinesRequester = this._client.raw.timelines;
+  constructor(/*@Inject(ITwitterClientToken) *//*client: TwitterClient*/) {
+    // this._client = client;
+    // this._timelinesRequester = this._client.raw.timelines;
   }
 
   get parametersValidator(): ITimelineClientParametersValidator {
@@ -49,7 +51,7 @@ export class TimelinesClient implements ITimelinesClient {
     }
 
     let iterator = this.getHomeTimelineIterator(parametersCurrent);
-    return (await iterator.nextPageAsync());            // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())];            // .ConfigureAwait(false)).ToArray();
   }
 
   public getHomeTimelineIterator(parameters?: IGetHomeTimelineParameters): ITwitterIterator<ITweet, number> {    // long?
@@ -75,7 +77,7 @@ export class TimelinesClient implements ITimelinesClient {
     }
 
     let iterator = this.getUserTimelineIterator(parameters);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public getUserTimelineIterator(userIdOrUsernameOrUserIdentifierOrParameters: number | string | IUserIdentifier | IGetUserTimelineParameters): ITwitterIterator<ITweet, number> {   // long?
@@ -102,7 +104,7 @@ export class TimelinesClient implements ITimelinesClient {
     }
 
     let iterator = this.getMentionsTimelineIterator(parametersCurrent);
-    return (await iterator.nextPageAsync()); // .ConfigureAwait(false)).ToArray();
+    return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
   }
 
   public getMentionsTimelineIterator(parameters?: IGetMentionsTimelineParameters): ITwitterIterator<ITweet, number> {    // long?
@@ -127,8 +129,7 @@ export class TimelinesClient implements ITimelinesClient {
     }
 
     let iterator = this.getRetweetsOfMeTimelineIterator(parametersCurrent);
-    let firstResults = await iterator.nextPageAsync(); // .ConfigureAwait(false);
-    return firstResults;    // ?.ToArray();
+    return [...(await iterator.nextPageAsync())];
   }
 
   public getRetweetsOfMeTimelineIterator(parameters?: IGetRetweetsOfMeTimelineParameters): ITwitterIterator<ITweet, number> {   // long?
@@ -147,9 +148,5 @@ export class TimelinesClient implements ITimelinesClient {
 
   private isIUserIdentifier(userIdOrUsernameOrUserIdentifierOrParameters: any): userIdOrUsernameOrUserIdentifierOrParameters is IUserIdentifier {
     return (userIdOrUsernameOrUserIdentifierOrParameters as IUserIdentifier).screenName !== undefined;
-  }
-
-  private isIGetUserTimelineParameters(userIdOrUsernameOrUserIdentifierOrParameters: any): userIdOrUsernameOrUserIdentifierOrParameters is IGetUserTimelineParameters {
-    return (userIdOrUsernameOrUserIdentifierOrParameters as IGetUserTimelineParameters).excludeReplies !== undefined;
   }
 }

@@ -12,7 +12,7 @@ export interface IUploadMessageVideoParameters extends IUploadParameters {
 }
 
 export class UploadMessageVideoParameters extends UploadBinaryParameters implements IUploadMessageVideoParameters {
-  constructor(binary: number[]) {
+  constructor(binary: ArrayBuffer) {
     super(binary);
 
     super.mediaType = MediaType.VideoMp4;

@@ -1,6 +1,6 @@
 ﻿import {ITwitterConfiguration} from "../../Public/Models/Interfaces/DTO/ITwitterConfiguration";
-import Dictionary from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
 import {IMediaEntitySize} from "../../Public/Models/Entities/IMediaEntitySize";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
 
 export class TwitterConfiguration implements ITwitterConfiguration {
   // [JsonProperty("characters_reserved_per_media")]

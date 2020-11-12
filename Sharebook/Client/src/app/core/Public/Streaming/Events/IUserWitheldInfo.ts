@@ -1,4 +1,4 @@
-﻿import IEnumerable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Enumeration/IEnumerable";
+﻿import IEnumerable from "typescript-dotnet-commonjs/System/Collections/Enumeration/IEnumerable";
 
 export interface IUserWitheldInfo {
   Id: number;

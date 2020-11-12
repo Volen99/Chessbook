@@ -1,7 +1,8 @@
-﻿import TimeSpan from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/TimeSpan";
-import {SharebookLimits} from "./SharebookLimits";
-import DateTime from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
+﻿import {SharebookLimits} from "./SharebookLimits";
 import {IProxyConfig, ProxyConfig} from "./ProxyConfig";
+import TimeSpan from "typescript-dotnet-commonjs/System/Time/TimeSpan";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
+import {Inject, InjectionToken} from "@angular/core";
 
 // Provide a set of preconfigured solutions that you can use to track the Twitter rate limits.
 export enum RateLimitTrackerMode {
@@ -25,7 +26,7 @@ export enum TweetMode {
   None = 2
 }
 
-export interface ITweetinviSettings {
+export interface ISharebookSettings {
   // Proxy used to execute Http Requests.
   proxyConfig: IProxyConfig;
 
@@ -48,17 +49,22 @@ export interface ITweetinviSettings {
 
   // Converters used by Tweetinvi to transform json received from Sharebook
   // into models understandable by Tweetinvi.
-  converters: JsonConverter[];
+  converters: any; // JsonConverter[];
 
   // Limits that Tweetinvi will use to communicate with Sharebook
   limits: SharebookLimits;
 
   // Initialize a setting from another one.
-  initialize(other: ITweetinviSettings): void;
+  initialize(other: ISharebookSettings): void;
 }
 
-export class SharebookSettings implements ITweetinviSettings {
-  constructor(source?: ITweetinviSettings) {
+export const ISharebookSettingsToken = new InjectionToken<ISharebookSettings>('ISharebookSettings', {
+  providedIn: 'root',
+  factory: () => new SharebookSettings(),
+});
+
+export class SharebookSettings implements ISharebookSettings {
+  constructor(@Inject(ISharebookSettingsToken) source?: ISharebookSettings) {
     if (!source) {
       this.getUtcDateTime = () => DateTime.now; /*UtcNow*/
       this.limits = new SharebookLimits();
@@ -84,9 +90,9 @@ export class SharebookSettings implements ITweetinviSettings {
   public getUtcDateTime: () => DateTime;
   public limits: SharebookLimits;
 
-  public converters: JsonConverter[];
+  public converters: any; // JsonConverter[];
 
-  public initialize(other: ITweetinviSettings): void {
+  public initialize(other: ISharebookSettings): void {
     this.proxyConfig = other.proxyConfig;
     this.httpRequestTimeout = other.httpRequestTimeout;
     this.rateLimitTrackerMode = other.rateLimitTrackerMode;

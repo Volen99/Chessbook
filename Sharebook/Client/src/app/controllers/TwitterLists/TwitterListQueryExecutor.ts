@@ -1,6 +1,8 @@
-﻿import {ITwitterResult} from 'src/app/core/Core/Web/TwitterResult';
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
+
+import {ITwitterResult} from 'src/app/core/Core/Web/TwitterResult';
 import {ITwitterRequest} from "../../core/Public/Models/Interfaces/ITwitterRequest";
-import {ITwitterAccessor} from "../../core/Core/Web/ITwitterAccessor";
+import {ITwitterAccessor, ITwitterAccessorToken} from "../../core/Core/Web/ITwitterAccessor";
 import {HttpMethod} from 'src/app/core/Public/Models/Enum/HttpMethod';
 import {ComputedTweetMode} from "../../core/Core/QueryGenerators/ComputedTweetMode";
 import {ICreateListParameters} from "../../core/Public/Parameters/ListsClient/CreateListParameters";
@@ -26,8 +28,8 @@ import {IGetUserListSubscriptionsParameters} from "../../core/Public/Parameters/
 import {ICheckIfUserIsSubscriberOfListParameters} from "../../core/Public/Parameters/ListsClient/Subscribers/CheckIfUserIsSubscriberOfListParameters";
 import {IGetTweetsFromListParameters} from "../../core/Public/Parameters/ListsClient/GetTweetsFromListParameters";
 import {ITweetDTO} from "../../core/Public/Models/Interfaces/DTO/ITweetDTO";
-import {ITwitterListQueryGenerator} from "./TwitterListQueryGenerator";
-import {InjectionToken} from "@angular/core";
+import {ITwitterListQueryGenerator, ITwitterListQueryGeneratorToken, TwitterListQueryGenerator} from "./TwitterListQueryGenerator";
+import {TwitterAccessor} from "../../Tweetinvi.Credentials/TwitterAccessor";
 
 export interface ITwitterListQueryExecutor {
   // list
@@ -81,14 +83,15 @@ export interface ITwitterListQueryExecutor {
 
 export const ITwitterListQueryExecutorToken = new InjectionToken<ITwitterListQueryExecutor>('ITwitterListQueryExecutor', {
   providedIn: 'root',
-  factory: () => new TwitterListQueryExecutor(),
+  factory: () => new TwitterListQueryExecutor(inject(TwitterListQueryGenerator), inject(TwitterAccessor)),
 });
 
 export class TwitterListQueryExecutor implements ITwitterListQueryExecutor {
   private readonly _listsQueryGenerator: ITwitterListQueryGenerator;
   private readonly _twitterAccessor: ITwitterAccessor;
 
-  constructor(listsQueryGenerator: ITwitterListQueryGenerator, twitterAccessor: ITwitterAccessor) {
+  constructor(@Inject(ITwitterListQueryGeneratorToken) listsQueryGenerator: ITwitterListQueryGenerator,
+              @Inject(ITwitterAccessorToken) twitterAccessor: ITwitterAccessor) {
     this._listsQueryGenerator = listsQueryGenerator;
     this._twitterAccessor = twitterAccessor;
   }

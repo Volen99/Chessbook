@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {IGetRateLimitsParameters} from "../../Parameters/HelpClient/GetRateLimitsParameters";
@@ -65,6 +65,6 @@ export interface IHelpRequester {
 
 export const IHelpRequesterToken = new InjectionToken<IHelpRequester>('IHelpRequester', {
   providedIn: 'root',
-  factory: () => new HelpRequester(Inject(TwitterClient), Inject(TwitterClientEvents),
-    Inject(HelpController), Inject(HelpClientRequiredParametersValidator)),
+  factory: () => new HelpRequester(inject(TwitterClient), inject(TwitterClientEvents),
+    inject(HelpController), inject(HelpClientRequiredParametersValidator)),
 });

@@ -1,4 +1,6 @@
-﻿import {BaseRequester} from "../BaseRequester";
+﻿import {Inject, Injectable} from "@angular/core";
+
+import {BaseRequester} from "../BaseRequester";
 import {IUsersRequester} from "../../../core/Public/Client/Requesters/IUsersRequester";
 import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
 import {IUserController, IUserControllerToken} from "../../../core/Core/Controllers/IUserController";
@@ -37,10 +39,13 @@ import {IMuteUserParameters} from "../../../core/Public/Parameters/AccountClient
 import {IUnmuteUserParameters} from "../../../core/Public/Parameters/AccountClient/UnMuteUserParameters";
 import {IGetProfileImageParameters} from "../../../core/Public/Parameters/UsersClient/GetProfileImageParameters";
 import {Stream} from "stream";
-import {ITwitterClientEvents} from "../../../core/Core/Events/TweetinviGlobalEvents";
-import {Inject, Injectable} from "@angular/core";
+import {ITwitterClientEvents, ITwitterClientEventsToken} from "../../../core/Core/Events/TweetinviGlobalEvents";
+import {Observable} from "rxjs";
+import {JsonQueryConverterRepository} from "../../../core/Core/JsonConverters/JsonQueryConverterRepository";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UsersRequester extends BaseRequester implements IUsersRequester {
   private readonly _userController: IUserController;
   private readonly _validator: IUsersClientRequiredParametersValidator;
@@ -59,17 +64,17 @@ export class UsersRequester extends BaseRequester implements IUsersRequester {
     this._validator.validate(parameters);
 
     let request = super.TwitterClient.createRequest();
-    return super.ExecuteRequestAsync(() => this._userController.getAuthenticatedUserAsync(parameters, request), request);
+    return super.executeRequestAsync(() => this._userController.getAuthenticatedUserAsync(parameters, request), request);
   }
 
   public getUserAsync(parameters: IGetUserParameters): Promise<ITwitterResult<IUserDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._userController.getUserAsync(parameters, request));
+    return super.executeRequestAsync(request => this._userController.getUserAsync(parameters, request));
   }
 
   public getUsersAsync(parameters: IGetUsersParameters): Promise<ITwitterResult<IUserDTO[]>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._userController.getUsersAsync(parameters, request));
+    return super.executeRequestAsync(request => this._userController.getUsersAsync(parameters, request));
   }
 
   public getFriendIdsIterator(parameters: IGetFriendIdsParameters): ITwitterPageIterator<ITwitterResult<IIdsCursorQueryResultDTO>> {
@@ -90,23 +95,23 @@ export class UsersRequester extends BaseRequester implements IUsersRequester {
 
   public getRelationshipBetweenAsync(parameters: IGetRelationshipBetweenParameters): Promise<ITwitterResult<IRelationshipDetailsDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._userController.getRelationshipBetweenAsync(parameters, request));
+    return super.executeRequestAsync(request => this._userController.getRelationshipBetweenAsync(parameters, request));
   }
 
   // FOLLOWERS
   public followUserAsync(parameters: IFollowUserParameters): Promise<ITwitterResult<IUserDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._userController.followUserAsync(parameters, request));
+    return super.executeRequestAsync(request => this._userController.followUserAsync(parameters, request));
   }
 
   public updateRelationshipAsync(parameters: IUpdateRelationshipParameters): Promise<ITwitterResult<IRelationshipDetailsDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._userController.updateRelationshipAsync(parameters, request));
+    return super.executeRequestAsync(request => this._userController.updateRelationshipAsync(parameters, request));
   }
 
   public unfollowUserAsync(parameters: IUnfollowUserParameters): Promise<ITwitterResult<IUserDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._userController.unfollowUserAsync(parameters, request));
+    return super.executeRequestAsync(request => this._userController.unfollowUserAsync(parameters, request));
   }
 
   public getUserIdsRequestingFriendshipIterator(parameters: IGetUserIdsRequestingFriendshipParameters): ITwitterPageIterator<ITwitterResult<IIdsCursorQueryResultDTO>> {
@@ -128,17 +133,17 @@ export class UsersRequester extends BaseRequester implements IUsersRequester {
   // BLOCK
   public blockUserAsync(parameters: IBlockUserParameters): Promise<ITwitterResult<IUserDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._userController.blockUserAsync(parameters, request));
+    return super.executeRequestAsync(request => this._userController.blockUserAsync(parameters, request));
   }
 
   public unblockUserAsync(parameters: IUnblockUserParameters): Promise<ITwitterResult<IUserDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._userController.unblockUserAsync(parameters, request));
+    return super.executeRequestAsync(request => this._userController.unblockUserAsync(parameters, request));
   }
 
   public reportUserForSpamAsync(parameters: IReportUserForSpamParameters): Promise<ITwitterResult<IUserDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._userController.reportUserForSpamAsync(parameters, request));
+    return super.executeRequestAsync(request => this._userController.reportUserForSpamAsync(parameters, request));
   }
 
   public getBlockedUserIdsIterator(parameters: IGetBlockedUserIdsParameters): ITwitterPageIterator<ITwitterResult<IIdsCursorQueryResultDTO>> {
@@ -160,13 +165,13 @@ export class UsersRequester extends BaseRequester implements IUsersRequester {
   // FRIENDSHIPS
   public getRelationshipsWithAsync(parameters: IGetRelationshipsWithParameters): Promise<ITwitterResult<IRelationshipStateDTO[]>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._userController.getRelationshipsWithAsync(parameters, request));
+    return super.executeRequestAsync(request => this._userController.getRelationshipsWithAsync(parameters, request));
   }
 
   // MUTE
   public getUserIdsWhoseRetweetsAreMutedAsync(parameters: IGetUserIdsWhoseRetweetsAreMutedParameters): Promise<ITwitterResult<number[]>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._userController.getUserIdsWhoseRetweetsAreMutedAsync(parameters, request));
+    return super.executeRequestAsync(request => this._userController.getUserIdsWhoseRetweetsAreMutedAsync(parameters, request));
   }
 
   public getMutedUserIdsIterator(parameters: IGetMutedUserIdsParameters): ITwitterPageIterator<ITwitterResult<IIdsCursorQueryResultDTO>> {
@@ -187,16 +192,16 @@ export class UsersRequester extends BaseRequester implements IUsersRequester {
 
   public muteUserAsync(parameters: IMuteUserParameters): Promise<ITwitterResult<IUserDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._userController.muteUserAsync(parameters, request));
+    return super.executeRequestAsync(request => this._userController.muteUserAsync(parameters, request));
   }
 
   public unmuteUserAsync(parameters: IUnmuteUserParameters): Promise<ITwitterResult<IUserDTO>> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._userController.unmuteUserAsync(parameters, request));
+    return super.executeRequestAsync(request => this._userController.unmuteUserAsync(parameters, request));
   }
 
-  public getProfileImageStream(parameters: IGetProfileImageParameters): Promise<Stream> {
+  public getProfileImageStream(parameters: IGetProfileImageParameters): Promise<any> {
     this._validator.validate(parameters);
-    return super.ExecuteRequestAsync(request => this._userController.getProfileImageStreamAsync(parameters, request));
+    return super.executeRequestAsync(request => this._userController.getProfileImageStreamAsync(parameters, request));
   }
 }

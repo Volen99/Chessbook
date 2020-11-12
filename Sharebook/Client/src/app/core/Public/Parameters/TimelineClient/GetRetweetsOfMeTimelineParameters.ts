@@ -14,7 +14,9 @@ export const IGetRetweetsOfMeTimelineParametersToken = new InjectionToken<IGetRe
   factory: () => new GetRetweetsOfMeTimelineParameters(),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class GetRetweetsOfMeTimelineParameters extends TimelineRequestParameters implements IGetRetweetsOfMeTimelineParameters {
   constructor(@Inject(IGetRetweetsOfMeTimelineParametersToken) source?: IGetRetweetsOfMeTimelineParameters) {
     if (source) {

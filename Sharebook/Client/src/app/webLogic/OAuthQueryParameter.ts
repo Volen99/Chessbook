@@ -1,6 +1,6 @@
-﻿/// Information used to generate an OAuth query
-import {IOAuthQueryParameter} from "../core/Core/Web/IOAuthQueryParameter";
+﻿import {IOAuthQueryParameter} from "../core/Core/Web/IOAuthQueryParameter";
 
+// Information used to generate an OAuth query
 export class OAuthQueryParameter implements IOAuthQueryParameter {
 
   //#region Constructor
@@ -30,7 +30,6 @@ export class OAuthQueryParameter implements IOAuthQueryParameter {
   public requiredForSignature: boolean;
   public requiredForHeader: boolean;
   public isPartOfOAuthSecretKey: boolean;
-
 
   // #endregion
 }

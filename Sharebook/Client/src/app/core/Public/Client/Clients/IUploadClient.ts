@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {IMedia} from "../../Models/Interfaces/IMedia";
 import {IUploadParameters} from "../../Parameters/Upload/UploadBinaryParameters";
@@ -17,9 +17,9 @@ export interface IUploadClient {
   // Validate all the Upload client parameters
   parametersValidator: IUploadClientParametersValidator;
 
-  uploadBinaryAsync(binary: number[]): Promise<IMedia>;
+  uploadBinaryAsync(binary: ArrayBuffer): Promise<IMedia>;
 
-  /// <summary>
+  /// <summary>uploadBinaryAsync
   /// Upload a binary in chunks and waits for the Twitter to have processed it
   /// <para>INIT : https://dev.twitter.com/en/docs/media/upload-media/api-reference/post-media-upload-init</para>
   /// <para>APPEND : https://dev.twitter.com/en/docs/media/upload-media/api-reference/post-media-upload-append</para>
@@ -29,7 +29,7 @@ export interface IUploadClient {
   uploadBinaryAsync(parameters: IUploadParameters): Promise<IMedia>;
 
   /// <inheritdoc cref="IUploadClient.UploadTweetImageAsync(IUploadTweetImageParameters)" />
-  uploadTweetImageAsync(binary: number[]): Promise<IMedia>;
+  uploadTweetImageAsync(binary: ArrayBuffer): Promise<IMedia>;
 
   /// <summary>
   /// Upload an image to Twitter
@@ -40,7 +40,7 @@ export interface IUploadClient {
   /// <returns>Uploaded media</returns>
   uploadTweetImageAsync(parameters: IUploadTweetImageParameters): Promise<IMedia>;
 
-  uploadMessageImageAsync(binary: number[]): Promise<IMedia>;
+  uploadMessageImageAsync(binary: ArrayBuffer): Promise<IMedia>;
 
   /// <summary>
   /// Upload an image to Twitter
@@ -51,7 +51,7 @@ export interface IUploadClient {
   /// <returns>Uploaded media</returns>
   uploadMessageImageAsync(parameters: IUploadMessageImageParameters): Promise<IMedia>;
 
-  uploadTweetVideoAsync(binary: number[]): Promise<IMedia>;
+  uploadTweetVideoAsync(binary: ArrayBuffer): Promise<IMedia>;
 
   /// <summary>
   /// Upload a video in chunks and waits for the Twitter to have processed it
@@ -64,7 +64,7 @@ export interface IUploadClient {
   uploadTweetVideoAsync(parameters: IUploadTweetVideoParameters): Promise<IMedia>;
 
   /// <inheritdoc cref="IUploadClient.UploadMessageVideoAsync(IUploadMessageVideoParameters)" />
-  uploadMessageVideoAsync(binary: number[]): Promise<IMedia>;
+  uploadMessageVideoAsync(binary: ArrayBuffer): Promise<IMedia>;
 
   /// <summary>
   /// Upload a video in chunks and waits for the Twitter to have processed it
@@ -98,5 +98,5 @@ export interface IUploadClient {
 
 export const IUploadClientToken = new InjectionToken<IUploadClient>('IUploadClient', {
   providedIn: 'root',
-  factory: () => new UploadClient(Inject(TwitterClient)),
+  factory: () => new UploadClient(inject(TwitterClient)),
 });

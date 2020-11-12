@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sharebook.Common\WorldFeed.Common.csproj" />
+    <ProjectReference Include="..\Sharebook.Common\Sharebook.Common.csproj" />
   </ItemGroup>
 
   

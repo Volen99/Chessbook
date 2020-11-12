@@ -1,8 +1,6 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
+import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {ITwitterRequest} from "../../../Public/Models/Interfaces/ITwitterRequest";
-import Uri from "../../../../c#-objects/TypeScript.NET-Core/packages/Web/source/Uri/Uri";
-import ArgumentException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
 import {ICreateBearerTokenParameters} from "../../../Public/Parameters/Auth/CreateBearerTokenParameters";
 import {IRequestAuthUrlParameters} from "../../../Public/Parameters/Auth/IRequestAuthUrlParameters";
 import {IRequestCredentialsParameters} from "../../../Public/Parameters/Auth/RequestCredentialsParameters";
@@ -15,6 +13,8 @@ import {
   IAuthClientRequiredParametersValidator,
   IAuthClientRequiredParametersValidatorToken
 } from "./AuthClientRequiredParametersValidator";
+import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
+import {UriExtensions} from "../../Extensions/UriExtensions";
 
 export interface IAuthClientParametersValidator {
   validate(parameters: ICreateBearerTokenParameters, request: ITwitterRequest): void;
@@ -30,10 +30,12 @@ export interface IAuthClientParametersValidator {
 
 export const IAuthClientParametersValidatorToken = new InjectionToken<IAuthClientParametersValidator>('IAuthClientParametersValidator', {
   providedIn: 'root',
-  factory: () => new AuthClientParametersValidator(Inject(AuthClientRequiredParametersValidator)),
+  factory: () => new AuthClientParametersValidator(inject(AuthClientRequiredParametersValidator)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthClientParametersValidator implements IAuthClientParametersValidator {
   private readonly _authClientRequiredParametersValidator: IAuthClientRequiredParametersValidator;
 
@@ -46,8 +48,8 @@ export class AuthClientParametersValidator implements IAuthClientParametersValid
 
     if (AuthClientParametersValidator.isIRequestAuthUrlParameters(parameters)) {
       if (parameters.callbackUrl != null) {
-        if (parameters.callbackUrl !== "oob" && !Uri.isWellFormedUriString(parameters.callbackUrl, UriKind.Absolute)) {
-          throw new ArgumentException("Invalid format, must be absolute uri or have a value of 'oob'", `${nameof(parameters)}${nameof(parameters.callbackUrl)}`);
+        if (parameters.callbackUrl !== "oob" && !UriExtensions.isWellFormedUriString(parameters.callbackUrl, UriKind.Absolute)) {
+          throw new ArgumentException("Invalid format, must be absolute uri or have a value of 'oob'", `${`nameof(parameters)`}${`nameof(parameters.callbackUrl)`}`);
         }
       }
     }

@@ -1,26 +1,26 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITweetIdentifier} from "./ITweetIdentifier";
-import IEquatable from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/IEquatable";
 import {IPlace} from "./IPlace";
 import {IUrlEntity} from "../Entities/IUrlEntity";
 import {IHashtagEntity} from "../Entities/IHashTagEntity";
 import {IMediaEntity} from "../Entities/IMediaEntity";
 import {IUserMentionEntity} from "../Entities/IUserMentionEntity";
 import {ICoordinates} from "./ICoordinates";
-import Dictionary from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
 import {TweetMode} from '../../Settings/SharebookSettings';
 import {ITweetEntities} from "../Entities/ITweetEntities";
 import {ITwitterClient} from "../../ITwitterClient";
 import {IExtendedTweet} from "./DTO/IExtendedTweet";
 import {IUser} from "./IUser";
-import {Language} from '../Enum/Language';
 import {ITweetDTO} from "./DTO/ITweetDTO";
 import {IOEmbedTweet} from "./IOEmbedTweet";
-import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {Tweet} from "../../../Core/Models/Tweet";
 import {TweetDTO} from "../../../Core/DTO/TweetDTO";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import IEquatable from "typescript-dotnet-commonjs/System/IEquatable";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
+import {Language} from "../../../Core/Attributes/Language";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
 
 // ... Well a Tweet :) https://dev.twitter.com/docs/platform-objects/tweets
 export interface ITweet extends ITweetIdentifier, IEquatable<ITweet> {
@@ -209,5 +209,5 @@ export interface ITweet extends ITweetIdentifier, IEquatable<ITweet> {
 
 export const ITweetToken = new InjectionToken<ITweet>('ITweet', {
   providedIn: 'root',
-  factory: () => new Tweet(Inject(TweetDTO), Inject(TweetMode), Inject(TwitterClient)),
+  factory: () => new Tweet(inject(TweetDTO), inject(TweetMode), inject(TwitterClient)),
 });

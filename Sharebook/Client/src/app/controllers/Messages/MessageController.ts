@@ -14,7 +14,9 @@ import {IMessageCursorQueryResultDTO} from "../../core/Public/Models/Interfaces/
 import {TwitterRequest} from "../../core/Public/TwitterRequest";
 import {ICreateMessageDTO} from "../../core/Public/Models/Interfaces/DTO/ICreateMessageDTO";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MessageController implements IMessageController {
   private readonly _messageQueryExecutor: IMessageQueryExecutor;
 

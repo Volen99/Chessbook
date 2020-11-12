@@ -1,4 +1,6 @@
-﻿//
+﻿import {HMAC} from "./HMAC";
+
+//
 // HMACSHA1.cs: Handles HMAC with SHA-1
 //
 // Author:
@@ -28,12 +30,12 @@
 //
 
 
-    export class HMACSHA1 extends HMAC
-    {
-        constructor(key: number[])
-        {
-            HashName = "SHA1";
-            _hashSizeValue = 160;
-            Key = key;
-        }
-    }
+export class HMACSHA1 extends HMAC {
+  constructor(key: number[]) {
+    super();
+
+    // HashName = "SHA1";
+    // _hashSizeValue = 160;
+    // Key = key;
+  }
+}

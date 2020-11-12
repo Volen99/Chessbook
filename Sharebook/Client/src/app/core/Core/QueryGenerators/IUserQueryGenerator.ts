@@ -1,4 +1,4 @@
-﻿import {Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {IGetAuthenticatedUserParameters} from "../../Public/Parameters/AccountClient/GetAuthenticatedUserParameters";
 import {IGetUserParameters} from "../../Public/Parameters/UsersClient/GetUserParameters";
@@ -83,5 +83,5 @@ export interface IUserQueryGenerator {
 
 export const IUserQueryGeneratorToken = new InjectionToken<IUserQueryGenerator>('IUserQueryGenerator', {
   providedIn: 'root',
-  factory: () => new UserQueryGenerator(Inject(UserQueryParameterGenerator), Inject(QueryParameterGenerator)),
+  factory: () => new UserQueryGenerator(inject(UserQueryParameterGenerator), inject(QueryParameterGenerator)),
 });

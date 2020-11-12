@@ -1,4 +1,5 @@
 import {GetRateLimitsParameters, IGetRateLimitsParameters, RateLimitsSource} from "./GetRateLimitsParameters";
+import Type from "typescript-dotnet-commonjs/System/Types";
 
 // For more information read: https://developer.twitter.com/en/docs/developer-utilities/rate-limit-status/api-reference/get-application-rate_limit_status
 export interface IGetEndpointRateLimitsParameters extends IGetRateLimitsParameters {
@@ -7,16 +8,16 @@ export interface IGetEndpointRateLimitsParameters extends IGetRateLimitsParamete
 }
 
 export class GetEndpointRateLimitsParameters extends GetRateLimitsParameters implements IGetEndpointRateLimitsParameters {
-  constructor(url?: string, from?: RateLimitsSource, source?: IGetEndpointRateLimitsParameters) {
-    if (source) {
-      super(source);
+  constructor(urlOrSource?: string | IGetEndpointRateLimitsParameters, from?: RateLimitsSource) {
+    if (Type.isString(urlOrSource)) {
+      super();
 
-      this.url = source?.url;
-    } else if (url) {
-      this.url = url;
+      this.url = urlOrSource;
       if (from) {
-        super.from = from;
+        this.from = from;
       }
+    } else {
+      this.url = urlOrSource.url;
     }
   }
 

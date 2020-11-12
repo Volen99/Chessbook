@@ -1,8 +1,11 @@
-import Exception from "../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exception";
-import {ITwitterResult, ITwitterResultToken} from "../../Core/Web/TwitterResult";
 import {Inject, Injectable} from "@angular/core";
 
-@Injectable()
+import {ITwitterResult, ITwitterResultToken} from "../../Core/Web/TwitterResult";
+import Exception from "typescript-dotnet-commonjs/System/Exception";
+
+@Injectable({
+  providedIn: 'root',
+})
 export class TwitterResponseException extends Exception {
   constructor(@Inject(ITwitterResultToken) twitterResult: ITwitterResult,
               message?: string) {

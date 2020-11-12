@@ -1,8 +1,8 @@
-﻿import {Inject, Injectable, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 
 import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {SharebookLimits} from "../../Settings/SharebookLimits";
-import ArgumentOutOfRangeException from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentOutOfRangeException";
+import ArgumentOutOfRangeException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentOutOfRangeException";
 
 // For more information read : https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-search
 export interface ISearchUsersParameters extends ICustomRequestParameters {
@@ -21,10 +21,12 @@ export interface ISearchUsersParameters extends ICustomRequestParameters {
 
 export const ISearchUsersParametersToken = new InjectionToken<ISearchUsersParameters>('ISearchUsersParameters', {
   providedIn: 'root',
-  factory: () => new SearchUsersParameters(Inject([String, SearchUsersParameters])),
+  factory: () => new SearchUsersParameters(inject(SearchUsersParameters)),
 });
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 // https://dev.twitter.com/rest/reference/get/users/search
 export class SearchUsersParameters extends CustomRequestParameters implements ISearchUsersParameters {
   constructor(@Inject(ISearchUsersParametersToken) queryOrParameters: string | ISearchUsersParameters) {
@@ -56,7 +58,7 @@ export class SearchUsersParameters extends CustomRequestParameters implements IS
       this._page = null;
     } else {
       if (this._page < 1) {
-        throw new ArgumentOutOfRangeException(nameof(this.page), "Search users page number cannot be lower than 1");
+        throw new ArgumentOutOfRangeException(`nameof(this.page)`, "Search users page number cannot be lower than 1");
       }
 
       this._page = value;

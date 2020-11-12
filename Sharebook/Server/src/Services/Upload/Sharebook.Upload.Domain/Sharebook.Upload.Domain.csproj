@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Sharebook.Common\WorldFeed.Common.csproj" />
   </ItemGroup>
 
 </Project>

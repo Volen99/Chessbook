@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
-import {User} from '../user/user.model';
+import {User} from "../../core/Core/Models/User";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class CurrentUserService {
 
   constructor() {

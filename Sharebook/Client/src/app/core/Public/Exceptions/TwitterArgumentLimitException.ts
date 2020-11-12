@@ -1,6 +1,7 @@
-﻿import ArgumentException from "src/app/c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
-
+﻿
 // This exception is raised when you provide an invalid argument because of its size or content.
+import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
+
 export class TwitterArgumentLimitException extends ArgumentException {
   constructor(argument: string, limitOrMessage: number | string, limitType: string, limitValueType: string) {
     if (typeof limitOrMessage === "string") {

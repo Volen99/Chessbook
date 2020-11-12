@@ -1,4 +1,4 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {inject, Inject, InjectionToken} from "@angular/core";
 
 import {ITwitterResult, TwitterResultFactory} from "../../../Core/Web/TwitterResult";
 import {ICreateListParameters} from "../../Parameters/ListsClient/CreateListParameters";
@@ -202,6 +202,6 @@ export interface ITwitterListsRequester {
 
 export const ITwitterListsRequesterToken = new InjectionToken<ITwitterListsRequester>('ITwitterListsRequester', {
   providedIn: 'root',
-  factory: () => new TwitterListsRequester(Inject(TwitterClient), Inject(TwitterClientEvents), Inject(TwitterResultFactory),
-    Inject(TwitterClientFactories), Inject(TwitterListController), Inject(TwitterListsClientRequiredParametersValidator)),
+  factory: () => new TwitterListsRequester(inject(TwitterClient), inject(TwitterClientEvents), inject(TwitterResultFactory),
+    inject(TwitterClientFactories), inject(TwitterListController), inject(TwitterListsClientRequiredParametersValidator)),
 });

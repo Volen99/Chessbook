@@ -31,6 +31,7 @@ export class UrlEntity implements IUrlEntity {
       return this.indices === other.indices;
     }
 
+    // @ts-ignore
     return this.indices.containsSameObjectsAs(other.indices, true);
   }
 

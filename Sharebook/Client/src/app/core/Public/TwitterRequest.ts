@@ -3,7 +3,7 @@ import {TwitterQuery} from "./TwitterQuery";
 import {ITwitterRequest} from "./Models/Interfaces/ITwitterRequest";
 import {ITwitterExecutionContext, TwitterExecutionContext} from "../Core/Client/TwitterExecutionContext";
 import {ITwitterClientHandler} from "../Core/Web/ITwitterClientHandler";
-import ArgumentException from "../../c#-objects/TypeScript.NET-Core/packages/Core/source/Exceptions/ArgumentException";
+import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
 
 export class TwitterRequest implements ITwitterRequest {
   private _query: ITwitterQuery;

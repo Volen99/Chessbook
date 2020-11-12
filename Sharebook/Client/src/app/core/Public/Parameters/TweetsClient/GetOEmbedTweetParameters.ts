@@ -1,8 +1,8 @@
 import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {ITweetIdentifier} from "../../Models/Interfaces/ITweetIdentifier";
 import {TweetIdentifier} from "../../Models/TweetIdentifier";
-import { Language } from '../../Models/Enum/Language';
-import Type from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Types";
+import Type from "typescript-dotnet-commonjs/System/Types";
+import {Language} from "../../../Core/Attributes/Language";
 
 // For more information visit : https://developer.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-oembed
 export enum OEmbedTweetAlignment {

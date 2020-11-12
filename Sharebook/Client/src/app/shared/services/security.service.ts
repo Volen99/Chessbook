@@ -13,7 +13,9 @@ import * as Oidc from 'oidc-client';
 
 import axios from 'axios';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class SecurityService {
   private http: HttpClient;
   private router: Router;
@@ -116,7 +118,6 @@ export class SecurityService {
             refreshing = true;
 
             // do the refresh
-            debugger
             return this.userManager.signinSilent().then(user => {
               console.log('new user:', user);
               // update the http request and client
@@ -174,7 +175,7 @@ export class SecurityService {
     }
 
     if (authResponseIsValid) {
-      this.SetAuthorizationData(token, id_token);
+      // this.SetAuthorizationData(token, id_token);
     }
   }
 

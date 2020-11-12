@@ -38,7 +38,7 @@ export class ScreenNameComponent implements OnInit {
 
   async onSubmit(value: any) {
     this.accountSettingsService.getSettings().subscribe(settings => {
-      this.accountSettings = settings;
+      // this.accountSettings = settings;
     });
 
     const form = this.usernameForm.value;
@@ -47,7 +47,6 @@ export class ScreenNameComponent implements OnInit {
 
     this.mapUpdateAccountSettingsParametersToAccountSettings();
 
-    debugger
     this.accountSettingsService.updateSettings(this.updateAccountSettingsParameters).subscribe(x => console.log('account updated ' + x));
   }
 

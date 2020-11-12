@@ -1,9 +1,9 @@
 ﻿import {Inject, InjectionToken} from "@angular/core";
 
 import {ISavedSearchDTO} from "./DTO/ISavedSearchDTO";
-import DateTime from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Time/DateTime";
 import {SavedSearch} from "../../../Core/Models/SavedSearch";
 import {SavedSearchDTO} from "../../../Core/DTO/SavedSearchDTO";
+import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
 
 // Twitter saved search.
 export interface ISavedSearch {

@@ -1,6 +1,6 @@
 ﻿import {PlaceType} from 'src/app/components/models/settings/place-type.model';
 import {IGeo} from "./IGeo";
-import Dictionary from "../../../../c#-objects/TypeScript.NET-Core/packages/Core/source/Collections/Dictionaries/Dictionary";
+import Dictionary from "typescript-dotnet-commonjs/System/Collections/Dictionaries/Dictionary";
 
 export interface IPlace {
   idStr: string; // ID representing this place. Note that this is represented as a string, not an integer
