@@ -7,7 +7,7 @@ import {HttpContent} from "./http-content";
 
 export class TwitterRequestParameters implements ITwitterRequestParameters {
   constructor(source?: ITwitterRequestParameters) {
-    if (source == null) {
+    if (!source) {
       return;
     }
 

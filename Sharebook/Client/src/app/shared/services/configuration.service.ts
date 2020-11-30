@@ -34,7 +34,7 @@ export class ConfigurationService {
       this.serverSettings = response as Configuration;
       console.log(this.serverSettings);
       this.storageService.store('identityUrl', this.serverSettings.identityUrl);
-      this.storageService.store('uploadUrl', this.serverSettings.uploadUrl);
+      this.storageService.store('storageUrl', this.serverSettings.storageUrl);
       this.isReady = true;
       this.settingsLoadedSource.next();
     });

@@ -42,6 +42,7 @@ import {Stream} from "stream";
 import {ITwitterClientEvents, ITwitterClientEventsToken} from "../../../core/Core/Events/TweetinviGlobalEvents";
 import {Observable} from "rxjs";
 import {JsonQueryConverterRepository} from "../../../core/Core/JsonConverters/JsonQueryConverterRepository";
+import {TwitterClient} from "../../TwitterClient";
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +51,7 @@ export class UsersRequester extends BaseRequester implements IUsersRequester {
   private readonly _userController: IUserController;
   private readonly _validator: IUsersClientRequiredParametersValidator;
 
-  constructor(@Inject(ITwitterClientToken) client: ITwitterClient,
+  constructor(client: TwitterClient,
               @Inject(ITwitterClientEventsToken) clientEvents: ITwitterClientEvents,
               @Inject(IUserControllerToken) userController: IUserController,
               @Inject(IUsersClientRequiredParametersValidatorToken) validator: IUsersClientRequiredParametersValidator) {

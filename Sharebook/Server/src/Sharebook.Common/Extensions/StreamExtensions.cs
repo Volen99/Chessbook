@@ -1,18 +1,19 @@
 ﻿namespace Sharebook.Common.Extensions
 {
     using System.IO;
+    using System.Threading.Tasks;
 
     public static class StreamExtensions
     {
-        public static byte[] ToByteArray(this Stream input)
+        public static async Task<byte[]> ToByteArray(this Stream input)
         {
             var buffer = new byte[16 * 1024];
             using (var memoryStream = new MemoryStream())
             {
                 int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                while ((read = await input.ReadAsync(buffer, 0, buffer.Length)) > 0)
                 {
-                    memoryStream.Write(buffer, 0, read);
+                    memoryStream.WriteAsync(buffer, 0, read);
                 }
 
                 return memoryStream.ToArray();

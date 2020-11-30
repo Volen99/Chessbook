@@ -37,6 +37,7 @@ import {TwitterClientEvents} from "../../../Core/Events/TweetinviGlobalEvents";
 import {UserController} from "../../../../controllers/User/UserController";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
 import {Observable} from "rxjs";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 /// <summary>
 /// A client providing all the methods related with users.
@@ -209,5 +210,5 @@ export interface IUsersRequester {
 
 export const IUsersRequesterToken = new InjectionToken<IUsersRequester>('IUsersRequester', {
   providedIn: 'root',
-  factory: () => new UsersRequester(Inject(TwitterClient), Inject(TwitterClientEvents), Inject(UserController), Inject(UsersClientRequiredParametersValidator)),
+  factory: () => AppInjector.get(UsersRequester),
 });

@@ -81,9 +81,10 @@ export class TwitterRequestHandler implements ITwitterRequestHandler {
 
       return twitterResponse;
     } catch (ex) {
+      debugger
       this.handleException(request, ex, rateLimitUpdater);
 
-      throw new Error(ex);
+      // throw new Error(ex);
     }
   }
 

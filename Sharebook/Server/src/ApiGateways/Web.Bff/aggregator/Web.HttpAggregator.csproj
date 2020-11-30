@@ -35,11 +35,5 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\Devspaces.Support\Devspaces.Support.csproj" />
   </ItemGroup>
 
-  <ItemGroup><!--<Protobuf Include="..\..\..\..\Science\Services\Sharebook.Science.API\Proto\science.proto" GrpcServices="Client">
-      <Link>Protos\science.proto</Link>
-    </Protobuf>-->
-    <ProjectReference Include="..\..\..\Sharebook\Sharebook.csproj" />
-  </ItemGroup>
-
 
 </Project>

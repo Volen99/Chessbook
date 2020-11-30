@@ -2,7 +2,7 @@
 {
     using Newtonsoft.Json;
 
-    using Sharebook.Upload.Domain.AggregatesModel.PostAggregate.Entities.ExtendedEntities;
+    using Sharebook.Storage.Domain.AggregatesModel.PostAggregate.Entities.ExtendedEntities;
 
     public class VideoInformationEntity : IVideoInformationEntity
     {

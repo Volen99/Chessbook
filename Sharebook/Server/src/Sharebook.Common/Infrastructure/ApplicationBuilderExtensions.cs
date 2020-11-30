@@ -1,14 +1,12 @@
-﻿namespace Sharebook.Infrastructure
+﻿namespace Sharebook.Common.Infrastructure
 {
-    using HealthChecks.UI.Client;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Diagnostics.HealthChecks;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
 
-    using Services;
+    using Sharebook.Services;
 
     public static class ApplicationBuilderExtensions
     {
@@ -30,16 +28,16 @@
                 .UseAuthorization()  // adds the authorization middleware to make sure, our API endpoint cannot be accessed by anonymous clients
                 .UseEndpoints(endpoints =>
                 {
-                    endpoints.MapHealthChecks("/health", new HealthCheckOptions
-                    {
-                        Predicate = _ => true,
-                        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                    });
+                    //endpoints.MapHealthChecks("/health", new HealthCheckOptions
+                    //{
+                    //    Predicate = _ => true,
+                    //    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                    //});
 
-                    endpoints.MapHealthChecks("/liveness", new HealthCheckOptions // from eShop
-                    {
-                        Predicate = r => r.Name.Contains("self")
-                    });
+                    //endpoints.MapHealthChecks("/liveness", new HealthCheckOptions // from eShop
+                    //{
+                    //    Predicate = r => r.Name.Contains("self")
+                    //});
 
                     endpoints.MapControllers();
                 });

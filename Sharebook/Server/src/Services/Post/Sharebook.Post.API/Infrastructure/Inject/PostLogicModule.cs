@@ -21,7 +21,7 @@
     using Sharebook.Post.Domain.AggregatesModel.PostAggregate.TwitterEntities;
     using Sharebook.Post.Domain.AggregatesModel.TweetAggregate;
     using Sharebook.Post.DTO;
-    using Sharebook.Upload.API.JsonConverters;
+    using Sharebook.Storage.API.JsonConverters;
 
     public class PostLogicModule : IPostModule
     {

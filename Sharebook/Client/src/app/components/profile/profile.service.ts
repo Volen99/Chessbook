@@ -25,9 +25,9 @@ export class ProfileService {
     this.configurationService = configurationService;
 
     if (this.configurationService.isReady) {
-      this.apiGatewayUrl = this.configurationService.serverSettings.uploadUrl;
+      this.apiGatewayUrl = this.configurationService.serverSettings.storageUrl;
     } else {
-      this.configurationService.settingsLoaded$.subscribe(x => this.apiGatewayUrl = this.configurationService.serverSettings.uploadUrl);
+      this.configurationService.settingsLoaded$.subscribe(x => this.apiGatewayUrl = this.configurationService.serverSettings.storageUrl);
     }
   }
 

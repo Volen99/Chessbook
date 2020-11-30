@@ -1,7 +1,7 @@
 ﻿namespace Sharebook.Post.API.Events
 {
-    using Sharebook.Upload.Application.Query;
-    using Sharebook.Upload.Exceptions;
+    using Sharebook.Storage.Application.Query;
+    using Sharebook.Storage.Exceptions;
 
     /// <summary>
     /// Event raised to inform that a request just failed its execution

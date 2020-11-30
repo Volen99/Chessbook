@@ -4,35 +4,35 @@
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Identity;
 
-    using Sharebook.Identity.Domain.AggregatesModel.UserAggregate;
+    using Sharebook.Identity.API.Models.User;
 
-    public class EFLoginService : ILoginService<User>
+    public class EFLoginService : ILoginService<ApplicationUser>
     {
-        private UserManager<User> userManager;
-        private SignInManager<User> signInManager;
+        private UserManager<ApplicationUser> userManager;
+        private SignInManager<ApplicationUser> signInManager;
 
-        public EFLoginService(UserManager<User> userManager, SignInManager<User> signInManager)
+        public EFLoginService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
 
-        public async Task<User> FindByUsername(string user)
+        public async Task<ApplicationUser> FindByUsername(string user)
         {
             return await this.userManager.FindByEmailAsync(user);
         }
 
-        public async Task<bool> ValidateCredentials(User user, string password)
+        public async Task<bool> ValidateCredentials(ApplicationUser user, string password)
         {
             return await this.userManager.CheckPasswordAsync(user, password);
         }
 
-        public Task SignIn(User user)
+        public Task SignIn(ApplicationUser user)
         {
             return this.signInManager.SignInAsync(user, true);
         }
 
-        public Task SignInAsync(User user, AuthenticationProperties properties, string authenticationMethod = null)
+        public Task SignInAsync(ApplicationUser user, AuthenticationProperties properties, string authenticationMethod = null)
         {
             return this.signInManager.SignInAsync(user, properties, authenticationMethod);
         }

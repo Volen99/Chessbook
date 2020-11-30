@@ -1,6 +1,7 @@
 ﻿import {Injectable, InjectionToken} from "@angular/core";
 
 import {CustomRequestParameters, ICustomRequestParameters} from "../../Public/Parameters/CustomRequestParameters";
+import {SharebookConsts} from "../../Public/sharebook-consts";
 
 export interface IChunkUploadInitParameters {
   mediaType: string;
@@ -20,7 +21,7 @@ export const IChunkUploadInitParametersToken = new InjectionToken<IChunkUploadIn
 })
 export class ChunkUploadInitParameters implements IChunkUploadInitParameters {
   constructor() {
-    this.mediaType = "media";
+    this.mediaType = SharebookConsts.fileCurrent.type; // "media";
     this.additionalOwnerIds = new Array<number>();
     this.customRequestParameters = new CustomRequestParameters();
   }

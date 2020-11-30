@@ -1,6 +1,6 @@
 ﻿using Sharebook.Common;
 
-namespace Sharebook.Infrastructure
+namespace Sharebook.Common.Infrastructure
 {
     using System.Security.Claims;
 

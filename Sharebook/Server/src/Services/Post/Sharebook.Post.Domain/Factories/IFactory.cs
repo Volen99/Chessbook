@@ -1,6 +1,6 @@
-﻿namespace Sharebook.Upload.Domain.Factories
+﻿namespace Sharebook.Storage.Domain.Factories
 {
-    using Sharebook.Upload.Domain.Common;
+    using Sharebook.Storage.Domain.Common;
 
     public interface IFactory<out TEntity>
         where TEntity : IAggregateRoot

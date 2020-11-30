@@ -16,6 +16,7 @@ import {IDestroySavedSearchParameters} from "../../Parameters/Search/DestroySave
 import {ISearchClientParametersValidator} from "../../../Core/Client/Validators/SearchClientParametersValidator";
 import {SearchClient} from "../../../../sharebook/Client/Clients/SearchClient";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 export interface ISearchClient {
   // Validate all the Search client parameters
@@ -119,5 +120,5 @@ export interface ISearchClient {
 
 export const ISearchClientToken = new InjectionToken<ISearchClient>('ISearchClient', {
   providedIn: 'root',
-  factory: () => new SearchClient(Inject(TwitterClient)),
+  factory: () => AppInjector.get(SearchClient),
 });

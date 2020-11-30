@@ -26,13 +26,13 @@
         {
             var converters = new List<JsonConverter>
             {
-                new JsonInterfaceToObjectConverter<IAccountSettingsDTO, AccountSettingsDTO>(),
+                //new JsonInterfaceToObjectConverter<IAccountSettingsDTO, AccountSettingsDTO>(),
 
                 new JsonInterfaceToObjectConverter<IEndpointRateLimit, EndpointRateLimit>(),
-                new JsonInterfaceToObjectConverter<ICredentialsRateLimits, CredentialsRateLimits>(),
+               // new JsonInterfaceToObjectConverter<ICredentialsRateLimits, CredentialsRateLimits>(),
                 new JsonInterfaceToObjectConverter<ITwitterExceptionInfo, TwitterExceptionInfo>(),
 
-                new JsonInterfaceToObjectConverter<ITwitterConfiguration, TwitterConfiguration>(),
+               // new JsonInterfaceToObjectConverter<ITwitterConfiguration, TwitterConfiguration>(),
 
                 // JsonCoordinatesConverter is used only for Properties (with an s) and not Property
                 // because Twitter does not provide the coordinates the same way if it is a list or

@@ -4,6 +4,7 @@
     using Newtonsoft.Json;
 
     using Sharebook.Common.Public.Models.Enums;
+    using Sharebook.Identity.API.Models.User.Enums;
 
     public class JsonAllowDirectMessagesConverter : JsonConverter
     {

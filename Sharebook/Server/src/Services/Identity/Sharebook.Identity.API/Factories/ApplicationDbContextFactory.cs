@@ -20,7 +20,7 @@
 
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
-            optionsBuilder.UseSqlServer(config.GetDefaultConnectionString(), sqlServerOptionsAction: o => o.MigrationsAssembly("WorldFeed.Identity.API"));
+            optionsBuilder.UseSqlServer(config.GetDefaultConnectionString(), sqlServerOptionsAction: o => o.MigrationsAssembly("Sharebook.Identity.API"));
 
             return new ApplicationDbContext(optionsBuilder.Options);
         }

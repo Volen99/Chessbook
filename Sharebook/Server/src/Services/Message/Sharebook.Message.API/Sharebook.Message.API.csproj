@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Sharebook.Common\Sharebook.Common.csproj" />
-    <ProjectReference Include="..\..\..\Sharebook\Sharebook.csproj" />
     <ProjectReference Include="..\Sharebook.Message.Domain\Sharebook.Message.Domain.csproj" />
     <ProjectReference Include="..\Sharebook.Message.Infrastructure\Sharebook.Message.Infrastructure.csproj" />
   </ItemGroup>

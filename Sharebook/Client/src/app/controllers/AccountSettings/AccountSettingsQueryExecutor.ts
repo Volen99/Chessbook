@@ -24,6 +24,7 @@ import {SharebookConsts} from "../../core/Public/sharebook-consts";
 import {TwitterAccessor} from "../../Tweetinvi.Credentials/TwitterAccessor";
 import {StringFormatter} from "../../core/Core/Extensions/StringFormater";
 import TimeSpan from "typescript-dotnet-commonjs/System/Time/TimeSpan";
+import {AppInjector} from "../../sharebook/Injectinvi/app-injector";
 
 export interface IAccountSettingsQueryExecutor {
   getAccountSettingsAsync(parameters: IGetAccountSettingsParameters, request: ITwitterRequest): Promise<ITwitterResult<IAccountSettingsDTO>>;
@@ -41,7 +42,7 @@ export interface IAccountSettingsQueryExecutor {
 
 export const IAccountSettingsQueryExecutorToken = new InjectionToken<IAccountSettingsQueryExecutor>('IAccountSettingsQueryExecutor', {
   providedIn: 'root',
-  factory: () => new AccountSettingsQueryExecutor(Inject(AccountSettingsQueryGenerator), Inject(TwitterAccessor)),
+  factory: () => AppInjector.get(AccountSettingsQueryExecutor),
 });
 
 @Injectable({

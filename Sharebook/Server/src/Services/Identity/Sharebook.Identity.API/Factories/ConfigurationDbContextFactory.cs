@@ -23,7 +23,7 @@
                                    // This options class contains properties to control the configuration store and ConfigurationDbContext
             var storeOptions = new ConfigurationStoreOptions();
 
-            optionsBuilder.UseSqlServer(config.GetDefaultConnectionString(), sqlServerOptionsAction: o => o.MigrationsAssembly("WorldFeed.Identity.API"));
+            optionsBuilder.UseSqlServer(config.GetDefaultConnectionString(), sqlServerOptionsAction: o => o.MigrationsAssembly("Sharebook.Identity.API"));
 
             return new ConfigurationDbContext(optionsBuilder.Options, storeOptions);
         }

@@ -40,6 +40,7 @@ import {IUsersClientParametersValidator} from "../../../Core/Client/Validators/U
 import {UsersClient} from "../../../../sharebook/Client/Clients/UsersClient";
 import {MultiLevelCursorIteratorFactory} from "../../../Core/Iterators/MultiLevelCursorIteratorFactory";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 export interface IUsersClient {
   // Validate all the Users client parameters
@@ -527,5 +528,5 @@ export interface IUsersClient {
 
 export const IUsersClientToken = new InjectionToken<IUsersClient>('IUsersClient', {
   providedIn: 'root',
-  factory: () => new UsersClient(Inject(TwitterClient), Inject(MultiLevelCursorIteratorFactory)),
+  factory: () => AppInjector.get(UsersClient),
 });

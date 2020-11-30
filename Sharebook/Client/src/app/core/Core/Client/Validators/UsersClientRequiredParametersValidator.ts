@@ -36,13 +36,14 @@ import {UriKind} from "../../../Public/Models/Enum/uri-kind";
 import {UriExtensions} from "../../Extensions/UriExtensions";
 import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
 import ArgumentNullException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentNullException";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 export interface IUsersClientRequiredParametersValidator extends IUsersClientParametersValidator {
 }
 
 export const IUsersClientRequiredParametersValidatorToken = new InjectionToken<IUsersClientRequiredParametersValidator>('IUsersClientRequiredParametersValidator', {
   providedIn: 'root',
-  factory: () => new UsersClientRequiredParametersValidator(inject(UserQueryValidator)),
+  factory: () => AppInjector.get(UsersClientRequiredParametersValidator) // new UsersClientRequiredParametersValidator(inject(UserQueryValidator)),
 });
 
 @Injectable({

@@ -9,6 +9,7 @@ import {IGetTrendsLocationCloseToParameters} from "../../Parameters/TrendsClient
 import {ITrendsClientParametersValidator} from "../../../Core/Client/Validators/TrendsClientParametersValidator";
 import {TrendsClient} from "../../../../sharebook/Client/Clients/TrendsClient";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 export interface ITrendsClient {
   // Validate all the Trends client parameters
@@ -47,5 +48,5 @@ export interface ITrendsClient {
 
 export const ITrendsClientToken = new InjectionToken<ITrendsClient>('ITrendsClient', {
   providedIn: 'root',
-  factory: () => new TrendsClient(Inject(TwitterClient)),
+  factory: () => AppInjector.get(TrendsClient),
 });

@@ -78,28 +78,27 @@
                     AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "worldfeedgateway",
                     },
 
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent = false,
-                },
-                new Client
-                {
-                    ClientId = "science.uploadswaggerui",
-                    ClientName = "Science Upload Swagger UI",
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RequirePkce = true,
-                    RequireClientSecret = false,
+                }
+                //new Client
+                //{
+                //    ClientId = "science.uploadswaggerui",
+                //    ClientName = "Science Upload Swagger UI",
+                //    AllowedGrantTypes = GrantTypes.Code,
+                //    RequirePkce = true,
+                //    RequireClientSecret = false,
 
-                    RedirectUris = { $"{clientsUrl["Science.Upload"]}/swagger/oauth2-redirect.html" },
-                    PostLogoutRedirectUris = { $"{clientsUrl["Science.Upload"]}/swagger/" },
+                //    RedirectUris = { $"{clientsUrl["Science.Upload"]}/swagger/oauth2-redirect.html" },
+                //    PostLogoutRedirectUris = { $"{clientsUrl["Science.Upload"]}/swagger/" },
 
-                    AllowedScopes =
-                    {
-                        "science.upload"
-                    }
-                },
+                //    AllowedScopes =
+                //    {
+                //        "science.upload"
+                //    }
+                //},
             };
         }
     }

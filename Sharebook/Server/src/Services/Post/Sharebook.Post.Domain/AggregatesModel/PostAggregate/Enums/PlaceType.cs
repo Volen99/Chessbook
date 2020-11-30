@@ -1,6 +1,6 @@
 ﻿namespace Sharebook.Post.Domain.AggregatesModel.PostAggregate.Enums
 {
-    using Sharebook.Upload.Domain.Common;
+    using Sharebook.Storage.Domain.Common;
 
     public class PlaceType : Enumeration
     {

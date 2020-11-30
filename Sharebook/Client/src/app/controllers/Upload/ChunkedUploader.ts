@@ -46,19 +46,18 @@ export class ChunkedUploader implements IChunkedUploader {
     this.uploadedSegments = new Dictionary<number, number[]>();
   }
 
-  get mediaId(): number {
+  get mediaId(): number | null {
     return this._media.id;
   }
 
-  set mediaId(value: number) {
+  set mediaId(value: number | null) {
     this._media.id = value;
   }
 
   public uploadedSegments: Dictionary<number, number[]>;
-  public nextSegmentIndex: number;
+  public nextSegmentIndex: number = 0;
 
   public async initAsync(initParameters: IChunkUploadInitParameters, request: ITwitterRequest): Promise<boolean> {
-    debugger
     let initQuery = this._uploadQueryGenerator.getChunkedUploadInitQuery(initParameters);
 
     request.query.url = initQuery;
@@ -69,6 +68,7 @@ export class ChunkedUploader implements IChunkedUploader {
 
     let initModel: IUploadInitModel = twitterResult?.model;
 
+
     if (initModel != null) {
       this._expectedBinaryLength = initParameters.totalBinaryLength;
       this._media.id = initModel.mediaId;
@@ -78,7 +78,6 @@ export class ChunkedUploader implements IChunkedUploader {
   }
 
   public async appendAsync(parameters: IChunkUploadAppendParameters, request: ITwitterRequest): Promise<boolean> {
-    this.mediaId = 1;   // TODO: Delete!!
     if (this.mediaId == null) {
       throw new InvalidOperationException(`You cannot append content to a non initialized chunked upload.
                  You need to invoke the initialize method OR set the MediaId property of an existing ChunkedUpload.`);
@@ -111,7 +110,7 @@ export class ChunkedUploader implements IChunkedUploader {
     this._result.appendsList.push(twitterResult);
 
     if (twitterResult.response.isSuccessStatusCode) {
-      this.uploadedSegments.setValue(parameters.segmentIndex/*.Value*/, parameters.binary);
+      this.uploadedSegments.setValue(parameters.segmentIndex, parameters.binary);
       ++this.nextSegmentIndex;
     }
 
@@ -129,7 +128,8 @@ export class ChunkedUploader implements IChunkedUploader {
     request.query.url = finalizeQuery;
     request.query.httpMethod = HttpMethod.POST;
 
-    let finalizeTwitterResult = await this._twitterAccessor.executeRequestGenericAsync<UploadedMediaInfo>(request); // .ConfigureAwait(false);
+    let finalizeTwitterResult = await this._twitterAccessor.executeRequestGenericAsync<UploadedMediaInfo>(request);
+    debugger
     let uploadedMediaInfos = finalizeTwitterResult.model;
 
     this.updateMedia(uploadedMediaInfos);
@@ -145,13 +145,14 @@ export class ChunkedUploader implements IChunkedUploader {
   }
 
   private updateMedia(uploadedMediaInfos: IUploadedMediaInfo): void {
+    debugger
     this._media.uploadedMediaInfo = uploadedMediaInfos;
 
     if (this._expectedBinaryLength != null) {
       // If all the data has not been sent then we do not construct the data
       if (this.uploadedSegments.toArray().reduce((acc, cur) => acc + cur.value.length, 0) === this._expectedBinaryLength) {
-        let allSegments = this.uploadedSegments.toArray().sort((a, b) => b.key - a.key);
-        this._media.data = allSegments.reduce((acc, cur) => [...acc, ...cur.value], []);
+        let allSegments = this.uploadedSegments.toArray().sort((a, b) => b.key - a.key); // OrderBy(x => x.Key);
+        this._media.data = allSegments.reduce((acc, cur) => [...acc, ...cur.value], []); // SelectMany(x => x.Value)
       }
     }
   }

@@ -61,7 +61,7 @@ export abstract class StringBuilderExtensions {
       parameter = parameter.substr(1);
     }
 
-    let query = this.toString();
+    let query = queryBuilder.toString();
 
     if (query.includes("?") && query[query.length - 1] !== '?' && query[query.length - 1] !== '&' && parameter[0] !== '&') {
       queryBuilder.append("&");

@@ -18,9 +18,9 @@
 
     using Sharebook.Common;
     using Sharebook.Identity.API.Models.AccountViewModels;
+    using Sharebook.Identity.API.Models.User;
+    using Sharebook.Identity.API.Models.User.Birthdate;
     using Sharebook.Identity.API.Services;
-    using Sharebook.Identity.Domain.AggregatesModel.UserAggregate;
-    using Sharebook.Identity.Domain.AggregatesModel.UserAggregate.Birthdate;
 
     /// <summary>
     /// This sample controller implements a typical login/logout/provision workflow for local accounts.
@@ -30,18 +30,18 @@
     public class AccountController : Controller
     {
         //private readonly InMemoryUserLoginService _loginService;
-        private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
-        private readonly ILoginService<User> loginService;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly ILoginService<ApplicationUser> loginService;
         private readonly IIdentityServerInteractionService interaction;
         private readonly IClientStore clientStore;
         private readonly IConfiguration configuration;
 
         public AccountController(
             //InMemoryUserLoginService loginService,
-            UserManager<User> userManager,
-            SignInManager<User> signInManager,
-            ILoginService<User> loginService,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            ILoginService<ApplicationUser> loginService,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IConfiguration configuration)
@@ -104,13 +104,16 @@
 
                     await this.loginService.SignInAsync(user, props);
 
-                    // make sure the returnUrl is still valid, and if yes - redirect back to authorize endpoint
-                    if (this.interaction.IsValidReturnUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
+                    //// make sure the returnUrl is still valid, and if yes - redirect back to authorize endpoint
+                    //if (this.interaction.IsValidReturnUrl(model.ReturnUrl))
+                    //{
+                    //    return Redirect(model.ReturnUrl);
+                    //}
 
-                    return Redirect("~/");
+                    //return Redirect("~/");
+
+                    return Redirect(model.ReturnUrl);
+
                 }
 
                 ModelState.AddModelError("", "Invalid username or password.");
@@ -268,34 +271,30 @@
 
             if (ModelState.IsValid)
             {
-                var user = new User
+                var user = new ApplicationUser
                 { 
                     Name = model.User.Name,
                     UserName = model.User.Name,
                     ScreenName = model.User.Name,
                     Email = model.Email,
-                    Gender = model.User.Gender,
+                    Gender = model.Gender,
                     CanMediaTag = true,
                     CreatedOn = DateTime.UtcNow,
                     DefaultProfileImage = true,
                     DefaultProfile = true,
                     Description = model.User.Description,
-                     
-                    Birthdate = new Birthdate
-                    {
-                        Month = model.User.Birthdate.Month,
-                        Day = model.User.Birthdate.Day,
-                        Year = model.User.Birthdate.Year,
-                        Visibility = model.User.Birthdate.Visibility,
-                        VisibilityYear = model.User.Birthdate.VisibilityYear,
-                    }
-            };
+                    Month = model.Birthdate.Month,
+                    Day = model.Birthdate.Day,
+                    Year = model.Birthdate.Year,
+                    Visibility = model.Birthdate.Visibility.ToString(),
+                    VisibilityYear = model.Birthdate.VisibilityYear.ToString(),
+                };
 
-                var birthday = DateTime.ParseExact($"{model.User.Birthdate.Month}/{model.User.Birthdate.Day}/{model.User.Birthdate.Year} 00:00", "M/d/yyyy hh:mm", CultureInfo.InvariantCulture);
+                var birthday = DateTime.ParseExact($"{model.Birthdate.Month}/{model.Birthdate.Day}/{model.Birthdate.Year} 00:00", "M/d/yyyy hh:mm", CultureInfo.InvariantCulture);
                 var age = Calculator.Age(birthday);
                 if (age.HasValue)
                 {
-                    user.Birthdate.Age = (int)age;
+                    user.Age = (int)age;
                 }
 
                 var result = await this.userManager.CreateAsync(user, model.Password);
@@ -306,8 +305,6 @@
                     return View(model);
                 }
             }
-
-
 
             if (returnUrl != null)
             {
@@ -406,7 +403,7 @@
         }
 
         [HttpGet]
-        public async Task<User> GetUser(string sub)
+        public async Task<ApplicationUser> GetUser(string sub)
         {
             var user = await this.userManager.FindByIdAsync(sub);
 

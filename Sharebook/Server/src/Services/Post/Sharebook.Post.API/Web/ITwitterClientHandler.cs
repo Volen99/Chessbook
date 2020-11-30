@@ -1,6 +1,6 @@
 ﻿namespace Sharebook.Post.API.Application.Web
 {
-    using Sharebook.Upload.Application.Query;
+    using Sharebook.Storage.Application.Query;
 
     public interface ITwitterClientHandler
     {

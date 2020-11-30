@@ -6,7 +6,7 @@
 
     using Sharebook.Common.Extensions;
     using Sharebook.Common.Public.Models;
-    using Sharebook.Upload.Domain.Common;
+    using Sharebook.Storage.Domain.Common;
 
     /// <summary>
     /// Geographic information of a location

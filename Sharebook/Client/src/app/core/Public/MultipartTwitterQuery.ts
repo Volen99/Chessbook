@@ -10,7 +10,7 @@ import {HttpContent} from "./http-content";
 
 export interface IMultipartTwitterQuery extends ITwitterQuery {
   // Binary to be send via HttpRequest
-  binaries: number[][];    // byte[][]
+  binaries: ArrayBuffer[];    // byte[][]
 
   // Content Id
   contentId: string;
@@ -52,20 +52,20 @@ export class MultipartTwitterQuery extends TwitterQuery implements IMultipartTwi
 
   public uploadProgressChanged: (uploadProgressChanged: IUploadProgressChanged) => void;
 
-  get HttpContent(): HttpContent {
-    debugger
-    return this.GetMultipartFormDataContent(this.contentId, this._binaries);
+  get httpContent(): HttpContent {
+    return new HttpContent().binary = this.binaries;
+   // return this.getMultipartFormDataContent(this.contentId, this._binaries);
   }
 
-  set HttpContent(value: HttpContent) {
+  set httpContent(value: HttpContent) {
     throw new InvalidOperationException("Multipart HttpContent is created based on the binaries of the MultipartRequest.");
   }
 
-  public static CreateHttpContent(contentId: string, binaries: ArrayBuffer[]): any /*MultipartFormDataContent*/ {
+  public static createHttpContent(contentId: string, binaries: ArrayBuffer[]): any /*MultipartFormDataContent*/ {
     let multiPartContent = new HttpContent(); // new MultipartFormDataContent();
+    multiPartContent.headers = new HttpHeaders();
 
     let i = 0;
-    debugger
     for (let binary of binaries) {
       multiPartContent.headers.set("Content-Type", "application/octet-stream");
       multiPartContent.binary = binary;
@@ -74,8 +74,8 @@ export class MultipartTwitterQuery extends TwitterQuery implements IMultipartTwi
     return multiPartContent;
   }
 
-  private GetMultipartFormDataContent(contentId: string, binaries: ArrayBuffer[]): HttpContent {
-     let multiPartContent = MultipartTwitterQuery.CreateHttpContent(contentId, binaries);
+  private getMultipartFormDataContent(contentId: string, binaries: ArrayBuffer[]): HttpContent {
+     let multiPartContent = MultipartTwitterQuery.createHttpContent(contentId, binaries);
 
     // let progressableContent: ProgressableStreamContent = new ProgressableStreamContent(multiPartContent, (args) => {
     //   UploadProgressChanged?.Invoke(args);

@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
     using Sharebook.Common.Web;
-    using Sharebook.Upload.Application.Requesters;
+    using Sharebook.Storage.Application.Requesters;
 
 
     /// <summary>

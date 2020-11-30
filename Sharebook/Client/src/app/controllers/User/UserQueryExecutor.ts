@@ -1,4 +1,4 @@
-﻿import {inject, Inject, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
 import {map, delay} from 'rxjs/operators'; // LOOOOOL!!! 02.11.2020 ♥♥♥
 
 import {ITwitterResult, TwitterResult} from "../../core/Core/Web/TwitterResult";
@@ -100,6 +100,9 @@ export const IUserQueryExecutorToken = new InjectionToken<IUserQueryExecutor>('I
   factory: () => new UserQueryExecutor(inject(UserQueryGenerator), inject(TwitterAccessor), inject(WebHelper)),
 });
 
+@Injectable({
+  providedIn: "root",
+})
 export class UserQueryExecutor implements IUserQueryExecutor {
   private readonly _userQueryGenerator: IUserQueryGenerator;
   private readonly _twitterAccessor: ITwitterAccessor;
@@ -116,6 +119,7 @@ export class UserQueryExecutor implements IUserQueryExecutor {
   public getAuthenticatedUserAsync(parameters: IGetAuthenticatedUserParameters, request: ITwitterRequest): Promise<ITwitterResult<IUserDTO>> {
     let query = this._userQueryGenerator.getAuthenticatedUserQuery(parameters);
 
+    debugger
     request.query.url = query;
     request.query.httpMethod = HttpMethod.GET;
 

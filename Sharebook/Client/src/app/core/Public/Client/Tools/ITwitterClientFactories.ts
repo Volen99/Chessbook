@@ -44,6 +44,7 @@ import {IRelationshipDetails} from "../../Models/Interfaces/IRelationshipDetails
 import {ICredentialsRateLimits} from "../../Models/RateLimits/ICredentialsRateLimits";
 import {IJsonObjectConverter} from "../../../Core/Helpers/IJsonObjectConverter";
 import {JsonObjectConverter} from "../../../Core/JsonConverters/JsonObjectConverter";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 export interface ITwitterClientFactories {
   // ACCOUNT SETTINGS
@@ -188,5 +189,5 @@ export interface ITwitterClientFactories {
 
 export const ITwitterClientFactoriesToken = new InjectionToken<ITwitterClientFactories>('ITwitterClientFactories', {
   providedIn: 'root',
-  factory: () => new TwitterClientFactories(inject(TwitterClient), inject(JsonObjectConverter)),
+  factory: () => AppInjector.get(TwitterClientFactories),
 });

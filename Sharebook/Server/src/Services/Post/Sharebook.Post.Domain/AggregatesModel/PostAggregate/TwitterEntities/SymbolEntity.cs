@@ -3,7 +3,7 @@
     using Newtonsoft.Json;
 
     using Sharebook.Common.Extensions;
-    using Sharebook.Upload.Domain.AggregatesModel.PostAggregate.Entities;
+    using Sharebook.Storage.Domain.AggregatesModel.PostAggregate.Entities;
 
     public class SymbolEntity : ISymbolEntity
     {

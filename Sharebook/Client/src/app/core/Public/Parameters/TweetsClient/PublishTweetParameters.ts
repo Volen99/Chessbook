@@ -8,6 +8,8 @@ import {ICoordinates} from "../../Models/Interfaces/ICoordinates";
 import {IMedia} from "../../Models/Interfaces/IMedia";
 import {TweetIdentifier} from "../../Models/TweetIdentifier";
 import { TweetMode } from '../../Settings/SharebookSettings';
+import Type from "typescript-dotnet-commonjs/System/Types";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-show-id
 export interface IPublishTweetParameters extends ICustomRequestParameters, ITweetModeParameter {
@@ -76,7 +78,7 @@ export interface IPublishTweetParameters extends ICustomRequestParameters, ITwee
 
 export const IPublishTweetParametersToken = new InjectionToken<IPublishTweetParameters>('IPublishTweetParameters', {
   providedIn: 'root',
-  factory: () => new PublishTweetParameters(),    // TODO: might bug kk
+  factory: () => AppInjector.get(PublishTweetParameters),
 });
 
 @Injectable({
@@ -85,7 +87,9 @@ export const IPublishTweetParametersToken = new InjectionToken<IPublishTweetPara
 export class PublishTweetParameters extends CustomRequestParameters implements IPublishTweetParameters {
   // @ts-ignore
   constructor(@Inject(IPublishTweetParametersToken) textOrSource?: string | IPublishTweetParameters) {
-    if (typeof textOrSource === 'string') {
+    if (!textOrSource) {
+      super();
+    } else if (Type.isString(textOrSource)) {
       super();
 
       this.text = textOrSource;
@@ -110,9 +114,10 @@ export class PublishTweetParameters extends CustomRequestParameters implements I
       this.autoPopulateReplyMetadata = textOrSource.autoPopulateReplyMetadata;
       this.excludeReplyUserIds = textOrSource.excludeReplyUserIds;
       this.tweetMode = textOrSource.tweetMode;
-    } else {
-      super();
     }
+
+    this.mediaIds = new Array<number>();
+    this.medias = new Array<IMedia>();
   }
 
 
@@ -132,8 +137,8 @@ export class PublishTweetParameters extends CustomRequestParameters implements I
     this.inReplyToTweet = value != null ? new TweetIdentifier(value as number) : null;
   }
 
-  public mediaIds: Array<number> /*{ get; set; }*/ = new Array<number>();
-  public medias: Array<IMedia> /*{ get; set; }*/ = new Array<IMedia>();
+  public mediaIds: Array<number>; /*{ get; set; }*//* = new Array<number>();*/
+  public medias: Array<IMedia>; /*{ get; set; }*/ /*= new Array<IMedia>();*/
 
   get hasMedia(): boolean {
     return this.mediaIds?.length > 0 || this.medias?.length > 0;

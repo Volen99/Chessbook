@@ -1,12 +1,12 @@
-﻿namespace Sharebook.Infrastructure
+﻿namespace Sharebook.Common.Infrastructure
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using Services.Identity;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
 
     using static InfrastructureConstants;
+    using Sharebook.Services.Identity;
 
     public class JwtHeaderAuthenticationMiddleware : IMiddleware
     {

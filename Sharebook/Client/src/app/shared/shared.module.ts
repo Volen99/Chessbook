@@ -17,24 +17,54 @@ import {PaginationComponent} from './components/pagination/pagination.component'
 import {StoreModule} from '@ngrx/store';
 import {sharedReducers} from './shared.reducers';
 
-import {CurrentUserService} from './services/current-user.service';
-import {LoginMenuComponent} from './navbar/login-menu/login-menu.component';
 import {Identity} from './components/identity/identity';
 import {ConfigurationService} from './services/configuration.service';
 import {SecurityService} from './services/security.service';
 import {StorageService} from './services/storage.service';
 import {DataService} from './services/data.service';
 import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.component";
+import { UploadComponent } from './components/upload/upload.component';
+import { WhoCanReplyComponent } from './components/upload/who-can-reply/who-can-reply.component';
+import {FileUploadModule} from "../global-modules/upload/file-upload.module";
+import { InsertedMediaComponent } from './components/upload/inserted-media/inserted-media.component';
+import { TimelineComponent } from './components/timeline/timeline.component';
+import { UploadHeaderComponent } from './components/upload/header/upload-header.component';
+import { ShareButtonComponent } from './components/share-button/share-button.component';
+import { SingleInsertedMediaComponent } from './components/upload/inserted-media/single-inserted-media/single-inserted-media.component';
+import {MediaSplitDirective} from "./components/upload/inserted-media/media-split.directive";
+import { KeyboardShortcutsComponent } from './components/keyboard-shortcuts/keyboard-shortcuts.component';
+import { NavLeftComponent } from './components/nav-layers/nav-left/nav-left.component';
+import { MessageBtnComponent } from './components/message-btn/message-btn.component';
+import { SidebarColumnComponent } from './components/sidebar-column/sidebar-column.component';
+import { MainComponent } from './components/main/main.component';
+import { TrendsComponent } from './components/sidebar-column/trends/trends.component';
+import { WhoToFollowComponent } from './components/sidebar-column/who-to-follow/who-to-follow.component';
+import { SearchComponent } from './components/sidebar-column/search/search.component';
 
 @NgModule({
   declarations: [
     Identity,
     PopUpComponent,
-    LoginMenuComponent,
     NavbarComponent,
     HomeComponent,
     PaginationComponent,
     PageNotFoundComponent,
+    UploadComponent,
+    WhoCanReplyComponent,
+    InsertedMediaComponent,
+    TimelineComponent,
+    UploadHeaderComponent,
+    ShareButtonComponent,
+    SingleInsertedMediaComponent,
+    MediaSplitDirective,
+    KeyboardShortcutsComponent,
+    NavLeftComponent,
+    MessageBtnComponent,
+    SidebarColumnComponent,
+    MainComponent,
+    TrendsComponent,
+    WhoToFollowComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,
@@ -47,6 +77,7 @@ import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.
     ModalModule,
     ToastrModule.forRoot(),
     SharedRoutingModule,
+    FileUploadModule,
   ],
   providers: [
     {
@@ -61,7 +92,6 @@ import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.
     },
     DataService,
     RouterExtService,
-    CurrentUserService,
     SecurityService,
     ConfigurationService,
     StorageService,
@@ -72,10 +102,16 @@ import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.
     ModalModule,
     Identity,
     PopUpComponent,
-    LoginMenuComponent,
     NavbarComponent,
     PaginationComponent,
     PageNotFoundComponent,
+    TimelineComponent,
+    ShareButtonComponent,
+    KeyboardShortcutsComponent,
+    MessageBtnComponent,
+    NavLeftComponent,
+    SidebarColumnComponent,
+    MainComponent,
   ]
 })
 export class SharedModule {

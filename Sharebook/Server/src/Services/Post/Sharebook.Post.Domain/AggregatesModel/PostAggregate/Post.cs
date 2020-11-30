@@ -8,7 +8,6 @@
     using Sharebook.Post.Domain.AggregatesModel.TweetAggregate.Properties;
     using Sharebook.Post.Domain.Common;
 
-    // Core Domain
     public class Post : Entity<long>, IAggregateRoot
     {
         internal Post(string text, string fullText, bool truncated, TweetEntities entities, string source, int inReplyToStatusId, string inReplyToStatusIdStr,

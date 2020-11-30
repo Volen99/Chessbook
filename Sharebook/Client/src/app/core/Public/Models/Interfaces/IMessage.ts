@@ -13,6 +13,7 @@ import {MessageEventDTO} from "../../../Core/DTO/Events/MessageEventDTO";
 import {App} from "../../../Core/Models/Properties/App";
 import IEquatable from "typescript-dotnet-commonjs/System/IEquatable";
 import DateTime from "typescript-dotnet-commonjs/System/Time/DateTime";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 // Message that can be sent privately between Twitter users privately.
 // https://developer.twitter.com/en/docs/direct-messages/sending-and-receiving/api-reference/new-event
@@ -66,5 +67,5 @@ export interface IMessage extends IEquatable<IMessage> {
 
 export const IMessageToken = new InjectionToken<IMessage>('IMessage', {
   providedIn: 'root',
-  factory: () => new Message(Inject(MessageEventDTO), Inject(App), Inject(TwitterClient)),
+  factory: () => AppInjector.get(Message),
 });

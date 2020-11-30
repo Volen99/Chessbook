@@ -100,7 +100,7 @@ export class WebRequestExecutor implements IWebRequestExecutor {
 
   public executeMultipartQueryAsync(request: ITwitterRequest): Promise<ITwitterResponse> {
     return this.executeTwitterQuerySafelyAsync(request, async () => {
-      let httpResponseMessage: HttpResponse<any> = null;
+      let httpResponseMessage: Response = null;
 
       try {
         httpResponseMessage = await this._httpClientWebHelper.getHttpResponseAsync(request.query);
@@ -116,10 +116,11 @@ export class WebRequestExecutor implements IWebRequestExecutor {
         }
 
         return result;
-      } catch (Exception) {
+      } catch (ex) {
         // httpResponseMessage?.Dispose();
 
-        throw new Exception();
+        debugger
+        throw Error(ex);
       }
     });
   }

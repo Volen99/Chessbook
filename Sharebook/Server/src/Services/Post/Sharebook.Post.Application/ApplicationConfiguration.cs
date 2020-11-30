@@ -6,7 +6,7 @@
     using AutoMapper;
     using MediatR;
 
-    using Sharebook.Upload.Application.Common.Behaviours;
+    using Sharebook.Storage.Application.Common.Behaviours;
 
     public static class ApplicationConfiguration
     {

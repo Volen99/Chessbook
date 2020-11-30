@@ -10,6 +10,7 @@ import {IGetRetweetsOfMeTimelineParameters} from "../../Parameters/TimelineClien
 import {ITimelineClientParametersValidator} from "../../../Core/Client/Validators/TimelineClientParametersValidator";
 import {TimelinesClient} from "../../../../sharebook/Client/Clients/TimelinesClient";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 export interface ITimelinesClient {
   // Validate all the Timelines client parameters
@@ -114,5 +115,5 @@ export interface ITimelinesClient {
 
 export const ITimelinesClientToken = new InjectionToken<ITimelinesClient>('ITimelinesClient', {
   providedIn: 'root',
-  factory: () => new TimelinesClient(Inject(TwitterClient)),
+  factory: () => AppInjector.get(TimelinesClient),
 });

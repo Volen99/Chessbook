@@ -3,7 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-
+    using Sharebook.Post.Application.Common.Interfaces;
     using Sharebook.Post.Domain.Common;
     using Sharebook.Post.Infrastructure.Data.Dbs;
 

@@ -5,19 +5,19 @@
     using Newtonsoft.Json;
 
     using Sharebook.Common.JsonConverters;
-    using Sharebook.Common.Public.Models.Entities;
-    using Sharebook.Common.Public.Models.Interfaces.DTO;
+    using Sharebook.Identity.API.Models.User;
+    using Sharebook.Identity.API.Models.User.Birthdate;
 
-    public class UserDTO : UserIdentifierDTO, IUserDTO
+    public class UserDTO : UserIdentifierDTO // , IUserDTO
     {
         // Verify : ProfileImageTile
 
         [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonProperty("status")]
-        [JsonConverter(typeof(JsonPropertyConverterRepository))]
-        public ITweetDTO Status { get; set; }
+        //[JsonProperty("status")]
+       // [JsonConverter(typeof(JsonPropertyConverterRepository))]
+        // public ITweetDTO Status { get; set; }
 
         [JsonProperty("description")]
         public string Description { get; set; }
@@ -57,8 +57,8 @@
         public bool Verified { get; set; }
 
         [JsonProperty("entities")]
-        [JsonConverter(typeof(JsonPropertyConverterRepository))]
-        public IUserEntities Entities { get; set; }
+       //  [JsonConverter(typeof(JsonPropertyConverterRepository))]
+        public UserEntities Entities { get; set; }
 
         [JsonProperty("notifications")]
         public bool? Notifications { get; set; }

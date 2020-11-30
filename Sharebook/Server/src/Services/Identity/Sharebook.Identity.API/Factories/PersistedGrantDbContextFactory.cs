@@ -22,7 +22,7 @@
             var optionsBuilder = new DbContextOptionsBuilder<PersistedGrantDbContext>();
             var operationOptions = new OperationalStoreOptions();
 
-            optionsBuilder.UseSqlServer(config.GetDefaultConnectionString(), sqlServerOptionsAction: o => o.MigrationsAssembly("WorldFeed.Identity.API"));
+            optionsBuilder.UseSqlServer(config.GetDefaultConnectionString(), sqlServerOptionsAction: o => o.MigrationsAssembly("Sharebook.Identity.API"));
 
             return new PersistedGrantDbContext(optionsBuilder.Options, operationOptions);
         }

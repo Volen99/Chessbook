@@ -5,6 +5,7 @@ import {ITwitterResult} from "../../../Core/Web/TwitterResult";
 import {ITwitterQuery} from "../../Models/Interfaces/ITwitterQuery";
 import {ExecuteClient} from "../../../../sharebook/Client/Clients/ExecuteClient";
 import {ExecuteRequester} from "../../../../sharebook/Client/Requesters/ExecuteRequester";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 export interface IExecuteClient {
   // Execute a custom request
@@ -26,5 +27,5 @@ export interface IExecuteClient {
 
 export const IExecuteClientToken = new InjectionToken<IExecuteClient>('IExecuteClient', {
   providedIn: 'root',
-  factory: () => new ExecuteClient(Inject(ExecuteRequester)),
+  factory: () => AppInjector.get(ExecuteClient)
 });

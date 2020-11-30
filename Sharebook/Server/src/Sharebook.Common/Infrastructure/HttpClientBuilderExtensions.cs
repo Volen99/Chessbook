@@ -1,4 +1,4 @@
-﻿namespace Sharebook.Infrastructure
+﻿namespace Sharebook.Common.Infrastructure
 {
     using System;
     using System.Net;
@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
     using Polly;
-    using Services.Identity;
+    using Sharebook.Services.Identity;
 
     using static InfrastructureConstants;
 

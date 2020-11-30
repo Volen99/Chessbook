@@ -1,4 +1,5 @@
 import {Injector, NgModule} from '@angular/core';
+import {MatDialogModule} from "@angular/material/dialog";
 
 import {AppComponent} from './app.component';
 import {BrowserModule} from '@angular/platform-browser';
@@ -26,6 +27,7 @@ import {TweetsClient} from "./sharebook/Client/Clients/TweetsClient";
 import {UsersClient} from "./sharebook/Client/Clients/UsersClient";
 import {AccountActivityClient} from "./sharebook/Client/Clients/AccountActivityClient";
 import {setAppInjector} from "./sharebook/Injectinvi/app-injector";
+import {FileUploadModule} from "./global-modules/upload/file-upload.module";
 
 // NgModuleS help organize an application into cohesive blocks of functionality.
 // The @NgModule tells Angular how to compile and launch the app
@@ -43,10 +45,12 @@ import {setAppInjector} from "./sharebook/Injectinvi/app-injector";
     ScienceModule,
     KidsModule,
     ProfileModule,
+    FileUploadModule,
+    MatDialogModule,
   ],
   providers: [TwitterClient, RawExecutors, UploadClient, ParametersValidator, AuthClient, AccountSettingsClient,
     ExecuteClient, HelpClient, ListsClient, MessagesClient, RateLimitsClient, SearchClient, TimelinesClient,
-    TrendsClient, TweetsClient, UploadClient, UsersClient, AccountActivityClient], // Register service providers and inject them into components
+    TrendsClient, TweetsClient, UploadClient, UsersClient, AccountActivityClient],
   bootstrap: [AppComponent]
 })
 export class AppModule {

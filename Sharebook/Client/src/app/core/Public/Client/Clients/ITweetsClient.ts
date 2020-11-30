@@ -21,6 +21,7 @@ import {IGetOEmbedTweetParameters} from "../../Parameters/TweetsClient/GetOEmbed
 import {ITweetsClientParametersValidator} from "../../../Core/Client/Validators/TweetsClientParametersValidator";
 import {TweetsClient} from "../../../../sharebook/Client/Clients/TweetsClient";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 export interface ITweetsClient {
   // Validate all the Tweets client parameters
@@ -189,5 +190,5 @@ export interface ITweetsClient {
 
 export const ITweetsClientToken = new InjectionToken<ITweetsClient>('ITweetsClient', {
   providedIn: 'root',
-  factory: () => new TweetsClient(Inject(TwitterClient)),
+  factory: () => AppInjector.get(TweetsClient),
 });

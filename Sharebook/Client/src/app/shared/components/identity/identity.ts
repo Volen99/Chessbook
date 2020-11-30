@@ -25,7 +25,7 @@ export class Identity implements OnInit {
     });
 
     if (window.location.hash) {
-      this.securityService.AuthorizedCallback();
+      this.securityService.authorizedCallback();
     }
 
     this.isAuthenticated = this.securityService.isAuthorized;
@@ -45,7 +45,8 @@ export class Identity implements OnInit {
   }
 
   login() {
-    this.securityService.Authorize();
+    debugger
+    this.securityService.authorize();
   }
 
   logout() {

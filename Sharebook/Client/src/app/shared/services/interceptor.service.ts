@@ -8,7 +8,7 @@ export class InterceptorService {
 
   constructor() { }
 
-  intercept(request: HttpRequest<any>, next: HttpHandler, ) {
+  intercept(request: HttpRequest<any>, next: HttpHandler) {
     request = request.clone({
       setHeaders: {
         // 'Content-Type' : 'application/json',
@@ -20,6 +20,6 @@ export class InterceptorService {
   }
 
   getToken() {
-    return localStorage.getItem('token')
+    return localStorage.getItem('token');
   }
 }

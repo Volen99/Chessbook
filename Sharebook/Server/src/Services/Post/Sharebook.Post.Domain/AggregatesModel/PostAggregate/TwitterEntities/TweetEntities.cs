@@ -4,10 +4,8 @@
     using System.Linq;
 
     using Sharebook.Common.Settings;
-    using Sharebook.Upload.Domain.AggregatesModel.PostAggregate.Entities;
-    using Sharebook.Upload.Domain.Common;
 
-    public class TweetEntities : ValueObject
+    public class TweetEntities /*ValueObject*/
     {
        // private readonly ITweetDTO _tweetDTO;
 
@@ -56,10 +54,10 @@
             //}
         }
 
-        public List<IUrlEntity> Urls { get; private set; }
-        public List<IUserMentionEntity> UserMentions { get; private set; }
-        public List<IHashtagEntity> Hashtags { get; private set; }
-        public List<ISymbolEntity> Symbols { get; private set; }
-        public List<IMediaEntity> Medias { get; private set; }
+        public List<UrlEntity> Urls { get; private set; }
+        public List<UserMentionEntity> UserMentions { get; private set; }
+        public List<HashtagEntity> Hashtags { get; private set; }
+        public List<SymbolEntity> Symbols { get; private set; }
+        public List<MediaEntity> Medias { get; private set; }
     }
 }

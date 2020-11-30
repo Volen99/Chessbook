@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    using Sharebook.Upload.Application.Common.Models;
+    using Sharebook.Storage.Application.Common.Models;
 
     public interface IIdentityService
     {

@@ -14,7 +14,7 @@ export class ScienceService {
   private store: Store<AppState>;
   private configurationService: ConfigurationService;
 
-  private uploadUrl: string;
+  private storageUrl: string;
 
   // private uploadPath: string = environment.scienceApiUrl + 'media' + '/upload';
   // private uploadPathWithoutSlash = this.uploadPath.slice(0, -1);
@@ -25,14 +25,14 @@ export class ScienceService {
     this.configurationService = configurationService;
 
     if (this.configurationService.isReady) {
-      this.uploadUrl = this.configurationService.serverSettings.uploadUrl;
+      this.storageUrl = this.configurationService.serverSettings.storageUrl;
     } else {
-      this.configurationService.settingsLoaded$.subscribe(x => this.uploadUrl = this.configurationService.serverSettings.uploadUrl);
+      this.configurationService.settingsLoaded$.subscribe(x => this.storageUrl = this.configurationService.serverSettings.storageUrl);
     }
   }
 
   upload(formData) {
-    return this.http.post<any>(this.uploadUrl + '/upload/image', formData, {
+    return this.http.post<any>(this.storageUrl + '/upload/image', formData, {
       // reportProgress: true,
       // observe: 'events',
     });

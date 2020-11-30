@@ -16,7 +16,6 @@ export class UploadQueryGenerator implements IUploadQueryGenerator {
   public getChunkedUploadInitQuery(parameters: IChunkUploadInitParameters): string {
     let initQuery = new StringBuilder(Resources.Upload_URL);
 
-    debugger
     StringBuilderExtensions.addParameterToQuery(initQuery, "command", "INIT");
     StringBuilderExtensions.addParameterToQuery(initQuery, "media_type", parameters.mediaType);
     StringBuilderExtensions.addParameterToQuery(initQuery, "total_bytes", parameters.totalBinaryLength.toString(/*CultureInfo.InvariantCulture*/));
@@ -37,7 +36,6 @@ export class UploadQueryGenerator implements IUploadQueryGenerator {
       throw new ArgumentNullException(`${`nameof(parameters.mediaId)`}", "APPEND Media Id cannot be null. Make sure you use the media id retrieved from the INIT query.`);
     }
 
-    parameters.segmentIndex = 1; // TODO: DELETE
     if (parameters.segmentIndex == null) {
       throw new ArgumentNullException(`${`nameof(parameters.segmentIndex)`}", "APPEND Segment index is required. Its initial value should be 0.`);
     }

@@ -13,6 +13,7 @@
     using Microsoft.Extensions.Options;
 
     using Sharebook.Identity.API.Data;
+    using Sharebook.Common.Settings;
 
     public class Program
     {

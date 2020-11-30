@@ -2,11 +2,9 @@
 {
     using System;
     using System.Reflection;
-    using StackExchange.Redis;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.DataProtection;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -15,17 +13,13 @@
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Diagnostics.HealthChecks;
-    using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-    using HealthChecks.UI.Client;
     using IdentityServer4.Services;
 
     using Sharebook.Identity.API.Services;
     using Sharebook.Identity.API.Devspaces;
     using Sharebook.Common.Infrastructure;
-    using Sharebook.Infrastructure;
-    using Sharebook.Identity.Domain.AggregatesModel.UserAggregate;
-    using Sharebook.Identity.Infrastructure.Data;
+    using Sharebook.Identity.API.Models.User;
+    using Sharebook.Identity.API.Data;
 
     public class Startup
     {
@@ -41,50 +35,19 @@
         {
             RegisterAppInsights(services);
 
-            services.Configure<AppSettings>(this.Configuration);
-
-            services.AddTokenAuthentication(this.Configuration);
-
-            // Add framework services.
-            services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(this.Configuration.GetDefaultConnectionString(),
-                    sqlServerOptionsAction: sqlOptions =>
-                    {
-                        sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
-                        // Configuring Connection Resiliency: https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency Deprecated? => https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/
-                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
-                    }));
-
-
-            if (this.Configuration.GetValue<string>("IsClusterEnv") == bool.TrueString)
-            {
-                services.AddDataProtection(opts =>
-                {
-                    opts.ApplicationDiscriminator = "worldfeed.identity.api";
-                })
-                .PersistKeysToRedis(ConnectionMultiplexer.Connect(this.Configuration["DPConnectionString"]), "DataProtection-Keys");
-            }
-
-            services.AddHealthChecks()                                    // This operation is idempotent
-                .AddCheck("self", () => HealthCheckResult.Healthy())
-                .AddSqlServer(Configuration.GetDefaultConnectionString(),
-                    name: "WorldFeedIdentityDatabase-check",
-                    tags: new string[] { "WorldFeedIdentityDatabase" });
-
-            services.AddTransient<ILoginService<User>, EFLoginService>();
-            services.AddTransient<IRedirectService, RedirectService>();
+            services.AddWebService<ApplicationDbContext>(this.Configuration);
 
             var defaultConnectionString = this.Configuration.GetDefaultConnectionString();
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             // Configures the Identity cookie.
             services.ConfigureApplicationCookie(config =>
             {
-                config.Cookie.Name = "WorldFeed.IdentityCookie";
+                config.Cookie.Name = "Sharebook.IdentityCookie";
                 config.LoginPath = "/Account/Login";
                 config.LogoutPath = "/Account/Logout";
             });
@@ -104,7 +67,7 @@
             })
             .AddDevspacesIfNeeded(this.Configuration.GetValue("EnableDevspaces", false))
             .AddDeveloperSigningCredential()                                // .AddSigningCredential(Certificate.Get())
-            .AddAspNetIdentity<User>()                                      // http://docs.identityserver.io/en/latest/reference/aspnet_identity.html
+            .AddAspNetIdentity<ApplicationUser>()                                      // http://docs.identityserver.io/en/latest/reference/aspnet_identity.html
             .AddConfigurationStore(options =>                               // this adds the config data from DB (clients, resources, CORS)
             {
                 options.ConfigureDbContext = builder => builder.UseSqlServer(defaultConnectionString,
@@ -136,6 +99,10 @@
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            services.AddTransient<ILoginService<ApplicationUser>, EFLoginService>();
+            services.AddTransient<IRedirectService, RedirectService>();
+
+
             var container = new ContainerBuilder();
             container.Populate(services);
 
@@ -146,11 +113,6 @@
         // The Configure method is used to specify how the app responds to HTTP requests. 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            // loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            // loggerFactory.AddDebug();
-            // loggerFactory.AddAzureWebAppDiagnostics();
-            // loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Trace);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -197,15 +159,6 @@
                 endpoints.MapDefaultControllerRoute();
                 // a stackoverflow dude: MapControllers is used to map any attributes that may exist on the controllers, like, [Route], [HttpGet], etc
                 endpoints.MapControllers();
-                endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
-                {
-                    Predicate = _ => true,
-                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                });
-                endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
-                {
-                    Predicate = r => r.Name.Contains("self")
-                });
 
                 endpoints.MapDefaultControllerRoute();
             });

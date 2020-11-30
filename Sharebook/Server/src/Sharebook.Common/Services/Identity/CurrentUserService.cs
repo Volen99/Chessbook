@@ -4,7 +4,7 @@
     using System.Security.Claims;
     using Microsoft.AspNetCore.Http;
 
-    using Infrastructure;
+    using Sharebook.Common.Infrastructure;
 
     public class CurrentUserService : ICurrentUserService
     {
@@ -18,11 +18,15 @@
             {
                 throw new InvalidOperationException("This request does not have an authenticated user.");
             }
-
-            this.UserId = this.user.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
-        public string UserId { get; }
+        public string UserId
+        {
+            get
+            {
+                return this.user.FindFirstValue(ClaimTypes.NameIdentifier);
+            }
+        }
 
         public bool IsAdministrator => this.user.IsAdministrator();
     }

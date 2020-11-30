@@ -502,5 +502,10 @@
         {
             return !string.IsNullOrEmpty(json) && json.Length >= 2 && ((json[0] == '{' && json[json.Length - 1] == '}') || (json[0] == '[' && json[json.Length - 1] == ']'));
         }
+
+        public static string[] Lines(this string text)
+        {
+            return text.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+        }
     }
 }

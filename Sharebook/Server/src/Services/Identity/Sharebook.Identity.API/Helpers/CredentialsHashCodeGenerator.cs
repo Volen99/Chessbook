@@ -1,6 +1,6 @@
 ﻿namespace Sharebook.Identity.API.Helpers
 {
-    using Sharebook.Identity.API.Auth.Authentication;
+    using Sharebook.Identity.API.Models.Authentication;
 
     public static class CredentialsHashCodeGenerator
     {

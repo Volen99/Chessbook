@@ -1,6 +1,6 @@
 ﻿using Sharebook.Common;
 
-namespace Sharebook.Infrastructure
+namespace Sharebook.Common.Infrastructure
 {
     using Microsoft.AspNetCore.Authorization;
 

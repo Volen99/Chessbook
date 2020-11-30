@@ -12,6 +12,7 @@
     using Microsoft.AspNetCore.Identity;
 
     using Sharebook.Identity.API.Models;
+    using Sharebook.Identity.API.Models.User;
 
     /// <summary>
     /// Read more: https://docs.identityserver.io/en/dev/reference/profileservice.html

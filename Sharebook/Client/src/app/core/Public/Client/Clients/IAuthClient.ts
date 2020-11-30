@@ -12,6 +12,7 @@ import {IInvalidateAccessTokenParameters} from "../../Parameters/Auth/Invalidate
 import {AuthClient} from "../../../../sharebook/Client/Clients/AuthClient";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
 import Uri from "typescript-dotnet-commonjs/System/Uri/Uri";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 export interface IAuthClient {
   // Validate all the Account activity client parameters
@@ -97,5 +98,5 @@ export interface IAuthClient {
 
 export const IAuthClientToken = new InjectionToken<IAuthClient>('IAuthClient', {
   providedIn: 'root',
-  factory: () => new AuthClient(Inject(TwitterClient)),
+  factory: () => AppInjector.get(AuthClient),
 });

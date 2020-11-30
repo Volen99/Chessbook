@@ -1,4 +1,4 @@
-﻿namespace Sharebook.Infrastructure
+﻿namespace Sharebook.Common.Infrastructure
 {
     public class InfrastructureConstants
     {

@@ -3,7 +3,7 @@
     using System;
 
     using Sharebook.Common.Public.Models.RateLimits;
-    using Sharebook.Upload.Application.Query;
+    using Sharebook.Storage.Application.Query;
 
     public class QueryExecutionEventArgs : EventArgs
     {

@@ -45,16 +45,16 @@
 
         private static void InitializeTweetinviInterfacesConverters()
         {
-            var userDTOConverter = new JsonInterfaceToObjectConverter<IUserDTO, UserDTO>();
+            //var userDTOConverter = new JsonInterfaceToObjectConverter<IUserDTO, UserDTO>();
             var userIdentifierConverter = new JsonInterfaceToObjectConverter<IUserIdentifier, UserIdentifierDTO>();
-            var accountSettingsConverter = new JsonInterfaceToObjectConverter<IAccountSettingsDTO, AccountSettingsDTO>();
+            //var accountSettingsConverter = new JsonInterfaceToObjectConverter<IAccountSettingsDTO, AccountSettingsDTO>();
 
-            JsonConverters.Add(typeof(IUserDTO), userDTOConverter);
+          //  JsonConverters.Add(typeof(IUserDTO), userDTOConverter);
             JsonConverters.Add(typeof(IUserIdentifier), userIdentifierConverter);
-            JsonConverters.Add(typeof(IAccountSettingsDTO), accountSettingsConverter);
+            //JsonConverters.Add(typeof(IAccountSettingsDTO), accountSettingsConverter);
 
-            JsonConverters.Add(typeof(IEndpointRateLimit), endpointRateLimitConverter);
-            JsonConverters.Add(typeof(ICredentialsRateLimits), credentialsRateLimitsConverter);
+           // JsonConverters.Add(typeof(IEndpointRateLimit), endpointRateLimitConverter);
+           // JsonConverters.Add(typeof(ICredentialsRateLimits), credentialsRateLimitsConverter);
         }
 
         private static readonly object _convertersLocker = new object();

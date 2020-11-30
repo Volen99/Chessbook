@@ -1,4 +1,4 @@
-﻿namespace Sharebook.Upload.API.JsonConverters
+﻿namespace Sharebook.Storage.API.JsonConverters
 {
     using Newtonsoft.Json;
 

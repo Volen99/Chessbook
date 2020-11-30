@@ -5,6 +5,7 @@
     using Sharebook.Common.Extensions;
     using Sharebook.Common.Helpers;
     using Sharebook.Common.Wrappers;
+    using Sharebook.Identity.API.Json;
 
     public class JsonObjectConverter : IJsonObjectConverter
     {

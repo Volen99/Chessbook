@@ -3,6 +3,7 @@
 import {IUserIdentifier} from "../../../Public/Models/Interfaces/IUserIdentifier";
 import ArgumentNullException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentNullException";
 import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/ArgumentException";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 export interface IUserQueryValidator {
   throwIfUserCannotBeIdentified(user: IUserIdentifier): void;
@@ -12,7 +13,7 @@ export interface IUserQueryValidator {
 
 export const IUserQueryValidatorToken = new InjectionToken<IUserQueryValidator>('IUserQueryValidator', {
   providedIn: 'root',
-  factory: () => new UserQueryValidator(),
+  factory: () => AppInjector.get(UserQueryValidator),
 });
 
 @Injectable({

@@ -1,3 +1,5 @@
+using Sharebook.Identity.API.Helpers;
+
 namespace Sharebook.Identity.API.Models.Authentication
 {
     public interface IReadOnlyConsumerCredentialsWithoutBearer

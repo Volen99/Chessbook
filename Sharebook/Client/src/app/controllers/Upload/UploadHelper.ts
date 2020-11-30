@@ -59,6 +59,7 @@ export class UploadHelper implements IUploadHelper {
       timeToWait = mediaStatus.processingInfo.checkAfterInMilliseconds;
     }
 
+    debugger
     media.uploadedMediaInfo = mediaStatus;
   }
 

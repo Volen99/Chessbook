@@ -1,8 +1,9 @@
 import {CustomRequestParameters, ICustomRequestParameters} from "../CustomRequestParameters";
 import {ITweetModeParameter} from "../ITweetModeParameter";
-import {ITweetIdentifier} from "../../Models/Interfaces/ITweetIdentifier";
+import {ITweetIdentifier, ITweetIdentifierToken} from "../../Models/Interfaces/ITweetIdentifier";
 import {TweetIdentifier} from "../../Models/TweetIdentifier";
 import {TweetMode} from '../../Settings/SharebookSettings';
+import {Inject} from "@angular/core";
 
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-show-id
 export interface IGetTweetParameters extends ICustomRequestParameters, ITweetModeParameter {
@@ -26,8 +27,9 @@ export interface IGetTweetParameters extends ICustomRequestParameters, ITweetMod
 }
 
 export class GetTweetParameters extends CustomRequestParameters implements IGetTweetParameters {
-  constructor(tweetIdOrTweet: | number | ITweetIdentifier) {
+  constructor(@Inject(ITweetIdentifierToken) tweetIdOrTweet: | number | ITweetIdentifier) {
     super();
+    debugger;
 
     let tweetCurrent: ITweetIdentifier;
     if (tweetIdOrTweet instanceof TweetIdentifier) {

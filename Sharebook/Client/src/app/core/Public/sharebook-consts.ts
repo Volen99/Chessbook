@@ -6,4 +6,6 @@ export abstract class SharebookConsts {
 
   public static EMPTY: string = "";
   public static INFINITE: number = -1;
+
+  public static fileCurrent: File;
 }

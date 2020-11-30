@@ -24,7 +24,7 @@ const routes: Routes = [
     loadChildren: () => import('./components/programming/programming-routing.module').then(m => m.ProgrammingRoutingModule),
   },
   {
-    path: 'settings',
+    path: 'profile',
     loadChildren: () => import('./components/profile/profile-routing.module').then(m => m.ProfileRoutingModule),
   },
 ];

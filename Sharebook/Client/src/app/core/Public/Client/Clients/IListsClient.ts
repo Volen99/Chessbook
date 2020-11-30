@@ -34,6 +34,7 @@ import {ListsClient} from "../../../../sharebook/Client/Clients/ListsClient";
 import {TwitterClient} from "../../../../sharebook/TwitterClient";
 import {TwitterListsRequester} from "../../../../sharebook/Client/Requesters/TwitterListsRequester";
 import {IUser} from "../../Models/Interfaces/IUser";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 export interface IListsClient {
   // Validate all the List client parameters
@@ -430,5 +431,5 @@ export interface IListsClient {
 
 export const IListsClientToken = new InjectionToken<IListsClient>('IListsClient', {
   providedIn: 'root',
-  factory: () => new ListsClient(Inject(TwitterListsRequester), Inject(TwitterClient)),
+  factory: () => AppInjector.get(ListsClient),
 });

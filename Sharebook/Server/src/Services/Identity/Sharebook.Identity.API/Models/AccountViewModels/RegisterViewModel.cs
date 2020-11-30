@@ -1,10 +1,11 @@
 ﻿namespace Sharebook.Identity.API.Models.AccountViewModels
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using Sharebook.Identity.API.Models.Enums;
+    using Sharebook.Identity.API.DTO;
+    using Sharebook.Identity.API.Models.ManageViewModels;
+    using Sharebook.Identity.API.Models.User.Enums;
 
     public class RegisterViewModel
     {
@@ -28,7 +29,11 @@
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public UserDTO User { get; set; }
+
+        public Gender Gender { get; set; }
+
+        public BirthdateViewModel Birthdate { get; set; }
     }
 
 }

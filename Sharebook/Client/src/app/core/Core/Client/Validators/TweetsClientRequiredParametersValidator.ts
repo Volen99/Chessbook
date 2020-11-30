@@ -48,6 +48,7 @@ export class TweetsClientRequiredParametersValidator implements ITweetsClientReq
       throw new ArgumentNullException(`nameof(parameters)`);
     }
 
+    debugger
     if (this.isParametersForThrowIfTweetBad(parameters)) {
       this.throwIfTweetCannotBeUsed(parameters.tweet, `${`nameof(parameters.tweet)`}`);
     } else if (this.isIGetTweetsParameters(parameters)) {
@@ -100,7 +101,7 @@ export class TweetsClientRequiredParametersValidator implements ITweetsClientReq
   }
 
   private isParametersForThrowIfTweetBad(parameters: TweetsParameters): parameters is ParametersForThrowIfTweetBad {
-    return (parameters as ParametersForThrowIfTweetBad).customQueryParameters !== undefined;
+    return (parameters as ParametersForThrowIfTweetBad).tweet !== undefined;
   }
 
   private isIGetTweetsParameters(parameters: TweetsParameters): parameters is IGetTweetsParameters {

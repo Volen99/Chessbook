@@ -3,6 +3,7 @@
 import {ICoordinates} from "./ICoordinates";
 import { Location } from '../Location';
 import {Coordinates} from "../Coordinates";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 // A rectangle box area defined by two coordinates.
 export interface ILocation {
@@ -15,6 +16,5 @@ export interface ILocation {
 
 export const ILocationToken = new InjectionToken<ILocation>('ILocation', {
   providedIn: 'root',
-  factory: () => new Location(Inject(Number), Inject(Number), Inject(Number), Inject(Number),
-  Inject(Coordinates), Inject(Coordinates)),
+  factory: () => AppInjector.get(Location),
 });

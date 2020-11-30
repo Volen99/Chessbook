@@ -4,7 +4,7 @@ import {ITwitterResult} from "../../../core/Core/Web/TwitterResult";
 import {IUserIdentifier} from "../../../core/Public/Models/Interfaces/IUserIdentifier";
 import {ITweetsClient} from "../../../core/Public/Client/Clients/ITweetsClient";
 import {ITwitterClient, ITwitterClientToken} from "../../../core/Public/ITwitterClient";
-import {ITweetsRequester} from "../../../core/Public/Client/Requesters/ITweetsRequester";
+import {ITweetsRequester, ITweetsRequesterToken} from "../../../core/Public/Client/Requesters/ITweetsRequester";
 import {ITweetsClientParametersValidator} from "../../../core/Core/Client/Validators/TweetsClientParametersValidator";
 import {ITweet} from "../../../core/Public/Models/Interfaces/ITweet";
 import {GetTweetParameters, IGetTweetParameters} from "../../../core/Public/Parameters/TweetsClient/GetTweetParameters";
@@ -34,6 +34,8 @@ import {
 } from "../../../core/Public/Parameters/TweetsClient/UnFavoriteTweetParameters";
 import {IOEmbedTweet} from "../../../core/Public/Models/Interfaces/IOEmbedTweet";
 import {GetOEmbedTweetParameters, IGetOEmbedTweetParameters} from "../../../core/Public/Parameters/TweetsClient/GetOEmbedTweetParameters";
+import {TwitterClient} from "../../TwitterClient";
+import {IUploadRequester, IUploadRequesterToken} from "../../../core/Public/Client/Requesters/IUploadRequester";
 
 @Injectable({
   providedIn: 'root',
@@ -42,9 +44,9 @@ export class TweetsClient implements ITweetsClient {
   private readonly _client: ITwitterClient;
   private readonly _tweetsRequester: ITweetsRequester;
 
-  constructor(@Inject(ITwitterClientToken) client: ITwitterClient) {
+  constructor(client: TwitterClient, @Inject(ITweetsRequesterToken) raw?: ITweetsRequester) {
     this._client = client;
-    this._tweetsRequester = client.raw?.tweets;
+    this._tweetsRequester = raw;
   }
 
   get parametersValidator(): ITweetsClientParametersValidator {

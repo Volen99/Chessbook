@@ -3,7 +3,7 @@
     using System;
 
     using Sharebook.Common.Public.Models.Interfaces;
-    using Sharebook.Upload.Application.Query;
+    using Sharebook.Storage.Application.Query;
 
     /// <summary>
     /// Event raised to inform that a request is starting its execution

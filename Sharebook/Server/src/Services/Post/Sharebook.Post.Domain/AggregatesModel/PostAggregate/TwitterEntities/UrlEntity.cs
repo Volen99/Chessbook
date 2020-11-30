@@ -3,7 +3,7 @@
     using Newtonsoft.Json;
 
     using Sharebook.Common.Extensions;
-    using Sharebook.Upload.Domain.AggregatesModel.PostAggregate.Entities;
+    using Sharebook.Storage.Domain.AggregatesModel.PostAggregate.Entities;
 
     /// <summary>
     /// Object storing information related with an URL on twitter

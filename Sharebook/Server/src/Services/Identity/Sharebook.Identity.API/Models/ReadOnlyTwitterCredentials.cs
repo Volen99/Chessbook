@@ -1,6 +1,6 @@
 ﻿namespace Sharebook.Identity.API.Models
 {
-    using Sharebook.Identity.API.Auth.Authentication;
+    using Sharebook.Identity.API.Models.Authentication;
 
     /// <summary>
     /// Readonly version of twitter credentials

@@ -65,7 +65,7 @@ export class UserDTO extends UserIdentifierDTO implements IUserDTO {
   public profileImageUrl: string;
 
   // [JsonProperty("follow_request_sent")]
-    public followRequestSent?: boolean;
+  public followRequestSent?: boolean;
 
   // [JsonProperty("default_profile")]
   public defaultProfile: boolean;

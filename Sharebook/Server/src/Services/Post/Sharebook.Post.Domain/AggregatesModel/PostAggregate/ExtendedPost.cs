@@ -1,6 +1,6 @@
 ﻿namespace Sharebook.Post.Domain.AggregatesModel.PostAggregate
 {
-    using Sharebook.Upload.Domain.AggregatesModel.PostAggregate.Entities;
+    using Sharebook.Storage.Domain.AggregatesModel.PostAggregate.Entities;
 
     public class ExtendedPost : IExtendedPost
     {

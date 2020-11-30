@@ -26,6 +26,7 @@ import {ChunkedUploader} from "./ChunkedUploader";
 import {MultipartTwitterQuery} from "../../core/Public/MultipartTwitterQuery";
 import {JsonConvert} from "json2typescript";
 import {AppInjector} from "../../sharebook/Injectinvi/app-injector";
+import {SharebookConsts} from "../../core/Public/sharebook-consts";
 
 export interface IUploadQueryExecutor {
   // Upload a binary
@@ -57,8 +58,8 @@ export class UploadQueryExecutor implements IUploadQueryExecutor {
   }
 
   public async uploadBinaryAsync(uploadQueryParameters: IUploadParameters, baseRequest: ITwitterRequest): Promise<IChunkUploadResult> {
-    let binary = uploadQueryParameters.binary;
-    let uploader = this.createChunkedUploader();
+    let binary: ArrayBuffer = uploadQueryParameters.binary;
+    let uploader: IChunkedUploader = this.createChunkedUploader();
 
     let initParameters = new ChunkUploadInitParameters();
     initParameters.totalBinaryLength = binary.byteLength;
@@ -82,9 +83,13 @@ export class UploadQueryExecutor implements IUploadQueryExecutor {
     // uploadQueryParameters.uploadStateChanged(new MediaUploadProgressChangedEventArgs(UploadProgressState.INITIALIZED, 0, totalSize));
     for (let i = 0; i < binaryChunks.length; ++i) {
       let binaryChunk = binaryChunks[i];
+
+      let chunkArrayBufferCurrent: () => Promise<ArrayBuffer> = async () => binaryChunk;
+      SharebookConsts.fileCurrent.arrayBuffer = chunkArrayBufferCurrent;
+
       let startUploadedSize = uploadedSize;
       // Must be `media`, if using the real media type as content id, Twitter does not accept when invoking .Finalize().
-      let appendParameters = new ChunkUploadAppendParameters(binaryChunk, "media", uploadQueryParameters.timeout);
+      let appendParameters = new ChunkUploadAppendParameters(binaryChunk, uploadQueryParameters.mediaType, uploadQueryParameters.timeout);
       appendParameters.uploadProgressChanged = (args) => {
         uploadedSize = startUploadedSize + args.NumberOfBytesUploaded;
         uploadQueryParameters.uploadStateChanged(new MediaUploadProgressChangedEventArgs(UploadProgressState.PROGRESS_CHANGED, uploadedSize, totalSize));
@@ -93,6 +98,7 @@ export class UploadQueryExecutor implements IUploadQueryExecutor {
 
 
       let appendRequest = new TwitterRequest(baseRequest);
+      debugger
       let appendOperationSucceeded = await uploader.appendAsync(appendParameters, appendRequest); // .ConfigureAwait(false);
 
       if (appendOperationSucceeded === false) {
@@ -103,6 +109,7 @@ export class UploadQueryExecutor implements IUploadQueryExecutor {
 
     let finalizeRequest = new TwitterRequest(baseRequest);
 
+    debugger
     let finalizeSucceeded: boolean = await uploader.finalizeAsync(uploadQueryParameters.finalizeCustomRequestParameters, finalizeRequest); // .ConfigureAwait(false);
     if (finalizeSucceeded) {
       let result = uploader.result;
@@ -140,8 +147,7 @@ export class UploadQueryExecutor implements IUploadQueryExecutor {
       let take: number = Math.min(chunkSize, binary.byteLength - skip);
 
       const view = new Uint8Array(binary);
-      // skip                                              // take
-      let chunkBytes = view.filter((u, z) => z >= skip).filter((u, z) => z < take);
+      let chunkBytes = view.filter((u, z) => z >= skip).filter((u, z) => z < take); // TODO: mega slow??!
 
       result.push(chunkBytes);
     }
@@ -154,7 +160,6 @@ export class UploadQueryExecutor implements IUploadQueryExecutor {
   }
 
   public addMediaMetadataAsync(metadata: IAddMediaMetadataParameters, request: ITwitterRequest): Promise<ITwitterResult> {
-    debugger
     let jsonConvert: JsonConvert = new JsonConvert();
     let json = jsonConvert.serializeObject(metadata);
 
@@ -187,7 +192,7 @@ export class UploadQueryExecutor implements IUploadQueryExecutor {
 
       // let waitTimeRemaining = media.uploadedMediaInfo.createdDate.add(timeBeforeOperationPermitted).subtract(DateTime.now);
       // if (waitTimeRemaining.TotalMilliseconds > 0) {
-      //   await this.sleep(waitTimeRemaining.TotalMilliseconds as number); // .ConfigureAwait(false);
+      //   await this.sleep(waitTimeRemaining.TotalMilliseconds as number);
       // }
     }
 

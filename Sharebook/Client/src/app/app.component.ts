@@ -29,7 +29,7 @@ import {RateLimitCacheManager} from "./Tweetinvi.Credentials/RateLimit/RateLimit
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['../assets/css/site.css', './app.component.css']
 })
 export class AppComponent implements OnInit {
   constructor(private titleService: Title, private securityService: SecurityService, private configurationService: ConfigurationService,
@@ -83,12 +83,12 @@ export class AppComponent implements OnInit {
   public subscription: Subscription;
 
   ngOnInit() {
-    console.log('app on init');
-    this.subscription = this.securityService.authenticationChallenge$.subscribe(res => this.Authenticated = res);
-
-    // Get configuration from server environment variables:
-    console.log('configuration');
-    this.configurationService.load();
+    // console.log('app on init');
+    // this.subscription = this.securityService.authenticationChallenge$.subscribe(res => this.Authenticated = res);
+    //
+    // // Get configuration from server environment variables:
+    // console.log('configuration');
+    // this.configurationService.load();
   }
 
   public setTitle(newTitle: string) {

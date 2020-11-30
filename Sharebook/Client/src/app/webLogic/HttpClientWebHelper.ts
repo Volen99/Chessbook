@@ -1,5 +1,5 @@
 ﻿import {Inject, Injectable} from "@angular/core";
-import {HttpClient, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 
 import {IHttpClientWebHelper} from "../core/Core/Helpers/IHttpClientWebHelper";
 import {ITwitterQuery} from "../core/Public/Models/Interfaces/ITwitterQuery";
@@ -14,6 +14,12 @@ import ArgumentException from "typescript-dotnet-commonjs/System/Exceptions/Argu
 import {HttpMethod} from "../core/Public/Models/Enum/HttpMethod";
 import {Observable, throwError} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
+import {SharebookConsts} from "../core/Public/sharebook-consts";
+import {ok} from "assert";
+import {FileUploader} from "../global-modules/upload/file-uploader.class";
+import {FileItem} from "../global-modules/upload/file-item.class";
+import {Guid} from "../../guid";
+import {SecurityService} from "../shared/services/security.service";
 
 @Injectable({
   providedIn: 'root',
@@ -21,12 +27,13 @@ import {catchError, tap} from "rxjs/operators";
 export class HttpClientWebHelper implements IHttpClientWebHelper {
   private readonly _oAuthWebRequestGeneratorFactory: IOAuthWebRequestGeneratorFactory;
   private _http: HttpClient;
+  private uploader: FileUploader;
 
   // All observables returned from HttpClient methods are cold by design. Execution of the HTTP request is
   // deferred, allowing you to extend the observable with additional operations such as tap and catchError
   // before anything actually happens.
   constructor(@Inject(IOAuthWebRequestGeneratorFactoryToken) oAuthWebRequestGeneratorFactory: IOAuthWebRequestGeneratorFactory,
-              httpClient: HttpClient) {
+              httpClient: HttpClient, private securityService: SecurityService) {
     this._oAuthWebRequestGeneratorFactory = oAuthWebRequestGeneratorFactory;
     this._http = httpClient;
   }
@@ -42,15 +49,14 @@ export class HttpClientWebHelper implements IHttpClientWebHelper {
 
     let httpMethod = HttpMethod[twitterQuery.httpMethod]; // new HttpMethod(twitterQuery.httpMethod.toString()); TODO: beware! Not full http method
 
-    debugger
-    if (twitterQuery.httpContent?.binary == null) {
-      let options = {
-        observe: 'response',
-        responseType: "arraybuffer"
-      };
-      // this.setHeaders(options, needId);
+    let options = {
+      observe: 'response',
+      responseType: "arraybuffer"
+    };
+    this.setHeaders(options, true);
 
-      return await this._http.get('https://jsonplaceholder.typicode.com/todos/1', options)
+    if (twitterQuery.httpContent == null) {
+      return await this._http.get(twitterQuery.url, options)
         .toPromise()
         .then((data: Response) => {
           debugger
@@ -61,17 +67,18 @@ export class HttpClientWebHelper implements IHttpClientWebHelper {
         throw new ArgumentException("Cannot send HttpContent in a WebRequest that is not POST.");
       }
 
-      return client.post('https://jsonplaceholder.typicode.com/todos/1',
-        twitterQuery.httpContent.binary,
-        twitterQuery.httpContent.headers)
-        .toPromise()
-        .then((data: Response) => {
-        debugger
-        return data;
-      });
-    }
+      let formData = new FormData();
+      let file = SharebookConsts.fileCurrent;
 
-    return response;
+      formData.append(`${file.name}`, file);
+
+      return this._http.post(twitterQuery.url, formData, options)
+         .toPromise()
+         .then((data?: Response) => {
+         debugger
+         return new HttpResponse<any>({statusText: "ok"});
+       });
+    }
   }
 
   public getHttpClient(twitterQuery: ITwitterQuery, twitterHandler?: ITwitterClientHandler): HttpClient {
@@ -85,20 +92,15 @@ export class HttpClientWebHelper implements IHttpClientWebHelper {
     return client;
   }
 
-  private handleError(error: any) {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('Client side network error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      console.error('Backend - ' +
-        `status: ${error.status}, ` +
-        `statusText: ${error.statusText}, ` +
-        `message: ${error.error.message}`);
+  private setHeaders(options: any, needId?: boolean) {
+    debugger
+    if (needId && this.securityService) {
+      options["headers"] = new HttpHeaders()
+        .append('authorization', 'Bearer ' + this.securityService.getToken())
+        .append('x-requestid', Guid.newGuid());
+    } else if (this.securityService) {
+      options["headers"] = new HttpHeaders()
+        .append('authorization', 'Bearer ' + this.securityService.getToken());
     }
-
-    // return an observable with a user-facing error message
-    return throwError(error || 'server error');
   }
 }

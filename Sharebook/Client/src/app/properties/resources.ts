@@ -250,7 +250,7 @@ export abstract class Resources {
   public static Tweet_Lookup: string = "https://api.twitter.com/1.1/statuses/lookup.json?";
 
   //   Looks up a localized string similar to https://api.twitter.com/1.1/statuses/update.json?.
-  public static Tweet_Publish: string = "https://api.twitter.com/1.1/statuses/update.json?";
+  public static Tweet_Publish: string = "https://localhost:5002/posts/update";
 
   //   Looks up a localized string similar to https://api.twitter.com/1.1/statuses/retweets/{0}.json.
   public static Tweet_Retweet_GetRetweets: string = "https://api.twitter.com/1.1/statuses/retweets/{0}.json";
@@ -262,7 +262,7 @@ export abstract class Resources {
   public static Tweet_Retweet_Publish: string = "https://api.twitter.com/1.1/statuses/retweet/{0}.json";
 
   //   Looks up a localized string similar to https://upload.twitter.com/1.1/media/upload.json.
-  public static Upload_URL: string = "https://upload.twitter.com/1.1/media/upload.json";
+  public static Upload_URL: string = "https://localhost:5002/media/upload";
 
   //   Looks up a localized string similar to https://api.twitter.com/1.1/account/verify_credentials.json.
   public static User_GetCurrentUser: string = "https://api.twitter.com/1.1/account/verify_credentials.json";
@@ -289,7 +289,7 @@ export abstract class Resources {
   public static User_GetFriends: string = "https://api.twitter.com/1.1/friends/ids.json?";
 
   //   Looks up a localized string similar to https://api.twitter.com/1.1/users/show.json?.
-  public static User_GetUser: string = "https://api.twitter.com/1.1/users/show.json?";
+  public static User_GetUser: string = "https://localhost:5002/users/show";
 
   //   Looks up a localized string similar to https://api.twitter.com/1.1/users/lookup.json?.
   public static User_GetUsers: string = "https://api.twitter.com/1.1/users/lookup.json?";

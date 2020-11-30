@@ -1,15 +1,13 @@
 ﻿namespace Sharebook.Identity.API.Controllers
 {
-    using System.Security.Claims;
     using System.Threading.Tasks;
     using IdentityServer4.Services;
-    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
 
+    using Sharebook.Common.Settings;
     using Sharebook.Identity.API.Models;
     using Sharebook.Identity.API.Services;
 

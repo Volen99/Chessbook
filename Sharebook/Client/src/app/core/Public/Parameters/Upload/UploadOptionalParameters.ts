@@ -5,6 +5,7 @@ import {SharebookLimits} from "../../Settings/SharebookLimits";
 import {IMediaUploadProgressChangedEventArgs} from "../../Events/MediaUploadProgressChangedEventArgs";
 import {CursorQueryParameters} from "../CursorQueryParameters";
 import TimeSpan from "typescript-dotnet-commonjs/System/Time/TimeSpan";
+import {SharebookConsts} from "../../sharebook-consts";
 
 export interface IUploadOptionalParameters {
   // Type of element that you want to publish.
@@ -53,7 +54,7 @@ export interface IUploadOptionalParameters {
 
 export class UploadOptionalParameters implements IUploadOptionalParameters {
   constructor() {
-    this.queryMediaType = "media";
+    this.queryMediaType = SharebookConsts.fileCurrent.type;
     this.maxChunkSize = SharebookLimits.DEFAULTS.UPLOAD_MAX_CHUNK_SIZE;
     this.additionalOwnerIds = new Array<number>();
     this.waitForTwitterProcessing = true;
@@ -80,7 +81,7 @@ export class UploadOptionalParameters implements IUploadOptionalParameters {
         this.queryMediaType = "video/mp4";
         break;
       default:
-        this.queryMediaType = "media"; // By default we need to inform Twitter that the binary is a media
+        this.queryMediaType = SharebookConsts.fileCurrent.type; // "media"; // By default we need to inform Twitter that the binary is a media
         break;
     }
   }

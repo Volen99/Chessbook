@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Sharebook\Sharebook.csproj" />
     <ProjectReference Include="..\Sharebook.Profile.Domain\Sharebook.Profile.Domain.csproj" />
     <ProjectReference Include="..\Sharebook.Profile.Infrastructure\Sharebook.Profile.Infrastructure.csproj" />
   </ItemGroup>

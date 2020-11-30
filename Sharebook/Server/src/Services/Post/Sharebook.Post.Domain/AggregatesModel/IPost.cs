@@ -305,6 +305,6 @@
         /// <summary>
         /// Generate an OEmbedTweet.
         /// </summary>
-        Task<IOEmbedTweet> GenerateOEmbedTweetAsync();
+        // Task<IOEmbedTweet> GenerateOEmbedTweetAsync();
     }
 }

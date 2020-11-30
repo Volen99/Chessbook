@@ -7,11 +7,12 @@ import {ProfileService} from "./profile.service";
 import {ConfigurationService} from "../../shared/services/configuration.service";
 import {Subscription} from "rxjs";
 import {AccountSettings} from "../models/settings/settings.model";
+import {TwitterClient} from "../../sharebook/TwitterClient";
 
 @Component({
   selector: 'app-profile-view',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css'],
+  styleUrls: ['../../../assets/css/site.css', './profile.component.css'],
   providers: [ProfileService]
 })
 export class ProfileComponent implements OnInit {
@@ -19,15 +20,18 @@ export class ProfileComponent implements OnInit {
   private accountSettingsService: ProfileService;
   private configurationService: ConfigurationService;
   private securityService: SecurityService;
+  private twitterClient: TwitterClient;
 
   private authenticated = false;
 
   constructor(storageService: StorageService, accountSettingsService: ProfileService,
-              configurationService: ConfigurationService, securityService: SecurityService) {
+              configurationService: ConfigurationService, securityService: SecurityService,
+              twitterClient: TwitterClient) {
     this.storageService = storageService;
     this.accountSettingsService = accountSettingsService;
     this.configurationService = configurationService;
     this.securityService = securityService;
+    this.twitterClient = twitterClient;
 
   }
 
@@ -35,7 +39,13 @@ export class ProfileComponent implements OnInit {
   public settings: AccountSettings;
   public authSubscription: Subscription;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    debugger
+    let user = await this.twitterClient.users.getUserAsync('volen1999@gmail.com');
+
+
+
+
     if (this.configurationService.isReady) {
       this.loadData();
     } else {

@@ -55,6 +55,7 @@ export class TweetController implements ITweetController {
   }
 
   public async publishTweetAsync(parameters: IPublishTweetParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO>> {
+    debugger
     parameters.mediaIds = parameters.mediaIds.concat(parameters.medias.map(x => x.uploadedMediaInfo.mediaId)); // .AddRange()
     return await this._tweetQueryExecutor.publishTweetAsync(parameters, request); // .ConfigureAwait(false);
   }
