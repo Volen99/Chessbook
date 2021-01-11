@@ -36,10 +36,10 @@ export interface ISearchTweetsParameters extends IMinMaxQueryParameters, ITweetM
   // Choose if the result set will be represented by recent or popular Tweets, or even a mix of both
   searchType?: SearchResultType;
 
-  // Search will only return tweets published after this date.
+  // Search will only return tweets published after this 1.
   since?: DateTime;
 
-  // Search will only return tweets published before this date.
+  // Search will only return tweets published before this 1.
   until?: DateTime;
 
   // Filters tweets based on metadata.

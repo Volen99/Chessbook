@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 
-import {StorageService} from '../../shared/services/storage.service';
-import {SecurityService} from '../../shared/services/security.service';
+import {StorageService} from '../../api-authorization/services/storage.service';
+import {SecurityService} from '../../api-authorization/from-shared/security.service';
 import {User} from "oidc-client";
 import {ProfileService} from "./profile.service";
-import {ConfigurationService} from "../../shared/services/configuration.service";
+import {ConfigurationService} from "../../core/configuration.service";
 import {Subscription} from "rxjs";
-import {AccountSettings} from "../models/settings/settings.model";
 import {TwitterClient} from "../../sharebook/TwitterClient";
 
 @Component({
@@ -36,15 +35,10 @@ export class ProfileComponent implements OnInit {
   }
 
   public user: User;
-  public settings: AccountSettings;
   public authSubscription: Subscription;
 
   async ngOnInit(): Promise<void> {
-    debugger
     let user = await this.twitterClient.users.getUserAsync('volen1999@gmail.com');
-
-
-
 
     if (this.configurationService.isReady) {
       this.loadData();

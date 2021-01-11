@@ -1,0 +1,14 @@
+@import '../../../sass/include/variables';
+@import '../../../sass/include/mixins';
+
+.account-title {
+  @include settings-big-title;
+
+  &.account-title-danger {
+    color: lighten($color: #c54130, $amount: 10);
+  }
+}
+
+.form-group {
+  max-width: 500px;
+}

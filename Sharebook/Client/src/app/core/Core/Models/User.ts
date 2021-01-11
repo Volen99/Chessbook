@@ -1,6 +1,5 @@
 ﻿import {ITwitterIterator} from "../../Public/Iterators/ITwitterIterator";
 import {IUserIdentifier} from "../../Public/Models/Interfaces/IUserIdentifier";
-import {Stream} from "stream";
 import {ImageSize} from "../../Public/Models/Enum/ImageSize";
 import {IUserEntities} from "../../Public/Models/Entities/IUserEntities";
 import {IUserDTO} from "../../Public/Models/Interfaces/DTO/IUserDTO";
@@ -303,7 +302,7 @@ export class User implements IUser {
 
   // Stream Profile Image
 
-  public getProfileImageStreamAsync(imageSize?: ImageSize): Promise<Stream> {
+  public getProfileImageStreamAsync(imageSize?: ImageSize): Promise<null> { // stream
     let imageSizeCurrent: ImageSize;
     if (!ImageSize) {
       imageSizeCurrent = ImageSize.Normal;

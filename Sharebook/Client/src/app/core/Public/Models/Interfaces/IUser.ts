@@ -23,7 +23,7 @@ export interface IUser extends IUserIdentifier, IEquatable<IUser> {
   // Client used by the instance to perform any request to Twitter
   client: ITwitterClient;
 
-  // Property used to store the twitter properties
+  // Property used to -+store the twitter properties
   userDTO: IUserDTO;
 
   // #region Twitter API Fields

@@ -5,7 +5,6 @@ import {SharedModule} from '../../shared/shared.module';
 import {ScienceRoutingModule} from './science-routing.module';
 import {PostComponent} from './post/post.component';
 import {ScienceService} from './science.service';
-import {ListPostsComponent} from './list-posts/list-posts.component';
 import {DndDirective} from './direcitives/dnd.directive';
 import { HighlightDirective } from './direcitives/highlight.directive';
 import {FileUploadModule} from "../../global-modules/upload/file-upload.module";
@@ -14,7 +13,6 @@ import {FileUploadModule} from "../../global-modules/upload/file-upload.module";
   declarations: [
     ScienceComponent,
     PostComponent,
-    ListPostsComponent,
     DndDirective,
     HighlightDirective,
   ],
@@ -27,7 +25,6 @@ import {FileUploadModule} from "../../global-modules/upload/file-upload.module";
   exports: [
     ScienceComponent,
     PostComponent,
-    ListPostsComponent,
     DndDirective,
     HighlightDirective,
   ],

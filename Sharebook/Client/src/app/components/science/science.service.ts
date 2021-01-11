@@ -3,15 +3,15 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
 
-import {AppState} from '../../store/app.state';
-import {ConfigurationService} from "../../shared/services/configuration.service";
+import {ConfigurationService} from "../../core/configuration.service";
+import {IRootState} from "../../+store";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScienceService {
   private http: HttpClient;
-  private store: Store<AppState>;
+  private store: Store<IRootState>;
   private configurationService: ConfigurationService;
 
   private storageUrl: string;
@@ -19,7 +19,7 @@ export class ScienceService {
   // private uploadPath: string = environment.scienceApiUrl + 'media' + '/upload';
   // private uploadPathWithoutSlash = this.uploadPath.slice(0, -1);
 
-  constructor(store: Store<AppState>, http: HttpClient, configurationService: ConfigurationService) {
+  constructor(store: Store<IRootState>, http: HttpClient, configurationService: ConfigurationService) {
     this.store = store;
     this.http = http;
     this.configurationService = configurationService;

@@ -1,0 +1,10 @@
+@import '../../../../sass/include/variables';
+@import '../../../../sass/include/mixins';
+
+.delete-me {
+  button {
+    @include peertube-button;
+    @include danger-button;
+    @include disable-outline;
+  }
+}

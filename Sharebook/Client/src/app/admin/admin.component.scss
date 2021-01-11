@@ -1,0 +1,10 @@
+@import '../../sass/include/variables';
+@import '../../sass/include/mixins';
+
+app-top-menu-dropdown {
+  flex-grow: 1;
+}
+
+.root {
+  @include sub-menu-h1;
+}

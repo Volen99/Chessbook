@@ -170,7 +170,7 @@
 }
 
 .r-urgr8i {
-  background-color: rgb(29, 161, 242);
+  background-color: rgb(29, 161, 242) !important; /*I put !important!!!*/
 }
 
 .r-1pi2tsx {
@@ -258,10 +258,10 @@
   background-color: rgba(0, 0, 0, 0);
 }
 
-/*by mi*/
-.r-1niwhzg:hover {
-  background-color: rgba(29, 161, 242, 0.1);
-}
+/*!*by mi*!*/
+/*.r-1niwhzg:hover {*/
+/*  background-color: rgba(29, 161, 242, 0.1);*/
+/*}*/
 
 .r-1niwhzg:active {
   background-color: rgba(29, 161, 242, 0.2);
@@ -477,10 +477,6 @@
 .r-g6jmlv {
   width: 100vw;
 }
-
-
-
-
 
 /*<div aria-label="WorldFeedTest"*/
 .r-1mlwlqe {
@@ -1020,5 +1016,103 @@
   border-color: rgb(29, 161, 242);
 }
 
+.r-1hfyk0a {
+  padding-left: 10px;
+}
 
+.r-obd0qt {
+  -webkit-box-align: end;
+  align-items: flex-end;
+}
+
+
+.r-9qu9m4 {
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+
+.r-axxi2z {
+  transition-property: -webkit-transform, transform;
+}
+
+
+.r-gtdqiz {
+  position: sticky;
+}
+
+
+.r-1ysxnx4 {
+  background-color: rgb(21, 24, 28);
+}
+
+
+.r-1kqtdi0 {
+  border-color: rgb(47, 51, 54);
+}
+
+.r-13l2t4g {
+  border-right-width: 1px;
+}
+
+.r-1w50u8q {
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.r-eia128 {
+  min-height: calc(44.9375px);
+}
+
+.r-y3t9qe {
+  margin-right: 15px;
+}
+
+.r-11wrixw {
+  margin-left: 0px;
+}
+
+.r-61z16t {
+  margin-right: 0px;
+}
+
+
+.r-1n1174f {
+  color: rgb(27, 149, 224);
+}
+
+
+.r-icoktb {
+  opacity: 0.5;
+}
+
+.r-1blvdjr {
+  font-size: 23px;
+}
+
+.r-fdjqy7 {
+  text-align: left;
+}
+
+.r-vmopo1 {
+  padding-top: 2px;
+}
+
+.r-xx1rs6 {
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.r-1dz5y72 {
+  resize: none;
+}
+
+.r-1ah4tor {
+  padding-right: 20px;
+}
+
+.r-vpgt9t {
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
 

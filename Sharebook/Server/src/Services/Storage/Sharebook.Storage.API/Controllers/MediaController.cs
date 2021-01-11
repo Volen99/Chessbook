@@ -42,7 +42,7 @@
         {
             if (query.Command == "INIT")
             {
-                var session = uploadService.createSession((Global.LastMediaId + 1).ToString(), query.TotalBytes.Value, query.MediaType, query.MediaCategory);
+                var session = uploadService.CreateSession((Global.LastMediaId + 1).ToString(), query.TotalBytes.Value, query.MediaType, query.MediaCategory);
 
                 return this.Ok(UploadInitViewModel.FromSession(session));
             }
@@ -68,7 +68,7 @@
             {
                 // TODO: check for invalid input
 
-                Session session = uploadService.getSession(query.MediaId.Value);
+                Session session = uploadService.GetSession(query.MediaId.Value);
 
                 // FINALIZE
                 string fileDestinationPath = Path.Combine(Resources.ROOT, session.GetMediaIdForFile(query.MediaId.Value));

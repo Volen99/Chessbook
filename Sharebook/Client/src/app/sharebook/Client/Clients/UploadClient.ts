@@ -41,9 +41,7 @@ export class UploadClient implements IUploadClient {
       parameters = new UploadBinaryParameters(binaryOrParameters);
     }
 
-    debugger
     let chunkUploadResult = await this._uploadRequester.uploadBinaryAsync(parameters);
-    debugger
 
     return chunkUploadResult.media;
   }

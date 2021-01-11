@@ -62,21 +62,10 @@ export class UploadComponent implements OnInit, OnDestroy {
   public rurgr8iOrR1q3imqu = this.defaultTweetBtnClassName;
 
   public async tweetBtnMouseEnter(event: MouseEvent) {
-    // let binary = await SharebookConsts.fileCurrent.arrayBuffer();
-    // let media = this.twitterClient.upload.uploadBinaryAsync(binary);
-
     this.changeTweetBtnBackgroundColorClassName();
   }
 
   public async tweetBtnMouseLeave(event: MouseEvent) {
-    // let tweet = await this.twitterClient.tweets.publishTweetAsync('I am no one');
-    // debugger
-    // let publishedTweet = await this.twitterClient.tweets.getTweetAsync(tweet.id);
-
-    debugger
-    this.twitterClient.users.getUserAsync("Volen is the worse")
-
-    this.changeTweetBtnBackgroundColorClassName();
   }
 
   public openDialog() {

@@ -1,4 +1,4 @@
-import { FileLikeObject } from "../../src";
+import {FileLikeObject} from "./file-like-object.class";
 
 export class FileType {
   /*  MS office  */

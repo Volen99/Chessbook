@@ -22,7 +22,7 @@ export interface ISavedSearch {
   // Query performed when executing the search.
   query: string;
 
-  // Creation date.
+  // Creation 1.
   createdAt: DateTime; // DateTimeOffset;
 }
 

@@ -23,7 +23,7 @@ namespace Sharebook.Storage.API.Service
             sessions = new Dictionary<long, Session>();
         }
 
-        public Session createSession(string fileName, long fileSize, string mediaType, string mediaCategory)
+        public Session CreateSession(string fileName, long fileSize, string mediaType, string mediaCategory)
         {
             //if (string.IsNullOrWhiteSpace(fileName))
             //    throw new BadRequestException("File name missing");
@@ -46,19 +46,19 @@ namespace Sharebook.Storage.API.Service
             return session;
         }
 
-        public Session getSession(long id)
+        public Session GetSession(long id)
         {
             return sessions[id];
         }
 
-        public List<Session> getAllSessions()
+        public List<Session> GetAllSessions()
         {
             return sessions.Values.ToList();
         }
 
         public void PersistBlock(long sessionId, int chunkNumber, byte[] buffer)
         {
-            Session session = getSession(sessionId);
+            Session session = GetSession(sessionId);
             try
             {
                 if (session == null)

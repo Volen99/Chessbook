@@ -97,7 +97,7 @@ export class TwitterRequestHandler implements ITwitterRequestHandler {
       return;
     }
 
-    // Use the RateLimitCacheManager instead of RateLimitHelper to get the queryRateLimits to ensure the cache is up to date!
+    // Use the RateLimitCacheManager instead of RateLimitHelper to get the queryRateLimits to ensure the cache is up to 1!
     let credentialRateLimits = await this._rateLimitCacheManager.getCredentialsRateLimitsAsync(twitterQuery.twitterCredentials);
 
     let queryRateLimit: IEndpointRateLimit = null;

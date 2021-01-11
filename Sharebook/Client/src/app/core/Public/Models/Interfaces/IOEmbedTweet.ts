@@ -3,6 +3,7 @@
 import {IOEmbedTweetDTO} from "./DTO/IOembedTweetDTO";
 import {OEmbedTweet} from "../../../Core/Models/OEmbedTweet";
 import {OEmbedTweetDTO} from "../../../Core/DTO/OembedTweetDTO";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 export interface IOEmbedTweet {
   // Author of the tweet.
@@ -32,5 +33,5 @@ export interface IOEmbedTweet {
 
 export const IOEmbedTweetToken = new InjectionToken<IOEmbedTweet>('IOEmbedTweet', {
   providedIn: 'root',
-  factory: () => new OEmbedTweet(inject(OEmbedTweetDTO)),
+  factory: () => AppInjector.get(OEmbedTweet),
 });

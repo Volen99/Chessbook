@@ -1,0 +1,22 @@
+@import '../../../sass/include/variables';
+@import '../../../sass/include/mixins';
+
+.root {
+  height: auto;
+  display: flex;
+  align-items: center;
+
+  .button-file {
+    @include peertube-button-file(auto);
+    @include grey-button;
+
+    &.with-icon {
+      @include button-with-icon;
+    }
+  }
+
+  .filename {
+    font-weight: $font-semibold;
+    margin-left: 5px;
+  }
+}

@@ -1,0 +1,23 @@
+$FontPathSourceSansPro: '~npm-font-source-sans-pro/fonts';
+$basePath: '#{$FontPathSourceSansPro}/WOFF2/TTF/SourceSansPro';
+
+@mixin fontface($name, $path, $weight: null, $style: null, $exts: woff2) {
+  $src: null;
+  @each $ext in $exts {
+    $src: append($src, url(quote($path + "." + $ext)) format(quote($ext)), comma);
+  }
+  @font-face {
+    font-family: quote($name);
+    font-weight: $weight;
+    font-style: $style;
+    font-stretch: normal;
+    font-display: swap;
+    src: $src;
+  }
+}
+
+@include fontface('Source Sans Pro', '#{$basePath}-Regular.ttf', 400, normal);
+@include fontface('Source Sans Pro', '#{$basePath}-It.ttf', 400, italic);
+@include fontface('Source Sans Pro', '#{$basePath}-Semibold.ttf', 600, normal);
+@include fontface('Source Sans Pro', '#{$basePath}-SemiboldIt.ttf', 600, italic);
+@include fontface('Source Sans Pro', '#{$basePath}-Bold.ttf', 700, normal);

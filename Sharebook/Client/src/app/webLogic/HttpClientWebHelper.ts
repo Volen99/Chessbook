@@ -18,8 +18,8 @@ import {SharebookConsts} from "../core/Public/sharebook-consts";
 import {ok} from "assert";
 import {FileUploader} from "../global-modules/upload/file-uploader.class";
 import {FileItem} from "../global-modules/upload/file-item.class";
-import {Guid} from "../../guid";
-import {SecurityService} from "../shared/services/security.service";
+import {Guid} from "../shared/core-utils/miscellaneous/guid";
+import {SecurityService} from "../api-authorization/from-shared/security.service";
 
 @Injectable({
   providedIn: 'root',
@@ -53,7 +53,6 @@ export class HttpClientWebHelper implements IHttpClientWebHelper {
       observe: 'response',
       responseType: "arraybuffer"
     };
-    this.setHeaders(options, true);
 
     if (twitterQuery.httpContent == null) {
       return await this._http.get(twitterQuery.url, options)

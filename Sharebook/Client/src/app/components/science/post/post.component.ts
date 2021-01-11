@@ -4,13 +4,12 @@ import {HttpClient} from '@angular/common/http';
 import {FormGroup} from 'ngx-strongly-typed-forms';
 import {Store} from '@ngrx/store';
 
-import {AppState} from '../../../store/app.state';
 import {ScienceService} from '../science.service';
-import {AddPost} from '../../../store/posts/actions/posts.actions';
-import {MediaINITQueryParameters} from '../../models/uploads/upload-media-INIT-query-parameters.model';
-import {MediaAPPENDQueryParameters} from '../../models/uploads/upload-media-APPEND-query-parameters.model';
-import {MediaFINALIZEQueryParameters} from '../../models/uploads/upload-media-FINALIZE-query-parameters.model';
-import {PostModel} from "../../models/post.model";
+import {IRootState} from "../../../+store";
+
+interface IPost {
+
+}
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -24,10 +23,10 @@ export class PostComponent implements OnInit {
   // Use EventEmitter only for event binding between a child and parent component.
   // Do not subscribe to it. Do not call any of those methods. Only call .emit()
   @Output() public onUploadFinished = new EventEmitter();
-  @Output() public OnPostCreated = new EventEmitter<Array<PostModel>>();
+  @Output() public OnPostCreated = new EventEmitter<Array<IPost>>();
   @Output() public OnFileTextDropped = new EventEmitter<string>();
 
-  private store: Store<AppState>;
+  private store: Store<IRootState>;
 
   private http: HttpClient;
   private router: Router;
@@ -37,7 +36,7 @@ export class PostComponent implements OnInit {
   private postForm: FormGroup<File>;
 
   constructor(
-    store: Store<AppState>,
+    store: Store<IRootState>,
     http: HttpClient,
     scienceService: ScienceService,
     router: Router,

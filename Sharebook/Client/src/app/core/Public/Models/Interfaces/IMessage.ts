@@ -34,7 +34,7 @@ export interface IMessage extends IEquatable<IMessage> {
   // Text contained in the message.
   text: string;
 
-  // Creation date of the message.
+  // Creation 1 of the message.
   createdAt: DateTime; // DateTimeOffset;
 
   // Id of the user who sent the message.

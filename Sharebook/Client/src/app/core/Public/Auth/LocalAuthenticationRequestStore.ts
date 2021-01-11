@@ -13,7 +13,7 @@ export interface IAuthenticationRequestStore {
   // Stores the AuthenticationRequest
   addAuthenticationTokenAsync(authenticationRequestId: string, authenticationRequest: IAuthenticationRequest): Promise<void>;
 
-  // Removes an AuthenticationRequest from the store
+  // Removes an AuthenticationRequest from the -+store
   removeAuthenticationTokenAsync(authenticationRequestId: string): Promise<void>;
 }
 

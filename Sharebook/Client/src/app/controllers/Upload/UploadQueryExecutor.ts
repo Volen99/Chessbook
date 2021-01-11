@@ -98,7 +98,6 @@ export class UploadQueryExecutor implements IUploadQueryExecutor {
 
 
       let appendRequest = new TwitterRequest(baseRequest);
-      debugger
       let appendOperationSucceeded = await uploader.appendAsync(appendParameters, appendRequest); // .ConfigureAwait(false);
 
       if (appendOperationSucceeded === false) {
@@ -109,7 +108,6 @@ export class UploadQueryExecutor implements IUploadQueryExecutor {
 
     let finalizeRequest = new TwitterRequest(baseRequest);
 
-    debugger
     let finalizeSucceeded: boolean = await uploader.finalizeAsync(uploadQueryParameters.finalizeCustomRequestParameters, finalizeRequest); // .ConfigureAwait(false);
     if (finalizeSucceeded) {
       let result = uploader.result;
@@ -124,7 +122,6 @@ export class UploadQueryExecutor implements IUploadQueryExecutor {
       }
     }
 
-    debugger
     return uploader.result;
   }
 

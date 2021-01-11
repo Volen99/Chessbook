@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {environment} from '../../../environments/environment';
-import {StorageService} from '../../shared/services/storage.service';
-import {PostModel} from "../models/post.model";
+import {StorageService} from '../../api-authorization/services/storage.service';
 import {FileUploader} from "../../global-modules/upload/file-uploader.class";
 
 // const URL = '/api/';

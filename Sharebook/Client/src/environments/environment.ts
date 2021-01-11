@@ -2,13 +2,17 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// In order to load these polyfills early enough (before app code), polyfill.ts imports this file to
+// to change the order in the final bundle.
+// import 'core-js/features/reflect'
+
 export const environment = {
-  production: false,
-  homeApiUrl: 'https://localhost:5000/Home/Configuration',
-  identityApiUrl: 'https://localhost:5003/',
-  scienceUploadApiUrl: 'https://localhost:5009/',
-  programmingQuizApiUrl: 'https://localhost:5998/',
+  production: true,
+  hmr: false,
+  apiUrl: '',
+  originServerUrl: ''
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file

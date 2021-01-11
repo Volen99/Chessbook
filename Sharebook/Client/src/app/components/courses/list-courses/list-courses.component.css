@@ -1,5 +1,0 @@
-.left, .right {
-  float: left;
-  width: calc(50% - 6em);
-  padding: 3em;
-}

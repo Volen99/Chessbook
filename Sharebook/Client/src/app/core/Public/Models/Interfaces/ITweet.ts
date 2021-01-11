@@ -140,7 +140,7 @@ export interface ITweet extends ITweetIdentifier, IEquatable<ITweet> {
 
   // #region Tweetinvi API Properties
 
-  // Property used to store the data received from Twitter
+  // Property used to -+store the data received from Twitter
   tweetDTO: ITweetDTO;
 
   // Collection of hashtags associated with a Tweet

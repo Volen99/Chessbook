@@ -1,0 +1,10 @@
+@import '../../../sass/include/variables';
+@import '../../../sass/include/mixins';
+
+.glyphicon-ok {
+  color: $green;
+}
+
+.glyphicon-remove {
+  color: $red;
+}

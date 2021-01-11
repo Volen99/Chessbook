@@ -1,17 +1,22 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
-import {HomeComponent} from './components/home/home.component';
+import {HomePageComponent} from '../home/home-page.component';
 import {UploadComponent} from "./components/upload/upload.component";
+import {MessagesComponent} from "./components/messages/messages.component";
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomePageComponent
   },
   {
     path: 'compose/tweet',
     component: UploadComponent,
+  },
+  {
+    path: 'messages',
+    component: MessagesComponent,
   }
 ];
 

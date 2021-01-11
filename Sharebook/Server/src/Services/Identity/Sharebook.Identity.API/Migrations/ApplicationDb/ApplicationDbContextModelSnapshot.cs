@@ -150,13 +150,28 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WorldFeed.Identity.API.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Sharebook.Identity.API.Models.User.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AllowContributorRequest")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AllowDirectMessagesFrom")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AllowGroupDirectMessagesFrom")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("AlwaysUseHttps")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("Blocking")
                         .HasColumnType("bit");
@@ -177,6 +192,9 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
+
                     b.Property<bool>("DefaultProfile")
                         .HasColumnType("bit");
 
@@ -189,12 +207,24 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("DiscoverableByEmail")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("DiscoverableByMobilePhone")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("DisplaySensitiveMedia")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<int>("EndSleepHour")
+                        .HasColumnType("int");
 
                     b.Property<long>("FavouritesCount")
                         .HasColumnType("bigint");
@@ -235,6 +265,9 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
                     b.Property<string>("Lang")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Language")
+                        .HasColumnType("int");
+
                     b.Property<int>("ListedCount")
                         .HasColumnType("int");
 
@@ -252,6 +285,9 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -278,6 +314,9 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
 
                     b.Property<string>("PinnedTweetIds")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PrivacyMode")
+                        .HasColumnType("int");
 
                     b.Property<string>("ProfileBackgroundColor")
                         .HasColumnType("nvarchar(max)");
@@ -330,6 +369,15 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("SleepTimeEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("SmartMute")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("StartSleepHour")
+                        .HasColumnType("int");
+
                     b.Property<int>("StatusesCount")
                         .HasColumnType("int");
 
@@ -345,6 +393,9 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("UseCookiePersonalization")
+                        .HasColumnType("bit");
+
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -354,6 +405,15 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
 
                     b.Property<bool>("Verified")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Visibility")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VisibilityYear")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -368,6 +428,29 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Sharebook.Identity.API.Models.User.Birthdate.Birthdate", b =>
+                {
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Visibility")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VisibilityYear")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.ToTable("Birthdate");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -379,7 +462,7 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("WorldFeed.Identity.API.Models.ApplicationUser", null)
+                    b.HasOne("Sharebook.Identity.API.Models.User.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -388,7 +471,7 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("WorldFeed.Identity.API.Models.ApplicationUser", null)
+                    b.HasOne("Sharebook.Identity.API.Models.User.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -403,7 +486,7 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WorldFeed.Identity.API.Models.ApplicationUser", null)
+                    b.HasOne("Sharebook.Identity.API.Models.User.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -412,163 +495,11 @@ namespace Sharebook.Identity.API.Migrations.ApplicationDb
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("WorldFeed.Identity.API.Models.ApplicationUser", null)
+                    b.HasOne("Sharebook.Identity.API.Models.User.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("WorldFeed.Identity.API.Models.ApplicationUser", b =>
-                {
-                    b.OwnsOne("WorldFeed.Identity.API.Models.Birthday.Birthdate", "Birthdate", b1 =>
-                        {
-                            b1.Property<string>("ApplicationUserId")
-                                .HasColumnType("nvarchar(450)");
-
-                            b1.Property<int>("Age")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Day")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Month")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Visibility")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("VisibilityYear")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Year")
-                                .HasColumnType("int");
-
-                            b1.HasKey("ApplicationUserId");
-
-                            b1.ToTable("AspNetUsers");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ApplicationUserId");
-                        });
-
-                    b.OwnsOne("WorldFeed.Identity.API.Models.Entities.Entity", "Entities", b1 =>
-                        {
-                            b1.Property<string>("ApplicationUserId")
-                                .HasColumnType("nvarchar(450)");
-
-                            b1.HasKey("ApplicationUserId");
-
-                            b1.ToTable("AspNetUsers");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ApplicationUserId");
-
-                            b1.OwnsOne("WorldFeed.Identity.API.Models.Entities.Description", "Description", b2 =>
-                                {
-                                    b2.Property<string>("EntityApplicationUserId")
-                                        .HasColumnType("nvarchar(450)");
-
-                                    b2.HasKey("EntityApplicationUserId");
-
-                                    b2.ToTable("AspNetUsers");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("EntityApplicationUserId");
-
-                                    b2.OwnsMany("WorldFeed.Identity.API.Models.Entities.Urls.Url", "Urls", b3 =>
-                                        {
-                                            b3.Property<string>("DescriptionEntityApplicationUserId")
-                                                .HasColumnType("nvarchar(450)");
-
-                                            b3.Property<int>("Id")
-                                                .ValueGeneratedOnAdd()
-                                                .HasColumnType("int")
-                                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                                            b3.Property<string>("DisplayUrl")
-                                                .HasColumnType("nvarchar(max)");
-
-                                            b3.Property<string>("ExpandedUrl")
-                                                .HasColumnType("nvarchar(max)");
-
-                                            b3.Property<string>("UrlPath")
-                                                .HasColumnType("nvarchar(max)");
-
-                                            b3.HasKey("DescriptionEntityApplicationUserId", "Id");
-
-                                            b3.ToTable("AspNetUsers_Urls");
-
-                                            b3.WithOwner()
-                                                .HasForeignKey("DescriptionEntityApplicationUserId");
-
-                                            b3.OwnsOne("WorldFeed.Identity.API.Models.Entities.Indices", "Indices", b4 =>
-                                                {
-                                                    b4.Property<string>("UrlDescriptionEntityApplicationUserId")
-                                                        .HasColumnType("nvarchar(450)");
-
-                                                    b4.Property<int>("UrlId")
-                                                        .ValueGeneratedOnAdd()
-                                                        .HasColumnType("int")
-                                                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                                                    b4.Property<int>("IndexFirst")
-                                                        .HasColumnType("int");
-
-                                                    b4.Property<int>("IndexSecond")
-                                                        .HasColumnType("int");
-
-                                                    b4.HasKey("UrlDescriptionEntityApplicationUserId", "UrlId");
-
-                                                    b4.ToTable("AspNetUsers_Urls");
-
-                                                    b4.WithOwner()
-                                                        .HasForeignKey("UrlDescriptionEntityApplicationUserId", "UrlId");
-                                                });
-                                        });
-                                });
-
-                            b1.OwnsOne("WorldFeed.Identity.API.Models.Entities.Urls.Url", "Url", b2 =>
-                                {
-                                    b2.Property<string>("EntityApplicationUserId")
-                                        .HasColumnType("nvarchar(450)");
-
-                                    b2.Property<string>("DisplayUrl")
-                                        .HasColumnType("nvarchar(max)");
-
-                                    b2.Property<string>("ExpandedUrl")
-                                        .HasColumnType("nvarchar(max)");
-
-                                    b2.Property<string>("UrlPath")
-                                        .HasColumnType("nvarchar(max)");
-
-                                    b2.HasKey("EntityApplicationUserId");
-
-                                    b2.ToTable("AspNetUsers");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("EntityApplicationUserId");
-
-                                    b2.OwnsOne("WorldFeed.Identity.API.Models.Entities.Indices", "Indices", b3 =>
-                                        {
-                                            b3.Property<string>("UrlEntityApplicationUserId")
-                                                .HasColumnType("nvarchar(450)");
-
-                                            b3.Property<int>("IndexFirst")
-                                                .HasColumnType("int");
-
-                                            b3.Property<int>("IndexSecond")
-                                                .HasColumnType("int");
-
-                                            b3.HasKey("UrlEntityApplicationUserId");
-
-                                            b3.ToTable("AspNetUsers");
-
-                                            b3.WithOwner()
-                                                .HasForeignKey("UrlEntityApplicationUserId");
-                                        });
-                                });
-                        });
                 });
 #pragma warning restore 612, 618
         }

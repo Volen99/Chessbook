@@ -3,6 +3,7 @@
 import {IRelationshipDetailsDTO} from "./DTO/IRelationshipDetailsDTO";
 import {RelationshipDetails} from "../../../Core/Models/TwitterEntities/RelationshipDetails";
 import {RelationshipDetailsDTO} from "../../../Core/DTO/RelationshipDetailsDTO";
+import {AppInjector} from "../../../../sharebook/Injectinvi/app-injector";
 
 export interface IRelationshipDetails {
   // The source user of the relationship
@@ -63,5 +64,5 @@ export interface IRelationshipDetails {
 
 export const IRelationshipDetailsToken = new InjectionToken<IRelationshipDetails>('IRelationshipDetails', {
   providedIn: 'root',
-  factory: () => new RelationshipDetails(inject(RelationshipDetailsDTO)),
+  factory: () => AppInjector.get(RelationshipDetails),
 });

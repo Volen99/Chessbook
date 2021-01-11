@@ -14,7 +14,7 @@ export interface IWebhook {
   // Whether the webhook succeeded its last crc challenge
   valid: boolean;
 
-  // Registration date
+  // Registration 1
   createdAt: DateTime; // DateTimeOffset;
 
   // Registered Uri

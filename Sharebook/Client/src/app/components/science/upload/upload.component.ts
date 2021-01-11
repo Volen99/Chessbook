@@ -23,7 +23,7 @@
 //     //         name: item._file.name,
 //     //         length: item._file.size,
 //     //         contentType: item._file.type,
-//     //         date: new Date()
+//     //         1: new Date()
 //     //       });
 //     //     });
 //     //   }

@@ -1,0 +1,39 @@
+@import '../../../sass/include/variables';
+@import '../../../sass/include/mixins';
+@import '../../../sass/include/miniature';
+
+.margin-content {
+  @include fluid-videos-miniature-layout;
+}
+
+.section {
+  @include miniature-rows;
+
+  padding-top: 0 !important;
+
+  .section-title {
+    align-items: center;
+  }
+
+  .videos {
+    overflow: hidden;
+
+    .no-results {
+      height: 50px;
+    }
+  }
+
+  my-video-miniature ::ng-deep my-video-actions-dropdown > my-action-dropdown {
+    // Fix our overflow
+    position: absolute;
+  }
+}
+
+@media screen and (max-width: $mobile-view) {
+  .section {
+    .section-title {
+      flex-direction: column;
+      align-items: normal;
+    }
+  }
+}

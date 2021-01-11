@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from 'rxjs';
 
-import {ConfigurationService} from "../../shared/services/configuration.service";
-import {DataService} from "../../shared/services/data.service";
+import {ConfigurationService} from "../../core/configuration.service";
+import {DataService} from "../../api-authorization/from-shared/data.service";
 import {tap} from "rxjs/operators";
 import {AccountSettings} from "../../core/Core/Models/AccountSettings";
 
