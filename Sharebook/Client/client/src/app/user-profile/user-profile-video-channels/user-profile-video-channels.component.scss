@@ -1,0 +1,39 @@
+@import '_variables';
+@import '_mixins';
+@import '_miniature';
+
+.margin-content {
+  @include fluid-videos-miniature-layout;
+}
+
+.section {
+  @include miniature-rows;
+
+  padding-top: 0 !important;
+
+  .section-title {
+    align-items: center;
+  }
+
+  .videos {
+    overflow: hidden;
+
+    .no-results {
+      height: 50px;
+    }
+  }
+
+  app-video-miniature ::ng-deep app-video-actions-dropdown > app-action-dropdown {
+    // Fix our overflow
+    position: absolute;
+  }
+}
+
+@media screen and (max-width: $mobile-view) {
+  .section {
+    .section-title {
+      flex-direction: column;
+      align-items: normal;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<div class="margin-content">
+  <div class="title-page title-page-single">
+    <span class="mr-1" i18n>Update</span>
+    <a [routerLink]="[ '/videos/watch', video.uuid ]">{{ video?.name }}</a>
+  </div>
+
+  <form novalidate [formGroup]="form">
+
+    <app-video-edit
+      [form]="form" [formErrors]="formErrors" [schedulePublicationPossible]="schedulePublicationPossible"
+      [validationMessages]="validationMessages" [userVideoChannels]="userVideoChannels"
+      [videoCaptions]="videoCaptions" [waitTranscodingEnabled]="waitTranscodingEnabled"
+      type="update" (pluginFieldsAdded)="hydratePluginFieldsFromVideo()"
+      [liveVideo]="liveVideo"
+    ></app-video-edit>
+
+    <div class="submit-container">
+      <app-button className="orange-button" i18n-label label="Update" icon="circle-tick"
+                 (click)="update()" (keydown.enter)="update()"
+                 [disabled]="!form.valid || isUpdatingVideo === true"
+      ></app-button>
+    </div>
+  </form>
+</div>

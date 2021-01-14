@@ -1,6 +1,0 @@
-Looks to me like /utils is a place where you can place small snippets you can use throughout the application.
-Small functions to build bigger things with. Utils functions are usually pure
-
-/helpers is more of a place where you store code architectural snippets in my view. Things essential for bootstrapping components and developer ergonomics.
-
-https://github.com/erikras/react-redux-universal-hot-example/issues/808

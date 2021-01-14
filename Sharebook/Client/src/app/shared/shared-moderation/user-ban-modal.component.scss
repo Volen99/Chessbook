@@ -1,6 +1,0 @@
-@import '../../../sass/include/variables';
-@import '../../../sass/include/mixins';
-
-textarea {
-  @include peertube-textarea(100%, 60px);
-}

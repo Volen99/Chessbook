@@ -1,7 +1,0 @@
-@import '../../../../sass/include/variables';
-@import '../../../../sass/include/mixins';
-
-.unblock-button {
-  @include peertube-button;
-  @include grey-button;
-}

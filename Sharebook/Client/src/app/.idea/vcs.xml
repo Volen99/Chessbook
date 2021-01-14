@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="VcsDirectoryMappings">
-    <mapping directory="$PROJECT_DIR$/../../../.." vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/c#-objects/TypeScript.NET-Core" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/c#-objects/datetime-offset.js" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/c#-objects/ts-nameof" vcs="Git" />
-  </component>
-</project>

@@ -1,0 +1,162 @@
+<!--<div class="cfp-hotkeys-container fade" [ngClass]="{'in': helpVisible}">-->
+<!--    <div class="cfp-hotkeys">-->
+<!--        <h4 class="cfp-hotkeys-title">{{ title }}</h4>-->
+<!--        <div class="cfp-hotkeys-table">-->
+<!--            <table>-->
+<!--                <tbody>-->
+<!--                <tr *ngFor="let hotkey of hotkeys">-->
+<!--                    <td class="cfp-hotkeys-keys">-->
+<!--                        <span *ngFor="let key of hotkey.formatted" class="cfp-hotkeys-key">{{ key }}</span>-->
+<!--                    </td>-->
+<!--                    <td class="cfp-hotkeys-text">{{ hotkey.description }}</td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--        <div class="cfp-hotkeys-close" (click)="toggleCheatSheet()">&#215;</div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<div class="css-1dbjc4n r-aqfbo4 r-1d2f490 r-12vffkv r-1xcajam r-zchlnj cfp-hotkeys-container fade"
+     [ngClass]="{'in': this.helpVisible}">
+    <div class="css-1dbjc4n r-12vffkv">
+        <div class="css-1dbjc4n r-12vffkv">
+            <div class="css-1dbjc4n r-1p0dtai r-1adg3ll r-1d2f490 r-bnwqim r-zchlnj r-ipm5af">
+                <div class="r-1oszu61 r-1phboty r-1yadl64 r-1p0dtai r-deolkf r-1adg3ll r-eqz5dr r-1d2f490 r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-zchlnj r-ipm5af r-417010">
+                    <div class="css-1dbjc4n r-1pz39u2 r-16y2uox r-1wbh5a2">
+                        <div data-focusable="true" tabindex="0" class="css-1dbjc4n"></div>
+                        <div data-focusable="true" tabindex="0"
+                             class="css-1dbjc4n r-1awozwy r-18u37iz r-1pi2tsx r-1777fci r-1xcajam r-ipm5af r-g6jmlv">
+                            <div class="css-1dbjc4n r-11z020y r-1p0dtai r-1d2f490 r-1xcajam r-zchlnj r-ipm5af"></div>
+                            <div aria-labelledby="modal-header" role="dialog" aria-modal="true"
+                                 class="css-1dbjc4n r-1867qdf r-1wbh5a2 r-rsyp9y r-1pjcn9w r-htvplk r-1udh08x">
+                                <div class="css-1dbjc4n r-kemksi r-z2wwpe r-16y2uox r-1wbh5a2">
+                                    <div class="css-1dbjc4n r-1h3ijdo r-136ojw6">
+                                        <div class="css-1dbjc4n">
+                                            <div class="css-1dbjc4n r-kemksi r-1igl3o0 r-rull8r r-qklmqi r-kicko2 r-notknq r-1h3ijdo r-1j3t67a">
+                                                <div class="css-1dbjc4n r-1awozwy r-18u37iz r-1h3ijdo r-1777fci r-1jgb5lz r-sb58tz r-13qz1uu">
+                                                    <div class="css-1dbjc4n r-1habvwh r-1pz39u2 r-1777fci r-1vsu8ta r-u0dd49">
+                                                        <div aria-label="Close" role="button" data-focusable="true"
+                                                             tabindex="0"
+                                                             class="css-18t94o4 css-1dbjc4n r-42olwf r-sdzlij r-1phboty r-rs99b7 r-1w2pmg r-1vuscfd r-53xb7h r-1ny4l3l r-mk0yit r-o7ynqc r-6416eg r-lrvibr"
+                                                             style="margin-left: calc(5px + (-1 * (41px - 1.5em)) / 2);"
+                                                             [ngClass]="{'r-1niwhzg': !this.isCloseIconHovered, 'r-zv2cs0': this.isCloseIconHovered}"
+                                                             (mouseenter)="handleCloseIconHover($event)"
+                                                             (mouseleave)="handleCloseIconHover($event)"
+                                                             (click)="this.toggleCheatSheet()">
+                                                            <div dir="auto"
+                                                                 class="css-901oao r-1awozwy r-13gxpu9 r-6koalj r-18u37iz r-16y2uox r-1qd0xha r-a023e6 r-b88u0q r-1777fci r-eljoum r-dnmrzs r-bcqeeo r-q4m81j r-qvutc0">
+                                                                <app-global-icon iconName="x"></app-global-icon>
+                                                                <span class="css-901oao css-16my406 css-bfa6kz r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="css-1dbjc4n r-16y2uox r-1wbh5a2 r-1pi2tsx r-1777fci">
+                                                        <div class="css-1dbjc4n r-1habvwh"><h2 aria-level="2" dir="auto"
+                                                                                               role="heading"
+                                                                                               class="css-4rbku5 css-901oao css-bfa6kz r-1fmj7o5 r-1qd0xha r-1b6yd1w r-1vr29t4 r-ad9z0x r-bcqeeo r-qvutc0"
+                                                                                               id="modal-header"><span
+                                                                class="css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0">{{this.title}}</span>
+                                                        </h2></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="css-1dbjc4n r-16y2uox r-1wbh5a2 r-1jgb5lz r-1ye8kvj r-13qz1uu">
+                                        <div class="css-1dbjc4n r-16y2uox r-1wbh5a2 r-1dqxon3">
+                                            <div class="css-1dbjc4n r-18u37iz r-1sp51qo r-k8qxaj">
+                                                <div class="css-1dbjc4n r-13awgt0">
+                                                    <div class="css-1dbjc4n r-1wtj0ep r-1j3t67a r-1hfyk0a r-1w50u8q">
+                                                        <h2 aria-level="2" role="heading"
+                                                            class="css-4rbku5 css-1dbjc4n r-18u37iz">
+                                                            <div class="css-1dbjc4n r-k200y r-z80fyv r-1777fci r-1bymd8e"></div>
+                                                            <div dir="auto"
+                                                                 class="css-901oao css-cens5h r-1fmj7o5 r-1qd0xha r-1b6yd1w r-1vr29t4 r-ad9z0x r-bcqeeo r-qvutc0"
+                                                                 style="-webkit-line-clamp: 3;"><span
+                                                                    class="css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0">Navigation</span>
+                                                            </div>
+                                                        </h2>
+                                                    </div>
+                                                    <ul role="list"
+                                                        class="css-4rbku5 css-1dbjc4n r-16cnnyw r-13l2t4g r-1phboty r-zso239 r-1qfoi16">
+                                                        <li aria-label="Shortcut help: ?" role="listitem"
+                                                            class="css-4rbku5 css-1dbjc4n r-18u37iz r-1wtj0ep r-vlx1xi r-hrzydr"
+                                                            *ngFor="let hotkey of this.navigationalHotkeys">
+                                                            <div dir="auto"
+                                                                 class="css-901oao r-1fmj7o5 r-1qd0xha r-a023e6 r-16dba41 r-ad9z0x r-bcqeeo r-qvutc0">
+                                                                <span class="css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0">{{hotkey.description}}</span>
+                                                            </div>
+                                                            <div class="css-1dbjc4n r-1awozwy r-18u37iz">
+                                                                <div dir="auto"
+                                                                     class="css-901oao r-1ysxnx4 r-16cnnyw r-z2wwpe r-1phboty r-rs99b7 r-16ftvwr r-1fmj7o5 r-1yh73n r-a023e6 r-16dba41 r-ad9z0x r-tu5rn7 r-ou255f r-1cy8qmm r-q4m81j r-qvutc0">
+                                                                    {{hotkey.formatted[0]}}
+                                                                </div>
+                                                                <ng-container *ngIf="hotkey.formatted.length === 2">
+                                                                    <div dir="auto"
+                                                                         class="css-901oao r-1fmj7o5 r-1qd0xha r-a023e6 r-16dba41 r-ad9z0x r-id7aif r-bcqeeo r-qvutc0">
+                                                                        <span class="css-901oao css-16my406 r-poiln3 r-bcqeeo r-qvutc0">+</span>
+                                                                    </div>
+                                                                    <div dir="auto"
+                                                                         class="css-901oao r-1ysxnx4 r-16cnnyw r-z2wwpe r-1phboty r-rs99b7 r-16ftvwr r-1fmj7o5 r-1yh73n r-a023e6 r-16dba41 r-ad9z0x r-tu5rn7 r-ou255f r-1cy8qmm r-q4m81j r-qvutc0">
+                                                                        {{hotkey.formatted[1]}}
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="css-1dbjc4n r-13awgt0">
+                                                    <div class="css-1dbjc4n r-1wtj0ep r-1j3t67a r-1hfyk0a r-1w50u8q">
+                                                        <h2 aria-level="2" role="heading"
+                                                            class="css-4rbku5 css-1dbjc4n r-18u37iz">
+                                                            <div class="css-1dbjc4n r-k200y r-z80fyv r-1777fci r-1bymd8e"></div>
+                                                            <div dir="auto"
+                                                                 class="css-901oao css-cens5h r-1fmj7o5 r-1qd0xha r-1b6yd1w r-1vr29t4 r-ad9z0x r-bcqeeo r-qvutc0"
+                                                                 style="-webkit-line-clamp: 3;"><span
+                                                                    class="css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0">Actions</span>
+                                                            </div>
+                                                        </h2>
+                                                    </div>
+                                                    <ul role="list" class="css-4rbku5 css-1dbjc4n">
+                                                        <li aria-label="{{hotkey.description}}}: {{hotkey.combo}}}"
+                                                            role="listitem"
+                                                            class="css-4rbku5 css-1dbjc4n r-18u37iz r-1wtj0ep r-vlx1xi r-hrzydr"
+                                                            *ngFor="let hotkey of this.actionsHotkeys">
+                                                            <div dir="auto"
+                                                                 class="css-901oao r-1fmj7o5 r-1qd0xha r-a023e6 r-16dba41 r-ad9z0x r-bcqeeo r-qvutc0">
+                                                                <span class="css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0">{{hotkey.description}}</span>
+                                                            </div>
+                                                            <div class="css-1dbjc4n r-1awozwy r-18u37iz">
+                                                                <div dir="auto"
+                                                                     class="css-901oao r-1ysxnx4 r-16cnnyw r-z2wwpe r-1phboty r-rs99b7 r-16ftvwr r-1fmj7o5 r-1yh73n r-a023e6 r-16dba41 r-ad9z0x r-tu5rn7 r-ou255f r-1cy8qmm r-q4m81j r-qvutc0">
+                                                                    {{hotkey.combo[0]}}
+                                                                </div>
+                                                                <ng-container *ngIf="hotkey.combo.length === 2">
+                                                                    <div dir="auto"
+                                                                         class="css-901oao r-1fmj7o5 r-1qd0xha r-a023e6 r-16dba41 r-ad9z0x r-id7aif r-bcqeeo r-qvutc0">
+                                                                        <span class="css-901oao css-16my406 r-poiln3 r-bcqeeo r-qvutc0">+</span>
+                                                                    </div>
+                                                                    <div dir="auto"
+                                                                         class="css-901oao r-1ysxnx4 r-16cnnyw r-z2wwpe r-1phboty r-rs99b7 r-16ftvwr r-1fmj7o5 r-1yh73n r-a023e6 r-16dba41 r-ad9z0x r-tu5rn7 r-ou255f r-1cy8qmm r-q4m81j r-qvutc0">
+                                                                        {{hotkey.combo[1]}}
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-focusable="true" tabindex="0" class="css-1dbjc4n"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

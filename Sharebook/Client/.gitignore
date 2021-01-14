@@ -1,46 +1,50 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
-
-# compiled output
-/dist
-/tmp
-/out-tsc
-# Only exists if Bazel was run
-/bazel-out
-
-# dependencies
-/node_modules
-
-# profiling files
-chrome-profiler-events*.json
-speed-measure-plugin*.json
-
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
-
-# misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-npm-debug.log
+# NPM instalation
+/node_modules/
+/server/tools/node_modules
+*npm-debug.log
 yarn-error.log
-testem.log
-/typings
 
-# System Files
-.DS_Store
-Thumbs.db
+# Testing
+/test1/
+/test2/
+/test3/
+/test4/
+/test5/
+/test6/
+/server/tests/fixtures/video_high_bitrate_1080p.mp4
+/server/tests/fixtures/video_59fps.mp4
+
+# Production
+/storage/
+/config/production.yaml
+/config/local*
+/ffmpeg/
+/ffmpeg-3/
+/ffmpeg-4/
+/thumbnails/
+/torrents/
+/videos/
+/previews/
+/logs/
+
+# IDE
+/*.sublime-project
+/*.sublime-workspace
+/**/.idea
+/dist
+/sharebook.iml
+
+# Zanata
+/.zanata-cache
+/scripts/i18n/generate-iso639-target.ts
+
+# Other
+/dump.rdb
+/.theia/
+/profiling/
+/*.zip
+/*.tar.xz
+/*.asc
+/server/tools/import-mediacore.ts
+/docker-volume/
+/init.mp4

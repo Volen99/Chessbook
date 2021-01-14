@@ -1,0 +1,24 @@
+@import '_variables';
+@import '_mixins';
+
+.help-to-translate {
+  @include peertube-button-link;
+  @include orange-button;
+
+  &.focus-visible,
+  &:focus {
+    box-shadow: none;
+  }
+
+  border-radius: 0;
+}
+
+.modal-body {
+  text-align: center;
+
+  a {
+    display: block;
+    font-size: 16px;
+    margin: 15px;
+  }
+}

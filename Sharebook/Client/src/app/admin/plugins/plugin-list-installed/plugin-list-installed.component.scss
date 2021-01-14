@@ -1,6 +1,0 @@
-@import '../../../../sass/include/variables';
-@import '../../../../sass/include/mixins';
-
-.update-button[disabled="true"] ::ng-deep .action-button {
-  cursor: default !important;
-}

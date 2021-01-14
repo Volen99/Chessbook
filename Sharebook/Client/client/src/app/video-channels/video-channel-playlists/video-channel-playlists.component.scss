@@ -1,0 +1,14 @@
+.title-page {
+  margin-top: 0;
+}
+
+.video-playlist {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .playlist-miniature-container {
+    margin-right: 15px;
+    margin-bottom: 30px;
+  }
+}
