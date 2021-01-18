@@ -1,0 +1,31 @@
+@import '_variables';
+@import '_mixins';
+
+label {
+  font-weight: $font-regular;
+  font-size: 100%;
+}
+
+.form-group:first-child {
+  margin-bottom: 15px;
+}
+
+input[type=text] {
+  @include sharebook-input-text(340px);
+
+  display: block;
+}
+
+input[type=submit] {
+  @include sharebook-button;
+  @include orange-button;
+
+  margin-top: 15px;
+}
+
+textarea {
+  @include sharebook-textarea(100%, 150px);
+  max-width: 100%;
+
+  display: block;
+}

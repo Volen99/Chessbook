@@ -1,0 +1,6 @@
+@import '_mixins';
+
+.btn-remote-follow {
+  @include sharebook-button;
+  @include orange-button;
+}

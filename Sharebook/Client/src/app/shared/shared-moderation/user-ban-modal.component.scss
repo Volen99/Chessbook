@@ -1,0 +1,6 @@
+@import 'variables';
+@import 'mixins';
+
+textarea {
+  @include sharebook-textarea(100%, 60px);
+}

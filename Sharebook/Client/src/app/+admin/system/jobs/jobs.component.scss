@@ -1,0 +1,53 @@
+@import '_variables';
+@import '_mixins';
+
+.select-job-state {
+  min-width: 120px;
+}
+
+.job-id {
+  max-width: 30vw !important;
+}
+
+.job-type {
+  width: 150px !important;
+}
+
+.job-date {
+  width: 170px !important;
+}
+
+.admin-sub-header {
+  flex-direction: row !important;
+  justify-content: flex-end;
+
+  .select-filter-block {
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+
+    label {
+      margin-bottom: 2px;
+    }
+
+    .peertube-select-container {
+      @include sharebook-select-container(auto);
+    }
+  }
+}
+
+td .glyphicon {
+  margin-right: 10px;
+}
+
+pre {
+  font-size: 11px;
+}
+
+.job-error {
+  color: red;
+}
+
+.badge {
+  @include table-badge;
+}

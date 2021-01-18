@@ -1,0 +1,97 @@
+<div aria-labelledby="modal-header" role="dialog" aria-modal="true"
+     class="css-1dbjc4n r-1867qdf r-1wbh5a2 r-kwpbio r-rsyp9y r-1pjcn9w r-1279nm1 r-htvplk r-1udh08x">
+    <div class="css-1dbjc4n r-kemksi r-16y2uox r-1wbh5a2">
+        <div class="css-1dbjc4n r-1pz39u2 r-16y2uox r-1wbh5a2">
+            <div data-focusable="true" tabindex="0" class="css-1dbjc4n"></div>
+            <div data-focusable="true" tabindex="0" class="css-1dbjc4n r-kemksi r-6koalj r-16y2uox r-1wbh5a2">
+                <div class="css-1dbjc4n r-1h3ijdo r-136ojw6">
+                    <div class="css-1dbjc4n">
+                        <div class="css-1dbjc4n r-kemksi r-1h3ijdo r-1j3t67a">
+                            <div class="css-1dbjc4n r-1awozwy r-18u37iz r-1h3ijdo r-1777fci r-1jgb5lz r-sb58tz r-13qz1uu">
+                                <cdk-step [stepControl]="this.formStepAccount" i18n-label="Stepper label for the registration page describing terms of service" label="account">
+                                    <app-account-modal (formBuilt)="this.onAccountFormBuilt($event)">
+
+                                    </app-account-modal>
+
+                                    <button cdkStepperPrevious>{{ this.defaultPreviousStepButtonLabel }}</button>
+                                    <button cdkStepperNext [disabled]="!formStepAccount || !formStepAccount.valid"
+                                            (click)="signup()">{{ this.accountButtonLabel }}</button>
+                                </cdk-step>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-focusable="true" tabindex="0" class="css-1dbjc4n"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="margin-content">
+
+    <div i18n class="title-page title-page-single">
+        Create an account
+    </div>
+
+    <app-signup-success *ngIf="signupDone" [message]="success"></app-signup-success>
+    <div *ngIf="info" class="alert alert-info">{{ info }}</div>
+
+    <div class="wrapper" [hidden]="signupDone">
+        <div class="register-form">
+            <app-custom-stepper linear *ngIf="!signupDone">
+                <cdk-step [stepControl]="formStepTerms"
+                          i18n-label="Stepper label for the registration page describing terms of service"
+                          label="Terms">
+                    <div class="instance-information">
+                        <app-instance-about-accordion (init)="onInstanceAboutAccordionInit($event)"
+                                                      [panels]="instanceInformationPanels"></app-instance-about-accordion>
+                    </div>
+
+                    <app-register-step-terms [hasCodeOfConduct]="!!aboutHtml.codeOfConduct"
+                                             (formBuilt)="onTermsFormBuilt($event)" (termsClick)="onTermsClick()"
+                                             (codeOfConductClick)="onCodeOfConductClick()"
+                    ></app-register-step-terms>
+
+                    <button cdkStepperNext
+                            [disabled]="!formStepTerms || !formStepTerms.valid">{{ defaultNextStepButtonLabel }}</button>
+                </cdk-step>
+
+                <cdk-step [stepControl]="formStepUser"
+                          i18n-label="Stepper label for the registration page asking user informations" label="User">
+                    <app-register-step-user (formBuilt)="onUserFormBuilt($event)"
+                                            [videoUploadDisabled]="videoUploadDisabled"></app-register-step-user>
+
+                    <button cdkStepperPrevious>{{ defaultPreviousStepButtonLabel }}</button>
+                    <button cdkStepperNext [disabled]="!formStepUser || !formStepUser.valid"
+                            (click)="videoUploadDisabled && signup()">{{ stepUserButtonLabel }}</button>
+                </cdk-step>
+
+                <cdk-step [stepControl]="formStepChannel"
+                          i18n-label="Stepper label for the registration page asking information about the default channel"
+                          label="Channel" *ngIf="!videoUploadDisabled">
+                    <app-register-step-channel (formBuilt)="onChannelFormBuilt($event)"
+                                               [username]="getUsername()"></app-register-step-channel>
+
+                    <button cdkStepperPrevious>{{ defaultPreviousStepButtonLabel }}</button>
+                    <button cdkStepperNext
+                            [disabled]="!formStepChannel || !formStepChannel.valid || hasSameChannelAndAccountNames()"
+                            (click)="signup()" i18n>
+                        Create my account
+                    </button>
+                </cdk-step>
+
+                <cdk-step i18n-label label="Done" editable="false">
+                    <div *ngIf="!signupDone && !error" class="done-loader">
+                        <app-loader [loading]="true"></app-loader>
+
+                        <div i18n>Sharebook is creating your account...</div>
+                    </div>
+
+                    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+                </cdk-step>
+            </app-custom-stepper>
+        </div>
+    </div>
+
+</div>

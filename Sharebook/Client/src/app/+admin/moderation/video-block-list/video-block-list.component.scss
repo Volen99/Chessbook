@@ -1,0 +1,27 @@
+@import 'mixins';
+
+app-global-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.input-group {
+  @include sharebook-input-group(300px);
+
+  .dropdown-toggle::after {
+    margin-left: 0;
+  }
+}
+
+.caption {
+  justify-content: flex-end;
+
+  input {
+    @include sharebook-input-text(250px);
+    flex-grow: 1;
+  }
+}
+
+.badge {
+  @include table-badge;
+}

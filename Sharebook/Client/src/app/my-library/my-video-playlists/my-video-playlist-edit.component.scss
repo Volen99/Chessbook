@@ -1,0 +1,36 @@
+@import '_variables';
+@import '_mixins';
+
+label {
+  font-weight: $font-regular;
+  font-size: 100%;
+}
+
+.video-playlist-title {
+  @include settings-big-title;
+}
+
+input[type=text] {
+  @include sharebook-input-text(340px);
+
+  display: block;
+}
+
+textarea {
+  @include sharebook-textarea(500px, 150px);
+
+  display: block;
+}
+
+.sharebook-select-container {
+  @include sharebook-select-container(340px);
+}
+
+input[type=submit] {
+  @include sharebook-button;
+  @include orange-button;
+}
+
+.breadcrumb {
+  @include breadcrumb;
+}

@@ -1,0 +1,10 @@
+@import '_variables';
+@import '_mixins';
+
+.delete-me {
+  button {
+    @include sharebook-button;
+    @include danger-button;
+    @include disable-outline;
+  }
+}

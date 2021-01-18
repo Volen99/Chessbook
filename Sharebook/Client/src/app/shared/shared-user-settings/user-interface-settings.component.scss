@@ -1,0 +1,21 @@
+@import '_variables';
+@import '_mixins';
+
+label {
+  font-weight: $font-regular;
+  font-size: 100%;
+}
+
+input[type=submit] {
+  @include sharebook-button;
+  @include orange-button;
+
+  display: block;
+  margin-top: 15px;
+}
+
+.peertube-select-container {
+  @include sharebook-select-container(340px);
+
+  margin-bottom: 30px;
+}
