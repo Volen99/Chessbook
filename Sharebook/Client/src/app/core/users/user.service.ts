@@ -30,7 +30,7 @@ export class UserService {
   private userCache: { [id: number]: Observable<UserServerModel> } = {};
 
   constructor(
-    private authHttp: HttpClient,
+    private http: HttpClient,
     private authService: AuthService,
     private restExtractor: RestExtractor,
     private restService: RestService,
@@ -46,7 +46,7 @@ export class UserService {
       password: newPassword
     };
 
-    return this.authHttp.put(url, body)
+    return this.http.put(url, body)
       .pipe(
         map(this.restExtractor.extractDataBool),
         catchError(err => this.restExtractor.handleError(err))
@@ -60,7 +60,7 @@ export class UserService {
       email: newEmail
     };
 
-    return this.authHttp.put(url, body)
+    return this.http.put(url, body)
       .pipe(
         map(this.restExtractor.extractDataBool),
         catchError(err => this.restExtractor.handleError(err))
@@ -70,7 +70,7 @@ export class UserService {
   updateMyProfile(profile: UserUpdateMe) {
     const url = UserService.BASE_USERS_URL + 'me';
 
-    return this.authHttp.put(url, profile)
+    return this.http.put(url, profile)
       .pipe(
         map(this.restExtractor.extractDataBool),
         catchError(err => this.restExtractor.handleError(err))
@@ -110,7 +110,7 @@ export class UserService {
   deleteMe() {
     const url = UserService.BASE_USERS_URL + 'me';
 
-    return this.authHttp.delete(url)
+    return this.http.delete(url)
       .pipe(
         map(this.restExtractor.extractDataBool),
         catchError(err => this.restExtractor.handleError(err))
@@ -120,12 +120,12 @@ export class UserService {
   changeAvatar(avatarForm: FormData) {
     const url = UserService.BASE_USERS_URL + 'me/avatar/pick';
 
-    return this.authHttp.post<{ avatar: Avatar }>(url, avatarForm)
+    return this.http.post<{ avatar: Avatar }>(url, avatarForm)
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 
-  signup(userCreate: UserRegister) {
-    return this.authHttp.post(UserService.BASE_USERS_URL + 'register', userCreate)
+  signup(payload: UserRegister) {
+    return this.http.post(UserService.BASE_USERS_URL + 'register', payload)
       .pipe(
         map(this.restExtractor.extractDataBool),
         catchError(err => this.restExtractor.handleError(err))
@@ -135,14 +135,14 @@ export class UserService {
   getMyVideoQuotaUsed() {
     const url = UserService.BASE_USERS_URL + 'me/video-quota-used';
 
-    return this.authHttp.get<UserVideoQuota>(url)
+    return this.http.get<UserVideoQuota>(url)
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 
   askResetPassword(email: string) {
     const url = UserService.BASE_USERS_URL + '/ask-reset-password';
 
-    return this.authHttp.post(url, { email })
+    return this.http.post(url, { email })
       .pipe(
         map(this.restExtractor.extractDataBool),
         catchError(err => this.restExtractor.handleError(err))
@@ -156,7 +156,7 @@ export class UserService {
       password
     };
 
-    return this.authHttp.post(url, body)
+    return this.http.post(url, body)
       .pipe(
         map(this.restExtractor.extractDataBool),
         catchError(res => this.restExtractor.handleError(res))
@@ -170,7 +170,7 @@ export class UserService {
       isPendingEmail
     };
 
-    return this.authHttp.post(url, body)
+    return this.http.post(url, body)
       .pipe(
         map(this.restExtractor.extractDataBool),
         catchError(res => this.restExtractor.handleError(res))
@@ -180,7 +180,7 @@ export class UserService {
   askSendVerifyEmail(email: string) {
     const url = UserService.BASE_USERS_URL + '/ask-send-verify-email';
 
-    return this.authHttp.post(url, { email })
+    return this.http.post(url, { email })
       .pipe(
         map(this.restExtractor.extractDataBool),
         catchError(err => this.restExtractor.handleError(err))
@@ -191,7 +191,7 @@ export class UserService {
     const url = UserService.BASE_USERS_URL + 'autocomplete';
     const params = new HttpParams().append('search', search);
 
-    return this.authHttp
+    return this.http
       .get<string[]>(url, { params })
       .pipe(catchError(res => this.restExtractor.handleError(res)));
   }
@@ -215,7 +215,7 @@ export class UserService {
   /* ###### Admin methods ###### */
 
   addUser(userCreate: UserCreate) {
-    return this.authHttp.post(UserService.BASE_USERS_URL, userCreate)
+    return this.http.post(UserService.BASE_USERS_URL, userCreate)
       .pipe(
         map(this.restExtractor.extractDataBool),
         catchError(err => this.restExtractor.handleError(err))
@@ -223,7 +223,7 @@ export class UserService {
   }
 
   updateUser(userId: number, userUpdate: UserUpdate) {
-    return this.authHttp.put(UserService.BASE_USERS_URL + userId, userUpdate)
+    return this.http.put(UserService.BASE_USERS_URL + userId, userUpdate)
       .pipe(
         map(this.restExtractor.extractDataBool),
         catchError(err => this.restExtractor.handleError(err))
@@ -233,7 +233,7 @@ export class UserService {
   updateUsers(users: UserServerModel[], userUpdate: UserUpdate) {
     return from(users)
       .pipe(
-        concatMap(u => this.authHttp.put(UserService.BASE_USERS_URL + u.id, userUpdate)),
+        concatMap(u => this.http.put(UserService.BASE_USERS_URL + u.id, userUpdate)),
         toArray(),
         catchError(err => this.restExtractor.handleError(err))
       );
@@ -249,7 +249,7 @@ export class UserService {
 
   getUser(userId: number, withStats = false) {
     const params = new HttpParams().append('withStats', withStats + '');
-    return this.authHttp.get<UserServerModel>(UserService.BASE_USERS_URL + userId, { params })
+    return this.http.get<UserServerModel>(UserService.BASE_USERS_URL + userId, { params })
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 
@@ -309,7 +309,7 @@ export class UserService {
       params = this.restService.addObjectParams(params, filters);
     }
 
-    return this.authHttp.get<ResultList<UserServerModel>>(UserService.BASE_USERS_URL, { params })
+    return this.http.get<ResultList<UserServerModel>>(UserService.BASE_USERS_URL, { params })
       .pipe(
         map(res => this.restExtractor.convertResultListDateToHuman(res)),
         map(res => this.restExtractor.applyToResultListData(res, this.formatUser.bind(this))),
@@ -322,7 +322,7 @@ export class UserService {
 
     return from(users)
       .pipe(
-        concatMap(u => this.authHttp.delete(UserService.BASE_USERS_URL + u.id)),
+        concatMap(u => this.http.delete(UserService.BASE_USERS_URL + u.id)),
         toArray(),
         catchError(err => this.restExtractor.handleError(err))
       );
@@ -334,7 +334,7 @@ export class UserService {
 
     return from(users)
       .pipe(
-        concatMap(u => this.authHttp.post(UserService.BASE_USERS_URL + u.id + '/block', body)),
+        concatMap(u => this.http.post(UserService.BASE_USERS_URL + u.id + '/block', body)),
         toArray(),
         catchError(err => this.restExtractor.handleError(err))
       );
@@ -345,7 +345,7 @@ export class UserService {
 
     return from(users)
       .pipe(
-        concatMap(u => this.authHttp.post(UserService.BASE_USERS_URL + u.id + '/unblock', {})),
+        concatMap(u => this.http.post(UserService.BASE_USERS_URL + u.id + '/unblock', {})),
         toArray(),
         catchError(err => this.restExtractor.handleError(err))
       );

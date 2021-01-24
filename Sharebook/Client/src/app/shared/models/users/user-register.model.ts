@@ -1,12 +1,10 @@
 export interface UserRegister {
-  username: string
-  password: string
-  email: string
-
-  displayName?: string
-
-  channel?: {
-    name: string
-    displayName: string
-  }
+  displayName: string;
+  email: string;
+  password?: string;
+  birthday: {
+    month: string,
+    day: string,
+    year: string,
+  };
 }

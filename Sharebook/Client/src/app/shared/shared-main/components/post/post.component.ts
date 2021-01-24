@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-post',
@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnInit {
+  @Input() public transform: number = 0;
+  @Input() public hasText = false;
+  @Input() public hasMedia = false;
 
   constructor() { }
 
   ngOnInit(): void {
   }
+
 
 }

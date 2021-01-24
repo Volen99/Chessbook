@@ -37,7 +37,9 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
 
   // If we returned true in shouldAttach(), now return the actual route data for restoration
   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle {
-    if (!this.isReuseEnabled(route)) return undefined;
+    if (!this.isReuseEnabled(route)) {
+      return undefined;
+    }
 
     const key = this.generateKey(route);
     this.recentlyUsed = key;
@@ -45,13 +47,16 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     console.log('Reusing component %s.', key);
 
     const handle = this.storedRouteHandles.get(key);
-    if (!handle) return handle;
+    if (!handle) {
+      return handle;
+    }
 
     (handle as any).componentRef.instance.enabledForReuse();
 
     return handle;
   }
 
+  // Thanks https://stackoverflow.com/questions/41280471/how-to-implement-routereusestrategy-shoulddetach-for-specific-routes-in-angular ♥
   // Reuse the route if we're going to and from the same route
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
     return future.routeConfig === curr.routeConfig;
@@ -60,7 +65,9 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   private gb() {
     if (this.storedRouteHandles.size >= this.MAX_SIZE) {
       this.storedRouteHandles.forEach((r, key) => {
-        if (key === this.recentlyUsed) return;
+        if (key === this.recentlyUsed) {
+          return;
+        }
 
         console.log('Removing stored component %s.', key);
 

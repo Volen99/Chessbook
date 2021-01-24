@@ -5,10 +5,11 @@ import { pairwise } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
 import { UserService } from '../../../core';
 import {
+  USER_DAY_VALIDATOR,
   USER_DISPLAY_NAME_REQUIRED_VALIDATOR,
-  USER_EMAIL_VALIDATOR,
+  USER_EMAIL_VALIDATOR, USER_MONTH_VALIDATOR,
   USER_PASSWORD_VALIDATOR,
-  USER_USERNAME_VALIDATOR
+  USER_USERNAME_VALIDATOR, USER_YEAR_VALIDATOR
 } from '../../../shared/form-validators/user-validators';
 import { FormReactive } from '../../../shared/shared-forms/form-reactive';
 import { FormValidatorService } from '../../../shared/shared-forms/form-validator.service';
@@ -20,8 +21,6 @@ import { Month } from '../../../shared/shared-main/enums/month';
   styleUrls: [ './account-modal.component.scss' ]
 })
 export class AccountModalComponent extends FormReactive implements OnInit {
-  @Input() videoUploadDisabled = false;
-
   @Output() formBuilt = new EventEmitter<FormGroup>();
 
   constructor(protected formValidatorService: FormValidatorService, private userService: UserService,
@@ -34,23 +33,31 @@ export class AccountModalComponent extends FormReactive implements OnInit {
       this.days.push(day);
     }
 
-    for (let year = 2021; year >= 2021 - 115; year--) {
+    for (let year = 2021; year >= 2021 - 121; year--) {
       this.years.push(year);
     }
 
-    this.buildForm({
-      displayName: USER_DISPLAY_NAME_REQUIRED_VALIDATOR,
+    super.buildForm({
       username: USER_USERNAME_VALIDATOR,
+      email: USER_EMAIL_VALIDATOR,
       password: USER_PASSWORD_VALIDATOR,
-      email: USER_EMAIL_VALIDATOR
+      birthday: {
+        month: USER_MONTH_VALIDATOR,
+        day: USER_DAY_VALIDATOR,
+        year: USER_YEAR_VALIDATOR,
+      },
     });
 
-    setTimeout(() => this.formBuilt.emit(this.form));
+    // setTimeout(() => this.formBuilt.emit(this.form));
 
-    concat(of(''),
-      this.form.get('displayName').valueChanges
-    ).pipe(pairwise())
-      .subscribe(([ oldValue, newValue ]) => this.onDisplayNameChange(oldValue, newValue));
+    setTimeout(() => {
+      this.formBuilt.emit(this.form);
+    });
+
+    // concat(of(''),
+    //   this.form.get('username').valueChanges
+    // ).pipe(pairwise())
+    //   .subscribe(([ oldValue, newValue ]) => this.onDisplayNameChange(oldValue, newValue));
   }
 
   public isNameCountOver40: boolean = false;
@@ -58,6 +65,24 @@ export class AccountModalComponent extends FormReactive implements OnInit {
   public months = Month;
   public days: number[] = [];
   public years: number[] = [];
+
+  changeMonth(ev: any) {
+    this.form.get('birthday.month').setValue(ev.target.value, {
+     // onlySelf: true,
+    });
+  }
+
+  changeDay(ev: any) {
+    this.form.get('birthday.day').setValue(ev.target.value, {
+     // onlySelf: true
+    });
+  }
+
+  changeYear(ev: any) {
+    this.form.get('birthday.year').setValue(ev.target.value, {
+      // onlySelf: true
+    });
+  }
 
   public get instanceHost() {
     return window.location.host;
@@ -68,6 +93,14 @@ export class AccountModalComponent extends FormReactive implements OnInit {
 
     const newUsername = this.userService.getNewUsername(oldDisplayName, newDisplayName, username);
     this.form.patchValue({ username: newUsername });
+  }
+
+  public show: boolean = false;
+  public revealOrHidePasswordText: string = 'Reveal password';
+
+  togalePass(): void {
+    this.show = !this.show;
+    this.revealOrHidePasswordText = this.show ? 'Hide password' : 'Reveal password';
   }
 
   public nameCurrentCount: number = 0;

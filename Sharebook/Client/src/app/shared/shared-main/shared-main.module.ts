@@ -40,6 +40,12 @@ import { AUTH_INTERCEPTOR_PROVIDER } from '@app/shared/shared-main/auth/auth-int
 import { AccountService } from '@app/shared/shared-main/account/account.service';
 import { ProfilePicture49x49Component } from '@app/shared/shared-main/components/profile-picture-49x49/profile-picture49x49.component';
 import { EnumToArrayPipe } from './angular/enum-to-array.pipe';
+import { FormDirective } from '@app/shared/shared-main/angular/form.directive';
+import { NextBtnDirective } from '@app/shared/shared-main/angular/next-btn.directive';
+import { CheckboxDirective } from './angular/checkbox.directive';
+import { DisableDirective } from './angular/disable.directive';
+import { GroupByPipe } from './angular/pipes/group-by.pipe';
+import { BootstrapToggleDirective } from './angular/directives/bootstrap-toggle.directive';
 
 @NgModule({
   imports: [
@@ -97,7 +103,13 @@ import { EnumToArrayPipe } from './angular/enum-to-array.pipe';
     HoverDirective,
     PostComponent,
     ProfilePicture49x49Component,
-    EnumToArrayPipe
+    EnumToArrayPipe,
+    FormDirective,
+    NextBtnDirective,
+    CheckboxDirective,
+    DisableDirective,
+    GroupByPipe,
+    BootstrapToggleDirective,
   ],
 
   exports: [
@@ -151,7 +163,13 @@ import { EnumToArrayPipe } from './angular/enum-to-array.pipe';
     HoverDirective,
     PostComponent,
     ProfilePicture49x49Component,
-    EnumToArrayPipe
+    EnumToArrayPipe,
+    FormDirective,
+    NextBtnDirective,
+    CheckboxDirective,
+    DisableDirective,
+    GroupByPipe,
+    BootstrapToggleDirective,
   ],
 
   providers: [

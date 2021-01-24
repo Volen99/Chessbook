@@ -58,7 +58,9 @@ export abstract class FormReactive {
       formErrors[field] = '';
       const control = form.get(field);
 
-      if (control.dirty) this.formChanged = true;
+      if (control.dirty) {
+        this.formChanged = true;
+      }
 
       // Don't care if dirty on force check
       const isDirty = control.dirty || forceCheck === true;

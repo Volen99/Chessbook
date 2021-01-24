@@ -3,192 +3,192 @@ import { NSFWPolicyType } from '../videos/nsfw-policy.type';
 import { BroadcastMessageLevel } from './broadcast-message-level.type';
 
 export interface ServerConfigPlugin {
-  name: string
-  version: string
-  description: string
-  clientScripts: { [name: string]: ClientScript }
+  name: string;
+  version: string;
+  description: string;
+  clientScripts: { [name: string]: ClientScript };
 }
 
 export interface ServerConfigTheme extends ServerConfigPlugin {
-  css: string[]
+  css: string[];
 }
 
 export interface RegisteredExternalAuthConfig {
-  npmName: string
-  name: string
-  version: string
-  authName: string
-  authDisplayName: string
+  npmName: string;
+  name: string;
+  version: string;
+  authName: string;
+  authDisplayName: string;
 }
 
 export interface RegisteredIdAndPassAuthConfig {
-  npmName: string
-  name: string
-  version: string
-  authName: string
-  weight: number
+  npmName: string;
+  name: string;
+  version: string;
+  authName: string;
+  weight: number;
 }
 
 export interface ServerConfig {
-  serverVersion: string
-  serverCommit?: string
+  serverVersion: string;
+  serverCommit?: string;
 
   instance: {
-    name: string
-    shortDescription: string
-    defaultClientRoute: string
-    isNSFW: boolean
-    defaultNSFWPolicy: NSFWPolicyType
+    name: string;
+    shortDescription: string;
+    defaultClientRoute: string;
+    isNSFW: boolean;
+    defaultNSFWPolicy: NSFWPolicyType;
     customizations: {
-      javascript: string
-      css: string
+      javascript: string,
+      css: string,
     }
-  }
+  };
 
   search: {
     remoteUri: {
-      users: boolean
-      anonymous: boolean
+      users: boolean,
+      anonymous: boolean,
     }
 
     searchIndex: {
-      enabled: boolean
-      url: string
-      disableLocalSearch: boolean
-      isDefaultSearch: boolean
+      enabled: boolean,
+      url: string,
+      disableLocalSearch: boolean,
+      isDefaultSearch: boolean,
     }
-  }
+  };
 
   plugin: {
-    registered: ServerConfigPlugin[]
+    registered: ServerConfigPlugin[],
 
-    registeredExternalAuths: RegisteredExternalAuthConfig[]
+    registeredExternalAuths: RegisteredExternalAuthConfig[],
 
-    registeredIdAndPassAuths: RegisteredIdAndPassAuthConfig[]
-  }
+    registeredIdAndPassAuths: RegisteredIdAndPassAuthConfig[],
+  };
 
   theme: {
-    registered: ServerConfigTheme[]
-    default: string
-  }
+    registered: ServerConfigTheme[],
+    default: string,
+  };
 
   email: {
-    enabled: boolean
-  }
+    enabled: boolean,
+  };
 
   contactForm: {
-    enabled: boolean
-  }
+    enabled: boolean,
+  };
 
   signup: {
-    allowed: boolean
-    allowedForCurrentIP: boolean
-    requiresEmailVerification: boolean
-  }
+    allowed: boolean,
+    allowedForCurrentIP: boolean,
+    requiresEmailVerification: boolean,
+  };
 
   transcoding: {
     hls: {
-      enabled: boolean
+      enabled: boolean,
     }
 
     webtorrent: {
-      enabled: boolean
+      enabled: boolean,
     }
 
-    enabledResolutions: number[]
-  }
+    enabledResolutions: number[],
+  };
 
   live: {
-    enabled: boolean
+    enabled: boolean,
 
-    maxDuration: number
-    maxInstanceLives: number
-    maxUserLives: number
-    allowReplay: boolean
+    maxDuration: number,
+    maxInstanceLives: number,
+    maxUserLives: number,
+    allowReplay: boolean,
 
     transcoding: {
-      enabled: boolean
+      enabled: boolean,
 
-      enabledResolutions: number[]
+      enabledResolutions: number[],
     }
-  }
+  };
 
   import: {
     videos: {
       http: {
-        enabled: boolean
+        enabled: boolean,
       }
       torrent: {
-        enabled: boolean
+        enabled: boolean,
       }
     }
-  }
+  };
 
   autoBlacklist: {
     videos: {
       ofUsers: {
-        enabled: boolean
+        enabled: boolean,
       }
     }
-  }
+  };
 
   avatar: {
     file: {
       size: {
-        max: number
+        max: number,
       }
-      extensions: string[]
+      extensions: string[],
     }
-  }
+  };
 
   video: {
     image: {
       size: {
-        max: number
+        max: number,
       }
-      extensions: string[]
+      extensions: string[],
     }
     file: {
-      extensions: string[]
+      extensions: string[],
     }
-  }
+  };
 
   videoCaption: {
     file: {
       size: {
-        max: number
+        max: number,
       }
-      extensions: string[]
+      extensions: string[],
     }
-  }
+  };
 
   user: {
-    videoQuota: number
-    videoQuotaDaily: number
-  }
+    videoQuota: number,
+    videoQuotaDaily: number,
+  };
 
   trending: {
     videos: {
-      intervalDays: number
+      intervalDays: number,
     }
-  }
+  };
 
   tracker: {
-    enabled: boolean
-  }
+    enabled: boolean,
+  };
 
   followings: {
     instance: {
       autoFollowIndex: {
-        indexUrl: string
+        indexUrl: string,
       }
     }
-  }
+  };
 
   broadcastMessage: {
-    enabled: boolean
-    message: string
-    level: BroadcastMessageLevel
-    dismissable: boolean
-  }
+    enabled: boolean,
+    message: string,
+    level: BroadcastMessageLevel,
+    dismissable: boolean,
+  };
 }

@@ -39,6 +39,7 @@ const icons = {
   home: require('!!raw-loader?!../../../assets/images/feather/home.svg').default,
   info: require('!!raw-loader?!../../../assets/images/feather/info.svg').default,
   logo: require('!!raw-loader?!../../../assets/images/feather/logo.svg').default,
+  lessThanSpace: require('!!raw-loader?!../../../assets/images/feather/lessThanSpace.svg').default,
   notifications: require('!!raw-loader?!../../../assets/images/feather/notifications.svg').default,
   more: require('!!raw-loader?!../../../assets/images/feather/more.svg').default,
   messages: require('!!raw-loader?!../../../assets/images/feather/messages.svg').default,
@@ -52,6 +53,7 @@ const icons = {
   verifiedAccount: require('!!raw-loader?!../../../assets/images/feather/verifiedAccount.svg').default,
   x: require('!!raw-loader?!../../../assets/images/feather/x.svg').default,
   '3dots': require('!!raw-loader?!../../../assets/images/feather/3dots.svg').default,
+
 
   playlists: require('!!raw-loader?!../../../assets/images/feather/list.svg').default,
   syndication: require('!!raw-loader?!../../../assets/images/feather/syndication.svg').default,

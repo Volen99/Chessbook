@@ -18,7 +18,7 @@ export const USER_USERNAME_VALIDATOR: BuildFormValidator = {
 
 export const USER_CHANNEL_NAME_VALIDATOR: BuildFormValidator = {
   VALIDATORS: [
-    Validators.required,
+    // Validators.required,
     Validators.minLength(1),
     Validators.maxLength(50),
     Validators.pattern(/^[a-z0-9][a-z0-9._]*$/)
@@ -73,11 +73,40 @@ export const USER_PASSWORD_OPTIONAL_VALIDATOR: BuildFormValidator = {
 };
 
 export const USER_CONFIRM_PASSWORD_VALIDATOR: BuildFormValidator = {
-  VALIDATORS: [],
+  VALIDATORS: [Validators.requiredTrue],  // Validators.requiredTrue by mi kk
   MESSAGES: {
     'matchPassword': $localize`The new password and the confirmed password do not correspond.`
   }
 };
+
+
+
+
+
+export const USER_MONTH_VALIDATOR: BuildFormValidator = {
+  VALIDATORS: [Validators.required, Validators.min(1), Validators.max(12)],
+  MESSAGES: {
+    'matchPassword': $localize`The new password and the confirmed password do not correspond.`
+  }
+};
+
+export const USER_DAY_VALIDATOR: BuildFormValidator = {
+  VALIDATORS: [Validators.required, Validators.min(1), Validators.max(31)],
+  MESSAGES: {
+    'matchPassword': $localize`The new password and the confirmed password do not correspond.`
+  }
+};
+
+export const USER_YEAR_VALIDATOR: BuildFormValidator = {
+  VALIDATORS: [Validators.required, Validators.min(1901), Validators.max(2021)],
+  MESSAGES: {
+    'matchPassword': $localize`The new password and the confirmed password do not correspond.`
+  }
+};
+
+
+
+
 
 export const USER_VIDEO_QUOTA_VALIDATOR: BuildFormValidator = {
   VALIDATORS: [ Validators.required, Validators.min(-1) ],
@@ -115,7 +144,7 @@ export const USER_DESCRIPTION_VALIDATOR: BuildFormValidator = {
 };
 
 export const USER_TERMS_VALIDATOR: BuildFormValidator = {
-  VALIDATORS: [ Validators.requiredTrue ],
+  VALIDATORS: [ Validators.nullValidator ],
   MESSAGES: {
     'required': $localize`You must agree with the instance terms in order to register on it.`
   }

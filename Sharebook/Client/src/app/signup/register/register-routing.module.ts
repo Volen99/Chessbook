@@ -7,6 +7,7 @@ import { RegisterComponent } from './register.component';
 const registerRoutes: Routes = [
   {
     path: '',
+    outlet: 'signup',
     component: RegisterComponent,
     // canActivate: [ MetaGuard, UnloggedGuard ],
     // data: {

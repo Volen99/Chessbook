@@ -7296,7 +7296,7 @@
           year: i
         } = s || {}, r = a && n && i && Hn(new Date(i, n - 1, a))
         return !e.ignore_birthday && s && r ? o.createElement(w.a, {
-          accessibilityLabel: Gn({ birthdate: r }),
+          accessibilityLabel: Gn({ birthday: r }),
           accessibilityRole: 'button',
           onClick: this._handleBirthdayEdit,
           testID: 'editBirthday'

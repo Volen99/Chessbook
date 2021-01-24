@@ -8,6 +8,14 @@ import { POSSIBLE_LOCALES } from './shared/core-utils/i18n';
 
 const routes: Routes = [
   {
+    path: 'client',
+    loadChildren: () => import('./logged-out-home/logged-out-home.module').then(m => m.LoggedOutHomeModule),
+  },
+  {
+    path: 'signup',
+    loadChildren: () => import('./signup/register/register.module').then(m => m.RegisterModule),
+  },
+  {
     path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
   },
@@ -53,10 +61,10 @@ const routes: Routes = [
     path: 'about',
     loadChildren: () => import('./about/about.module').then(m => m.AboutModule)
   },
-  {
-    path: 'signup',
-    loadChildren: () => import('./signup/register/register.module').then(m => m.RegisterModule)
-  },
+  // {
+  //   path: 'signup',
+  //   loadChildren: () => import('./signup/register/register.module').then(m => m.RegisterModule)
+  // },
   {
     path: 'reset-password',
     loadChildren: () => import('./reset-password/reset-password.module').then(m => m.ResetPasswordModule)

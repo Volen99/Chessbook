@@ -4,11 +4,19 @@ import { MetaGuard } from '@ngx-meta/core';
 
 import { ServerConfigResolver } from '../core/routing/server-config-resolver.service';
 import { LoggedOutHomeComponent } from './logged-out-home.component';
+import { RegisterComponent } from '../signup/register/register.component';
 
 const loginRoutes: Routes = [
   {
     path: '',
     component: LoggedOutHomeComponent,
+    outlet: 'logged-out-home',
+    data: {
+      reuse: {
+        enabled: true,
+        key: 'logged-out-home',
+      }
+    },
     // canActivate: [ MetaGuard ],
     // data: {
     //   meta: {
@@ -18,7 +26,8 @@ const loginRoutes: Routes = [
     // resolve: {
     //   serverConfig: ServerConfigResolver
     // }
-  }
+  },
+
 ];
 
 @NgModule({

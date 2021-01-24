@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>aspnet-Sharebook-BBB373B5-EF3F-4DBB-B8AA-7152CEC275BF</UserSecretsId>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityServer4" Version="4.1.1" />
+    <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.1" />
+    <PackageReference Include="IdentityServer4.EntityFramework" Version="4.1.1" />
+    <PackageReference Include="IdentityServer4.EntityFramework.Storage" Version="4.1.1" />
+    <PackageReference Include="IdentityServer4.Storage" Version="4.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.2" />
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.113" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.2" />
+    <PackageReference Include="Polly" Version="7.2.1" />
+    <PackageReference Include="Serilog" Version="2.10.1-dev-01265" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.1-dev-00188" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.2.0-dev-00264" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0-dev-00839" />
+    <PackageReference Include="Serilog.Sinks.Http" Version="7.2.0" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="5.0.0-dev-00174" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Sharebook.Common\Sharebook.Common.csproj" />
+    <ProjectReference Include="..\..\Data\Sharebook.Data.Models\Sharebook.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\Sharebook.Data\Sharebook.Data.csproj" />
+    <ProjectReference Include="..\..\Services\Sharebook.Services.Data\Sharebook.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\Sharebook.Services.Mapping\Sharebook.Services.Mapping.csproj" />
+    <ProjectReference Include="..\..\Services\Sharebook.Services.Messaging\Sharebook.Services.Messaging.csproj" />
+    <ProjectReference Include="..\..\Services\Sharebook.Services\Sharebook.Services.csproj" />
+    <ProjectReference Include="..\Sharebook.Web.Infrastructure\Sharebook.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\Sharebook.Web.Models\Sharebook.Web.Models.csproj" />
+    <ProjectReference Include="..\Sharebook.Web.ViewModels\Sharebook.Web.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Administration\Factories\" />
+    <Folder Include="Areas\Administration\Helpers\" />
+    <Folder Include="Areas\Administration\Infrastructure\" />
+    <Folder Include="Areas\Administration\Models\" />
+    <Folder Include="Areas\Administration\Validators\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+</Project>

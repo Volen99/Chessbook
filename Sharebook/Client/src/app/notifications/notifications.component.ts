@@ -92,7 +92,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
   onNavigate(link: HTMLAnchorElement) {
     this.closePopover();
-    this.navigate.emit(link);
+    // this.navigate.emit(link);
   }
 
   markAllAsRead() {

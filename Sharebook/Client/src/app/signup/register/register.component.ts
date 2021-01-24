@@ -20,9 +20,8 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.serverConfig = this.route.snapshot.data.serverConfig;
+   // this.serverConfig = this.route.snapshot.data.serverConfig;
 
-    this.videoUploadDisabled = this.serverConfig.user.videoQuota === 0;
     this.stepUserButtonLabel = this.videoUploadDisabled
       ? $localize`:Button on the registration form to finalize the account and channel creation:Signup`
       : this.defaultNextStepButtonLabel;
@@ -39,6 +38,9 @@ export class RegisterComponent implements OnInit {
   public videoUploadDisabled: boolean;
 
   public formStepAccount: FormGroup;
+  public formStepCustomizeExperience: FormGroup;
+  public formStepCreateYourAccount: FormGroup;
+  public formStepEmailVerificationCode: FormGroup;
 
   public formStepTerms: FormGroup;
   public formStepUser: FormGroup;
@@ -72,22 +74,54 @@ export class RegisterComponent implements OnInit {
   }
 
   public getUsername() {
-    if (!this.formStepUser) {
+    if (!this.formStepAccount) {
       return undefined;
     }
 
-    return this.formStepUser.value['username'];
+    return this.formStepAccount.value['username'];
   }
 
   public getChannelName() {
-    if (!this.formStepChannel) return undefined;
+    if (!this.formStepAccount) {
+      return undefined;
+    }
 
-    return this.formStepChannel.value['name'];
+    return this.formStepAccount.value['username'];
+  }
+
+  public getEmail() {
+    if (!this.formStepAccount) {
+      return undefined;
+    }
+
+    return this.formStepAccount.value['email'];
+  }
+
+  public getBirthday() {
+    if (!this.formStepAccount) {
+      return undefined;
+    }
+
+    return this.formStepAccount.value['birthday'];
   }
 
   public onAccountFormBuilt(form: FormGroup) {
     this.formStepAccount = form;
   }
+
+  public onCustomizeExperienceFormBuilt(form: FormGroup) {
+    this.formStepCustomizeExperience = form;
+  }
+
+  public onCreateYourAccountFormBuilt(form: FormGroup) {
+    this.formStepCreateYourAccount = form;
+  }
+
+  public onCreateEmailVerificationCodeFormBuilt(form: FormGroup) {
+    this.formStepEmailVerificationCode = form;
+  }
+
+
 
   public onTermsFormBuilt(form: FormGroup) {
     this.formStepTerms = form;
@@ -117,11 +151,11 @@ export class RegisterComponent implements OnInit {
   public async signup() {
     this.error = null;
 
-    const body: UserRegister = await this.hooks.wrapObject(
-      Object.assign(this.formStepUser.value, { channel: this.videoUploadDisabled ? undefined : this.formStepChannel.value }),
+    const body: UserRegister = this.formStepAccount.value; /*await this.hooks.wrapObject(
+      Object.assign(this.formStepAccount.value, { channel: this.videoUploadDisabled ? undefined : this.formStepChannel.value }),
       'signup',
       'filter:api.signup.registration.create.params'
-    );
+    );*/
 
     this.userService.signup(body).subscribe(
       () => {
@@ -133,10 +167,10 @@ export class RegisterComponent implements OnInit {
         }
 
         // Auto login
-        this.authService.login(body.username, body.password)
+        this.authService.login(body.displayName, body.password)
           .subscribe(
             () => {
-              this.success = $localize`You are now logged in as ${body.username}!`;
+              this.success = $localize`You are now logged in as ${body.displayName}!`;
             },
 
             err => this.error = err.message

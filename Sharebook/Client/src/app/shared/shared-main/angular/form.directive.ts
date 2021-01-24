@@ -15,7 +15,7 @@ export class FormDirective {
   }
 
   @HostListener('window:click', ['$event.target'])
-  handleWindowClick(ev) {
+  handleWindowClick(ev: any) {
     if (ev.tagName !== 'INPUT' && ev.tagName !== 'SELECT' && ev.tagName !== 'TEXTAREA') {
       this.renderer.removeClass(this.el.nativeElement, 'r-p1n3y5');
       this.renderer.addClass(this.el.nativeElement, 'r-1kqtdi0');
