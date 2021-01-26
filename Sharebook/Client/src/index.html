@@ -1,366 +1,378 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en" style="overflow: auto scroll;overscroll-behavior-y: none;font-size: 15px;">
+<!doctype html>
+<html>
 <head>
-    <style>
-        .DraftEditor-editorContainer, .DraftEditor-root, .public-DraftEditor-content {
-            height: inherit;
-            text-align: initial;
-            min-height: inherit;
-            max-height: inherit;
-            overflow: auto;
-        }
+  <meta charset="utf-8">
+  <title>Admin / Sharebook</title>
 
-        .public-DraftEditor-content[contenteditable=true] {
-            -webkit-user-modify: read-write-plaintext-only
-        }
+  <base href="/">
 
-        .DraftEditor-root {
-            width: 100%;
-            position: relative
-        }
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpVhQiwAllg1RAFaxMWSpQruuGARy0Y1k&libraries=places"></script>
 
-        .DraftEditor-editorContainer {
-            background-color: rgba(255, 255, 255, 0);
-            border-left: .1px solid transparent;
-            position: relative;
-            z-index: 1
-        }
+  <style>
+      /*by mi*/
+      .r-lwhw9o {
+          height: 1.75rem;
+      }
 
-        .public-DraftEditor-block {
-            position: relative
-        }
-
-        .DraftEditor-alignLeft .public-DraftStyleDefault-block {
-            text-align: left
-        }
-
-        .DraftEditor-alignLeft .public-DraftEditorPlaceholder-root {
-            left: 0;
-            text-align: left
-        }
-
-        .DraftEditor-alignCenter .public-DraftStyleDefault-block {
-            text-align: center
-        }
-
-        .DraftEditor-alignCenter .public-DraftEditorPlaceholder-root {
-            margin: 0 auto;
-            text-align: center;
-            width: 100%
-        }
-
-        .DraftEditor-alignRight .public-DraftStyleDefault-block {
-            text-align: right
-        }
-
-        .DraftEditor-alignRight .public-DraftEditorPlaceholder-root {
-            right: 0;
-            text-align: right
-        }
-
-        .public-DraftEditorPlaceholder-root {
-            color: #6E767D;
-            position: absolute;
-            z-index: 1
-        }
-
-        .public-DraftEditorPlaceholder-hasFocus {
-            color: #6E767D;
-        }
-
-        .DraftEditorPlaceholder-hidden {
-            display: none
-        }
-
-        .public-DraftStyleDefault-block {
-            position: relative;
-            overflow:hidden;
-            white-space: pre-wrap
-        }
-
-        .public-DraftStyleDefault-ltr {
-            direction: ltr;
-            text-align: left
-        }
-
-        .public-DraftStyleDefault-rtl {
-            direction: rtl;
-            text-align: right
-        }
-
-        .singleline .public-DraftStyleDefault-block {
-            overflow-x: auto;
-            scrollbar-width: none;
-            white-space: nowrap;
-            -ms-overflow-style: none;
-        }
-        .singleline .public-DraftStyleDefault-block::-webkit-scrollbar {
-            display: none;
-        }
-    </style>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <meta name="theme-color" content="#fff"/>
-    <meta property="og:platform" content="PeerTube"/>
-
-
-    <style>html, body {
-        height: 100%;
-    }</style>
-
-    <style id="react-native-stylesheet">[stylesheet-group="0"] {
+    .DraftEditor-editorContainer, .DraftEditor-root, .public-DraftEditor-content {
+      height: inherit;
+      text-align: initial;
+      min-height: inherit;
+      max-height: inherit;
+      overflow: auto;
     }
 
-    html {
-        -ms-text-size-adjust: 100%;
-        -webkit-text-size-adjust: 100%;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    .public-DraftEditor-content[contenteditable=true] {
+      -webkit-user-modify: read-write-plaintext-only
     }
 
-    body {
-        margin: 0;
+    .DraftEditor-root {
+      width: 100%;
+      position: relative
     }
 
-    button::-moz-focus-inner, input::-moz-focus-inner {
-        border: 0;
-        padding: 0;
+    .DraftEditor-editorContainer {
+      background-color: rgba(255, 255, 255, 0);
+      border-left: .1px solid transparent;
+      position: relative;
+      z-index: 1
     }
 
-    input::-webkit-inner-spin-button, input::-webkit-outer-spin-button, input::-webkit-search-cancel-button, input::-webkit-search-decoration, input::-webkit-search-results-button, input::-webkit-search-results-decoration {
-        display: none;
+    .public-DraftEditor-block {
+      position: relative
     }
 
-    [stylesheet-group="0.1"] {
+    .DraftEditor-alignLeft .public-DraftStyleDefault-block {
+      text-align: left
     }
 
-    :focus:not([data-focusvisible-polyfill]) {
-        outline: none;
+    .DraftEditor-alignLeft .public-DraftEditorPlaceholder-root {
+      left: 0;
+      text-align: left
     }
 
-    [stylesheet-group="1"] {
+    .DraftEditor-alignCenter .public-DraftStyleDefault-block {
+      text-align: center
     }
 
-    .css-1dbjc4n {
-        /*-ms-flex-align: stretch;*/
-        /*-ms-flex-direction: column;*/
-        /*-ms-flex-negative: 0;*/
-        /*-ms-flex-preferred-size: auto;*/
-        /*-webkit-align-items: stretch;*/
-        /*-webkit-box-align: stretch;*/
-        /*-webkit-box-direction: normal;*/
-        /*-webkit-box-orient: vertical;*/
-        /*-webkit-flex-basis: auto;*/
-        /*-webkit-flex-direction: column;*/
-        /*-webkit-flex-shrink: 0;*/
-        align-items: stretch;
-        border: 0 solid black;
-        box-sizing: border-box;
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        flex-basis: auto;
-        flex-direction: column;
-        flex-shrink: 0;
-        margin-bottom: 0px;
-        margin-left: 0px;
-        margin-right: 0px;
-        margin-top: 0px;
-        min-height: 0px;
-        min-width: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-        padding-right: 0px;
-        padding-top: 0px;
-        position: relative;
-        z-index: 0;
+    .DraftEditor-alignCenter .public-DraftEditorPlaceholder-root {
+      margin: 0 auto;
+      text-align: center;
+      width: 100%
     }
 
-    .css-901oao {
-        border: 0 solid black;
-        box-sizing: border-box;
-        color: rgba(0, 0, 0, 1.00);
-        display: inline;
-        font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        margin-bottom: 0px;
-        margin-left: 0px;
-        margin-right: 0px;
-        margin-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-        padding-right: 0px;
-        padding-top: 0px;
-        white-space: pre-wrap;
-        word-wrap: break-word;
+    .DraftEditor-alignRight .public-DraftStyleDefault-block {
+      text-align: right
     }
 
-    .css-16my406 {
-        color: inherit;
-        font: inherit;
-        white-space: inherit;
+    .DraftEditor-alignRight .public-DraftEditorPlaceholder-root {
+      right: 0;
+      text-align: right
     }
 
-    [stylesheet-group="2"] {
+    .public-DraftEditorPlaceholder-root {
+      color: #6E767D;
+      position: absolute;
+      z-index: 1
     }
 
-    .r-13awgt0 {
-        -ms-flex: 1 1 0%;
-        -webkit-flex: 1;
-        flex: 1;
+    .public-DraftEditorPlaceholder-hasFocus {
+      color: #6E767D;
     }
 
-    .r-4qtqp9 {
-        display: inline-block;
+    .DraftEditorPlaceholder-hidden {
+      display: none
     }
 
-    .r-ywje51 {
-        margin-bottom: auto;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: auto;
+    .public-DraftStyleDefault-block {
+      position: relative;
+      overflow:hidden;
+      white-space: pre-wrap
     }
 
-    .r-hvic4v {
-        display: none;
+    .public-DraftStyleDefault-ltr {
+      direction: ltr;
+      text-align: left
     }
 
-    .r-1adg3ll {
-        display: block;
+    .public-DraftStyleDefault-rtl {
+      direction: rtl;
+      text-align: right
     }
 
-    [stylesheet-group="2.2"] {
+    .singleline .public-DraftStyleDefault-block {
+      overflow-x: auto;
+      scrollbar-width: none;
+      white-space: nowrap;
+      -ms-overflow-style: none;
     }
-
-    .r-12vffkv > * {
-        pointer-events: auto;
+    .singleline .public-DraftStyleDefault-block::-webkit-scrollbar {
+      display: none;
     }
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    .r-12vffkv {
-        pointer-events: none !important;
+  <meta name="theme-color" content="#fff"/>
+  <meta property="og:platform" content="PeerTube"/>
+
+
+  <style>html, body {
+    height: 100%;
+  }</style>
+
+  <style id="react-native-stylesheet">[stylesheet-group="0"] {
+  }
+
+  html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+
+  body {
+    margin: 0;
+  }
+
+  button::-moz-focus-inner, input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+
+  input::-webkit-inner-spin-button, input::-webkit-outer-spin-button, input::-webkit-search-cancel-button, input::-webkit-search-decoration, input::-webkit-search-results-button, input::-webkit-search-results-decoration {
+    display: none;
+  }
+
+  [stylesheet-group="0.1"] {
+  }
+
+  :focus:not([data-focusvisible-polyfill]) {
+    outline: none;
+  }
+
+  [stylesheet-group="1"] {
+  }
+
+  .css-1dbjc4n {
+    /*-ms-flex-align: stretch;*/
+    /*-ms-flex-direction: column;*/
+    /*-ms-flex-negative: 0;*/
+    /*-ms-flex-preferred-size: auto;*/
+    /*-webkit-align-items: stretch;*/
+    /*-webkit-box-align: stretch;*/
+    /*-webkit-box-direction: normal;*/
+    /*-webkit-box-orient: vertical;*/
+    /*-webkit-flex-basis: auto;*/
+    /*-webkit-flex-direction: column;*/
+    /*-webkit-flex-shrink: 0;*/
+    align-items: stretch;
+    border: 0 solid black;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-basis: auto;
+    flex-direction: column;
+    flex-shrink: 0;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    min-height: 0px;
+    min-width: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    position: relative;
+    z-index: 0;
+  }
+
+  .css-901oao {
+    border: 0 solid black;
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 1.00);
+    display: inline;
+    font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .css-16my406 {
+    color: inherit;
+    font: inherit;
+    white-space: inherit;
+  }
+
+  [stylesheet-group="2"] {
+  }
+
+  .r-13awgt0 {
+    -ms-flex: 1 1 0%;
+    -webkit-flex: 1;
+    flex: 1;
+  }
+
+  .r-4qtqp9 {
+    display: inline-block;
+  }
+
+  .r-ywje51 {
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+  }
+
+  .r-hvic4v {
+    display: none;
+  }
+
+  .r-1adg3ll {
+    display: block;
+  }
+
+  [stylesheet-group="2.2"] {
+  }
+
+  .r-12vffkv > * {
+    pointer-events: auto;
+  }
+
+  .r-12vffkv {
+    pointer-events: none !important;
+  }
+
+  .r-14lw9ot {
+    background-color: rgba(255, 255, 255, 1.00);
+  }
+
+  .r-1p0dtai {
+    bottom: 0px;
+  }
+
+  .r-1d2f490 {
+    left: 0px;
+  }
+
+  .r-1xcajam {
+    position: fixed;
+  }
+
+  .r-zchlnj {
+    right: 0px;
+  }
+
+  .r-ipm5af {
+    top: 0px;
+  }
+
+  .r-1srlen8 {
+    background-color: rgba(27, 40, 54, 1.00);
+  }
+
+  .r-yyyyoo {
+    fill: currentcolor;
+  }
+
+  .r-1xvli5t {
+    height: 1.25em;
+  }
+
+  .r-dnmrzs {
+    max-width: 100%;
+  }
+
+  .r-bnwqim {
+    position: relative;
+  }
+
+  .r-1plcrui {
+    vertical-align: text-bottom;
+  }
+
+  .r-lrvibr {
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .r-13gxpu9 {
+    color: rgba(29, 161, 242, 1.00);
+  }
+
+  .r-wy61xf {
+    height: 72px;
+  }
+
+  .r-u8s1d {
+    position: absolute;
+  }
+
+  .r-1blnp2b {
+    width: 72px;
+  }
+
+  .r-1ykxob0 {
+    top: 60%;
+  }
+
+  .r-1b2b6em {
+    line-height: 2em;
+  }
+
+  .r-q4m81j {
+    text-align: center;
+  }
+
+  .r-1fmj7o5 {
+    color: rgba(217, 217, 217, 1.00);
+  }</style>
+
+
+  <!-- Web Manifest file -->
+  <link rel="manifest" href="/manifest.webmanifest?[manifestContentHash]">
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png?[faviconContentHash]"/>
+  <link rel="apple-touch-icon" href="/assets/images/icons/icon-144x144.png" sizes="144x144"/>
+  <link rel="apple-touch-icon" href="src/assets/images/icons/icon-192x192.png" sizes="192x192"/>
+
+  <!-- logo background-image -->
+  <style type="text/css">
+    .icon-logo {
+      background-image: url('/assets/images/logo.svg?[logoContentHash]');
     }
+  </style>
 
-    .r-14lw9ot {
-        background-color: rgba(255, 255, 255, 1.00);
-    }
+  <!-- base url -->
+  <base href="/">
 
-    .r-1p0dtai {
-        bottom: 0px;
-    }
+  <!-- /!\ The following comment is used by the server to prerender some tags /!\ -->
 
-    .r-1d2f490 {
-        left: 0px;
-    }
+  <!-- title tag -->
+  <!-- description tag -->
+  <!-- custom css tag -->
+  <!-- meta tags -->
 
-    .r-1xcajam {
-        position: fixed;
-    }
-
-    .r-zchlnj {
-        right: 0px;
-    }
-
-    .r-ipm5af {
-        top: 0px;
-    }
-
-    .r-1srlen8 {
-        background-color: rgba(27, 40, 54, 1.00);
-    }
-
-    .r-yyyyoo {
-        fill: currentcolor;
-    }
-
-    .r-1xvli5t {
-        height: 1.25em;
-    }
-
-    .r-dnmrzs {
-        max-width: 100%;
-    }
-
-    .r-bnwqim {
-        position: relative;
-    }
-
-    .r-1plcrui {
-        vertical-align: text-bottom;
-    }
-
-    .r-lrvibr {
-        -moz-user-select: none;
-        -ms-user-select: none;
-        -webkit-user-select: none;
-        user-select: none;
-    }
-
-    .r-13gxpu9 {
-        color: rgba(29, 161, 242, 1.00);
-    }
-
-    .r-wy61xf {
-        height: 72px;
-    }
-
-    .r-u8s1d {
-        position: absolute;
-    }
-
-    .r-1blnp2b {
-        width: 72px;
-    }
-
-    .r-1ykxob0 {
-        top: 60%;
-    }
-
-    .r-1b2b6em {
-        line-height: 2em;
-    }
-
-    .r-q4m81j {
-        text-align: center;
-    }
-
-    .r-1fmj7o5 {
-        color: rgba(217, 217, 217, 1.00);
-    }</style>
-
-
-    <!-- Web Manifest file -->
-    <link rel="manifest" href="/manifest.webmanifest?[manifestContentHash]">
-
-    <link rel="icon" type="image/png" href="/assets/images/favicon.png?[faviconContentHash]"/>
-    <link rel="apple-touch-icon" href="/assets/images/icons/icon-144x144.png" sizes="144x144"/>
-    <link rel="apple-touch-icon" href="src/assets/images/icons/icon-192x192.png" sizes="192x192"/>
-
-    <!-- logo background-image -->
-    <style type="text/css">
-        .icon-logo {
-            background-image: url('/assets/images/logo.svg?[logoContentHash]');
-        }
-    </style>
-
-    <!-- base url -->
-    <base href="/">
-
-    <!-- /!\ The following comment is used by the server to prerender some tags /!\ -->
-
-    <!-- title tag -->
-    <!-- description tag -->
-    <!-- custom css tag -->
-    <!-- meta tags -->
-
-    <!-- /!\ Do not remove it /!\ -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- /!\ Do not remove it /!\ -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-
-<!-- 3. Display the application -->
 <body style="background-color: rgb(0, 0, 0);">
-
 <noscript>
     <p>It seems you are either <strong>blocking or disabling Javascript</strong> on your browser, and we totally get
         that. However this endpoint uses Angular, so the front end is in full JavaScript and won't work without it.</p>
@@ -402,8 +414,17 @@
     }
 </script>
 
-<app-root role="main">
-</app-root>
+  <app-root role="main">Loading...</app-root>
+
+<!--  <style>@-webkit-keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@-moz-keyframes spin{0%{-moz-transform:rotate(0)}100%{-moz-transform:rotate(360deg)}}@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.spinner{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1003;background: #000000;overflow:hidden}  .spinner div:first-child{display:block;position:relative;left:50%;top:50%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;box-shadow:0 3px 3px 0 rgba(255,56,106,1);transform:translate3d(0,0,0);animation:spin 2s linear infinite}  .spinner div:first-child:after,.spinner div:first-child:before{content:'';position:absolute;border-radius:50%}  .spinner div:first-child:before{top:5px;left:5px;right:5px;bottom:5px;box-shadow:0 3px 3px 0 rgb(255, 228, 32);-webkit-animation:spin 3s linear infinite;animation:spin 3s linear infinite}  .spinner div:first-child:after{top:15px;left:15px;right:15px;bottom:15px;box-shadow:0 3px 3px 0 rgba(61, 175, 255,1);animation:spin 1.5s linear infinite}</style>-->
+<!--  <div id="nb-global-spinner" class="spinner">-->
+<!--    <div class="blob blob-0"></div>-->
+<!--    <div class="blob blob-1"></div>-->
+<!--    <div class="blob blob-2"></div>-->
+<!--    <div class="blob blob-3"></div>-->
+<!--    <div class="blob blob-4"></div>-->
+<!--    <div class="blob blob-5"></div>-->
+<!--  </div>-->
 
 </body>
 </html>

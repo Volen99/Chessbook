@@ -1,6 +1,8 @@
 export const environment = {
   production: true,
-  hmr: false,
-  apiUrl: '',
-  originServerUrl: ''
+  apiUrl: 'http://localhost:5000/api',
+  testUser: {
+    token: {},
+    email: '',
+  },
 };

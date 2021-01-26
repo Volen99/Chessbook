@@ -1,15 +1,15 @@
-import { RegisterClientHelpers } from 'src/types/register-client-option.model';
+import {RegisterClientHelpers} from "../types/register-client-option.model";
 import {
   ClientHookName,
   clientHookObject,
   ClientScript,
   PluginType, RegisterClientFormFieldOptions,
   RegisterClientHookOptions, RegisterClientVideoFieldOptions,
-  ServerConfigPlugin
 } from '../app/shared/models';
 import { ClientScript as ClientScriptModule } from '../types/client-script.model';
 import { importModule } from './utils';
-import { getHookType, internalRunHook } from '../app/shared/core-utils';
+import {getHookType, internalRunHook} from "../app/shared/core-utils/plugins";
+import {ServerConfigPlugin} from "../app/@core/plugins";
 
 interface HookStructValue extends RegisterClientHookOptions {
   plugin: ServerConfigPlugin;

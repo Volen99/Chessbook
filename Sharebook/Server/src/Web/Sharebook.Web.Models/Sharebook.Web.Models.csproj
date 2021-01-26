@@ -1,23 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <LangVersion>latest</LangVersion>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="5.0.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.312" PrivateAssets="all" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Data\Sharebook.Data.Models\Sharebook.Data.Models.csproj" />
-    <ProjectReference Include="..\..\Services\Sharebook.Services.Mapping\Sharebook.Services.Mapping.csproj" />
+    <ProjectReference Include="..\..\Sharebook.Data\Sharebook.Data.Models\Sharebook.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Sharebook.Services\Sharebook.Services.Mapping\Sharebook.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>

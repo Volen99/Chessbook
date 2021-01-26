@@ -47,9 +47,9 @@ export const serverFilterHookObject = {
 
   // Filter result used to check if a user can register on the instance
   'filter:api.user.signup.allowed.result': true
-}
+};
 
-export type ServerFilterHookName = keyof typeof serverFilterHookObject
+export type ServerFilterHookName = keyof typeof serverFilterHookObject;
 
 export const serverActionHookObject = {
   // Fired when the application has been loaded and is listening HTTP requests
@@ -89,13 +89,13 @@ export const serverActionHookObject = {
 
   // Fired when a user got a new oauth2 token
   'action:api.user.oauth2-got-token': true
-}
+};
 
-export type ServerActionHookName = keyof typeof serverActionHookObject
+export type ServerActionHookName = keyof typeof serverActionHookObject;
 
-export const serverHookObject = Object.assign({}, serverFilterHookObject, serverActionHookObject)
-export type ServerHookName = keyof typeof serverHookObject
+export const serverHookObject = Object.assign({}, serverFilterHookObject, serverActionHookObject);
+export type ServerHookName = keyof typeof serverHookObject;
 
 export interface ServerHook {
-  runHook <T> (hookName: ServerHookName, result?: T, params?: any): Promise<T>
+  runHook<T>(hookName: ServerHookName, result?: T, params?: any): Promise<T>;
 }

@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MetaGuard } from '@ngx-meta/core';
+/*import { MetaGuard } from '@ngx-meta/core';*/
 import { UserProfileComponent } from './user-profile.component';
-import { UserProfileVideosComponent } from './user-profile-videos/user-profile-videos.component';
-import { UserProfileAboutComponent } from './user-profile-about/user-profile-about.component';
-import { UserProfileVideoChannelsComponent } from './user-profile-video-channels/user-profile-video-channels.component';
 import { FollowersComponent } from './followers/followers.component';
 
 const accountsRoutes: Routes = [

@@ -50,10 +50,10 @@ export const clientFilterHookObject = {
 
   // Filter our SVG icons content
   'filter:internal.common.svg-icons.get-content.params': true,
-  'filter:internal.common.svg-icons.get-content.result': true
-}
+  'filter:internal.common.svg-icons.get-content.result': true,
+};
 
-export type ClientFilterHookName = keyof typeof clientFilterHookObject
+export type ClientFilterHookName = keyof typeof clientFilterHookObject;
 
 export const clientActionHookObject = {
   // Fired when the application is being initialized
@@ -90,13 +90,13 @@ export const clientActionHookObject = {
 
   // Fired when the embed loaded the player
   'action:embed.player.loaded': true
-}
+};
 
-export type ClientActionHookName = keyof typeof clientActionHookObject
+export type ClientActionHookName = keyof typeof clientActionHookObject;
 
-export const clientHookObject = Object.assign({}, clientFilterHookObject, clientActionHookObject)
-export type ClientHookName = keyof typeof clientHookObject
+export const clientHookObject = Object.assign({}, clientFilterHookObject, clientActionHookObject);
+export type ClientHookName = keyof typeof clientHookObject;
 
 export interface ClientHook {
-  runHook <T> (hookName: ClientHookName, result?: T, params?: any): Promise<T>
+  runHook <T> (hookName: ClientHookName, result?: T, params?: any): Promise<T>;
 }

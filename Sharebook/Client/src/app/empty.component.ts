@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-empty',
-  template: ''
+  template: '',
 })
 export class EmptyComponent {
 

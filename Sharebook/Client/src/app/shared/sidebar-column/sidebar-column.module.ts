@@ -4,7 +4,7 @@ import { SidebarColumnComponent } from './sidebar-column.component';
 import { TrendsComponent } from './trends/trends.component';
 import { WhoToFollowComponent } from './who-to-follow/who-to-follow.component';
 import { SearchComponent } from './search/search.component';
-import { SharedMainModule } from '../shared-main';
+import {SharedMainModule} from "../shared-main/shared-main.module";
 
 @NgModule({
   declarations: [

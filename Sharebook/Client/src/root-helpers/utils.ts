@@ -58,7 +58,7 @@ function importModule(path: string) {
 
 function wait(ms: number) {
   return new Promise(res => {
-    setTimeout(() => res(), ms);
+    setTimeout(() => res(null), ms); // null by mi
   });
 }
 

@@ -3,135 +3,91 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Sharebook": {
+    "sharebook": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "i18n": {
-        "sourceLocale": {
-          "code": "en",
-          "baseHref": "/client/en-US/"
-        },
-        "locales": {
-
-        }
-      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
-            "localize": false,
+            "preserveSymlinks": true,
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "tsConfig": "tsconfig.app.json",
+            "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/sass/include"
-              ]
-            },
             "assets": [
-              "src/assets/images",
-              "src/manifest.webmanifest"
+              "src/assets",
+              "src/favicon.ico",
+              "src/favicon.png",
+              "src/web.config",
+              {
+                "glob": "**/*",
+                "input": "node_modules/leaflet/dist/images",
+                "output": "/assets/img/markers"
+              }
             ],
             "styles": [
-              "src/sass/application.scss"
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/typeface-exo/index.css",
+              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+              "node_modules/ionicons/scss/ionicons.scss",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "node_modules/socicon/css/socicon.css",
+              "node_modules/nebular-icons/scss/nebular-icons.scss",
+              "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
+              "node_modules/leaflet/dist/leaflet.css",
+              "src/app/@theme/styles/styles.scss"
+            ],
+            "scripts": [
+              "node_modules/pace-js/pace.min.js",
+              "node_modules/tinymce/tinymce.min.js",
+              "node_modules/tinymce/themes/modern/theme.min.js",
+              "node_modules/tinymce/plugins/link/plugin.min.js",
+              "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/table/plugin.min.js",
+              "node_modules/echarts/dist/echarts.min.js",
+              "node_modules/echarts/dist/extension/bmap.min.js",
+              "node_modules/chart.js/dist/Chart.min.js"
             ],
             "allowedCommonJsDependencies": [
-              "@angularclass/hmr",
-              "debug",
-              "mousetrap",
-              "chart.js",
-              "linkifyjs/html",
-              "linkifyjs",
-              "markdown-it",
-              "markdown-it-emoji/light",
-              "sanitize-html",
-              "socket.io-client",
-              "socket.io-parser",
-              "@app/about/about-sharebook/about-sharebook-contributors.component",
-              "path",
-              "video.js",
-              "p2p-media-loader-hlsjs",
-              "videojs-hotkeys/videojs.hotkeys",
-              "p2p-media-loader-core",
-              "qrcode",
-              "webtorrent",
-              "cache-chunk-store",
-              "global/document",
-              "videojs-vtt.js",
-              "videojs-vtt.js",
-              "@babel/runtime/helpers/possibleConstructorReturn",
-              "@babel/runtime/helpers/inherits",
-              "@babel/runtime/helpers/construct",
-              "@videojs/xhr",
-              "htmlparser2",
-              "url",
-              "parse-srcset",
-              "postcss"
-            ],
-            "scripts": []
+              "angular2-chartjs",
+              "echarts",
+              "lodash",
+              "zrender/lib/svg/svg",
+              "zrender/lib/vml/vml",
+              "style-loader!angular2-toaster/toaster.css",
+              "style-loader!leaflet/dist/leaflet.css",
+              "rxjs-compat/Subject",
+              "rxjs-compat/add/operator/delay",
+              "rxjs/add/operator/delay",
+              "rxjs-compat/add/observable/of",
+              "rxjs/add/observable/of"
+            ]
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
+              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "serviceWorker": true,
-              "ngswConfigPath": "src/ngsw-config.json",
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "50kb"
-                }
-              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
-                }
-              ]
-            },
-            "hmr": {
-              "localize": false,
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.hmr.ts"
-                }
-              ]
-            },
-            "e2e": {
-              "localize": false,
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.e2e.ts"
                 }
               ]
             }
@@ -140,27 +96,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "baseHref": "/",
-            "deployUrl": "client/",
-            "browserTarget": "Sharebook:build"
+            "browserTarget": "sharebook:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "Sharebook:build:production"
-            },
-            "hmr": {
-              "browserTarget": "Sharebook:build:hmr"
-            },
-            "e2e": {
-              "browserTarget": "Sharebook:build:e2e"
-
+              "browserTarget": "sharebook:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Sharebook:build"
+            "browserTarget": "sharebook:build"
           }
         },
         "test": {
@@ -170,13 +117,37 @@
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [],
+            "scripts": [
+              "node_modules/pace-js/pace.min.js",
+              "node_modules/tinymce/tinymce.min.js",
+              "node_modules/tinymce/themes/modern/theme.min.js",
+              "node_modules/tinymce/plugins/link/plugin.min.js",
+              "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/table/plugin.min.js",
+              "node_modules/echarts/dist/echarts.min.js",
+              "node_modules/echarts/dist/extension/bmap.min.js",
+              "node_modules/chart.js/dist/Chart.min.js"
+            ],
             "styles": [
-              "src/sass/application.scss"
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/typeface-exo/index.css",
+              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+              "node_modules/ionicons/scss/ionicons.scss",
+              "node_modules/font-awesome/scss/font-awesome.scss",
+              "node_modules/socicon/css/socicon.css",
+              "node_modules/nebular-icons/scss/nebular-icons.scss",
+              "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
+              "src/app/@theme/styles/styles.scss"
             ],
             "assets": [
-              "src/assets/images",
-              "src/manifest.webmanifest"
+              "src/assets",
+              "src/favicon.ico",
+              "src/favicon.png",
+              {
+                "glob": "**/*",
+                "input": "node_modules/leaflet/dist/images",
+                "output": "/assets/img/markers"
+              }
             ]
           }
         },
@@ -184,85 +155,25 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.app.json"
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
-        "xliffmerge": {
-          "builder": "@ngx-i18nsupport/tooling:xliffmerge",
-          "options": {
-            "xliffmergeOptions": {
-              "i18nFormat": "xlf",
-              "srcDir": "src/locale",
-              "genDir": "src/locale",
-              "i18nBaseFile": "angular",
-              "defaultLanguage": "en-US",
-              "languages": [
-                "ar",
-                "ca-ES",
-                "gl-ES",
-                "cs-CZ",
-                "da-DK",
-                "de-DE",
-                "el-GR",
-                "en-GB",
-                "en-US",
-                "eo",
-                "es-ES",
-                "eu-ES",
-                "fa-IR",
-                "fi-FI",
-                "fr-FR",
-                "gd",
-                "gl-ES",
-                "hu-HU",
-                "it-IT",
-                "ja-JP",
-                "jbo",
-                "kab",
-                "ko-KR",
-                "lt-LT",
-                "nb-NO",
-                "nl-NL",
-                "oc",
-                "pl-PL",
-                "pt-BR",
-                "pt-PT",
-                "ru-RU",
-                "sk-SK",
-                "sl-SI",
-                "sv-SE",
-                "ta",
-                "th-TH",
-                "tr-TR",
-                "uk-UA",
-                "vi-VN",
-                "zh-Hans-CN",
-                "zh-Hant-TW"
-              ]
-            }
+            "typeCheck": true,
+            "exclude": []
           }
         }
       }
     },
-    "Sharebook-e2e": {
-      "root": "e2e/",
+    "sharebook-e2e": {
+      "root": "",
       "sourceRoot": "",
       "projectType": "application",
       "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "Sharebook:serve:e2e"
-          },
-          "configurations": {
-            "local": {
-              "protractorConfig": "e2e/local-protractor.conf.js"
-            }
+            "protractorConfig": "./protractor.conf.js",
+            "devServerTarget": "sharebook:serve"
           }
         },
         "lint": {
@@ -271,22 +182,20 @@
             "tsConfig": [
               "e2e/tsconfig.e2e.json"
             ],
-            "exclude": [
-              "**/.node_modules/**"
-            ]
+            "exclude": []
           }
         }
       }
     }
   },
-  "defaultProject": "Sharebook",
+  "defaultProject": "sharebook",
   "schematics": {
     "@schematics/angular:component": {
-      "prefix": "app",
+      "prefix": "ngx",
       "style": "scss"
     },
     "@schematics/angular:directive": {
-      "prefix": "app"
+      "prefix": "ngx"
     }
   }
 }

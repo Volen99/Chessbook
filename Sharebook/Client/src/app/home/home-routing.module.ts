@@ -5,7 +5,8 @@ import { NgModule } from '@angular/core';
 const routes: Routes = [
   {
     path: '',
-    component: HomePageComponent
+    component: HomePageComponent,
+    loadChildren: () => import('../shared/timeline/timeline.module').then(m => m.TimelineModule),
   }
 ];
 

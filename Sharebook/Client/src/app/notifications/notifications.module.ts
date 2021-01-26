@@ -6,7 +6,7 @@ import { SidebarColumnModule } from '../shared/sidebar-column/sidebar-column.mod
 import { NotificationsRoutingModule } from './notifications-routing.module';
 import { NotificationsComponent } from './notifications.component';
 import { MentionsComponent } from './mentions/mentions.component';
-import { SharedMainModule } from '../shared/shared-main';
+import {SharedMainModule} from "../shared/shared-main/shared-main.module";
 
 @NgModule({
   declarations: [

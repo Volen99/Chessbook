@@ -1,2 +1,34 @@
 @import "src/sass/application";
 
+.r-16l9doz {
+  height: auto;
+}
+
+
+.r-phn5h3 {
+  width: 49px;
+}
+
+
+// I put this, coz when I use flex-basis: 49px with
+// <app-profile-picture49x49> it does not work :(
+.min-width-49px {
+  min-width: 49px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

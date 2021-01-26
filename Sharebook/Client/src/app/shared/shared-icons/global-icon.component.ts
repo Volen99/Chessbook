@@ -1,27 +1,28 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit } from '@angular/core';
-import { HooksService } from '../../core/plugins/hooks.service';
+import {HooksService} from "../../@core/plugins";
 
 const icons = {
   // misc icons
-  npm: require('!!raw-loader?!../../../assets/images/misc/npm.svg').default,
-  markdown: require('!!raw-loader?!../../../assets/images/misc/markdown.svg').default,
-  language: require('!!raw-loader?!../../../assets/images/misc/language.svg').default,
-  'video-lang': require('!!raw-loader?!../../../assets/images/misc/video-lang.svg').default,
-  support: require('!!raw-loader?!../../../assets/images/misc/support.svg').default,
-  'peertube-x': require('!!raw-loader?!../../../assets/images/misc/peertube-x.svg').default,
-  robot: require('!!raw-loader?!../../../assets/images/misc/miscellaneous-services.svg').default, // material ui
-  videos: require('!!raw-loader?!../../../assets/images/misc/video-library.svg').default, // material ui
-  history: require('!!raw-loader?!../../../assets/images/misc/history.svg').default, // material ui
-  subscriptions: require('!!raw-loader?!../../../assets/images/misc/subscriptions.svg').default, // material ui
-  'playlist-add': require('!!raw-loader?!../../../assets/images/misc/playlist-add.svg').default, // material ui
-  follower: require('!!raw-loader?!../../../assets/images/misc/account-arrow-left.svg').default, // material ui
-  following: require('!!raw-loader?!../../../assets/images/misc/account-arrow-right.svg').default, // material ui
+  // npm: require('!!raw-loader?!../../../assets/images/misc/npm.svg').default,
+  // markdown: require('!!raw-loader?!../../../assets/images/misc/markdown.svg').default,
+  // language: require('!!raw-loader?!../../../assets/images/misc/language.svg').default,
+  // 'video-lang': require('!!raw-loader?!../../../assets/images/misc/video-lang.svg').default,
+  // support: require('!!raw-loader?!../../../assets/images/misc/support.svg').default,
+  // 'peertube-x': require('!!raw-loader?!../../../assets/images/misc/peertube-x.svg').default,
+  // robot: require('!!raw-loader?!../../../assets/images/misc/miscellaneous-services.svg').default, // material ui
+  // videos: require('!!raw-loader?!../../../assets/images/misc/video-library.svg').default, // material ui
+  // history: require('!!raw-loader?!../../../assets/images/misc/history.svg').default, // material ui
+  // subscriptions: require('!!raw-loader?!../../../assets/images/misc/subscriptions.svg').default, // material ui
+  // 'playlist-add': require('!!raw-loader?!../../../assets/images/misc/playlist-add.svg').default, // material ui
+  // follower: require('!!raw-loader?!../../../assets/images/misc/account-arrow-left.svg').default, // material ui
+  // following: require('!!raw-loader?!../../../assets/images/misc/account-arrow-right.svg').default, // material ui
 
   // custom icons
   addPhoto: require('!!raw-loader?!../../../assets/images/feather/addPhoto.svg').default,
   addPoll: require('!!raw-loader?!../../../assets/images/feather/addPoll.svg').default,
   addEmoji: require('!!raw-loader?!../../../assets/images/feather/addEmoji.svg').default,
   angleArrowPointingToRight: require('!!raw-loader?!../../../assets/images/feather/angleArrowPointingToRight.svg').default,
+  bell: require('!!raw-loader?!../../../assets/images/feather/bell.svg').default,
   backArrow: require('!!raw-loader?!../../../assets/images/feather/backArrow.svg').default,
   cog: require('!!raw-loader?!../../../assets/images/feather/cog.svg').default,
   check: require('!!raw-loader?!../../../assets/images/feather/check.svg').default,
@@ -40,7 +41,6 @@ const icons = {
   info: require('!!raw-loader?!../../../assets/images/feather/info.svg').default,
   logo: require('!!raw-loader?!../../../assets/images/feather/logo.svg').default,
   lessThanSpace: require('!!raw-loader?!../../../assets/images/feather/lessThanSpace.svg').default,
-  notifications: require('!!raw-loader?!../../../assets/images/feather/notifications.svg').default,
   more: require('!!raw-loader?!../../../assets/images/feather/more.svg').default,
   messages: require('!!raw-loader?!../../../assets/images/feather/messages.svg').default,
   profile: require('!!raw-loader?!../../../assets/images/feather/profile.svg').default,
@@ -68,7 +68,7 @@ const icons = {
   'cloud-download': require('!!raw-loader?!../../../assets/images/feather/cloud-download.svg').default,
   clock: require('!!raw-loader?!../../../assets/images/feather/clock.svg').default,
   delete: require('!!raw-loader?!../../../assets/images/feather/delete.svg').default,
-  bell: require('!!raw-loader?!../../../assets/images/feather/bell.svg').default,
+  /*bell: require('!!raw-loader?!../../../assets/images/feather/bell.svg').default,*/
   'sign-out': require('!!raw-loader?!../../../assets/images/feather/log-out.svg').default,
   'sign-in': require('!!raw-loader?!../../../assets/images/feather/log-in.svg').default,
   download: require('!!raw-loader?!../../../assets/images/feather/download.svg').default,

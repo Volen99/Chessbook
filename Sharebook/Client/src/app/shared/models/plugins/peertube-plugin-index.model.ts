@@ -1,14 +1,14 @@
 export interface SharebookPluginIndex {
-  npmName: string
-  description: string
-  homepage: string
-  createdAt: Date
-  updatedAt: Date
+  npmName: string;
+  description: string;
+  homepage: string;
+  createdAt: Date;
+  updatedAt: Date;
 
-  popularity: number
+  popularity: number;
 
-  latestVersion: string
+  latestVersion: string;
 
-  name?: string
-  installed?: boolean
+  name?: string;
+  installed?: boolean;
 }
