@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit } from '@angular/core';
-import {HooksService} from "../../@core/plugins";
+import {HooksService} from "../../core/plugins";
 
 const icons = {
   // misc icons
@@ -34,6 +34,7 @@ const icons = {
   colorPickerPurple: require('!!raw-loader?!../../../assets/images/feather/colorPickerPurple.svg').default,
   colorPickerOrange: require('!!raw-loader?!../../../assets/images/feather/colorPickerOrange.svg').default,
   colorPickerGreen: require('!!raw-loader?!../../../assets/images/feather/colorPickerGreen.svg').default,
+  dislike: require('!!raw-loader?!../../../assets/images/feather/dislike.svg').default,
   explore: require('!!raw-loader?!../../../assets/images/feather/explore.svg').default,
   earthSouthAmerica: require('!!raw-loader?!../../../assets/images/feather/earthSouthAmerica.svg').default,
   flag: require('!!raw-loader?!../../../assets/images/feather/flag.svg').default,
@@ -62,7 +63,6 @@ const icons = {
   globe: require('!!raw-loader?!../../../assets/images/feather/globe.svg').default,
   'recently-added': require('!!raw-loader?!../../../assets/images/feather/recently-added.svg').default,
   trending: require('!!raw-loader?!../../../assets/images/feather/trending.svg').default,
-  dislike: require('!!raw-loader?!../../../assets/images/feather/dislike.svg').default,
   like: require('!!raw-loader?!../../../assets/images/feather/like.svg').default,
   no: require('!!raw-loader?!../../../assets/images/feather/no.svg').default,
   'cloud-download': require('!!raw-loader?!../../../assets/images/feather/cloud-download.svg').default,

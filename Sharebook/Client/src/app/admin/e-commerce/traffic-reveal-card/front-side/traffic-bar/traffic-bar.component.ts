@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Comparison } from '../../../../../@core/interfaces/ecommerce/traffic-list';
+import { Comparison } from '../../../../../core/interfaces/ecommerce/traffic-list';
 
 @Component({
   selector: 'ngx-traffic-bar',

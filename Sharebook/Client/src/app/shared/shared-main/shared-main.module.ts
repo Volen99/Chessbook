@@ -6,6 +6,10 @@ import {BootstrapToggleDirective} from "./angular/directives/bootstrap-toggle.di
 import {PostComponent} from "./components/post/post.component";
 import {ProfilePicture49x49Component} from "./components/profile-picture-49x49/profile-picture49x49.component";
 import {StaticHeaderComponent} from "./components/static-header/static-header.component";
+import {NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
+import {FromNowPipe} from "./angular/pipes/from-now.pipe";
+import {DateToggleComponent} from "./date";
+import {InfiniteScrollerDirective} from "./angular/directives/infinite-scroller.directive";
 // import { SharedModule as PrimeSharedModule } from 'primeng/api';
 // import { ClipboardModule } from '@angular/cdk/clipboard';
 // import { HttpClientModule } from '@angular/common/http';
@@ -15,7 +19,7 @@ import {StaticHeaderComponent} from "./components/static-header/static-header.co
 //   BytesPipe,
 //   DurationFormatterPipe,
 //   FromNowPipe,
-//   InfiniteScrollerDirective,
+//   InfiniteScrollerDirective
 //   NumberFormatterPipe,
 //   SharebookTemplateDirective
 // } from './angular';
@@ -64,7 +68,7 @@ import {StaticHeaderComponent} from "./components/static-header/static-header.co
     // NgbModalModule,
     // NgbPopoverModule,
     // NgbNavModule,
-    // NgbTooltipModule,
+    NgbTooltipModule,
     // NgbCollapseModule,
     //
     // ClipboardModule,
@@ -78,12 +82,12 @@ import {StaticHeaderComponent} from "./components/static-header/static-header.co
     // VideoAvatarChannelComponent,
     // ActorAvatarInfoComponent,
     //
-    // FromNowPipe,
+    FromNowPipe,
     // NumberFormatterPipe,
     // BytesPipe,
     // DurationFormatterPipe,
     //
-    // InfiniteScrollerDirective,
+     InfiniteScrollerDirective,
     // SharebookTemplateDirective,
     //
     // ActionDropdownComponent,
@@ -91,7 +95,7 @@ import {StaticHeaderComponent} from "./components/static-header/static-header.co
     // DeleteButtonComponent,
     // EditButtonComponent,
     //
-    // DateToggleComponent,
+    DateToggleComponent,
     //
     // FeedComponent,
     //
@@ -129,7 +133,7 @@ import {StaticHeaderComponent} from "./components/static-header/static-header.co
     // NgbModalModule,
     // NgbPopoverModule,
     // NgbNavModule,
-    // NgbTooltipModule,
+    NgbTooltipModule,
     // NgbCollapseModule,
     //
     // ClipboardModule,
@@ -139,12 +143,12 @@ import {StaticHeaderComponent} from "./components/static-header/static-header.co
     // VideoAvatarChannelComponent,
     // ActorAvatarInfoComponent,
     //
-    // FromNowPipe,
+    FromNowPipe,
     // BytesPipe,
     // NumberFormatterPipe,
     // DurationFormatterPipe,
     //
-    // InfiniteScrollerDirective,
+     InfiniteScrollerDirective,
     // SharebookTemplateDirective,
     //
     // ActionDropdownComponent,
@@ -152,7 +156,7 @@ import {StaticHeaderComponent} from "./components/static-header/static-header.co
     // DeleteButtonComponent,
     // EditButtonComponent,
     //
-    // DateToggleComponent,
+    DateToggleComponent,
     //
     // FeedComponent,
     //
@@ -182,7 +186,7 @@ import {StaticHeaderComponent} from "./components/static-header/static-header.co
   providers: [
     // DatePipe,
     //
-    // FromNowPipe,
+    FromNowPipe,
     //
     // AUTH_INTERCEPTOR_PROVIDER,
     //

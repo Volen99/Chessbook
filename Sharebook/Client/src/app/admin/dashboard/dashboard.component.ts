@@ -1,7 +1,7 @@
 import {Component, OnDestroy} from '@angular/core';
 import { takeWhile } from 'rxjs/operators' ;
-import { SolarData, SolarEnergyStatistics } from '../../@core/interfaces/iot/solar';
-import { Device, DevicesData } from '../../@core/interfaces/iot/devices';
+import { SolarData, SolarEnergyStatistics } from '../../core/interfaces/iot/solar';
+import { Device, DevicesData } from '../../core/interfaces/iot/devices';
 
 @Component({
   selector: 'ngx-dashboard',

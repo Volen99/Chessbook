@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AnalyticsService} from './@core/utils';
-import {InitUserService} from './@theme/services/init-user.service';
+import {AnalyticsService} from './core/utils';
+import {InitUserService} from './theme/services/init-user.service';
 import {Subject} from 'rxjs';
 import {filter, takeUntil} from 'rxjs/operators';
 import {NavigationEnd, NavigationStart, Router} from "@angular/router";

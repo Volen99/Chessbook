@@ -7,8 +7,8 @@
 import { delay, takeWhile } from 'rxjs/operators';
 import { AfterViewInit, Component, Input, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
-import { LayoutService } from '../../../../@core/utils';
-import { OutlineData } from '../../../../@core/interfaces/ecommerce/visitors-analytics';
+import { LayoutService } from '../../../../core/utils';
+import { OutlineData } from '../../../../core/interfaces/ecommerce/visitors-analytics';
 
 @Component({
   selector: 'ngx-visitors-analytics-chart',

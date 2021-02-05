@@ -116,7 +116,5 @@
 
             return File(photoContent, contentType: "image/png");
         }
-
-
     }
 }

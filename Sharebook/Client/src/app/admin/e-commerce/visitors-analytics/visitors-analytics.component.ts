@@ -7,7 +7,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { NbThemeService } from '@nebular/theme';
-import { OutlineData, VisitorsAnalyticsData } from '../../../@core/interfaces/ecommerce/visitors-analytics';
+import { OutlineData, VisitorsAnalyticsData } from '../../../core/interfaces/ecommerce/visitors-analytics';
 import { forkJoin } from 'rxjs';
 
 

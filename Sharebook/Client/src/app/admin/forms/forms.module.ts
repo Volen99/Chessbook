@@ -17,7 +17,7 @@ import {
   NbUserModule,
 } from '@nebular/theme';
 
-import { ThemeModule } from '../../@theme/theme.module';
+import { ThemeModule } from '../../theme/theme.module';
 import { FormsRoutingModule } from './forms-routing.module';
 import { FormsComponent } from './forms.component';
 import { FormInputsComponent } from './form-inputs/form-inputs.component';

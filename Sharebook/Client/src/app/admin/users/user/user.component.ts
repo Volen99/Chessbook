@@ -8,10 +8,10 @@ import { takeUntil } from 'rxjs/operators';
 
 import { NbToastrService } from '@nebular/theme';
 
-import { UserData, User } from '../../../@core/interfaces/common/users';
-import { EMAIL_PATTERN, NUMBERS_PATTERN } from '../../../@auth/components';
+import { UserData, User } from '../../../core/interfaces/common/users';
+import { EMAIL_PATTERN, NUMBERS_PATTERN } from '../../../auth/components';
 import {NbAuthOAuth2JWTToken, NbTokenService} from '@nebular/auth';
-import {UserStore} from '../../../@core/stores/user.store';
+import {UserStore} from '../../../core/stores/user.store';
 
 export enum UserFormMode {
   VIEW = 'View',

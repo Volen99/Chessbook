@@ -3,9 +3,9 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserFormMode} from "../admin/users/user/user.component";
 import {takeUntil} from "rxjs/operators";
-import {User, UserData} from "../@core/interfaces/common/users";
+import {User, UserData} from "../core/interfaces/common/users";
 import {NbTokenService} from "@nebular/auth";
-import {UserStore} from "../@core/stores/user.store";
+import {UserStore} from "../core/stores/user.store";
 import {NbToastrService} from "@nebular/theme";
 import {FormBuilder} from "@angular/forms";
 import {Subject} from "rxjs/Subject";
@@ -27,16 +27,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   public location = location;
 
   ngOnInit() {
+    this.loadUserData();
   }
 
   ngOnDestroy() {
-    this.loadUserData();
   }
 
   public profileCurrent: User;
 
   loadUserData() {
-    debugger
     const username = this.route.snapshot.params['username'];
     if (username) {
       const currentUserId = this.userStore.getUser().id;
@@ -45,13 +44,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   loadUser(username: string) {
-    const loadUser = this.usersService.get(username);
-    loadUser
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((user) => {
-        this.profileCurrent = user;
-        // this is a place for value changes handling
-        // this.userForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {   });
-      });
+    // const loadUser = this.usersService.get(username);
+    // loadUser
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe((user) => {
+    //     this.profileCurrent = user;
+    //     // this is a place for value changes handling
+    //     // this.userForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {   });
+    //   });
   }
 }

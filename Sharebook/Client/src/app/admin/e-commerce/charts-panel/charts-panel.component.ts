@@ -4,8 +4,8 @@ import { takeWhile } from 'rxjs/operators';
 import { ChartPanelHeaderComponent } from './chart-panel-header/chart-panel-header.component';
 import { OrdersChartComponent } from './charts/orders-chart.component';
 import { ProfitChartComponent } from './charts/profit-chart.component';
-import { ChartData, ChartSummary } from '../../../@core/interfaces/common/chart';
-import { OrdersProfitChartData } from '../../../@core/interfaces/ecommerce/orders-profit-chart';
+import { ChartData, ChartSummary } from '../../../core/interfaces/common/chart';
+import { OrdersProfitChartData } from '../../../core/interfaces/ecommerce/orders-profit-chart';
 
 @Component({
   selector: 'ngx-ecommerce-charts',

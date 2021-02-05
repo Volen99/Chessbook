@@ -6,8 +6,8 @@
 
 import { Component, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
-import { TemperatureHumidityData } from '../../../@core/interfaces/iot/temperature-humidity';
-import { DeviceParameter, Device } from '../../../@core/interfaces/iot/devices';
+import { TemperatureHumidityData } from '../../../core/interfaces/iot/temperature-humidity';
+import { DeviceParameter, Device } from '../../../core/interfaces/iot/devices';
 import { takeWhile } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 

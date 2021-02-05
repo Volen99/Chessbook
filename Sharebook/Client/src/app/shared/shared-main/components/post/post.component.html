@@ -26,18 +26,16 @@
                                                                 <div dir="auto"
                                                                      class="css-901oao css-bfa6kz r-1fmj7o5 r-1qd0xha r-a023e6 r-b88u0q r-ad9z0x r-bcqeeo r-3s2u2q r-qvutc0">
                                                                     <span class="css-901oao css-16my406 r-poiln3 r-bcqeeo r-qvutc0"><span
-                                                                            class="css-901oao css-16my406 r-poiln3 r-bcqeeo r-qvutc0">WorldFeedTest</span></span>
+                                                                            class="css-901oao css-16my406 r-poiln3 r-bcqeeo r-qvutc0">{{this.post.user.login}}</span></span>
                                                                 </div>
-                                                                <div dir="auto"
-                                                                     class="css-901oao r-1fmj7o5 r-18u37iz r-1q142lx r-1qd0xha r-a023e6 r-16dba41 r-ad9z0x r-bcqeeo r-qvutc0">
-                                                                    <app-global-icon
-                                                                            iconName="protected"></app-global-icon>
+                                                                <div *ngIf="this.post.user?.protected" dir="auto" class="css-901oao r-1fmj7o5 r-18u37iz r-1q142lx r-1qd0xha r-a023e6 r-16dba41 r-ad9z0x r-bcqeeo r-qvutc0">
+                                                                    <app-global-icon iconName="protected"></app-global-icon>
                                                                 </div>
                                                             </div>
                                                             <div class="css-1dbjc4n r-18u37iz r-1wbh5a2 r-1f6r7vd">
                                                                 <div dir="ltr"
                                                                      class="css-901oao css-bfa6kz r-9ilb82 r-18u37iz r-1qd0xha r-a023e6 r-16dba41 r-ad9z0x r-bcqeeo r-qvutc0">
-                                                                    <span class="css-901oao css-16my406 r-poiln3 r-bcqeeo r-qvutc0">@WorldFeedTest12</span>
+                                                                    <span class="css-901oao css-16my406 r-poiln3 r-bcqeeo r-qvutc0">{{this.post.user.screenName}}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -49,7 +47,7 @@
                                                     <a href="/WorldFeedTest12/status/1349046021976944642" dir="auto"
                                                        aria-label="Jan 12" role="link" data-focusable="true"
                                                        class="css-4rbku5 css-18t94o4 css-901oao r-9ilb82 r-1loqt21 r-1q142lx r-1qd0xha r-a023e6 r-16dba41 r-ad9z0x r-bcqeeo r-3s2u2q r-qvutc0">
-                                                        <time datetime="2021-01-12T17:30:10.000Z">Jan 12</time>
+                                                        <time datetime="2021-01-12T17:30:10.000Z"><app-date-toggle [date]="post.createdAt"></app-date-toggle></time>
                                                     </a></div>
                                                 <div class="css-1dbjc4n r-18u37iz r-1h0z5md r-1joea0r">
                                                     <div aria-expanded="false" aria-haspopup="true" aria-label="More"
@@ -105,9 +103,9 @@
                                                                          data-testid="tweetPhoto"
                                                                          style="margin-bottom: 0px; margin-top: 0px;">
                                                                         <div class="css-1dbjc4n r-1niwhzg r-vvn4in r-u6sd8q r-4gszlv r-1p0dtai r-1pi2tsx r-1d2f490 r-u8s1d r-zchlnj r-ipm5af r-13qz1uu r-1wyyakw"
-                                                                             style="background-image: url('https://pbs.twimg.com/media/Em9dWMeW4AAcmiU?format=jpg&amp;name=small');"></div>
+                                                                             [style.background-image]="'url(' + this.mediaUrl +')'"></div>
                                                                         <img alt="Image" draggable="true"
-                                                                             src="https://pbs.twimg.com/media/Em9dWMeW4AAcmiU?format=jpg&amp;name=small"
+                                                                             [src]="this.mediaUrl"
                                                                              class="css-9pa8cd"></div>
                                                                 </div>
                                                             </div>
@@ -123,8 +121,10 @@
                                                      tabindex="0"
                                                      class="css-18t94o4 css-1dbjc4n r-1777fci r-11cpok1 r-1ny4l3l r-bztko3 r-lrvibr"
                                                      data-testid="reply">
-                                                    <div dir="ltr"
-                                                         class="css-901oao r-1awozwy r-9ilb82 r-6koalj r-1qd0xha r-a023e6 r-16dba41 r-1h0z5md r-ad9z0x r-bcqeeo r-o7ynqc r-clp7b1 r-3s2u2q r-qvutc0">
+                                                    <div dir="ltr" class="css-901oao r-1awozwy r-9ilb82 r-6koalj r-1qd0xha r-a023e6 r-16dba41 r-1h0z5md r-ad9z0x r-bcqeeo r-o7ynqc r-clp7b1 r-3s2u2q r-qvutc0"
+                                                         [ngClass]="{'r-9ilb82': !this.isCommentIconHovered, 'r-13gxpu9': this.isCommentIconHovered}"
+                                                         (mouseenter)="this.handleCommentIconHover($event)"
+                                                         (mouseleave)="this.handleCommentIconHover($event)">
                                                         <div class="css-1dbjc4n r-xoduu5">
                                                             <div class="css-1dbjc4n r-1niwhzg r-sdzlij r-1p0dtai r-xoduu5 r-1d2f490 r-xf4iuw r-1ny4l3l r-u8s1d r-zchlnj r-ipm5af r-o7ynqc r-6416eg"></div>
                                                             <app-global-icon iconName="comment"></app-global-icon>
@@ -141,8 +141,10 @@
                                                      data-focusable="true" tabindex="0"
                                                      class="css-18t94o4 css-1dbjc4n r-1777fci r-11cpok1 r-1ny4l3l r-bztko3 r-lrvibr"
                                                      data-testid="retweet">
-                                                    <div dir="ltr"
-                                                         class="css-901oao r-1awozwy r-9ilb82 r-6koalj r-1qd0xha r-a023e6 r-16dba41 r-1h0z5md r-ad9z0x r-bcqeeo r-o7ynqc r-clp7b1 r-3s2u2q r-qvutc0">
+                                                    <div dir="ltr" class="css-901oao r-1awozwy r-9ilb82 r-6koalj r-1qd0xha r-a023e6 r-16dba41 r-1h0z5md r-ad9z0x r-bcqeeo r-o7ynqc r-clp7b1 r-3s2u2q r-qvutc0"
+                                                         [ngClass]="{'r-9ilb82': !this.isRetweetIconHovered, 'r-nw8l94': this.isRetweetIconHovered}"
+                                                         (mouseenter)="this.handleRetweetIconHover($event)"
+                                                         (mouseleave)="this.handleRetweetIconHover($event)">
                                                         <div class="css-1dbjc4n r-xoduu5">
                                                             <div class="css-1dbjc4n r-1niwhzg r-sdzlij r-1p0dtai r-xoduu5 r-1d2f490 r-xf4iuw r-1ny4l3l r-u8s1d r-zchlnj r-ipm5af r-o7ynqc r-6416eg"></div>
                                                             <app-global-icon iconName="retweet"></app-global-icon>
@@ -153,19 +155,44 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="css-1dbjc4n r-18u37iz r-1h0z5md">
-                                                <div aria-label="0 Likes. Like" role="button" data-focusable="true"
+                                            <div class="css-1dbjc4n r-18u37iz r-1h0z5md" (click)="this.setLike()"
+                                                 [attr.aria-label]="tooltipLike" [ngbTooltip]="this.tooltipLike" placement="auto" [openDelay]="700">
+                                                <div [attr.aria-label]="(this.post.favoriteCount ? this.post.favoriteCount : 0) + ' Likes. Like'" role="button" data-focusable="true"
                                                      tabindex="0"
                                                      class="css-18t94o4 css-1dbjc4n r-1777fci r-11cpok1 r-1ny4l3l r-bztko3 r-lrvibr"
                                                      data-testid="like">
-                                                    <div dir="ltr"
-                                                         class="css-901oao r-1awozwy r-9ilb82 r-6koalj r-1qd0xha r-a023e6 r-16dba41 r-1h0z5md r-ad9z0x r-bcqeeo r-o7ynqc r-clp7b1 r-3s2u2q r-qvutc0">
+                                                    <div dir="ltr" class="css-901oao r-1awozwy r-9ilb82 r-6koalj r-1qd0xha r-a023e6 r-16dba41 r-1h0z5md r-ad9z0x r-bcqeeo r-o7ynqc r-clp7b1 r-3s2u2q r-qvutc0"
+                                                         [ngClass]="{'r-9ilb82': !this.isLikeIconHovered, 'r-daml9f': this.isLikeIconHovered}"
+                                                         (mouseenter)="this.handleLikeIconHover($event)"
+                                                         (mouseleave)="this.handleLikeIconHover($event)">
                                                         <div class="css-1dbjc4n r-xoduu5">
                                                             <div class="css-1dbjc4n r-1niwhzg r-sdzlij r-1p0dtai r-xoduu5 r-1d2f490 r-xf4iuw r-1ny4l3l r-u8s1d r-zchlnj r-ipm5af r-o7ynqc r-6416eg"></div>
                                                             <app-global-icon iconName="like"></app-global-icon>
                                                         </div>
                                                         <div class="css-1dbjc4n r-xoduu5 r-1udh08x"><span
                                                                 class="css-901oao css-16my406 r-poiln3 r-n6v787 r-1sf4r6n r-1j6idkz r-utggzx r-d3hbe1 r-1wgg2b2 r-axxi2z r-qvutc0"></span>
+                                                            <span *ngIf="this.post.favoriteCount !== 0" class="css-901oao css-16my406 r-poiln3 r-bcqeeo r-qvutc0" style="padding-left: 10px">{{this.post.favoriteCount}}</span> <!--style by mi kk-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="css-1dbjc4n r-18u37iz r-1h0z5md" (click)="this.setDislike()"
+                                                 [attr.aria-label]="tooltipDislike" [ngbTooltip]="this.tooltipDislike" placement="auto" [openDelay]="700">
+                                                <div [attr.aria-label]="this.post.dislikeCount ? this.post.dislikeCount : 0 + ' Dislikes. Dislike'" role="button" data-focusable="true"
+                                                     tabindex="0"
+                                                     class="css-18t94o4 css-1dbjc4n r-1777fci r-11cpok1 r-1ny4l3l r-bztko3 r-lrvibr"
+                                                     data-testid="dislike">
+                                                    <div dir="ltr" class="css-901oao r-1awozwy r-9ilb82 r-6koalj r-1qd0xha r-a023e6 r-16dba41 r-1h0z5md r-ad9z0x r-bcqeeo r-o7ynqc r-clp7b1 r-3s2u2q r-qvutc0"
+                                                         [ngClass]="{'r-9ilb82': !this.isAddToBookmarkIconHovered, 'dislike-hover': this.isAddToBookmarkIconHovered}"
+                                                         (mouseenter)="this.handleAddToBookmarkIconHover($event)"
+                                                         (mouseleave)="this.handleAddToBookmarkIconHover($event)">
+                                                        <div class="css-1dbjc4n r-xoduu5">
+                                                            <div class="css-1dbjc4n r-1niwhzg r-sdzlij r-1p0dtai r-xoduu5 r-1d2f490 r-xf4iuw r-1ny4l3l r-u8s1d r-zchlnj r-ipm5af r-o7ynqc r-6416eg"></div>
+                                                            <app-global-icon iconName="dislike"></app-global-icon>
+                                                        </div>
+                                                        <div class="css-1dbjc4n r-xoduu5 r-1udh08x"><span
+                                                                class="css-901oao css-16my406 r-poiln3 r-n6v787 r-1sf4r6n r-1j6idkz r-utggzx r-d3hbe1 r-1wgg2b2 r-axxi2z r-qvutc0"></span>
+                                                            <span *ngIf="this.post.dislikeCount !== 0" class="css-901oao css-16my406 r-poiln3 r-bcqeeo r-qvutc0" style="padding-left: 10px">{{this.post.dislikeCount}}</span>
                                                         </div>
                                                     </div>
                                                 </div>

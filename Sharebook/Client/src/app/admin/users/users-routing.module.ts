@@ -9,7 +9,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { UsersComponent } from './users.component';
 import { UserComponent } from './user/user.component';
-import { AdminGuard } from '../../@auth/admin.guard';
+import { AdminGuard } from '../../auth/admin.guard';
 
 const routes: Routes = [{
   path: '',

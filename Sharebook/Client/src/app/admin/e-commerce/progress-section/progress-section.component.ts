@@ -5,7 +5,7 @@
  */
 
 import { Component, OnDestroy } from '@angular/core';
-import { ProgressInfo, StatsProgressBarData } from '../../../@core/interfaces/ecommerce/stats-progress-bar';
+import { ProgressInfo, StatsProgressBarData } from '../../../core/interfaces/ecommerce/stats-progress-bar';
 import { takeWhile } from 'rxjs/operators';
 
 @Component({

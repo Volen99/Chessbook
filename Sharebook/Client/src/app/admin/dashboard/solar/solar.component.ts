@@ -1,7 +1,7 @@
 import { delay } from 'rxjs/operators';
 import { AfterViewInit, Component, Input, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
-import { SolarEnergyStatistics } from '../../../@core/interfaces/iot/solar';
+import { SolarEnergyStatistics } from '../../../core/interfaces/iot/solar';
 
 declare const echarts: any;
 

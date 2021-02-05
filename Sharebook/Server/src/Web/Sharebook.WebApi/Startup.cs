@@ -10,8 +10,11 @@
     using Newtonsoft.Json.Serialization;
 
     using Sharebook.Data;
+    using Sharebook.Services.Mapping;
     using Sharebook.Web.Api.Identity;
     using Sharebook.Web.Api.Setup;
+    using Sharebook.Web.Models;
+    using System.Reflection;
     using AutoMapperConfiguration = AutoMapper.Configuration;
 
     public class Startup
@@ -36,7 +39,7 @@
 
         protected void ConfigureMapping(AutoMapperConfiguration.MapperConfigurationExpression config)
         {
-            AutoMapperConfig.Configure(config);
+            AutoMapperConfigAdmin.Configure(config);
         }
 
         public virtual void ConfigureServices(IServiceCollection services)
@@ -66,6 +69,8 @@
 
         public void Configure(IApplicationBuilder app, IHostEnvironment env, IDataBaseInitializer dataBaseInitializer)
         {
+            AutoMapperConfig.RegisterMappings(typeof(SettingsDTO).GetTypeInfo().Assembly);
+
             if (dataBaseInitializer != null)
             {
                 dataBaseInitializer.Initialize();
@@ -102,7 +107,7 @@
         private void RegisterMapping()
         {
             var config = new AutoMapperConfiguration.MapperConfigurationExpression();
-            AutoMapperConfig.Configure(config);
+            AutoMapperConfigAdmin.Configure(config);
             ConfigureMapping(config);
             AutoMapper.Mapper.Initialize(config);
         }

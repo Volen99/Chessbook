@@ -1,3 +1,2 @@
-import { JobState } from '../app/shared/models';
 
-export type JobStateClient = JobState;
+export type JobStateClient = null;

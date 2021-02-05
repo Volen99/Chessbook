@@ -4,10 +4,14 @@
     using Microsoft.Extensions.DependencyInjection;
 
     using Sharebook.Data;
+    using Sharebook.Data.Common;
+    using Sharebook.Data.Common.Repositories;
     using Sharebook.Data.Models;
     using Sharebook.Data.Repositories;
     using Sharebook.Services;
     using Sharebook.Services.Data.Services;
+    using Sharebook.Services.Data.Services.Entities;
+    using Sharebook.Services.Data.Services.Upload;
 
     public static class ContainerExtension
     {
@@ -17,6 +21,12 @@
 
             services.AddScoped<IDataBaseInitializer, DataBaseInitializer>();
 
+            // Data repositories
+            services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddScoped<IDbQueryRunner, DbQueryRunner>();
+
+            // Application services
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ISettingsRepository, SettingsRepository>();
             services.AddTransient<IUserPhotoRepository, UserPhotoRepository>();
@@ -26,6 +36,9 @@
             services.AddTransient<IRoleRepository<Role>, RoleRepository>();
             services.AddTransient<IUserRoleRepository<UserRole>, UserRoleRepository>();
             services.AddTransient<IUserClaimRepository<UserClaim>, UserClaimRepository>();
+            services.AddTransient<IUploadService, UploadService>();
+            services.AddTransient<IMediaService, MediaService>();
+            services.AddTransient<IPostsService, PostsService>();
         }
     }
 }

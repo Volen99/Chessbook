@@ -24,11 +24,11 @@
             builder.Property(obj => obj.IsDeleted).HasDefaultValue(false);
 
 
-            builder.Property(obj => obj.AddressCity).HasColumnName("City");
-            builder.Property(obj => obj.AddressStreet).HasColumnName("Street");
-            builder.Property(obj => obj.AddressZipCode).HasColumnName("ZipCode");
-            builder.Property(obj => obj.AddressLat).HasColumnName("Lat");
-            builder.Property(obj => obj.AddressLng).HasColumnName("Lng");
+            //builder.Property(obj => obj.AddressCity).HasColumnName("City");
+            //builder.Property(obj => obj.AddressStreet).HasColumnName("Street");
+            //builder.Property(obj => obj.AddressZipCode).HasColumnName("ZipCode");
+            //builder.Property(obj => obj.AddressLat).HasColumnName("Lat");
+            //builder.Property(obj => obj.AddressLng).HasColumnName("Lng");
 
             builder
                 .HasOne(obj => obj.Photo)

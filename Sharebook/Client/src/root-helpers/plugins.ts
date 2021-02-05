@@ -9,7 +9,7 @@ import {
 import { ClientScript as ClientScriptModule } from '../types/client-script.model';
 import { importModule } from './utils';
 import {getHookType, internalRunHook} from "../app/shared/core-utils/plugins";
-import {ServerConfigPlugin} from "../app/@core/plugins";
+import {ServerConfigPlugin} from "../app/core/plugins";
 
 interface HookStructValue extends RegisterClientHookOptions {
   plugin: ServerConfigPlugin;

@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { PieChart, EarningData } from '../../../../@core/interfaces/ecommerce/earning';
+import { PieChart, EarningData } from '../../../../core/interfaces/ecommerce/earning';
 import { takeWhile } from 'rxjs/operators';
 
 @Component({

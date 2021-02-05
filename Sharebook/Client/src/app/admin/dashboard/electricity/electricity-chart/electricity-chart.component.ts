@@ -7,8 +7,8 @@
 import { delay, takeWhile } from 'rxjs/operators';
 import { AfterViewInit, Component, Input, OnDestroy, OnChanges } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
-import { LayoutService } from '../../../../@core/utils';
-import { ElectricityChart } from '../../../../@core/interfaces/iot/electricity';
+import { LayoutService } from '../../../../core/utils';
+import { ElectricityChart } from '../../../../core/interfaces/iot/electricity';
 
 @Component({
   selector: 'ngx-electricity-chart',

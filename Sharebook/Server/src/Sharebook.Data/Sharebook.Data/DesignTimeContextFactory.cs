@@ -19,15 +19,17 @@
             string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
             IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../Sharebook.Web.Api"))
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory()/*, "../Sharebook.Web.Api"*/))
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{environment}.json", optional: true)
                 .Build();
 
-            var connectionString = configuration.GetConnectionString("localDb");
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
 
             var builder = new DbContextOptionsBuilder<DataContext>();
-            builder.UseSqlServer(connectionString);
+            //builder.UseSqlServer(connectionString);
+
+            builder.UseSqlServer(connectionString, sqlServerOptionsAction: o => o.MigrationsAssembly("Sharebook.Data"));
 
             return new DataContext(builder.Options);
         }

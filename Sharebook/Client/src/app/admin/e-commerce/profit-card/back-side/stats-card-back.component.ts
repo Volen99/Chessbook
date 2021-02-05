@@ -5,7 +5,7 @@
  */
 
 import { Component, OnDestroy } from '@angular/core';
-import { StatsBarData } from '../../../../@core/interfaces/ecommerce/stats-bar';
+import { StatsBarData } from '../../../../core/interfaces/ecommerce/stats-bar';
 import { takeWhile } from 'rxjs/operators';
 
 @Component({

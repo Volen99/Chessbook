@@ -5,6 +5,7 @@
 
     public static class ClaimsPrincipalExtensions
     {
+        // This is so dope 🔥 31.01.2021, Sunday, 21:42 PM | [lyrics] Artik & Asti - Неделимы [LIETUVIŠKAI]
         public static int GetUserId(this ClaimsPrincipal principal)
         {
             if (principal == null)

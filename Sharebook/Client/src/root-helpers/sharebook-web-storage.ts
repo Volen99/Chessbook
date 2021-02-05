@@ -1,4 +1,5 @@
-// Thanks: https://github.com/capaj/localstorage-polyfill
+// Thanks: https://github.com/capaj/localstorage-polyfill ♥
+
 const valuesMap = new Map();
 
 function proxify(instance: MemoryStorage) {
@@ -63,30 +64,30 @@ class MemoryStorage {
 }
 
 let sharebookLocalStorage: Storage;
-let peertubeSessionStorage: Storage;
+let sharebookSessionStorage: Storage;
 
 function reinitStorage() {
   const instanceLocalStorage = new MemoryStorage();
   const instanceSessionStorage = new MemoryStorage();
 
   sharebookLocalStorage = proxify(instanceLocalStorage);
-  peertubeSessionStorage = proxify(instanceSessionStorage);
+  sharebookSessionStorage = proxify(instanceSessionStorage);
 }
 
 try {
   sharebookLocalStorage = localStorage;
-  peertubeSessionStorage = sessionStorage;
+  sharebookSessionStorage = sessionStorage;
 } catch (err) {
   // support Firefox and other browsers using an exception rather than null
   reinitStorage();
 }
 
 // support Brave and other browsers using null rather than an exception
-if (sharebookLocalStorage === null || peertubeSessionStorage === null) {
+if (sharebookLocalStorage === null || sharebookSessionStorage === null) {
   reinitStorage();
 }
 
 export {
   sharebookLocalStorage,
-  peertubeSessionStorage,
+  sharebookSessionStorage,
 };

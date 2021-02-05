@@ -7,7 +7,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
-import { TrafficChartData } from '../../../@core/interfaces/iot/traffic-chart';
+import { TrafficChartData } from '../../../core/interfaces/iot/traffic-chart';
 import { TrafficChartComponent } from './traffic-chart.component';
 
 @Component({

@@ -5,8 +5,8 @@
  */
 
 import { Component, OnDestroy } from '@angular/core';
-import { TrafficListItem, TrafficListData } from '../../../@core/interfaces/ecommerce/traffic-list';
-import { TrafficBar } from '../../../@core/interfaces/ecommerce/traffic-bar';
+import { TrafficListItem, TrafficListData } from '../../../core/interfaces/ecommerce/traffic-list';
+import { TrafficBar } from '../../../core/interfaces/ecommerce/traffic-bar';
 import { takeWhile } from 'rxjs/operators';
 
 @Component({

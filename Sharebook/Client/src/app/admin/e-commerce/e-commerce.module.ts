@@ -1,9 +1,3 @@
-/*
- * Copyright (c) Akveo 2019. All Rights Reserved.
- * Licensed under the Single Application / Multi Application License.
- * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
- */
-
 import { NgModule } from '@angular/core';
 import {
   NbButtonModule,
@@ -19,7 +13,7 @@ import {
 import { NgxEchartsModule } from 'ngx-echarts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
-import { ThemeModule } from '../../@theme/theme.module';
+import { ThemeModule } from '../../theme/theme.module';
 import { ECommerceComponent } from './e-commerce.component';
 import { ProfitCardComponent } from './profit-card/profit-card.component';
 import { ECommerceChartsPanelComponent } from './charts-panel/charts-panel.component';

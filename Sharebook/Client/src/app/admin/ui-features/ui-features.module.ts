@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { NbAlertModule, NbCardModule, NbIconModule, NbPopoverModule, NbSearchModule } from '@nebular/theme';
 
-import { ThemeModule } from '../../@theme/theme.module';
+import { ThemeModule } from '../../theme/theme.module';
 import { UiFeaturesRoutingModule } from './ui-features-routing.module';
 import { UiFeaturesComponent } from './ui-features.component';
 import { GridComponent } from './grid/grid.component';

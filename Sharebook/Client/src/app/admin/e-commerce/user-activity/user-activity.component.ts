@@ -8,7 +8,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
 
-import { UserActivityData, UserActive } from '../../../@core/interfaces/ecommerce/user-activity';
+import { UserActivityData, UserActive } from '../../../core/interfaces/ecommerce/user-activity';
 
 @Component({
   selector: 'ngx-user-activity',

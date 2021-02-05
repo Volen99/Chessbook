@@ -21,7 +21,7 @@ import {
   NbTabsetModule,
 } from '@nebular/theme';
 
-import { ThemeModule } from '../../@theme/theme.module';
+import { ThemeModule } from '../../theme/theme.module';
 import { ExtraComponentsRoutingModule } from './extra-components-routing.module';
 
 // components

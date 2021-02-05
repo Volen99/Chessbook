@@ -6,6 +6,7 @@
 
     using Sharebook.Data.Models.System;
     using Sharebook.Data.Models;
+    using Sharebook.Data.Common.Repositories;
 
     public class UserPhotoRepository : BaseRepository<UserPhoto, DataContext>, IUserPhotoRepository
     {

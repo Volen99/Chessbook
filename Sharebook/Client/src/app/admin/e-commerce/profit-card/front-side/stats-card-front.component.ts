@@ -5,9 +5,9 @@
  */
 
 import { Component, OnDestroy } from '@angular/core';
-import { ProfitBarAnimationChartData } from '../../../../@core/interfaces/ecommerce/profit-bar-animation-chart';
+import { ProfitBarAnimationChartData } from '../../../../core/interfaces/ecommerce/profit-bar-animation-chart';
 import { takeWhile } from 'rxjs/operators';
-import { ChartData } from '../../../../@core/interfaces/common/chart';
+import { ChartData } from '../../../../core/interfaces/common/chart';
 
 @Component({
   selector: 'ngx-stats-card-front',

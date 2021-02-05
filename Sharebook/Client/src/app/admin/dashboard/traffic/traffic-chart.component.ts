@@ -7,7 +7,7 @@
 import { delay, takeWhile } from 'rxjs/operators';
 import { AfterViewInit, Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
-import { LayoutService } from '../../../@core/utils';
+import { LayoutService } from '../../../core/utils';
 
 @Component({
   selector: 'ngx-traffic-chart',

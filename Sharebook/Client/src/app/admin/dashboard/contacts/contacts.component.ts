@@ -7,7 +7,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
-import { PhoneData, Contact, RecentUser } from '../../../@core/interfaces/iot/phone';
+import { PhoneData, Contact, RecentUser } from '../../../core/interfaces/iot/phone';
 
 @Component({
   selector: 'ngx-contacts',

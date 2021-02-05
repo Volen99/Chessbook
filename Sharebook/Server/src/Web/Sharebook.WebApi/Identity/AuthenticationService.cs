@@ -23,7 +23,9 @@
         public async Task<AuthResult<Token>> Login(LoginDTO loginDto)
         {
             if (loginDto == null || string.IsNullOrEmpty(loginDto.Email) || string.IsNullOrEmpty(loginDto.Password))
+            {
                 return AuthResult<Token>.UnvalidatedResult;
+            }
 
             var user = await userManager.FindByEmailAsync(loginDto.Email);
 
@@ -66,11 +68,18 @@
                 string.IsNullOrEmpty(signUpDto.Password) ||
                 string.IsNullOrEmpty(signUpDto.ConfirmPassword) ||
                 string.IsNullOrEmpty(signUpDto.FullName) ||
-                signUpDto.Password != signUpDto.ConfirmPassword
-            )
+                signUpDto.Password != signUpDto.ConfirmPassword )
+            {
                 return AuthResult<Token>.UnvalidatedResult;
+            }
 
-            var newUser = new TUser { Login = signUpDto.FullName, Email = signUpDto.Email };
+            var newUser = new TUser
+            {
+                Name = signUpDto.FullName,
+                ScreenName = "@" + signUpDto.FullName,
+                Email = signUpDto.Email,
+                Login = signUpDto.FullName, 
+            };
 
             var result = await userManager.CreateAsync(newUser, signUpDto.Password);
 

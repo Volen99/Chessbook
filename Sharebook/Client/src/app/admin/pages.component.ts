@@ -3,7 +3,7 @@ import { takeWhile } from 'rxjs/operators';
 import { NbTokenService } from '@nebular/auth';
 import { NbMenuItem } from '@nebular/theme';
 import { PagesMenu } from './pages-menu';
-import { InitUserService } from '../@theme/services/init-user.service';
+import { InitUserService } from '../theme/services/init-user.service';
 
 @Component({
   selector: 'ngx-pages',

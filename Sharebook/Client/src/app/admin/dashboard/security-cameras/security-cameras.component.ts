@@ -5,7 +5,7 @@
  */
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Camera, SecurityCamerasData } from '../../../@core/interfaces/iot/security-cameras';
+import { Camera, SecurityCamerasData } from '../../../core/interfaces/iot/security-cameras';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { NbComponentSize, NbThemeService, NbMediaBreakpointsService } from '@nebular/theme';
