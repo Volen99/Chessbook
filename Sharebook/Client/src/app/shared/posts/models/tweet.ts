@@ -2,7 +2,7 @@
 import {ICoordinates} from "./properties/ICoordinates";
 import {IPlace} from "./properties/IPlace";
 import {IOEmbedTweet} from "./properties/OEmbed-tweet";
-import {User} from "../../../core/interfaces/common/users";
+import {IUser} from "../../../core/interfaces/common/users";
 import {ITweetEntities} from "../../post-object/Entities/interfaces/ITweetEntities";
 import {ITweetDTO} from "./DTO/tweet-dto";
 import {IMediaEntity} from "../../post-object/Entities/interfaces/IMediaEntity";
@@ -65,9 +65,9 @@ export interface IPost extends ITweetIdentifier {
   inReplyToScreenName: string;
 
   // User who created the Tweet
-  createdBy: User;
+  createdBy: IUser;
 
-  // Details the Tweet ID of the user's own retweet (if existent) of this Tweet.
+  // Details the Tweet ID of the users's own retweet (if existent) of this Tweet.
   currentUserRetweetIdentifier: ITweetIdentifier;
 
   // Ids of the users who contributed in the Tweet
@@ -114,7 +114,7 @@ export interface IPost extends ITweetIdentifier {
   // Countries in which the tweet will be withheld
   withheldInCountries: Iterable<string>;
 
-  // When present, indicates whether the content being withheld is the "status" or a "user."
+  // When present, indicates whether the content being withheld is the "status" or a "users."
   withheldScope: string;
 
   // #endregion
@@ -162,6 +162,9 @@ export interface IPost extends ITweetIdentifier {
 
   // #endregion
 
+  blacklisted?: boolean;
+  blacklistedReason?: string;
+
   // #region Favorites
 
   // Favorites the tweet
@@ -172,7 +175,7 @@ export interface IPost extends ITweetIdentifier {
 
   // #endregion
 
-  // Retweet the current tweet from the authenticated user.
+  // Retweet the current tweet from the authenticated users.
   publishRetweetAsync(): Promise<IPost>;
 
   // Get the retweets of the current tweet

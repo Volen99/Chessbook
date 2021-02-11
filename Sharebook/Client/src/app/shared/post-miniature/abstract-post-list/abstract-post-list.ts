@@ -3,7 +3,7 @@ import {ComponentPaginationLight} from "../../../core/rest/component-pagination.
 import {PostSortField} from "../../posts/models/post-sort-field.type";
 import {Post} from "../../shared-main/post/post.model";
 import {Subject} from "rxjs/Subject";
-import {User} from "../../../core/interfaces/common/users";
+import {IUser} from "../../../core/interfaces/common/users";
 import {ActivatedRoute, Router} from "@angular/router";
 import {fromEvent, Observable, Subscription} from "rxjs";
 import {LocalStorageService} from "../../../core/wrappers/storage.service";
@@ -66,7 +66,7 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
   // Subjects are like EventEmitters: they maintain a registry of many listeners.
   onDataSubject = new Subject<any[]>();
 
-  userMiniature: User;
+  userMiniature: IUser;
 
 
   abstract getPostsObservable(page: number): Observable<{ data: Post[] }>;
@@ -264,8 +264,8 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
   //
   //   this.authService.userInformationLoaded
   //     .subscribe(() => {
-  //       const user = this.authService.getUser();
-  //       this.displayModerationBlock = user.hasRight(UserRight.SEE_ALL_VIDEOS);
+  //       const users = this.authService.getUser();
+  //       this.displayModerationBlock = users.hasRight(UserRight.SEE_ALL_VIDEOS);
   //     });
   // }
 

@@ -43,6 +43,10 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
+import {DisplayComponent} from "./components/display/display.component";
+import {ThemeRoutingModule} from "./theme-routing-module";
+import {SharedMainModule} from "../shared/shared-main/shared-main.module";
+import {SharedGlobalIconModule} from "../shared/shared-icons/shared-global-icon.module";
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -60,6 +64,7 @@ const NB_MODULES = [
   NbEvaIconsModule,
 ];
 const COMPONENTS = [
+  DisplayComponent,
   HeaderComponent,
   FooterComponent,
   SearchInputComponent,
@@ -78,7 +83,7 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, AuthModule, ...NB_MODULES],
+  imports: [CommonModule, ThemeRoutingModule, AuthModule, SharedMainModule, SharedGlobalIconModule, ...NB_MODULES],
   exports: [CommonModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })

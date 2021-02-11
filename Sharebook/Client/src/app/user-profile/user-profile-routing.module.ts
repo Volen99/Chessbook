@@ -38,7 +38,7 @@ const accountsRoutes: Routes = [
   //         },
   //         reuse: {
   //           enabled: true,
-  //           key: 'user-profile-videos-list'
+  //           key: 'users-profile-videos-list'
   //         }
   //       }
   //     },

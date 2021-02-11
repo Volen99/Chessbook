@@ -5,6 +5,7 @@
     using Sharebook.Data.Configuration;
     using Sharebook.Data.Configuration.System;
     using Sharebook.Data.Models;
+    using Sharebook.Data.Models.Comments;
     using Sharebook.Data.Models.Post;
     using Sharebook.Data.Models.Post.Entities;
     using Sharebook.Data.Models.System;
@@ -45,6 +46,8 @@
         public DbSet<Indices> Indices { get; set; }
 
         public DbSet<PostVote> PostVotes { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
 
 
 

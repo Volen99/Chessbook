@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserFormMode} from "../admin/users/user/user.component";
 import {takeUntil} from "rxjs/operators";
-import {User, UserData} from "../core/interfaces/common/users";
+import {IUser, UserData} from "../core/interfaces/common/users";
 import {NbTokenService} from "@nebular/auth";
 import {UserStore} from "../core/stores/user.store";
 import {NbToastrService} from "@nebular/theme";
@@ -33,7 +33,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
-  public profileCurrent: User;
+  public profileCurrent: IUser;
 
   loadUserData() {
     const username = this.route.snapshot.params['username'];
@@ -47,8 +47,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     // const loadUser = this.usersService.get(username);
     // loadUser
     //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe((user) => {
-    //     this.profileCurrent = user;
+    //   .subscribe((users) => {
+    //     this.profileCurrent = users;
     //     // this is a place for value changes handling
     //     // this.userForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {   });
     //   });

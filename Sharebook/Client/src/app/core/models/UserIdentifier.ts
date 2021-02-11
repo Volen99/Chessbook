@@ -1,4 +1,4 @@
-﻿import {IUserIdentifier} from "../../shared/models/user/user-identifier";
+﻿import {IUserIdentifier} from "../../shared/models/users/user-identifier";
 
 export class UserIdentifier implements IUserIdentifier {
   constructor(userIdOrScreenName?: number | string) {

@@ -1,5 +1,5 @@
 ﻿// A hashtag is a keyword prefixed by # and representing a category of tweet
-// This class stores information related with an user mention
+// This class stores information related with an users mention
 import {IHashtagEntity} from "./interfaces/IHashTagEntity";
 
 export class HashtagEntity implements IHashtagEntity {

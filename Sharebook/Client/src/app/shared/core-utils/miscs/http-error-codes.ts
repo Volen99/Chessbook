@@ -53,7 +53,7 @@ export enum HttpStatusCode {
      * Official Documentation @ https://tools.ietf.org/html/rfc7231#section-6.3.5
      *
      * There is no content to send for this request, but the headers may be useful.
-     * The user-agent may update its cached headers for this resource with the new ones.
+     * The users-agent may update its cached headers for this resource with the new ones.
      */
     NO_CONTENT_204 = 204,
 
@@ -137,7 +137,7 @@ export enum HttpStatusCode {
      * Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet
      * been provided. The response must include a `WWW-Authenticate` header field containing a challenge applicable to the
      * requested resource. See Basic access authentication and Digest access authentication. 401 semantically means
-     * "unauthenticated",i.e. the user does not have the necessary credentials.
+     * "unauthenticated",i.e. the users does not have the necessary credentials.
      */
     UNAUTHORIZED_401 = 401,
 
@@ -288,7 +288,7 @@ export enum HttpStatusCode {
     /**
      * Official Documentation @ https://tools.ietf.org/html/rfc6585#section-4
      *
-     * The user has sent too many requests in a given amount of time. Intended for use with rate-limiting schemes.
+     * The users has sent too many requests in a given amount of time. Intended for use with rate-limiting schemes.
      */
     TOO_MANY_REQUESTS_429 = 429,
 
@@ -347,8 +347,8 @@ export enum HttpStatusCode {
      *
      * The 507 (Insufficient Storage) status code means the method could not be performed on the resource because the
      * server is unable to store the representation needed to successfully complete the request. This condition is
-     * considered to be temporary. If the request which received this status code was the result of a user action,
-     * the request MUST NOT be repeated until it is requested by a separate user action.
+     * considered to be temporary. If the request which received this status code was the result of a users action,
+     * the request MUST NOT be repeated until it is requested by a separate users action.
      *
      * @see HttpStatusCode.PAYLOAD_TOO_LARGE_413 for quota errors
      */

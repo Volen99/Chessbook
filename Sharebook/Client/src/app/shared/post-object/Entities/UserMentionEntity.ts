@@ -1,6 +1,6 @@
 ﻿import {IUserMentionEntity} from "./interfaces/IUserMentionEntity";
 
-// Object storing information related with an user mention on Twitter
+// Object storing information related with an users mention on Twitter
 export class UserMentionEntity implements IUserMentionEntity {
   // [JsonProperty("id")]
   public id: number; // long?

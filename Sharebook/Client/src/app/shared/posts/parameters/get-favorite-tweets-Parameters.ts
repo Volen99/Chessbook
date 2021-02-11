@@ -1,11 +1,11 @@
 ﻿import {IMinMaxQueryParameters, MinMaxQueryParameters} from "../../models/query/min-max-query-parameters";
-import {IUserIdentifier} from "../../models/user/user-identifier";
+import {IUserIdentifier} from "../../models/users/user-identifier";
 import {SharebookLimits} from "../../../helpers/sharebook-limits";
 import {UserIdentifier} from "../../../core/models/UserIdentifier";
 
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-favorites-list
 export interface IGetUserFavoriteTweetsParameters extends IMinMaxQueryParameters {
-  // The user from whom you want to get the favorite tweets
+  // The users from whom you want to get the favorite tweets
   user: IUserIdentifier;
 
   // Include the tweet entities
@@ -53,10 +53,10 @@ export class GetUserFavoriteTweetsParameters extends MinMaxQueryParameters imple
 // {
 // }
 //
-// public GetUserFavoriteTweetsParameters(IUserIdentifier user)
+// public GetUserFavoriteTweetsParameters(IUserIdentifier users)
 // {
 //   PageSize = TwitterLimits.DEFAULTS.TWEETS_GET_FAVORITE_TWEETS_MAX_SIZE;
-//   User = user;
+//   User = users;
 // }
 //
 // public GetUserFavoriteTweetsParameters(IGetUserFavoriteTweetsParameters source) : base(source)

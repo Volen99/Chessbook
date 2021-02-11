@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {IUserIdentifier} from "../models/user/user-identifier";
+import {IUserIdentifier} from "../models/users/user-identifier";
 import {HttpParams} from "@angular/common/http";
 import {RestService} from "../../core/rest/rest.service";
 
@@ -54,7 +54,7 @@ export class UserQueryParameterGeneratorService {
     let usersList = usersIdentifiers; // .ToArray();
 
     if (usersList.some(user => user.id <= 0 && !(user.idStr) && !(user.screenName))) {
-      throw new Error("At least 1 valid user identifier is required.");
+      throw new Error("At least 1 valid users identifier is required.");
     }
 
     let userIds = new Array<string>();

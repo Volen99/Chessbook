@@ -8,7 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { NbToastrService } from '@nebular/theme';
 
-import { UserData, User } from '../../../core/interfaces/common/users';
+import { UserData, IUser } from '../../../core/interfaces/common/users';
 import { EMAIL_PATTERN, NUMBERS_PATTERN } from '../../../auth/components';
 import {NbAuthOAuth2JWTToken, NbTokenService} from '@nebular/auth';
 import {UserStore} from '../../../core/stores/user.store';
@@ -117,16 +117,17 @@ export class UserComponent implements OnInit, OnDestroy {
         this.userForm.setValue({
           id: user.id ? user.id : '',
           role: user.role ? user.role : '',
-          firstName: user.firstName ? user.firstName : '',
-          lastName: user.lastName ? user.lastName : '',
-          login: user.login ? user.login : '',
+          name: user.name ? user.name : '',
+          // firstName: user.firstName ? user.firstName : '',
+          // lastName: user.lastName ? user.lastName : '',
+          // login: user.login ? user.login : '',
           age: user.age ? user.age : '',
           email: user.email,
-          address: {
-            street: (user.address && user.address.street) ? user.address.street : '',
-            city: (user.address && user.address.city) ? user.address.city : '',
-            zipCode: (user.address && user.address.zipCode) ? user.address.zipCode : '',
-          },
+          // address: {
+          //   street: (user.address && user.address.street) ? user.address.street : '',
+          //   city: (user.address && user.address.city) ? user.address.city : '',
+          //   zipCode: (user.address && user.address.zipCode) ? user.address.zipCode : '',
+          // },
         });
 
         // this is a place for value changes handling
@@ -135,15 +136,15 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
 
-  convertToUser(value: any): User {
-    const user: User = value;
+  convertToUser(value: any): IUser {
+    const user: IUser = value;
     return user;
   }
 
   save() {
-    const user: User = this.convertToUser(this.userForm.value);
+    const user: IUser = this.convertToUser(this.userForm.value);
 
-    let observable = new Observable<User>();
+    let observable = new Observable<IUser>();
     if (this.mode === UserFormMode.EDIT_SELF) {
       this.usersService.updateCurrent(user).subscribe((result: any) => {
           this.tokenService.set(new NbAuthOAuth2JWTToken(result, 'email', new Date()));

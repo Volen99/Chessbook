@@ -27,7 +27,7 @@ export const serverFilterHookObject = {
   'filter:api.video.post-import-url.accept.result': true,
   'filter:api.video.post-import-torrent.accept.result': true,
   // Filter the result of the accept comment (thread or reply) functions
-  // If the functions return false then the user cannot post its comment
+  // If the functions return false then the users cannot post its comment
   'filter:api.video-thread.create.accept.result': true,
   'filter:api.video-comment-reply.create.accept.result': true,
 
@@ -45,7 +45,7 @@ export const serverFilterHookObject = {
   // (fired when a local or remote video is created or updated)
   'filter:video.auto-blacklist.result': true,
 
-  // Filter result used to check if a user can register on the instance
+  // Filter result used to check if a users can register on the instance
   'filter:api.user.signup.allowed.result': true
 };
 
@@ -74,20 +74,20 @@ export const serverActionHookObject = {
   // Fired when a comment (thread or reply) is deleted
   'action:api.video-comment.deleted': true,
 
-  // Fired when a user is blocked (banned)
+  // Fired when a users is blocked (banned)
   'action:api.user.blocked': true,
-  // Fired when a user is unblocked (unbanned)
+  // Fired when a users is unblocked (unbanned)
   'action:api.user.unblocked': true,
-  // Fired when a user registered on the instance
+  // Fired when a users registered on the instance
   'action:api.user.registered': true,
-  // Fired when an admin/moderator created a user
+  // Fired when an admin/moderator created a users
   'action:api.user.created': true,
-  // Fired when a user is removed by an admin/moderator
+  // Fired when a users is removed by an admin/moderator
   'action:api.user.deleted': true,
-  // Fired when a user is updated by an admin/moderator
+  // Fired when a users is updated by an admin/moderator
   'action:api.user.updated': true,
 
-  // Fired when a user got a new oauth2 token
+  // Fired when a users got a new oauth2 token
   'action:api.user.oauth2-got-token': true
 };
 

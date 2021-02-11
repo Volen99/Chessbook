@@ -25,6 +25,7 @@ import {SharedGlobalIconModule} from "./shared/shared-icons/shared-global-icon.m
 import {SharedModule} from "./shared/shared.module";
 import {ComposeModule} from "./compose/compose.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {SharedFormModule} from "./shared/forms/shared-form.module";
 
 @NgModule({
   declarations: [
@@ -34,8 +35,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+
     HttpClientModule,
     AppRoutingModule,
+    SharedFormModule,
     SharedGlobalIconModule, // not used in appModule?!
 
     AuthModule.forRoot(),

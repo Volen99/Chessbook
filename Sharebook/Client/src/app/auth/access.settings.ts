@@ -3,12 +3,12 @@ export const authSettings = {
   },
   user: {
     parent: 'guest',
-      view: ['current-user'],
-      edit: ['current-user'],
+      view: ['current-users'],
+      edit: ['current-users'],
   },
   admin: {
     parent: 'user',
-      view: ['current-user', 'users'],
-      edit: ['current-user', 'users'],
+      view: ['current-users', 'users'],
+      edit: ['current-users', 'users'],
   },
 };

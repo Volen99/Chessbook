@@ -1,40 +1,40 @@
 ﻿import {IRelationshipDetailsDTO} from "./IRelationshipDetailsDTO";
 
 export interface IRelationshipDetails {
-  // The source user of the relationship
+  // The source users of the relationship
   sourceId: number;
 
-  // The source user of the relationship
+  // The source users of the relationship
   sourceIdStr: string;
 
-  // The source user of the relationship
+  // The source users of the relationship
   sourceScreenName: string;
 
-  // The target user of the relationship
+  // The target users of the relationship
   targetId: number;
 
-  // The target user of the relationship
+  // The target users of the relationship
   targetIdStr: string;
 
-  // The target user of the relationship
+  // The target users of the relationship
   targetScreenName: string;
 
-  // Informs if the source user following the target user.
+  // Informs if the source users following the target users.
   following: boolean;
 
-  // Informs if the source user is followed by the target user.
+  // Informs if the source users is followed by the target users.
   followedBy: boolean;
 
-  // Informs if the private source user has received a request to be followed by the target user.
+  // Informs if the private source users has received a request to be followed by the target users.
   followingRequestReceived: boolean;
 
-  // Informs if the source user requested to follow the private target user.
+  // Informs if the source users requested to follow the private target users.
   followingRequested: boolean;
 
-  // Informs if the source user has requested to be notified when the target user publishes tweets.
+  // Informs if the source users has requested to be notified when the target users publishes tweets.
   notificationsEnabled: boolean;
 
-  // Informs if the source user can send private messages to the target.
+  // Informs if the source users can send private messages to the target.
   canSendDirectMessage: boolean;
 
   // Informs if the source has blocked the target.
@@ -51,7 +51,7 @@ export interface IRelationshipDetails {
   // Informs if the source wants to receive a notification for each reply published by the target.
   allReplies: boolean;
 
-  // Informs if the source has marked the user as being a spammer.
+  // Informs if the source has marked the users as being a spammer.
   markedSpam: boolean;
 
   relationshipDetailsDTO: IRelationshipDetailsDTO;

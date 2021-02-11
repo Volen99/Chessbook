@@ -1,15 +1,19 @@
 import {CommonModule, DatePipe} from '@angular/common';
 import {NgModule} from '@angular/core';
+import {RouterModule} from "@angular/router";
+
 import {SharedGlobalIconModule} from "../shared-icons/shared-global-icon.module";
 import {HoverDirective} from "./angular/directives/hover.directive";
 import {BootstrapToggleDirective} from "./angular/directives/bootstrap-toggle.directive";
 import {PostComponent} from "./components/post/post.component";
 import {ProfilePicture49x49Component} from "./components/profile-picture-49x49/profile-picture49x49.component";
 import {StaticHeaderComponent} from "./components/static-header/static-header.component";
-import {NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
 import {FromNowPipe} from "./angular/pipes/from-now.pipe";
 import {DateToggleComponent} from "./date";
 import {InfiniteScrollerDirective} from "./angular/directives/infinite-scroller.directive";
+import {SharebookTemplateDirective} from "./angular/directives/sharebook-template.directive";
+import {BytesPipe} from "./angular/pipes/bytes.pipe";
+import {ActionDropdownComponent} from "./buttons/action-dropdown.component";
 // import { SharedModule as PrimeSharedModule } from 'primeng/api';
 // import { ClipboardModule } from '@angular/cdk/clipboard';
 // import { HttpClientModule } from '@angular/common/http';
@@ -47,31 +51,37 @@ import {InfiniteScrollerDirective} from "./angular/directives/infinite-scroller.
 // import { DisableDirective } from './angular/disable.directive';
 // import { GroupByPipe } from './angular/pipes/group-by.pipe';
 // import { BootstrapToggleDirective } from './angular/directives/bootstrap-toggle.directive';
-// import {
-//   NgbCollapseModule,
-//   NgbDropdownModule,
-//   NgbModalModule,
-//   NgbNavModule,
-//   NgbPopoverModule,
-//   NgbTooltipModule
-// } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbCollapseModule,
+  NgbDropdownModule,
+  NgbModalModule,
+  NgbNavModule,
+  NgbPopoverModule,
+  NgbTooltipModule,
+  NgbButtonsModule
+} from '@ng-bootstrap/ng-bootstrap';
+import {ClipboardModule} from "@angular/cdk/clipboard";
+import {FeedComponent} from "./feeds/feed.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import {HelpComponent} from "./misc/help.component";
 
 @NgModule({
   imports: [
     CommonModule,
     // FormsModule,
     // ReactiveFormsModule,
-    // RouterModule,
+    RouterModule,
     // HttpClientModule,
-    //
-    // NgbDropdownModule,
-    // NgbModalModule,
-    // NgbPopoverModule,
-    // NgbNavModule,
+
+    NgbDropdownModule,
+    NgbModalModule,
+    NgbPopoverModule,
+    NgbNavModule,
     NgbTooltipModule,
-    // NgbCollapseModule,
-    //
-    // ClipboardModule,
+    NgbCollapseModule,
+
+    ClipboardModule,
     //
     // PrimeSharedModule,
 
@@ -84,25 +94,25 @@ import {InfiniteScrollerDirective} from "./angular/directives/infinite-scroller.
     //
     FromNowPipe,
     // NumberFormatterPipe,
-    // BytesPipe,
+    BytesPipe,
     // DurationFormatterPipe,
     //
      InfiniteScrollerDirective,
-    // SharebookTemplateDirective,
+     SharebookTemplateDirective,
     //
-    // ActionDropdownComponent,
+     ActionDropdownComponent,
     // ButtonComponent,
     // DeleteButtonComponent,
     // EditButtonComponent,
     //
     DateToggleComponent,
     //
-    // FeedComponent,
+    FeedComponent,
     //
     // LoaderComponent,
     // SmallLoaderComponent,
     //
-    // HelpComponent,
+    HelpComponent,
     // ListOverflowComponent,
     // TopMenuDropdownComponent,
     //
@@ -124,19 +134,19 @@ import {InfiniteScrollerDirective} from "./angular/directives/infinite-scroller.
 
   exports: [
     CommonModule,
-    // FormsModule,
-    // ReactiveFormsModule,
-    // RouterModule,
-    // HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    HttpClientModule,
     //
-    // NgbDropdownModule,
+    NgbDropdownModule,
     // NgbModalModule,
     // NgbPopoverModule,
-    // NgbNavModule,
+    NgbNavModule,
     NgbTooltipModule,
     // NgbCollapseModule,
     //
-    // ClipboardModule,
+    ClipboardModule,
     //
     // PrimeSharedModule,
     //
@@ -144,26 +154,26 @@ import {InfiniteScrollerDirective} from "./angular/directives/infinite-scroller.
     // ActorAvatarInfoComponent,
     //
     FromNowPipe,
-    // BytesPipe,
+    BytesPipe,
     // NumberFormatterPipe,
     // DurationFormatterPipe,
     //
      InfiniteScrollerDirective,
-    // SharebookTemplateDirective,
+     SharebookTemplateDirective,
     //
-    // ActionDropdownComponent,
+    ActionDropdownComponent,
     // ButtonComponent,
     // DeleteButtonComponent,
     // EditButtonComponent,
     //
     DateToggleComponent,
     //
-    // FeedComponent,
+    FeedComponent,
     //
     // LoaderComponent,
     // SmallLoaderComponent,
     //
-    // HelpComponent,
+    HelpComponent,
     // ListOverflowComponent,
     // TopMenuDropdownComponent,
     //

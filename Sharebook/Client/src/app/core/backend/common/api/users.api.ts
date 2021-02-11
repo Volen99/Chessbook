@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpService } from './http.service';
 import { map } from 'rxjs/operators';
 import { DataSource } from 'ng2-smart-table/lib/lib/data-source/data-source';
+import {IUser} from "../../../interfaces/common/users";
 
 @Injectable()
 export class UsersApi {
@@ -57,5 +58,25 @@ export class UsersApi {
 
   update(item: any): Observable<any> {
     return this.api.put(`${this.apiController}/${item.id}`, item);
+  }
+
+  ban(url: string, body) {
+    return this.api.post(`${this.apiController}/${url}`, body);
+  }
+
+  unban(url: string, body) {
+    return this.api.post(`${this.apiController}/${url}`, body);
+  }
+
+  updateUser(id: number, body) {
+    return this.api.put(`${this.apiController}/${id}`, body);
+  }
+
+  updateUsers(id: number, body) {
+    return this.api.put(`${this.apiController}/${id}`, body);
+  }
+
+  getUser(id: number, params: HttpParams) {
+    return this.api.get<IUser>(`${this.apiController}/${id}`, params);
   }
 }

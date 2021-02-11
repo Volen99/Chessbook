@@ -23,7 +23,7 @@
 // const logger = debug('sharebook:menu:MenuComponent');
 //
 import {Component, OnDestroy, OnInit} from "@angular/core";
-import {User, UserData} from "../interfaces/common/users";
+import {IUser, UserData} from "../interfaces/common/users";
 import {UsersService} from "../backend/common/services/users.service";
 import {takeUntil, tap} from 'rxjs/operators';
 import {UserStore} from "../stores/user.store";
@@ -43,7 +43,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userStore.onUserStateChange()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((user: User) => {
+      .subscribe((user: IUser) => {
         this.user = user;
       });
   }
@@ -53,7 +53,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public user: User;
+  public user: IUser;
 }
 
 //   @ViewChild('languageChooserModal', { static: true }) languageChooserModal: LanguageChooserComponent;
@@ -123,7 +123,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 //
 //     this.isLoggedIn = this.authService.isLoggedIn();
 //     if (this.isLoggedIn === true) {
-//       this.user = this.authService.getUser();
+//       this.users = this.authService.getUser();
 //
 //       this.computeNSFWPolicy();
 //       this.computeVideosLink();
@@ -137,7 +137,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 //       status => {
 //         if (status === AuthStatus.LoggedIn) {
 //           this.isLoggedIn = true;
-//           this.user = this.authService.getUser();
+//           this.users = this.authService.getUser();
 //
 //           this.computeAdminAccess();
 //           this.computeVideosLink();
@@ -145,7 +145,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 //           logger('Logged in.');
 //         } else if (status === AuthStatus.LoggedOut) {
 //           this.isLoggedIn = false;
-//           this.user = undefined;
+//           this.users = undefined;
 //
 //           this.computeAdminAccess();
 //
@@ -176,8 +176,8 @@ export class MenuComponent implements OnInit, OnDestroy {
 //   }
 //
 //   getFirstAdminRightAvailable () {
-//     const user = this.authService.getUser();
-//     if (!user) return undefined;
+//     const users = this.authService.getUser();
+//     if (!users) return undefined;
 //
 //     const adminRights = [
 //       UserRight.MANAGE_USERS,
@@ -189,7 +189,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 //     ];
 //
 //     for (const adminRight of adminRights) {
-//       if (user.hasRight(adminRight)) {
+//       if (users.hasRight(adminRight)) {
 //         return adminRight;
 //       }
 //     }
@@ -224,10 +224,10 @@ export class MenuComponent implements OnInit, OnDestroy {
 //   }
 //
 //   toggleUseP2P () {
-//     if (!this.user) return;
-//     this.user.webTorrentEnabled = !this.user.webTorrentEnabled;
+//     if (!this.users) return;
+//     this.users.webTorrentEnabled = !this.users.webTorrentEnabled;
 //
-//     this.userService.updateMyProfile({ webTorrentEnabled: this.user.webTorrentEnabled })
+//     this.userService.updateMyProfile({ webTorrentEnabled: this.users.webTorrentEnabled })
 //       .subscribe(() => this.authService.refreshUserInformation());
 //   }
 //
@@ -288,17 +288,17 @@ export class MenuComponent implements OnInit, OnDestroy {
 //   }
 //
 //   private buildUserLanguages () {
-//     if (!this.user) {
+//     if (!this.users) {
 //       this.videoLanguages = [];
 //       return;
 //     }
 //
-//     if (!this.user.videoLanguages) {
+//     if (!this.users.videoLanguages) {
 //       this.videoLanguages = [ $localize`any language` ];
 //       return;
 //     }
 //
-//     this.videoLanguages = this.user.videoLanguages
+//     this.videoLanguages = this.users.videoLanguages
 //       .map(locale => this.langForLocale(locale))
 //       .map(value => value === undefined ? '?' : value);
 //   }
@@ -312,7 +312,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 //   private computeVideosLink () {
 //     this.authService.userInformationLoaded
 //       .pipe(
-//         switchMap(() => this.user.computeCanSeeVideosLink(this.userService.getMyVideoQuotaUsed()))
+//         switchMap(() => this.users.computeCanSeeVideosLink(this.userService.getMyVideoQuotaUsed()))
 //       ).subscribe(res => {
 //       if (res === true) {
 //         logger('User can see videos link.');
@@ -323,12 +323,12 @@ export class MenuComponent implements OnInit, OnDestroy {
 //   }
 //
 //   private computeNSFWPolicy () {
-//     if (!this.user) {
+//     if (!this.users) {
 //       this.nsfwPolicy = null;
 //       return;
 //     }
 //
-//     switch (this.user.nsfwPolicy) {
+//     switch (this.users.nsfwPolicy) {
 //       case 'do_not_list':
 //         this.nsfwPolicy = $localize`hide`;
 //         break;

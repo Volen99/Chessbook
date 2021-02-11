@@ -1,13 +1,19 @@
-//@import '_variables';
-//@import '_mixins';
-//
-//@import '_fonts';
-//
-//@import '~video.js/dist/video-js.css';
-//
-//$assets-path: '../../assets/';
-//
-//@import './bootstrap';
+$icon-font-path: '~@neos21/bootstrap3-glyphicons/assets/fonts/';
+
+@import '_bootstrap-variables';
+@import '_variables';
+@import '_mixins';
+
+@import '_fonts';
+
+$assets-path: '../../assets/';
+
+@import './bootstrap';
+//@import './primeng-custom';
+//@import './ng-select.scss';
+
+
+
 
 // twitter styles
 
@@ -186,10 +192,10 @@
 //}
 
 //.r-lrvibr {
-//  -moz-user-select: none;
-//  -ms-user-select: none;
-//  -webkit-user-select: none;
-//  user-select: none;
+//  -moz-users-select: none;
+//  -ms-users-select: none;
+//  -webkit-users-select: none;
+//  users-select: none;
 //}
 
 .r-13qz1uu {

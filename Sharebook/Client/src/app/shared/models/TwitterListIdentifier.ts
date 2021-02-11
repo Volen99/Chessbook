@@ -1,4 +1,4 @@
-﻿import {IUserIdentifier} from "./user/user-identifier";
+﻿import {IUserIdentifier} from "./users/user-identifier";
 import {UserIdentifier} from "../../core/models/UserIdentifier";
 import {ITwitterListIdentifier} from "../posts/models/twitter-list-identifier";
 

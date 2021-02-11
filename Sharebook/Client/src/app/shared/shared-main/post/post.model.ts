@@ -1,7 +1,7 @@
 import {IPost} from "../../posts/models/tweet";
 import {IOEmbedTweet} from "../../posts/models/properties/OEmbed-tweet";
 import {ITweetDTO} from "../../posts/models/DTO/tweet-dto";
-import {User} from "../../../core/interfaces/common/users";
+import {IUser} from "../../../core/interfaces/common/users";
 import {ITweetEntities} from "../../post-object/Entities/interfaces/ITweetEntities";
 import {ICoordinates} from "../../posts/models/properties/ICoordinates";
 import {ITweetIdentifier} from "../../posts/models/tweet-identifier";
@@ -16,12 +16,14 @@ export class Post /*implements IPost*/ {
 
   // #region Public Attributes
 
-  private _user: User;
+  private _user: IUser;
   private _entities: ITweetEntities;
 
   constructor(postFromServer: Post) {
     this.postFromServer = postFromServer;
   }
+
+  uuid: string;
 
   get postFromServer(): Post {
     return this._postFromServer;
@@ -138,7 +140,7 @@ export class Post /*implements IPost*/ {
     return this._entities;
   }
 
-  get user(): User {
+  get user(): IUser {
     return this._user;
   }
 
@@ -378,6 +380,9 @@ export class Post /*implements IPost*/ {
   // public unfavoriteAsync(): Promise<void> {
   //   return this.client.tweets.unfavoriteTweetAsync(this);
   // }
+
+  blacklisted?: boolean;
+  blockedReason?: string;
 
 
   public ToString(): string {

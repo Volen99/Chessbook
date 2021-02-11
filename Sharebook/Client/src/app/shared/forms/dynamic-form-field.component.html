@@ -1,0 +1,39 @@
+<div [formGroup]="form">
+  <label *ngIf="setting.type !== 'input-checkbox'" [attr.for]="setting.name" [innerHTML]="setting.label"></label>
+
+  <div *ngIf="setting.descriptionHTML" class="label-small-info" [innerHTML]="setting.descriptionHTML"></div>
+
+  <input *ngIf="setting.type === 'input'" type="text" [id]="setting.name" [formControlName]="setting.name" />
+
+  <app-input-toggle-hidden *ngIf="setting.type === 'input-password'" [formControlName]="setting.name" [inputId]="setting.name"></app-input-toggle-hidden>
+
+  <textarea *ngIf="setting.type === 'input-textarea'" type="text" [id]="setting.name" [formControlName]="setting.name"></textarea>
+
+  <app-help *ngIf="setting.type === 'markdown-text'" helpType="markdownText"></app-help>
+
+  <app-help *ngIf="setting.type === 'markdown-enhanced'" helpType="markdownEnhanced"></app-help>
+
+  <app-markdown-textarea
+    *ngIf="setting.type === 'markdown-text'"
+    markdownType="text" [id]="setting.name" [formControlName]="setting.name" textareaWidth="500px"
+    [classes]="{ 'input-error': formErrors['settings.name'] }"
+  ></app-markdown-textarea>
+
+  <app-markdown-textarea
+    *ngIf="setting.type === 'markdown-enhanced'"
+    markdownType="enhanced" [id]="setting.name" [formControlName]="setting.name" textareaWidth="500px"
+    [classes]="{ 'input-error': formErrors['settings.name'] }"
+  ></app-markdown-textarea>
+
+  <app-peertube-checkbox
+    *ngIf="setting.type === 'input-checkbox'"
+    [id]="setting.name"
+    [formControlName]="setting.name"
+    [labelInnerHTML]="setting.label"
+  ></app-peertube-checkbox>
+
+  <div *ngIf="formErrors[setting.name]" class="form-error">
+    {{ formErrors[setting.name] }}
+  </div>
+
+</div>

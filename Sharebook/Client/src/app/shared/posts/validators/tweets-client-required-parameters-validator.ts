@@ -81,7 +81,7 @@ export class TweetsClientRequiredParametersValidator implements ITweetsClientReq
                 throw new Error("Some media were not uploaded, ${nameof(parameters.medias)}");
             }
         } else if (this.isIGetUserFavoriteTweetsParameters(parameters)) {
-            // this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.user, `${`nameof(parameters.user)`}`);
+            // this._userQueryValidator.throwIfUserCannotBeIdentified(parameters.users, `${`nameof(parameters.users)`}`);
             throw  Error();
         }
     }

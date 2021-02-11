@@ -1,6 +1,6 @@
 import {ITweetIdentifier} from "../tweet-identifier";
 import {ICoordinates} from "../properties/ICoordinates";
-import {User} from "../../../../core/interfaces/common/users";
+import {IUser} from "../../../../core/interfaces/common/users";
 import {ITweetEntities} from "../../../post-object/Entities/interfaces/ITweetEntities";
 import {IPlace} from "../properties/IPlace";
 
@@ -17,7 +17,7 @@ export interface ITweetDTO extends ITweetIdentifier {
 
     favoriteCount?: number;
 
-    createdBy: User;
+    createdBy: IUser;
 
     currentUserRetweetIdentifier: ITweetIdentifier;
 

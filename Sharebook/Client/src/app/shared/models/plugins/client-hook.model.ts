@@ -18,7 +18,7 @@ export const clientFilterHookObject = {
   'filter:api.recently-added-videos.videos.list.params': true,
   'filter:api.recently-added-videos.videos.list.result': true,
 
-  // Filter params/result of the function that fetch videos of the user subscription page
+  // Filter params/result of the function that fetch videos of the users subscription page
   'filter:api.user-subscriptions-videos.videos.list.params': true,
   'filter:api.user-subscriptions-videos.videos.list.result': true,
 
@@ -34,10 +34,10 @@ export const clientFilterHookObject = {
   'filter:api.video-watch.video-thread-replies.list.params': true,
   'filter:api.video-watch.video-thread-replies.list.result': true,
 
-  // Filter params/result of the function that fetch videos according to the user search
+  // Filter params/result of the function that fetch videos according to the users search
   'filter:api.search.videos.list.params': true,
   'filter:api.search.videos.list.result': true,
-  // Filter params/result of the function that fetch video-channels according to the user search
+  // Filter params/result of the function that fetch video-channels according to the users search
   'filter:api.search.video-channels.list.params': true,
   'filter:api.search.video-channels.list.result': true,
 
@@ -67,7 +67,7 @@ export const clientActionHookObject = {
   'action:video-watch.player.loaded': true,
   // Fired when the video watch page comments(threads) are loaded and load more comments on scroll
   'action:video-watch.video-threads.loaded': true,
-  // Fired when a user click on 'View x replies' and they're loaded
+  // Fired when a users click on 'View x replies' and they're loaded
   'action:video-watch.video-thread-replies.loaded': true,
 
   // Fired when the video edit page (upload, URL/torrent import, update) is being initialized

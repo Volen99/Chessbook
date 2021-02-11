@@ -15,7 +15,7 @@ import {
   GetUserFavoriteTweetsParameters,
   IGetUserFavoriteTweetsParameters
 } from "./parameters/get-favorite-tweets-Parameters";
-import {IUserIdentifier} from "../models/user/user-identifier";
+import {IUserIdentifier} from "../models/users/user-identifier";
 import {FavoriteTweetParameters, IFavoriteTweetParameters} from "./parameters/favorite-tweet-parameters";
 import {IUnfavoriteTweetParameters, UnfavoriteTweetParameters} from "./parameters/unfavorite-tweet-parameters";
 import {GetOEmbedTweetParameters, IGetOEmbedTweetParameters} from "./parameters/get-OEmbed-tweet-parameters";

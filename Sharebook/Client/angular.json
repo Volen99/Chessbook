@@ -18,6 +18,11 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/sass/include"
+              ]
+            },
             "assets": [
               "src/assets",
               "src/favicon.ico",
@@ -39,7 +44,8 @@
               "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
               "node_modules/leaflet/dist/leaflet.css",
-              "src/app/theme/styles/styles.scss"
+              "src/app/theme/styles/styles.scss",
+              "src/sass/application.scss"
             ],
             "scripts": [
               "node_modules/pace-js/pace.min.js",
@@ -64,7 +70,13 @@
               "rxjs-compat/add/operator/delay",
               "rxjs/add/operator/delay",
               "rxjs-compat/add/observable/of",
-              "rxjs/add/observable/of"
+              "rxjs/add/observable/of",
+
+              "linkifyjs/html",
+              "linkifyjs",
+              "markdown-it",
+              "markdown-it-emoji/light",
+              "sanitize-html"
             ]
           },
           "configurations": {
@@ -137,7 +149,8 @@
               "node_modules/socicon/css/socicon.css",
               "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
-              "src/app/theme/styles/styles.scss"
+              "src/app/theme/styles/styles.scss",
+              "src/sass/application.scss"
             ],
             "assets": [
               "src/assets",
@@ -191,11 +204,11 @@
   "defaultProject": "sharebook",
   "schematics": {
     "@schematics/angular:component": {
-      "prefix": "ngx",
+      "prefix": "app",
       "style": "scss"
     },
     "@schematics/angular:directive": {
-      "prefix": "ngx"
+      "prefix": "app"
     }
   }
 }

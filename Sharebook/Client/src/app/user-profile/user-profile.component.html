@@ -36,7 +36,7 @@
                                                             <div class="css-1dbjc4n r-1awozwy r-xoduu5 r-18u37iz r-dnmrzs"><span
                                                                     class="css-901oao css-16my406 css-bfa6kz r-1fmj7o5 r-1qd0xha r-1vr29t4 r-ad9z0x r-bcqeeo r-3s2u2q r-qvutc0"><span
                                                                     class="css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0"><span
-                                                                    class="css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0">{{this.profileCurrent?.login}}</span></span></span><span
+                                                                    class="css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0">{{this.profileCurrent?.name}}</span></span></span><span
                                                                     class="css-901oao css-16my406 r-18u37iz r-1q142lx r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0"><svg
                                                                     viewBox="0 0 24 24"
                                                                     aria-label="Protected account"
@@ -89,7 +89,7 @@
                 <div>
                     <div class="css-1dbjc4n r-16y2uox">
                         <div class="css-1dbjc4n r-1jgb5lz r-1ye8kvj r-13qz1uu">
-                            <div class="css-1dbjc4n"><a routerLink="/{{this.profileCurrent?.login}}/header_photo" role="link"
+                            <div class="css-1dbjc4n"><a routerLink="/{{this.profileCurrent?.name}}/header_photo" role="link"
                                                         aria-hidden="true" tabindex="-1"
                                                         class="css-4rbku5 css-18t94o4 css-1dbjc4n r-1loqt21 r-1ny4l3l r-o7ynqc r-6416eg">
                                 <div class="css-1dbjc4n r-1adg3ll r-1udh08x" style="">
@@ -372,11 +372,11 @@
 <!--          <span *ngIf="account.mutedByInstance" class="badge badge-danger" i18n>Muted by your instance</span>-->
 <!--          <span *ngIf="account.mutedServerByInstance" class="badge badge-danger" i18n>Instance muted by your instance</span>-->
 
-<!--          <app-user-moderation-dropdown-->
+<!--          <app-users-moderation-dropdown-->
 <!--            [prependActions]="prependModerationActions"-->
-<!--            buttonSize="small" [account]="account" [user]="accountUser" placement="bottom-left auto"-->
+<!--            buttonSize="small" [account]="account" [users]="accountUser" placement="bottom-left auto"-->
 <!--            (userChanged)="onUserChanged()" (userDeleted)="onUserDeleted()"-->
-<!--          ></app-user-moderation-dropdown>-->
+<!--          ></app-users-moderation-dropdown>-->
 <!--        </div>-->
 <!--        <div class="actor-followers" [title]="accountFollowerTitle">-->
 <!--          {{ subscribersDisplayFor(naiveAggregatedSubscribers) }}-->

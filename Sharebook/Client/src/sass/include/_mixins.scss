@@ -37,7 +37,7 @@
   }
 }
 
-@mixin sharebook-word-wrap {
+@mixin peertube-word-wrap {
   word-break: break-word;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -91,7 +91,7 @@
   }
 }
 
-@mixin sharebook-input-text($width) {
+@mixin peertube-input-text($width) {
   display: inline-block;
   height: $button-height;
   width: $width;
@@ -116,7 +116,7 @@
   }
 }
 
-@mixin sharebook-input-group($width) {
+@mixin peertube-input-group($width) {
   width: $width;
   min-height: $button-height;
   padding-top: 0;
@@ -129,8 +129,8 @@
   }
 }
 
-@mixin sharebook-textarea ($width, $height) {
-  @include sharebook-input-text($width);
+@mixin peertube-textarea ($width, $height) {
+  @include peertube-input-text($width);
 
   color: pvar(--textareaForegroundColor);
   background-color: pvar(--textareaBackgroundColor);
@@ -158,7 +158,7 @@
     background-color: #C6C6C6;
   }
 
-  app-global-icon {
+  my-global-icon {
     @include apply-svg-color(#fff)
   }
 }
@@ -173,13 +173,14 @@
     cursor: default;
   }
 
-  app-global-icon {
+  my-global-icon {
     @include apply-svg-color(transparent)
   }
 }
 
 @mixin grey-button {
   @include button-focus($grey-button-outline-color);
+
   background-color: $grey-background-color;
   color: pvar(--greyForegroundColor);
 
@@ -192,7 +193,7 @@
     cursor: default;
   }
 
-  app-global-icon {
+  my-global-icon {
     @include apply-svg-color(pvar(--greyForegroundColor))
   }
 }
@@ -213,12 +214,12 @@
     cursor: default;
   }
 
-  app-global-icon {
+  my-global-icon {
     @include apply-svg-color($text)
   }
 }
 
-@mixin sharebook-button {
+@mixin peertube-button {
   border: none;
   font-weight: $font-semibold;
   font-size: 15px;
@@ -230,24 +231,28 @@
   cursor: pointer;
 }
 
-@mixin sharebook-button-link {
+@mixin peertube-button-link {
   display: inline-block;
 
   @include disable-default-a-behaviour;
-  @include sharebook-button;
+  @include peertube-button;
 }
 
-@mixin sharebook-button-outline {
+@mixin peertube-button-outline {
   display: inline-block;
 
   @include disable-default-a-behaviour;
-  @include sharebook-button;
+  @include peertube-button;
 
   border: 1px solid;
 }
 
 @mixin button-with-icon($width: 20px, $margin-right: 3px, $top: -1px) {
-  app-global-icon {
+  display: inline-flex;
+  align-items: center;
+  line-height: normal !important;
+
+  my-global-icon {
     position: relative;
     width: $width;
     margin-right: $margin-right;
@@ -255,14 +260,11 @@
   }
 }
 
-@mixin sharebook-button-file ($width) {
+@mixin peertube-file {
   position: relative;
   overflow: hidden;
   display: inline-block;
-  width: $width;
   min-height: 30px;
-
-  @include sharebook-button;
 
   input[type=file] {
     position: absolute;
@@ -279,6 +281,13 @@
     cursor: inherit;
     display: block;
   }
+}
+
+@mixin peertube-button-file ($width) {
+  width: $width;
+
+  @include peertube-file;
+  @include peertube-button;
 }
 
 @mixin icon ($size) {
@@ -313,7 +322,7 @@
   }
 }
 
-@mixin sharebook-select-container ($width) {
+@mixin peertube-select-container ($width) {
   padding: 0;
   margin: 0;
   width: $width;
@@ -364,7 +373,7 @@
     }
   }
 
-  &.sharebook-select-button {
+  &.peertube-select-button {
     @include grey-button;
 
     select,
@@ -377,7 +386,7 @@
 }
 
 // Thanks: https://codepen.io/triss90/pen/XNEdRe/
-@mixin sharebook-radio-container {
+@mixin peertube-radio-container {
   input[type="radio"] {
     display: none;
 
@@ -414,7 +423,7 @@
   }
 }
 
-@mixin sharebook-checkbox ($border-width) {
+@mixin peertube-checkbox ($border-width) {
   opacity: 0;
   position: absolute;
 
@@ -656,11 +665,16 @@
         font-size: 130%;
       }
     }
+
+    list-overflow {
+      display: inline-block;
+      width: max-content;
+    }
   }
 }
 
 @mixin create-button {
-  @include sharebook-button-link;
+  @include peertube-button-link;
   @include orange-button;
   @include button-with-icon(20px, 5px, -1px);
 }
@@ -682,7 +696,7 @@
 @mixin dropdown-with-icon-item {
   padding: 6px 15px;
 
-  app-global-icon {
+  my-global-icon {
     width: 22px;
     opacity: .7;
 
@@ -807,7 +821,6 @@
   .dashboard-num, .dashboard-text {
     text-align: center;
     font-size: 130%;
-    line-height: 21px;
     color: pvar(--mainForegroundColor);
     line-height: 30px;
     margin-bottom: 20px;
@@ -951,7 +964,7 @@
     padding-bottom: 15px;
     margin-bottom: $sub-menu-margin-bottom;
 
-    app-global-icon {
+    my-global-icon {
       margin-right: 10px;
       vertical-align: bottom;
       width: 24px;

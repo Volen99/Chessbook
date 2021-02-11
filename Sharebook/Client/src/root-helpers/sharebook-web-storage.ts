@@ -1,5 +1,4 @@
 // Thanks: https://github.com/capaj/localstorage-polyfill ♥
-
 const valuesMap = new Map();
 
 function proxify(instance: MemoryStorage) {

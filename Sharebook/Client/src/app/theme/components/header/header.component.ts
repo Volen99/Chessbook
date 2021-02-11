@@ -6,7 +6,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { UserStore } from '../../../core/stores/user.store';
 import { SettingsData } from '../../../core/interfaces/common/settings';
-import { User } from '../../../core/interfaces/common/users';
+import { IUser } from '../../../core/interfaces/common/users';
 
 @Component({
   selector: 'ngx-header',
@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
-  user: User;
+  user: IUser;
 
   themes = [
     {
@@ -66,7 +66,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
       )
-      .subscribe((user: User) => {
+      .subscribe((user: IUser) => {
         this.user = user;
         this.userMenu = this.getMenuItems();
       });
@@ -93,6 +93,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   changeTheme(themeName: string) {
+    debugger
     this.userStore.setSetting(themeName);
     this.settingsService.updateCurrent(this.userStore.getUser().settings)
       .pipe(takeUntil(this.destroy$))

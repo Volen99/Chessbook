@@ -1,4 +1,4 @@
-// import {SortMeta} from 'primeng/api';
+import {SortMeta} from 'primeng/api';
 import {HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {ComponentPaginationLight} from './component-pagination.model';

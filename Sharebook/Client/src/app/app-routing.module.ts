@@ -34,17 +34,21 @@ const routes: Routes = [
         loadChildren: () => import('./messages/messages.module').then(m => m.MessagesModule),
     },
     {
-        path: ':username',
-        canActivate: [AuthGuard],
-        loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule)
-    },
-    {
         path: 'auth',
         loadChildren: () => import('app/auth/auth.module').then(m => m.AuthModule),
     },
     {
         path: 'compose/share',
         loadChildren: () => import('app/compose/compose.module').then(m => m.ComposeModule),
+    },
+    {
+        path: 'display',
+        loadChildren: () => import('app/theme/theme.module').then(m => m.ThemeModule),
+    },
+    {
+        path: ':username',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule)
     },
     // {
     //     path: '',
