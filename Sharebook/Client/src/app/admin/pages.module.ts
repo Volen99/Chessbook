@@ -7,8 +7,17 @@ import { ThemeModule } from '../theme/theme.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { PagesMenu } from './pages-menu';
 import { ECommerceModule } from './e-commerce/e-commerce.module';
-import { NbMenuModule } from '@nebular/theme';
+import {
+  NbChatModule,
+  NbDatepickerModule,
+  NbDialogModule,
+  NbMenuModule,
+  NbSidebarModule,
+  NbToastrModule,
+  NbWindowModule
+} from '@nebular/theme';
 import { AuthModule } from '../auth/auth.module';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -22,7 +31,24 @@ const PAGES_COMPONENTS = [
     ECommerceModule,
     NbMenuModule,
     MiscellaneousModule,
+    // AuthModule.forRoot(),
+
+
+
+
     AuthModule.forRoot(),
+
+    NbSidebarModule.forRoot(),
+    NbMenuModule.forRoot(),
+    NbDatepickerModule.forRoot(),
+    NbDialogModule.forRoot(),
+    NbWindowModule.forRoot(),
+    NbToastrModule.forRoot(),
+    NbChatModule.forRoot({
+      messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
+    }),
+
+    NgbModule,
   ],
   declarations: [
     ...PAGES_COMPONENTS,

@@ -1,0 +1,27 @@
+<!--<span *ngIf="menuItem.group">-->
+<!--  <nb-icon class="menu-icon" [config]="menuItem.icon" *ngIf="menuItem.icon"></nb-icon>-->
+<!--    {{ menuItem.title }}-->
+<!--</span>-->
+<a *ngIf="menuItem.link && !menuItem.url && !menuItem.children && !menuItem.group"
+   [routerLink]="menuItem.link"
+   [queryParams]="menuItem.queryParams"
+   [fragment]="menuItem.fragment"
+   [queryParamsHandling]="menuItem.queryParamsHandling"
+   [preserveFragment]="menuItem.preserveFragment"
+   [skipLocationChange]="menuItem.skipLocationChange"
+   [attr.target]="menuItem.target"
+   [attr.title]="menuItem.title"
+   [class.active]="menuItem.selected"
+   (mouseenter)="onHoverItem(menuItem)"
+   (click)="onItemClick(menuItem);"
+   class="menu-item">
+    <div class="sharebook-container align-items-center border-radius-9999px flex-direction-row justify-content-center max-width-100-per padding-10px transition-duration transition-property">
+        <div class="sharebook-container">
+            <app-global-icon *ngIf="menuItem.icon" iconName="{{menuItem.icon}}" aria-hidden="true"></app-global-icon>
+        </div>
+        <div dir="auto" class="css-901oao sharebook-text lights-out-text-color font-family heading-font-size font-weight-700 inside-element-container-line-height margin-left-20px menu-text-container-margin-right min-width-0px text-overflow-wrap">
+            <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{menuItem.title}}</span>
+        </div>
+    </div>
+</a>
+

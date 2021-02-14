@@ -10,7 +10,7 @@ const routes: Routes = [
     },
     {
         path: 'admin',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         loadChildren: () => import('app/admin/pages.module').then(m => m.PagesModule),
     },
     {
@@ -20,17 +20,17 @@ const routes: Routes = [
     },
     {
         path: 'explore',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         loadChildren: () => import('./explore/explore.module').then(m => m.ExploreModule),
     },
     {
         path: 'notifications',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule),
     },
     {
         path: 'messages',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         loadChildren: () => import('./messages/messages.module').then(m => m.MessagesModule),
     },
     {
@@ -47,7 +47,7 @@ const routes: Routes = [
     },
     {
         path: ':username',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule)
     },
     // {

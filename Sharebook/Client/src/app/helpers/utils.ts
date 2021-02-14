@@ -1,6 +1,9 @@
 import {DatePipe} from '@angular/common';
 import {environment} from '../../environments/environment';
 
+export type SbNullableInput = string | null | undefined;
+export type SbBooleanInput = boolean | SbNullableInput;
+
 // Thanks: https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript ♥
 function getParameterByName(name: string, url: string) {
   if (!url) {
@@ -160,6 +163,16 @@ function isXPercentInViewport(el: HTMLElement, percentVisible: number) {
     Math.floor(100 - (((rect.top >= 0 ? 0 : rect.top) / +-(rect.height / 1)) * 100)) < percentVisible ||
     Math.floor(100 - ((rect.bottom - windowHeight) / rect.height) * 100) < percentVisible
   );
+}
+
+export function convertToBoolProperty(val: any): boolean {
+  if (typeof val === 'string') {
+    val = val.toLowerCase().trim();
+
+    return (val === 'true' || val === '');
+  }
+
+  return !!val;
 }
 
 export {

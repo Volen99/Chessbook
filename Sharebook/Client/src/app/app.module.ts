@@ -19,13 +19,13 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import {EmptyComponent} from "./empty.component";
-import {ShareButtonComponent} from "./core/menu/share-button/share-button.component";
 import {SharedMainModule} from "./shared/shared-main/shared-main.module";
 import {SharedGlobalIconModule} from "./shared/shared-icons/shared-global-icon.module";
 import {SharedModule} from "./shared/shared.module";
 import {ComposeModule} from "./compose/compose.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {SharedFormModule} from "./shared/forms/shared-form.module";
+import {PagesModule} from "./core/menu/pages.module";
 
 @NgModule({
   declarations: [
@@ -42,23 +42,23 @@ import {SharedFormModule} from "./shared/forms/shared-form.module";
     SharedGlobalIconModule, // not used in appModule?!
 
     AuthModule.forRoot(),
-
-    NbSidebarModule.forRoot(),
-    NbMenuModule.forRoot(),
-    NbDatepickerModule.forRoot(),
-    NbDialogModule.forRoot(),
-    NbWindowModule.forRoot(),
-    NbToastrModule.forRoot(),
-    NbChatModule.forRoot({
-      messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
-    }),
+    //
+    // NbSidebarModule.forRoot(),
+    // NbMenuModule.forRoot(),
+    // NbDatepickerModule.forRoot(),
+    // NbDialogModule.forRoot(),
+    // NbWindowModule.forRoot(),
+    // NbToastrModule.forRoot(),
+    // NbChatModule.forRoot({
+    //   messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
+    // }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
 
     SharedModule,
     SharedMainModule,
     ComposeModule,
-    NgbModule,
+    // NgbModule,
   ],
   bootstrap: [AppComponent],
   providers: [],

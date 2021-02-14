@@ -20,9 +20,7 @@ import { UsersService } from './backend/common/services/users.service';
 import { SettingsService } from './backend/common/services/settings.service';
 import { InitUserService } from '../theme/services/init-user.service';
 import {HooksService, PluginService} from "./plugins";
-import {MenuComponent} from "./menu/menu.component";
 import {SharedGlobalIconModule} from "../shared/shared-icons/shared-global-icon.module";
-import {ShareButtonComponent} from "./menu/share-button/share-button.component";
 import {RouterModule} from "@angular/router";
 import {RestService} from "./rest/rest.service";
 import {RestExtractor} from "./rest/rest-extractor";
@@ -34,6 +32,10 @@ import {MarkdownService} from "./renderer/markdown.service";
 import {ConfirmService} from "./confirm/confirm.service";
 import {Notifier} from "./notification/notifier.service";
 import {AuthService} from "./auth/auth.service";
+import {PagesModule} from "./menu/pages.module";
+import {MenuModule} from "./menu/core/menu.module";
+import {PagesComponent} from "./menu/pages.component";
+import {MenuInternalService, MenuService} from "./menu/core/menu.service";
 
 
 export const NB_CORE_PROVIDERS = [
@@ -60,14 +62,14 @@ export const NB_CORE_PROVIDERS = [
     BrowserAnimationsModule,
     RouterModule,
 
+    PagesModule,
     SharedGlobalIconModule,
   ],
   exports: [
     NbAuthModule,
-    MenuComponent,
+    PagesComponent,
   ],
-  declarations: [MenuComponent, ShareButtonComponent,
-  ],
+  declarations: [],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
@@ -93,6 +95,9 @@ export class CoreModule {
 
         ConfirmService,
         Notifier,
+
+        MenuInternalService,
+        MenuService,
       ],
     };
   }
