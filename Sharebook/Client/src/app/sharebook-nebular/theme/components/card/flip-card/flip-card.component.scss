@@ -1,0 +1,69 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+@mixin prefix-backface-visibility($value) {
+  backface-visibility: $value;
+  // Don't remove prefixed property as it's wouldn't be added during the build.
+  // Fixes back card visibility in Safari.
+  -webkit-backface-visibility: $value;
+}
+
+:host {
+  display: block;
+  perspective: 1200px;
+  position: relative;
+}
+
+:host-context(.flipped) {
+  .flipcard-body {
+    transform: rotateY(-180deg);
+
+    .front-container {
+      opacity: 0;
+      transition: opacity 0s 0.25s;
+      @include prefix-backface-visibility(hidden);
+
+      .flip-button {
+        opacity: 0;
+        z-index: -1;
+      }
+    }
+
+    .back-container {
+      @include prefix-backface-visibility(visible);
+    }
+  }
+}
+
+.flipcard-body {
+  display: flex;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+
+  .front-container,
+  .back-container {
+    flex: 1;
+
+    .flip-button {
+      cursor: pointer;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      opacity: 1;
+      transition: opacity 0s 0.15s;
+    }
+  }
+
+  .front-container {
+    @include prefix-backface-visibility(visible);
+    transition: opacity 0s 0.2s;
+  }
+
+  .back-container {
+    @include prefix-backface-visibility(hidden);
+    transform: rotateY(180deg);
+  }
+}

@@ -144,7 +144,6 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
   loadMoreVideos(reset = false) {
     this.getPostsObservable(this.pagination.currentPage).subscribe(
       ({data}) => {
-        debugger;
         this.hasDoneFirstQuery = true;
         this.lastQueryLength = data.length;
 

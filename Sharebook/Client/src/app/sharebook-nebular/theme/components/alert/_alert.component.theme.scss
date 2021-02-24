@@ -1,0 +1,67 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+@mixin nb-alert-theme() {
+  nb-alert {
+    border-radius: nb-theme(alert-border-radius);
+    box-shadow: nb-theme(alert-shadow);
+    font-family: nb-theme(alert-text-font-family);
+    font-size: nb-theme(alert-text-font-size);
+    font-weight: nb-theme(alert-text-font-weight);
+    line-height: nb-theme(alert-text-line-height);
+    padding: nb-theme(alert-padding);
+
+    // TODO: move alert margin style to layout
+    margin-bottom: nb-theme(alert-bottom-margin);
+
+    @include nb-scrollbars(
+        nb-theme(alert-scrollbar-color),
+        nb-theme(alert-scrollbar-background-color),
+        nb-theme(alert-scrollbar-width));
+
+    &.closable {
+      @include nb-ltr(padding-right, nb-theme(alert-closable-start-padding));
+      @include nb-rtl(padding-left, nb-theme(alert-closable-start-padding));
+    }
+
+    .close {
+      padding: nb-theme(alert-padding);
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+      font-family: monospace;
+    }
+  }
+
+  @each $size in nb-get-sizes() {
+    nb-alert.size-#{$size} {
+      height: nb-theme(alert-#{$size}-height);
+    }
+  }
+
+  @each $status in nb-get-statuses() {
+    nb-alert {
+      &.status-#{$status} {
+        color: nb-theme(alert-#{$status}-text-color);
+        background-color: nb-theme(alert-#{$status}-background-color);
+
+        a,
+        a:hover {
+          color: nb-theme(alert-#{$status}-text-color);
+        }
+      }
+
+      &.accent-#{$status} {
+        border-top: nb-theme(alert-border-radius) solid nb-theme(alert-accent-#{$status}-color);
+      }
+
+      &.outline-#{$status} {
+        border: nb-theme(alert-outline-width) solid nb-theme(alert-outline-#{$status}-color);
+      }
+    }
+  }
+}
+

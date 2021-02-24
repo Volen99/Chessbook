@@ -1,0 +1,10 @@
+
+@import 'global/components';
+@import 'global/overrides';
+@import 'global/breakpoints';
+@import 'global/styles';
+
+@mixin nb-theme-global() {
+  @include nb-theme-components();
+  @include nb-theme-overrides();
+}

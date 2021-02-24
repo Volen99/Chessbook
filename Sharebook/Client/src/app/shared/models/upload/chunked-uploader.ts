@@ -1,7 +1,7 @@
 import {IChunkUploadInitParameters} from "./chunk-upload-init-parameters";
 import {IChunkUploadAppendParameters} from "./chunk-upload-append-parameters";
 import {ICustomRequestParameters} from "../query/custom-request-parameters";
-import {IChunkUploadResult} from "../../../compose/upload/chunked-upload/core/chunk-uploader-result";
+import {IChunkUploadResult} from "../../../pages/modal-overlays/dialog/compose/upload/chunked-upload/core/chunk-uploader-result";
 
 export interface IChunkedUploader {
   mediaId?: number;

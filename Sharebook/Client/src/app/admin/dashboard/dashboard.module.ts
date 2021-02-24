@@ -13,7 +13,7 @@ import {
 } from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
 
-import { ThemeModule } from '../../theme/theme.module';
+import { ThemeModule } from '../theme/theme.module';
 import { DashboardComponent } from './dashboard.component';
 import { StatusCardComponent } from './status-card/status-card.component';
 import { ContactsComponent } from './contacts/contacts.component';
@@ -32,7 +32,7 @@ import { TrafficComponent } from './traffic/traffic.component';
 import { TrafficChartComponent } from './traffic/traffic-chart.component';
 import { FormsModule } from '@angular/forms';
 import { StatusCardPlaceholderComponent } from './status-card/status-card-placeholder.component';
-import { AuthModule } from '../../auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 
 @NgModule({
   imports: [

@@ -22,7 +22,6 @@ export class PostDetails extends Post {
   }
 
   buildLikeAndDislikePercents() {
-    debugger
     this.likesPercent = (this.favoriteCount / (this.favoriteCount + this.dislikeCount)) * 100;
     this.dislikesPercent = (this.dislikeCount / (this.favoriteCount + this.dislikeCount)) * 100;
   }

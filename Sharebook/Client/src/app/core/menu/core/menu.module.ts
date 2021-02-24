@@ -5,9 +5,8 @@ import {SharedModule} from "../../../shared/shared.module";
 import {SharedGlobalIconModule} from "../../../shared/shared-icons/shared-global-icon.module";
 import {RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
-import {ShareButtonComponent} from "../share-button/share-button.component";
 
-const nbMenuComponents = [MenuComponent, MenuItemComponent, ShareButtonComponent];
+const nbMenuComponents = [MenuComponent, MenuItemComponent];
 
 const NB_MENU_PROVIDERS = [MenuService, MenuInternalService];
 

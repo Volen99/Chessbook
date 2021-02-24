@@ -1,0 +1,37 @@
+@import '../../styles/core/mixins';
+
+:host {
+  display: flex;
+
+  .user-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .user-picture {
+    position: relative;
+    flex-shrink: 0;
+
+    &.image {
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    &.initials {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .user-name,
+  .user-title {
+    @include nb-rtl(text-align, right);
+  }
+
+  .info-container {
+    @include nb-ltr(margin-left, 0.5rem);
+    @include nb-rtl(margin-right, 0.5rem);
+  }
+}

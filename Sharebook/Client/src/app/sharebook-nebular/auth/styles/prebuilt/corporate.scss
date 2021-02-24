@@ -1,0 +1,8 @@
+@import '../../../theme/styles/all';
+@import '../globals';
+
+$nb-enabled-themes: (corporate);
+
+@include nb-install() {
+  @include nb-auth-global();
+};

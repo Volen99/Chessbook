@@ -1,0 +1,134 @@
+@mixin nb-search-theme() {
+
+  nb-search-field {
+    .close-button {
+      z-index: 1;
+    }
+
+    .search {
+      background: nb-theme(search-background-color);
+
+      span.info {
+        color: nb-theme(search-info-text-color);
+        font-family: nb-theme(search-info-text-font-family);
+        font-size: nb-theme(search-info-text-font-size);
+        font-weight: nb-theme(search-info-text-font-weight);
+        line-height: nb-theme(search-info-text-line-height);
+      }
+
+      input {
+        border-bottom: nb-theme(search-divider-width) nb-theme(search-divider-style) nb-theme(search-divider-color);
+        color: nb-theme(search-text-color);
+        font-family: nb-theme(search-text-font-family);
+        font-size: nb-theme(search-text-font-size);
+        font-weight: nb-theme(search-text-font-weight);
+        line-height: nb-theme(search-text-line-height);
+
+        &::placeholder {
+          color: nb-theme(search-placeholder-text-color);
+        }
+
+        &::-ms-clear {
+          display: none;
+        }
+      }
+    }
+
+    &.rotate-layout {
+      opacity: 0;
+      background: nb-theme(search-background-color);
+    }
+
+    &.modal-zoomin {
+      .search::before,
+      .search::after {
+        border: 1.5rem solid nb-theme(search-extra-background-color);
+      }
+
+    }
+
+    &.modal-half {
+      .form-wrapper {
+        background: nb-theme(search-background-color);
+      }
+      .search::before {
+        background: nb-theme(search-extra-background-color);
+      }
+    }
+
+    &.modal-drop {
+      .form-content::after {
+        background: nb-theme(search-divider-color);
+      }
+      .search::before {
+        background: nb-theme(search-background-color);
+      }
+    }
+
+    &.curtain {
+      .search::after {
+        background: nb-theme(search-background-color);
+      }
+      .search {
+        background: nb-theme(search-background-color);
+      }
+    }
+
+    &.column-curtain {
+      &::before {
+        background: nb-theme(search-background-color);
+      }
+      &::after {
+        background: transparent;
+      }
+      &.show::after {
+        background: nb-theme(search-extra-background-color);
+      }
+    }
+  }
+}
+
+// by mi
+@import '../../../theme/styles/themes';
+@import '../../../../../../node_modules/@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+  .show-grid {
+    .row {
+      margin: -0.5rem;
+    }
+
+    div[class^=col-] {
+      padding: 0.5rem;
+      box-sizing: border-box;
+
+      div {
+        text-align: center;
+        background-color: nb-theme(background-basic-color-2);
+        padding: 0.75rem 0.25rem;
+        border-radius: 0.25rem;
+      }
+    }
+  }
+
+  .grid-h {
+    margin-top: 1.5rem;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .table-responsive {
+    margin-top: 1rem;
+  }
+}
+
+//@include media-breakpoint-down(xxxl) {
+//  nb-card-body {
+//    margin-left: 109px;
+//  }
+//}
+
+
+

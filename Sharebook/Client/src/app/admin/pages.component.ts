@@ -1,9 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { NbTokenService } from '@nebular/auth';
-import { NbMenuItem } from '@nebular/theme';
 import { PagesMenu } from './pages-menu';
-import { InitUserService } from '../theme/services/init-user.service';
+import { InitUserService } from './theme/services/init-user.service';
+import {NbMenuItem} from "@nebular/theme";
 
 @Component({
   selector: 'ngx-pages',

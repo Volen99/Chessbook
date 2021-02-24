@@ -1,76 +1,75 @@
-import {ExtraOptions, RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {AuthGuard} from './auth/auth.guard';
+import {ExtraOptions, RouterModule, Routes} from '@angular/router';
+
+import {AuthGuard} from "./auth/auth.guard";
 
 const routes: Routes = [
-    {
+  {
+    path: '',
+    children: [
+      {
         path: '',
-        pathMatch: 'full',
-        loadChildren: () => import('./logged-out-home/logged-out-home.module').then(m => m.LoggedOutHomeModule),
-    },
-    {
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
+      {
+        path: 'home',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule),
+      },
+      {
+        path: 'explore',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./pages/explore/explore.module').then(m => m.ExploreModule),
+      },
+      {
+        path: 'profile',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule),
+      },
+      {
+        path: 'ui-features',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./pages/ui-features/ui-features.module')
+          .then(m => m.UiFeaturesModule),
+      },
+      {
+        path: 'infinite',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./pages/layout/layout.module')
+          .then(m => m.LayoutModule),
+      },
+      {
+        path: 'auth',
+        loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+      },
+      {
         path: 'admin',
         // canActivate: [AuthGuard],
-        loadChildren: () => import('app/admin/pages.module').then(m => m.PagesModule),
-    },
-    {
-        path: 'home',
-        // canActivate: [AuthGuard],
-        loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
-    },
-    {
-        path: 'explore',
-        // canActivate: [AuthGuard],
-        loadChildren: () => import('./explore/explore.module').then(m => m.ExploreModule),
-    },
-    {
-        path: 'notifications',
-        // canActivate: [AuthGuard],
-        loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule),
-    },
-    {
-        path: 'messages',
-        // canActivate: [AuthGuard],
-        loadChildren: () => import('./messages/messages.module').then(m => m.MessagesModule),
-    },
-    {
-        path: 'auth',
-        loadChildren: () => import('app/auth/auth.module').then(m => m.AuthModule),
-    },
-    {
-        path: 'compose/share',
-        loadChildren: () => import('app/compose/compose.module').then(m => m.ComposeModule),
-    },
-    {
-        path: 'display',
-        loadChildren: () => import('app/theme/theme.module').then(m => m.ThemeModule),
-    },
-    {
-        path: ':username',
-        // canActivate: [AuthGuard],
-        loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule)
-    },
-    // {
-    //     path: '',
-    //     component: EmptyComponent, // Avoid 4õ4, app component will redirect dynamically
-    // },
-    {
-        path: '**',
-        redirectTo: 'pages',
-    },
+        loadChildren: () => import('./admin/pages.module').then(m => m.PagesModule),
+      },
+    ]
+  },
+
+  //
+  // {
+  //   path: '**',
+  //   redirectTo: 'pages'
+  // },
 ];
 
+
 const config: ExtraOptions = {
-    useHash: false,
-    relativeLinkResolution: 'legacy',
+  useHash: false,
+  // relativeLinkResolution: 'legacy', // TODO: was uncommented
 }; /*{
     useHash: false,
-    relativeLinkResolution: 'legacy'
+    relativeLinkResolution: 'legacy'// you're required to use ../ rather than ./ when set to 'legacy'
 };*/
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, config)],
-    exports: [RouterModule],
+  imports: [RouterModule.forRoot(routes, config)],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {
 }

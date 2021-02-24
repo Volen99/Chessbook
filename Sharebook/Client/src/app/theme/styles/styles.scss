@@ -4,19 +4,19 @@
 @import 'themes';
 
 // framework component themes (styles tied to theme variables)
-@import '~@nebular/theme/styles/globals';
-@import '~@nebular/auth/styles/all';
+@import '../../sharebook-nebular/theme/styles/globals';
+@import '../../sharebook-nebular/auth/styles/globals';    // TODO might bug, u know why kk
 
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
-@import '~bootstrap/scss/grid';
+@import '../../../../node_modules/bootstrap/scss/functions';
+@import '../../../../node_modules/bootstrap/scss/variables';
+@import '../../../../node_modules/bootstrap/scss/mixins';
+@import '../../../../node_modules/bootstrap/scss/grid';
 
 // loading progress bar theme
-@import './pace.theme';
+@import 'pace.theme';
 
-@import './layout';
-@import './overrides';
+@import 'layout';
+@import 'overrides';
 
 // install the framework and custom global styles
 @include nb-install() {
@@ -33,4 +33,4 @@
 };
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import '../../../../node_modules/bootstrap/scss/bootstrap';

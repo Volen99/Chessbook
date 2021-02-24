@@ -1,0 +1,21 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+@function nb-get-core-statuses() {
+  @return 'basic', 'primary', 'success', 'warning', 'danger', 'info', 'control';
+}
+
+@function nb-get-statuses() {
+  @return join(nb-get-core-statuses(), $nb-custom-statuses);
+}
+
+@function nb-get-sizes() {
+  @return 'tiny', 'small', 'medium', 'large', 'giant';
+}
+
+@function nb-get-shapes() {
+  @return 'rectangle', 'semi-round', 'round';
+}

@@ -1,0 +1,91 @@
+@import '../../styles/core/mixins';
+
+:host ::ng-deep {
+  display: block;
+
+  .menu-items,
+  .menu-item > .menu-items {
+    list-style-type: none;
+    overflow: hidden;
+  }
+
+  .menu-item a {
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+
+    .menu-title {
+      flex: 1 0 auto;
+      @include nb-rtl(text-align, right);
+    }
+  }
+
+  .menu-item nb-badge {
+    position: static;
+  }
+
+  .menu-group span {
+    display: flex;
+  }
+}
+
+
+
+
+
+$menu-link-icon-size: 22px;
+$menu-link-icon-margin-right: 18px;
+
+$menu-link-icon-height: 1.75rem;
+
+$menu-link-background-color: rgba(29, 161, 242, 0.1);
+$menu-link-text-color: rgba(29, 161, 242, 1.00);
+
+.menu-width {
+  width: 275px;
+}
+
+.svg-menu-height {
+  height: $menu-link-icon-height;
+}
+
+
+.menu-logo-padding-bottom-top {
+  padding-bottom: 2px;
+  padding-top: 2px;
+}
+
+.menu-logo-height {
+  height: 2rem;
+}
+
+.r-1ag2gil {
+  padding-bottom: 7px;
+  padding-top: 7px;
+}
+
+.menu-profile-margin-left-right {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.notifications-count-box-sizing {
+  box-sizing: content-box;
+}
+
+.notifications-count-font-size {
+  font-size: 11px;
+}
+
+
+.notifications-count-min-width {
+  min-width: 1.5em;
+}
+
+.notifications-count-right {
+  right: -4px;
+}
+
+.notifications-count-top {
+  top: -6px;
+}

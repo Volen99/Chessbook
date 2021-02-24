@@ -1,8 +1,9 @@
-import { NbAuthService, NbAuthOAuth2JWTToken } from '@nebular/auth';
-import { NbRoleProvider } from '@nebular/security';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+import {NbRoleProvider} from "../sharebook-nebular/security/services/role.provider";
+import {NbAuthService} from "../sharebook-nebular/auth/services/auth.service";
+import {NbAuthOAuth2JWTToken} from "../sharebook-nebular/auth/services/token/token";
 
 @Injectable()
 export class RoleProvider extends NbRoleProvider {

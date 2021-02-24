@@ -1,6 +1,6 @@
-import { NbMenuItem } from '@nebular/theme';
-import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { NbMenuItem } from '@nebular/theme';
 
 @Injectable()
 export class PagesMenu {
@@ -126,7 +126,7 @@ export class PagesMenu {
         ],
       },
       {
-        title: 'Extra Components',
+        title: 'Extra components',
         icon: 'message-circle-outline',
         children: [
           {

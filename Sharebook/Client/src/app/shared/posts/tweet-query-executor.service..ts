@@ -52,7 +52,8 @@ import {addWarning} from "@angular-devkit/build-angular/src/utils/webpack-diagno
 @Injectable()
 export class TweetQueryExecutorService {
 
-  constructor(private tweetQueryGeneratorService: TweetQueryGeneratorService, private postsApi: PostsApi) {
+  constructor(private tweetQueryGeneratorService: TweetQueryGeneratorService,
+              private postsApi: PostsApi) {
   }
 
   // public async getTweetAsync(parameters: IGetTweetParameters): Promise<ITweetDTO> {
@@ -81,7 +82,6 @@ export class TweetQueryExecutorService {
     return await this.postsApi.publishTweetAsync(params)
         .toPromise()
         .then(data => {
-            debugger
           return data;
         });
   }

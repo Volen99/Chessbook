@@ -1,6 +1,31 @@
 @import "../../../sass/application";
 
-.r-1hycxz {
+@include media-breakpoint-down(sm) {
+  .control-item {
+    display: none;
+  }
+  .user-action {
+    border: none;
+    padding: 0;
+  }
+}
+
+nb-actions.size-small nb-action {
+  height: inherit;
+  padding: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+
+
+
+
+
+
+.sidebarColumn-width {
   width: 350px;
 }
 

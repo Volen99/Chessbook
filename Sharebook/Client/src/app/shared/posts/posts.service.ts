@@ -297,7 +297,6 @@ export class PostsService {
   }
 
   extractVideos(result: ResultList<Post>) {
-    debugger
     const postsJson = result.data;
     const totalPosts = result.total;
     const posts: Post[] = [];

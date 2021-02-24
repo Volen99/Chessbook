@@ -1,0 +1,52 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+@mixin nb-progress-bar-theme() {
+  nb-progress-bar {
+    .progress-container {
+      border-radius: nb-theme(progress-bar-border-radius);
+    }
+
+    .progress-value {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: nb-theme(progress-bar-text-font-family);
+      transition-duration: nb-theme(progress-bar-animation-duration);
+      transition-property: width, background-color;
+    }
+  }
+
+  @each $size in nb-get-sizes() {
+
+    nb-progress-bar.size-#{$size} {
+      .progress-container {
+        height: nb-theme(progress-bar-#{$size}-height);
+      }
+
+      .progress-value {
+        font-size: nb-theme(progress-bar-#{$size}-text-font-size);
+        font-weight: nb-theme(progress-bar-#{$size}-text-font-weight);
+        line-height: nb-theme(progress-bar-#{$size}-text-line-height);
+      }
+    }
+  }
+
+  @each $status in nb-get-statuses() {
+
+    nb-progress-bar.status-#{$status} {
+      .progress-container {
+        background-color: nb-theme(progress-bar-#{$status}-background-color);
+      }
+
+      .progress-value {
+        background-color: nb-theme(progress-bar-#{$status}-filled-background-color);
+        color: nb-theme(progress-bar-#{$status}-text-color);
+      }
+    }
+  }
+}
+

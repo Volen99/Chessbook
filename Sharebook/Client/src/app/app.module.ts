@@ -2,35 +2,33 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { CoreModule } from './core/core.module';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './theme/theme.module';
 import { AuthModule } from './auth/auth.module';
 
-import {
-  NbChatModule,
-  NbDatepickerModule,
-  NbDialogModule,
-  NbMenuModule,
-  NbSidebarModule,
-  NbToastrModule,
-  NbWindowModule,
-} from '@nebular/theme';
 import {EmptyComponent} from "./empty.component";
 import {SharedMainModule} from "./shared/shared-main/shared-main.module";
 import {SharedGlobalIconModule} from "./shared/shared-icons/shared-global-icon.module";
 import {SharedModule} from "./shared/shared.module";
-import {ComposeModule} from "./compose/compose.module";
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {SharedFormModule} from "./shared/forms/shared-form.module";
-import {PagesModule} from "./core/menu/pages.module";
+import {NbSidebarModule} from "./sharebook-nebular/theme/components/sidebar/sidebar.module";
+import {NbMenuModule} from "./sharebook-nebular/theme/components/menu/menu.module";
+import {NbDatepickerModule} from "./sharebook-nebular/theme/components/datepicker/datepicker.module";
+import {NbDialogModule} from "./sharebook-nebular/theme/components/dialog/dialog.module";
+import {NbWindowModule} from "./sharebook-nebular/theme/components/window/window.module";
+import {NbToastrModule} from "./sharebook-nebular/theme/components/toastr/toastr.module";
+import {NbChatModule} from "./sharebook-nebular/theme/components/chat/chat.module";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {CoreModule} from "./core/core.module";
+import {PagesMenu} from "./pages/pages-menu";
+import {ModalOverlaysModule} from "./pages/modal-overlays/modal-overlays.module";
 
 @NgModule({
   declarations: [
-      AppComponent,
-      EmptyComponent,
+    AppComponent,
+    EmptyComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,26 +40,32 @@ import {PagesModule} from "./core/menu/pages.module";
     SharedGlobalIconModule, // not used in appModule?!
 
     AuthModule.forRoot(),
-    //
-    // NbSidebarModule.forRoot(),
-    // NbMenuModule.forRoot(),
-    // NbDatepickerModule.forRoot(),
-    // NbDialogModule.forRoot(),
-    // NbWindowModule.forRoot(),
-    // NbToastrModule.forRoot(),
-    // NbChatModule.forRoot({
-    //   messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
-    // }),
+
+    NbSidebarModule.forRoot(),
+    NbMenuModule.forRoot(),
+    NbDatepickerModule.forRoot(),
+    NbDialogModule.forRoot(),
+    NbWindowModule.forRoot(),
+    NbToastrModule.forRoot(),
+    NbChatModule.forRoot({
+      messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
+    }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
 
+
+    ModalOverlaysModule,
+
     SharedModule,
     SharedMainModule,
-    ComposeModule,
-    // NgbModule,
+
+    ThemeModule,
+    NbMenuModule,
+
+    NgbModule,
   ],
   bootstrap: [AppComponent],
-  providers: [],
+  providers: [PagesMenu],
 })
 export class AppModule {
 }

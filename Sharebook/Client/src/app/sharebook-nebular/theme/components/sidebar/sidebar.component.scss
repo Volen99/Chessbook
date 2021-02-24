@@ -1,0 +1,165 @@
+@import '../../styles/core/mixins';
+
+@import '../../../../../../node_modules/bootstrap/scss/mixins/breakpoints';
+@import '../../../../sharebook-nebular/theme/styles/global/breakpoints';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: auto;
+  order: 0;
+
+  .scrollable {
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+  }
+
+  .main-container {
+    // TODO: this looks like a dirty fix to stop sidebar jumping while page is scrolled
+    transform: translate3d(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main-container-fixed {
+    position: fixed;
+
+    // bt mi
+    align-items: center;
+  }
+
+  &.right {
+    @include nb-ltr(order, 4);
+    @include nb-rtl(order, 0);
+    margin-right: 0;
+    margin-left: auto;
+  }
+
+  &.end {
+    order: 4;
+    @include nb-ltr() {
+      margin-right: 0;
+      margin-left: auto;
+    };
+    @include nb-rtl() {
+      margin-left: 0;
+      margin-right: auto;
+    };
+  }
+
+  // TODO: in this case this will won't work when header is not fixed and sidebar is
+  &.fixed {
+    position: fixed;
+    height: 100%;
+    z-index: 999;
+    top: 0;
+    bottom: 0;
+
+    left: 0;
+
+    &.right {
+      right: 0;
+    }
+  }
+
+  &.fixed.start {
+    @include nb-ltr(left, 0);
+    @include nb-rtl(right, 0);
+  }
+  &.fixed.end {
+    @include nb-ltr(right, 0);
+    @include nb-rtl(left, 0);
+  }
+
+  ::ng-deep nb-sidebar-footer {
+    margin-top: auto;
+    display: block;
+  }
+
+  ::ng-deep nb-sidebar-header {
+    display: block;
+  }
+
+  .share-button {
+    margin-top: 30px;
+  }
+}
+
+
+// by mi
+
+$menu-link-icon-size: 22px;
+$menu-link-icon-margin-right: 18px;
+
+$menu-link-icon-height: 1.75rem;
+
+$menu-link-background-color: rgba(29, 161, 242, 0.1);
+$menu-link-text-color: rgba(29, 161, 242, 1.00);
+
+@include media-breakpoint-down(md) {
+  app-share-button {
+    display: none;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  app-share-button {
+    display: none;
+  }
+}
+
+.menu-width {
+  width: 275px;
+}
+
+.svg-menu-height {
+  height: $menu-link-icon-height;
+}
+
+
+.menu-logo-padding-bottom-top {
+  padding-bottom: 2px;
+  padding-top: 2px;
+}
+
+.menu-logo-height {
+  height: 2rem;
+}
+
+.r-1ag2gil {
+  padding-bottom: 7px;
+  padding-top: 7px;
+}
+
+.menu-profile-margin-left-right {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.notifications-count-box-sizing {
+  box-sizing: content-box;
+}
+
+.notifications-count-font-size {
+  font-size: 11px;
+}
+
+
+.notifications-count-min-width {
+  min-width: 1.5em;
+}
+
+.notifications-count-right {
+  right: -4px;
+}
+
+.notifications-count-top {
+  top: -6px;
+}
+
+.account-menu {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}

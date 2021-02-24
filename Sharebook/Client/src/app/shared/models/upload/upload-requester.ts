@@ -1,8 +1,8 @@
 import {IUploadParameters} from "./upload-binary-parameters";
-import {IChunkUploadResult} from "../../../compose/upload/chunked-upload/core/chunk-uploader-result";
 import {IAddMediaMetadataParameters} from "./add-media-metadata-parameters";
 import {IMedia} from "./media/media";
 import {IUploadedMediaInfo} from "./media/uploaded-media-info";
+import {IChunkUploadResult} from "../../../pages/modal-overlays/dialog/compose/upload/chunked-upload/core/chunk-uploader-result";
 
 export interface IUploadRequester {
   /// <summary>

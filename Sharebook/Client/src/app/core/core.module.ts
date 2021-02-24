@@ -1,49 +1,36 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { NbAuthModule } from '@nebular/auth';
+import {CommonMockModule} from "../core/mock/common/common-mock.module";
+import {CommonBackendModule} from "../core/backend/common/common-backend.module";
+import {AnalyticsService, LayoutService, PlayerService, StateService} from "../core/utils";
+import {throwIfAlreadyLoaded} from "../core/module-import-guard";
+import {UserStore} from "../core/stores/user.store";
+import {UsersService} from "../core/backend/common/services/users.service";
+import {InitUserService} from "../theme/services/init-user.service";
+import {SettingsService} from "../core/backend/common/services/settings.service";
+import {NbAuthModule} from "../sharebook-nebular/auth/auth.module";
+import {RestService} from "../core/rest/rest.service";
+import {RestExtractor} from "../core/rest/rest-extractor";
+import {ScreenService} from "../core/wrappers/screen.service";
+import {LocalStorageService, SessionStorageService} from "../core/wrappers/storage.service";
+import {HooksService, PluginService} from "../core/plugins";
+import {AuthService} from "../core/auth/auth.service";
+import {HtmlRendererService} from "../core/renderer/html-renderer.service";
+import {LinkifierService} from "../core/renderer/linkifier.service";
+import {MarkdownService} from "../core/renderer/markdown.service";
+import {ConfirmService} from "../core/confirm/confirm.service";
+import {Notifier} from "../core/notification/notifier.service";
+import {MenuInternalService, MenuService} from "../core/menu/core/menu.service";
 
-import { throwIfAlreadyLoaded } from './module-import-guard';
-import {
-  AnalyticsService,
-  LayoutService,
-  PlayerService,
-  StateService,
-} from './utils';
 
-import { CommonBackendModule } from './backend/common/common-backend.module';
-import { CommonMockModule } from './mock/common/common-mock.module';
-import { EcommerceMockModule } from './mock/ecommerce/ecommerce-mock.module';
-import { IotMockModule } from './mock/iot/iot-mock.module';
-import { UserStore } from './stores/user.store';
-import { UsersService } from './backend/common/services/users.service';
-import { SettingsService } from './backend/common/services/settings.service';
-import { InitUserService } from '../theme/services/init-user.service';
-import {HooksService, PluginService} from "./plugins";
-import {SharedGlobalIconModule} from "../shared/shared-icons/shared-global-icon.module";
-import {RouterModule} from "@angular/router";
-import {RestService} from "./rest/rest.service";
-import {RestExtractor} from "./rest/rest-extractor";
-import {ScreenService} from "./wrappers/screen.service";
-import {LocalStorageService, SessionStorageService} from "./wrappers/storage.service";
-import {HtmlRendererService} from "./renderer/html-renderer.service";
-import {LinkifierService} from "./renderer/linkifier.service";
-import {MarkdownService} from "./renderer/markdown.service";
-import {ConfirmService} from "./confirm/confirm.service";
-import {Notifier} from "./notification/notifier.service";
-import {AuthService} from "./auth/auth.service";
-import {PagesModule} from "./menu/pages.module";
-import {MenuModule} from "./menu/core/menu.module";
-import {PagesComponent} from "./menu/pages.component";
-import {MenuInternalService, MenuService} from "./menu/core/menu.service";
 
 
 export const NB_CORE_PROVIDERS = [
   ...CommonMockModule.forRoot().providers,
   ...CommonBackendModule.forRoot().providers,
 
-  ...EcommerceMockModule.forRoot().providers,
-  ...IotMockModule.forRoot().providers,
+  // ...EcommerceMockModule.forRoot().providers,
+  // ...IotMockModule.forRoot().providers,
 
   AnalyticsService,
   LayoutService,
@@ -59,15 +46,9 @@ export const NB_CORE_PROVIDERS = [
 @NgModule({
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
-    RouterModule,
-
-    PagesModule,
-    SharedGlobalIconModule,
   ],
   exports: [
     NbAuthModule,
-    PagesComponent,
   ],
   declarations: [],
 })
@@ -85,6 +66,11 @@ export class CoreModule {
         UsersService,
         InitUserService,
         SettingsService,
+
+
+
+
+
         PluginService,
         HooksService,
         AuthService,

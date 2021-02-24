@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NB_AUTH_OPTIONS, NbAuthSocialLink, NbAuthService, NbAuthResult } from '@nebular/auth';
 import { getDeepFromObject } from '../../helpers';
 import { EMAIL_PATTERN } from '../constants';
+import {NB_AUTH_OPTIONS, NbAuthSocialLink} from "../../../sharebook-nebular/auth/auth.options";
+import {NbAuthService} from "../../../sharebook-nebular/auth/services/auth.service";
+import {NbAuthResult} from "../../../sharebook-nebular/auth/services/auth-result";
 
 @Component({
   selector: 'ngx-register',

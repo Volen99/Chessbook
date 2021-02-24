@@ -10,7 +10,7 @@ import {
   NbTabsetModule, NbUserModule,
 } from '@nebular/theme';
 
-import { ThemeModule } from '../../theme/theme.module';
+import { ThemeModule } from '../theme/theme.module';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { Tab1Component, Tab2Component, TabsComponent } from './tabs/tabs.component';

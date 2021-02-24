@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'ngx-search-input',
+  selector: 'app-search-input',
   styleUrls: ['./search-input.component.scss'],
   template: `
     <i class="control-icon ion ion-ios-search"

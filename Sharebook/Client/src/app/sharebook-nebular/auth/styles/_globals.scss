@@ -1,0 +1,5 @@
+@import 'global/components';
+
+@mixin nb-auth-global() {
+  @include nb-auth-components();
+}

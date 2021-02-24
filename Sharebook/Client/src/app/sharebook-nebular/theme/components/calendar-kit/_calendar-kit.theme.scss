@@ -1,0 +1,21 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+@import './components/calendar-navigation/calendar-navigation.theme';
+@import './components/calendar-picker/calendar-picker.component.theme';
+@import './components/calendar-days-names/calendar-days-names.component.theme';
+@import './components/calendar-week-number/calendar-week-number.component.theme';
+@import './components/calendar-day-picker/calendar-day-picker.component.theme';
+@import './components/calendar-cell.theme';
+
+@mixin nb-calendar-kit-theme() {
+  @include nb-calendar-navigation-theme();
+  @include nb-calendar-picker-theme();
+  @include nb-calendar-days-names-theme();
+  @include nb-calendar-week-numbers-theme();
+  @include nb-calendar-day-picker-theme();
+  @include nb-calendar-cell-theme();
+}

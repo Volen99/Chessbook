@@ -1,8 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { NB_AUTH_OPTIONS, NbAuthService, NbAuthResult } from '@nebular/auth';
 import { getDeepFromObject } from '../../helpers';
+import {NB_AUTH_OPTIONS} from "../../../sharebook-nebular/auth/auth.options";
+import {NbAuthService} from "../../../sharebook-nebular/auth/services/auth.service";
+import {NbAuthResult} from "../../../sharebook-nebular/auth/services/auth-result";
 
 @Component({
   selector: 'ngx-logout',
@@ -23,7 +25,6 @@ export class NgxLogoutComponent implements OnInit {
 
   logout(strategy: string): void {
     this.service.logout(strategy).subscribe((result: NbAuthResult) => {
-      debugger
       const redirect = result.getRedirect();
       if (redirect) {
         setTimeout(() => {

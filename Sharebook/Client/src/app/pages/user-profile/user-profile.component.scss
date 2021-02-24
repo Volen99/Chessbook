@@ -1,0 +1,344 @@
+//// Bootstrap grid utilities require functions, variables and mixins
+//@import 'node_modules/bootstrap/scss/functions';
+//@import 'node_modules/bootstrap/scss/variables';
+//@import 'node_modules/bootstrap/scss/mixins';
+//@import 'node_modules/bootstrap/scss/grid';
+//
+//@import '_variables';
+//@import '_mixins';
+
+@import "../../../sass/application";
+
+
+
+
+
+.main-width {
+  width: 990px;
+}
+
+.r-2llsf {
+  min-height: 100%;
+}
+
+.main-left-vertical-border-left-width {
+  border-left-width: 1px;
+}
+
+
+/*heading*/
+
+
+
+
+.font-weight-800 {
+  font-weight: 800;
+}
+
+
+.miniature-element-height {
+  height: 1.25em;
+}
+
+.svg-margin-left {
+  margin-left: 2px;
+}
+
+.max-width-100-per {
+  max-width: 100%;
+}
+
+.third-wheel-color {
+  color: rgb(110, 118, 125);
+}
+
+.line-height-calc {
+  line-height: calc(19.6875px);
+}
+
+
+.r-1uusn97 {
+  box-shadow: rgba(217, 217, 217, 0.2) 0px 0px 5px, rgba(217, 217, 217, 0.25) 0px 1px 4px 1px;
+}
+
+.r-d3hbe1 {
+  transform: translate3d(0px, 0px, 0px);
+}
+
+.r-nx0j10 {
+  transition-timing-function: ease, ease, step-end;
+}
+/*end heading*/
+
+.r-ku1wi2 {
+  margin-bottom: 15px;
+}
+
+.align-items-flex-end {
+  -webkit-box-align: end;
+  align-items: flex-end;
+}
+
+
+.notifications-border-color {
+  border-color: rgb(0, 0, 0);
+}
+
+.r-14f9gny {
+  border-width: 4px;
+}
+
+.r-1gzrgec {
+  margin-bottom: -4px;
+}
+
+
+.r-cnkkqs {
+  margin-left: -4px;
+}
+
+.r-zjg7tu {
+  margin-top: -18%;
+}
+
+.min-width-49px {
+  min-width: 49px;
+}
+
+.r-1xce0ei {
+  width: 25%;
+}
+
+.display-block {
+  display: block;
+}
+
+.r-15d164r {
+  margin-bottom: 10px;
+}
+
+
+
+.emoji-margin-left {
+  margin-left: 0.075em;
+}
+
+.emoji-margin-right {
+  margin-right: 0.075em;
+}
+
+.r-h9hxbl {
+  width: 1.2em;
+}
+
+.r-1vglu5a {
+  line-height: 10px;
+}
+
+
+.flex-expand {
+  -ms-flex: 1 1 0%;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+/*end profile */
+
+
+.r-1ro0kt6 {
+  flex-basis: 0%;
+}
+
+
+
+
+.padding-bottom-top-15px {
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+
+.r-axxi2z {
+  transition-property: -webkit-transform, transform;
+}
+
+
+.r-tzz3ar {
+  flex-wrap: nowrap;
+}
+
+
+
+.r-lltvgl {
+  overflow-x: auto;
+}
+
+.r-buy8e9 {
+  overflow-y: hidden;
+}
+
+.r-mfh4gg {
+  scroll-snap-type: x mandatory;
+}
+
+
+.r-2eszeu {
+}
+
+.r-2eszeu::-webkit-scrollbar {
+  display: none;
+}
+
+.r-hbs49y {
+  transform: translate3d(0px, 0px, 0px);
+}
+
+.r-6b64d0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.r-cpa5s6 {
+  scroll-snap-align: start;
+}
+
+
+.r-oucylx {
+  border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.r-wgabs5 {
+  border-bottom-width: 2px;
+}
+
+.r-1oqcu8e {
+  padding: 15px;
+}
+
+.r-13zfj0p {
+  color: rgb(47, 51, 54);
+}
+
+.r-150rngu {
+}
+
+.r-18p3no4 {
+  border-bottom-color: rgb(29, 161, 242);
+}
+
+
+.font-weight-400 {
+  font-weight: 400;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//.sub-menu {
+//  @include sub-menu-with-actor;
+//
+//  .actor {
+//    width: 100%;
+//  }
+//}
+//
+//.margin-content {
+//  // margin-content is required, but child views have their own margins
+//  // that match views outside the scope of accounts, so we only align
+//  // them with the margins of .sub-menu when required.
+//  margin: 0;
+//}
+//
+//.right-buttons {
+//  display: flex;
+//  height: max-content;
+//  margin-left: auto;
+//  margin-top: 10px;
+//
+//  @include media-breakpoint-down(lg) {
+//    flex-flow: column-reverse;
+//
+//    a {
+//      margin-top: 0.25rem;
+//      margin-right: 0 !important;
+//    }
+//  }
+//
+//  a {
+//    @include sharebook-button-outline;
+//  }
+//
+//  app-subscribe-button {
+//    min-height: 30px;
+//  }
+//}
+//
+//app-users-moderation-dropdown,
+//.badge {
+//  margin-left: 10px;
+//
+//  position: relative;
+//  top: 3px;
+//}
+//
+//.badge {
+//  font-size: 13px;
+//}
+//
+//.copy-button {
+//  border: none;
+//  padding: 5px;
+//  margin-top: -2px;
+//}
+//
+//@media screen and (max-width: $mobile-view) {
+//  .sub-menu {
+//    .actor {
+//      flex-direction: column;
+//      align-items: center;
+//
+//      img,
+//      .actor-info .actor-names .actor-display-name {
+//        margin-right: 0;
+//      }
+//
+//      .actor-info  {
+//        .actor-names {
+//          flex-direction: column;
+//          align-items: center;
+//        }
+//
+//        app-users-moderation-dropdown {
+//          margin-left: 0;
+//        }
+//
+//        .actor-followers {
+//          text-align: center;
+//        }
+//      }
+//    }
+//  }
+//}

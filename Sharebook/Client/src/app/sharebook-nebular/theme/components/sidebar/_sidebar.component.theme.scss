@@ -1,0 +1,182 @@
+@mixin nb-sidebar-theme() {
+
+  nb-sidebar {
+
+    background-color: nb-theme(sidebar-background-color);
+    box-shadow: nb-theme(sidebar-shadow);
+    color: nb-theme(sidebar-text-color);
+    font-family: nb-theme(sidebar-text-font-family);
+    font-size: nb-theme(sidebar-text-font-size);
+    font-weight: nb-theme(sidebar-text-font-weight);
+    line-height: nb-theme(sidebar-text-line-height);
+    width: nb-theme(sidebar-width);
+
+    .main-container {
+      height: nb-theme(sidebar-height);
+      width: nb-theme(sidebar-width);
+    }
+
+    .scrollable {
+      padding: nb-theme(sidebar-padding);
+      position: relative;
+
+      -webkit-transform: translate3d(0, 0, 0); // ios optimisation
+      @include media-breakpoint-down(sm) {
+        overflow-y: auto; // scroll;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      @include nb-scrollbars(
+          nb-theme(sidebar-scrollbar-color),
+          nb-theme(sidebar-scrollbar-background-color),
+          nb-theme(sidebar-scrollbar-width));
+    }
+
+    // TODO: width used to use transition on width
+    &.collapsed {
+      width: 0;
+      padding: 0;
+      .main-container {
+        width: 0;
+        padding: 0;
+      }
+      .scrollable {
+        width: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      nb-sidebar-header,  nb-sidebar-footer {
+        width: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    }
+
+    &.compacted {
+      width: nb-theme(sidebar-width-compact);
+      .main-container {
+        width: nb-theme(sidebar-width-compact);
+      }
+
+      nb-menu {
+        width: nb-theme(sidebar-width-compact);
+
+        .menu-item a.active {
+          position: relative;
+
+          &::before {
+            position: absolute;
+            content: '';
+            @include nb-ltr(left, 0);
+            @include nb-rtl(right, 0);
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: nb-theme(sidebar-menu-item-highlight-color);
+          }
+        }
+
+        > .menu-items > .menu-item > a {
+          span, nb-badge, .expand-state {
+            display: none;
+          }
+        }
+
+        .menu-items > .menu-item {
+          transition: border-color 1s ease;
+
+          &.menu-group {
+            display: block;
+            color: transparent;
+            width: 0;
+            padding: 0;
+            overflow: hidden;
+          }
+
+          i {
+            margin-right: 0;
+          }
+
+          a {
+            justify-content: center;
+          }
+
+          & > .expanded {
+            display: none;
+          }
+        }
+
+      }
+      // we need to pull the content
+      &.left.fixed ~ .content {
+        margin-left: nb-theme(sidebar-width-compact);
+      }
+
+      &.fixed.right ~ .content {
+        margin-left: 0;
+        margin-right: nb-theme(sidebar-width-compact);
+      }
+
+      &.left.fixed ~ .content.center {
+        padding-left: nb-theme(sidebar-width-compact);
+      }
+
+      &.fixed.right ~ .content.center {
+        padding-left: 0;
+        padding-right: nb-theme(sidebar-width-compact);
+      }
+
+      &.start.fixed ~ .content {
+        @include nb-ltr(margin-left, nb-theme(sidebar-width-compact));
+        @include nb-rtl(margin-right, nb-theme(sidebar-width-compact));
+      }
+
+      &.fixed.end ~ .content {
+        @include nb-ltr(margin-right,nb-theme(sidebar-width-compact));
+        @include nb-rtl(margin-left, nb-theme(sidebar-width-compact));
+      }
+
+      &.start.fixed ~ .content.center {
+        @include nb-ltr(padding-left, nb-theme(sidebar-width-compact));
+        @include nb-rtl(padding-right, nb-theme(sidebar-width-compact));
+      }
+
+      &.fixed.end ~ .content.center {
+        @include nb-ltr(padding-right, nb-theme(sidebar-width-compact));
+        @include nb-rtl(padding-left, nb-theme(sidebar-width-compact));
+      }
+    }
+
+    &.fixed.left.collapsed + .content,
+    &.fixed.start.collapsed + .content {
+      margin-left: 0;
+    }
+
+    &.fixed.right.collapsed + .content,
+    &.fixed.end.collapsed + .content {
+      margin-right: 0;
+    }
+
+    &.expanded {
+      width: nb-theme(sidebar-width);
+      > .scrollable {
+        width: nb-theme(sidebar-width);
+      }
+    }
+
+    nb-sidebar-header {
+      padding: nb-theme(sidebar-padding);
+      height: nb-theme(sidebar-header-height);
+    }
+
+    nb-sidebar-footer {
+      padding: nb-theme(sidebar-padding);
+      height: nb-theme(sidebar-footer-height);
+    }
+
+    nb-menu {
+      margin: 0 -#{nb-theme(sidebar-padding)} -#{nb-theme(sidebar-padding)};
+    }
+  }
+}

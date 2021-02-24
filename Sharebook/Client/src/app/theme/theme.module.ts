@@ -1,29 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  NbActionsModule,
-  NbLayoutModule,
-  NbMenuModule,
-  NbSearchModule,
-  NbSidebarModule,
-  NbUserModule,
-  NbContextMenuModule,
-  NbButtonModule,
-  NbSelectModule,
-  NbIconModule,
-  NbSpinnerModule,
-  NbThemeModule,
-} from '@nebular/theme';
-import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { NbSecurityModule } from '@nebular/security';
-import { AuthModule } from '../auth/auth.module';
 
-import {
-  FooterComponent,
-  HeaderComponent,
-  SearchInputComponent,
-  TinyMCEComponent,
-} from './components';
 import {
   MeasureConverterPipe,
   CapitalizePipe,
@@ -43,10 +20,25 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
-import {DisplayComponent} from "./components/display/display.component";
-import {ThemeRoutingModule} from "./theme-routing-module";
-import {SharedMainModule} from "../shared/shared-main/shared-main.module";
-import {SharedGlobalIconModule} from "../shared/shared-icons/shared-global-icon.module";
+import {NbLayoutModule} from "../sharebook-nebular/theme/components/layout/layout.module";
+import {NbMenuModule} from "../sharebook-nebular/theme/components/menu/menu.module";
+import {NbUserModule} from "../sharebook-nebular/theme/components/user/user.module";
+import {NbActionsModule} from "../sharebook-nebular/theme/components/actions/actions.module";
+import {NbSidebarModule} from "../sharebook-nebular/theme/components/sidebar/sidebar.module";
+import {NbContextMenuModule} from "../sharebook-nebular/theme/components/context-menu/context-menu.module";
+import {NbSecurityModule} from "../sharebook-nebular/security/security.module";
+import {NbButtonModule} from "../sharebook-nebular/theme/components/button/button.module";
+import {NbSelectModule} from "../sharebook-nebular/theme/components/select/select.module";
+import {NbIconModule} from "../sharebook-nebular/theme/components/icon/icon.module";
+import {NbSpinnerModule} from "../sharebook-nebular/theme/components/spinner/spinner.module";
+import {NbEvaIconsModule} from "../sharebook-nebular/eva-icons/eva-icons.module";
+import {NbSearchModule} from "../sharebook-nebular/theme/components/search/search.module";
+import {HeaderComponent} from "./components/header/header.component";
+import {FooterComponent} from "./components/footer/footer.component";
+import {SearchInputComponent} from "./components/search-input/search-input.component";
+import {TinyMCEComponent} from "./components/tiny-mce/tiny-mce.component";
+import {AuthModule} from "../auth/auth.module";
+import {NbThemeModule} from "../sharebook-nebular/theme/theme.module";
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -64,7 +56,6 @@ const NB_MODULES = [
   NbEvaIconsModule,
 ];
 const COMPONENTS = [
-  DisplayComponent,
   HeaderComponent,
   FooterComponent,
   SearchInputComponent,
@@ -83,7 +74,7 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, ThemeRoutingModule, AuthModule, SharedMainModule, SharedGlobalIconModule, ...NB_MODULES],
+  imports: [CommonModule, AuthModule, ...NB_MODULES],
   exports: [CommonModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })
@@ -94,7 +85,7 @@ export class ThemeModule {
       providers: [
         ...NbThemeModule.forRoot(
           {
-            name: 'cosmic',
+            name: 'default',
           },
           [ DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME, DARK_THEME ],
         ).providers,

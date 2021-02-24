@@ -1,7 +1,6 @@
-<span
+<time [attr.datetime]="this.dateAbsolute"
   class="date-toggle"
   [title]="getTitle()"
-  (click)="toggle()"
->
+  (click)="toggle()">
   {{ getContent() }}
-</span>
+</time>

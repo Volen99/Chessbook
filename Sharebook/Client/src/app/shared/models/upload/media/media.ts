@@ -1,5 +1,4 @@
 ﻿import {IUploadedMediaInfo} from "./uploaded-media-info";
-import {Media} from "../../../../compose/upload/chunked-upload/core/media";
 
 export interface IMedia {
   name: string;

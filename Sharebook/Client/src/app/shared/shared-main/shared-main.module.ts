@@ -65,6 +65,7 @@ import {FeedComponent} from "./feeds/feed.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {HelpComponent} from "./misc/help.component";
+import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.module";
 
 @NgModule({
   imports: [
@@ -85,7 +86,8 @@ import {HelpComponent} from "./misc/help.component";
     //
     // PrimeSharedModule,
 
-    SharedGlobalIconModule
+    SharedGlobalIconModule,
+    NbIconModule
   ],
 
   declarations: [

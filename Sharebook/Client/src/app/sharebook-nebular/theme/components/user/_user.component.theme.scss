@@ -1,0 +1,59 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+@mixin nb-user-theme() {
+  nb-user {
+    .user-picture {
+      background-color: nb-theme(user-picture-box-background-color);
+      border: nb-theme(user-picture-box-border-width) solid nb-theme(user-picture-box-border-color);
+    }
+
+    .initials {
+      color: nb-theme(user-initials-text-color);
+      font-family: nb-theme(user-initials-text-font-family);
+      font-weight: nb-theme(user-initials-text-font-weight);
+    }
+
+    .user-name {
+      color: nb-theme(user-name-text-color);
+      font-family: nb-theme(user-name-text-font-family);
+      font-weight: nb-theme(user-name-text-font-weight);
+    }
+
+    .user-title {
+      color: nb-theme(user-title-text-color);
+      font-family: nb-theme(user-title-text-font-family);
+      font-weight: nb-theme(user-title-text-font-weight);
+    }
+  }
+
+  @each $size in nb-get-sizes() {
+    nb-user.size-#{$size} {
+      .user-picture {
+        height: nb-theme(user-#{$size}-height);
+        width: nb-theme(user-#{$size}-width);
+      }
+      .initials {
+        font-size: nb-theme(user-#{$size}-initials-text-font-size);
+        line-height: nb-theme(user-#{$size}-initials-text-line-height);
+      }
+      .user-name {
+        font-size: nb-theme(user-#{$size}-name-text-font-size);
+        line-height: nb-theme(user-#{$size}-name-text-line-height);
+      }
+      .user-title {
+        font-size: nb-theme(user-#{$size}-title-text-font-size);
+        line-height: nb-theme(user-#{$size}-title-text-line-height);
+      }
+    }
+  }
+
+  @each $shape in nb-get-shapes() {
+    nb-user.shape-#{$shape} .user-picture {
+      border-radius: nb-theme(user-#{$shape}-border-radius);
+    }
+  }
+}

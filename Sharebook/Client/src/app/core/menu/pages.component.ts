@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NbMenuItem} from "@nebular/theme";
 import {NbTokenService} from "@nebular/auth";
-import {InitUserService} from "../../theme/services/init-user.service";
+import {InitUserService} from "../../admin/theme/services/init-user.service";
 import {takeWhile} from "rxjs/operators";
 import {PagesMenu} from "./pages-menu";
-import {MenuItem} from "./core/menu.service";
+import {MenuItem, MenuService} from "./core/menu.service";
 
 @Component({
   selector: 'app-pages',
@@ -18,7 +18,8 @@ export class PagesComponent implements OnDestroy {
 
   constructor(private pagesMenu: PagesMenu,
               private tokenService: NbTokenService,
-              protected initUserService: InitUserService) {
+              protected initUserService: InitUserService,
+              private menuService: MenuService) {
     this.initMenu();
 
     this.tokenService.tokenChange()
@@ -34,6 +35,9 @@ export class PagesComponent implements OnDestroy {
       .subscribe(menu => {
         this.menu = menu;
       });
+
+    this.menuService.collapseAll();
+
   }
 
   ngOnDestroy(): void {

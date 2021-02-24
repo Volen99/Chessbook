@@ -1,5 +1,6 @@
-import { NbAuthOAuth2JWTToken, NbPasswordAuthStrategy } from '@nebular/auth';
-import { environment } from '../../environments/environment';
+import {NbPasswordAuthStrategy} from "../sharebook-nebular/auth/strategies/password/password-strategy";
+import {NbAuthOAuth2JWTToken} from "../sharebook-nebular/auth/services/token/token";
+import {environment} from "../../environments/environment";
 
 export const socialLinks = [
   {

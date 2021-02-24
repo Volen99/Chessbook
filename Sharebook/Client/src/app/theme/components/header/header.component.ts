@@ -1,12 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
-import { LayoutService } from '../../../core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { UserStore } from '../../../core/stores/user.store';
-import { SettingsData } from '../../../core/interfaces/common/settings';
-import { IUser } from '../../../core/interfaces/common/users';
+import {IUser} from "../../../core/interfaces/common/users";
+import {UserStore} from "../../../core/stores/user.store";
+import {SettingsData} from "../../../core/interfaces/common/settings";
+import {LayoutService} from "../../../core/utils";
+import {NbThemeService} from "../../../sharebook-nebular/theme/services/theme.service";
+import {NbSidebarService} from "../../../sharebook-nebular/theme/components/sidebar/sidebar.service";
+import {NbMediaBreakpointsService} from "../../../sharebook-nebular/theme/services/breakpoints.service";
+import {NbMenuService} from "../../../sharebook-nebular/theme/components/menu/menu.service";
 
 @Component({
   selector: 'ngx-header',
@@ -93,7 +96,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   changeTheme(themeName: string) {
-    debugger
     this.userStore.setSetting(themeName);
     this.settingsService.updateCurrent(this.userStore.getUser().settings)
       .pipe(takeUntil(this.destroy$))

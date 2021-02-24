@@ -1,9 +1,9 @@
-﻿import {TimeSpan} from "../../../compose/upload/shared/timespan";
-import {CustomRequestParameters, ICustomRequestParameters} from "../query/custom-request-parameters";
+﻿import {CustomRequestParameters, ICustomRequestParameters} from "../query/custom-request-parameters";
 import {SharebookConsts} from "../../../helpers/sharebook-consts";
 import {MediaCategory} from "../enums/media-category";
 import {MediaType} from "../enums/media-type";
 import {SharebookLimits} from "../../../helpers/sharebook-limits";
+import {TimeSpan} from "../../../pages/modal-overlays/dialog/compose/upload/shared/timespan";
 
 export interface IUploadOptionalParameters {
   // Type of element that you want to publish.

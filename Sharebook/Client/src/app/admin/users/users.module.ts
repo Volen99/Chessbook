@@ -8,9 +8,9 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
-import { ThemeModule } from '../../theme/theme.module';
+import { ThemeModule } from '../theme/theme.module';
 import { UsersRoutingModule } from './users-routing.module';
-import { AuthModule } from '../../auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 
 // components
 import { UsersComponent } from './users.component';

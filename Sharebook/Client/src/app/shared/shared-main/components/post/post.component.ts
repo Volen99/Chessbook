@@ -25,6 +25,8 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  userMenu = this.getMenuItems();
+
   public userRating: UserVideoRateType = null;
 
   public tooltipLike = '';
@@ -34,6 +36,14 @@ export class PostComponent implements OnInit {
   public isLikeIconHovered = false;
   public isRetweetIconHovered = false;
   public isAddToBookmarkIconHovered = false;
+
+  getMenuItems() {
+    const userLink = this.post?.user ?  '/admin/users/current/' : '';
+    return [
+      { title: 'Profile', link: userLink, queryParams: { profile: true } },
+      { title: 'Log out', link: '/auth/logout' },
+    ];
+  }
 
   handleCommentIconHover(event: MouseEvent) {
     this.isCommentIconHovered = !this.isCommentIconHovered;
@@ -56,7 +66,7 @@ export class PostComponent implements OnInit {
       return;
     }
 
-    // Already liked this video
+    // Already liked this post
     if (this.userRating === 'like') {
       this.setRating('none');
     } else {

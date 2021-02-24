@@ -1,9 +1,10 @@
 import {Observable} from 'rxjs';
-import {IUser, UserData} from '../../core/interfaces/common/users';
 import {tap} from 'rxjs/operators';
-import {UserStore} from '../../core/stores/user.store';
 import {Injectable} from '@angular/core';
-import {NbJSThemesRegistry, NbThemeService} from '@nebular/theme';
+import {IUser, UserData} from "../../core/interfaces/common/users";
+import {NbThemeService} from "../../sharebook-nebular/theme/services/theme.service";
+import {NbJSThemesRegistry} from "../../sharebook-nebular/theme/services/js-themes-registry.service";
+import {UserStore} from "../../core/stores/user.store";
 
 @Injectable()
 export class InitUserService {

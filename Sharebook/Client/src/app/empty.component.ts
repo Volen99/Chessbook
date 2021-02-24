@@ -5,5 +5,7 @@ import { Component } from '@angular/core';
   template: '',
 })
 export class EmptyComponent {
-
+  constructor() {
+    console.log('🌌');
+  }
 }

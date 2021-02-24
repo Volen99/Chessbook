@@ -5,9 +5,10 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { NbAuthService, NbAuthToken } from '@nebular/auth';
 import { Observable, of as observableOf } from 'rxjs';
 import { map } from 'rxjs/operators';
+import {NbAuthService} from "../sharebook-nebular/auth/services/auth.service";
+import {NbAuthToken} from "../sharebook-nebular/auth/services/token/token";
 
 @Pipe({ name: 'ngxAuthToken' })
 export class AuthPipe implements PipeTransform {

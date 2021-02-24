@@ -1,0 +1,51 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+@mixin nb-spinner-theme() {
+
+  .nb-spinner-container {
+    position: relative;
+  }
+
+  nb-spinner .message {
+    color: nb-theme(spinner-text-color);
+    font-family: nb-theme(spinner-text-font-family);
+    font-size: nb-theme(spinner-text-font-size);
+    font-weight: nb-theme(spinner-text-font-weight);
+    line-height: nb-theme(spinner-text-line-height);
+  }
+
+  @each $status in nb-get-statuses() {
+    nb-spinner.status-#{$status} {
+      background-color: nb-theme(spinner-#{$status}-background-color);
+
+      .spin-circle {
+        border-top-color: nb-theme(spinner-#{$status}-circle-filled-color);
+        border-right-color: nb-theme(spinner-#{$status}-circle-empty-color);
+        border-bottom-color: nb-theme(spinner-#{$status}-circle-filled-color);
+        border-left-color: nb-theme(spinner-#{$status}-circle-filled-color);
+      }
+    }
+  }
+
+  @each $size in nb-get-sizes() {
+    nb-spinner.size-#{$size} {
+      font-size: nb-theme(spinner-height-#{$size});
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    40% {
+      transform: rotate(230deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}

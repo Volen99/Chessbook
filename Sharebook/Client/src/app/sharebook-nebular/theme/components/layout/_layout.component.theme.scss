@@ -1,0 +1,222 @@
+@mixin window-mode($padding-top) {
+  padding-top: $padding-top;
+
+  nb-layout-header.fixed {
+    top: $padding-top;
+  }
+
+  nb-layout-header.fixed ~ .layout-container nb-sidebar .main-container-fixed {
+    height: calc(100vh - #{$padding-top} - #{nb-theme(header-height)});
+    top: calc(#{$padding-top} + #{nb-theme(header-height)});
+  }
+
+  nb-sidebar.fixed {
+    left: calc((100vw - #{nb-theme(layout-window-mode-max-width)}) / 2);
+  }
+
+  .layout .layout-container {
+    nb-sidebar.fixed.right {
+      right: calc((100vw - #{nb-theme(layout-window-mode-max-width)}) / 2);
+    }
+
+    nb-sidebar.fixed {
+      top: calc(#{nb-theme(header-height)} + #{$padding-top});
+    }
+  }
+
+  .scrollable-container {
+    height: calc(100vh - #{$padding-top});
+    box-shadow: nb-theme(layout-window-shadow);
+  }
+}
+
+@mixin nb-layout-theme() {
+
+  nb-layout .scrollable-container {
+    @include nb-scrollbars(
+        nb-theme(layout-scrollbar-color),
+        nb-theme(layout-scrollbar-background-color),
+        nb-theme(layout-scrollbar-width));
+  }
+
+
+  nb-layout.with-scroll .scrollable-container {
+    overflow: auto;
+    height: 100vh;
+    display: block;
+
+    @include media-breakpoint-down(sm) {
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  .layout {
+    min-width: nb-theme(layout-window-mode-min-width);
+  }
+
+  nb-layout.window-mode {
+
+    background: nb-theme(layout-window-mode-background-color);
+    display: block;
+
+    .scrollable-container {
+      max-width: nb-theme(layout-window-mode-max-width);
+      margin: 0 auto;
+    }
+
+    .layout nb-layout-header {
+      max-width: nb-theme(layout-window-mode-max-width);
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+
+      nav {
+        max-width: nb-theme(layout-window-mode-max-width);
+        margin: 0 auto;
+      }
+    }
+
+    @media screen and (min-width: nb-theme(layout-window-mode-max-width) + 20px) {
+      $padding-top: nb-theme(layout-window-mode-padding-top) / 4;
+
+      @include window-mode($padding-top);
+
+      nb-layout.with-scroll {
+        .scrollable-container {
+          height: calc(100vh - #{$padding-top});
+        }
+      }
+    }
+
+    @media screen and (min-width: nb-theme(layout-window-mode-max-width) + 150px) {
+      $padding-top: nb-theme(layout-window-mode-padding-top) / 2;
+
+      @include window-mode($padding-top);
+
+      nb-layout.with-scroll {
+        .scrollable-container {
+          height: calc(100vh - #{$padding-top});
+        }
+      }
+    }
+
+    @media screen and (min-width: nb-theme(layout-window-mode-max-width) + 300px) {
+      $padding-top: nb-theme(layout-window-mode-padding-top);
+
+      @include window-mode($padding-top);
+
+      nb-layout.with-scroll {
+        .scrollable-container {
+          height: calc(100vh - #{$padding-top});
+        }
+      }
+    }
+  }
+
+  nb-layout .layout {
+    background-color: nb-theme(layout-background-color);
+    color: nb-theme(layout-text-color);
+    font-family: nb-theme(layout-text-font-family);
+    font-size: nb-theme(layout-text-font-size);
+    font-weight: nb-theme(layout-text-font-weight);
+    line-height: nb-theme(layout-text-line-height);
+    min-height: nb-theme(layout-min-height);
+
+    .layout-container {
+
+      nb-sidebar {
+        &.fixed,
+        .main-container-fixed {
+          top: nb-theme(header-height);
+        }
+      }
+
+      .content {
+
+        nb-layout-footer {
+          box-shadow: nb-theme(footer-shadow);
+
+          nav {
+            background-color: nb-theme(footer-background-color);
+            border-top: nb-theme(footer-divider-width) nb-theme(footer-divider-style) nb-theme(footer-divider-color);
+            color: nb-theme(footer-text-color);
+            font-family: nb-theme(footer-text-font-family);
+            font-size: nb-theme(footer-text-font-size);
+            font-weight: nb-theme(footer-text-font-weight);
+            line-height: nb-theme(footer-text-line-height);
+            padding: nb-theme(footer-padding);
+
+            a {
+              color: nb-theme(footer-text-highlight-color);
+
+              @include hover-focus-active {
+                color: nb-theme(footer-text-highlight-color);
+              }
+            }
+          }
+        }
+
+        &.center {
+          width: nb-theme(layout-content-width);
+          flex: 0 100 nb-theme(layout-content-width) !important;
+        }
+
+        .columns nb-layout-column {
+          padding: nb-theme(layout-padding);
+
+          @include media-breakpoint-down(md) {
+            padding: nb-theme(layout-medium-padding);
+          }
+
+          @include media-breakpoint-down(sm) {
+            padding: nb-theme(layout-small-padding);
+          }
+        }
+      }
+    }
+  }
+
+  nb-layout-header {
+    background-color: nb-theme(header-background-color);
+    color: nb-theme(header-text-color);
+    font-family: nb-theme(header-text-font-family);
+    font-size: nb-theme(header-text-font-size);
+    font-weight: nb-theme(header-text-font-weight);
+    line-height: nb-theme(header-text-line-height);
+
+    nav {
+      color: nb-theme(header-text-color);
+      box-shadow: nb-theme(header-shadow);
+      height: nb-theme(header-height);
+      padding: nb-theme(header-padding);
+
+      a {
+        color: nb-theme(header-text-color);
+
+        @include hover-focus-active {
+          color: nb-theme(header-text-color);
+        }
+      }
+    }
+
+    & ~ .layout-container {
+      min-height: calc(#{nb-theme(layout-min-height)} - #{nb-theme(header-height)});
+    }
+
+    &.fixed ~ .layout-container {
+      padding-top: nb-theme(header-height);
+      min-height: nb-theme(layout-min-height);
+    }
+
+    &.fixed ~ .layout-container nb-sidebar .main-container {
+      height: calc(#{nb-theme(sidebar-height)} - #{nb-theme(header-height)});
+    }
+  }
+
+  nb-layout.with-subheader {
+    nb-sidebar .main-container {
+      box-shadow: none; // so that we don't have a shadow over the header in this mode
+    }
+  }
+}

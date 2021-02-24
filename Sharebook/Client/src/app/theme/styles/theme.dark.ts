@@ -1,4 +1,5 @@
-import { NbJSThemeOptions, DARK_THEME as baseTheme } from '@nebular/theme';
+import {NbJSThemeOptions} from "../../sharebook-nebular/theme/services/js-themes/theme.options";
+import {DARK_THEME as baseTheme} from "../../sharebook-nebular/theme/services/js-themes/dark.theme";
 
 const baseThemeVariables = baseTheme.variables;
 

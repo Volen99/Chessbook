@@ -1,7 +1,7 @@
-import { NbJSThemeOptions, CORPORATE_THEME as baseTheme } from '@nebular/theme';
+import {NbJSThemeOptions} from "../../sharebook-nebular/theme/services/js-themes/theme.options";
+import {CORPORATE_THEME as baseTheme} from "../../sharebook-nebular/theme/services/js-themes/corporate.theme";
 
 const baseThemeVariables = baseTheme.variables;
-
 export const CORPORATE_THEME = {
   name: 'corporate',
   base: 'corporate',

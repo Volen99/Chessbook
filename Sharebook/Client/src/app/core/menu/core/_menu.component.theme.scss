@@ -1,5 +1,5 @@
 @mixin nb-menu-theme() {
-  app-menu {
+  nb-menu {
     background-color: nb-theme(menu-background-color);
 
     ul.menu-items {

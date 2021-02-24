@@ -1,0 +1,63 @@
+<!--<div class="sharebook-container backface-visibility-hidden flex-grow-expand">-->
+<!--    <div class="sharebook-container align-items-stretch element-background-color-rgba flex-direction-row flex-grow-expand justify-content-space-between r-2llsf width-100-per">-->
+<!--        <app-timeline></app-timeline>-->
+<!--        <app-sidebar-column></app-sidebar-column>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<div class="infinite-cards row" appInfiniteScroller (nearOfBottom)="onNearOfBottom()" [autoInit]="true" [dataObservable]="onDataSubject.asObservable()">
+    <div class="col-md-12 col-lg-7 col-xxxl-6 r-yfoy6g r-18bvks7 main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1 main-left-right-vertical-border-color"
+    style="padding-left: 0px">
+        <nb-card style="width: 102.6%"> <!--inner container to fit vertical border-->
+            <app-timeline-cards-header></app-timeline-cards-header>
+            <div class="sharebook-container ocean-line border-bottom-color border-bottom-style-solid border-bottom-width-1px r-2sztyj r-1efd50x r-5kkj8d"></div>
+            <div class="sharebook-container margin-left-right-auto main-primary-column-max-width-600px width-100-per">
+                <div class="sharebook-container">
+                    <div class="sharebook-container">
+                        <section aria-labelledby="accessible-list-1" role="region" class="sharebook-container">
+                            <h1 aria-level="1" dir="auto"
+                                role="heading"
+                                class="sharebook-link css-901oao border-width-0px r-1xk2f4g height-1px overflow-hidden r-wwvuq4 position-absolute width-1px"
+                                id="accessible-list-1">Your Home
+                                Timeline
+                            </h1>
+                            <div aria-label="Timeline: Your Home Timeline" class="sharebook-container">
+                                <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.posts.length) + 'px'}">
+                                    <ng-container *ngIf="this.posts?.length > 0;">
+                                        <app-post *ngFor="let post of this.posts; index as i"
+                                                  [hasText]="!!post.text"
+                                                  [hasMedia]="post.entities.medias.length > 0"
+                                                  [transform]="this.setTransform(i)"
+                                                  [mediaUrl]="post.entities.medias[0].mediaURL"
+                                                  [post]="post">
+
+                                        </app-post>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+<!--            <nb-list-->
+<!--                    nbInfiniteList-->
+<!--                    listenWindowScroll-->
+<!--                    [threshold]="500"-->
+<!--                    (bottomThreshold)="loadNext(secondCard)">-->
+<!--                <nb-list-item *ngFor="let newsPost of secondCard.news">-->
+<!--                    <ngx-news-post [post]="newsPost"></ngx-news-post>-->
+<!--                </nb-list-item>-->
+<!--                <nb-list-item *ngFor="let _ of secondCard.placeholders">-->
+<!--                    <ngx-news-post-placeholder></ngx-news-post-placeholder>-->
+<!--                </nb-list-item>-->
+<!--            </nb-list>-->
+        </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-5 col-xxxl-6">
+        <nb-card>
+            <app-sidebar-column></app-sidebar-column>
+        </nb-card>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
-import {MeasureConverterPipe} from '../../../theme/pipes';
+import {MeasureConverterPipe} from '../../theme/pipes';
 
 interface TreeNode<T> {
   data: T;

@@ -200,7 +200,6 @@ export class MenuComponent implements OnInit, AfterViewInit,  OnDestroy {
     this.userStore.onUserStateChange()
       .pipe(takeUntil(this.destroy$))
       .subscribe((user: IUser) => {
-        debugger
         this.user = user;
       });
 

@@ -4,13 +4,19 @@ import {UserQueryParameterGeneratorService} from "./services/user-query-paramete
 import {PostsModule} from "./posts/posts.module";
 import { TimelineContainerComponent } from './containers/timeline-container/timeline-container.component';
 import {RouterModule} from "@angular/router";
+import {ShareButtonComponent} from "../share-button/share-button.component";
+import {NbButtonModule} from "../sharebook-nebular/theme/components/button/button.module";
 
 @NgModule({
-    declarations: [TimelineContainerComponent],
-    imports: [
-        CommonModule,
-        RouterModule,
-        PostsModule,
+    declarations: [TimelineContainerComponent, ShareButtonComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    PostsModule,
+    NbButtonModule,
+  ],
+    exports: [
+        ShareButtonComponent
     ],
     providers: [
         UserQueryParameterGeneratorService,

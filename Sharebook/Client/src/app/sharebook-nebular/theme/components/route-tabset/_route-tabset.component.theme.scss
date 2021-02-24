@@ -1,0 +1,96 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+@mixin nb-route-tabset-theme() {
+
+  nb-route-tabset {
+    @include nb-scrollbars(
+        nb-theme(route-tabset-scrollbar-color),
+        nb-theme(route-tabset-scrollbar-background-color),
+        nb-theme(route-tabset-scrollbar-width));
+
+    background-color: nb-theme(route-tabset-background-color);
+    border-radius: nb-theme(route-tabset-border-radius);
+    box-shadow: nb-theme(route-tabset-shadow);
+
+    .route-tabset {
+      border-bottom:
+        nb-theme(route-tabset-divider-width)
+        nb-theme(route-tabset-divider-style)
+        nb-theme(route-tabset-divider-color);
+    }
+
+    .tab-link {
+      background-color: nb-theme(route-tabset-tab-background-color);
+      cursor: pointer;
+      padding: nb-theme(route-tabset-tab-padding);
+      color: nb-theme(route-tabset-tab-text-color);
+      font-family: nb-theme(route-tabset-tab-text-font-family);
+      font-size: nb-theme(route-tabset-tab-text-font-size);
+      font-weight: nb-theme(route-tabset-tab-text-font-weight);
+      line-height: nb-theme(route-tabset-tab-text-line-height);
+      text-transform: nb-theme(route-tabset-tab-text-transform);
+
+      &::before {
+        background-color: nb-theme(route-tabset-tab-underline-color);
+        height: nb-theme(route-tabset-tab-underline-width);
+      }
+    }
+
+    .route-tab.active {
+      .tab-link {
+        background-color: nb-theme(tabset-tab-active-background-color);
+        color: nb-theme(tabset-tab-active-text-color);
+        &::before {
+          background-color: nb-theme(tabset-tab-active-underline-color);
+        }
+      }
+    }
+
+    .route-tab:focus {
+      .tab-link {
+        background-color: nb-theme(route-tabset-tab-focus-background-color);
+        color: nb-theme(route-tabset-tab-focus-text-color);
+        &::before {
+          background-color: nb-theme(route-tabset-tab-focus-underline-color);
+        }
+      }
+    }
+
+    .route-tab:hover {
+      .tab-link {
+        background-color: nb-theme(route-tabset-tab-hover-background-color);
+        color: nb-theme(route-tabset-tab-hover-text-color);
+        &::before {
+          background-color: nb-theme(route-tabset-tab-hover-underline-color);
+        }
+      }
+    }
+
+    .route-tab.disabled {
+      cursor: default;
+      pointer-events: none;
+
+      .tab-link {
+        background-color: nb-theme(route-tabset-tab-disabled-background-color);
+        color: nb-theme(route-tabset-tab-disabled-text-color);
+        cursor: default;
+        pointer-events: none;
+        &::before {
+          background-color: nb-theme(route-tabset-tab-disabled-underline-color);
+        }
+      }
+    }
+
+    .route-tab.responsive {
+      @media screen and (max-width: nb-theme(route-tabset-tab-text-hide-breakpoint)) {
+        .tab-text {
+          display: none;
+        }
+      }
+    }
+  }
+}

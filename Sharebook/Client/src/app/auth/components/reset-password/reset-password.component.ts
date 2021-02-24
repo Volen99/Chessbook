@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NB_AUTH_OPTIONS, NbAuthService, NbAuthResult } from '@nebular/auth';
 import { getDeepFromObject } from '../../helpers';
+import {NbAuthService} from "../../../sharebook-nebular/auth/services/auth.service";
+import {NB_AUTH_OPTIONS} from "../../../sharebook-nebular/auth/auth.options";
+import {NbAuthResult} from "../../../sharebook-nebular/auth/services/auth-result";
 
 @Component({
   selector: 'ngx-reset-password-page',

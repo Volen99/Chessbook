@@ -38,7 +38,6 @@ export class TweetsRequesterService {
   public publishTweetAsync(parameters: IPublishTweetParameters): Promise<ITweetDTO> {
     // this._tweetsClientRequiredParametersValidator.validate(parameters);
 
-    debugger
     return this.tweetControllerService.publishTweetAsync(parameters);
   }
 

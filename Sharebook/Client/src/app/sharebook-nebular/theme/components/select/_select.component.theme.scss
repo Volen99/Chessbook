@@ -1,0 +1,64 @@
+/*
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+@import './select-outline';
+@import './select-filled';
+@import './select-hero';
+
+@mixin nb-select-theme() {
+  nb-select .select-button {
+    min-width: nb-theme(select-min-width);
+    cursor: nb-theme(select-cursor);
+    font-family: nb-theme(select-text-font-family);
+
+    &.placeholder {
+      font-family: nb-theme(select-placeholder-text-font-family);
+    }
+    &:focus {
+      outline: none;
+    }
+    &[disabled] {
+      cursor: nb-theme(select-disabled-cursor);
+    }
+  }
+
+  @each $size in nb-get-sizes() {
+    nb-select.size-#{$size} {
+      .select-button {
+        font-size: nb-theme(select-#{$size}-text-font-size);
+        font-weight: nb-theme(select-#{$size}-text-font-weight);
+        line-height: nb-theme(select-#{$size}-text-line-height);
+
+        &.placeholder {
+          font-size: nb-theme(select-#{$size}-placeholder-text-font-size);
+          font-weight: nb-theme(select-#{$size}-placeholder-text-font-weight);
+        }
+
+        &.empty::before {
+          content: ' ';
+          display: block;
+          height: nb-theme(select-#{$size}-text-line-height);
+        }
+      }
+
+      &:not(.full-width) {
+        max-width: nb-theme(select-#{$size}-max-width);
+      }
+    }
+  }
+
+  @each $shape in nb-get-shapes() {
+    nb-select.shape-#{$shape} .select-button {
+      border-radius: nb-theme(select-#{$shape}-border-radius);
+    }
+  }
+
+  @include select-outline();
+  @include select-filled();
+  @include select-hero();
+
+  @include nb-form-field-root-component('nb-select');
+}

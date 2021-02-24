@@ -3,18 +3,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpRequest } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import {
-  NbAuthJWTInterceptor,
-  NbAuthModule,
-  NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
-  NbTokenLocalStorage,
-} from '@nebular/auth';
+
 import { AuthInterceptor } from './auth.interceptor';
 import { AuthGuard } from './auth.guard';
 import { AdminGuard } from './admin.guard';
 import { AuthPipe } from './auth.pipe';
 import { RoleProvider } from './role.provider';
-import { NbRoleProvider, NbSecurityModule } from '@nebular/security';
 
 import {
   NgxLoginComponent,
@@ -26,19 +20,24 @@ import {
   NgxResetPasswordComponent,
 } from './components';
 
-import {
-  NbAlertModule,
-  NbCardModule,
-  NbIconModule,
-  NbLayoutModule,
-  NbCheckboxModule,
-  NbInputModule,
-  NbButtonModule,
-} from '@nebular/theme';
+
 import { AuthRoutingModule } from './auth-routing.module';
-import { ComponentsModule } from '../components/components.module';
 import { authOptions } from './auth.settings';
 import { authSettings } from './access.settings';
+import {NbIconModule} from "../sharebook-nebular/theme/components/icon/icon.module";
+import {NbLayoutModule} from "../sharebook-nebular/theme/components/layout/layout.module";
+import {NbCardModule} from "../sharebook-nebular/theme/components/card/card.module";
+import {NbAlertModule} from "../sharebook-nebular/theme/components/alert/alert.module";
+import {NbCheckboxModule} from "../sharebook-nebular/theme/components/checkbox/checkbox.module";
+import {NbInputModule} from "../sharebook-nebular/theme/components/input/input.module";
+import {NbButtonModule} from "../sharebook-nebular/theme/components/button/button.module";
+import {ComponentsModule} from "../components/components.module";
+import {NbSecurityModule} from "../sharebook-nebular/security/security.module";
+import {NbRoleProvider} from "../sharebook-nebular/security/services/role.provider";
+import {NbAuthModule} from "../sharebook-nebular/auth/auth.module";
+import {NbTokenLocalStorage} from "../sharebook-nebular/auth/services/token/token-storage";
+import {NB_AUTH_TOKEN_INTERCEPTOR_FILTER} from "../sharebook-nebular/auth/auth.options";
+import {NbAuthJWTInterceptor} from "../sharebook-nebular/auth/services/interceptors/jwt-interceptor";
 
 const GUARDS = [AuthGuard, AdminGuard];
 const PIPES = [AuthPipe];

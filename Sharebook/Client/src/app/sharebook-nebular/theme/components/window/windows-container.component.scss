@@ -1,0 +1,9 @@
+:host {
+  display: flex;
+  align-items: flex-end;
+  overflow-x: auto;
+
+  ::ng-deep nb-window:not(.full-screen) {
+    margin: 0 2rem;
+  }
+}

@@ -1,5 +1,5 @@
 import {CustomRequestParameters, ICustomRequestParameters} from "../query/custom-request-parameters";
-import {TimeSpan} from "../../../compose/upload/shared/timespan";
+import {TimeSpan} from "../../../pages/modal-overlays/dialog/compose/upload/shared/timespan";
 
 export interface IChunkUploadAppendParameters {   // 23.09.2020, Wednesday, 22:06 | Deep Space Ambient Mix
   binary: Uint8Array;                          // 06.10.2020, Tuesday, 13:44 | 𝘧𝘭𝘰𝘳𝘢 𝘤𝘢𝘴𝘩 - 𝘠𝘰𝘶'𝘳𝘦 𝘚𝘰𝘮𝘦𝘣𝘰𝘥𝘺 𝘌𝘭𝘴𝘦 (𝘚𝘭𝘰𝘸𝘦𝘥 𝘋𝘰𝘸𝘯)

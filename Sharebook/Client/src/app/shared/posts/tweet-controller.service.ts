@@ -16,7 +16,6 @@ import {IGetOEmbedTweetParameters} from "./parameters/get-OEmbed-tweet-parameter
 import {IGetTweetParameters} from "./parameters/get-tweet-parameters";
 import {IGetTweetsParameters} from "./parameters/get-tweets-parameters";
 import { TweetQueryExecutorService} from "./tweet-query-executor.service.";
-import {UploadQueryExecutorService} from "../../compose/upload/chunked-upload/upload-query-executor.service";
 import {ITweetDTO} from "./models/DTO/tweet-dto";
 
 @Injectable()
@@ -24,7 +23,7 @@ export class TweetControllerService {
   // private readonly _pageCursorIteratorFactories: IPageCursorIteratorFactories;
 
   constructor(private tweetQueryExecutorService: TweetQueryExecutorService,
-              private uploadQueryExecutorService: UploadQueryExecutorService) {
+              /*private uploadQueryExecutorService: UploadQueryExecutorService*/) {
   }
 
   // public getTweetAsync(parameters: IGetTweetParameters): Promise<ITweetDTO> {

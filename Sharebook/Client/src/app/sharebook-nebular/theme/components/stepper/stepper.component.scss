@@ -1,0 +1,63 @@
+:host(.horizontal) {
+  .header {
+    .step {
+      flex-direction: column;
+    }
+
+    .connector {
+      height: 2px;
+    }
+  }
+
+  .label-index {
+    margin-bottom: 10px;
+  }
+}
+
+:host(.vertical) {
+  display: flex;
+  height: 100%;
+
+  .header {
+    flex-direction: column;
+
+    .label {
+      margin: 0 10px;
+    }
+
+    .connector {
+      width: 2px;
+    }
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+
+  .connector {
+    flex: auto;
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &.noninteractive {
+      cursor: default;
+    }
+  }
+
+  .label-index {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .label {
+    width: max-content;
+  }
+}

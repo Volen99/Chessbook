@@ -9,7 +9,7 @@ import { takeUntil } from 'rxjs/operators';
 import { NbToastrService } from '@nebular/theme';
 
 import { UserData, IUser } from '../../../core/interfaces/common/users';
-import { EMAIL_PATTERN, NUMBERS_PATTERN } from '../../../auth/components';
+import { EMAIL_PATTERN, NUMBERS_PATTERN } from '../../auth/components';
 import {NbAuthOAuth2JWTToken, NbTokenService} from '@nebular/auth';
 import {UserStore} from '../../../core/stores/user.store';
 

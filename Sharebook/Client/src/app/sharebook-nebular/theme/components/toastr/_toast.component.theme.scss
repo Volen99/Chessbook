@@ -1,0 +1,69 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+@mixin nb-toast-theme() {
+  nb-toast {
+    border-style: nb-theme(toastr-border-style);
+    border-width: nb-theme(toastr-border-width);
+    border-radius: nb-theme(toastr-border-radius);
+    padding: nb-theme(toastr-padding);
+    box-shadow: nb-theme(toastr-shadow);
+
+    .title {
+      font-family: nb-theme(toastr-title-text-font-family);
+      font-size: nb-theme(toastr-title-text-font-size);
+      font-weight: nb-theme(toastr-title-text-font-weight);
+      line-height: nb-theme(toastr-title-text-line-height);
+    }
+
+    .message {
+      font-family: nb-theme(toastr-text-font-family);
+      font-size: nb-theme(toastr-text-font-size);
+      font-weight: nb-theme(toastr-text-font-weight);
+      line-height: nb-theme(toastr-text-line-height);
+    }
+
+    .icon-container {
+      @include nb-ltr(margin-right, 1.25rem);
+      @include nb-rtl(margin-left, 1.25rem);
+      border-radius: nb-theme(toastr-border-radius);
+      min-width: 2.5rem;
+      min-height: 2.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      nb-icon {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  @each $status in nb-get-statuses() {
+    nb-toast.status-#{$status} {
+      background: nb-theme(toastr-#{$status}-background-color);
+      border-color: nb-theme(toastr-#{$status}-border-color);
+      color: nb-theme(toastr-#{$status}-text-color);
+
+      .title {
+        color: nb-theme(toastr-#{$status}-text-color);
+      }
+
+      &.destroy-by-click:hover {
+        background: nb-theme(toastr-destroyable-#{$status}-hover-background-color);
+        border-color: nb-theme(toastr-destroyable-#{$status}-hover-border-color);
+      }
+
+      .icon-container {
+        background: nb-theme(toastr-icon-#{$status}-background-color);
+        color: nb-theme(toastr-icon-#{$status}-color);
+      }
+    }
+  }
+  .toastr-overlay-container {
+    z-index: 1041;
+  }
+}

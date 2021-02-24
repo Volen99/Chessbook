@@ -1,4 +1,6 @@
-import { NbJSThemeOptions, COSMIC_THEME as baseTheme } from '@nebular/theme';
+import {NbJSThemeOptions} from "../../sharebook-nebular/theme/services/js-themes/theme.options";
+import {COSMIC_THEME as baseTheme} from "../../sharebook-nebular/theme/services/js-themes/cosmic.theme";
+
 
 const baseThemeVariables = baseTheme.variables;
 

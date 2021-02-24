@@ -1,0 +1,106 @@
+@import '../../styles/core/mixins';
+
+:host {
+
+  @include nb-ltr(text-align, left);
+  @include nb-rtl(text-align, right);
+
+  -webkit-font-smoothing: antialiased;
+
+  .layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  ::ng-deep nb-layout-header {
+    display: block;
+
+    nav {
+      align-items: center;
+      justify-content: flex-start;
+      display: flex;
+    }
+
+    &.fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1040;
+    }
+  }
+
+  .layout-container {
+    display: flex;
+    flex: 1;
+    -ms-flex: 1 1 auto;
+    flex-direction: row;
+
+    ::ng-deep nb-sidebar {
+      &.left {
+        @include nb-ltr(order, 0);
+        @include nb-rtl(order, 2);
+      }
+      &.right {
+        @include nb-ltr(order, 2);
+        @include nb-rtl(order, 0);
+      }
+      &.end {
+        order: 2;
+      }
+
+      .fixed {
+        position: fixed;
+        width: 100%;
+        overflow-y: auto;
+        height: 100%;
+      }
+    }
+
+    .content {
+      display: flex;
+      flex: 1;
+      -ms-flex: 1 1 auto;
+      flex-direction: column;
+      min-width: 0;
+
+      &.center {
+        max-width: 100%;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .columns {
+        display: flex;
+        flex: 1;
+        -ms-flex: 1 1 auto;
+        flex-direction: row;
+        width: 100%;
+
+        ::ng-deep nb-layout-column {
+          order: 1;
+          flex: 1 0;
+          min-width: 0; // fix for flexbug https://github.com/philipwalton/flexbugs#flexbug-1
+          &.left {
+            @include nb-ltr(order, 0);
+            @include nb-rtl(order, 2);
+          }
+          &.start {
+            order: 0;
+          }
+        }
+      }
+
+      ::ng-deep nb-layout-footer {
+        display: block;
+        margin-top: auto;
+
+        nav {
+          justify-content: center;
+          display: flex;
+        }
+      }
+    }
+  }
+}
