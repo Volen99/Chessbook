@@ -1,8 +1,11 @@
 ﻿namespace Sharebook.Services
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
-
+    using Sharebook.Data.Common.Filters;
+    using Sharebook.Data.Common.System;
     using Sharebook.Data.Models;
+    using Sharebook.Data.Models.System;
     using Sharebook.Data.Repositories;
     using Sharebook.Services.Data;
     using Sharebook.Services.Data.Services;
@@ -19,6 +22,17 @@
         {
             this.userRepository = userRepository;
             this.userPhotoRepository = userPhotoRepository;
+        }
+
+        public async Task<GridData<UserDTO>> GetDataForGrid(UsersGridFilter filter, bool includeDeleted = false)
+        {
+            var tuple = await userRepository.GetFilteredListWithTotalCount(filter, Session, includeDeleted);
+
+            return new GridData<UserDTO>
+            {
+                Items = tuple.Item1.MapTo<IEnumerable<UserDTO>>(),
+                TotalCount = tuple.Item2
+            };
         }
 
         public async Task<bool> Delete(int id)
@@ -50,6 +64,22 @@
         {
             var user = await userRepository.GetByLogin(login, Session, includeDeleted);
             return user.MapTo<UserDTO>();
+        }
+
+        public async Task<(IEnumerable<TUser>, int)> GetFilteredListWithTotalCount(UsersGridFilter filter,
+            ContextSession session, bool includeDeleted = false)
+        {
+            var query = GetEntities(session, includeDeleted).ApplyFilter(filter);
+            return (
+                await query
+                    .Skip(filter.PageSize * (filter.PageNumber - 1))
+                    .Take(filter.PageSize)
+                    .Include(u => u.UserRoles)
+                    .ThenInclude(x => x.Role)
+                    .Include(u => u.Settings)
+                    .ToArrayAsync(),
+                await query
+                    .CountAsync());
         }
     }
 }

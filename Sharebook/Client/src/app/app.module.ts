@@ -29,6 +29,7 @@ import {ModalOverlaysModule} from "./pages/modal-overlays/modal-overlays.module"
   declarations: [
     AppComponent,
     EmptyComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -66,6 +67,8 @@ import {ModalOverlaysModule} from "./pages/modal-overlays/modal-overlays.module"
   ],
   bootstrap: [AppComponent],
   providers: [PagesMenu],
+  exports: [
+  ]
 })
 export class AppModule {
 }

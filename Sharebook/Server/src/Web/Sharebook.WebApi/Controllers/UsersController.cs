@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Sharebook.Services.Data.Services;
+    using Sharebook.Services.Data.Services.Entities;
     using Sharebook.Web.Api.Identity;
     using Sharebook.Web.Api.Interfaces;
     using Sharebook.Web.Models;
@@ -15,12 +16,24 @@
         protected readonly IUserService userService;
         protected readonly JwtManager jwtManager;
         protected readonly IAuthenticationService authService;
+        protected readonly IPostsService postsService;
 
-        public UsersController(IUserService userService, JwtManager jwtManager, IAuthenticationService authService)
+        public UsersController(IUserService userService, JwtManager jwtManager, IAuthenticationService authService, IPostsService postsService)
         {
             this.userService = userService;
             this.jwtManager = jwtManager;
             this.authService = authService;
+            this.postsService = postsService;
+        }
+
+        [HttpGet]
+        [Route("")]
+        // [Authorize(Policy = "AdminOnly")]
+        public async Task<IActionResult> GetDataForGrid([FromQuery] UsersGridFilter filter)
+        {
+            filter = filter ?? new UsersGridFilter();
+            var users = await userService.GetDataForGrid(filter);
+            return Ok(users);
         }
 
         [HttpGet]
@@ -115,6 +128,17 @@
             }
 
             return File(photoContent, contentType: "image/png");
+        }
+
+        [HttpGet]
+        [Route("me/posts/{postId:int}/rating")]
+        [Authorize]
+        public async Task<IActionResult> GetUserPostRating(int postId)
+        {
+            var currentUserId = User.GetUserId();
+            var postRateDTO = await this.postsService.LoadUserPostRate(currentUserId, postId);
+
+            return this.Ok(postRateDTO);
         }
     }
 }

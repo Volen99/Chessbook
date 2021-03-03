@@ -6,6 +6,8 @@
     using Sharebook.Data.Configuration.System;
     using Sharebook.Data.Models;
     using Sharebook.Data.Models.Comments;
+    using Sharebook.Data.Models.Contact;
+    using Sharebook.Data.Models.Phone;
     using Sharebook.Data.Models.Post;
     using Sharebook.Data.Models.Post.Entities;
     using Sharebook.Data.Models.System;
@@ -50,6 +52,11 @@
         public DbSet<Comment> Comments { get; set; }
 
 
+        public DbSet<Contact> Contacts { get; set; }
+
+        public DbSet<PhoneCall> Calls { get; set; }
+
+        public DbSet<ContactPhoto> ContactPhotos { get; set; }
 
 
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
@@ -64,6 +71,10 @@
             builder.ApplyConfiguration(new UserClaimConfig());
             builder.ApplyConfiguration(new UserPhotoConfig());
             builder.ApplyConfiguration(new SettingsConfig());
+
+            builder.ApplyConfiguration(new ContactConfig());
+            builder.ApplyConfiguration(new PhoneCallConfig());
+            builder.ApplyConfiguration(new ContactPhotoConfig());
 
             // modelBuilder.HasDefaultSchema("starter_core");
 

@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.FileProviders;
     using Microsoft.Extensions.Hosting;
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
@@ -14,6 +15,7 @@
     using Sharebook.Web.Api.Identity;
     using Sharebook.Web.Api.Setup;
     using Sharebook.Web.Models;
+    using System.IO;
     using System.Reflection;
     using AutoMapperConfiguration = AutoMapper.Configuration;
 
@@ -87,9 +89,19 @@
 
             app.UseRouting();
 
-            app.UseCors("CorsPolicy");
+           /* app.UseCors("CorsPolicy"); was here!!!! */
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "Files")),
+                RequestPath = "/Files"
+            });
+
+
+            app.UseCors("CorsPolicy");
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
 

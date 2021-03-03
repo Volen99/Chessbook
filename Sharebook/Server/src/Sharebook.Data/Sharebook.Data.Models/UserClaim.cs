@@ -1,6 +1,8 @@
-﻿namespace Sharebook.Data.Models
+﻿using Sharebook.Data.Common.Models;
+
+namespace Sharebook.Data.Models
 {
-    public class UserClaim : BaseEntity
+    public class UserClaim : BaseModel<int>
     {
         public int UserId { get; set; }
 

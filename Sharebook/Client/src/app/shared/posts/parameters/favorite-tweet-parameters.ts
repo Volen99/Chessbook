@@ -1,20 +1,21 @@
 import {TweetIdentifier} from "../../Models/TweetIdentifier";
 import {CustomRequestParameters, ICustomRequestParameters} from "../../models/query/custom-request-parameters";
 import {ITweetIdentifier} from "../models/tweet-identifier";
+import {UserVideoRateType} from "../models/rate/user-video-rate.type";
 
 // For more information visit : https://developer.twitter.com/en/docs/tweets/post-and-engage/api-reference/post-favorites-create
 export interface IFavoriteTweetParameters extends ICustomRequestParameters {
   // The identifier of the tweet you want to favorite
   tweet: ITweetIdentifier;
 
-  isUp: boolean;
+  rateType: UserVideoRateType;
 
   // Include the tweet entities
   includeEntities?: boolean;
 }
 
 export class FavoriteTweetParameters extends CustomRequestParameters implements IFavoriteTweetParameters {
-  constructor(tweetIdOrTweet: | number | ITweetIdentifier, isUp: boolean) {
+  constructor(tweetIdOrTweet: | number | ITweetIdentifier, rateType: UserVideoRateType) {
     super();
 
     let tweetCurrent: ITweetIdentifier;
@@ -25,11 +26,11 @@ export class FavoriteTweetParameters extends CustomRequestParameters implements 
     }
 
     this.tweet = tweetCurrent;
-    this.isUp = isUp;
+    this.rateType = rateType;
   }
 
   public tweet: ITweetIdentifier;
-  public isUp: boolean;
+  public rateType: UserVideoRateType;
   public includeEntities?: boolean;
 }
 

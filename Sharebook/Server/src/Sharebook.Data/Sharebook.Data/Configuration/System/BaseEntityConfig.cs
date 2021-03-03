@@ -2,11 +2,11 @@
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
+    using Sharebook.Data.Common.Models;
     using Sharebook.Data.Models;
 
     public abstract class BaseEntityConfig<TType> : IEntityTypeConfiguration<TType>
-        where TType : BaseEntity
+        where TType : BaseModel<int>
     {
         protected string TableName { get; set; }
 

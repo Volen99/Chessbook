@@ -12,6 +12,7 @@ import {IFavoriteTweetParameters} from "../parameters/favorite-tweet-parameters"
 import {IUnfavoriteTweetParameters} from "../parameters/unfavorite-tweet-parameters";
 import {IGetUserFavoriteTweetsParameters} from "../parameters/get-favorite-tweets-Parameters";
 import {IGetOEmbedTweetParameters} from "../parameters/get-OEmbed-tweet-parameters";
+import {UserVideoRate} from "../models/rate/user-video-rate.model";
 
 @Injectable()
 export class PostsApi {
@@ -31,6 +32,10 @@ export class PostsApi {
 
     publishTweetAsync(params: HttpParams): Observable<any> {
         return this.api.post(this.apiController, {},{ params });
+    }
+
+    getUserVideoRating(url) {
+        return this.api.get<UserVideoRate>(url);
     }
 
 

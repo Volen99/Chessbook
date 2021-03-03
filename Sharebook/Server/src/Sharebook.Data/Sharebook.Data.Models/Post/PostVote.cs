@@ -4,8 +4,9 @@
     using global::System.ComponentModel.DataAnnotations;
 
     using Sharebook.Data.Common.Models;
+    using Sharebook.Data.Models.Post.Enums;
 
-    public class PostVote : BaseDeletableModel<long>
+    public class PostVote : BaseModel<int>
     {
         /// <summary>
         /// Gets or sets the forum post identifier
@@ -23,11 +24,6 @@
         /// <summary>
         /// Gets or sets a value indicating whether this vote is up or is down
         /// </summary>
-        public bool IsUp { get; set; }
-
-        /// <summary>
-        /// Gets or sets the date and time of instance creation
-        /// </summary>
-        public DateTime CreatedOnUtc { get; set; }
+        public PostRateType Type { get; set; }
     }
 }

@@ -194,7 +194,7 @@ export class TweetQueryGeneratorService {
     let params = new HttpParams(); // new StringBuilder(Resources.Tweet_Favorite_Create);
 
     params = this.restService.addParameterToQuery(params, "id", this.getTweetId(parameters.tweet));
-    params = this.restService.addParameterToQuery(params, "is_up", parameters.isUp.toString());
+    params = this.restService.addParameterToQuery(params, "rate_type", parameters.rateType.toString());
     params = this.restService.addParameterToQuery(params, "include_entities", parameters.includeEntities);
     params = this.restService.addFormattedParameterToQuery(params, parameters.formattedCustomQueryParameters);
 

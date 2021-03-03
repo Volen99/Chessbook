@@ -1,6 +1,8 @@
 import { Observable } from 'rxjs';
 
 export interface Contact {
+  id: number;
+
   name: string;
   picture: string;
   type: string;

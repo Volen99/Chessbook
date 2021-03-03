@@ -1,6 +1,8 @@
-﻿namespace Sharebook.Data.Models
+﻿using Sharebook.Data.Common.Models;
+
+namespace Sharebook.Data.Models
 {
-    public class UserPhoto : BaseEntity
+    public class UserPhoto : BaseModel<int>
     {
         public byte[] Image { get; set; }
 

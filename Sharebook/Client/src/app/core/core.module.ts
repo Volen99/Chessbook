@@ -20,17 +20,14 @@ import {LinkifierService} from "../core/renderer/linkifier.service";
 import {MarkdownService} from "../core/renderer/markdown.service";
 import {ConfirmService} from "../core/confirm/confirm.service";
 import {Notifier} from "../core/notification/notifier.service";
-import {MenuInternalService, MenuService} from "../core/menu/core/menu.service";
-
-
-
+import {IotBackendModule} from "./backend/iot/iot-backend.module";
 
 export const NB_CORE_PROVIDERS = [
   ...CommonMockModule.forRoot().providers,
   ...CommonBackendModule.forRoot().providers,
 
   // ...EcommerceMockModule.forRoot().providers,
-  // ...IotMockModule.forRoot().providers,
+  ...IotBackendModule.forRoot().providers,
 
   AnalyticsService,
   LayoutService,
@@ -81,9 +78,6 @@ export class CoreModule {
 
         ConfirmService,
         Notifier,
-
-        MenuInternalService,
-        MenuService,
       ],
     };
   }

@@ -28,8 +28,10 @@
                                                                     <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap"><span
                                                                             class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">{{this.post.user.name}}</span></span>
                                                                 </div>
-                                                                <div *ngIf="this.post.user?.protected" dir="auto" class="css-901oao lights-out-text-color flex-direction-row svg-flex-shrink-0 font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
-                                                                    <app-global-icon iconName="protected"></app-global-icon>
+                                                                <div *ngIf="this.post.user?.protected" dir="auto"
+                                                                     class="css-901oao lights-out-text-color flex-direction-row svg-flex-shrink-0 font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
+                                                                    <app-global-icon
+                                                                            iconName="protected"></app-global-icon>
                                                                 </div>
                                                             </div>
                                                             <div class="sharebook-container flex-direction-row flex-shrink r-1f6r7vd">
@@ -53,7 +55,8 @@
                                                     <div aria-expanded="false" aria-haspopup="true" aria-label="More"
                                                          role="button" data-focusable="true" tabindex="0"
                                                          class="sharebook-cursor-pointer sharebook-container justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none"
-                                                         data-testid="caret">
+                                                         data-testid="caret"
+                                                         [nbContextMenu]="this.meatballsMenu">
                                                         <div dir="ltr"
                                                              class="css-901oao align-items-center third-wheel-color display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
                                                             <div class="sharebook-container display-inline-flex">
@@ -89,7 +92,8 @@
                                                                 href="/WorldFeedTest12/status/1328383109394538496/photo/1"
                                                                 role="link" data-focusable="true"
                                                                 class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer outline-style-none">
-                                                            <div class="sharebook-container display-block overflow-hidden" style="">
+                                                            <div class="sharebook-container display-block overflow-hidden"
+                                                                 style="">
                                                                 <div class="display-block width-100-per"
                                                                      style="padding-bottom: 56.25%;"></div>
                                                                 <div class="bottom-0px height-100-per left-0px position-absolute top-0px width-100-per">
@@ -98,7 +102,7 @@
                                                                          data-testid="tweetPhoto"
                                                                          style="margin-bottom: 0px; margin-top: 0px;">
                                                                         <div class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
-                                                                             [style.background-image]="'url(' + this.mediaUrl +')'"></div>
+                                                                             [style.background-image]="imageBackgroundStyle"></div>
                                                                         <img alt="Image" draggable="true"
                                                                              [src]="this.mediaUrl"
                                                                              class="sharebook-image"></div>
@@ -116,10 +120,8 @@
                                                      tabindex="0"
                                                      class="sharebook-cursor-pointer sharebook-container justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none"
                                                      data-testid="reply">
-                                                    <div dir="ltr" class="css-901oao align-items-center third-wheel-color display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap"
-                                                         [ngClass]="{'r-9ilb82': !this.isCommentIconHovered, 'r-13gxpu9': this.isCommentIconHovered}"
-                                                         (mouseenter)="this.handleCommentIconHover($event)"
-                                                         (mouseleave)="this.handleCommentIconHover($event)">
+                                                    <div dir="ltr"
+                                                         class="css-901oao r-9ilb82 align-items-center third-wheel-color display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
                                                         <div class="sharebook-container display-inline-flex">
                                                             <div class="sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
                                                             <app-global-icon iconName="comment"></app-global-icon>
@@ -136,10 +138,8 @@
                                                      data-focusable="true" tabindex="0"
                                                      class="sharebook-cursor-pointer sharebook-container justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none"
                                                      data-testid="retweet">
-                                                    <div dir="ltr" class="css-901oao align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap"
-                                                         [ngClass]="{'r-9ilb82': !this.isRetweetIconHovered, 'r-nw8l94': this.isRetweetIconHovered}"
-                                                         (mouseenter)="this.handleRetweetIconHover($event)"
-                                                         (mouseleave)="this.handleRetweetIconHover($event)">
+                                                    <div dir="ltr"
+                                                         class="css-901oao r-9ilb82 align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
                                                         <div class="sharebook-container display-inline-flex">
                                                             <div class="sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
                                                             <app-global-icon iconName="retweet"></app-global-icon>
@@ -150,44 +150,50 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="sharebook-container flex-direction-row justify-content-flex-start" (click)="this.setLike()"
-                                                 [attr.aria-label]="tooltipLike" [ngbTooltip]="this.tooltipLike" placement="auto" [openDelay]="700">
-                                                <div [attr.aria-label]="(this.post.favoriteCount ? this.post.favoriteCount : 0) + ' Likes. Like'" role="button" data-focusable="true"
+                                            <div class="sharebook-container flex-direction-row justify-content-flex-start"
+                                                 (click)="this.setLike()"
+                                                 [attr.aria-label]="tooltipLike" [ngbTooltip]="this.tooltipLike"
+                                                 placement="auto" [openDelay]="700">
+                                                <div [attr.aria-label]="(this.post.favoriteCount ? this.post.favoriteCount : 0) + ' Likes. Like'"
+                                                     role="button" data-focusable="true"
                                                      tabindex="0"
                                                      class="sharebook-cursor-pointer sharebook-container justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none"
                                                      data-testid="like">
-                                                    <div dir="ltr" class="css-901oao align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap"
-                                                         [ngClass]="{'r-9ilb82': !this.isLikeIconHovered, 'r-daml9f': this.isLikeIconHovered}"
-                                                         (mouseenter)="this.handleLikeIconHover($event)"
-                                                         (mouseleave)="this.handleLikeIconHover($event)">
+                                                    <div dir="ltr"
+                                                         class="css-901oao r-9ilb82 align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
                                                         <div class="sharebook-container display-inline-flex">
                                                             <div class="sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
-                                                            <app-global-icon iconName="like"></app-global-icon>
+                                                            <!--<app-global-icon iconName="like"></app-global-icon>-->
+                                                            <nb-icon
+                                                                    [icon]="this.userRating === 'like' ? 'heart' : 'heart-outline'"></nb-icon>
                                                         </div>
-                                                        <div class="sharebook-container display-inline-flex overflow-hidden"><span
-                                                                class="css-901oao sharebook-text-inherit text-font-family third-wheel-text-font-size line-height-calc r-1j6idkz padding-left-right r-d3hbe1 r-1wgg2b2 r-axxi2z text-overflow-wrap"></span>
-                                                            <span *ngIf="this.post.favoriteCount !== 0" class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap" style="padding-left: 10px">{{this.post.favoriteCount}}</span> <!--style by mi kk-->
+                                                        <div class="sharebook-container display-inline-flex overflow-hidden">
+                                                            <span class="css-901oao sharebook-text-inherit text-font-family third-wheel-text-font-size line-height-calc r-1j6idkz padding-left-right r-d3hbe1 r-1wgg2b2 r-axxi2z text-overflow-wrap">
+                                                                <span *ngIf="this.post.favoriteCount !== 0" class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">{{this.post.favoriteCount}}</span>
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="sharebook-container flex-direction-row justify-content-flex-start" (click)="this.setDislike()"
-                                                 [attr.aria-label]="tooltipDislike" [ngbTooltip]="this.tooltipDislike" placement="auto" [openDelay]="700">
-                                                <div [attr.aria-label]="this.post.dislikeCount ? this.post.dislikeCount : 0 + ' Dislikes. Dislike'" role="button" data-focusable="true"
+                                            <div class="sharebook-container flex-direction-row justify-content-flex-start"
+                                                 (click)="this.setDislike()"
+                                                 [attr.aria-label]="tooltipDislike" [ngbTooltip]="this.tooltipDislike"
+                                                 placement="auto" [openDelay]="700">
+                                                <div [attr.aria-label]="this.post.dislikeCount ? this.post.dislikeCount : 0 + ' Dislikes. Dislike'"
+                                                     role="button" data-focusable="true"
                                                      tabindex="0"
                                                      class="sharebook-cursor-pointer sharebook-container justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none"
                                                      data-testid="dislike">
-                                                    <div dir="ltr" class="css-901oao align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap"
-                                                         [ngClass]="{'r-9ilb82': !this.isAddToBookmarkIconHovered, 'dislike-hover': this.isAddToBookmarkIconHovered}"
-                                                         (mouseenter)="this.handleAddToBookmarkIconHover($event)"
-                                                         (mouseleave)="this.handleAddToBookmarkIconHover($event)">
+                                                    <div dir="ltr"
+                                                         class="css-901oao r-9ilb82 align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
                                                         <div class="sharebook-container display-inline-flex">
                                                             <div class="sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
                                                             <app-global-icon iconName="dislike"></app-global-icon>
                                                         </div>
                                                         <div class="sharebook-container display-inline-flex overflow-hidden"><span
                                                                 class="css-901oao sharebook-text-inherit text-font-family third-wheel-text-font-size line-height-calc r-1j6idkz padding-left-right r-d3hbe1 r-1wgg2b2 r-axxi2z text-overflow-wrap"></span>
-                                                            <span *ngIf="this.post.dislikeCount !== 0" class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap" style="padding-left: 10px">{{this.post.dislikeCount}}</span>
+                                                            <span *ngIf="this.post.dislikeCount !== 0"
+                                                                  class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap" style="padding-left: 10px">{{this.post.dislikeCount}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -208,23 +214,25 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="sharebook-container flex-direction-row justify-content-flex-start"><a
-                                                    href="/WorldFeedTest12/status/1349046021976944642/analytics"
-                                                    aria-label="View Tweet activity" role="link" data-focusable="true"
-                                                    class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none">
-                                                <div dir="ltr"
-                                                     class="css-901oao align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
-                                                    <div class="sharebook-container display-inline-flex">
-                                                        <div class="sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
-                                                        <svg viewBox="0 0 24 24"
-                                                             class="svg-display-inline-block svg-fill-currentcolor miniature-element-height max-width-100-per svg-position-relative svg-vertical-align users-select-none second-class-svg-width">
-                                                            <g>
-                                                                <path d="M12 22c-.414 0-.75-.336-.75-.75V2.75c0-.414.336-.75.75-.75s.75.336.75.75v18.5c0 .414-.336.75-.75.75zm5.14 0c-.415 0-.75-.336-.75-.75V7.89c0-.415.335-.75.75-.75s.75.335.75.75v13.36c0 .414-.337.75-.75.75zM6.86 22c-.413 0-.75-.336-.75-.75V10.973c0-.414.337-.75.75-.75s.75.336.75.75V21.25c0 .414-.335.75-.75.75z"></path>
-                                                            </g>
-                                                        </svg>
+                                            <div class="sharebook-container flex-direction-row justify-content-flex-start">
+                                                <a
+                                                        href="/WorldFeedTest12/status/1349046021976944642/analytics"
+                                                        aria-label="View Tweet activity" role="link"
+                                                        data-focusable="true"
+                                                        class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none">
+                                                    <div dir="ltr"
+                                                         class="css-901oao align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
+                                                        <div class="sharebook-container display-inline-flex">
+                                                            <div class="sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
+                                                            <svg viewBox="0 0 24 24"
+                                                                 class="svg-display-inline-block svg-fill-currentcolor miniature-element-height max-width-100-per svg-position-relative svg-vertical-align users-select-none second-class-svg-width">
+                                                                <g>
+                                                                    <path d="M12 22c-.414 0-.75-.336-.75-.75V2.75c0-.414.336-.75.75-.75s.75.336.75.75v18.5c0 .414-.336.75-.75.75zm5.14 0c-.415 0-.75-.336-.75-.75V7.89c0-.415.335-.75.75-.75s.75.335.75.75v13.36c0 .414-.337.75-.75.75zM6.86 22c-.413 0-.75-.336-.75-.75V10.973c0-.414.337-.75.75-.75s.75.336.75.75V21.25c0 .414-.335.75-.75.75z"></path>
+                                                                </g>
+                                                            </svg>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </a></div>
+                                                </a></div>
                                         </div>
                                     </div>
                                 </div>

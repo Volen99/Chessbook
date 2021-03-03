@@ -9,6 +9,7 @@
     using Sharebook.Data.Models;
     using Sharebook.Data.Models.Post;
     using Sharebook.Data.Models.Post.Entities;
+    using Sharebook.Data.Models.Post.Enums;
     using Sharebook.Services.Mapping;
     using Sharebook.Web.Models.Outputs.Posts;
 
@@ -81,14 +82,13 @@
         }
 
      
-        public async Task<PostDTO> InsertPostVoteAsync(long postId, int userId, bool isUp)
+        public async Task<PostDTO> InsertPostVoteAsync(long postId, int userId, PostRateType postRateType)
         {
             var postVoteNew = new PostVote
             {
                 PostId = postId,
                 UserId = userId,
-                IsUp = isUp,
-                CreatedOnUtc = DateTime.UtcNow
+                Type = postRateType,
             };
                 
 
@@ -96,7 +96,7 @@
             await this.postVoteRepository.SaveChangesAsync();
 
             var post = this.postsRepository.All().Where(p => p.Id == postVoteNew.PostId).FirstOrDefault();
-            if (postVoteNew.IsUp)
+            if (postVoteNew.Type == PostRateType.Like)
             {
                 ++post.FavoriteCount;
             } else
@@ -121,28 +121,42 @@
                 .FirstOrDefaultAsync(pv => pv.PostId == postId && pv.UserId == userId);
         }
 
-        public async Task<PostDTO> ChangeVote(PostVote postVote)
+        public async Task<PostDTO> ChangeVote(PostRateType queryRateType, PostVote currentPostVote)
         {
-            if (postVote == null)
+            if (currentPostVote == null)
             {
-                throw new ArgumentNullException(nameof(postVote));
+                throw new ArgumentNullException(nameof(currentPostVote));
             }
 
-            postVote.IsUp = !postVote.IsUp;
-
-            var post = this.postsRepository.All().Where(p => p.Id == postVote.PostId).FirstOrDefault();
-            if (postVote.IsUp)
+            var post = this.postsRepository.All().Where(p => p.Id == currentPostVote.PostId).FirstOrDefault();
+            if (queryRateType == PostRateType.Like)
             {
-                ++post.FavoriteCount;
-                --post.DislikeCount;
+                if (currentPostVote.Type == PostRateType.Dislike)
+                {
+                    ++post.FavoriteCount;
+                    --post.DislikeCount;
+                }
+                else if (currentPostVote.Type == PostRateType.None)
+                {
+                    ++post.FavoriteCount;
+                }
+                
             }
             else
             {
-                --post.FavoriteCount;
-                ++post.DislikeCount;
+                if (currentPostVote.Type == PostRateType.Like)
+                {
+                    --post.FavoriteCount;
+                    ++post.DislikeCount;
+                }
+                else if (currentPostVote.Type == PostRateType.None)
+                {
+                    ++post.DislikeCount;
+                }
             }
 
-            postVote.ModifiedOn = DateTime.Now;
+            currentPostVote.Type = queryRateType;
+            currentPostVote.ModifiedOn = DateTime.Now;
             await this.postsRepository.SaveChangesAsync();
 
             return this.GetById<PostDTO>(post.Id);
@@ -157,15 +171,13 @@
             //}
 
             return await this.postVoteRepository.All()
-                .CountAsync(pv => pv.UserId == userId && pv.CreatedOnUtc > сreatedFromUtc);
+                .CountAsync(pv => pv.UserId == userId && pv.CreatedOn > сreatedFromUtc);
         }
 
         public async Task<PostDTO> RemoveVote(PostVote postVote)
         {
             var post = this.postsRepository.All().Where(p => p.Id == postVote.PostId).FirstOrDefault();
-
-            postVote.IsDeleted = true;
-            if (postVote.IsUp)
+            if (postVote.Type ==  PostRateType.Like)
             {
                 post.FavoriteCount--;
             }
@@ -174,12 +186,23 @@
                 post.DislikeCount--;
             }
 
+            postVote.Type = PostRateType.None;
+
             await this.postsRepository.SaveChangesAsync();
             await this.postVoteRepository.SaveChangesAsync();
 
             return this.GetById<PostDTO>(post.Id);
         }
 
+        public async Task<PostRateDTO> LoadUserPostRate(int userId, int postId)
+        {
+            var ratingObject = this.postVoteRepository.All()
+                .Where(pv => pv.UserId == userId && pv.PostId == postId)
+                .To<PostRateDTO>()
+                .FirstOrDefault();
+
+            return ratingObject;
+        }
 
         private List<MediaEntity> GetMedias(int[] mediasIds)
         {

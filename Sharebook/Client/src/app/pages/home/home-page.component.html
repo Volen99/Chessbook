@@ -19,8 +19,7 @@
                             <h1 aria-level="1" dir="auto"
                                 role="heading"
                                 class="sharebook-link css-901oao border-width-0px r-1xk2f4g height-1px overflow-hidden r-wwvuq4 position-absolute width-1px"
-                                id="accessible-list-1">Your Home
-                                Timeline
+                                id="accessible-list-1">Your Home Timeline
                             </h1>
                             <div aria-label="Timeline: Your Home Timeline" class="sharebook-container">
                                 <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.posts.length) + 'px'}">
@@ -29,6 +28,7 @@
                                                   [hasText]="!!post.text"
                                                   [hasMedia]="post.entities.medias.length > 0"
                                                   [transform]="this.setTransform(i)"
+                                                  [picture]="post.entities.medias[0].mediaURL"
                                                   [mediaUrl]="post.entities.medias[0].mediaURL"
                                                   [post]="post">
 

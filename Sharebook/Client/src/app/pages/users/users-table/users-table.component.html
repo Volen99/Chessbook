@@ -1,0 +1,18 @@
+<nb-card>
+  <nb-card-header>
+    Users List
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table
+      class="user-smart-table"
+      [settings]="settings"
+      [source]="source"
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+  <nb-card-footer>
+    <button type="submit" (click)="createUser()" class="btn btn-primary">Add User</button>
+  </nb-card-footer>
+</nb-card>

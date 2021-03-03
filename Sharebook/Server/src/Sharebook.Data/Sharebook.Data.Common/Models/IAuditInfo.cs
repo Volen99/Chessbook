@@ -1,6 +1,7 @@
-﻿namespace Sharebook.Data.Common.Models
+﻿using System;
+
+namespace Sharebook.Data.Common.Models
 {
-    using System;
 
     public interface IAuditInfo
     {

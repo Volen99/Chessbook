@@ -277,12 +277,6 @@ export class PagesMenu {
         children: undefined,
       },
       {
-        title: 'Infinite List',
-        icon: 'list-outline',
-        link: '/layout/infinite',
-        children: undefined,
-      },
-      {
         title: 'Messages',
         icon: 'email-outline',
         link: '/messages',

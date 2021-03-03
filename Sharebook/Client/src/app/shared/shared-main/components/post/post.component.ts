@@ -1,9 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UserStore} from "../../../../core/stores/user.store";
 import {UserVideoRateType} from "../../../posts/models/rate/user-video-rate.type";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {PostsService} from "../../../posts/posts.service";
 import {PostDetails} from "../../post/post-details.model";
+import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
+import {Notifier} from "../../../../core/notification/notifier.service";
+import {takeUntil} from "rxjs/operators";
+import {IUser} from "../../../../core/interfaces/common/users";
 
 @Component({
   selector: 'app-post',
@@ -17,48 +21,53 @@ export class PostComponent implements OnInit {
   @Input() public mediaUrl: string;
   @Input() post: PostDetails = null;
 
-  constructor(private userStore: UserStore, private postService: PostsService) {
+  private destroy$: Subject<void> = new Subject<void>();
+
+  constructor(private domSanitizer: DomSanitizer, private userStore: UserStore, private postService: PostsService) {
     this.tooltipLike = `Like`;
     this.tooltipDislike = `Dislike`;
   }
 
+
   ngOnInit(): void {
+    // by mi
+    this.userStore.onUserStateChange()
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe((user: IUser) => {
+        // this.user = user;
+        this.meatballsMenu = this.getMenuItems();
+      });
+
+
+    this.checkUserRating();
   }
 
-  userMenu = this.getMenuItems();
+  meatballsMenu = this.getMenuItems();
+
+  imageBackgroundStyle: SafeStyle;
 
   public userRating: UserVideoRateType = null;
 
   public tooltipLike = '';
   public tooltipDislike = '';
 
-  public isCommentIconHovered = false;
-  public isLikeIconHovered = false;
-  public isRetweetIconHovered = false;
-  public isAddToBookmarkIconHovered = false;
-
   getMenuItems() {
-    const userLink = this.post?.user ?  '/admin/users/current/' : '';
+    const userLink = this.post?.user ? '/admin/users/current/' : '';
+    const screenName = this.post?.user?.screenName;
     return [
-      { title: 'Profile', link: userLink, queryParams: { profile: true } },
-      { title: 'Log out', link: '/auth/logout' },
+      {title: `Follow ${screenName}`, link: userLink, queryParams: {profile: true}},
+      {title: `Mute ${screenName}`, link: '/auth/logout'},
+      {title: `Block ${screenName}`, link: '/auth/logout'},
+      {title: `Embed Post`, link: '/auth/logout'},
+      {title: `Report Post`, link: '/auth/logout'},
     ];
   }
 
-  handleCommentIconHover(event: MouseEvent) {
-    this.isCommentIconHovered = !this.isCommentIconHovered;
-  }
-
-  handleLikeIconHover(event: MouseEvent) {
-    this.isLikeIconHovered = !this.isLikeIconHovered;
-  }
-
-  handleRetweetIconHover(event: MouseEvent) {
-    this.isRetweetIconHovered = !this.isRetweetIconHovered;
-  }
-
-  handleAddToBookmarkIconHover(event: MouseEvent) {
-    this.isAddToBookmarkIconHovered = !this.isAddToBookmarkIconHovered;
+  @Input()
+  set picture(value: string) {
+    this.imageBackgroundStyle = value ? this.domSanitizer.bypassSecurityTrustStyle(`url(${value})`) : null;
   }
 
   setLike() {
@@ -91,7 +100,24 @@ export class PostComponent implements OnInit {
     return !!this.userStore.getUser();
   }
 
+  private checkUserRating() {
+    // Unlogged users do not have ratings
+    if (this.isUserLoggedIn() === false) {
+      return;
+    }
 
+    this.postService.getUserVideoRating(this.post.id)
+      .subscribe(
+        ratingObject => {
+          debugger
+          if (ratingObject) {
+            this.userRating = ratingObject.type;
+          }
+        },
+
+        // err => this.notifier.error(err.message)
+      );
+  }
 
   private setRating(nextRating: UserVideoRateType) {
     const ratingMethods: { [id in UserVideoRateType]: (id: number) => Observable<any> } = {
@@ -130,4 +156,6 @@ export class PostComponent implements OnInit {
     // this.post.buildLikeAndDislikePercents();
     // this.setVideoLikesBarTooltipText();
   }
+
+
 }

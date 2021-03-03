@@ -1,14 +1,13 @@
-import { Subscription } from 'rxjs';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserFormMode} from "../../admin/users/user/user.component";
+import { Subscription } from 'rxjs';
 import {takeUntil, tap} from "rxjs/operators";
-import {IUser, UserData} from "../../core/interfaces/common/users";
-import {NbTokenService} from "@nebular/auth";
-import {UserStore} from "../../core/stores/user.store";
-import {NbToastrService} from "@nebular/theme";
-import {FormBuilder} from "@angular/forms";
 import {Subject} from "rxjs/Subject";
+import { Location } from '@angular/common';
+
+import {IUser, UserData} from "../../core/interfaces/common/users";
+import {UserStore} from "../../core/stores/user.store";
+import {NbTokenService} from "../../sharebook-nebular/auth/services/token/token.service";
 
 @Component({
   templateUrl: './user-profile.component.html',
@@ -21,10 +20,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               private router: Router,
               private route: ActivatedRoute,
               private tokenService: NbTokenService,
-              private userStore: UserStore) {
+              private userStore: UserStore,
+              protected location: Location) {
   }
-
-  public location = location;
 
   ngOnInit() {
     // this.loadUserData();
@@ -62,5 +60,36 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         // this is a place for value changes handling
         // this.userForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {   });
       });
+  }
+
+  tabs: any[] = [
+    {
+      title: 'Posts',
+      route: './tab1',
+    },
+    {
+      title: 'Posts & replies',
+      route: [ './tab2' ],
+    },
+    {
+      title: 'Media',
+      route: './tab3'
+      // icon: 'flash-outline',
+      // responsive: true,
+      // disabled: true,
+    },
+    {
+      title: 'Likes',
+      route: './tab4'
+    },
+    // {
+    //   title: 'Dislikes',
+    //   route: './tab5'
+    // },
+  ];
+
+  back() {
+    this.location.back();
+    return false;
   }
 }

@@ -34,6 +34,7 @@ import {HttpParams} from "@angular/common/http";
 import {RestService} from "../../core/rest/rest.service";
 import {TimelineApi} from "../timeline/backend/timeline.api";
 import {Observable} from "rxjs";
+import {UserVideoRate} from "./models/rate/user-video-rate.model";
 
 @Injectable()
 export class PostsService {
@@ -277,7 +278,7 @@ export class PostsService {
   }
 
   getHomeTimelinePosts(parameters: GetHomeTimelineParameters) {
-    const { postPagination, sort, skipCount } = parameters;
+    const {postPagination, sort, skipCount} = parameters;
 
     const pagination = this.restService.componentPaginationToRestPagination(postPagination);
 
@@ -290,10 +291,10 @@ export class PostsService {
     params = this.restService.addFormattedParameterToQuery(params, parameters.formattedCustomQueryParameters);
 
     return this.timelineApi.getHomeTimelineAsync(params);
-      // .pipe(                    // @ts-ignore
-      //   switchMap(res => this.extractVideos(res)),                  // switchMap might bug
-      //   catchError(err => this.restExtractor.handleError(err))
-      // );
+    // .pipe(                    // @ts-ignore
+    //   switchMap(res => this.extractVideos(res)),                  // switchMap might bug
+    //   catchError(err => this.restExtractor.handleError(err))
+    // );
   }
 
   extractVideos(result: ResultList<Post>) {
@@ -308,9 +309,16 @@ export class PostsService {
     return {total: totalPosts, data: posts};
   }
 
+  getUserVideoRating(id: number) {
+    const url = 'users/me/posts/' + id + '/rating';
+
+    return this.postsApi.getUserVideoRating(url)
+      .pipe(catchError(err => this.restExtractor.handleError(err)));
+  }
+
   private setVideoRate(id: number, rateType: UserVideoRateType) {
-    let isUp = (rateType === 'like');
-    let params = this.tweetQueryGeneratorService.getCreateFavoriteTweetQuery(new FavoriteTweetParameters(id, isUp));
+
+    let params = this.tweetQueryGeneratorService.getCreateFavoriteTweetQuery(new FavoriteTweetParameters(id, rateType));
 
     return this.postsApi.votePostAsync(params)
       .pipe(

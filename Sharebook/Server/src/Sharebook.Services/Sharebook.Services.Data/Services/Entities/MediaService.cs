@@ -24,7 +24,7 @@
             {
                 CreatedOn = DateTime.Now,
                 Directory = directory,
-                MediaURL = "https://64.media.tumblr.com/98a9402a02b986cbc2660f8fc3cf3335/cdbda670422f23fa-5d/s640x960/cae66e4d77a314ab10ca98b0e771e12bfe36aaf6.jpg",
+                MediaURL = $"https://localhost:5001{imageUrl.Remove(0, 1).Replace('\\', '/')}",
                 MediaType = mediaType,
                 Size = size,
             };

@@ -6,20 +6,28 @@ import { SharedGlobalIconModule } from '../../shared/shared-icons/shared-global-
 import { FollowersComponent } from './followers/followers.component';
 import {SharedMainModule} from "../../shared/shared-main/shared-main.module";
 import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";
+import {NbTabsetModule} from "../../sharebook-nebular/theme/components/tabset/tabset.module";
+import {NbRouteTabsetModule} from "../../sharebook-nebular/theme/components/route-tabset/route-tabset.module";
+import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/button.module";
+import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.module";
 
 @NgModule({
-  imports: [
-    UserProfileRoutingModule,
+    imports: [
+        UserProfileRoutingModule,
 
-    SharedMainModule,
-    // SharedFormModule,
-    // SharedUserSubscriptionModule,
-    // SharedModerationModule,
-    // SharedVideoMiniatureModule,
-    SharedGlobalIconModule,
-    SidebarColumnModule,
-    NbCardModule
-  ],
+        SharedMainModule,
+        // SharedFormModule,
+        // SharedUserSubscriptionModule,
+        // SharedModerationModule,
+        // SharedVideoMiniatureModule,
+        SharedGlobalIconModule,
+        SidebarColumnModule,
+        NbCardModule,
+        NbTabsetModule,
+        NbRouteTabsetModule,
+        NbButtonModule,
+        NbIconModule
+    ],
 
   declarations: [
     UserProfileComponent,

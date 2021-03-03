@@ -66,6 +66,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {HelpComponent} from "./misc/help.component";
 import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.module";
+import {NbContextMenuModule} from "../../sharebook-nebular/theme/components/context-menu/context-menu.module";
 
 @NgModule({
   imports: [
@@ -87,7 +88,8 @@ import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.m
     // PrimeSharedModule,
 
     SharedGlobalIconModule,
-    NbIconModule
+    NbIconModule,
+    NbContextMenuModule
   ],
 
   declarations: [

@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Sharebook.Data.Common\Sharebook.Data.Common.csproj" />
     <ProjectReference Include="..\Sharebook.Data.Models\Sharebook.Data.Models.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Configuration\Post\" />
-  </ItemGroup>
 </Project>

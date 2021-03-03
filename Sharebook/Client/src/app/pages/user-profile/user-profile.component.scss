@@ -7,10 +7,46 @@
 //@import '_variables';
 //@import '_mixins';
 
-@import "../../../sass/application";
+// @import "../../../sass/application";
 
 
+nb-card {
+  padding: 0;
+  margin: 0;
 
+  border: none;
+
+  nb-card-body {
+    padding: 0;
+    margin: 0;
+
+    overflow: hidden;
+    border: none;
+
+  }
+
+  nb-card-header {
+    h2 {
+      font-size: 19px;
+    }
+
+    padding: 0;
+  }
+}
+
+
+/*.navigation */
+.link {
+  display: inline-block;
+  text-decoration: none;
+
+  nb-icon {
+    font-size: 15px; //2rem;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+  }
+}
 
 
 .main-width {
@@ -27,8 +63,6 @@
 
 
 /*heading*/
-
-
 
 
 .font-weight-800 {
@@ -68,6 +102,7 @@
 .r-nx0j10 {
   transition-timing-function: ease, ease, step-end;
 }
+
 /*end heading*/
 
 .r-ku1wi2 {
@@ -118,7 +153,6 @@
 }
 
 
-
 .emoji-margin-left {
   margin-left: 0.075em;
 }
@@ -150,8 +184,6 @@
 }
 
 
-
-
 .padding-bottom-top-15px {
   padding-bottom: 15px;
   padding-top: 15px;
@@ -166,7 +198,6 @@
 .r-tzz3ar {
   flex-wrap: nowrap;
 }
-
 
 
 .r-lltvgl {
@@ -230,31 +261,6 @@
 .font-weight-400 {
   font-weight: 400;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //.sub-menu {

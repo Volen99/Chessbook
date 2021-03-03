@@ -1,6 +1,8 @@
-﻿namespace Sharebook.Data.Models
+﻿using Sharebook.Data.Common.Models;
+
+namespace Sharebook.Data.Models
 {
-    public class Settings : BaseEntity
+    public class Settings : BaseModel<int>
     {
         public string ThemeName { get; set; }
 

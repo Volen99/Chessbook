@@ -23,6 +23,11 @@ const routes: Routes = [
         loadChildren: () => import('./pages/explore/explore.module').then(m => m.ExploreModule),
       },
       {
+        path: 'messages',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./pages/messages/messages.module').then(m => m.MessagesModule),
+      },
+      {
         path: 'profile',
         canActivate: [AuthGuard],
         loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule),
@@ -30,23 +35,16 @@ const routes: Routes = [
       {
         path: 'ui-features',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./pages/ui-features/ui-features.module')
-          .then(m => m.UiFeaturesModule),
+        loadChildren: () => import('./pages/ui-features/ui-features.module').then(m => m.UiFeaturesModule),
       },
       {
-        path: 'infinite',
+        path: 'users',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./pages/layout/layout.module')
-          .then(m => m.LayoutModule),
+        loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule),
       },
       {
         path: 'auth',
         loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
-      },
-      {
-        path: 'admin',
-        // canActivate: [AuthGuard],
-        loadChildren: () => import('./admin/pages.module').then(m => m.PagesModule),
       },
     ]
   },

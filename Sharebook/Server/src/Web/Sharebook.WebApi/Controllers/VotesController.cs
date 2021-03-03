@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Sharebook.Data.Models.Post;
+    using Sharebook.Data.Models.Post.Enums;
     using Sharebook.Services.Data.Services.Entities;
     using Sharebook.Web.Api.Identity;
     using Sharebook.Web.Models.Inputs;
@@ -39,7 +40,7 @@
             var postVote = await this.postServce.GetPostVoteAsync(query.Id, User.GetUserId());
             if (postVote != null)
             {
-                if ((postVote.IsUp && query.IsUp) || (!postVote.IsUp && !query.IsUp))
+                if (query.RateType == PostRateType.None)
                 {
                     var dto = await this.postServce.RemoveVote(postVote);
 
@@ -47,12 +48,12 @@
                 }
                    
 
-                var postDTO = await this.postServce.ChangeVote(postVote);
+                var postDTO = await this.postServce.ChangeVote(query.RateType, postVote);
 
                 return this.Ok(postDTO);
             }
 
-            var res = await this.postServce.InsertPostVoteAsync(query.Id, User.GetUserId(), query.IsUp);
+            var res = await this.postServce.InsertPostVoteAsync(query.Id, User.GetUserId(), query.RateType);
 
             return this.Ok(res);
         }

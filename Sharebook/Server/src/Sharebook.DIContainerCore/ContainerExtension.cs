@@ -10,7 +10,9 @@
     using Sharebook.Data.Repositories;
     using Sharebook.Services;
     using Sharebook.Services.Data.Services;
+    using Sharebook.Services.Data.Services.Contacts;
     using Sharebook.Services.Data.Services.Entities;
+    using Sharebook.Services.Data.Services.Phone;
     using Sharebook.Services.Data.Services.Upload;
 
     public static class ContainerExtension
@@ -39,6 +41,11 @@
             services.AddTransient<IUploadService, UploadService>();
             services.AddTransient<IMediaService, MediaService>();
             services.AddTransient<IPostsService, PostsService>();
+
+
+            // IOT - E-Commerce
+            services.AddTransient<IContactService, ContactService>();
+            services.AddTransient<IPhoneCallService, PhoneCallService>();
         }
     }
 }

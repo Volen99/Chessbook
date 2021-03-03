@@ -39,6 +39,7 @@ import {SearchInputComponent} from "./components/search-input/search-input.compo
 import {TinyMCEComponent} from "./components/tiny-mce/tiny-mce.component";
 import {AuthModule} from "../auth/auth.module";
 import {NbThemeModule} from "../sharebook-nebular/theme/theme.module";
+import {MatRippleModule} from "@angular/material/core";
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -63,6 +64,8 @@ const COMPONENTS = [
   OneColumnLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
+
+
 ];
 const PIPES = [
   CapitalizePipe,
@@ -74,8 +77,8 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, AuthModule, ...NB_MODULES],
-  exports: [CommonModule, ...PIPES, ...COMPONENTS],
+  imports: [CommonModule, MatRippleModule, AuthModule, ...NB_MODULES],
+  exports: [CommonModule, MatRippleModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })
 export class ThemeModule {

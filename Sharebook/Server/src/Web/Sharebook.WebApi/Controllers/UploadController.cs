@@ -15,6 +15,7 @@
     using Sharebook.Web.Api.Identity;
     using System.Threading.Tasks;
     using Sharebook.Services.Data.Services.Entities;
+    using Sharebook.Common.Infrastructure.Helpers;
 
     [Route("upload")]
     public class UploadController : BaseApiController
@@ -64,17 +65,17 @@
                 Session session = uploadService.GetSession(query.MediaId.Value);
 
                 // FINALIZE
-                string fileDestinationPath = Path.Combine(Resources.ROOT, session.GetMediaIdForFile(query.MediaId.Value));
+                string fileFolderPath = Path.Combine(Resources.ROOT, session.GetMediaIdForFile(query.MediaId.Value));
 
-                if (!Directory.Exists(fileDestinationPath))
+                if (!Directory.Exists(fileFolderPath))
                 {
-                    Directory.CreateDirectory(fileDestinationPath);
+                    Directory.CreateDirectory(fileFolderPath);
                 }
 
-                string path = Path.Combine(fileDestinationPath, $"{session.MediaId}{session.FileInfo.Extension}");
-                uploadService.WriteToFileStream(new FileStream(path, FileMode.Append, FileAccess.Write), session);
+                string filePath = Path.Combine(fileFolderPath, $"{session.MediaId}{session.FileInfo.Extension}");
+                uploadService.WriteToFileStream(new FileStream(filePath, FileMode.Append, FileAccess.Write), session);
 
-                await this.mediaService.WriteToDb(fileDestinationPath, path, session.FileInfo.MediaType, session.FileInfo.Size);
+                await this.mediaService.WriteToDb(fileFolderPath, filePath, session.FileInfo.MediaType, session.FileInfo.Size);
 
                 return this.Ok(UploadFinalizeOutputModel.FromSession(session));
             }

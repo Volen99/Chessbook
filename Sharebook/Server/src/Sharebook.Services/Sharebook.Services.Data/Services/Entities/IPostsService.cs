@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
 
     using Sharebook.Data.Models.Post;
+    using Sharebook.Data.Models.Post.Enums;
     using Sharebook.Web.Models.Outputs.Posts;
 
     public interface IPostsService
@@ -19,7 +20,7 @@
 
         int GetCountByCategoryId(int categoryId);
 
-        Task<PostDTO> InsertPostVoteAsync(long postId, int userId, bool isUp);
+        Task<PostDTO> InsertPostVoteAsync(long postId, int userId, PostRateType postRateType);
 
         /// <summary>
         /// Get a post vote 
@@ -32,9 +33,11 @@
         /// <summary>
         /// Delete a post vote
         /// </summary>
-        Task<PostDTO> ChangeVote(PostVote postVote);
+        Task<PostDTO> ChangeVote(PostRateType postRateType, PostVote postVote);
 
         Task<PostDTO> RemoveVote(PostVote postVote);
+
+        Task<PostRateDTO> LoadUserPostRate(int userId, int postId);
 
         /// <summary>
         /// Get post vote made since the parameter date
