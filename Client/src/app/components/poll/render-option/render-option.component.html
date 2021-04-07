@@ -1,0 +1,25 @@
+<li> <!--key={option.get('title')}-->
+    <label class="poll__option" [ngClass]="{selectable: !this.showResults}">
+        <input name="vote-options" [type]="this.poll.multiple ? 'checkbox' : 'radio'"
+               [value]="this.optionIndex" [checked]="this.active" (change)="this.handleOptionChange"
+               [disabled]="this.disabled"/>
+
+        <span *ngIf="!this.showResults" class="poll__input" tabIndex='0'
+              [attr.role]="this.poll.multiple ? 'checkbox' : 'radio'"
+              (keypress)="this.handleOptionKeyPress"
+              [attr.aria-checked]="this.active"
+              [attr.aria-label]="option.title"
+              [attr.data-index]="optionIndex">
+        </span>
+
+        <span *ngIf="this.showResults" class='poll__number'>this.math.round(this.percent)%</span>
+
+        <span>{{this.option.label}}</span> <!--dangerouslySetInnerHTML="{__html: titleEmojified}"--> <!--class="poll__option__text translate"-->
+
+        <span *ngIf="!!this.voted" class="poll__voted">
+                 <nb-icon id="check" icon="checkmark-circle-2" class="poll__voted__mark"></nb-icon>
+            </span>
+    </label>
+
+    <!--Motion-->
+</li>

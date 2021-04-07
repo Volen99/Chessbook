@@ -1,0 +1,34 @@
+<nb-card>
+  <nb-card-header>NOTIFICATIONS</nb-card-header>
+  <nb-card-body>
+    <div class="custom-row">
+      <div i18n>Activities</div>
+      <div i18n>Web</div>
+      <div i18n>Email</div>
+    </div>
+
+    <ng-container *ngFor="let notificationType of notificationSettingKeys">
+      <div class="custom-row" *ngIf="hasUserRight(notificationType)">
+        <div>{{ labelNotifications[notificationType] }}</div>
+
+        <div>
+          <nb-toggle
+                  [(ngModel)]="webNotifications[notificationType]"
+                  (ngModelChange)="updateWebSetting(notificationType, webNotifications[notificationType])"
+          ></nb-toggle>
+        </div>
+
+        <div>
+          <nb-toggle
+                  [(ngModel)]="emailNotifications[notificationType]"
+                  (ngModelChange)="updateEmailSetting(notificationType, emailNotifications[notificationType])"
+          ></nb-toggle>
+        </div>
+      </div>
+    </ng-container>
+  </nb-card-body>
+</nb-card>
+
+
+
+

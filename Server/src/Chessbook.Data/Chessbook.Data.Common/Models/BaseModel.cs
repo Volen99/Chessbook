@@ -1,0 +1,15 @@
+﻿namespace Chessbook.Data.Common.Models
+{
+    using global::System;
+    using global::System.ComponentModel.DataAnnotations;
+
+    public abstract class BaseModel<TKey> : IAuditInfo
+    {
+        [Key]
+        public TKey Id { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+    }
+}

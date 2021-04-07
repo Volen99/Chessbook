@@ -1,0 +1,8 @@
+<nb-card>
+    <nb-card-header>DISPLAY</nb-card-header>
+    <nb-card-body>
+        <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
+            <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
+        </nb-select>
+    </nb-card-body>
+</nb-card>

@@ -1,0 +1,92 @@
+<div class="search" (keyup.esc)="emitClose()">
+    <button (click)="emitClose()" nbButton ghost class="close-button">
+        <nb-icon icon="close-outline" pack="nebular-essentials"></nb-icon>
+    </button>
+<!--    <div class="row">-->
+<!--        <div class="col-md-12">-->
+<!--            <nb-card style="border: none;">-->
+<!--&lt;!&ndash;                <nb-card-header>&ndash;&gt;-->
+<!--&lt;!&ndash;                    Categories&ndash;&gt;-->
+<!--&lt;!&ndash;                </nb-card-header>&ndash;&gt;-->
+<!--                <nb-card-body>-->
+<!--                    <div class="row show-grid">-->
+<!--                        <div class="col-6 col-sm-4">-->
+<!--                            <nb-actions size="medium">-->
+<!--                                <nb-action class="control-item" icon="map-outline" anchorText="History"></nb-action>-->
+<!--                            </nb-actions>-->
+<!--                        </div>-->
+<!--                        <div class="col-6 col-sm-4">-->
+<!--                            <nb-actions size="medium">-->
+<!--                                <nb-action class="control-item" icon="thermometer-minus-outline" title="Science" anchorText="Science"></nb-action>-->
+<!--                            </nb-actions>-->
+<!--                        </div>-->
+<!--                        <div class="col-6 col-sm-4">-->
+<!--                            <nb-actions size="medium">-->
+<!--                                <nb-action class="control-item" icon="book-open-outline" anchorText="Literature"></nb-action>-->
+<!--                            </nb-actions>-->
+<!--                        </div>-->
+<!--                        <div class="col-6 col-sm-4">-->
+<!--                            <nb-actions size="medium">-->
+<!--                                <nb-action class="control-item" icon="bulb-outline" anchorText="Gaming"></nb-action>-->
+<!--                            </nb-actions>-->
+<!--                        </div>-->
+<!--                        <div class="col-6 col-sm-4">-->
+<!--                            <nb-actions size="medium">-->
+<!--                                <nb-action class="control-item" icon="people-outline" anchorText="Politics"></nb-action>-->
+<!--                            </nb-actions>-->
+<!--                        </div>-->
+<!--                        <div class="col-6 col-sm-4">-->
+<!--                            <nb-actions size="medium">-->
+<!--                                <nb-action class="control-item" icon="tv-outline" anchorText="News"></nb-action>-->
+<!--                            </nb-actions>-->
+<!--                        </div>-->
+<!--                        <div class="col-6 col-sm-4">-->
+<!--                            <nb-actions size="medium">-->
+<!--                                <nb-action class="control-item" icon="brush-outline" anchorText="Philosophy"></nb-action>-->
+<!--                            </nb-actions>-->
+<!--                        </div>-->
+<!--                        <div class="col-6 col-sm-4">-->
+<!--                            <nb-actions size="medium">-->
+<!--                                <nb-action class="control-item" icon="at-outline" anchorText="Developers"></nb-action>-->
+<!--                            </nb-actions>-->
+<!--                        </div>-->
+<!--                        <div class="col-6 col-sm-4">-->
+<!--                            <nb-actions size="medium">-->
+<!--                                <nb-action class="control-item" icon="compass-outline" anchorText="Travel"></nb-action>-->
+<!--                            </nb-actions>-->
+<!--                        </div>-->
+<!--                        <div class="col-6 col-sm-4">-->
+<!--                            <nb-actions size="medium">-->
+<!--                                <nb-action class="control-item" icon="smiling-face-outline" anchorText="Fun"></nb-action>-->
+<!--                            </nb-actions>-->
+<!--                        </div>-->
+<!--                        <div class="col-6 col-sm-4">-->
+<!--                            <nb-actions size="medium">-->
+<!--                                <nb-action class="control-item" icon="person-done-outline" anchorText="Celebrities"></nb-action>-->
+<!--                            </nb-actions>-->
+<!--                        </div>-->
+<!--                        <div class="col-6 col-sm-4">-->
+<!--                            <nb-actions size="medium">-->
+<!--                                <nb-action class="control-item" icon="music-outline" anchorText="Music"></nb-action>-->
+<!--                            </nb-actions>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </nb-card-body>-->
+<!--            </nb-card>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div class="row">
+        <div class="coll-12">
+            <app-survey *ngIf="this.poll" [poll]="this.poll"></app-survey>
+
+        </div>
+    </div>
+
+<!--    <nb-card>-->
+<!--        <nb-card-body>-->
+<!--            <app-survey *ngIf="this.poll" [poll]="this.poll"></app-survey>-->
+<!--        </nb-card-body>-->
+<!--    </nb-card>-->
+
+</div>

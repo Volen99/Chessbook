@@ -1,0 +1,107 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29318.209
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{F306B0F5-310E-4ABB-8269-A01EDD959A44}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{EEAC1B7E-6EB4-41A0-AA3C-5448089A483E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{4D48BC4C-7905-416D-8539-A314ECBA8983}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessbook.Common", "Chessbook.Common\Chessbook.Common.csproj", "{AB5203F8-9EE9-49DE-9A3E-9C71BD8D8E0F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessbook.DIContainerCore", "Chessbook.DIContainerCore\Chessbook.DIContainerCore.csproj", "{AFB82BAB-F251-467F-9BCF-A05984D9ED78}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessbook.IdentityManagementCore", "Chessbook.IdentityManagementCore\Chessbook.IdentityManagementCore.csproj", "{5986197C-D149-4ACA-A3E9-CF3A829C1F63}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessbook.Web.Api", "Web\Chessbook.WebApi\Chessbook.Web.Api.csproj", "{965FBA06-3EC6-4656-9D7A-F447D9C319A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessbook.Services", "Chessbook.Services\Chessbook.Services\Chessbook.Services.csproj", "{DFD4E879-1BC4-4E5E-BB66-A9AB0A34E8E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessbook.Services.Data", "Chessbook.Services\Chessbook.Services.Data\Chessbook.Services.Data.csproj", "{5535C70A-7D6D-4AAB-8B86-81436F3553F0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessbook.Services.Mapping", "Chessbook.Services\Chessbook.Services.Mapping\Chessbook.Services.Mapping.csproj", "{8FC9DC70-F1D4-4AFA-A607-47E740BA3F83}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessbook.Services.Common", "Chessbook.Services\Chessbook.Services.Common\Chessbook.Services.Common.csproj", "{55B12C61-FA76-4C26-B572-1C8B3E015B8C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessbook.Data", "Chessbook.Data\Chessbook.Data\Chessbook.Data.csproj", "{5829C933-4982-427A-A040-EC5C28373FEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessbook.Data.Common", "Chessbook.Data\Chessbook.Data.Common\Chessbook.Data.Common.csproj", "{285B957D-787B-4ECF-B221-CCE70315AE99}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessbook.Data.Models", "Chessbook.Data\Chessbook.Data.Models\Chessbook.Data.Models.csproj", "{ACBFA127-0E14-419D-B0B4-6B5C91AF3A5D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessbook.Web.Models", "Web\Chessbook.Web.Models\Chessbook.Web.Models.csproj", "{6F15D5D3-C05B-4F2A-88C2-E6B558413F80}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB5203F8-9EE9-49DE-9A3E-9C71BD8D8E0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB5203F8-9EE9-49DE-9A3E-9C71BD8D8E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB5203F8-9EE9-49DE-9A3E-9C71BD8D8E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB5203F8-9EE9-49DE-9A3E-9C71BD8D8E0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFB82BAB-F251-467F-9BCF-A05984D9ED78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFB82BAB-F251-467F-9BCF-A05984D9ED78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFB82BAB-F251-467F-9BCF-A05984D9ED78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFB82BAB-F251-467F-9BCF-A05984D9ED78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5986197C-D149-4ACA-A3E9-CF3A829C1F63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5986197C-D149-4ACA-A3E9-CF3A829C1F63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5986197C-D149-4ACA-A3E9-CF3A829C1F63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5986197C-D149-4ACA-A3E9-CF3A829C1F63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{965FBA06-3EC6-4656-9D7A-F447D9C319A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{965FBA06-3EC6-4656-9D7A-F447D9C319A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{965FBA06-3EC6-4656-9D7A-F447D9C319A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{965FBA06-3EC6-4656-9D7A-F447D9C319A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFD4E879-1BC4-4E5E-BB66-A9AB0A34E8E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFD4E879-1BC4-4E5E-BB66-A9AB0A34E8E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFD4E879-1BC4-4E5E-BB66-A9AB0A34E8E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFD4E879-1BC4-4E5E-BB66-A9AB0A34E8E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5535C70A-7D6D-4AAB-8B86-81436F3553F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5535C70A-7D6D-4AAB-8B86-81436F3553F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5535C70A-7D6D-4AAB-8B86-81436F3553F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5535C70A-7D6D-4AAB-8B86-81436F3553F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FC9DC70-F1D4-4AFA-A607-47E740BA3F83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FC9DC70-F1D4-4AFA-A607-47E740BA3F83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FC9DC70-F1D4-4AFA-A607-47E740BA3F83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FC9DC70-F1D4-4AFA-A607-47E740BA3F83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55B12C61-FA76-4C26-B572-1C8B3E015B8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55B12C61-FA76-4C26-B572-1C8B3E015B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55B12C61-FA76-4C26-B572-1C8B3E015B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55B12C61-FA76-4C26-B572-1C8B3E015B8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5829C933-4982-427A-A040-EC5C28373FEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5829C933-4982-427A-A040-EC5C28373FEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5829C933-4982-427A-A040-EC5C28373FEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5829C933-4982-427A-A040-EC5C28373FEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{285B957D-787B-4ECF-B221-CCE70315AE99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{285B957D-787B-4ECF-B221-CCE70315AE99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{285B957D-787B-4ECF-B221-CCE70315AE99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{285B957D-787B-4ECF-B221-CCE70315AE99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACBFA127-0E14-419D-B0B4-6B5C91AF3A5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACBFA127-0E14-419D-B0B4-6B5C91AF3A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACBFA127-0E14-419D-B0B4-6B5C91AF3A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACBFA127-0E14-419D-B0B4-6B5C91AF3A5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F15D5D3-C05B-4F2A-88C2-E6B558413F80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F15D5D3-C05B-4F2A-88C2-E6B558413F80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F15D5D3-C05B-4F2A-88C2-E6B558413F80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F15D5D3-C05B-4F2A-88C2-E6B558413F80}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{965FBA06-3EC6-4656-9D7A-F447D9C319A2} = {4D48BC4C-7905-416D-8539-A314ECBA8983}
+		{DFD4E879-1BC4-4E5E-BB66-A9AB0A34E8E4} = {EEAC1B7E-6EB4-41A0-AA3C-5448089A483E}
+		{5535C70A-7D6D-4AAB-8B86-81436F3553F0} = {EEAC1B7E-6EB4-41A0-AA3C-5448089A483E}
+		{8FC9DC70-F1D4-4AFA-A607-47E740BA3F83} = {EEAC1B7E-6EB4-41A0-AA3C-5448089A483E}
+		{55B12C61-FA76-4C26-B572-1C8B3E015B8C} = {EEAC1B7E-6EB4-41A0-AA3C-5448089A483E}
+		{5829C933-4982-427A-A040-EC5C28373FEB} = {F306B0F5-310E-4ABB-8269-A01EDD959A44}
+		{285B957D-787B-4ECF-B221-CCE70315AE99} = {F306B0F5-310E-4ABB-8269-A01EDD959A44}
+		{ACBFA127-0E14-419D-B0B4-6B5C91AF3A5D} = {F306B0F5-310E-4ABB-8269-A01EDD959A44}
+		{6F15D5D3-C05B-4F2A-88C2-E6B558413F80} = {4D48BC4C-7905-416D-8539-A314ECBA8983}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {328B8E10-FED4-47C9-86C2-27E2B708C6E0}
+	EndGlobalSection
+EndGlobal

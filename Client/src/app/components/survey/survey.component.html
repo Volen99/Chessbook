@@ -1,0 +1,62 @@
+<!--<div class="poll">-->
+<!--    <h3 class="survey-view-question">{{this.poll.question}}</h3>-->
+<!--    <ul>-->
+<!--        &lt;!&ndash;poll.get('options').map((option, i) => this.renderOption(option, i, showResults))&ndash;&gt;-->
+<!--        <ng-container *ngFor="let option of this.poll.options; let i = index">-->
+<!--            <app-render-option [poll]="this.poll" [option]="option" [optionIndex]="i"-->
+<!--                               [showResults]="this.showResults"></app-render-option>-->
+<!--        </ng-container>-->
+<!--    </ul>-->
+
+<!--    <div class="poll__footer">-->
+<!--        <button *ngIf="!this.showResults" class="button button-secondary" [disabled]="this.disabled"-->
+<!--                (click)="this.handleVote()">Vote-->
+<!--        </button>-->
+<!--        <span *ngIf="this.showResults && !this.disabled"><button class="poll__link" (click)="this.handleRefresh()">Refresh</button> · </span>-->
+<!--        {{this.votesCount}}-->
+<!--        <span *ngIf="this.poll.expires_at"> · {{this.timeRemaining}}</span>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<nb-card>-->
+<!--    <nb-card-body>-->
+<!--        <nb-card-footer>-->
+<!--            -->
+<!--        </nb-card-footer>-->
+<!--    </nb-card-body>-->
+<!--</nb-card>-->
+
+<div class="section-container-component">
+    <div class="section-content-component survey-view-content">
+        <h1 class="text-basic">{{this.poll.question}}</h1>
+        <div>
+            <div *ngIf="!this.showResults" class="survey-options-component">
+                <div class="survey-options-options">
+                    <nb-radio-group [(value)]="this.selected">
+                            <nb-radio *ngFor="let option of this.poll.options; let i = index" [value]="option.id" (valueChange)="this.handleOptionChange($event)">{{option.label}}</nb-radio>
+                    </nb-radio-group>
+                </div>
+                <button nbButton size="large" status="primary" shape="rectangle" (click)="this.handleVote()">Submit</button>
+            </div>
+            <div *ngIf="this.showResults">
+                <ng-container *ngFor="let option of this.poll.options">
+                    <div>
+                        <div class="survey-results-label-title text-basic">
+                            {{this.option.label}} <span class="survey-results-subtitle">({{this.calcPercent(option)}}%, {{option.votes}} Votes)</span>
+                        </div>
+                        <nb-progress-bar size="tiny" [value]="option.votes" status="primary"></nb-progress-bar>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="survey-view-footer">
+                <p class="paragraph-2 text-hint">Created on {{this.getNormalizedDate(this.poll.startDateUtc)}} | {{this.poll.votes_count}} Votes | 997 Comments</p>
+                <button nbButton status="info" class="survey-view-results-button" style="padding-top: 0px; padding-bottom: 15px" (click)="this.handleShowResults()" ghost>{{!this.showResults ? 'View Results' : 'Back to Vote'}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--                    <div class="survey-results-progress">-->
+<!--                        <div class="survey-results-progress-bar" style="width: 10%;"></div>-->
+<!--                    </div>-->
+

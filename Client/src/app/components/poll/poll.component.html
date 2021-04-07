@@ -1,0 +1,15 @@
+<div class="poll">
+    <ul>
+        <!--poll.get('options').map((option, i) => this.renderOption(option, i, showResults))-->
+        <ng-container *ngFor="let option of this.poll.options; let i = index">
+            <app-render-option [poll]="this.poll" [option]="option" [optionIndex]="i" [showResults]="this.showResults"></app-render-option>
+        </ng-container>
+    </ul>
+
+    <div class="poll__footer">
+        <button *ngIf="!this.showResults" class="button button-secondary" [disabled]="this.disabled" (click)="this.handleVote()">Vote</button>
+        <span *ngIf="this.showResults && !this.disabled"><button class="poll__link" (click)="this.handleRefresh()">Refresh</button> · </span>
+        {{this.votesCount}}
+        <span *ngIf="this.poll.expires_at"> · {{this.timeRemaining}}</span>
+    </div>
+</div>

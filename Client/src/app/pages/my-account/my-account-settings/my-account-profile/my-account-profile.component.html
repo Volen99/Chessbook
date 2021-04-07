@@ -1,0 +1,72 @@
+<nb-card>
+    <nb-card-header>PROFILE SETTINGS</nb-card-header>
+    <nb-card-body>
+        <div [formGroup]="userForm" class="container">
+            <div class="form-group col-12 col-lg-8 col-xl-9">
+                <label for="inputLogin">Display name</label>
+                <input nbInput fullWidth id="inputLogin" formControlName="login"
+                       [status]="(login?.errors?.required || login?.hasError('minlength') || login?.hasError('maxlength')) && login.touched ? 'danger' : 'primary'"
+                       class="form-control" placeholder="Display name">
+                <ngx-validation-message label="Login"
+                                        [showMinLength]="login?.hasError('minlength')"
+                                        [showMaxLength]="login?.hasError('maxlength')"
+                                        [showRequired]="login?.errors?.required && login.touched"
+                                        minLength=6
+                                        maxLength=20></ngx-validation-message>
+            </div>
+
+            <div class="form-group col-12 col-lg-8 col-xl-9">
+                <label for="description">Description</label>
+                <textarea nbInput fullWidth id="description" shape="rectangle" formControlName="description"
+                          [status]="(email?.errors?.required || email?.hasError('pattern')) && email.touched ? 'danger' : 'primary'"
+                          class="form-control"
+                          placeholder="Description">
+                </textarea>
+                <ngx-validation-message label="Description"
+                                        [showPattern]="email?.hasError('pattern') && email.touched"
+                                        [showRequired]="email?.errors?.required && email.touched" min=1
+                                        max=120></ngx-validation-message>
+            </div>
+        </div>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton status="primary" [disabled]="!userForm.valid" (click)="save()" hero>Submit</button>
+        <button nbButton status="info" (click)="back()" hero>Back</button>
+    </nb-card-footer>
+</nb-card>
+
+
+
+<!--<div *ngIf="error" class="alert alert-danger">{{ error }}</div>-->
+
+<!--<form role="form" (ngSubmit)="updateMyProfile()" [formGroup]="form">-->
+
+<!--  <div class="form-group">-->
+<!--    <label i18n for="username">Username</label>-->
+<!--    <input type="text" id="username" class="form-control" formControlName="username" readonly>-->
+<!--    <div class="text-muted" i18n>-->
+<!--      People can find you using {{ user?.screenName }}@{{ this.instanceHost }}-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="form-group">-->
+<!--    <label i18n for="display-name">Display name</label>-->
+<!--    <input type="text" id="display-name" class="form-control" formControlName="display-name" [ngClass]="{ 'input-error': formErrors['display-name'] }">-->
+<!--    <div *ngIf="formErrors['display-name']" class="form-error">-->
+<!--      {{ formErrors['display-name'] }}-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="form-group">-->
+<!--    <label i18n for="description">Description</label>-->
+<!--    <textarea-->
+<!--      id="description" formControlName="description" class="form-control"-->
+<!--      [ngClass]="{ 'input-error': formErrors['description'] }"-->
+<!--    ></textarea>-->
+<!--    <div *ngIf="formErrors.description" class="form-error">-->
+<!--      {{ formErrors.description }}-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <input type="submit" i18n-value value="Save" [disabled]="!form.valid">-->
+<!--</form>-->

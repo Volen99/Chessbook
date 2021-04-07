@@ -1,0 +1,16 @@
+<nb-card>
+    <nb-card-header>{{ title }}</nb-card-header>
+    <nb-card-body>
+        <p class="text-hint">
+            {{this.body}}
+        </p>
+        <div class="form-group">
+            <label for="username" class="text-hint">Type your username to confirm</label>
+            <input id="username" #name nbInput fullWidth>
+        </div>
+    </nb-card-body>
+    <nb-card-footer>
+        <button class="cancel" nbButton status="primary" (click)="this.dismiss()">Cancel</button>
+        <button nbButton status="danger" (click)="this.submit(name.value)">Submit</button>
+    </nb-card-footer>
+</nb-card>

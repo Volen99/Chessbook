@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Chessbook.Data\Chessbook.Data.Common\Chessbook.Data.Common.csproj" ReferenceOutputAssembly="true" />
+    <ProjectReference Include="..\..\Chessbook.Data\Chessbook.Data.Models\Chessbook.Data.Models.csproj" ReferenceOutputAssembly="true" />
+    <ProjectReference Include="..\..\Chessbook.Data\Chessbook.Data\Chessbook.Data.csproj" />
+    <ProjectReference Include="..\..\Web\Chessbook.Web.Models\Chessbook.Web.Models.csproj" />
+    <ProjectReference Include="..\Chessbook.Services.Mapping\Chessbook.Services.Mapping.csproj" ReferenceOutputAssembly="true" />
+  </ItemGroup>
+
+</Project>

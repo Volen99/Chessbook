@@ -1,0 +1,38 @@
+<nb-card>
+    <nb-card-body>
+        <div class="compose-form__poll-wrapper">
+            <input nbInput type="text" fullWidth placeholder="The question..." (change)="this.handleQuestionChange($event)">
+            <ul>
+                <ng-container *ngFor="let title of this.initialPoll.options; let i = index">
+                    <app-poll-form-option [options]="this.initialPoll.options" [title]="title" key="i" [index]="i" [onRemove]="this.onRemoveOption" [isPollMultiple]="this.initialPoll.multiple" [onToggleMultiple]="this.handleToggleMultiple" [autoFocus]="i === this.autoFocusIndex"></app-poll-form-option> <!--...other-->
+                </ng-container>
+            </ul>
+
+            <nb-card-footer>
+                    <button ghost nbButton status="primary" (click)="this.handleAddOption()"> <!--[disabled]="this.initialPoll.options.length >= 4"-->
+                        <nb-icon icon="plus-outline"></nb-icon>
+                    </button>
+
+                    <nb-select [selected]="86400"  (selectedChange)="this.handleSelectDuration($event)">
+                        <nb-option [value]="300">5 minutes</nb-option>
+                        <nb-option [value]="1800">30 minutes</nb-option>
+                        <nb-option [value]="3600">1 hour</nb-option>
+                        <nb-option [value]="21600">6 hours</nb-option>
+                        <nb-option [value]="86400">1 day</nb-option>
+                        <nb-option [value]="259200">3 days</nb-option>
+                        <nb-option [value]="604800">7 days</nb-option>
+                    </nb-select>
+
+            </nb-card-footer>
+        </div>
+
+
+
+    </nb-card-body>
+</nb-card>
+
+<nb-card>
+    <nb-card-body>
+        <button nbButton status="primary" size="medium" (click)="handlePublish()">Publish 😎</button>
+    </nb-card-body>
+</nb-card>
