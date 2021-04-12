@@ -28,11 +28,6 @@ const routes: Routes = [
         loadChildren: () => import('./pages/messages/messages.module').then(m => m.MessagesModule),
       },
       {
-        path: 'profile',
-        canActivate: [AuthGuard],
-        loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule),
-      },
-      {
         path: 'ui-features',
         canActivate: [AuthGuard],
         loadChildren: () => import('./pages/ui-features/ui-features.module').then(m => m.UiFeaturesModule),
@@ -57,6 +52,15 @@ const routes: Routes = [
       {
         path: 'notifications',
         loadChildren: () => import('./pages/notifications/notifications.module').then(m => m.NotificationsModule),
+      },
+      {
+        path: ':screenName',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule),
+      },
+      {
+        path: ':username/post/:id',
+        loadChildren: () => import('./shared/posts/post-watch/post-watch.module').then(m => m.PostWatchModule),
       }
     ]
   },

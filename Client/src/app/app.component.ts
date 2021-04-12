@@ -20,6 +20,7 @@ import {ScreenService} from "./core/wrappers/screen.service";
 import {HttpClient} from "@angular/common/http";
 import {IPoll} from "./shared/posts/models/poll/poll";
 import {environment} from "../environments/environment";
+import {IUser} from "./core/interfaces/common/users";
 
 @Component({
   selector: 'app-root',
@@ -40,7 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.initUser();
 
-    this.initMenu();
+    // this.initMenu(); // comment coz of user.screenName for :profile
 
     this.tokenService.tokenChange()
       .pipe(takeWhile(() => this.alive))
@@ -55,11 +56,15 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // this.analytics.trackPageViews();
 
+
+
+
     this.initRouteEvents();
 
 
   }
 
+  user: IUser;
 
   public isAdmin = false;
 
@@ -68,11 +73,15 @@ export class AppComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
       )
-      .subscribe();
+      .subscribe((data) => {
+        this.user = data;
+        this.initMenu();
+
+      });
   }
 
   initMenu() {
-    this.pagesMenu.getMenu()
+    this.pagesMenu.getMenu(this.user?.screenName)
       .pipe(takeWhile(() => this.alive))
       .subscribe(menu => {
         this.menu = menu;

@@ -4,7 +4,6 @@
     using Microsoft.EntityFrameworkCore;
 
 
-    [Owned]
     public class DescriptionEntity
     {
         public IEnumerable<UrlEntity> Urls { get; set; }

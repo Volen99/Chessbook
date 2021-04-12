@@ -6,7 +6,7 @@ import {NbMenuItem} from '../sharebook-nebular/theme/components/menu/menu.servic
 @Injectable()
 export class PagesMenu {
 
-  getMenu(): Observable<NbMenuItem[]> {
+  getMenu(screenName: string): Observable<NbMenuItem[]> {
     const dashboardMenu: NbMenuItem[] = [
       // {
       //   title: 'E-commerce',
@@ -285,7 +285,7 @@ export class PagesMenu {
       {
         title: 'Profile',
         icon: 'person-outline',
-        link: '/profile',
+        link: `/${screenName}`,
         children: undefined,
       },
     ];

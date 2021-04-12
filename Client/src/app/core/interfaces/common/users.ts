@@ -55,6 +55,8 @@ export interface IUser extends IUserIdentifier {
 
   profileImageUrlHttp: string;
 
+  profileImageUrlHttps: string;
+
   profileImageUrl: string;
 
   followRequestSent?: boolean;

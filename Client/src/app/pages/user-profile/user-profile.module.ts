@@ -12,6 +12,7 @@ import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/bu
 import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.module";
 import {NbActionsModule} from "../../sharebook-nebular/theme/components/actions/actions.module";
 import {ComponentsModule} from "../../components/components.module";
+import {UserProfileService} from "./user-profile.service";
 
 @NgModule({
     imports: [
@@ -43,7 +44,7 @@ import {ComponentsModule} from "../../components/components.module";
     UserProfileComponent
   ],
 
-  providers: []
+  providers: [UserProfileService]
 })
 export class UserProfileModule {
 }

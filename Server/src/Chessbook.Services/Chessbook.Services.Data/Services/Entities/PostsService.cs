@@ -63,7 +63,7 @@
             throw new System.NotImplementedException();
         }
 
-        public T GetById<T>(long id)
+        public T GetById<T>(int id)
         {
             return this.postsRepository.All().Where(p => p.Id == id)
                 .To<T>().FirstOrDefault();
@@ -75,10 +75,14 @@
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<T> GetHomeTimeline<T>(int userId, int? count = null, int skip = 0)
+        public async Task<IEnumerable<T>> GetHomeTimeline<T>(int userId, int? count = null, int skip = 0)
         {
             var query = this.postsRepository.All()
-                .Where(p => p.UserId == userId)
+                .Where(p => p.IsDeleted == false)
+                .Include(p => p.User)
+                .Include(p => p.Medias)
+                .Include(p => p.Poll)
+                .ThenInclude(poll => poll.Options)
                 .OrderBy(p => p.CreatedAt)
                 .Skip(skip);
 
@@ -87,24 +91,24 @@
                 query = query.Take(count.Value);
             }
 
-            foreach (var post in query)
-            {
-                if (post.MediasIds != null)
-                {
-                    var ids = post.MediasIds?.Split(", ").Select(x => int.Parse(x)).ToArray();
-                    post.Medias = this.GetMedias(ids);
-                }
-                else if (post.PollId != null)
-                {
-                }
+            //foreach (var post in query)
+            //{
+            //    if (post.MediasIds != null)
+            //    {
+            //        var ids = post.MediasIds?.Split(", ").Select(x => int.Parse(x)).ToArray();
+            //        post.Medias = await this.GetMedias(ids);
+            //    }
+            //    else if (post.PollId != null)
+            //    {
+            //    }
                 
-            }
+            //}
 
             return query.To<T>().ToList();
         }
 
      
-        public async Task<PostDTO> InsertPostVoteAsync(long postId, int userId, PostRateType postRateType)
+        public async Task<PostDTO> InsertPostVoteAsync(int postId, int userId, PostRateType postRateType)
         {
             var postVoteNew = new PostVote
             {
@@ -226,17 +230,27 @@
             return ratingObject;
         }
 
-        private List<MediaEntity> GetMedias(int[] mediasIds)
+        private async Task<List<MediaEntityDTO>> GetMedias(int[] mediasIds)
         {
-            var mediaEntities = new List<MediaEntity>();
+            var mediaEntities = new List<MediaEntityDTO>();
             for (int i = 0; i < mediasIds.Length; i++)
             {
-                mediaEntities.Add(this.mediaService.GetMediaById(mediasIds[i]));
+                var mediaCurrent = await this.mediaService.GetMediaById<MediaEntityDTO>(mediasIds[i]);
+                mediaEntities.Add(mediaCurrent);
             }
 
             return mediaEntities;
         }
 
-       
+        public async Task<IEnumerable<T>> GetLikers<T>(int postId)
+        {
+            var likers = this.postVoteRepository.All()
+                .Where(pv => pv.PostId == postId)
+                .Include(u => u.User)
+                .Select(pv => pv.User)
+                .MapTo<IEnumerable<T>>();
+
+            return likers;
+        }
     }
 }

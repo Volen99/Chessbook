@@ -355,7 +355,9 @@ export class Post /*implements IPost*/ {
   // #region Tweetinvi API Attributes
 
   get url(): string {
-    return `https://twitter.com/${this.user?.screenName}/status/${this.id.toString(/*CultureInfo.InvariantCulture*/).toLocaleLowerCase()}`;
+    return `/${this.user?.screenName}/post/${this.id.toLocaleString().toLocaleLowerCase()}`;
+
+    // return `https://twitter.com/${this.user?.screenName}/status/${this.id.toString(/*CultureInfo.InvariantCulture*/).toLocaleLowerCase()}`;
   }
 
   // #endregion

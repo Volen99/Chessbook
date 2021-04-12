@@ -14,7 +14,7 @@
 
         //public List<SymbolEntity> Symbols { get; set; }
 
-        public List<MediaEntity> Medias { get; set; }
+        public List<MediaEntityDTO> Medias { get; set; }
 
         public PollDTO Poll { get; set; }
     }

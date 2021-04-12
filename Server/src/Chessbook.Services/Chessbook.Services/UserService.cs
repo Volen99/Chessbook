@@ -90,5 +90,12 @@
 
             return users;
         }
+
+        public async Task<UserDTO> GetByScreenName(string screenName, bool includeDeleted = true)
+        {
+            var profile = await this.userRepository.GetByLogin(screenName, base.Session);
+
+            return profile.MapTo<UserDTO>();
+        }
     }
 }

@@ -43,7 +43,7 @@
         public async Task<User> GetByLogin(string login, ContextSession session, bool includeDeleted = false)
         {
             return await GetEntities(session, includeDeleted)
-                .Where(obj => obj.Login == login)
+                .Where(obj => obj.ScreenName == login)
                 .Include(u => u.UserRoles)
                 .ThenInclude(x => x.Role)
                 .Include(u => u.Settings)

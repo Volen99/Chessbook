@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Chessbook.Data.Models.Polls
 {
@@ -58,5 +59,7 @@ namespace Chessbook.Data.Models.Polls
         public DateTime? EndDateUtc { get; set; }
 
         public bool IsSurvey { get; set; }
+
+        public ICollection<PollOption> Options { get; set; }
     }
 }

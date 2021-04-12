@@ -1,17 +1,20 @@
-﻿namespace Chessbook.Data.Models.Post.Entities
+﻿using Chessbook.Data.Common.Models;
+
+namespace Chessbook.Data.Models.Post.Entities
 {
     /// <summary>
-    /// Object storing information related with media size on Twitter
+    /// Object storing information related with media size on Chessbook
     /// </summary>
-    public class MediaEntitySize
+    public class MediaEntitySize : BaseModel<int>
     {
-        // [JsonProperty("w")]
+        public int MediaId { get; set; }
+
+        public string Variant { get; set; }
+
         public int? Width { get; set; }
 
-        // [JsonProperty("h")]
         public int? Height { get; set; }
 
-        // [JsonProperty("resize")]
-        public string Resize { get; set; }
+        public string Resize { get; set; } // Resizing method used to obtain this size
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Chessbook.Web.Models.Outputs.Polls
 {
-    public class PollDTO : IMapTo<Poll>
+    public class PollDTO : IMapFrom<Poll>, IMapTo<Poll>
     {
         public PollDTO()
         {
@@ -36,14 +36,10 @@ namespace Chessbook.Web.Models.Outputs.Polls
 
         public bool Voted { get; set; }
 
-        [JsonProperty("votes_count")]
         public int VotesCount { get; set; }
-
-        [JsonProperty("voters_count")]
 
         public int VotersCount { get; set; }
 
-        [JsonProperty("own_votes")]
         public int[] OwnVotes { get; set; }
     }
 }

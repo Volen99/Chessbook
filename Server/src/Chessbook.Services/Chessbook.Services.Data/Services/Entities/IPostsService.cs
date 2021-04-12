@@ -13,15 +13,15 @@
     {
         Task<Post> CreateAsync(QueryPostParams query, int userId, string mediaIds = null, int pollId = 0);
 
-        T GetById<T>(long id);
+        T GetById<T>(int id);
 
         IEnumerable<T> GetByCategoryId<T>(int categoryId, int? take = null, int skip = 0);
 
-        IEnumerable<T> GetHomeTimeline<T>(int userId, int? count = null, int skip = 0);
+        Task<IEnumerable<T>> GetHomeTimeline<T>(int userId, int? count = null, int skip = 0);
 
         int GetCountByCategoryId(int categoryId);
 
-        Task<PostDTO> InsertPostVoteAsync(long postId, int userId, PostRateType postRateType);
+        Task<PostDTO> InsertPostVoteAsync(int postId, int userId, PostRateType postRateType);
 
         /// <summary>
         /// Get a post vote 
@@ -47,5 +47,7 @@
         /// <param name="сreatedFromUtc">Date</param>
         /// <returns>Post votes count</returns>
         Task<int> GetNumberOfPostVotesAsync(int userId, DateTime сreatedFromUtc);
+
+        Task<IEnumerable<T>> GetLikers<T>(int postId);
     }
 }

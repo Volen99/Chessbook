@@ -37,6 +37,7 @@ import {Observable} from "rxjs";
 import {UserVideoRate} from "./models/rate/user-video-rate.model";
 import {IPostConstant} from "./models/post-constant.model";
 import {PostPrivacy} from "../models/enums/post-privacy";
+import {PostDetails} from "../shared-main/post/post-details.model";
 
 @Injectable()
 export class PostsService {
@@ -99,6 +100,25 @@ export class PostsService {
     return null;
 
     // return this._client.factories.createTweet(requestResult?.model);
+  }
+
+  getPost(videoId: string): Observable<PostDetails> {
+    // return this.serverService.getServerLocale()
+    //   .pipe(
+    //     switchMap(translations => {
+    //       return this.authHttp.get<PostDetails>(VideoService.BASE_VIDEO_URL + options.videoId)
+    //     //   .pipe(map(videoHash => ({ videoHash, translations })))
+    //     }),
+    //     map(({ videoHash, translations }) => new VideoDetails(videoHash, translations)),
+    //     catchError(err => this.restExtractor.handleError(err))
+    //   );
+
+    return this.postsApi.getPost(videoId)
+      .pipe(map(videoHash => ({videoHash})))
+      .pipe(map(({videoHash}) => new PostDetails(videoHash)),
+        catchError(err => this.restExtractor.handleError(err)));
+
+
   }
 
   // // Tweets - Destroy
@@ -367,6 +387,12 @@ export class PostsService {
     return base
       .map(o => ({...base[o.id - 1], ...o})); // merge the input privacies that contain a label, and extend them with a description
 
+  }
+
+  getLikers(postId: number) {
+    let url = `likers/${postId}`;
+
+    return this.postsApi.getLikers(url);
   }
 
   // #endregion

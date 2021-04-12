@@ -9,7 +9,7 @@
     using Chessbook.Data.Models.Post.Properties;
     using Chessbook.Data.Models.Polls;
 
-    public class Post : BaseDeletableModel<long>
+    public class Post : BaseDeletableModel<int>
     {
         public Post()
         {
@@ -19,8 +19,8 @@
         public string IdStr { get; set; }
 
         [Required]
-        public long UserId { get; set; }
-        public User User { get; set; }
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
 
         public string Text { get; set; }
 

@@ -15,6 +15,7 @@
     using Chessbook.Data.Models.Polls;
     using Chessbook.Web.Models.Polls;
     using Chessbook.Web.Models.Outputs.Polls;
+    using Chessbook.Web.Models;
 
     [Route("posts")]
     public class PostsController : BaseApiController
@@ -46,7 +47,7 @@
                 skip = query.Start;
             }
 
-            var postDTOs = this.postService.GetHomeTimeline<PostDTO>(User.GetUserId(), query.Count, skip);
+            var postDTOs = await this.postService.GetHomeTimeline<PostDTO>(User.GetUserId(), query.Count, skip);
 
             var userDTO = await this.userService.GetById(User.GetUserId());
             foreach (var postDTO in postDTOs)
@@ -56,17 +57,17 @@
                 if (postDTO.MediasIds != null)
                 {
                     var ids = postDTO.MediasIds?.Split(", ").Select(x => int.Parse(x)).ToArray();
-                    postDTO.Entities.Medias = this.GetMedias(ids);
+                    postDTO.Entities.Medias = await this.GetMedias(ids);
                 }
-                else if (postDTO.PollId != 0)
-                {
-                    var poll = await this.pollService.GetPollByIdAsync<PollDTO>(postDTO.PollId);
-                    var pollOptions = await this.pollService.GetPollAnswerByPollAsync<PollOptionDTO>(poll.Id);
+                //else if (postDTO.PollId != 0)
+                //{
+                //    var poll = await this.pollService.GetPollByIdAsync<PollDTO>(postDTO.PollId);
+                //    var pollOptions = await this.pollService.GetPollAnswerByPollAsync<PollOptionDTO>(poll.Id);
 
-                    poll.Options = pollOptions;
+                //    poll.Options = pollOptions;
 
-                    postDTO.Entities.Poll = poll;
-                }
+                //    postDTO.Entities.Poll = poll;
+                //}
             }
 
             return this.Ok(new
@@ -98,12 +99,59 @@
             return this.Ok(query);
         }
 
-        private List<MediaEntity> GetMedias(int[] mediasIds)
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetPost(int id)
         {
-            var mediaEntities = new List<MediaEntity>();
+            var post = this.postService.GetById<PostDTO>(id);
+
+            var userDTO = await this.userService.GetById(User.GetUserId());
+            post.User = userDTO;
+
+            if (post.MediasIds != null)
+            {
+                var ids = post.MediasIds?.Split(", ").Select(x => int.Parse(x)).ToArray();
+                post.Entities.Medias = await this.GetMedias(ids);
+
+                var mediaSizes = await this.mediaService.GetMediaSize<MediaEntitySizeDTO>((int)post.Entities.Medias[0].Id);
+
+                foreach (var size in mediaSizes)
+                {
+                    if (!post.Entities.Medias[0].Sizes.ContainsKey(size.Variant)) // nostalgia 💚
+                    {
+                        post.Entities.Medias[0].Sizes.Add(size.Variant, size);
+                    }
+                }
+            }
+            else if (post.PollId != 0)
+            {
+                var poll = await this.pollService.GetPollByIdAsync<PollDTO>(post.PollId);
+                var pollOptions = await this.pollService.GetPollAnswerByPollAsync<PollOptionDTO>(poll.Id);
+
+                poll.Options = pollOptions;
+
+                post.Entities.Poll = poll;
+            }
+
+            return this.Ok(post);
+        }
+
+        [HttpGet]
+        [Route("likers/{id}")]
+        public async Task<IActionResult> Likers(int id)
+        {
+            var users = await this.postService.GetLikers<UserDTO>(id);
+
+            return this.Ok(users);
+        }
+
+        private async Task<List<MediaEntityDTO>> GetMedias(int[] mediasIds)
+        {
+            var mediaEntities = new List<MediaEntityDTO>();
             for (int i = 0; i < mediasIds.Length; i++)
             {
-                mediaEntities.Add(this.mediaService.GetMediaById(mediasIds[i]));
+                var mediaCurrent = await this.mediaService.GetMediaById<MediaEntityDTO>(mediasIds[i]);
+                mediaEntities.Add(mediaCurrent);
             }
 
             return mediaEntities;

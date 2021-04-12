@@ -8,15 +8,13 @@
     /// <summary>
     /// Object storing information related with a Media on Twitter
     /// </summary>
-    public class MediaEntity : BaseDeletableModel<long>
+    public class MediaEntity : BaseDeletableModel<int>
     {
-        public string IdStr { get; set; }
-
         public string Directory { get; set; }
 
         public long Size { get; set; }
 
-        public string URL { get; set; }
+        public string Url { get; set; }
 
         public string DisplayURL { get; set; }
 
@@ -26,17 +24,16 @@
 
         public string MediaURLHttps { get; set; }
 
-        //[JsonProperty("type")]
-        public string MediaType { get; set; }
+        public string Type { get; set; }
 
         public int IndicesId { get; set; }
         public Indices Indices { get; set; }
 
-        //public Dictionary<string, MediaEntitySize> Sizes { get; set; }
+        // public Dictionary<string, MediaEntitySize> Sizes { get; set; }
 
         //[JsonProperty("video_info")]
         //[JsonConverter(typeof(JsonPropertyConverterRepository))]
-        public VideoInformationEntity VideoDetails { get; set; }
+        // public VideoInformationEntity VideoDetails { get; set; }
 
         //public bool Equals(IMediaEntity other)
         //{

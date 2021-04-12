@@ -82,7 +82,6 @@ export class MarkdownService {
   }
 
   private async render(name: keyof MarkdownParsers, markdown: string, withEmoji = false) {
-    debugger
     if (!markdown) {
       return '';
     }

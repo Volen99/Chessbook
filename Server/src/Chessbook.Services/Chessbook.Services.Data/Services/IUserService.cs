@@ -13,6 +13,9 @@
         Task<GridData<UserDTO>> GetDataForGrid(UsersGridFilter filter, bool includeDeleted = false);
 
         Task<UserDTO> GetById(int id, bool includeDeleted = false);
+
+        Task<UserDTO> GetByScreenName(string screenName, bool includeDeleted = true);
+
         Task<UserDTO> GetByLogin(string login, bool includeDeleted = false);
         Task<bool> Delete(int id);
         Task<UserDTO> Edit(UserDTO dto);

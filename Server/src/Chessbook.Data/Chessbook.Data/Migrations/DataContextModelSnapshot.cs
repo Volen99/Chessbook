@@ -55,9 +55,6 @@ namespace Chessbook.Data.Migrations
                     b.Property<int>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<long?>("PostId1")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -76,7 +73,7 @@ namespace Chessbook.Data.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.HasIndex("PostId1");
+                    b.HasIndex("PostId");
 
                     b.HasIndex("UserId1");
 
@@ -210,6 +207,8 @@ namespace Chessbook.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PollId");
+
                     b.ToTable("PollAnswers");
                 });
 
@@ -259,8 +258,8 @@ namespace Chessbook.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("PostId")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
@@ -310,9 +309,9 @@ namespace Chessbook.Data.Migrations
 
             modelBuilder.Entity("Chessbook.Data.Models.Post.Entities.MediaEntity", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .UseIdentityColumn();
 
                     b.Property<DateTime>("CreatedOn")
@@ -330,9 +329,6 @@ namespace Chessbook.Data.Migrations
                     b.Property<string>("ExpandedURL")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdStr")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("IndicesId")
                         .HasColumnType("int");
 
@@ -341,9 +337,6 @@ namespace Chessbook.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<string>("MediaType")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MediaURL")
                         .HasColumnType("nvarchar(max)");
@@ -354,13 +347,16 @@ namespace Chessbook.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("PostId")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
 
                     b.Property<long>("Size")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("URL")
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -372,6 +368,39 @@ namespace Chessbook.Data.Migrations
                     b.HasIndex("PostId");
 
                     b.ToTable("MediaEntities");
+                });
+
+            modelBuilder.Entity("Chessbook.Data.Models.Post.Entities.MediaEntitySize", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Height")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MediaId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Resize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Variant")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Width")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MediaEntitySizes");
                 });
 
             modelBuilder.Entity("Chessbook.Data.Models.Post.Entities.SymbolEntity", b =>
@@ -399,8 +428,8 @@ namespace Chessbook.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("PostId")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
@@ -447,8 +476,8 @@ namespace Chessbook.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("PostId")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
 
                     b.Property<string>("URL")
                         .HasColumnType("nvarchar(max)");
@@ -495,8 +524,8 @@ namespace Chessbook.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("PostId")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ScreenName")
                         .HasColumnType("nvarchar(max)");
@@ -514,9 +543,9 @@ namespace Chessbook.Data.Migrations
 
             modelBuilder.Entity("Chessbook.Data.Models.Post.Post", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .UseIdentityColumn();
 
                     b.Property<string>("Contributors")
@@ -621,10 +650,7 @@ namespace Chessbook.Data.Migrations
                     b.Property<string>("UrlsIds")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int?>("UserId1")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserMentionsIds")
@@ -636,7 +662,7 @@ namespace Chessbook.Data.Migrations
 
                     b.HasIndex("PollId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
                 });
@@ -663,6 +689,9 @@ namespace Chessbook.Data.Migrations
                     b.Property<long>("PostId")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("PostId1")
+                        .HasColumnType("int");
+
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
@@ -673,7 +702,7 @@ namespace Chessbook.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("PostId");
+                    b.HasIndex("PostId1");
 
                     b.HasIndex("UserId");
 
@@ -1006,7 +1035,9 @@ namespace Chessbook.Data.Migrations
 
                     b.HasOne("Chessbook.Data.Models.Post.Post", "Post")
                         .WithMany()
-                        .HasForeignKey("PostId1");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Chessbook.Data.Models.User", "User")
                         .WithMany()
@@ -1041,6 +1072,15 @@ namespace Chessbook.Data.Migrations
                     b.Navigation("Contact");
                 });
 
+            modelBuilder.Entity("Chessbook.Data.Models.Polls.PollOption", b =>
+                {
+                    b.HasOne("Chessbook.Data.Models.Polls.Poll", null)
+                        .WithMany("Options")
+                        .HasForeignKey("PollId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Chessbook.Data.Models.Post.Entities.HashtagEntity", b =>
                 {
                     b.HasOne("Chessbook.Data.Models.Post.Entities.Indices", "Indices")
@@ -1064,59 +1104,7 @@ namespace Chessbook.Data.Migrations
                         .WithMany("Medias")
                         .HasForeignKey("PostId");
 
-                    b.OwnsOne("Chessbook.Data.Models.Post.Entities.ExtendedEntities.VideoInformationEntity", "VideoDetails", b1 =>
-                        {
-                            b1.Property<long>("MediaEntityId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("bigint")
-                                .UseIdentityColumn();
-
-                            b1.Property<string>("AspectRatio")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<int>("DurationInMilliseconds")
-                                .HasColumnType("int");
-
-                            b1.HasKey("MediaEntityId");
-
-                            b1.ToTable("MediaEntities");
-
-                            b1.WithOwner()
-                                .HasForeignKey("MediaEntityId");
-
-                            b1.OwnsMany("Chessbook.Data.Models.Post.Entities.ExtendedEntities.VideoEntityVariant", "Variants", b2 =>
-                                {
-                                    b2.Property<long>("VideoInformationEntityMediaEntityId")
-                                        .HasColumnType("bigint");
-
-                                    b2.Property<int>("Id")
-                                        .ValueGeneratedOnAdd()
-                                        .HasColumnType("int")
-                                        .UseIdentityColumn();
-
-                                    b2.Property<int>("Bitrate")
-                                        .HasColumnType("int");
-
-                                    b2.Property<string>("ContentType")
-                                        .HasColumnType("nvarchar(max)");
-
-                                    b2.Property<string>("URL")
-                                        .HasColumnType("nvarchar(max)");
-
-                                    b2.HasKey("VideoInformationEntityMediaEntityId", "Id");
-
-                                    b2.ToTable("VideoEntityVariant");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("VideoInformationEntityMediaEntityId");
-                                });
-
-                            b1.Navigation("Variants");
-                        });
-
                     b.Navigation("Indices");
-
-                    b.Navigation("VideoDetails");
                 });
 
             modelBuilder.Entity("Chessbook.Data.Models.Post.Entities.SymbolEntity", b =>
@@ -1166,13 +1154,15 @@ namespace Chessbook.Data.Migrations
 
                     b.HasOne("Chessbook.Data.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.OwnsOne("Chessbook.Data.Models.Post.Properties.Coordinates", "Coordinates", b1 =>
                         {
-                            b1.Property<long>("PostId")
+                            b1.Property<int>("PostId")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("bigint")
+                                .HasColumnType("int")
                                 .UseIdentityColumn();
 
                             b1.Property<double>("Latitude")
@@ -1191,9 +1181,9 @@ namespace Chessbook.Data.Migrations
 
                     b.OwnsOne("Chessbook.Data.Models.Post.Properties.Geo", "Geo", b1 =>
                         {
-                            b1.Property<long>("PostId")
+                            b1.Property<int>("PostId")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("bigint")
+                                .HasColumnType("int")
                                 .UseIdentityColumn();
 
                             b1.Property<string>("Type")
@@ -1209,9 +1199,9 @@ namespace Chessbook.Data.Migrations
 
                     b.OwnsOne("Chessbook.Data.Models.Post.Properties.Place", "Place", b1 =>
                         {
-                            b1.Property<long>("PostId")
+                            b1.Property<int>("PostId")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("bigint")
+                                .HasColumnType("int")
                                 .UseIdentityColumn();
 
                             b1.Property<string>("Country")
@@ -1244,9 +1234,9 @@ namespace Chessbook.Data.Migrations
 
                             b1.OwnsOne("Chessbook.Data.Models.Post.Properties.Geo", "BoundingBox", b2 =>
                                 {
-                                    b2.Property<long>("PlacePostId")
+                                    b2.Property<int>("PlacePostId")
                                         .ValueGeneratedOnAdd()
-                                        .HasColumnType("bigint")
+                                        .HasColumnType("int")
                                         .UseIdentityColumn();
 
                                     b2.Property<string>("Type")
@@ -1262,9 +1252,9 @@ namespace Chessbook.Data.Migrations
 
                             b1.OwnsOne("Chessbook.Data.Models.Post.Properties.Geo", "Geometry", b2 =>
                                 {
-                                    b2.Property<long>("PlacePostId")
+                                    b2.Property<int>("PlacePostId")
                                         .ValueGeneratedOnAdd()
-                                        .HasColumnType("bigint")
+                                        .HasColumnType("int")
                                         .UseIdentityColumn();
 
                                     b2.Property<string>("Type")
@@ -1298,9 +1288,7 @@ namespace Chessbook.Data.Migrations
                 {
                     b.HasOne("Chessbook.Data.Models.Post.Post", "Post")
                         .WithMany()
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("PostId1");
 
                     b.HasOne("Chessbook.Data.Models.User", "User")
                         .WithMany()
@@ -1371,6 +1359,11 @@ namespace Chessbook.Data.Migrations
                     b.Navigation("Calls");
 
                     b.Navigation("Photo");
+                });
+
+            modelBuilder.Entity("Chessbook.Data.Models.Polls.Poll", b =>
+                {
+                    b.Navigation("Options");
                 });
 
             modelBuilder.Entity("Chessbook.Data.Models.Post.Post", b =>

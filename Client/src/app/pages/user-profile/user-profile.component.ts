@@ -1,31 +1,57 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { Subscription } from 'rxjs';
-import {takeUntil, tap} from "rxjs/operators";
+import {Subscription} from 'rxjs';
+import {catchError, distinctUntilChanged, map, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {Subject} from "rxjs/Subject";
-import { Location } from '@angular/common';
+import {Location} from '@angular/common';
 
 import {IUser, UserData} from "../../core/interfaces/common/users";
 import {UserStore} from "../../core/stores/user.store";
 import {NbTokenService} from "../../sharebook-nebular/auth/services/token/token.service";
+import {UserProfileService} from "./user-profile.service";
+import {User} from "../../shared/shared-main/user/user.model";
+import {HttpStatusCode} from "../../shared/core-utils/miscs";
+import {RestExtractor} from "../../core/rest/rest-extractor";
+import {Notifier} from "../../core/notification/notifier.service";
 
 @Component({
   templateUrl: './user-profile.component.html',
-  styleUrls: [ './user-profile.component.scss' ]
+  styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   protected readonly unsubscribe$ = new Subject<void>();
 
-  constructor(private usersService: UserData,
+  private routeSub: Subscription;
+
+  constructor(private userProfileService: UserProfileService,
+              private usersService: UserData,
               private router: Router,
               private route: ActivatedRoute,
               private tokenService: NbTokenService,
               private userStore: UserStore,
+              private notifier: Notifier,
+              private restExtractor: RestExtractor,
               protected location: Location) {
   }
 
   ngOnInit() {
-    // this.loadUserData();
+    this.routeSub = this.route.params
+      .pipe(
+        map(params => params['screenName']),
+        distinctUntilChanged(),
+        switchMap(screenName => this.userProfileService.getProfile(screenName)),
+        tap(profile => this.onAccount(profile)),
+        // switchMap(account => this.videoChannelService.listAccountVideoChannels(account)),
+        catchError(err => this.restExtractor.redirectTo404IfNotFound(err, 'other', [
+          HttpStatusCode.BAD_REQUEST_400,
+          HttpStatusCode.NOT_FOUND_404
+        ]))
+      )
+      .subscribe(
+        // videoChannels => this.videoChannels = videoChannels.data,
+        //
+        // err => this.notifier.error(err.message)
+      );
 
     this.initUser();
   }
@@ -33,15 +59,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
+  public loggedInUser: IUser;
+  public profileCurrent: IUser;
+
   initUser() {
     return this.usersService.getCurrentUser()
       .pipe(tap(user => {
-        this.profileCurrent = user;
+        this.loggedInUser = user;
       }))
       .subscribe();
   }
-
-  public profileCurrent: IUser;
 
   loadUserData() {
     const username = this.route.snapshot.params['username'];
@@ -56,10 +83,27 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     loadUser
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((users) => {
-        this.profileCurrent = users;
+        this.loggedInUser = users;
         // this is a place for value changes handling
         // this.userForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {   });
       });
+  }
+
+  private async onAccount(user: User) {
+
+    this.profileCurrent = user;
+    // this.accountFollowerTitle = $localize`${account.followersCount} direct account followers`;
+    //
+    // this.prependModerationActions = undefined;
+    //
+    // this.accountDescriptionHTML = await this.markdown.textMarkdownToHTML(account.description);
+    //
+    // // After the markdown renderer to avoid layout changes
+    // this.account = account;
+    //
+    // this.updateModerationActions();
+    // this.loadUserIfNeeded(account);
+    // this.loadAccountVideosCount();
   }
 
   tabs: any[] = [
@@ -69,7 +113,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     },
     {
       title: 'Posts & replies',
-      route: [ './tab2' ],
+      route: ['./tab2'],
     },
     {
       title: 'Media',

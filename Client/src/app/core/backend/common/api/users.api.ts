@@ -46,6 +46,11 @@ export class UsersApi {
       }));
   }
 
+
+  getProfile(url: string) {
+    return this.api.get(`${this.apiController}/${url}`);
+  }
+
   delete(id: number): Observable<boolean> {
     return this.api.delete(`${this.apiController}/${id}`);
   }

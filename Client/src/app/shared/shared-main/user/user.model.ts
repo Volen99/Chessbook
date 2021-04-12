@@ -255,6 +255,8 @@ export class User implements IUser {
     return this.userDTO.notifications;
   }
 
+  profileImageUrlHttps: string;
+
 
   hasRight(right: UserRight) {
     return hasUserRight(this.role, right);

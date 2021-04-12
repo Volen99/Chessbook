@@ -38,6 +38,8 @@
 
         public DbSet<MediaEntity> MediaEntities { get; set; }
 
+        public DbSet<MediaEntitySize> MediaEntitySizes { get; set; }
+
         public DbSet<HashtagEntity> HashtagEntities { get; set; }
 
         public DbSet<UrlEntity> UrlEntities { get; set; }

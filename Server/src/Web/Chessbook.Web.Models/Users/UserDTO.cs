@@ -67,7 +67,6 @@
         //[JsonProperty("profile_image_url")]
          // public string ProfileImageUrlHttp { get; set; }
 
-        [JsonProperty("profile_image_url_https")]
         public string ProfileImageUrlHttps { get; set; }
 
         [JsonProperty("follow_request_sent")]

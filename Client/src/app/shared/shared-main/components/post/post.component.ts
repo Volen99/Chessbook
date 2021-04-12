@@ -54,7 +54,9 @@ export class PostComponent implements OnInit {
 
     this.checkUserRating();
 
-    this.init();
+    // this.init();
+
+      this.buildVideoLink();
   }
 
   sanitizedCommentHTML = '';
@@ -125,6 +127,37 @@ export class PostComponent implements OnInit {
   isUserLoggedIn() {
     return !!this.userStore.getUser();
   }
+
+    videoRouterLink: any[] = [];
+
+  buildVideoLink () {
+      debugger
+    if (!this.post.url) {
+      this.videoRouterLink = [ `/${this.post.user.screenName}/post`, this.post.id ];
+
+      return;
+    }
+
+    // if (this.videoLinkType === 'external') {
+    //   this.videoRouterLink = null;
+    //   this.videoHref = this.video.url;
+    //   this.videoTarget = '_blank';
+    //   return
+    // }
+    //
+    // // Lazy load
+    // this.videoRouterLink = [ '/search/lazy-load-video', { url: this.video.url } ]
+  }
+
+    getVideoRouterLink () {
+        if (this.videoRouterLink) {
+            return this.videoRouterLink;
+        }
+
+        return this.post.url;
+
+        // return [ '/videos/watch', this.post.uuid ];
+    }
 
   private checkUserRating() {
     // Unlogged users do not have ratings

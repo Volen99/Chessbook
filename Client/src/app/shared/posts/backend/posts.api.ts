@@ -13,6 +13,7 @@ import {IUnfavoriteTweetParameters} from "../parameters/unfavorite-tweet-paramet
 import {IGetUserFavoriteTweetsParameters} from "../parameters/get-favorite-tweets-Parameters";
 import {IGetOEmbedTweetParameters} from "../parameters/get-OEmbed-tweet-parameters";
 import {UserVideoRate} from "../models/rate/user-video-rate.model";
+import {PostDetails} from "../../shared-main/post/post-details.model";
 
 @Injectable()
 export class PostsApi {
@@ -24,6 +25,10 @@ export class PostsApi {
 
     getTweetAsync(params: HttpParams): Observable<any> { // Promise<ITwitterResult<ITweetDTO>>;
         return this.api.get(this.apiController, { params });
+    }
+
+    getPost(id): Observable<any> {
+        return this.api.get(`${this.apiController}/${id}`);
     }
 
     getTweetsAsync(params: HttpParams): Observable<any[]> {
@@ -60,6 +65,10 @@ export class PostsApi {
 
      votePostAsync(params: HttpParams): Observable<any> {
          return this.api.put(this.voteApiController, {},{ params });
+     }
+
+     getLikers(url: string) {
+        return this.api.get(`${this.apiController}/${url}`);
      }
 
     // unfavoriteTweetAsync(parameters: IUnfavoriteTweetParameters): Promise<ITwitterResult<ITweetDTO>>;

@@ -20,7 +20,7 @@
                                             <div class="sharebook-container r-k4xj1c flex-direction-row justify-content-space-between">
                                                 <div class="sharebook-container post--trend-top-info-align-items flex-direction-row flex-shrink">
                                                     <div class="sharebook-container flex-shrink max-width-100-per"><a
-                                                            routerLink="/profile" role="link" data-focusable="true"
+                                                            routerLink="/:screenName" role="link" data-focusable="true"
                                                             class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer flex-shrink max-width-100-per outline-style-none">
                                                         <div class="sharebook-container align-items-center flex-direction-row flex-shrink max-width-100-per outline-style-none">
                                                             <div class="sharebook-container align-items-center flex-direction-row max-width-100-per">
@@ -71,11 +71,14 @@
                                         </div>
                                     </div>
                                     <div class="sharebook-container">
-                                        <div *ngIf="this.post.inReplyToStatusId" class="sharebook-container r-4qtqp9 flex-direction-row justify-content-space-between r-zl2h9q">
-                                            <div dir="auto" class="css-901oao third-wheel-color font-family font-size-15px font-weight-400 r-rjixqe r-bcqeeo text-overflow-wrap">
+                                        <div *ngIf="this.post.inReplyToStatusId"
+                                             class="sharebook-container r-4qtqp9 flex-direction-row justify-content-space-between r-zl2h9q">
+                                            <div dir="auto"
+                                                 class="css-901oao third-wheel-color font-family font-size-15px font-weight-400 r-rjixqe r-bcqeeo text-overflow-wrap">
                                                 Replying to
-                                                <div class="sharebook-container display-inline-flex"><a routerLink="/WorldFeedTest12" role="link"
-                                                                                                        class="css-4rbku5 css-18t94o4 css-901oao sharebook-text-inherit r-1n1174f r-1loqt21 r-poiln3 r-bcqeeo text-overflow-wrap"><span
+                                                <div class="sharebook-container display-inline-flex"><a
+                                                        routerLink="/WorldFeedTest12" role="link"
+                                                        class="css-4rbku5 css-18t94o4 css-901oao sharebook-text-inherit r-1n1174f r-1loqt21 r-poiln3 r-bcqeeo text-overflow-wrap"><span
                                                         class="css-901oao sharebook-text-inherit r-poiln3 r-bcqeeo text-overflow-wrap">{{this.post.inReplyToScreenName}}</span></a>
                                                 </div>
                                             </div>
@@ -83,7 +86,7 @@
                                         <div class="sharebook-container">
                                             <div *ngIf="this.hasText" lang="en" dir="auto"
                                                  class="css-901oao lights-out-text-color font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px svg-position-relative text-overflow-wrap">
-                                                <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap" [innerHTML]="this.sanitizedCommentHTML"> </span><span
+                                                <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap"> {{this.post.text}} </span><span
                                                     class="css-901oao sharebook-text-inherit svg-display-inline-block meatballs-menu-height emoji-margin-left emoji-margin-right svg-position-relative r-h9hxbl"><div
                                                     aria-label="♥"
                                                     class="sharebook-container display-inline-flex image-flex-expand left-0px overflow-hidden position-absolute r-h9hxbl image-z-index"
@@ -98,27 +101,22 @@
                                             <div *ngIf="this.hasMedia" class="sharebook-container">
                                                 <div class="sharebook-container">
                                                     <div class="sharebook-container r-18bvks7 border-radius-16px border-style-solid border-width-1px margin-top-10px outline-style-none overflow-hidden transition-duration transition-property">
-                                                        <div class="sharebook-container"><a
-                                                                href="/WorldFeedTest12/status/1328383109394538496/photo/1"
-                                                                role="link" data-focusable="true"
-                                                                class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer outline-style-none">
-                                                            <div class="sharebook-container display-block overflow-hidden"
-                                                                 style="">
-                                                                <div class="display-block width-100-per"
-                                                                     style="padding-bottom: 56.25%;"></div>
-                                                                <div class="bottom-0px height-100-per left-0px position-absolute top-0px width-100-per">
-                                                                    <div aria-label="Image"
-                                                                         class="sharebook-container bottom-0px image-flex-expand left-0px image-margin-left image-margin-right overflow-hidden position-absolute right-0px top-0px image-z-index"
-                                                                         data-testid="tweetPhoto"
-                                                                         style="margin-bottom: 0px; margin-top: 0px;">
-                                                                        <div class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
-                                                                             [style.background-image]="imageBackgroundStyle"></div>
-                                                                        <img alt="Image" draggable="true"
-                                                                             [src]="this.mediaUrl"
-                                                                             class="sharebook-image"></div>
+                                                        <div class="sharebook-container">
+                                                            <a [routerLink]="this.getVideoRouterLink()" role="link" data-focusable="true" class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer outline-style-none">
+                                                                <div class="sharebook-container display-block overflow-hidden" style="">
+                                                                    <div class="display-block width-100-per" style="padding-bottom: 56.25%;"></div>
+                                                                    <div class="bottom-0px height-100-per left-0px position-absolute top-0px width-100-per">
+                                                                        <div aria-label="Image"
+                                                                             class="sharebook-container bottom-0px image-flex-expand left-0px image-margin-left image-margin-right overflow-hidden position-absolute right-0px top-0px image-z-index"
+                                                                             data-testid="tweetPhoto"
+                                                                             style="margin-bottom: 0px; margin-top: 0px;">
+                                                                            <div class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
+                                                                                 [style.background-image]="imageBackgroundStyle"></div>
+                                                                            <img alt="Image" draggable="true" [src]="this.mediaUrl" class="sharebook-image"></div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </a></div>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

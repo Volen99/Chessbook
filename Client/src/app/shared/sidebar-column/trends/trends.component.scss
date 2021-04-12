@@ -1,4 +1,15 @@
-@import "../../../../sass/application";
+@import '../../../theme/styles/themes';
+
+@include nb-install-component() {
+  .gear-color {
+    color: nb-theme(icon-primary-color);
+  }
+
+  .show-more-link {
+    color: nb-theme(link-text-color);
+  }
+
+}
 
 .r-k0dy70 {
   border-color: rgb(21, 24, 28);

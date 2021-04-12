@@ -166,5 +166,20 @@
 
             return this.Ok(postRateDTO);
         }
+
+        [HttpGet]
+        [Route("profile/{screenName:length(3,16)}")] // WTF...
+        public async Task<IActionResult> GetProfile(string screenName)
+        {
+            var userDTO = await this.userService.GetByScreenName(screenName);
+
+            return this.Ok(userDTO);
+        }
+    }
+
+    public class GetProfileInputQueryModel
+    {
+        [BindProperty(Name = "screen_name")]
+        public string ScreenName { get; set; }
     }
 }

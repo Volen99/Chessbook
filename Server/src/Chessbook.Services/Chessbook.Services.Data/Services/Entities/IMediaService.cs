@@ -9,7 +9,9 @@
     {
         Task WriteToDb(string directory, string imageUrl, string mediaType, long size);
 
-        MediaEntity GetMediaById(long postId);
+        Task<T> GetMediaById<T>(int postId);
+
+        Task<IEnumerable<T>> GetMediaSize<T>(int mediaId);
 
         long? GetLastId();
     }

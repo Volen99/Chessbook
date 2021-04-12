@@ -1,18 +1,18 @@
 ﻿namespace Chessbook.Web.Models.Outputs.Posts
 {
     using System;
-
+    using AutoMapper;
     using Chessbook.Data.Models.Post;
     using Chessbook.Services.Mapping;
 
-    public class PostDTO : IMapFrom<Post>, IMapTo<Post>
+    public class PostDTO : IMapFrom<Post>, IMapTo<Post>, IHaveCustomMappings
     {
         public PostDTO()
         {
             this.Entities = new ObjectEntitiesDTO();
         }
 
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public string IdStr => this.Id.ToString();
 
@@ -58,15 +58,22 @@
 
         public int? ReplyCount { get; set; }
 
-        public long? InReplyToStatusId { get; set; }
+        public int? InReplyToStatusId { get; set; }
 
         public string InReplyToStatusIdStr { get; set; }
 
-        public long? InReplyToUserId { get; set; }
+        public int? InReplyToUserId { get; set; }
 
         public string InReplyToUserIdStr { get; set; }
 
         public string InReplyToScreenName { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<Post, PostDTO>()
+                .ForPath(x => x.Entities.Poll, options => options.MapFrom(p => p.Poll));
+                
+        }
 
         //[JsonProperty("quote_count")]
         //public int? QuoteCount { get; set; }
