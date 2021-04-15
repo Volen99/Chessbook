@@ -131,7 +131,8 @@ export interface IUser extends IUserIdentifier {
 
   hasRight(right: UserRight);
 
-  updateAccountAvatar(newAccountAvatar?: Avatar);
+  // updateAccountAvatar(newAccountAvatar?: Avatar);
+  updateAccountAvatar(newAccountAvatarUrl?: string);
 }
 
 export interface Address {

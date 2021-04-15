@@ -42,8 +42,8 @@ export class PostThreadComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.post.entities.medias) {
-      this.picture = this.post.entities.medias[0].mediaURL;
-      this.mediaUrl = this.post.entities.medias[0].mediaURL;
+      this.picture = this.post.entities.medias[0].expandedURL;
+      this.mediaUrl = this.post.entities.medias[0].expandedURL;
     }
 
 

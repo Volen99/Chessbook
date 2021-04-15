@@ -16,16 +16,19 @@
     using System.Threading.Tasks;
     using Chessbook.Services.Data.Services.Entities;
     using Chessbook.Common.Infrastructure.Helpers;
+    using Chessbook.Services.Data.Services.Media;
 
     [Route("upload")]
     public class UploadController : BaseApiController
     {
         private static UploadService uploadService = new UploadService(new LocalFileSystemRepository());
 
+        private readonly IPictureService _pictureService;
         private readonly IMediaService mediaService;
 
-        public UploadController(IMediaService mediaService)
+        public UploadController(IPictureService pictureService, IMediaService mediaService)
         {
+            this._pictureService = pictureService;
             this.mediaService = mediaService;
         }
 
@@ -52,7 +55,18 @@
                     return this.BadRequest("Invalid segment index");
                 }
 
-                var file = this.Request.Form.Files.First();
+                var file = this.Request.Form.Files.FirstOrDefault();
+
+                if (file == null)
+                {
+                    return this.BadRequest(new { success = false, message = "No file uploaded 😟" });
+                }
+
+                const string qqFileNameParameter = "qqfilename";
+
+                var qqFileName = Request.Form.ContainsKey(qqFileNameParameter)
+                ? Request.Form[qqFileNameParameter].ToString()
+                : string.Empty;
 
                 uploadService.PersistBlock(query.MediaId.Value, query.SegmentIndex.Value, this.ToByteArray(file.OpenReadStream()));
 
@@ -63,6 +77,8 @@
                 // TODO: check for invalid input
 
                 Session session = uploadService.GetSession(query.MediaId.Value);
+
+
 
                 // FINALIZE
                 string fileFolderPath = Path.Combine(Resources.ROOT, session.GetMediaIdForFile(query.MediaId.Value));
@@ -76,6 +92,9 @@
                 uploadService.WriteToFileStream(new FileStream(filePath, FileMode.Append, FileAccess.Write), session);
 
                 await this.mediaService.WriteToDb(fileFolderPath, filePath, session.FileInfo.MediaType, session.FileInfo.Size);
+
+                var picture = await _pictureService.InsertPictureAsync(session, filePath, session.FileInfo.Name);
+
 
                 return this.Ok(UploadFinalizeOutputModel.FromSession(session));
             }

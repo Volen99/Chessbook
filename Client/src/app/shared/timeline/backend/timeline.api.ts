@@ -19,8 +19,8 @@ export class TimelineApi {
     return this.api.get<ResultList<Post>>(`${this.apiController}/home_timeline`, { params });
   }
 
-  getUserTimelineAsync(params: HttpParams): Observable<any[]> {
-    return this.api.get(this.apiController, { params });
+  getUserTimelineAsync(params: HttpParams): Observable<ResultList<Post>> {
+    return this.api.get<ResultList<Post>>(`${this.apiController}/timeline/profile`, { params });
   }
 
   getMentionsTimelineAsync(params: HttpParams): Observable<any[]> {

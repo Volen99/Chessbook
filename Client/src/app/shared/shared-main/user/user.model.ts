@@ -272,12 +272,18 @@ export class User implements IUser {
     // }
   }
 
-  updateAccountAvatar(newAccountAvatar?: Avatar) {
+  // updateAccountAvatar(newAccountAvatar?: Avatar) {
     // if (newAccountAvatar) {
     //   this.account.updateAvatar(newAccountAvatar);
     // } else {
     //   this.account.resetAvatar();
     // }
+  // }
+
+  updateAccountAvatar(newAccountAvatarUrl?: string) {
+    if (newAccountAvatarUrl) {
+      this.profileImageUrlHttps = newAccountAvatarUrl;
+    }
   }
 
   // #endregion

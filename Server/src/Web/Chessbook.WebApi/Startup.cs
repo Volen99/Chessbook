@@ -93,11 +93,13 @@
 
             app.UseHttpsRedirection();
 
+            //  app.UseStaticFiles();
+
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
-                    Path.Combine(env.ContentRootPath, "Files")),
-                RequestPath = "/Files"
+                    Path.Combine(env.ContentRootPath, "wwwroot/images")),
+                RequestPath = "/images"
             });
 
 

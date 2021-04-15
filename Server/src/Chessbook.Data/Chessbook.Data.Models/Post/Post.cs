@@ -44,7 +44,6 @@
         public string SymbolsIds { get; set; }
         public List<SymbolEntity> Symbols { get; private set; }
 
-        public string MediasIds { get; set; }
         public virtual ICollection<MediaEntity> Medias { get; set; }
 
         public int? PollId { get; set; }

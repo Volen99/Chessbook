@@ -409,11 +409,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </h2>
-                                                                    <div dir="auto"
-                                                                         class="css-901oao sharebook-text third-wheel-color font-family third-wheel-text-font-size font-weight-400 line-height-calc min-width-0px text-overflow-wrap">
-                                                                        50
-                                                                        Posts
-                                                                    </div>
+                                                                    <div dir="auto" class="css-901oao sharebook-text third-wheel-color font-family third-wheel-text-font-size font-weight-400 line-height-calc min-width-0px text-overflow-wrap">this.profileCurrent.postsCount</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -466,9 +462,8 @@
                                                          class="sharebook-container bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">
                                                         <div
                                                                 class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
-                                                                style="background-image: url(&quot;https://pbs.twimg.com/profile_banners/1282729794837393408/1594702607/1080x360&quot;);"></div>
-                                                        <img alt="" draggable="true"
-                                                             src="https://pbs.twimg.com/profile_banners/1282729794837393408/1594702607/1080x360"
+                                                                [style.background-image]="'url(' + this.profileCurrent.profileImageUrlHttps +')'"></div>
+                                                        <img alt="" draggable="true" [src]="this.profileCurrent.profileImageUrlHttps"
                                                              class="sharebook-image"></div>
                                                 </div>
                                             </div>
@@ -488,10 +483,8 @@
                                                                      class="sharebook-container border-radius-9999px bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">
                                                                     <div
                                                                             class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
-                                                                            style="background-image: url('https://pbs.twimg.com/profile_images/1282898800458301446/Mv_SWzQp_200x200.jpg');"></div>
-                                                                    <img alt="" draggable="true"
-                                                                         src="https://pbs.twimg.com/profile_images/1282898800458301446/Mv_SWzQp_200x200.jpg"
-                                                                         class="sharebook-image"></div>
+                                                                            [style.background-image]="'url(' + this.profileCurrent.profileImageUrlHttps +')'"></div>
+                                                                    <img alt="" class="sharebook-image" [src]="this.profileCurrent.profileImageUrlHttps" draggable="true"></div>
                                                             </div>
                                                         </div>
                                                         <div
@@ -530,8 +523,7 @@
                                                                 <div dir="auto"
                                                                      class="css-901oao lights-out-text-color font-family heading-font-size font-weight-800 inside-element-container-line-height min-width-0px text-overflow-wrap">
                     <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span
-                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.profileCurrent?.name}}</span></span><span
-                                                                        class="css-901oao sharebook-text-inherit flex-direction-row svg-flex-shrink-0 font-family heading-font-size inside-element-container-line-height min-width-0px text-overflow-wrap"><svg
+                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.profileCurrent?.name}}</span></span><span *ngIf="this.profileCurrent?.protected" class="css-901oao sharebook-text-inherit flex-direction-row svg-flex-shrink-0 font-family heading-font-size inside-element-container-line-height min-width-0px text-overflow-wrap"><svg
                                                                         viewBox="0 0 24 24"
                                                                         aria-label="Protected account"
                                                                         class="lights-out-text-color svg-display-inline-block svg-fill-currentcolor miniature-element-height svg-margin-left max-width-100-per svg-position-relative svg-vertical-align users-select-none"><g><path
@@ -613,7 +605,7 @@
                                                             title="3">
                                                             <span style="margin-right: 2px"
                                                             class="css-901oao sharebook-text-inherit lights-out-text-color font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap"><span
-                                                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">3</span></span>
+                                                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.profileCurrent.friendsCount}}</span></span>
                                                         <span
                                                                 class="css-901oao sharebook-text-inherit third-wheel-color font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span
                                                                 class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Following</span></span></a>
@@ -627,7 +619,7 @@
                                                                                         title="1">
                                                             <span style="margin-right: 2px"
                                                             class="css-901oao sharebook-text-inherit lights-out-text-color font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap"><span
-                                                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">1</span></span>
+                                                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.profileCurrent.followersCount}}</span></span>
                                                         <span
                                                                 class="css-901oao sharebook-text-inherit third-wheel-color font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span
                                                                 class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Follower</span></span></a>
@@ -762,9 +754,16 @@
                                                     WorldFeedTest’s Posts</h1>
                                                 <div [attr.aria-label]="'Timeline: ' + this.profileCurrent?.name + '’s Posts'"
                                                      class="sharebook-container">
-                                                    <div style="position: relative; min-height: 6554.39px;">
-                                                        <!--                                            <app-post [hasText]="true" [hasMedia]="false" [transform]="0.2"></app-post>-->
-                                                        <!--                                            <app-post [hasText]="false" [hasMedia]="true" [transform]="100.6"></app-post>-->
+                                                    <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.posts.length) + 'px'}">
+                                                        <ng-container *ngIf="this.posts?.length > 0;">
+                                                            <app-post *ngFor="let post of this.posts; let i = index"
+                                                                      [hasText]="!!post?.text"
+                                                                      [hasMedia]="!!post?.entities.medias"
+                                                                      [transform]="this?.setTransform(i)"
+                                                                      [isPoll]="!!post?.entities.poll"
+                                                                      [post]="post">
+                                                            </app-post>
+                                                        </ng-container>
                                                     </div>
                                                 </div>
                                             </section>

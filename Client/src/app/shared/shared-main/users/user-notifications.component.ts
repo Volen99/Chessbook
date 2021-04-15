@@ -5,7 +5,7 @@ import {UserNotificationService} from './user-notification.service';
 import {ComponentPagination, hasMoreItems} from "../../../core/rest/component-pagination.model";
 import {Notifier} from "../../../core/notification/notifier.service";
 import {AbuseState} from "../../models/moderation/abuse/abuse-state.model";
-import { UserNotificationType } from '../../models/users/user-notification.model';
+import {UserNotificationType} from '../../models/users/user-notification.model';
 
 @Component({
   selector: 'my-user-notifications',
@@ -22,9 +22,6 @@ export class UserNotificationsComponent implements OnInit {
 
   notifications: UserNotification[] = [];
   sortField = 'createdAt';
-
-  // So we can access it in the template
-  UserNotificationType = UserNotificationType;
 
   componentPagination: ComponentPagination;
 
@@ -48,7 +45,7 @@ export class UserNotificationsComponent implements OnInit {
   }
 
   loadNotifications(reset?: boolean) {
-    this.userNotificationService.listMyNotifications({
+    const options = {
       pagination: this.componentPagination,
       ignoreLoadingBar: this.ignoreLoadingBar,
       sort: {
@@ -56,7 +53,9 @@ export class UserNotificationsComponent implements OnInit {
         // if we order by creation date, we want DESC. all other fields are ASC (like unread).
         order: this.sortField === 'createdAt' ? -1 : 1
       }
-    })
+    };
+
+    this.userNotificationService.listMyNotifications(options)
       .subscribe(
         result => {
           this.notifications = reset ? result.data : this.notifications.concat(result.data);

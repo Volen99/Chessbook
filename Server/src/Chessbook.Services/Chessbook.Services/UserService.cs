@@ -60,6 +60,12 @@
             return user.MapTo<UserDTO>();
         }
 
+        public async Task<User> GetByIdClean(int id, bool includeDeleted = false)
+        {
+            var user = await userRepository.Get(id, Session, includeDeleted);
+            return user;
+        }
+
         public async Task<UserDTO> GetByLogin(string login, bool includeDeleted = false)
         {
             var user = await userRepository.GetByLogin(login, Session, includeDeleted);
@@ -96,6 +102,15 @@
             var profile = await this.userRepository.GetByLogin(screenName, base.Session);
 
             return profile.MapTo<UserDTO>();
+        }
+
+        public async Task SaveAvatarId(int userId, int pictureId)
+        {
+            var user = (await this.userRepository.Get(userId, Session));
+
+            user.ProfilePictureId = pictureId;
+
+            await this.userRepository.Edit(user, Session);
         }
     }
 }

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Observable, of} from 'rxjs';
 
 import {NbMenuItem} from '../sharebook-nebular/theme/components/menu/menu.service';
@@ -292,4 +292,6 @@ export class PagesMenu {
 
     return of([...dashboardMenu, ...menu]);
   }
+
+
 }

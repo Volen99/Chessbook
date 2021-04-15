@@ -14,6 +14,9 @@
     using Chessbook.Services.Data.Services.Entities;
     using Chessbook.Services.Data.Services.Phone;
     using Chessbook.Services.Data.Services.Upload;
+    using Chessbook.Services.Data.Services.Media;
+    using Nop.Core.Infrastructure;
+    using Nop.Services.Common;
 
     public static class ContainerExtension
     {
@@ -38,10 +41,16 @@
             services.AddTransient<IRoleRepository<Role>, RoleRepository>();
             services.AddTransient<IUserRoleRepository<UserRole>, UserRoleRepository>();
             services.AddTransient<IUserClaimRepository<UserClaim>, UserClaimRepository>();
+
             services.AddTransient<IUploadService, UploadService>();
             services.AddTransient<IMediaService, MediaService>();
             services.AddTransient<IPostsService, PostsService>();
             services.AddTransient<IPollService, PollService>();
+
+            services.AddTransient<IPictureService, PictureService>();
+            services.AddTransient<INopFileProvider, NopFileProvider>();
+            services.AddTransient<IGenericAttributeService, GenericAttributeService>();
+
 
 
             // IOT - E-Commerce

@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\Chessbook.Services\Chessbook.Services.Data\Chessbook.Services.Data.csproj" />
     <ProjectReference Include="..\..\Chessbook.Services\Chessbook.Services.Mapping\Chessbook.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\Chessbook.Services\Chessbook.Services\Chessbook.Services.csproj" />
+    <ProjectReference Include="..\Chessbook.Web.Infrastructure\Chessbook.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\Chessbook.Web.Models\Chessbook.Web.Models.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +46,6 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\love.jpg" />
+    <Folder Include="wwwroot\images\thumbs\" />
   </ItemGroup>
 </Project>

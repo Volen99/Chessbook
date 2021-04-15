@@ -24,6 +24,7 @@ export class NgxLogoutComponent implements OnInit {
   }
 
   logout(strategy: string): void {
+    debugger
     this.service.logout(strategy).subscribe((result: NbAuthResult) => {
       const redirect = result.getRedirect();
       if (redirect) {

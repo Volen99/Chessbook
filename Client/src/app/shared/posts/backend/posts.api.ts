@@ -24,7 +24,7 @@ export class PostsApi {
     }
 
     getTweetAsync(params: HttpParams): Observable<any> { // Promise<ITwitterResult<ITweetDTO>>;
-        return this.api.get(this.apiController, { params });
+        return this.api.get(this.apiController, {params}); // '{ params }' omg I want to kill myself! 11.04.2021, Sunday, 16:18 | Cigarettes After Sex - Falling in Love (lyrics) I 1 Hour Loop
     }
 
     getPost(id): Observable<any> {
@@ -32,11 +32,11 @@ export class PostsApi {
     }
 
     getTweetsAsync(params: HttpParams): Observable<any[]> {
-        return this.api.get(this.apiController, { params });
+        return this.api.get(this.apiController, {params});
     }
 
     publishTweetAsync(params: HttpParams, body?: {}): Observable<any> {
-        return this.api.post(this.apiController, body,{ params });
+        return this.api.post(this.apiController, body, {params});
     }
 
     getUserVideoRating(url: string) {
@@ -44,7 +44,11 @@ export class PostsApi {
     }
 
     removePost(url: string) {
-       return this.api.delete(`${this.apiController}/${url}`);
+        return this.api.delete(`${this.apiController}/${url}`);
+    }
+
+    getProfilePosts<T>(url: string, params: HttpParams) {
+        return this.api.get(`${this.apiController}/${url}`, {params});
     }
 
 
@@ -63,13 +67,13 @@ export class PostsApi {
     // // Destroy Tweet
     // destroyTweetAsync(parameters: IDestroyTweetParameters): Promise<ITwitterResult<ITweetDTO>>;
 
-     votePostAsync(params: HttpParams): Observable<any> {
-         return this.api.put(this.voteApiController, {},{ params });
-     }
+    votePostAsync(params: HttpParams): Observable<any> {
+        return this.api.put(this.voteApiController, {}, {params});
+    }
 
-     getLikers(url: string) {
+    getLikers(url: string) {
         return this.api.get(`${this.apiController}/${url}`);
-     }
+    }
 
     // unfavoriteTweetAsync(parameters: IUnfavoriteTweetParameters): Promise<ITwitterResult<ITweetDTO>>;
     //

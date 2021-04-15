@@ -79,7 +79,6 @@
                 ScreenName = "@" + signUpDto.FullName,
                 Email = signUpDto.Email,
                 Login = signUpDto.FullName,
-                ProfileImageUrlHttps = "https://localhost:5001/Files/Avatars/sadness.jpg",
             };
 
             var result = await userManager.CreateAsync(newUser, signUpDto.Password);

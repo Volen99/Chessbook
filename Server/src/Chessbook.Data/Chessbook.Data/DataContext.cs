@@ -15,6 +15,8 @@
     using System.Linq;
     using System.Reflection;
     using Chessbook.Data.Models.Polls;
+    using Chessbook.Data.Models.Media;
+    using Nop.Core.Domain.Common;
 
     public class DataContext : DbContext
     {
@@ -64,7 +66,13 @@
         public DbSet<Poll> Polls { get; set; }
         public DbSet<PollOption> PollAnswers { get; set; }
         public DbSet<PollVotingRecord> PollVotingRecords { get; set; }
-        
+
+        public DbSet<Picture> Pictures { get; set; }
+
+        public DbSet<PostPicture> PostsPictures { get; set; }
+
+        public DbSet<GenericAttribute> GenericAttributes { get; set; }
+
 
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 

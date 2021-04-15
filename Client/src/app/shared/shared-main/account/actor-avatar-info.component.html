@@ -1,9 +1,9 @@
 <nb-card>
     <nb-card-body>
-        <ng-container *ngIf="actor">
+        <ng-container *ngIf="this.user">
             <div class="actor">
                 <div class="d-flex">
-                    <img [src]="actor.picture" alt="Avatar"/>
+                    <img [src]="this.user.profileImageUrlHttps" alt="Avatar"/>
 
                     <!--          <nb-user [name]="actor?.name" [picture]="actor?.picture"></nb-user>-->
 
@@ -30,10 +30,10 @@
 
                 <div class="actor-info">
                     <div class="actor-info-names">
-                        <div class="actor-info-display-name">{{ actor.name }}</div>
-                        <div class="actor-info-username">{{ actor.screenName }}</div>
+                        <div class="actor-info-display-name">{{ user.name }}</div>
+                        <div class="actor-info-username">{{ user.screenName }}</div>
                     </div>
-                    <div i18n class="actor-info-followers">{{ actor.followersCount ? this.actor.followersCount : 0 }} followers</div>
+                    <div i18n class="actor-info-followers">{{ user.followersCount ? this.user.followersCount : 0 }} followers</div>
                 </div>
             </div>
         </ng-container>

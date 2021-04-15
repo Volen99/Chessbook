@@ -32,6 +32,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessbook.Data.Models", "Ch
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessbook.Web.Models", "Web\Chessbook.Web.Models\Chessbook.Web.Models.csproj", "{6F15D5D3-C05B-4F2A-88C2-E6B558413F80}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessbook.Web.Infrastructure", "Web\Chessbook.Web.Infrastructure\Chessbook.Web.Infrastructure.csproj", "{11BFE94C-A680-4CF6-803D-10EA04FAD94B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chessbook.Core", "Chessbook.Core\Chessbook.Core.csproj", "{8552DF39-BC9C-48A2-AA40-2A6D90737349}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +90,14 @@ Global
 		{6F15D5D3-C05B-4F2A-88C2-E6B558413F80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F15D5D3-C05B-4F2A-88C2-E6B558413F80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F15D5D3-C05B-4F2A-88C2-E6B558413F80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11BFE94C-A680-4CF6-803D-10EA04FAD94B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11BFE94C-A680-4CF6-803D-10EA04FAD94B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11BFE94C-A680-4CF6-803D-10EA04FAD94B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11BFE94C-A680-4CF6-803D-10EA04FAD94B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8552DF39-BC9C-48A2-AA40-2A6D90737349}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8552DF39-BC9C-48A2-AA40-2A6D90737349}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8552DF39-BC9C-48A2-AA40-2A6D90737349}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8552DF39-BC9C-48A2-AA40-2A6D90737349}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +112,7 @@ Global
 		{285B957D-787B-4ECF-B221-CCE70315AE99} = {F306B0F5-310E-4ABB-8269-A01EDD959A44}
 		{ACBFA127-0E14-419D-B0B4-6B5C91AF3A5D} = {F306B0F5-310E-4ABB-8269-A01EDD959A44}
 		{6F15D5D3-C05B-4F2A-88C2-E6B558413F80} = {4D48BC4C-7905-416D-8539-A314ECBA8983}
+		{11BFE94C-A680-4CF6-803D-10EA04FAD94B} = {4D48BC4C-7905-416D-8539-A314ECBA8983}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {328B8E10-FED4-47C9-86C2-27E2B708C6E0}

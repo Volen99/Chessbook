@@ -28,7 +28,7 @@ export class TimelineService {
   public getUserTimelineAsync(parameters: IGetUserTimelineParameters): Observable<any[]> {
     let params = this.timelineQueryGeneratorService.getUserTimelineQuery(parameters);
 
-    return this.timelineApi.getUserTimelineAsync(params);
+    return null; // this.timelineApi.getUserTimelineAsync(params);
   }
 
   // Mention Timeline

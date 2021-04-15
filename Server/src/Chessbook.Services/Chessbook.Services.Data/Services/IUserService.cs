@@ -13,6 +13,7 @@
         Task<GridData<UserDTO>> GetDataForGrid(UsersGridFilter filter, bool includeDeleted = false);
 
         Task<UserDTO> GetById(int id, bool includeDeleted = false);
+        Task<User> GetByIdClean(int id, bool includeDeleted = false);
 
         Task<UserDTO> GetByScreenName(string screenName, bool includeDeleted = true);
 
@@ -22,6 +23,8 @@
         Task<byte[]> GetUserPhoto(int userId);
 
         Task<(IEnumerable<User>, int)> GetAllUsers(UsersGridFilter filter);
+
+        Task SaveAvatarId(int userId, int pictureId);
       
     }
 }

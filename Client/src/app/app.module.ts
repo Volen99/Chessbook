@@ -24,14 +24,14 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {CoreModule} from "./core/core.module";
 import {PagesMenu} from "./pages/pages-menu";
 import {ModalOverlaysModule} from "./pages/modal-overlays/modal-overlays.module";
-import {NotificationComponent} from "./pages/notification.component";
+import {NotificationComponent} from "./sharebook-nebular/theme/components/menu/notification.component";
+import {LoggedOutHomeComponent} from "./logged-out-home/logged-out-home.component";
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoggedOutHomeComponent,
     EmptyComponent,
-
-    NotificationComponent,
   ],
   imports: [
     BrowserModule,

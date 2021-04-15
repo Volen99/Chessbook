@@ -121,6 +121,36 @@ namespace Chessbook.Data.Migrations
                     b.ToTable("ContactPhotos");
                 });
 
+            modelBuilder.Entity("Chessbook.Data.Models.Media.Picture", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("AltAttribute")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsNew")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MimeType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoFilename")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TitleAttribute")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VirtualPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pictures");
+                });
+
             modelBuilder.Entity("Chessbook.Data.Models.Phone.PhoneCall", b =>
                 {
                     b.Property<int>("Id")
@@ -403,6 +433,24 @@ namespace Chessbook.Data.Migrations
                     b.ToTable("MediaEntitySizes");
                 });
 
+            modelBuilder.Entity("Chessbook.Data.Models.Post.Entities.PostPicture", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("PictureId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PostsPictures");
+                });
+
             modelBuilder.Entity("Chessbook.Data.Models.Post.Entities.SymbolEntity", b =>
                 {
                     b.Property<long>("Id")
@@ -600,9 +648,6 @@ namespace Chessbook.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Lang")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MediasIds")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedOn")
@@ -899,14 +944,14 @@ namespace Chessbook.Data.Migrations
                     b.Property<string>("ProfileImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProfileImageUrlHttps")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ProfileLinkColor")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfileLocation")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProfilePictureId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ProfileSidebarBorderColor")
                         .HasColumnType("nvarchar(max)");
@@ -1025,6 +1070,36 @@ namespace Chessbook.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("Nop.Core.Domain.Common.GenericAttribute", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime?>("CreatedOrUpdatedDateUTC")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KeyGroup")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GenericAttributes");
                 });
 
             modelBuilder.Entity("Chessbook.Data.Models.Comments.Comment", b =>

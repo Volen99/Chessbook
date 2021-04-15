@@ -25,7 +25,7 @@ export class ActorAvatarInfoComponent implements OnInit, OnChanges {
   @ViewChild('avatarfileInput') avatarfileInput: ElementRef<HTMLInputElement>;
   @ViewChild('avatarPopover') avatarPopover: NgbPopover;
 
-  @Input() actor: User;
+  @Input() user: User;
 
   @Output() avatarChange = new EventEmitter<FormData>();
   @Output() avatarDelete = new EventEmitter<void>();
@@ -40,6 +40,7 @@ export class ActorAvatarInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    debugger
     // this.serverService.getConfig()
     //   .subscribe(config => {
     //     this.maxAvatarSize = config.avatar.file.size.max;
@@ -49,16 +50,16 @@ export class ActorAvatarInfoComponent implements OnInit, OnChanges {
     //       `${getBytes(this.maxAvatarSize)} ${$localize`extensions`}: ${this.avatarExtensions}`;
     //   });
 
-    this.actor.picture = 'https://localhost:5001/Files/Avatars/sadness.jpg';
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['actor']) {
-      this.avatarUrl = User.GET_ACTOR_AVATAR_URL(this.actor);
+      this.avatarUrl = User.GET_ACTOR_AVATAR_URL(this.user);
     }
   }
 
   onAvatarChange(input: HTMLInputElement) {
+    debugger
     this.avatarfileInput = new ElementRef(input);
 
     const avatarfile = this.avatarfileInput.nativeElement.files[0];

@@ -1,4 +1,5 @@
 ﻿using Chessbook.Services.Data.Services;
+using Chessbook.Services.Data.Services.Media;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,7 +13,8 @@ namespace Chessbook.Web.Api.Controllers
     public class ProfilesController : BaseApiController
     {
         private readonly IUserService userService;
-        public ProfilesController(IUserService userService)
+        private readonly IPictureService pictureService;
+        public ProfilesController(IUserService userService, IPictureService pictureService)
         {
             this.userService = userService;
         }
@@ -21,6 +23,10 @@ namespace Chessbook.Web.Api.Controllers
         public async Task<IActionResult> GetProfile([FromQuery] string screen_name)
         {
             var userDTO = await this.userService.GetByScreenName(screen_name);
+
+            var profilePictureUrl = await this.pictureService.GetPictureUrlAsync(userDTO.ProfilePictureId, 400);
+
+            userDTO.ProfileImageUrlHttps = profilePictureUrl;
 
             return this.Ok(userDTO);
         }

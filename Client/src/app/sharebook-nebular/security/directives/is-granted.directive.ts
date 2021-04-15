@@ -23,7 +23,7 @@ export class NbIsGrantedDirective implements OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe((can: boolean) => {
-        if (/*can*/ true && !this.hasView) {
+        if (can && !this.hasView) {
           this.viewContainer.createEmbeddedView(this.templateRef);
           this.hasView = true;
         } else if (!can && this.hasView) {

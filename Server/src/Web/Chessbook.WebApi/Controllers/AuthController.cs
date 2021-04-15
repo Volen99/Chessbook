@@ -98,6 +98,7 @@
         [Route("sign-out")]
         public async Task<IActionResult> SignOut()
         {
+            await Task.FromResult(true);
             return Ok();
         }
 

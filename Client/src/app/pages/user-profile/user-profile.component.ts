@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {catchError, distinctUntilChanged, map, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {Subject} from "rxjs/Subject";
 import {Location} from '@angular/common';
@@ -13,25 +13,38 @@ import {User} from "../../shared/shared-main/user/user.model";
 import {HttpStatusCode} from "../../shared/core-utils/miscs";
 import {RestExtractor} from "../../core/rest/rest-extractor";
 import {Notifier} from "../../core/notification/notifier.service";
+import {PostsService} from "../../shared/posts/posts.service";
+import {AbstractPostList} from "../../shared/post-miniature/abstract-post-list/abstract-post-list";
+import {ScreenService} from 'app/core/wrappers/screen.service';
+import {LocalStorageService} from 'app/core/wrappers/storage.service';
+import {Post} from 'app/shared/shared-main/post/post.model';
+import {immutableAssign} from "../../helpers/utils";
+import {GetHomeTimelineParameters} from "../../shared/models/timeline/get-home-timeline-parameters";
+import {GetUserTimelineParameters} from "../../shared/models/timeline/get-user-timeline-parameters";
+import {UsersService} from "../../core/backend/common/services/users.service";
 
 @Component({
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss']
 })
-export class UserProfileComponent implements OnInit, OnDestroy {
+export class UserProfileComponent extends AbstractPostList implements OnInit, OnDestroy {
   protected readonly unsubscribe$ = new Subject<void>();
 
   private routeSub: Subscription;
 
-  constructor(private userProfileService: UserProfileService,
-              private usersService: UserData,
-              private router: Router,
-              private route: ActivatedRoute,
+  constructor(protected router: Router,
+              protected route: ActivatedRoute,
+              protected usersService: UsersService,
+              private userProfileService: UserProfileService,
+              protected screenService: ScreenService,
+              protected storageService: LocalStorageService,
               private tokenService: NbTokenService,
               private userStore: UserStore,
               private notifier: Notifier,
               private restExtractor: RestExtractor,
-              protected location: Location) {
+              private postService: PostsService,
+              protected location: Location,) {
+    super();
   }
 
   ngOnInit() {
@@ -41,7 +54,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         switchMap(screenName => this.userProfileService.getProfile(screenName)),
         tap(profile => this.onAccount(profile)),
-        // switchMap(account => this.videoChannelService.listAccountVideoChannels(account)),
+        /*switchMap(user => this.postService.getProfilePosts({ user })),*/
         catchError(err => this.restExtractor.redirectTo404IfNotFound(err, 'other', [
           HttpStatusCode.BAD_REQUEST_400,
           HttpStatusCode.NOT_FOUND_404
@@ -53,10 +66,27 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         // err => this.notifier.error(err.message)
       );
 
+    debugger
+    super.ngOnInit();
+
     this.initUser();
   }
 
   ngOnDestroy() {
+  }
+
+  titlePage: string;
+
+  getPostsObservable(page: number): Observable<{ data: Post[] }> {
+    const newPagination = immutableAssign(this.pagination, {currentPage: page});
+
+    let parameters = new GetUserTimelineParameters(newPagination, this.sort, true, this.userMiniature.id);
+    return this.postService.getUserTimelineQuery(parameters);
+
+  }
+
+  generateSyndicationList(): void {
+    throw new Error('Method not implemented.');
   }
 
   public loggedInUser: IUser;
@@ -89,9 +119,23 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       });
   }
 
+  calcMinHeight(postsCount?: number): number {
+    if (!postsCount) {
+      return 670;
+    }
+
+    return postsCount * 670;
+  }
+
+  setTransform(i: number): number {
+    return i * 388.7; // 😁
+  }
+
   private async onAccount(user: User) {
 
-    this.profileCurrent = user;
+    debugger
+    // @ts-ignore
+    this.profileCurrent = user.userDTO;
     // this.accountFollowerTitle = $localize`${account.followersCount} direct account followers`;
     //
     // this.prependModerationActions = undefined;
@@ -105,6 +149,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     // this.loadUserIfNeeded(account);
     // this.loadAccountVideosCount();
   }
+
 
   tabs: any[] = [
     {

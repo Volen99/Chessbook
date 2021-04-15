@@ -38,6 +38,12 @@ import {UserVideoRate} from "./models/rate/user-video-rate.model";
 import {IPostConstant} from "./models/post-constant.model";
 import {PostPrivacy} from "../models/enums/post-privacy";
 import {PostDetails} from "../shared-main/post/post-details.model";
+import {ComponentPaginationLight} from "../../core/rest/component-pagination.model";
+import {PostSortField} from "./models/post-sort-field.type";
+import {PostFilter} from "./models/post-query.type";
+import {User} from "../shared-main/user/user.model";
+import {GetUserTimelineParameters, IGetUserTimelineParameters} from "../models/timeline/get-user-timeline-parameters";
+import {UserQueryParameterGeneratorService} from "../services/user-query-parameter-generator.service";
 
 @Injectable()
 export class PostsService {
@@ -46,7 +52,9 @@ export class PostsService {
               private restExtractor: RestExtractor,
               private restService: RestService,
               private timelineApi: TimelineApi,
-              private tweetsRequesterService?: TweetsRequesterService) {
+              private userQueryParameterGeneratorService: UserQueryParameterGeneratorService,
+              private tweetsRequesterService?: TweetsRequesterService,
+              ) {
   }
 
   // get parametersValidator(): ITweetsClientParametersValidator {
@@ -295,6 +303,37 @@ export class PostsService {
 
   }
 
+  getProfilePosts(parameters: {
+    user: User,
+    videoPagination: ComponentPaginationLight,
+    sort: PostSortField
+    videoFilter?: PostFilter
+    search?: string
+  }): Observable<ResultList<Post>> {
+    const {user, videoPagination, sort, videoFilter, search} = parameters;
+
+    const pagination = this.restService.componentPaginationToRestPagination(videoPagination);
+
+    let params = new HttpParams();
+    params = this.restService.addRestGetParams(params, pagination, sort);
+
+    if (videoFilter) {
+      params = params.set('filter', videoFilter);
+    }
+
+    if (search) {
+      params = params.set('search', search);
+    }
+
+    let url = user.screenName + '/posts';
+
+    return this.postsApi.getProfilePosts<ResultList<Post>>(url, params)
+      .pipe(                        // @ts-ignore
+        switchMap(res => this.extractVideos(res)),
+        catchError(err => this.restExtractor.handleError(err))
+      );
+  }
+
   getPosts() {
 
   }
@@ -317,6 +356,28 @@ export class PostsService {
     //   switchMap(res => this.extractVideos(res)),                  // switchMap might bug
     //   catchError(err => this.restExtractor.handleError(err))
     // );
+  }
+
+  getUserTimelineQuery(parameters: GetUserTimelineParameters) {
+    const {postPagination, sort, skipCount} = parameters;
+
+    debugger
+    const pagination = this.restService.componentPaginationToRestPagination(postPagination);
+
+    let params = new HttpParams();
+
+    params = this.restService.addRestGetParams(params, pagination, sort);
+
+    params = this.restService.addFormattedParameterToQuery(params, this.userQueryParameterGeneratorService.generateIdOrScreenNameParameter(parameters.user));
+
+    // this._queryParameterGenerator.addTimelineParameters(query, parameters, tweetMode);
+
+    params = this.restService.addParameterToQuery(params, "exclude_replies", parameters.excludeReplies);
+    params = this.restService.addParameterToQuery(params, "include_rts", parameters.includeRetweets);
+    params = this.restService.addFormattedParameterToQuery(params, parameters.formattedCustomQueryParameters);
+
+    debugger
+    return this.timelineApi.getUserTimelineAsync(params);
   }
 
   extractVideos(result: ResultList<Post>) {

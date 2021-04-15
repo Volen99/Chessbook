@@ -17,18 +17,20 @@
     public class PostsService : IPostsService
     {
         private readonly IDeletableEntityRepository<Post> postsRepository;
+        private readonly IRepository<PostPicture> postPictureRepository;
         private readonly IRepository<PostVote> postVoteRepository;
 
         private readonly IMediaService mediaService;
 
-        public PostsService(IDeletableEntityRepository<Post> postsRepository, IMediaService mediaService, IRepository<PostVote> postVoteRepository)
+        public PostsService(IDeletableEntityRepository<Post> postsRepository, IRepository<PostPicture> postPictureRepository, IMediaService mediaService, IRepository<PostVote> postVoteRepository)
         {
             this.postsRepository = postsRepository;
+            this.postPictureRepository = postPictureRepository;
             this.mediaService = mediaService;
             this.postVoteRepository = postVoteRepository;
         }
 
-        public async Task<Post> CreateAsync(QueryPostParams query, int userId, string mediaIds = null, int pollId = 0)
+        public async Task<Post> CreateAsync(QueryPostParams query, int userId, int[] mediaIds = null, int pollId = 0)
         {
             var postNew = new Post
             {
@@ -43,17 +45,28 @@
                 postNew.InReplyToScreenName = query.InReplyToScreenName;
             }
 
+            await this.postsRepository.AddAsync(postNew);
+            await this.postsRepository.SaveChangesAsync();
+
             if (mediaIds != null)
             {
-                postNew.MediasIds = mediaIds;
+                for (int i = 0; i < mediaIds.Length; i++)
+                {
+                    var postPicture = new PostPicture
+                    {
+                        ProductId = postNew.Id,
+                        PictureId = mediaIds[i],
+                    };
+
+                    await this.postPictureRepository.AddAsync(postPicture);
+                }
+
+                await this.postPictureRepository.SaveChangesAsync();
             }
             else if (pollId != 0)
             {
                 postNew.PollId = pollId;
             }
-
-            await this.postsRepository.AddAsync(postNew);
-            await this.postsRepository.SaveChangesAsync();
 
             return postNew;
         }
@@ -107,7 +120,27 @@
             return query.To<T>().ToList();
         }
 
-     
+        public async Task<IEnumerable<T>> GetUserProfileTimeline<T>(int userId, int? count = null, int skip = 0)
+        {
+            var query = this.postsRepository.All()
+              .Where(p => p.IsDeleted == false)
+              .Where(p => p.UserId == userId)
+              .Include(p => p.User)
+              .Include(p => p.Medias)
+              .Include(p => p.Poll)
+              .ThenInclude(poll => poll.Options)
+              .OrderBy(p => p.CreatedAt)
+              .Skip(skip);
+
+            if (count.HasValue)
+            {
+                query = query.Take(count.Value);
+            }
+
+            return query.To<T>().ToList();
+        }
+
+
         public async Task<PostDTO> InsertPostVoteAsync(int postId, int userId, PostRateType postRateType)
         {
             var postVoteNew = new PostVote
@@ -252,5 +285,7 @@
 
             return likers;
         }
+
+       
     }
 }

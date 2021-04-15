@@ -3,10 +3,10 @@ import {filter} from 'rxjs/operators';
 import {Component, EventEmitter, Output, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {NgbPopover} from '@ng-bootstrap/ng-bootstrap';
-import {UserNotificationService} from "../shared/shared-main/users/user-notification.service";
-import {ScreenService} from "../core/wrappers/screen.service";
-import {Notifier} from "../core/notification/notifier.service";
-import { PeerTubeSocket } from 'app/core/notification/sharebook-socket.service';
+import {UserNotificationService} from "../../../../shared/shared-main/users/user-notification.service";
+import {ScreenService} from "../../../../core/wrappers/screen.service";
+import {Notifier} from "../../../../core/notification/notifier.service";
+import {PeerTubeSocket} from "../../../../core/notification/sharebook-socket.service";
 
 @Component({
   selector: 'my-notification',
@@ -37,19 +37,19 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.userNotificationService.countUnreadNotifications()
-      .subscribe(
-        result => {
-          this.unreadNotifications = Math.min(result, 99); // Limit number to 99
-          this.subscribeToNotifications();
-        },
-
-        err => this.notifier.error(err.message)
-      );
-
-    this.routeSub = this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => this.closePopover());
+    // this.userNotificationService.countUnreadNotifications()
+    //   .subscribe(
+    //     result => {
+    //       this.unreadNotifications = Math.min(result, 99); // Limit number to 99
+    //       this.subscribeToNotifications();
+    //     },
+    //
+    //     err => this.notifier.error(err.message)
+    //   );
+    //
+    // this.routeSub = this.router.events
+    //   .pipe(filter(event => event instanceof NavigationEnd))
+    //   .subscribe(() => this.closePopover());
   }
 
   ngOnDestroy() {

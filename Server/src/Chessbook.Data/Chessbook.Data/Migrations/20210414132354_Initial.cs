@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Sharebook.Data;
 
 namespace Chessbook.Data.Migrations
 {
@@ -21,6 +22,24 @@ namespace Chessbook.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contacts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GenericAttributes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EntityId = table.Column<int>(type: "int", nullable: false),
+                    KeyGroup = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StoreId = table.Column<int>(type: "int", nullable: false),
+                    CreatedOrUpdatedDateUTC = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GenericAttributes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -61,6 +80,24 @@ namespace Chessbook.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Pictures",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MimeType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SeoFilename = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AltAttribute = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TitleAttribute = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsNew = table.Column<bool>(type: "bit", nullable: false),
+                    VirtualPath = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pictures", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Polls",
                 columns: table => new
                 {
@@ -96,6 +133,20 @@ namespace Chessbook.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PollVotingRecords", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostsPictures",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    PictureId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostsPictures", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,7 +204,7 @@ namespace Chessbook.Data.Migrations
                     ProfileBackgroundImageUrlHttps = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProfileBackgroundTile = table.Column<bool>(type: "bit", nullable: false),
                     ProfileImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProfileImageUrlHttps = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfilePictureId = table.Column<int>(type: "int", nullable: false),
                     ProfileBannerUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProfileLinkColor = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProfileSidebarBorderColor = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -272,7 +323,6 @@ namespace Chessbook.Data.Migrations
                     UserMentionsIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HashtagsIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SymbolsIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MediasIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PollId = table.Column<int>(type: "int", nullable: true),
                     Source = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     InReplyToStatusId = table.Column<int>(type: "int", nullable: false),
@@ -804,6 +854,9 @@ namespace Chessbook.Data.Migrations
                 name: "IX_UserRoles_RoleId",
                 table: "UserRoles",
                 column: "RoleId");
+
+            // Seed initial data
+            migrationBuilder.Sql(SeedData.Initial("dbo"));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -813,6 +866,9 @@ namespace Chessbook.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "ContactPhotos");
+
+            migrationBuilder.DropTable(
+                name: "GenericAttributes");
 
             migrationBuilder.DropTable(
                 name: "HashtagEntities");
@@ -827,10 +883,16 @@ namespace Chessbook.Data.Migrations
                 name: "PhoneCalls");
 
             migrationBuilder.DropTable(
+                name: "Pictures");
+
+            migrationBuilder.DropTable(
                 name: "PollAnswers");
 
             migrationBuilder.DropTable(
                 name: "PollVotingRecords");
+
+            migrationBuilder.DropTable(
+                name: "PostsPictures");
 
             migrationBuilder.DropTable(
                 name: "PostVotes");

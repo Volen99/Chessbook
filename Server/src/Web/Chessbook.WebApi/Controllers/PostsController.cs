@@ -16,6 +16,8 @@
     using Chessbook.Web.Models.Polls;
     using Chessbook.Web.Models.Outputs.Polls;
     using Chessbook.Web.Models;
+    using Chessbook.Services.Data.Services.Media;
+    using Chessbook.Common;
 
     [Route("posts")]
     public class PostsController : BaseApiController
@@ -26,15 +28,19 @@
         private IPollService pollService;
         private IUserService userService;
 
+
         private readonly IMediaService mediaService;
+        private readonly IPictureService pictureService;
 
 
-        public PostsController(IPostsService postService, IPollService pollService, IUserService userService, IMediaService mediaService)
+        public PostsController(IPostsService postService, IPollService pollService, IUserService userService, IMediaService mediaService,
+            IPictureService pictureService)
         {
             this.postService = postService;
             this.userService = userService;
             this.mediaService = mediaService;
             this.pollService = pollService;
+            this.pictureService = pictureService;
         }
 
         [HttpGet]
@@ -49,25 +55,39 @@
 
             var postDTOs = await this.postService.GetHomeTimeline<PostDTO>(User.GetUserId(), query.Count, skip);
 
-            var userDTO = await this.userService.GetById(User.GetUserId());
             foreach (var postDTO in postDTOs)
             {
-                postDTO.User = userDTO;
+                postDTO.Entities.Poll = postDTO.Poll;
 
-                if (postDTO.MediasIds != null)
+                var picture = (await this.pictureService.GetPicturesByPostIdAsync(postDTO.Id)).FirstOrDefault();
+
+                var pictureSize = 480;
+
+                string displayUrl;
+                string expandUrl;
+
+                (expandUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture);
+                (displayUrl, _) = await this.pictureService.GetPictureUrlAsync(picture, pictureSize);
+
+                var pictureModel = new MediaEntityDTO
                 {
-                    var ids = postDTO.MediasIds?.Split(", ").Select(x => int.Parse(x)).ToArray();
-                    postDTO.Entities.Medias = await this.GetMedias(ids);
+                    Id = picture.Id,
+                    IdStr = picture.Id.ToString(),
+                    DisplayURL = ChessbookConstants.SiteHttps + displayUrl,
+                    ExpandedURL = ChessbookConstants.SiteHttps + expandUrl,
+                    MediaURL = picture.VirtualPath,
+                };
+
+                if (picture != null)
+                {
+                    postDTO.Entities.Medias.Add(pictureModel);
                 }
-                //else if (postDTO.PollId != 0)
-                //{
-                //    var poll = await this.pollService.GetPollByIdAsync<PollDTO>(postDTO.PollId);
-                //    var pollOptions = await this.pollService.GetPollAnswerByPollAsync<PollOptionDTO>(poll.Id);
 
-                //    poll.Options = pollOptions;
+                var profilePictureUrl = await this.pictureService.GetPictureUrlAsync(postDTO.User.ProfilePictureId, 73);
 
-                //    postDTO.Entities.Poll = poll;
-                //}
+                // TODO: check for null
+
+                postDTO.User.ProfileImageUrlHttps = ChessbookConstants.SiteHttps + profilePictureUrl;
             }
 
             return this.Ok(new
@@ -77,13 +97,62 @@
             });
         }
 
+        [HttpGet]
+        [Route("timeline/profile")]
+        public async Task<IActionResult> GetProfilePosts([FromQuery] QueryPostsProfileTimeline query)
+        {
+            var skip = 0;
+            if (query.SkipCount)
+            {
+                skip = query.Start;
+            }
+
+            var posts = await this.postService.GetUserProfileTimeline<PostDTO>(query.UserId, query.Count, skip);
+
+            var userDTO = await this.userService.GetById(User.GetUserId());
+            foreach (var post in posts)
+            {
+                post.User = userDTO;
+                post.Entities.Poll = post.Poll;
+
+                var picture = (await this.pictureService.GetPicturesByPostIdAsync(post.Id)).FirstOrDefault();
+
+                var pictureSize = 480;
+
+                string displayUrl;
+                string expandUrl;
+
+                (expandUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture);
+                (displayUrl, _) = await this.pictureService.GetPictureUrlAsync(picture, pictureSize);
+
+                var pictureModel = new MediaEntityDTO
+                {
+                    Id = picture.Id,
+                    IdStr = picture.Id.ToString(),
+                    DisplayURL = ChessbookConstants.SiteHttps + displayUrl,
+                    ExpandedURL = ChessbookConstants.SiteHttps + expandUrl,
+                    MediaURL = picture.VirtualPath,
+                };
+
+                if (picture != null)
+                {
+                    post.Entities.Medias.Add(pictureModel);
+                }
+            }
+
+            return this.Ok(new
+            {
+                data = posts,
+                total = posts.Count(),
+            });
+        }
+
         [HttpPost]
         public async Task<IActionResult> PostPublish([FromQuery] QueryPostParams query, [FromBody] PollCreateBody pollBody)
         {
             if (!query.HasPoll)
             {
-                var mediaIds = string.Join(", ", query.MediaIds);
-                var post = await this.postService.CreateAsync(query, User.GetUserId(), mediaIds);
+                var post = await this.postService.CreateAsync(query, User.GetUserId(), query.MediaIds);
             }
             else
             {
@@ -105,23 +174,28 @@
         {
             var post = this.postService.GetById<PostDTO>(id);
 
-            var userDTO = await this.userService.GetById(User.GetUserId());
-            post.User = userDTO;
+            var picture = (await this.pictureService.GetPicturesByPostIdAsync(post.Id)).FirstOrDefault();
 
-            if (post.MediasIds != null)
+            var pictureSize = 480;
+
+            string displayUrl;
+            string expandUrl;
+
+            (expandUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture);
+            (displayUrl, _) = await this.pictureService.GetPictureUrlAsync(picture, pictureSize);
+
+            var pictureModel = new MediaEntityDTO
             {
-                var ids = post.MediasIds?.Split(", ").Select(x => int.Parse(x)).ToArray();
-                post.Entities.Medias = await this.GetMedias(ids);
+                Id = picture.Id,
+                IdStr = picture.Id.ToString(),
+                DisplayURL = ChessbookConstants.SiteHttps + displayUrl,
+                ExpandedURL = ChessbookConstants.SiteHttps + expandUrl,
+                MediaURL = picture.VirtualPath,
+            };
 
-                var mediaSizes = await this.mediaService.GetMediaSize<MediaEntitySizeDTO>((int)post.Entities.Medias[0].Id);
-
-                foreach (var size in mediaSizes)
-                {
-                    if (!post.Entities.Medias[0].Sizes.ContainsKey(size.Variant)) // nostalgia 💚
-                    {
-                        post.Entities.Medias[0].Sizes.Add(size.Variant, size);
-                    }
-                }
+            if (picture != null)
+            {
+                post.Entities.Medias.Add(pictureModel);
             }
             else if (post.PollId != 0)
             {
@@ -135,6 +209,8 @@
 
             return this.Ok(post);
         }
+
+
 
         [HttpGet]
         [Route("likers/{id}")]
@@ -156,5 +232,6 @@
 
             return mediaEntities;
         }
+
     }
 }

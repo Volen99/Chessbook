@@ -11,13 +11,15 @@
 
     public interface IPostsService
     {
-        Task<Post> CreateAsync(QueryPostParams query, int userId, string mediaIds = null, int pollId = 0);
+        Task<Post> CreateAsync(QueryPostParams query, int userId, int[] mediaIds = null, int pollId = 0);
 
         T GetById<T>(int id);
 
         IEnumerable<T> GetByCategoryId<T>(int categoryId, int? take = null, int skip = 0);
 
         Task<IEnumerable<T>> GetHomeTimeline<T>(int userId, int? count = null, int skip = 0);
+
+        Task<IEnumerable<T>> GetUserProfileTimeline<T>(int userId, int? count = null, int skip = 0);
 
         int GetCountByCategoryId(int categoryId);
 

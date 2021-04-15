@@ -11,6 +11,7 @@ import {IUser} from "../../../../core/interfaces/common/users";
 import {NbDialogService} from "../../../../sharebook-nebular/theme/components/dialog/dialog.service";
 import {UploadComponent} from "../../../../pages/modal-overlays/dialog/compose/upload/upload.component";
 import {MarkdownService} from "../../../../core/renderer/markdown.service";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-post',
@@ -36,8 +37,8 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.post.entities.medias) {
-      this.picture = this.post.entities.medias[0].mediaURL;
-      this.mediaUrl = this.post.entities.medias[0].mediaURL;
+      this.picture = this.post.entities.medias[0].displayURL;
+      this.mediaUrl = this.post.entities.medias[0].displayURL;
     }
 
 
@@ -131,7 +132,6 @@ export class PostComponent implements OnInit {
     videoRouterLink: any[] = [];
 
   buildVideoLink () {
-      debugger
     if (!this.post.url) {
       this.videoRouterLink = [ `/${this.post.user.screenName}/post`, this.post.id ];
 

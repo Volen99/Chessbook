@@ -6,6 +6,8 @@
 
         public const string AdministratorRoleName = "Administrator";
 
+        public const string SiteHttps = "https://localhost:5001";
+
         /// <summary>
         /// Gets a multiple thumb directories length
         /// </summary>

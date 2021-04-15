@@ -91,7 +91,7 @@
 
         public string ProfileImageUrl { get; set; }
 
-        public string ProfileImageUrlHttps { get; set; }
+        public int ProfilePictureId { get; set; }
 
         public string ProfileBannerUrl { get; set; }
 

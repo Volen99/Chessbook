@@ -184,7 +184,7 @@ export class UsersService extends UserData {
   }
 
   changeAvatar(avatarForm: FormData) {
-    const url = 'me/avatar/pick';
+    const url = 'avatar';
 
     return this.api.changeAvatar(url, avatarForm)
       .pipe(catchError(err => this.restExtractor.handleError(err)));

@@ -1,0 +1,212 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Chessbook.Data.Models.Media;
+using Chessbook.Data.Models.Memory;
+using Microsoft.AspNetCore.Http;
+
+namespace Chessbook.Services.Data.Services.Media
+{
+    /// <summary>
+    /// Picture service interface
+    /// </summary>
+    public interface IPictureService
+    {
+        //TODO: migrate to an extension method
+        /// <summary>
+        /// Returns the file extension from mime type.
+        /// </summary>
+        /// <param name="mimeType">Mime type</param>
+        /// <returns>File extension</returns>
+        Task<string> GetFileExtensionFromMimeTypeAsync(string mimeType);
+
+        /// <summary>
+        /// Gets the loaded picture binary depending on picture storage settings
+        /// </summary>
+        /// <param name="picture">Picture</param>
+        /// <returns>Picture binary</returns>
+        Task<byte[]> LoadPictureBinaryAsync(Picture picture);
+
+        /// <summary>
+        /// Get picture SEO friendly name
+        /// </summary>
+        /// <param name="name">Name</param>
+        /// <returns>Result</returns>
+        Task<string> GetPictureSeNameAsync(string name);
+
+        /// <summary>
+        /// Gets the default picture URL
+        /// </summary>
+        /// <param name="targetSize">The target picture size (longest side)</param>
+        /// <param name="defaultPictureType">Default picture type</param>
+        /// <param name="storeLocation">Store location URL; null to use determine the current store location automatically</param>
+        /// <returns>Picture URL</returns>
+        Task<string> GetDefaultPictureUrlAsync(int targetSize = 0,
+            PictureType defaultPictureType = PictureType.Entity,
+            string storeLocation = null);
+
+        /// <summary>
+        /// Get a picture URL
+        /// </summary>
+        /// <param name="pictureId">Picture identifier</param>
+        /// <param name="targetSize">The target picture size (longest side)</param>
+        /// <param name="showDefaultPicture">A value indicating whether the default picture is shown</param>
+        /// <param name="storeLocation">Store location URL; null to use determine the current store location automatically</param>
+        /// <param name="defaultPictureType">Default picture type</param>
+        /// <returns>Picture URL</returns>
+        Task<string> GetPictureUrlAsync(int pictureId,
+            int targetSize = 0,
+            bool showDefaultPicture = true,
+            string storeLocation = null,
+            PictureType defaultPictureType = PictureType.Entity);
+
+        /// <summary>
+        /// Get a picture URL
+        /// </summary>
+        /// <param name="picture">Reference instance of Picture</param>
+        /// <param name="targetSize">The target picture size (longest side)</param>
+        /// <param name="showDefaultPicture">A value indicating whether the default picture is shown</param>
+        /// <param name="storeLocation">Store location URL; null to use determine the current store location automatically</param>
+        /// <param name="defaultPictureType">Default picture type</param>
+        /// <returns>Picture URL</returns>
+        Task<(string Url, Picture Picture)> GetPictureUrlAsync(Picture picture,
+            int targetSize = 0,
+            bool showDefaultPicture = true,
+            string storeLocation = null,
+            PictureType defaultPictureType = PictureType.Entity);
+
+        /// <summary>
+        /// Get a picture local path
+        /// </summary>
+        /// <param name="picture">Picture instance</param>
+        /// <param name="targetSize">The target picture size (longest side)</param>
+        /// <param name="showDefaultPicture">A value indicating whether the default picture is shown</param>
+        /// <returns></returns>
+        Task<string> GetThumbLocalPathAsync(Picture picture, int targetSize = 0, bool showDefaultPicture = true);
+
+        /// <summary>
+        /// Gets a picture
+        /// </summary>
+        /// <param name="pictureId">Picture identifier</param>
+        /// <returns>Picture</returns>
+        Task<Picture> GetPictureByIdAsync(int pictureId);
+
+        /// <summary>
+        /// Deletes a picture
+        /// </summary>
+        /// <param name="picture">Picture</param>
+        Task DeletePictureAsync(Picture picture);
+
+        ///// <summary>
+        ///// Gets a collection of pictures
+        ///// </summary>
+        ///// <param name="virtualPath">Virtual path</param>
+        ///// <param name="pageIndex">Current page</param>
+        ///// <param name="pageSize">Items on each page</param>
+        ///// <returns>Paged list of pictures</returns>
+        //Task<IPagedList<Picture>> GetPicturesAsync(string virtualPath = "", int pageIndex = 0, int pageSize = int.MaxValue);
+
+        /// <summary>
+        /// Gets pictures by product identifier
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="recordsToReturn">Number of records to return. 0 if you want to get all items</param>
+        /// <returns>Pictures</returns>
+        Task<IList<Picture>> GetPicturesByPostIdAsync(int postId, int recordsToReturn = 0);
+
+        /// <summary>
+        /// Inserts a picture
+        /// </summary>
+        /// <param name="pictureBinary">The picture binary</param>
+        /// <param name="mimeType">The picture MIME type</param>
+        /// <param name="seoFilename">The SEO filename</param>
+        /// <param name="altAttribute">"alt" attribute for "img" HTML element</param>
+        /// <param name="titleAttribute">"title" attribute for "img" HTML element</param>
+        /// <param name="isNew">A value indicating whether the picture is new</param>
+        /// <param name="validateBinary">A value indicating whether to validated provided picture binary</param>
+        /// <returns>Picture</returns>
+        Task<Picture> InsertPictureAsync(byte[] pictureBinary, string mimeType, string seoFilename,
+            string altAttribute = null, string titleAttribute = null,
+            bool isNew = true, bool validateBinary = true);
+
+        /// <summary>
+        /// Inserts a picture
+        /// </summary>
+        /// <param name="formFile">Form file</param>
+        /// <param name="defaultFileName">File name which will be use if IFormFile.FileName not present</param>
+        /// <param name="virtualPath">Virtual path</param>
+        /// <returns>Picture</returns>
+        Task<Picture> InsertPictureAsync(Session formFile, string filePath, string defaultFileName = "", string virtualPath = "");
+
+        /// <summary>
+        /// Updates the picture
+        /// </summary>
+        /// <param name="pictureId">The picture identifier</param>
+        /// <param name="pictureBinary">The picture binary</param>
+        /// <param name="mimeType">The picture MIME type</param>
+        /// <param name="seoFilename">The SEO filename</param>
+        /// <param name="altAttribute">"alt" attribute for "img" HTML element</param>
+        /// <param name="titleAttribute">"title" attribute for "img" HTML element</param>
+        /// <param name="isNew">A value indicating whether the picture is new</param>
+        /// <param name="validateBinary">A value indicating whether to validated provided picture binary</param>
+        /// <returns>Picture</returns>
+        Task<Picture> UpdatePictureAsync(int pictureId, byte[] pictureBinary, string mimeType,
+            string seoFilename, string altAttribute = null, string titleAttribute = null,
+            bool isNew = true, bool validateBinary = true);
+
+        /// <summary>
+        /// Updates the picture
+        /// </summary>
+        /// <param name="picture">The picture to update</param>
+        /// <returns>Picture</returns>
+        Task<Picture> UpdatePictureAsync(Picture picture);
+
+        /// <summary>
+        /// Updates a SEO filename of a picture
+        /// </summary>
+        /// <param name="pictureId">The picture identifier</param>
+        /// <param name="seoFilename">The SEO filename</param>
+        /// <returns>Picture</returns>
+        Task<Picture> SetSeoFilenameAsync(int pictureId, string seoFilename);
+
+        /// <summary>
+        /// Validates input picture dimensions
+        /// </summary>
+        /// <param name="pictureBinary">Picture binary</param>
+        /// <param name="mimeType">MIME type</param>
+        /// <returns>Picture binary or throws an exception</returns>
+        Task<byte[]> ValidatePictureAsync(byte[] pictureBinary, string mimeType);
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the images should be stored in data base.
+        /// </summary>
+        Task<bool> IsStoreInDbAsync();
+
+        /// <summary>
+        /// Sets a value indicating whether the images should be stored in data base
+        /// </summary>
+        /// <param name="isStoreInDb">A value indicating whether the images should be stored in data base</param>
+        Task SetIsStoreInDbAsync(bool isStoreInDb);
+
+        /// <summary>
+        /// Get pictures hashes
+        /// </summary>
+        /// <param name="picturesIds">Pictures Ids</param>
+        /// <returns></returns>
+        Task<IDictionary<int, string>> GetPicturesHashAsync(int[] picturesIds);
+
+        ///// <summary>
+        ///// Get product picture (for shopping cart and order details pages)
+        ///// </summary>
+        ///// <param name="product">Product</param>
+        ///// <param name="attributesXml">Attributes (in XML format)</param>
+        ///// <returns>Picture</returns>
+        //Task<Picture> GetProductPictureAsync(Product product, string attributesXml);
+
+        ///// <summary>
+        ///// Get product picture binary by picture identifier
+        ///// </summary>
+        ///// <param name="pictureId">The picture identifier</param>
+        ///// <returns>Picture binary</returns>
+        //Task<PictureBinary> GetPictureBinaryByPictureIdAsync(int pictureId);
+    }
+}

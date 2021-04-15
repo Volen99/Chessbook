@@ -9,8 +9,15 @@ export interface ITimelineRequestParameters extends IMinMaxQueryParameters {
 }
 
 export abstract class TimelineRequestParameters extends MinMaxQueryParameters implements ITimelineRequestParameters {
-  protected constructor() {
+  protected constructor(source?: ITimelineRequestParameters) {
+    if (source) {
+      super(source);
+
+      this.trimUser = source?.trimUser;
+      this.includeEntities = source?.includeEntities;
+    } else {
       super();
+    }
   }
 
   public trimUser: boolean | null;

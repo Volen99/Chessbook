@@ -2,14 +2,20 @@
 {
     using System;
     using AutoMapper;
+    using Chessbook.Data.Models.Polls;
     using Chessbook.Data.Models.Post;
     using Chessbook.Services.Mapping;
+    using Chessbook.Web.Models.Outputs.Polls;
+    using Newtonsoft.Json;
 
     public class PostDTO : IMapFrom<Post>, IMapTo<Post>, IHaveCustomMappings
     {
         public PostDTO()
         {
-            this.Entities = new ObjectEntitiesDTO();
+            this.Entities = new ObjectEntitiesDTO
+            {
+                Poll = this.Poll,
+            };
         }
 
         public int Id { get; set; }
@@ -37,7 +43,6 @@
         //public Coordinates Coordinates { get; set; }
 
         //public IEnumerable<MediaEntity> Medias { get; set; }              
-        public string MediasIds { get; set; }
 
         public ObjectEntitiesDTO Entities { get; set; }
 
@@ -68,11 +73,12 @@
 
         public string InReplyToScreenName { get; set; }
 
+        [JsonIgnore]
+        public PollDTO Poll { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Post, PostDTO>()
-                .ForPath(x => x.Entities.Poll, options => options.MapFrom(p => p.Poll));
-                
+
         }
 
         //[JsonProperty("quote_count")]
