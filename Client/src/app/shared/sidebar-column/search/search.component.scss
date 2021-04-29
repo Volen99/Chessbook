@@ -1,21 +1,32 @@
-.r-15d164r {
-  margin-bottom: 10px;
+@import './src/app/theme/styles/themes';
+
+@include nb-install-component() {
+  .r-15d164r {
+    margin-bottom: 10px;
+  }
+
+  .r-8fdsdq {
+    z-index: 4;
+  }
+
+  .search-background-color {
+    background-color: nb-theme(color-primary-transparent-100);
+  }
+
+  .element-background-color-rgba {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+
+
+  .magnifying-glass-padding-left {
+    padding-left: 10px;
+  }
+
+  .r-30o5oe {
+    appearance: none;
+  }
 }
 
-.r-8fdsdq {
-  z-index: 4;
-}
-
-//.search-background-color {
-//  background-color: nb-theme(sidebar-background-color);   // background-color: rgb(32, 35, 39);
-//}
 
 
-
-.magnifying-glass-padding-left {
-  padding-left: 10px;
-}
-
-.r-30o5oe {
-  appearance: none;
-}

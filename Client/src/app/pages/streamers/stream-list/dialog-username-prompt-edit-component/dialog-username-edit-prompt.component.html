@@ -1,0 +1,25 @@
+<nb-card>
+    <nb-card-header>{{ this.title }}</nb-card-header>
+    <nb-card-body>
+        <h5 class="title">{{!this.isEdit ? 'Username:' : 'Edit username:'}}</h5>
+        <ul *ngIf="!this.isEdit">
+            <li style="font-size: 22px;">
+                {{ this.username }}
+                <button nbButton size="medium" ghost status="primary">
+                    <nb-icon icon="edit-outline" (click)="handleEditClick()"></nb-icon>
+                </button>
+                <button nbButton size="medium" ghost status="primary">
+                    <nb-icon icon="trash-2-outline"></nb-icon>
+                </button>
+            </li>
+        </ul>
+        <div *ngIf="this.isEdit" class="form-group">
+            <input nbInput [(ngModel)]="newUsername" name="username">
+        </div>
+
+    </nb-card-body>
+    <nb-card-footer>
+        <button *ngIf="!this.isEdit" nbButton hero status="primary" (click)="this.dismiss()">Dismiss Dialog</button>
+        <button *ngIf="this.isEdit" nbButton hero status="primary" (click)="this.edit()">Edit</button>
+    </nb-card-footer>
+</nb-card>

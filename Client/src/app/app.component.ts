@@ -21,6 +21,8 @@ import {HttpClient} from "@angular/common/http";
 import {IPoll} from "./shared/posts/models/poll/poll";
 import {environment} from "../environments/environment";
 import {IUser} from "./core/interfaces/common/users";
+import {NbIconLibraries} from "./sharebook-nebular/theme/components/icon/icon-libraries";
+
 
 @Component({
   selector: 'app-root',
@@ -35,9 +37,19 @@ export class AppComponent implements OnInit, OnDestroy {
               private pagesMenu: PagesMenu,
               private tokenService: NbTokenService,
               private initUserService: InitUserService,
-              private screenService: ScreenService,
-              private http: HttpClient,
+              private iconLibraries: NbIconLibraries,
               /* private analytics: AnalyticsService,*/) {
+
+    // this.iconLibraries.registerFontPack('font-awesome', { iconClassPrefix: 'fa' });
+    // this.iconLibraries.setDefaultPack('font-awesome'); // <---- set as default
+
+    this.iconLibraries.registerFontPack('solid', {packClass: 'fas', iconClassPrefix: 'fa'});
+    this.iconLibraries.registerFontPack('regular', {packClass: 'far', iconClassPrefix: 'fa'});
+    this.iconLibraries.registerFontPack('light', {packClass: 'fal', iconClassPrefix: 'fa'});
+    this.iconLibraries.registerFontPack('duotone', {packClass: 'fad', iconClassPrefix: 'fa'});
+    this.iconLibraries.registerFontPack('brands', {packClass: 'fab', iconClassPrefix: 'fa'});
+
+    // this.iconLibraries.setDefaultPack('duotone');
 
     this.initUser();
 

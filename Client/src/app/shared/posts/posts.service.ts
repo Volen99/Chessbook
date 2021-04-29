@@ -54,7 +54,7 @@ export class PostsService {
               private timelineApi: TimelineApi,
               private userQueryParameterGeneratorService: UserQueryParameterGeneratorService,
               private tweetsRequesterService?: TweetsRequesterService,
-              ) {
+  ) {
   }
 
   // get parametersValidator(): ITweetsClientParametersValidator {
@@ -129,21 +129,14 @@ export class PostsService {
 
   }
 
-  // // Tweets - Destroy
-  //
-  // public async destroyTweetAsync(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters: number
-  //     | ITweetIdentifier | ITweet | ITweetDTO | IDestroyTweetParameters): Promise<void> {
-  //     let parameters: IDestroyTweetParameters;
-  //     if (this.isIDestroyTweetParameters(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters)) {
-  //         parameters = tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters;
-  //     } else if (this.isTweet(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters)) {
-  //         parameters = new DestroyTweetParameters(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters.tweetDTO); // .ConfigureAwait(false);
-  //     } else {
-  //         parameters = new DestroyTweetParameters(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters);
-  //     }
-  //
-  //     await this.tweetsRequesterService.destroyTweetAsync(parameters); // .ConfigureAwait(false);
-  // }
+  // Tweets - Destroy
+
+  public async destroyTweetAsync(postId: number | ITweetIdentifier, unshare = false): Promise<any> {
+    let parameters = new DestroyTweetParameters(postId);
+
+    return await this.tweetsRequesterService.destroyTweetAsync(parameters, unshare); // .ConfigureAwait(false);
+  }
+
   //
   // // Retweets
   //
@@ -159,17 +152,19 @@ export class PostsService {
   //     return this._client.factories.createTweets(requestResult?.model);
   // }
   //
-  // public async publishRetweetAsync(tweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IPublishRetweetParameters): Promise<ITweet> {
-  //     let parameters: IPublishRetweetParameters;
-  //     if (this.isIPublishRetweetParameters(tweetIdOrTweetIdentifierOrParameters)) {
-  //         parameters = tweetIdOrTweetIdentifierOrParameters;
-  //     } else {
-  //         parameters = new PublishRetweetParameters(tweetIdOrTweetIdentifierOrParameters);
-  //     }
-  //
-  //     let requestResult = await this.tweetsRequesterService.gublishRetweetAsync(parameters); // .ConfigureAwait(false);
-  //     return this._client.factories.createTweet(requestResult?.model);
-  // }
+  public async publishRetweetAsync(tweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IPublishRetweetParameters): Promise<IPost> {
+
+    let parameters: IPublishRetweetParameters;
+    if (this.isIPublishRetweetParameters(tweetIdOrTweetIdentifierOrParameters)) {
+      parameters = tweetIdOrTweetIdentifierOrParameters;
+    } else {
+      parameters = new PublishRetweetParameters(tweetIdOrTweetIdentifierOrParameters);
+    }
+
+    let requestResult = await this.tweetsRequesterService.publishRetweetAsync(parameters);
+    return null;
+  }
+
   //
   // public async destroyRetweetAsync(retweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IDestroyRetweetParameters): Promise<void> {
   //     let parameters: IDestroyRetweetParameters;
@@ -361,7 +356,6 @@ export class PostsService {
   getUserTimelineQuery(parameters: GetUserTimelineParameters) {
     const {postPagination, sort, skipCount} = parameters;
 
-    debugger
     const pagination = this.restService.componentPaginationToRestPagination(postPagination);
 
     let params = new HttpParams();
@@ -376,7 +370,6 @@ export class PostsService {
     params = this.restService.addParameterToQuery(params, "include_rts", parameters.includeRetweets);
     params = this.restService.addFormattedParameterToQuery(params, parameters.formattedCustomQueryParameters);
 
-    debugger
     return this.timelineApi.getUserTimelineAsync(params);
   }
 

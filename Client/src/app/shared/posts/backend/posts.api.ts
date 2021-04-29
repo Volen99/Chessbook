@@ -39,6 +39,10 @@ export class PostsApi {
         return this.api.post(this.apiController, body, {params});
     }
 
+    publishRetweetAsync(url: string, params: HttpParams, body?: {}): Observable<any> {
+        return this.api.post(`${this.apiController}/${url}`, body, {params});
+    }
+
     getUserVideoRating(url: string) {
         return this.api.get<UserVideoRate>(url);
     }
@@ -63,9 +67,11 @@ export class PostsApi {
     //
     // // Get Retweeters Ids
     // getRetweeterIdsAsync(parameters: IGetRetweeterIdsParameters): Promise<ITwitterResult<IIdsCursorQueryResultDTO>>;
-    //
-    // // Destroy Tweet
-    // destroyTweetAsync(parameters: IDestroyTweetParameters): Promise<ITwitterResult<ITweetDTO>>;
+
+    // Destroy Tweet
+    destroyTweetAsync(url: string, params: HttpParams, body?: {}): Observable<any> {
+        return this.api.post(`${this.apiController}/${url}`, {}, {params});
+    }
 
     votePostAsync(params: HttpParams): Observable<any> {
         return this.api.put(this.voteApiController, {}, {params});

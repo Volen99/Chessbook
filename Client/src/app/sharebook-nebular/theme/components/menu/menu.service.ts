@@ -6,6 +6,7 @@ import { share } from 'rxjs/operators';
 import { isFragmentContain, isFragmentEqual, isUrlPathContain, isUrlPathEqual } from './url-matching-helpers';
 import { NbIconConfig } from '../icon/icon.component';
 import { NbBadge } from '../badge/badge.component';
+import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 
 export interface NbMenuBag { tag: string; item: NbMenuItem }
 
@@ -50,7 +51,7 @@ export class NbMenuItem {
    * Icon class name or icon config object
    * @type {string | NbIconConfig}
    */
-  icon?: string | NbIconConfig;
+  icon?: string | NbIconConfig | IconDefinition;
   /**
    * Expanded by default
    * @type {boolean}

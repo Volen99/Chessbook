@@ -1,0 +1,294 @@
+@import '_variables';
+@import '_mixins';
+@import '_bootstrap-variables';
+@import '_miniature';
+
+$player-factor: #{16/9};
+$video-info-margin-left: 44px;
+
+.margin-content {
+  margin-left: 30px;
+  margin-right: 30px;
+  flex-grow: 1;
+}
+
+.video-bottom {
+  display: flex;
+  margin-top: 1.5rem;
+
+  .video-info {
+    flex-grow: 1;
+    // Set min width for flex item
+    min-width: 1px;
+    max-width: 100%;
+
+    .video-info-first-row {
+      display: flex;
+
+      & > div:first-child {
+        flex-grow: 1;
+      }
+
+      .video-info-name {
+        margin-right: 30px;
+        min-height: 40px; // Align with the action buttons
+        font-size: 27px;
+        font-weight: $font-semibold;
+        flex-grow: 1;
+      }
+
+      .video-info-first-row-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 100%;
+      }
+
+      .video-info-date-views {
+        align-self: start;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        font-size: 1em;
+      }
+
+      .video-info-channel {
+        font-weight: $font-semibold;
+        font-size: 15px;
+
+        a {
+          @include disable-default-a-behaviour;
+
+          color: pvar(--mainForegroundColor);
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+
+        .video-info-channel-left {
+          flex-grow: 1;
+
+          .video-info-channel-left-links {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            line-height: 1.37;
+
+            a:nth-of-type(2) {
+              font-weight: $font-regular;
+              font-size: 90%;
+            }
+
+            a.single-link {
+              margin-top: 7px;
+            }
+          }
+        }
+
+        my-subscribe-button {
+          margin-left: 5px;
+        }
+      }
+
+      my-feed {
+        margin-left: 5px;
+        margin-top: 1px;
+      }
+
+      .video-actions-rates {
+        margin: 0 0 10px 0;
+        align-items: start;
+        width: max-content;
+        margin-left: auto;
+
+        .video-actions {
+          height: 40px; // Align with the title
+          display: flex;
+          align-items: center;
+
+          .action-button:not(:first-child),
+          .action-dropdown,
+          my-video-actions-dropdown {
+            margin-left: 5px;
+          }
+
+          ::ng-deep.action-button {
+            @include peertube-button;
+            @include button-with-icon(21px, 0, -1px);
+            @include apply-svg-color(pvar(--actionButtonColor));
+
+            font-size: 100%;
+            font-weight: $font-semibold;
+            display: inline-block;
+            padding: 0 10px 0 10px;
+            white-space: nowrap;
+            background-color: transparent !important;
+            color: pvar(--actionButtonColor);
+            text-transform: uppercase;
+
+            &::after {
+              display: none;
+            }
+
+            &:hover {
+              opacity: 0.9;
+            }
+
+            &.action-button-like,
+            &.action-button-dislike {
+              filter: brightness(120%);
+
+              .count {
+                margin: 0 5px;
+              }
+            }
+
+            &.action-button-like.activated {
+              .count {
+                color: pvar(--activatedActionButtonColor);
+              }
+
+              app-global-icon {
+                @include apply-svg-color(pvar(--activatedActionButtonColor));
+              }
+            }
+
+            &.action-button-dislike.activated {
+              .count {
+                color: pvar(--activatedActionButtonColor);
+              }
+
+              app-global-icon {
+                @include apply-svg-color(pvar(--activatedActionButtonColor));
+              }
+            }
+
+            &.action-button-support {
+              color: pvar(--supportButtonColor);
+
+              app-global-icon {
+                @include apply-svg-color(pvar(--supportButtonColor));
+              }
+            }
+
+            &.action-button-support {
+              app-global-icon {
+                ::ng-deep path:first-child {
+                  fill: pvar(--supportButtonHeartColor) !important;
+                }
+              }
+            }
+
+            &.action-button-save {
+              app-global-icon {
+                top: 0 !important;
+                right: -1px;
+              }
+            }
+
+            .icon-text {
+              margin-left: 3px;
+            }
+          }
+        }
+
+        .video-info-likes-dislikes-bar-outer-container {
+          position: relative;
+        }
+
+        .video-info-likes-dislikes-bar-inner-container {
+          position: absolute;
+          height: 20px;
+        }
+
+        .video-info-likes-dislikes-bar {
+          $likes-bar-height: 2px;
+          height: $likes-bar-height;
+          margin-top: -$likes-bar-height;
+          width: 120px;
+          background-color: #ccc;
+          position: relative;
+          top: 10px;
+
+          .likes-bar {
+            height: 100%;
+            background-color: #909090;
+
+            &.liked {
+              background-color: pvar(--activatedActionButtonColor);
+            }
+          }
+        }
+      }
+    }
+
+    .video-info-description {
+      margin: 20px 0;
+      margin-left: $video-info-margin-left;
+      font-size: 15px;
+
+      .video-info-description-html {
+        @include peertube-word-wrap;
+
+        ::ng-deep a {
+          text-decoration: none;
+        }
+      }
+
+      .glyphicon, .description-loading {
+        margin-left: 3px;
+      }
+
+      .description-loading {
+        display: inline-block;
+      }
+
+      .video-info-description-more {
+        cursor: pointer;
+        font-weight: $font-semibold;
+        color: pvar(--greyForegroundColor);
+        font-size: 14px;
+
+        .glyphicon {
+          position: relative;
+          top: 2px;
+        }
+      }
+    }
+
+    .video-attributes {
+      margin-left: $video-info-margin-left;
+    }
+
+    .video-attributes .video-attribute {
+      font-size: 13px;
+      display: block;
+      margin-bottom: 12px;
+
+      .video-attribute-label {
+        min-width: 142px;
+        padding-right: 5px;
+        display: inline-block;
+        color: pvar(--greyForegroundColor);
+        font-weight: $font-bold;
+      }
+
+      a.video-attribute-value {
+        @include disable-default-a-behaviour;
+        color: pvar(--mainForegroundColor);
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+
+      &.video-attribute-tags {
+        .video-attribute-value:not(:nth-child(2)) {
+          &::before {
+            content: ', '
+          }
+        }
+      }
+    }
+  }
+}

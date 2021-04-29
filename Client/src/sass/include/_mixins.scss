@@ -23,17 +23,28 @@
   display: block;
   /* Fallback for non-webkit */
   display: -webkit-box;
-  max-height: $font-size * $number-of-lines;
+  -webkit-line-clamp: $number-of-lines;
   /* Fallback for non-webkit */
   font-size: $font-size;
   line-height: $font-size;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-height: $font-size * $number-of-lines;
 }
 
-@mixin prefix($property, $parameters...) {
-  @each $prefix in -webkit-, -moz-, -ms-, -o-, "" {
-    #{$prefix}#{$property}: $parameters;
+@mixin fade-text ($fade-after, $background-color) {
+  position: relative;
+  overflow: hidden;
+
+  &:after {
+    content: '';
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: linear-gradient(transparent $fade-after, $background-color);
   }
 }
 
@@ -41,9 +52,6 @@
   word-break: break-word;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
   hyphens: auto;
 }
 
@@ -51,28 +59,6 @@
   ::ng-deep .feather,
   ::ng-deep .material {
     color: $color;
-  }
-
-  ::ng-deep svg {
-    path[fill="#000"],
-    g[fill="#000"],
-    rect[fill="#000"],
-    circle[fill="#000"],
-    polygon[fill="#000"] {
-      fill: $color;
-    }
-
-    path[stroke="#000"],
-    g[stroke="#000"],
-    rect[stroke="#000"],
-    circle[stroke="#000"],
-    polygon[stroke="#000"] {
-      stroke: $color;
-    }
-
-    stop[stop-color="#000"] {
-      stop-color: $color;
-    }
   }
 }
 
@@ -139,12 +125,13 @@
   font-size: 15px;
 }
 
+
 @mixin orange-button {
   @include button-focus(pvar(--mainColorLightest));
 
   &, &:active, &:focus {
     color: #fff;
-    background-color: pvar(--mainColor);
+    background-color: purple; // pvar(--mainColor);
   }
 
   &:hover {
@@ -158,8 +145,35 @@
     background-color: #C6C6C6;
   }
 
-  my-global-icon {
+  fa-icon {
     @include apply-svg-color(#fff)
+  }
+}
+
+@mixin orange-button-inverted {
+  @include button-focus(pvar(--mainColorLightest));
+
+  border: 2px solid pvar(--mainColor);
+  font-weight: $font-semibold;
+
+  &, &:active, &:focus {
+    color: pvar(--mainColor);
+    background-color: pvar(--mainBackgroundColor);
+  }
+
+  &:hover {
+    color: pvar(--mainColor);
+    background-color: pvar(--mainColorLightest);
+  }
+
+  &[disabled], &.disabled {
+    cursor: default;
+    color: pvar(--mainColor);
+    background-color: #C6C6C6;
+  }
+
+  my-global-icon {
+    @include apply-svg-color(pvar(--mainColor))
   }
 }
 
@@ -214,7 +228,7 @@
     cursor: default;
   }
 
-  my-global-icon {
+  fa-icon {
     @include apply-svg-color($text)
   }
 }
@@ -225,7 +239,8 @@
   font-size: 15px;
   height: $button-height;
   line-height: $button-height;
-  border-radius: 3px;
+  // FIXME: because of primeng that redefines border-radius of all input[type="..."]
+  border-radius: 3px !important;
   text-align: center;
   padding: 0 17px 0 13px;
   cursor: pointer;
@@ -252,7 +267,7 @@
   align-items: center;
   line-height: normal !important;
 
-  my-global-icon {
+  fa-icon {
     position: relative;
     width: $width;
     margin-right: $margin-right;
@@ -534,6 +549,14 @@
   min-height: $size;
 }
 
+@mixin channel-avatar ($size) {
+  width: $size;
+  height: $size;
+  min-width: $size;
+  min-height: $size;
+  border-radius: 5px;
+}
+
 @mixin chevron ($size, $border-width) {
   border-style: solid;
   border-width: $border-width $border-width 0 0;
@@ -593,103 +616,29 @@
   }
 }
 
-@mixin sub-menu-with-actor {
-  position: initial;
-  z-index: unset;
-  height: max-content;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  .actor {
-    display: flex;
-    margin-top: 20px;
-    margin-bottom: 20px;
-
-    img {
-      @include avatar(80px);
-
-      margin-right: 20px;
-    }
-
-    .actor-info {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-
-      .actor-names {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-
-        .actor-display-name {
-          font-size: 23px;
-          font-weight: $font-bold;
-          margin-right: 7px;
-        }
-
-        .actor-name {
-          position: relative;
-          top: 3px;
-          font-size: 14px;
-          color: $grey-actor-name;
-        }
-      }
-
-      .actor-lower {
-        grid-area: lower;
-      }
-
-      .actor-followers {
-        font-size: 15px;
-      }
-
-      .actor-owner {
-        @include actor-owner;
-      }
-    }
-  }
-
-  .links {
-    margin-top: 0;
-    margin-bottom: 15px;
-
-    a {
-      margin-top: 0;
-      margin-bottom: 0;
-      text-transform: uppercase;
-      font-weight: 600;
-      font-size: 110%;
-
-      @media screen and (max-width: $mobile-view) {
-        font-size: 130%;
-      }
-    }
-
-    list-overflow {
-      display: inline-block;
-      width: max-content;
-    }
-  }
-}
-
 @mixin create-button {
   @include peertube-button-link;
   @include orange-button;
   @include button-with-icon(20px, 5px, -1px);
 }
 
-@mixin row-blocks {
+@mixin row-blocks ($column-responsive: true) {
   display: flex;
   min-height: 130px;
   padding-bottom: 20px;
   margin-bottom: 20px;
   border-bottom: 1px solid #C6C6C6;
 
-  @media screen and (max-width: 800px) {
-    flex-direction: column;
-    height: auto;
-    align-items: center;
+  @media screen and (max-width: $small-view) {
+    @if $column-responsive {
+      flex-direction: column;
+      height: auto;
+      align-items: center;
+    } @else {
+      min-height: initial;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
   }
 }
 
@@ -756,7 +705,7 @@
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
   list-style: none;
-  background-color: pvar(--submenuColor);
+  background-color: pvar(--submenuBackgroundColor);
   border-radius: 0.25rem;
 
   .breadcrumb-item {
@@ -811,7 +760,7 @@
     & > a,
     & > div {
       padding: 20px;
-      background: pvar(--submenuColor);
+      background: pvar(--submenuBackgroundColor);
       border-radius: 4px;
       box-sizing: border-box;
       height: 100%;
@@ -833,7 +782,7 @@
   }
 }
 
-@mixin divider($color: pvar(--submenuColor), $background: pvar(--mainBackgroundColor)) {
+@mixin divider($color: pvar(--submenuBackgroundColor), $background: pvar(--mainBackgroundColor)) {
   width: 95%;
   border-top: .05rem solid $color;
   height: .05rem;
@@ -916,7 +865,7 @@
   }
 }
 
-@mixin admin-sub-header-responsive ($horizontal-margins) {
+@mixin admin-sub-header-responsive {
   flex-direction: column;
 
   .form-sub-title {
@@ -931,7 +880,7 @@
     white-space: nowrap;
     height: 50px;
     padding: 10px 0;
-    width: calc(100vw - #{$horizontal-margins*2});
+    width: 100%;
 
     a {
       margin-left: 5px;
@@ -939,14 +888,16 @@
   }
 }
 
-// applies 16:9 ratio to a child element (using $selector) only using
-// an immediate's parent size. This allows 16:9 ratio without explicit
+// applies ratio (default to 16:9) to a child element (using $selector) only using
+// an immediate's parent size. This allows to set a ratio without explicit
 // dimensions, as width/height cannot be computed from each other.
-@mixin large-screen-ratio ($selector: 'div') {
+@mixin block-ratio ($selector: 'div', $inverted-ratio: 9/16) {
+  $padding-percent: percentage($inverted-ratio);
+
   position: relative;
   height: 0;
   width: 100%;
-  padding-top: 56%;
+  padding-top: $padding-percent;
 
   #{$selector} {
     position: absolute;
@@ -964,7 +915,7 @@
     padding-bottom: 15px;
     margin-bottom: $sub-menu-margin-bottom;
 
-    my-global-icon {
+    > my-global-icon {
       margin-right: 10px;
       vertical-align: bottom;
       width: 24px;
@@ -990,4 +941,32 @@
   border-bottom: ($height / 2) solid transparent;
 
   border-left: $width solid rgba(255, 255, 255, 0.95);
+}
+
+@mixin on-small-main-col () {
+  :host-context(.main-col:not(.expanded)) {
+    @media screen and (max-width: $small-view + $menu-width) {
+      @content;
+    }
+  }
+
+  :host-context(.main-col.expanded) {
+    @media screen and (max-width: $small-view) {
+      @content;
+    }
+  }
+}
+
+@mixin on-mobile-main-col () {
+  :host-context(.main-col:not(.expanded)) {
+    @media screen and (max-width: $mobile-view + $menu-width) {
+      @content;
+    }
+  }
+
+  :host-context(.main-col.expanded) {
+    @media screen and (max-width: $mobile-view) {
+      @content;
+    }
+  }
 }

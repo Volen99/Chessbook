@@ -28,10 +28,10 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     this.disabled      = false; // this.disabled || Object.entries(this.selected).every(item => !item);
 
 
-    if (this.poll.voters_count !== null && this.poll.voters_count !== undefined) {
-      this.votesCount = this.poll.voters_count;
+    if (this.poll.votersCount !== null && this.poll.votersCount !== undefined) {
+      this.votesCount = this.poll.votersCount;
     } else {
-      this.votesCount = this.poll.votes_count;
+      this.votesCount = this.poll.votesCount;
     }
 
     this._setupTimer();
@@ -39,7 +39,7 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   }
 
   calcPercent(option: IPollOption) {
-     this.percent = this.poll.votes_count === 0 ? 0 : (option.votes / this.poll.votes_count) * 100;
+     this.percent = this.poll.votesCount === 0 ? 0 : (option.votes / this.poll.votesCount) * 100;
 
      return Math.round(this.percent);
   }

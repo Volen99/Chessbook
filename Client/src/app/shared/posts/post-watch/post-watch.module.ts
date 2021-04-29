@@ -12,6 +12,7 @@ import {SharedGlobalIconModule} from "../../shared-icons/shared-global-icon.modu
 import { LikesComponent } from './likes/likes.component';
 import {NbListModule} from "../../../sharebook-nebular/theme/components/list/list.module";
 import {NbUserModule} from "../../../sharebook-nebular/theme/components/user/user.module";
+import {SharedModule} from "../../shared.module";
 
 @NgModule({
   declarations: [PostWatchComponent, PostThreadComponent, LikesComponent],
@@ -27,6 +28,7 @@ import {NbUserModule} from "../../../sharebook-nebular/theme/components/user/use
     SharedGlobalIconModule,
     NbListModule,
     NbUserModule,
+    SharedModule,
   ],
 
 })

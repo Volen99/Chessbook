@@ -41,11 +41,12 @@ export class TweetsRequesterService {
     return this.tweetControllerService.publishTweetAsync(parameters);
   }
 
-  // // Tweets - Destroy
-  // public destroyTweetAsync(parameters: IDestroyTweetParameters): Promise<ITweetDTO> {
-  //   this._tweetsClientRequiredParametersValidator.validate(parameters);
-  //   return super.executeRequestAsync(request => this._tweetController.destroyTweetAsync(parameters, request));
-  // }
+  // Tweets - Destroy
+  public destroyTweetAsync(parameters: IDestroyTweetParameters, unshare = false): Promise<ITweetDTO> {
+    // this._tweetsClientRequiredParametersValidator.validate(parameters);
+
+    return this.tweetControllerService.destroyTweetAsync(parameters, unshare);
+  }
   //
   // // Retweets
   // public getRetweetsAsync(parameters: IGetRetweetsParameters): Promise<ITweetDTO[]> {
@@ -53,11 +54,12 @@ export class TweetsRequesterService {
   //   return super.executeRequestAsync(request => this._tweetController.getRetweetsAsync(parameters, request));
   // }
   //
-  // // Retweets - Publish
-  // public gublishRetweetAsync(parameters: IPublishRetweetParameters): Promise<ITweetDTO> {
-  //   this._tweetsClientRequiredParametersValidator.validate(parameters);
-  //   return super.executeRequestAsync(request => this._tweetController.publishRetweetAsync(parameters, request));
-  // }
+  // Retweets - Publish
+  public publishRetweetAsync(parameters: IPublishRetweetParameters): Promise<ITweetDTO> {
+    // this._tweetsClientRequiredParametersValidator.validate(parameters);
+
+    return this.tweetControllerService.publishRetweetAsync(parameters);
+  }
   //
   // // Retweets - Destroy
   // public destroyRetweetAsync(parameters: IDestroyRetweetParameters): Promise<ITweetDTO> {

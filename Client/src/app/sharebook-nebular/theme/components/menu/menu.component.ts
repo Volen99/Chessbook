@@ -10,15 +10,25 @@ import {
   DoCheck,
   PLATFORM_ID,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { Router, NavigationEnd, NavigationExtras } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { takeUntil, filter, map } from 'rxjs/operators';
-import { NbMenuInternalService, NbMenuItem, NbMenuBag, NbMenuService, NbMenuBadgeConfig } from './menu.service';
-import { convertToBoolProperty, NbBooleanInput } from '../helpers';
-import { NB_WINDOW } from '../../theme.options';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { NbLayoutDirectionService } from '../../services/direction.service';
+import {isPlatformBrowser} from '@angular/common';
+import {Router, NavigationEnd, NavigationExtras} from '@angular/router';
+import {BehaviorSubject, Subject} from 'rxjs';
+import {takeUntil, filter, map} from 'rxjs/operators';
+import {NbMenuInternalService, NbMenuItem, NbMenuBag, NbMenuService, NbMenuBadgeConfig} from './menu.service';
+import {convertToBoolProperty, NbBooleanInput} from '../helpers';
+import {NB_WINDOW} from '../../theme.options';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {NbLayoutDirectionService} from '../../services/direction.service';
+import {faHouse, faHashtag, faBell, faEnvelope, faUser, faTv} from '@fortawesome/pro-light-svg-icons';
+import {
+  faHouse as faHouseSolid,
+  faHashtag as faHashtagSolid,
+  faBell as faBellSolid,
+  faEnvelope as faEnvelopeSolid,
+  faUser as faUserSolid,
+  faTv as faTvSolid
+} from '@fortawesome/pro-solid-svg-icons';
+import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 
 export enum NbToggleStates {
   Expanded = 'expanded',
@@ -30,8 +40,8 @@ export enum NbToggleStates {
   templateUrl: './menu-item.component.html',
   animations: [
     trigger('toggle', [
-      state(NbToggleStates.Collapsed, style({ height: '0', margin: '0' })),
-      state(NbToggleStates.Expanded, style({ height: '*' })),
+      state(NbToggleStates.Collapsed, style({height: '0', margin: '0'})),
+      state(NbToggleStates.Expanded, style({height: '*'})),
       transition(`${NbToggleStates.Collapsed} <=> ${NbToggleStates.Expanded}`, animate(300)),
     ]),
   ],
@@ -49,7 +59,8 @@ export class NbMenuItemComponent implements DoCheck, AfterViewInit, OnDestroy {
   toggleState: NbToggleStates;
 
   constructor(protected menuService: NbMenuService,
-              protected directionService: NbLayoutDirectionService) {}
+              protected directionService: NbLayoutDirectionService) {
+  }
 
   ngDoCheck() {
     this.toggleState = this.menuItem.expanded ? NbToggleStates.Expanded : NbToggleStates.Collapsed;
@@ -58,8 +69,8 @@ export class NbMenuItemComponent implements DoCheck, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.menuService.onSubmenuToggle()
       .pipe(
-        filter(({ item }) => item === this.menuItem),
-        map(({ item }: NbMenuBag) => item.expanded),
+        filter(({item}) => item === this.menuItem),
+        map(({item}: NbMenuBag) => item.expanded),
         takeUntil(this.destroy$),
       )
       .subscribe(isExpanded => this.toggleState = isExpanded ? NbToggleStates.Expanded : NbToggleStates.Collapsed);
@@ -82,7 +93,7 @@ export class NbMenuItemComponent implements DoCheck, AfterViewInit, OnDestroy {
     this.selectItem.emit(item);
   }
 
-  onItemClick(item: NbMenuItem) {
+  onItemClick(item: NbMenuItem | any) {
     this.itemClick.emit(item);
   }
 
@@ -204,20 +215,20 @@ export class NbMenuItemComponent implements DoCheck, AfterViewInit, OnDestroy {
   selector: 'nb-menu',
   styleUrls: ['./menu.component.scss'],
   template: `
-    <ul class="menu-items">
-      <ng-container *ngFor="let item of items">
-        <li nbMenuItem *ngIf="!item.hidden"
-            [menuItem]="item"
-            [badge]="item.badge"
-            [class.menu-group]="item.group"
-            (hoverItem)="onHoverItem($event)"
-            (toggleSubMenu)="onToggleSubMenu($event)"
-            (selectItem)="onSelectItem($event)"
-            (itemClick)="onItemClick($event)"
-            class="menu-item">
-        </li>
-      </ng-container>
-    </ul>
+      <ul class="menu-items">
+          <ng-container *ngFor="let item of items">
+              <li nbMenuItem *ngIf="!item.hidden"
+                  [menuItem]="item"
+                  [badge]="item.badge"
+                  [class.menu-group]="item.group"
+                  (hoverItem)="onHoverItem($event)"
+                  (toggleSubMenu)="onToggleSubMenu($event)"
+                  (selectItem)="onSelectItem($event)"
+                  (itemClick)="onItemClick($event)"
+                  class="menu-item">
+              </li>
+          </ng-container>
+      </ul>
   `,
 })
 export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -245,9 +256,11 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   get autoCollapse(): boolean {
     return this._autoCollapse;
   }
+
   set autoCollapse(value: boolean) {
     this._autoCollapse = convertToBoolProperty(value);
   }
+
   protected _autoCollapse: boolean = false;
   static ngAcceptInputType_autoCollapse: NbBooleanInput;
 
@@ -285,7 +298,7 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe((data: { tag: string; listener: BehaviorSubject<NbMenuBag> }) => {
-        data.listener.next({ tag: this.tag, item: this.getSelectedItem(this.items) });
+        data.listener.next({tag: this.tag, item: this.getSelectedItem(this.items)});
       });
 
     this.menuInternalService
@@ -334,7 +347,45 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     this.menuInternalService.selectItem(item, this.items, this.autoCollapse, this.tag);
   }
 
-  onItemClick(item: NbMenuItem) {
+  lightIconsObj = {
+    house: faHouse,
+    hashtag: faHashtag,
+    bell: faBell,
+    envelope: faEnvelope,
+    user: faUser,
+    tv: faTv,
+  };
+
+  solidIconsObj = {
+    house: faHouseSolid,
+    hashtag: faHashtagSolid,
+    bell: faBellSolid,
+    envelope: faEnvelopeSolid,
+    user: faUserSolid,
+    tv: faTvSolid,
+  };
+
+  lastIconClicked: IconDefinition;
+
+  // I mean, it works...
+  onItemClick(item: NbMenuItem | any) {
+    if (!this.tag) {
+      if (this.lastIconClicked) {
+        this.lastIconClicked = this.lightIconsObj[this.lastIconClicked.iconName];
+
+        // @ts-ignore
+        let last = this.items.filter(mi => mi.icon.iconName === this.lastIconClicked.iconName)[0];
+
+        last.icon = this.lightIconsObj[this.lastIconClicked.iconName];
+      }
+
+      if (item.icon.prefix === 'fal') {
+        item.icon = this.solidIconsObj[item.icon.iconName];
+      }
+
+      this.lastIconClicked = item.icon;
+    }
+
     this.menuInternalService.itemClick(item, this.tag);
   }
 

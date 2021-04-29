@@ -12,7 +12,7 @@ export class WhoToFollowComponent implements OnInit {
   constructor(private userService: UsersService) { }
 
   ngOnInit(): void {
-    this.userService.getUsers(1, 3)
+    this.userService.getUsers(1, 40)
         .subscribe((data) => {
           this.users = data["item1"];
         });

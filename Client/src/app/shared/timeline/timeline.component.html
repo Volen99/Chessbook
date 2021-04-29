@@ -291,6 +291,7 @@
                             [transform]="this?.setTransform(i)"
                             [mediaUrl]="post?.entities.medias?.shift().mediaURL"
                             [isPoll]="!!this?.post.entities.poll"
+                            [isReshare]="!!post?.resharedStatus"
                             [post]="post">
 
                   </app-post>

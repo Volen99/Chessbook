@@ -384,5 +384,6 @@ export class User implements IUser {
   }
 
   notificationSettings?: UserNotificationSetting;
+  followedBy: boolean;
 
 }

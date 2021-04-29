@@ -18,6 +18,8 @@
     filter: blur(3px);
     padding-left: 4px;
   }
+
+  text-decoration: none; // by mi kk
 }
 
 $play-overlay-transition: 0.2s ease;
@@ -244,6 +246,69 @@ $play-overlay-width: 18px;
           min-width: var(--miniature-min-width);
           max-width: var(--miniature-max-width);
         }
+      }
+    }
+  }
+}
+
+// Use margin by default, or padding if $margin is false
+@mixin grid-videos-miniature-margins ($margin: true, $min-margin: 0) {
+  --gridVideosMiniatureMargins: #{pvar(--videosHorizontalMarginContent)};
+
+  @if $margin {
+    margin-left: var(--gridVideosMiniatureMargins) !important;
+    margin-right: var(--gridVideosMiniatureMargins) !important;
+  } @else {
+    padding-left: var(--gridVideosMiniatureMargins) !important;
+    padding-right: var(--gridVideosMiniatureMargins) !important;
+  }
+
+  @media screen and (max-width: $mobile-view) {
+    --gridVideosMiniatureMargins: #{$min-margin};
+
+    width: auto;
+  }
+}
+
+
+@mixin grid-videos-miniature-layout {
+  @include grid-videos-miniature-margins;
+
+  @media screen and (min-width: $mobile-view) {
+    .videos,
+    .playlists {
+      --miniatureMinWidth: #{$video-thumbnail-width - 25px};
+      --miniatureMaxWidth: #{$video-thumbnail-width};
+
+      display: grid;
+      column-gap: 30px;
+      grid-template-columns: repeat(
+        auto-fill,
+                      minmax(
+                                      var(--miniatureMinWidth),
+                                      1fr
+                      )
+      );
+
+      .video-wrapper,
+      .playlist-wrapper {
+        margin: 0 auto;
+        width: 100%;
+
+        my-video-miniature,
+         {
+          display: block;
+          min-width: var(--miniatureMinWidth);
+          max-width: var(--miniatureMaxWidth);
+        }
+      }
+
+      @media screen and (min-width: #{breakpoint(xm)}) {
+        column-gap: 15px;
+      }
+
+      @media screen and (min-width: #{breakpoint(fhd)}) {
+        column-gap: 2%;
       }
     }
   }

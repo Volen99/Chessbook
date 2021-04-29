@@ -18,6 +18,7 @@
     using System.IO;
     using System.Reflection;
     using AutoMapperConfiguration = AutoMapper.Configuration;
+    using Chessbook.Web.Api.Factories;
 
     public class Startup
     {
@@ -56,6 +57,8 @@
             services.ConfigureCors();
 
             services.AddAuthorization(opt => opt.RegisterPolicies());
+
+            services.AddTransient<IUserModelFactory, UserModelFactory>();
 
             services
                 .AddControllers(opt =>

@@ -60,7 +60,7 @@
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<(IEnumerable<User>, int)> GetFilteredListWithTotalCount(UsersGridFilter filter, ContextSession session, bool includeDeleted = false)
+        public async Task<(IList<User>, int)> GetFilteredListWithTotalCount(UsersGridFilter filter, ContextSession session, bool includeDeleted = false)
         {
             var query = GetEntities(session, includeDeleted); // .ApplyFilter(filter);
             return (

@@ -48,8 +48,8 @@
 
       .menu-icon {
         color: nb-theme(menu-item-icon-color);
-        font-size: 1.6875rem; // nb-theme(menu-item-icon-width);
-        margin: nb-theme(menu-item-icon-margin);
+        font-size: 1.6300rem; // 1.6875rem; // nb-theme(menu-item-icon-width);
+        // margin: nb-theme(menu-item-icon-margin); // by mi for margin-left on text
         width: 1em;
         text-align: center;
       }

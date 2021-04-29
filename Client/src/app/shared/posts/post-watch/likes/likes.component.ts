@@ -20,7 +20,6 @@ export class LikesComponent implements OnInit {
   ngOnInit(): void {
     this.postService.getLikers(this.postId)
       .subscribe((data) => {
-        debugger
         this.users = data;
     });
   }

@@ -5,7 +5,6 @@
 <!--    </div>-->
 <!--</div>-->
 
-
 <div class="infinite-cards row" appInfiniteScroller (nearOfBottom)="onNearOfBottom()" [autoInit]="true" [dataObservable]="onDataSubject.asObservable()" style="margin: 0px">
     <div class="col-md-12 col-lg-7 col-xxxl-6 r-yfoy6g r-18bvks7 main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1 main-left-right-vertical-border-color" style="padding-left: 0px"> <!--style="padding-left: 0px-->
         <nb-card style="width: 102.6%"> <!--inner container to fit vertical border-->
@@ -26,9 +25,11 @@
                                         <app-post *ngFor="let post of this.posts; let i = index"
                                                   [hasText]="!!post?.text"
                                                   [hasMedia]="!!post?.entities.medias"
-                                                  [transform]="this?.setTransform(i)"
+                                                  [transform]="this.setTransform(i)"
                                                   [isPoll]="!!post?.entities.poll"
-                                                  [post]="post">
+                                                  [isReshare]="!!post?.resharedStatus"
+                                                  [post]="post"
+                                                  [removeVideoFromArray]="this.removeVideoFromArray">
 
 <!--                                            [picture]="post?.entities.medias?.shift()?.mediaURL"-->
 <!--                                            [mediaUrl]="post?.entities.medias?.shift()?.mediaURL"-->

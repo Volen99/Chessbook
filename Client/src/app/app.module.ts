@@ -26,6 +26,7 @@ import {PagesMenu} from "./pages/pages-menu";
 import {ModalOverlaysModule} from "./pages/modal-overlays/modal-overlays.module";
 import {NotificationComponent} from "./sharebook-nebular/theme/components/menu/notification.component";
 import {LoggedOutHomeComponent} from "./logged-out-home/logged-out-home.component";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -67,6 +68,8 @@ import {LoggedOutHomeComponent} from "./logged-out-home/logged-out-home.componen
     NbMenuModule,
 
     NgbModule,
+    FontAwesomeModule
+
   ],
   bootstrap: [AppComponent],
   providers: [PagesMenu],

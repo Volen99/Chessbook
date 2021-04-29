@@ -72,6 +72,9 @@ import {ActorAvatarInfoComponent} from "./account/actor-avatar-info.component";
 import {NbUserModule} from "../../sharebook-nebular/theme/components/user/user.module";
 import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";
 import {ComponentsModule} from "../../components/components.module";
+import {NumberFormatterPipe} from "./angular/pipes/number-formatter.pipe";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {SocialContextComponent} from "./components/post/social-context/social-context.component";
 
 @NgModule({
   imports: [
@@ -97,7 +100,8 @@ import {ComponentsModule} from "../../components/components.module";
     NbContextMenuModule,
     NbUserModule,
     NbCardModule,
-    ComponentsModule
+    ComponentsModule,
+    FontAwesomeModule
   ],
 
   declarations: [
@@ -105,7 +109,7 @@ import {ComponentsModule} from "../../components/components.module";
     ActorAvatarInfoComponent,
     //
     FromNowPipe,
-    // NumberFormatterPipe,
+    NumberFormatterPipe,
     BytesPipe,
     // DurationFormatterPipe,
     //
@@ -141,6 +145,8 @@ import {ComponentsModule} from "../../components/components.module";
     // DisableDirective,
     // GroupByPipe,
     // BootstrapToggleDirective,
+
+    SocialContextComponent
   ],
 
   exports: [
@@ -166,7 +172,7 @@ import {ComponentsModule} from "../../components/components.module";
     //
     FromNowPipe,
     BytesPipe,
-    // NumberFormatterPipe,
+    NumberFormatterPipe,
     // DurationFormatterPipe,
     //
      InfiniteScrollerDirective,

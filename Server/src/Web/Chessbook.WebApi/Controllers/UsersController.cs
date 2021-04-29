@@ -18,6 +18,14 @@
     using System;
     using System.Linq;
     using Chessbook.Common;
+    using Chessbook.Services.Mapping;
+    using Chessbook.Web.Models.Inputs;
+    using Chessbook.Services.Data;
+    using Chessbook.Web.Models.Outputs;
+    using Chessbook.Data.Models;
+    using Chessbook.Data.Models.Media;
+    using Chessbook.Web.Api.Factories;
+    using System.Collections.Generic;
 
     [Route("users")]
     public class UsersController : BaseApiController
@@ -28,9 +36,11 @@
         protected readonly IPostsService postsService;
         protected readonly IPictureService pictureService;
         private readonly IGenericAttributeService genericAttributeService;
+        private readonly IRelationshipService relationshipService;
+        private readonly IUserModelFactory userModelFactory;
 
         public UsersController(IUserService userService, JwtManager jwtManager, IAuthenticationService authService, IPostsService postsService,
-            IPictureService pictureService)
+            IPictureService pictureService, IRelationshipService relationshipService, IUserModelFactory userModelFactory)
         {
             this.userService = userService;
             this.jwtManager = jwtManager;
@@ -38,6 +48,8 @@
             this.postsService = postsService;
             this.pictureService = pictureService;
             // this.genericAttributeService = genericAttributeService;
+            this.relationshipService = relationshipService;
+            this.userModelFactory = userModelFactory;
         }
 
         [HttpGet]
@@ -60,10 +72,19 @@
                 PageSize = pageSize,
             };
 
-            var users = await this.userService.GetAllUsers(filter);
+            var users = await this.userService.GetAllUsers(filter, User.GetUserId());
+
+            var usersDTO = users.Item1.MapTo<IList<UserDTO>>();
+
+            for (int i = 0; i < usersDTO.Count; i++)
+            {
+                usersDTO[i] = await this.userModelFactory.PrepareCustomerModelAsync(usersDTO[i]);
+            }
+
+            var tupe = new Tuple<IList<UserDTO>, int>(usersDTO, users.Item2);
 
             // Thanks https://stackoverflow.com/questions/7397207/json-net-error-self-referencing-loop-detected-for-type ♥
-            var res = JsonConvert.SerializeObject(users, Formatting.Indented,
+            var res = JsonConvert.SerializeObject(tupe, Formatting.Indented,
                new JsonSerializerSettings
                {
                    PreserveReferencesHandling = PreserveReferencesHandling.Objects,
@@ -80,6 +101,9 @@
         public async Task<IActionResult> Get(int id)
         {
             var user = await userService.GetById(id);
+
+            user.StatusesCount = await this.postsService.GetPostsCountByUserId(user.Id);
+
             return Ok(user);
         }
 
@@ -90,13 +114,11 @@
             var currentUserId = User.GetUserId();
             if (currentUserId > 0)
             {
-                var user = await userService.GetById(currentUserId);
+                var model = await userService.GetById(currentUserId);
 
-                var profilePictureUrl = await this.pictureService.GetPictureUrlAsync(user.ProfilePictureId, 400);
+                model = await this.userModelFactory.PrepareCustomerModelAsync(model);
 
-                user.ProfileImageUrlHttps = ChessbookConstants.SiteHttps + profilePictureUrl;
-
-                return Ok(user);
+                return this.Ok(model);
             }
 
             return Unauthorized();
@@ -249,17 +271,17 @@
             return this.Ok(postRateDTO);
         }
 
+
+
         [HttpGet]
         [Route("profile/{screenName:length(3,16)}")] // WTF...
         public async Task<IActionResult> GetProfile(string screenName)
         {
-            var userDTO = await this.userService.GetByScreenName(screenName);
+            var model = await this.userService.GetByScreenName(screenName);
 
-            var profilePictureUrl = await this.pictureService.GetPictureUrlAsync(userDTO.ProfilePictureId, 400);
+            model = await this.userModelFactory.PrepareCustomerModelAsync(model);
 
-            userDTO.ProfileImageUrlHttps = ChessbookConstants.SiteHttps + profilePictureUrl;
-
-            return this.Ok(userDTO);
+            return this.Ok(model);
         }
     }
 

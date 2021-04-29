@@ -22,6 +22,14 @@ import {immutableAssign} from "../../helpers/utils";
 import {GetHomeTimelineParameters} from "../../shared/models/timeline/get-home-timeline-parameters";
 import {GetUserTimelineParameters} from "../../shared/models/timeline/get-user-timeline-parameters";
 import {UsersService} from "../../core/backend/common/services/users.service";
+import {faLongArrowLeft, faBirthdayCake, faCalendarAlt, faEllipsisH} from '@fortawesome/pro-light-svg-icons';
+import {RelationshipsService} from "../../shared/shared-main/relationships/relationships.service";
+import {
+  GetRelationshipBetweenParameters,
+  IGetRelationshipBetweenParameters
+} from "../../shared/shared-main/relationships/models/get-relationship-between-parameters.model";
+import {IRelationshipDetails} from "../../shared/shared-main/relationships/models/relationship-details.model";
+
 
 @Component({
   templateUrl: './user-profile.component.html',
@@ -43,7 +51,8 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
               private notifier: Notifier,
               private restExtractor: RestExtractor,
               private postService: PostsService,
-              protected location: Location,) {
+              protected location: Location,
+              private relationshipsService: RelationshipsService) {
     super();
   }
 
@@ -64,23 +73,31 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
         // videoChannels => this.videoChannels = videoChannels.data,
         //
         // err => this.notifier.error(err.message)
+
       );
 
-    debugger
     super.ngOnInit();
 
-    this.initUser();
+    this.initUser(); // not needed?
   }
 
   ngOnDestroy() {
   }
+
+  relationshipDetails: IRelationshipDetails;
+
+  faLongArrowLeft = faLongArrowLeft;
+  faBirthdayCake = faBirthdayCake;
+  faCalendarAlt = faCalendarAlt;
+
+  faEllipsisH = faEllipsisH;
 
   titlePage: string;
 
   getPostsObservable(page: number): Observable<{ data: Post[] }> {
     const newPagination = immutableAssign(this.pagination, {currentPage: page});
 
-    let parameters = new GetUserTimelineParameters(newPagination, this.sort, true, this.userMiniature.id);
+    let parameters = new GetUserTimelineParameters(newPagination, this.sort, true, this.profileCurrent.id);
     return this.postService.getUserTimelineQuery(parameters);
 
   }
@@ -100,6 +117,9 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
       .subscribe();
   }
 
+  // snapshot only gets the initial value of the parameter map with this technique.
+  // Use the observable paramMap approach if there's a possibility that the router
+  // could re-use the component. This tutorial sample app uses with the observable paramMap.
   loadUserData() {
     const username = this.route.snapshot.params['username'];
     if (username) {
@@ -133,9 +153,17 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
 
   private async onAccount(user: User) {
 
-    debugger
     // @ts-ignore
     this.profileCurrent = user.userDTO;
+
+    let relationshipBetweenParameters = new GetRelationshipBetweenParameters(this.userStore.getUser().id ,this.profileCurrent.id);
+    this.relationshipsService.show(relationshipBetweenParameters)
+      .subscribe((data: IRelationshipDetails) => {
+        debugger
+        this.relationshipDetails = data;
+      });
+
+
     // this.accountFollowerTitle = $localize`${account.followersCount} direct account followers`;
     //
     // this.prependModerationActions = undefined;
@@ -149,6 +177,29 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
     // this.loadUserIfNeeded(account);
     // this.loadAccountVideosCount();
   }
+
+  isManageable () {
+    if (!this.isUserLoggedIn()) {
+      return false;
+    }
+
+    return this.profileCurrent?.id === this.userStore.getUser().id;
+  }
+
+  svgStyles = {
+    'display': 'inline-block',
+    'fill': 'currentcolor',
+    'flex-shrink': '0',
+    'width': '1.5em',
+    'height': '1.5em',
+    'max-width': '100% ',
+    'position': 'relative',
+    'vertical-align': 'text-bottom',
+    '-moz-user-select': 'none',
+    '-ms-user-select': 'none',
+    '-webkit-user-select': 'none',
+    'user-select': 'none',
+  };
 
 
   tabs: any[] = [
@@ -181,4 +232,9 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
     this.location.back();
     return false;
   }
+
+  isUserLoggedIn() {
+    return !!this.userStore.getUser();
+  }
+
 }

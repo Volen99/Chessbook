@@ -29,10 +29,10 @@ export class PollComponent implements OnInit, AfterViewInit, OnChanges, OnDestro
     this.disabled      = false; // this.disabled || Object.entries(this.selected).every(item => !item);
 
 
-    if (this.poll.voters_count !== null && this.poll.voters_count !== undefined) {
-      this.votesCount = this.poll.voters_count;
+    if (this.poll.votersCount !== null && this.poll.votersCount !== undefined) {
+      this.votesCount = this.poll.votersCount;
     } else {
-      this.votesCount = this.poll.votes_count;
+      this.votesCount = this.poll.votesCount;
     }
 
     this._setupTimer();

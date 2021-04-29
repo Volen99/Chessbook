@@ -1,4 +1,5 @@
 import {Component, OnDestroy, OnInit,} from '@angular/core';
+import {faCog} from '@fortawesome/pro-light-svg-icons';
 
 @Component({
   selector: 'app-notifications',
@@ -16,6 +17,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
 
   }
+
+  faCog = faCog;
 
   tabs: any[] = [
     {

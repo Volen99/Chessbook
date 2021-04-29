@@ -27,8 +27,8 @@ export class PostWatchComponent implements OnInit {
 
   ngOnInit(): void {
     this.paramsSub = this.route.params.subscribe(routeParams => {
-      const username = routeParams['username'];
-      if (username) {
+      const screenName = routeParams['screenName'];
+      if (screenName) {
         // this.loadVideo(videoId);
       }
 

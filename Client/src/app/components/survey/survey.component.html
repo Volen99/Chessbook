@@ -49,7 +49,7 @@
                 </ng-container>
             </div>
             <div class="survey-view-footer">
-                <p class="paragraph-2 text-hint">Created on {{this.getNormalizedDate(this.poll.startDateUtc)}} | {{this.poll.votes_count}} Votes | 997 Comments</p>
+                <p class="paragraph-2 text-hint">Created on {{this.getNormalizedDate(this.poll.startDateUtc)}} | {{this.poll.votesCount}} Votes | 997 Comments</p>
                 <button nbButton status="info" class="survey-view-results-button" style="padding-top: 0px; padding-bottom: 15px" (click)="this.handleShowResults()" ghost>{{!this.showResults ? 'View Results' : 'Back to Vote'}}</button>
             </div>
         </div>

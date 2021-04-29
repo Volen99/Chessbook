@@ -17,6 +17,7 @@
     .menu-title {
       flex: 1 0 auto;
       @include nb-rtl(text-align, right);
+      margin-left: 20px; // by mi
     }
   }
 

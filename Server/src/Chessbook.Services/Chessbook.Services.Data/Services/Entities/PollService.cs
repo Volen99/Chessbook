@@ -80,6 +80,14 @@ namespace Chessbook.Services.Data.Services.Entities
 
         }
 
+        public async Task<Poll> GetPollByIdClean(int pollId)
+        {
+            var poll = await _pollRepository.All().Where(p => p.Id == pollId)
+              .FirstOrDefaultAsync();
+
+            return poll;
+        }
+
         public Task<List<Poll>> GetPollsAsync(int storeId, int languageId = 0, bool showHidden = false, bool loadShownOnHomepageOnly = false, string systemKeyword = null, int pageIndex = 0, int pageSize = int.MaxValue)
         {
             throw new NotImplementedException();

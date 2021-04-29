@@ -16,7 +16,7 @@
              data-testid="UserCell">
           <div class="sharebook-container flex-direction-row">
             <div class="sharebook-container container-left-side-flex-expand justify-content-center container-left-side-margin-right-10px" style="flex-basis: 49px;">
-              <div class="sharebook-container flex-shrink max-width-100-per"><a routerLink="/Huawei_Europe" role="link"
+              <div class="sharebook-container flex-shrink max-width-100-per"><a [routerLink]="'/' + user.screenName" role="link"
                                                                                 data-focusable="true"
                                                                                 class="sharebook-link sharebook-cursor-pointer sharebook-container border-radius-9999px cursor-pointer display-block container-left-side-avatar-height outline-style-none overflow-hidden transition-duration transition-property width-100-per">
                 <div class="sharebook-container display-block overflow-hidden" style="">
@@ -26,9 +26,9 @@
                          class="sharebook-container border-radius-9999px bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">
                       <div
                               class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
-                              style="background-image: url('https://64.media.tumblr.com/7f80876fcf4487f3928ce3ef13491d72/tumblr_pfhpywpBgt1r6baqco1_1280.jpg');"></div>
+                              [style.background-image]="'url(' + user.profileImageUrlHttps +')'"></div>
                       <img alt="" draggable="true"
-                           src="https://64.media.tumblr.com/211b50c175608868b9e6b899d83e40a8/34df5ea6eb6b22f9-44/s1280x1920/49c45cfd3415bc5e8c11e1b5ded215d19fc08e49.jpg"
+                           [src]="user.profileImageUrlHttps"
                            class="sharebook-image"></div>
                   </div>
                 </div>
@@ -38,7 +38,7 @@
             </div>
             <div class="sharebook-container open-space-container-flex-expand flex-grow-expand justify-content-center">
               <div class="sharebook-container align-items-center flex-direction-row justify-content-space-between">
-                <div class="sharebook-container flex-shrink max-width-100-per"><a routerLink="/Huawei_Europe" role="link"
+                <div class="sharebook-container flex-shrink max-width-100-per"><a [routerLink]="'/' + user.screenName" role="link"
                                                                                   data-focusable="true"
                                                                                   class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer flex-shrink max-width-100-per outline-style-none">
                   <div class="sharebook-container flex-shrink max-width-100-per outline-style-none">
@@ -64,6 +64,10 @@
                            class="css-901oao sharebook-text third-wheel-color flex-direction-row font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
                         <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{user.screenName}}</span>
                       </div>
+                      <div *ngIf="user?.followedBy" dir="auto"
+                           class="css-901oao sharebook-text align-items-center r-z32n2g r-z2wwpe third-wheel-color display-flex r-1q142lx font-family r-n6v787 font-weight-400 r-1cwl3u0 r-13hce6t min-width-0px r-s1qlax text-overflow-wrap">
+                        <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Follows you</span>
+                      </div>
                     </div>
                   </div>
                 </a></div>
@@ -79,7 +83,9 @@
                   <!--                  </div>-->
                   <!--                </div>-->
 
-                  <a nbButton size="small" status="primary" shape="round" outline>Follow</a>
+<!--                  <a nbButton size="small" status="primary" shape="round" outline>Follow</a>-->
+
+                  <app-follow-button [account]="user"></app-follow-button>
                 </div>
               </div>
             </div>
@@ -105,7 +111,7 @@
         </div>
       </ng-container>
     </div>
-    <a href="/i/connect_people?user_id=1282729794837393408" role="link" data-focusable="true"
+    <a routerLink="/connect" role="link" data-focusable="true"
        class="show-more-link sharebook-cursor-pointer sharebook-container r-1pp923h r-1moyyf3 cursor-pointer outline-style-none left-right-padding-15px padding-bottom-top-15px transition-duration transition-property">
       <div dir="auto" class="css-901oao r-13gxpu9 font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
         <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Show more</span></div>

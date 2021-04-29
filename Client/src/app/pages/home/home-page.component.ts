@@ -103,4 +103,8 @@ export class HomePageComponent extends AbstractPostList implements OnInit {
       });
   }
 
+  removeVideoFromArray(post: Post) {
+    super.removeVideoFromArray(post);
+  }
+
 }

@@ -13,21 +13,30 @@
     using Chessbook.Services.Mapping;
     using Chessbook.Web.Models.Outputs.Posts;
     using Chessbook.Web.Models.Inputs;
+    using Chessbook.Data.Models.Polls;
 
     public class PostsService : IPostsService
     {
         private readonly IDeletableEntityRepository<Post> postsRepository;
         private readonly IRepository<PostPicture> postPictureRepository;
         private readonly IRepository<PostVote> postVoteRepository;
+        private readonly IDeletableEntityRepository<PostReshare> postReshareRepository;
+        private readonly IUserService userService;
+        private readonly IPollService pollService;
 
         private readonly IMediaService mediaService;
 
-        public PostsService(IDeletableEntityRepository<Post> postsRepository, IRepository<PostPicture> postPictureRepository, IMediaService mediaService, IRepository<PostVote> postVoteRepository)
+        public PostsService(IDeletableEntityRepository<Post> postsRepository, IRepository<PostPicture> postPictureRepository,
+            IMediaService mediaService, IRepository<PostVote> postVoteRepository, IDeletableEntityRepository<PostReshare> postReshareRepository,
+            IUserService userService, IPollService pollService)
         {
             this.postsRepository = postsRepository;
             this.postPictureRepository = postPictureRepository;
             this.mediaService = mediaService;
             this.postVoteRepository = postVoteRepository;
+            this.postReshareRepository = postReshareRepository;
+            this.userService = userService;
+            this.pollService = pollService;
         }
 
         public async Task<Post> CreateAsync(QueryPostParams query, int userId, int[] mediaIds = null, int pollId = 0)
@@ -71,6 +80,33 @@
             return postNew;
         }
 
+        public async Task<Post> CreateRetweet(int originalPostId, int userId, bool trimUser)
+        {
+            var postNew = new Post
+            {
+                UserId = userId,
+                CreatedAt = DateTime.UtcNow,
+                Reshared = true,
+            };
+
+
+            await this.postsRepository.AddAsync(postNew);
+            await this.postsRepository.SaveChangesAsync();
+
+            var resharedNew = new PostReshare
+            {
+                PostId = originalPostId,
+                ResharedPostId = postNew.Id,
+                UserId = userId,
+            };
+
+            await this.postReshareRepository.AddAsync(resharedNew);
+            await this.postReshareRepository.SaveChangesAsync();
+
+            return postNew;
+
+        }
+
         public IEnumerable<T> GetByCategoryId<T>(int categoryId, int? take = null, int skip = 0)
         {
             throw new System.NotImplementedException();
@@ -83,12 +119,18 @@
 
         }
 
+        public async Task<Post> GetByIdClean(int id)
+        {
+            return await this.postsRepository.All().Where(p => p.Id == id)
+                .FirstOrDefaultAsync();
+        }
+
         public int GetCountByCategoryId(int categoryId)
         {
             throw new System.NotImplementedException();
         }
 
-        public async Task<IEnumerable<T>> GetHomeTimeline<T>(int userId, int? count = null, int skip = 0)
+        public async Task<List<T>> GetHomeTimeline<T>(int userId, int? count = null, int skip = 0)
         {
             var query = this.postsRepository.All()
                 .Where(p => p.IsDeleted == false)
@@ -99,23 +141,22 @@
                 .OrderBy(p => p.CreatedAt)
                 .Skip(skip);
 
+            var reshareQuery = this.postReshareRepository.All();
             if (count.HasValue)
             {
                 query = query.Take(count.Value);
+                reshareQuery = reshareQuery.Take(count.Value);
             }
 
-            //foreach (var post in query)
-            //{
-            //    if (post.MediasIds != null)
-            //    {
-            //        var ids = post.MediasIds?.Split(", ").Select(x => int.Parse(x)).ToArray();
-            //        post.Medias = await this.GetMedias(ids);
-            //    }
-            //    else if (post.PollId != null)
-            //    {
-            //    }
-                
-            //}
+
+            foreach (var post in query)
+            {
+                var resharesCount = reshareQuery.Where(re => re.PostId == post.Id).Count();
+                post.RetweetCount = resharesCount;
+            }
+
+
+
 
             return query.To<T>().ToList();
         }
@@ -149,7 +190,7 @@
                 UserId = userId,
                 Type = postRateType,
             };
-                
+
 
             await this.postVoteRepository.AddAsync(postVoteNew);
             await this.postVoteRepository.SaveChangesAsync();
@@ -158,7 +199,8 @@
             if (postVoteNew.Type == PostRateType.Like)
             {
                 ++post.FavoriteCount;
-            } else
+            }
+            else
             {
                 ++post.DislikeCount;
             }
@@ -199,7 +241,7 @@
                 {
                     ++post.FavoriteCount;
                 }
-                
+
             }
             else
             {
@@ -236,7 +278,7 @@
         public async Task<PostDTO> RemoveVote(PostVote postVote)
         {
             var post = this.postsRepository.All().Where(p => p.Id == postVote.PostId).FirstOrDefault();
-            if (postVote.Type ==  PostRateType.Like)
+            if (postVote.Type == PostRateType.Like)
             {
                 post.FavoriteCount--;
             }
@@ -275,17 +317,183 @@
             return mediaEntities;
         }
 
-        public async Task<IEnumerable<T>> GetLikers<T>(int postId)
+        public async Task<IList<T>> GetLikers<T>(int postId)
         {
             var likers = this.postVoteRepository.All()
                 .Where(pv => pv.PostId == postId)
                 .Include(u => u.User)
                 .Select(pv => pv.User)
-                .MapTo<IEnumerable<T>>();
+                .MapTo<IList<T>>();
 
             return likers;
         }
 
-       
+        public async Task<int> GetPostsCountByUserId(int userId)
+        {
+            var count = await this.postsRepository.All()
+                .Where(p => p.UserId == userId)
+                .CountAsync();
+
+            return count;
+        }
+
+        public async Task<T> GetResharedOriginal<T>(int resharedPostId)
+        {
+            var current = await this.postReshareRepository.All().Where(rs => rs.ResharedPostId == resharedPostId)
+                .FirstOrDefaultAsync();
+
+            if (current == null)
+            {
+
+            }
+
+            var post = this.postsRepository.All().Where(p => p.Id == current.PostId)
+                .Include(p => p.Medias)
+                .Include(p => p.Poll)
+                .ThenInclude(poll => poll.Options)
+                .To<T>()
+                .FirstOrDefault();
+
+            return post;
+        }
+
+        public async Task<bool> GetReshareStatus(int postId, int userId)    
+        {
+            var res = await this.postReshareRepository.All()
+                .Where(rs => rs.PostId == postId && userId == rs.UserId)
+                .FirstOrDefaultAsync();
+
+            return res != null;
+        }
+
+        public async Task<int> GetReshareCount(int postId)
+        {
+            var count = await this.postReshareRepository.All()
+                .Where(rs => rs.PostId == postId)
+                .CountAsync();
+
+            return count;
+        }
+
+
+        /// <summary>
+        /// Check whether customer is allowed to delete post
+        /// </summary>
+        /// <param name="customer">Customer</param>
+        /// <param name="post">Topic</param>
+        /// <returns>True if allowed, otherwise false</returns>
+        public async Task<bool> IsCustomerAllowedToDeletePostAsync(User customer, Post post)
+        {
+            if (post == null)
+            {
+                return false;
+            }
+
+            if (customer == null)
+            {
+                return false;
+            }
+
+            if (await userService.IsGuestAsync(customer))
+            {
+                return false;
+            }
+
+            if (await userService.IsForumModeratorAsync(customer))
+            {
+                return true;
+            }
+
+            var ownPost = customer.Id == post.UserId;
+
+            return ownPost;
+        }
+
+        /// <summary>
+        /// Gets a forum topic
+        /// </summary>
+        /// <param name="forumTopicId">The forum topic identifier</param>
+        /// <param name="increaseViews">The value indicating whether to increase forum topic views</param>
+        /// <returns>Forum Topic</returns>
+        protected async Task<Poll> GetTopicByIdAsync(int forumTopicId, bool increaseViews)
+        {
+            var poll = await this.pollService.GetPollByIdClean(forumTopicId);
+
+            if (poll == null)
+            {
+                return null;
+            }
+
+            return poll;
+        }
+
+        public async Task DeleteProductAsync(Post product)
+        {
+            var sharedPostsFromThisPost = this.postReshareRepository.All()
+                .Where(rs => rs.PostId == product.Id && !rs.IsDeleted);
+
+            if (sharedPostsFromThisPost != null)
+            {
+                foreach (var item in sharedPostsFromThisPost)
+                {
+                   var current = this.postsRepository.All().Where(p => p.Id == item.ResharedPostId)
+                        .FirstOrDefault();
+
+                    if (current == null)
+                    {
+                        continue;
+                    }
+
+                    this.postReshareRepository.Delete(item);
+                    this.postsRepository.Delete(current);
+                }
+
+            }
+
+            if (product.Reshared)
+            {
+                var curr = await this.postReshareRepository.All()
+                    .Where(x => x.ResharedPostId == product.Id)
+                    .FirstOrDefaultAsync();
+
+                this.postReshareRepository.Delete(curr);
+            }
+
+            await this.postReshareRepository.SaveChangesAsync();
+
+
+
+            this.postsRepository.Delete(product);
+            await this.postsRepository.SaveChangesAsync();
+        }
+
+        public async Task Unshare(Post product)
+        {
+            var curr = await this.postReshareRepository.All()
+                   .Where(x => x.ResharedPostId == product.Id)
+                   .FirstOrDefaultAsync();
+
+            if (curr == null)
+            {
+                // parent post
+                var res = await this.postReshareRepository.All()
+                   .Where(x => x.PostId == product.Id)
+                   .FirstOrDefaultAsync();
+
+                var theActualSharedPost = await this.postsRepository.All().Where(p => p.Id == res.ResharedPostId).FirstOrDefaultAsync();
+
+                this.postsRepository.Delete(theActualSharedPost);
+                this.postReshareRepository.Delete(res);
+            }
+            else
+            {
+                var theActualSharedPost = await this.postsRepository.All().Where(p => p.Id == curr.ResharedPostId).FirstOrDefaultAsync();
+
+                this.postReshareRepository.Delete(curr);
+                this.postsRepository.Delete(theActualSharedPost);
+            }
+
+            await this.postsRepository.SaveChangesAsync();
+        }
     }
 }

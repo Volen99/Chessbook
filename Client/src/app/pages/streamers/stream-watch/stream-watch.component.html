@@ -1,0 +1,85 @@
+<nb-card>
+    <nb-card-body style="padding: 0">
+        <div id="player"></div>
+    </nb-card-body>
+    <nb-card-footer style="padding: 0">
+        <!-- Video information -->
+        <div *ngIf="this.stream" class="margin-content video-bottom">
+            <div class="video-info">
+                <div class="video-info-first-row">
+                    <div>
+                        <div class="d-block"> <!--d-md-none-->
+                            <!-- only shown on medium devices, has its counterpart for larger viewports below -->
+                            <h1 class="video-info-name"> {{this.stream.title}} </h1>
+                            <div class="video-info-date-views">
+                                <ng-container i18n>Started
+                                    <app-date-toggle [date]="this.stream.started_at"></app-date-toggle>
+                                </ng-container>
+                                •
+                                <my-video-views-counter [video]="this.stream"></my-video-views-counter>
+                            </div>
+
+                            <div class="video-actions-rates">
+                                <div class="video-actions fullWidth justify-content-end">
+                                    <nb-actions>
+                                        <nb-action>
+                                            <a nbButton size="small" status="primary" [href]="'https://www.twitch.tv/'+ this.stream.user_login" target="_blank">View on Twitch.tv</a>
+                                        </nb-action>
+                                    </nb-actions>
+                                </div>
+                            </div>
+
+                        </div>
+<!--                        <div class="pt-3 border-top video-info-channel d-flex">-->
+<!--                            <div class="video-info-channel-left d-flex">-->
+<!--                                &lt;!&ndash;<my-video-nb-channel [video]="this.stream" [genericChannel]="isChannelDisplayNameGeneric()"></my-video-nb-channel>&ndash;&gt;-->
+
+<!--                                <div class="video-info-channel-left-links ml-1">-->
+
+
+<!--                                </div>-->
+<!--                            </div>-->
+
+<!--                            &lt;!&ndash;<button nbButton size="small" status="warning">Follow</button>&ndash;&gt;-->
+<!--                        </div>-->
+                    </div>
+                </div>
+
+                <!--<div class="video-info-description">
+                    <div
+                            class="video-info-description-html"
+                            [innerHTML]="this.stream.title"
+                            (timestampClicked)="handleTimestampClicked($event)"
+                            timestampRouteTransformer
+                    ></div>
+
+                    <div class="video-info-description-more" *ngIf="completeDescriptionShown === false && video.description?.length >= 250" (click)="showMoreDescription()">
+                        <ng-container i18n>Show more</ng-container>
+                        <span *ngIf="descriptionLoading === false" class="glyphicon glyphicon-menu-down"></span>
+                        <my-small-loader class="description-loading" [loading]="descriptionLoading"></my-small-loader>
+                    </div>
+
+                    <div *ngIf="completeDescriptionShown === true" (click)="showLessDescription()" class="video-info-description-more">
+                        <ng-container i18n>Show less</ng-container>
+                        <span *ngIf="descriptionLoading === false" class="glyphicon glyphicon-menu-up"></span>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+    </nb-card-footer>
+</nb-card>
+
+
+<!--<div class="root">-->
+<!--    &lt;!&ndash; We need the video container for videojs so we just hide it &ndash;&gt;-->
+<!--    <div id="video-wrapper">-->
+<!--        <div id="videojs-wrapper">-->
+<!--            <div id="twast-2"></div>-->
+<!--        </div>-->
+
+<!--    </div>-->
+
+
+<!--    &lt;!&ndash;*ngIf="hasAlreadyAcceptedPrivacyConcern === false"&ndash;&gt;-->
+<!--</div>-->
+

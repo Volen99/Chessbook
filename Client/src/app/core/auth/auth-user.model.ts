@@ -108,4 +108,6 @@ export class AuthUser extends User implements IUser {
       })
     );
   }
+
+  followedBy: boolean;
 }

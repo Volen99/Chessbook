@@ -9,6 +9,9 @@ import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.m
 import {NbActionsModule} from "../../sharebook-nebular/theme/components/actions/actions.module";
 import {NbContextMenuModule} from "../../sharebook-nebular/theme/components/context-menu/context-menu.module";
 import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/button.module";
+import {NbInputModule} from "../../sharebook-nebular/theme/components/input/input.module";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {SharedModule} from "../shared.module";
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/bu
     NbActionsModule,
     NbContextMenuModule,
     NbButtonModule,
+    NbInputModule,
+    FontAwesomeModule,
+    SharedModule,
   ],
   exports: [
     SidebarColumnComponent,

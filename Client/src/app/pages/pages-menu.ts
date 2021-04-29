@@ -1,5 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
 import {Observable, of} from 'rxjs';
+import { faHouse, faHashtag, faBell, faEnvelope, faUser, faTv } from '@fortawesome/pro-light-svg-icons';
+
 
 import {NbMenuItem} from '../sharebook-nebular/theme/components/menu/menu.service';
 
@@ -259,35 +261,40 @@ export class PagesMenu {
 
       {
         title: 'Home',
-        icon: 'home-outline',
+        icon: faHouse,
         link: '/home',
         // home: true,
         children: undefined,
       },
       {
         title: 'Explore',
-        icon: 'hash-outline',
+        icon: faHashtag,
         link: '/explore',
         children: undefined,
       },
       {
         title: 'Notifications',
-        icon: 'bell-outline',
+        icon: faBell,
         link: '/notifications',
         children: undefined,
       },
       {
         title: 'Messages',
-        icon: 'email-outline',
+        icon: faEnvelope,
         link: '/messages',
         children: undefined,
       },
       {
         title: 'Profile',
-        icon: 'person-outline',
+        icon: faUser,
         link: `/${screenName}`,
         children: undefined,
       },
+      {
+        title: 'Streamers',
+        icon: faTv,
+        link: '/streamers',
+      }
     ];
 
     return of([...dashboardMenu, ...menu]);

@@ -668,11 +668,11 @@ namespace Chessbook.Data.Migrations
                     b.Property<int>("ReplyCount")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Reshared")
+                        .HasColumnType("bit");
+
                     b.Property<int>("RetweetCount")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Retweeted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Source")
                         .HasColumnType("nvarchar(max)");
@@ -710,6 +710,43 @@ namespace Chessbook.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("Chessbook.Data.Models.Post.PostReshare", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResharedPostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("PostReshares");
                 });
 
             modelBuilder.Entity("Chessbook.Data.Models.Post.PostVote", b =>
@@ -754,6 +791,59 @@ namespace Chessbook.Data.Migrations
                     b.ToTable("PostVotes");
                 });
 
+            modelBuilder.Entity("Chessbook.Data.Models.Relationship", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<bool>("BlockedBy")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Blocking")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("FollowedBy")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Following")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Muting")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MutingNotifications")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Requested")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SourceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TargetId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Relationships");
+                });
+
             modelBuilder.Entity("Chessbook.Data.Models.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -781,6 +871,38 @@ namespace Chessbook.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Settings");
+                });
+
+            modelBuilder.Entity("Chessbook.Data.Models.TwitchLoginName", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LoginName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("TwitchLoginNames");
                 });
 
             modelBuilder.Entity("Chessbook.Data.Models.User", b =>
@@ -1357,6 +1479,17 @@ namespace Chessbook.Data.Migrations
                     b.Navigation("Poll");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Chessbook.Data.Models.Post.PostReshare", b =>
+                {
+                    b.HasOne("Chessbook.Data.Models.Post.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("Chessbook.Data.Models.Post.PostVote", b =>

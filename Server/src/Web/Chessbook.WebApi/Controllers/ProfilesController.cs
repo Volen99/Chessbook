@@ -1,4 +1,5 @@
-﻿using Chessbook.Services.Data.Services;
+﻿using Chessbook.Data.Models.Media;
+using Chessbook.Services.Data.Services;
 using Chessbook.Services.Data.Services.Media;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,8 @@ namespace Chessbook.Web.Api.Controllers
         {
             var userDTO = await this.userService.GetByScreenName(screen_name);
 
-            var profilePictureUrl = await this.pictureService.GetPictureUrlAsync(userDTO.ProfilePictureId, 400);
+            var avatarPictureId = userDTO.ProfilePictureId; // await _genericAttributeService.GetAttributeAsync<int>(customer, NopCustomerDefaults.AvatarPictureIdAttribute);
+            var profilePictureUrl = await this.pictureService.GetPictureUrlAsync(avatarPictureId, 400, true, defaultPictureType: PictureType.Avatar);
 
             userDTO.ProfileImageUrlHttps = profilePictureUrl;
 

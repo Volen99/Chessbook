@@ -9,18 +9,18 @@
 
                     <div class="actor-img-edit-container">
 
-                        <div *ngIf="!hasAvatar()" class="actor-img-edit-button" [ngbTooltip]="avatarFormat" placement="right"
+                        <div *ngIf="!hasAvatar()" class="actor-img-edit-button" style="font-size: 20px;" [ngbTooltip]="avatarFormat" placement="right"
                              container="body">
-                            <app-global-icon iconName="upload"></app-global-icon>
+                            <fa-icon [icon]="this.faCamera"></fa-icon>
                             <label class="sr-only" for="avatarfile" i18n>Upload a new avatar</label>
                             <input #avatarfileInput type="file" title=" " name="avatarfile" id="avatarfile"
                                    [accept]="avatarExtensions" (change)="onAvatarChange(avatarfileInput)"/>
                         </div>
 
-                        <div *ngIf="hasAvatar()" class="actor-img-edit-button" #avatarPopover="ngbPopover"
+                        <div *ngIf="hasAvatar()" class="actor-img-edit-button" style="font-size: 18px;" #avatarPopover="ngbPopover"
                              [ngbPopover]="avatarEditContent" popoverClass="popover-avatar-info" autoClose="outside"
                              placement="right">
-                            <app-global-icon iconName="edit"></app-global-icon>
+                            <fa-icon [icon]="this.faPen"></fa-icon>
                             <label class="sr-only" for="avatarMenu" i18n>Change your avatar</label>
                         </div>
 
@@ -33,7 +33,7 @@
                         <div class="actor-info-display-name">{{ user.name }}</div>
                         <div class="actor-info-username">{{ user.screenName }}</div>
                     </div>
-                    <div i18n class="actor-info-followers">{{ user.followersCount ? this.user.followersCount : 0 }} followers</div>
+                    <div i18n class="actor-info-followers">{this.user?.friendsCount, plural, =1 {1 follower} other {{{ this.user?.friendsCount | myNumberFormatter }} followers}}</div>
                 </div>
             </div>
         </ng-container>

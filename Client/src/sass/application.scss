@@ -297,16 +297,34 @@ $assets-path: '../../assets/';
   cursor: pointer;
 }
 
-.element-background-color-rgba {
-  background-color: rgba(0, 0, 0, 0);
+@import './src/app/theme/styles/themes';
+
+@include nb-install-component() {
+  .element-background-color-rgba {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  .r-13gxpu9 {
+    color: nb-theme(color-primary-default);
+  }
+
+  .hover-color-blue {
+    background-color: rgba(29, 161, 242, 0.1);
+  }
+
+  .icon-hover {
+    &:hover {
+      background-color: nb-theme(button-outline-primary-hover-background-color);
+      border-color: nb-theme(button-outline-primary-hover-border-color);
+      color: nb-theme(button-outline-primary-hover-text-color);
+    }
+  }
+
 }
+
 
 .element-border-color-rgba {
   border-color: rgba(0, 0, 0, 0);
-}
-
-.hover-color-blue {
-  background-color: rgba(29, 161, 242, 0.1);
 }
 
 // 🎵 Hello darkness, my old friend 🎵
@@ -1122,9 +1140,7 @@ $assets-path: '../../assets/';
 }
 
 
-.search-background-color {
-   background-color: #1B1B53;
-}
+
 
 .emoji-margin-left {
   margin-left: 0.075em;

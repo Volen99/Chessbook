@@ -28,6 +28,7 @@ import {
 import {NbInputModule} from "../../../../sharebook-nebular/theme/components/input/input.module";
 import {NbSelectModule} from "../../../../sharebook-nebular/theme/components/select/select.module";
 import { ReplyCommentComponent } from './upload/reply-comment/reply-comment.component';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ReplyCommentComponent } from './upload/reply-comment/reply-comment.comp
     SharedMainModule,
     NbInputModule,
     NbSelectModule,
+    FontAwesomeModule,
   ],
 
     exports: [

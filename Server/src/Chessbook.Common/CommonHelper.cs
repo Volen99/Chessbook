@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nop.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -94,6 +95,18 @@ namespace Chessbook.Common
         {
             //return (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
             return (T)To(value, typeof(T));
+        }
+
+        /// <summary>
+        /// Returns an random integer number within a specified range 🤓
+        /// </summary>
+        /// <param name="min">Minimum number</param>
+        /// <param name="max">Maximum number</param>
+        /// <returns>Result</returns>
+        public static int GenerateRandomInteger(int min = 0, int max = int.MaxValue)
+        {
+            using var random = new SecureRandomNumberGenerator();
+            return random.Next(min, max);
         }
     }
 }

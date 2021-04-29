@@ -86,7 +86,7 @@
 
         public bool Favorited { get; set; }
 
-        public bool Retweeted { get; set; }
+        public bool Reshared { get; set; }
 
         public bool PossiblySensitive { get; set; }
 

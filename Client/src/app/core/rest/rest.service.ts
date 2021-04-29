@@ -8,6 +8,7 @@ import {SharebookConsts} from "../../helpers/sharebook-consts";
 import {ITimelineRequestParameters} from "../../shared/models/timeline/timeline-request-parameters";
 import {IMinMaxQueryParameters} from "../../shared/models/query/min-max-query-parameters";
 import {OEmbedTweetAlignment, OEmbedTweetTheme} from "../../shared/posts/parameters/get-OEmbed-tweet-parameters";
+import {ITweetIdentifier} from "../../shared/posts/models/tweet-identifier";
 
 interface QueryStringFilterPrefixes {
   [key: string]: {
@@ -200,9 +201,9 @@ export class RestService {
     return !(cursor) ? "" : `&cursor=${cursor}`;
   }
 
-  // public generateTweetIdentifier(tweetId: ITweetIdentifier): string {
-  //   return tweetId.idStr ?? tweetId.id.toString();
-  // }
+  public generateTweetIdentifier(tweetId: ITweetIdentifier): string {
+    return tweetId.idStr ?? tweetId.id.toString();
+  }
 
   public generateAdditionalRequestParameters(additionalParameters: string, existingParameters: boolean = true): string {
     if (!additionalParameters) {

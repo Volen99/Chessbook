@@ -15,7 +15,7 @@ import {IUnfavoriteTweetParameters} from "./parameters/unfavorite-tweet-paramete
 import {IGetOEmbedTweetParameters} from "./parameters/get-OEmbed-tweet-parameters";
 import {IGetTweetParameters} from "./parameters/get-tweet-parameters";
 import {IGetTweetsParameters} from "./parameters/get-tweets-parameters";
-import { TweetQueryExecutorService} from "./tweet-query-executor.service.";
+import {TweetQueryExecutorService} from "./tweet-query-executor.service.";
 import {ITweetDTO} from "./models/DTO/tweet-dto";
 
 @Injectable()
@@ -74,15 +74,16 @@ export class TweetControllerService {
 //
 //     return textLength;
 //   }
-//
-//   // Retweets - Publish
-//   public publishRetweetAsync(parameters: IPublishRetweetParameters): Promise<ITwitterResult<ITweetDTO>> {
-//     return this.tweetQueryExecutorService.publishRetweetAsync(parameters, request);
-//   }
+
+  // Retweets - Publish
+  public async publishRetweetAsync(parameters: IPublishRetweetParameters): Promise<ITweetDTO> {
+    return await this.tweetQueryExecutorService.publishRetweetAsync(parameters);
+  }
+
 //
 //   // Retweets - Destroy
 //
-//   public destroyRetweetAsync(parameters: IDestroyRetweetParameterst): Promise<ITwitterResult<ITweetDTO>> {
+//   public destroyRetweetAsync(parameters: IDestroyRetweetParameters): Promise<ITwitterResult<ITweetDTO>> {
 //     return this.tweetQueryExecutorService.destroyRetweetAsync(parameters, request);
 //   }
 //
@@ -106,10 +107,10 @@ export class TweetControllerService {
 //
 //   }
 //
-//   // Destroy Tweet
-//   public destroyTweetAsync(parameters: IDestroyTweetParameters): Promise<ITwitterResult<ITweetDTO>> {
-//     return this.tweetQueryExecutorService.destroyTweetAsync(parameters, request);
-//   }
+  // Destroy Tweet
+  public async destroyTweetAsync(parameters: IDestroyTweetParameters, unshare = false): Promise<ITweetDTO> {
+    return await this.tweetQueryExecutorService.destroyTweetAsync(parameters, unshare);
+  }
 //
 //   // Favorite Tweet
 //   public getFavoriteTweetsIterator(parameters: IGetUserFavoriteTweetsParameters, request: ITwitterRequest): ITwitterPageIterator<ITwitterResult<ITweetDTO[]>, number> { // long?

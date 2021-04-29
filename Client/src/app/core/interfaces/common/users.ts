@@ -101,6 +101,8 @@ export interface IUser extends IUserIdentifier {
 
   withheldScope: string;
 
+  followedBy: boolean;
+
 
   // id: number;
   // firstName: string;

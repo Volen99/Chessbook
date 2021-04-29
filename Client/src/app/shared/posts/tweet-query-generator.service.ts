@@ -121,14 +121,14 @@ export class TweetQueryGeneratorService {
     }
 
     let quotedTweetId = this.getTweetId(parameters.quotedTweet);
-    return `https://sharebook.com/${parameters.quotedTweet.createdBy.screenName}/status/${quotedTweetId}`;
+    return `https://chessbook.com/${parameters.quotedTweet.createdBy.screenName}/status/${quotedTweetId}`;
   }
 
   public getDestroyTweetQuery(parameters: IDestroyTweetParameters): HttpParams {
     let params = new HttpParams(); // new StringBuilder(format(Resources.Tweet_Destroy, this._queryParameterGenerator.generateTweetIdentifier(parameters.tweet)));
 
     params = this.restService.addParameterToQuery(params, "trim_user", parameters.TrimUser);
-    // params = this.restService.addParameterToQuery(params, "tweet_mode", tweetMode);
+    params = this.restService.addParameterToQuery(params, "id", this.restService.generateTweetIdentifier(parameters.tweet));
 
     params = this.restService.addFormattedParameterToQuery(params, parameters.formattedCustomQueryParameters);
 
@@ -162,8 +162,11 @@ export class TweetQueryGeneratorService {
   }
 
   public getPublishRetweetQuery(parameters: IPublishRetweetParameters): HttpParams {
+    debugger
     let tweetId = this.getTweetId(parameters.tweet);
     let params = new HttpParams(); // new StringBuilder(format(Resources.Tweet_Retweet_Publish, tweetId));
+
+    params = this.restService.addParameterToQuery(params, "id", tweetId);
 
     params = this.restService.addParameterToQuery(params, "trim_user", parameters.trimUser);
 
@@ -265,7 +268,7 @@ export class TweetQueryGeneratorService {
 
     let tweetId = tweetIdentifier.idStr;
     if (!tweetId) {
-      tweetId = tweetIdentifier.id.toString(/*CultureInfo.InvariantCulture*/);
+      tweetId = tweetIdentifier.id.toLocaleString();       // toString(/*CultureInfo.InvariantCulture*/);
     }
 
     return tweetId;

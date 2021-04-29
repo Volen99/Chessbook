@@ -17,6 +17,9 @@
     using Chessbook.Services.Data.Services.Media;
     using Nop.Core.Infrastructure;
     using Nop.Services.Common;
+    using Chessbook.Core.JsonConverters;
+    using Chessbook.Core.JsonConverters.Logic;
+    using Chessbook.Services.Data;
 
     public static class ContainerExtension
     {
@@ -50,12 +53,18 @@
             services.AddTransient<IPictureService, PictureService>();
             services.AddTransient<INopFileProvider, NopFileProvider>();
             services.AddTransient<IGenericAttributeService, GenericAttributeService>();
+            services.AddTransient<IStreamersService, StreamersService>();
+            services.AddTransient<IRelationshipService, RelationshipService>();
 
 
 
             // IOT - E-Commerce
             services.AddTransient<IContactService, ContactService>();
             services.AddTransient<IPhoneCallService, PhoneCallService>();
+
+
+            services.AddTransient<IJsonObjectConverter, JsonObjectConverter>();
+            services.AddTransient<IJsonConvertWrapper, JsonConvertWrapper>();
         }
     }
 }

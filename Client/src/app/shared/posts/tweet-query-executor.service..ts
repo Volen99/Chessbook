@@ -99,12 +99,15 @@ export class TweetQueryExecutorService {
   //   return this._twitterAccessor.executeRequestAsync<ITweetDTO[]>(request);
   // }
   //
-  // public publishRetweetAsync(parameters: IPublishRetweetParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO>> {
-  //   let params = this._tweetQueryGenerator.getPublishRetweetQuery(parameters, new ComputedTweetMode(parameters, request));
-  //   request.query.url = query;
-  //   request.query.httpMethod = HttpMethod.POST;
-  //   return this._twitterAccessor.executeRequestAsync<ITweetDTO>(request);
-  // }
+  public async publishRetweetAsync(parameters: IPublishRetweetParameters): Promise<ITweetDTO> {
+    let params = this.tweetQueryGeneratorService.getPublishRetweetQuery(parameters);
+
+    return await this.postsApi.publishRetweetAsync('reshare', params)
+      .toPromise()
+      .then(data => {
+        return data;
+      });
+  }
   //
   // // Publish UnRetweet
   // public destroyRetweetAsync(parameters: IDestroyRetweetParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO>> {
@@ -122,15 +125,23 @@ export class TweetQueryExecutorService {
   // }
   //
   // // #endregion;
-  //
-  // // Destroy Tweet
-  // public destroyTweetAsync(parameters: IDestroyTweetParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO>> {
-  //   let params = this._tweetQueryGenerator.getDestroyTweetQuery(parameters, new ComputedTweetMode(parameters, request));
-  //   request.query.url = query;
-  //   request.query.httpMethod = HttpMethod.POST;
-  //   return this._twitterAccessor.executeRequestAsync<ITweetDTO>(request);
-  // }
-  //
+
+  // Destroy Tweet
+  public async destroyTweetAsync(parameters: IDestroyTweetParameters, unshare = false): Promise<ITweetDTO> {
+    let params = this.tweetQueryGeneratorService.getDestroyTweetQuery(parameters);
+
+    let url = 'delete';
+    if(unshare) {
+      url = 'unshare';
+    }
+
+    return await this.postsApi.destroyTweetAsync(url, params)
+      .toPromise()
+      .then(data => {
+        return data;
+      });
+  }
+
   // // Favorite Tweet
   // public getFavoriteTweetsAsync(parameters: IGetUserFavoriteTweetsParameters, request: ITwitterRequest): Promise<ITwitterResult<ITweetDTO[]>> {
   //   let params = this._tweetQueryGenerator.getFavoriteTweetsQuery(parameters, new ComputedTweetMode(parameters, request));

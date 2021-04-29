@@ -136,19 +136,18 @@ export class NbSidebarFooterComponent {
       <ng-content select="nb-sidebar-header"></ng-content>
       <div class="scrollable" (click)="onClick($event)">
         <ng-content></ng-content>
-<!--        <a nbButton fullWidth status="primary" size="large" class="share-button" [routerLink]="['/compose/share']">Share</a>-->
           <app-share-button></app-share-button>
       </div>
         <ng-content select="nb-sidebar-footer"></ng-content>
-        <nb-actions size="small" class="account-menu">
-            <nb-action class="user-action"  > <!--*nbIsGranted="['view', 'current-users']"-->
-                <nb-user [nbContextMenu]="userMenu"
-                         [onlyPicture]="userPictureOnly"
-                         [name]="user?.name"
-                         [picture]="user?.picture | ngxAuthToken | async">
-                </nb-user>
-            </nb-action>
-        </nb-actions>
+<!--        <nb-actions size="small" class="account-menu">-->
+<!--            <nb-action class="user-action"  > &lt;!&ndash;*nbIsGranted="['view', 'current-users']"&ndash;&gt;-->
+<!--                <nb-user [nbContextMenu]="userMenu"-->
+<!--                         [onlyPicture]="userPictureOnly"-->
+<!--                         [name]="user?.name"-->
+<!--                         [picture]="user?.picture | ngxAuthToken | async">-->
+<!--                </nb-user>-->
+<!--            </nb-action>-->
+<!--        </nb-actions>-->
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

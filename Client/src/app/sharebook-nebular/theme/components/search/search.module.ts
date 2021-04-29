@@ -10,18 +10,20 @@ import { NbSearchService } from './search.service';
 import {NbActionsModule} from "../actions/actions.module";
 import {NbCardModule} from "../card/card.module";
 import {ComponentsModule} from "../../../../components/components.module";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 
 @NgModule({
-    imports: [
-        NbSharedModule,
-        NbOverlayModule,
-        NbIconModule,
-        NbButtonModule,
-        NbActionsModule,
-        NbCardModule,
-        ComponentsModule,
-    ],
+  imports: [
+    NbSharedModule,
+    NbOverlayModule,
+    NbIconModule,
+    NbButtonModule,
+    NbActionsModule,
+    NbCardModule,
+    ComponentsModule,
+    FontAwesomeModule,
+  ],
   declarations: [
     NbSearchComponent,
     NbSearchFieldComponent,

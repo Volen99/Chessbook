@@ -53,9 +53,6 @@
 
         public bool? Notifications { get; set; }
 
-        //[JsonProperty("profile_image_url")]
-         // public string ProfileImageUrlHttp { get; set; }
-
         public string ProfileImageUrlHttps { get; set; }
 
         public bool? FollowRequestSent { get; set; }
@@ -104,6 +101,8 @@
 
         [JsonIgnore]
         public int ProfilePictureId { get; set; }
+
+        public bool FollowedBy { get; set; }
 
         public override string ToString()
         {

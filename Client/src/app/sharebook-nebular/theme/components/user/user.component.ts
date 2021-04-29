@@ -129,7 +129,7 @@ export class NbUserComponent {
    */
   @Input()
   set picture(value: string) {
-    this.imageBackgroundStyle = value ? this.domSanitizer.bypassSecurityTrustStyle(`url(https://localhost:5001/Files/Avatars/sadness.jpg)`) : null;
+    this.imageBackgroundStyle = value ? this.domSanitizer.bypassSecurityTrustStyle(`url(${value})`) : null;
   }
 
   /**

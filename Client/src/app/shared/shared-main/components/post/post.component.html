@@ -12,15 +12,16 @@
                                     <div class="sharebook-container open-space-container-flex-expand flex-grow-expand component-padding-top"></div>
                                 </div>
                             </div>
+                            <app-social-context *ngIf="this.isReshare" [socialContextProps]="this.socialContextProps" ></app-social-context>
                             <div class="sharebook-container flex-direction-row" data-testid="tweet">
-                                <app-profile-picture49x49></app-profile-picture49x49>
+                                <app-profile-picture49x49 [profileImageUrlHttps]="this.post?.user?.profileImageUrlHttps"></app-profile-picture49x49>
                                 <div class="sharebook-container open-space-container-flex-expand flex-grow-expand justify-content-center post-padding-bottom">
                                     <div class="sharebook-container">
                                         <div class="sharebook-container r-zl2h9q">
                                             <div class="sharebook-container r-k4xj1c flex-direction-row justify-content-space-between">
                                                 <div class="sharebook-container post--trend-top-info-align-items flex-direction-row flex-shrink">
                                                     <div class="sharebook-container flex-shrink max-width-100-per"><a
-                                                            routerLink="/:screenName" role="link" data-focusable="true"
+                                                            [routerLink]="'/' + this.post?.user?.screenName" role="link" data-focusable="true"
                                                             class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer flex-shrink max-width-100-per outline-style-none">
                                                         <div class="sharebook-container align-items-center flex-direction-row flex-shrink max-width-100-per outline-style-none">
                                                             <div class="sharebook-container align-items-center flex-direction-row max-width-100-per">
@@ -133,10 +134,10 @@
                                                      data-testid="reply"
                                                      (click)="this.handleReplyButton(this.post)">
                                                     <div dir="ltr"
-                                                         class="css-901oao r-9ilb82 align-items-center third-wheel-color display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
+                                                         class="css-901oao r-9ilb82 align-items-center display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
                                                         <div class="sharebook-container display-inline-flex">
-                                                            <div class="sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
-                                                            <app-global-icon iconName="comment"></app-global-icon>
+                                                            <div class="icon-hover sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
+                                                            <fa-icon [icon]="this.faComment"></fa-icon>
                                                         </div>
                                                         <div class="sharebook-container display-inline-flex overflow-hidden"><span
                                                                 class="css-901oao sharebook-text-inherit text-font-family third-wheel-text-font-size line-height-calc r-1j6idkz padding-left-right r-d3hbe1 r-1wgg2b2 r-axxi2z text-overflow-wrap"></span>
@@ -149,15 +150,18 @@
                                                      aria-label="0 Retweets. Retweet" role="button"
                                                      data-focusable="true" tabindex="0"
                                                      class="sharebook-cursor-pointer sharebook-container justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none"
-                                                     data-testid="retweet">
+                                                     data-testid="retweet"
+                                                     (click)="this.handleReshareButton(this.post)">
                                                     <div dir="ltr"
                                                          class="css-901oao r-9ilb82 align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
                                                         <div class="sharebook-container display-inline-flex">
-                                                            <div class="sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
-                                                            <app-global-icon iconName="retweet"></app-global-icon>
+                                                            <div class="icon-hover sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
+                                                            <fa-icon [icon]="this.faShare" [ngStyle]="{'color': this.post.reshared ? 'green' : 'inherit'}"></fa-icon>
                                                         </div>
-                                                        <div class="sharebook-container display-inline-flex overflow-hidden"><span
-                                                                class="css-901oao sharebook-text-inherit text-font-family third-wheel-text-font-size line-height-calc r-1j6idkz padding-left-right r-d3hbe1 r-1wgg2b2 r-axxi2z text-overflow-wrap"></span>
+                                                        <div class="sharebook-container display-inline-flex overflow-hidden">
+                                                            <span *ngIf="this.post?.reshareCount" class="css-901oao sharebook-text-inherit text-font-family third-wheel-text-font-size line-height-calc r-1j6idkz padding-left-right r-d3hbe1 r-1wgg2b2 r-axxi2z text-overflow-wrap">
+                                                                {{this.post.reshareCount}}
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -174,10 +178,10 @@
                                                     <div dir="ltr"
                                                          class="css-901oao r-9ilb82 align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
                                                         <div class="sharebook-container display-inline-flex">
-                                                            <div class="sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
+                                                            <div class="icon-hover sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
                                                             <!--<app-global-icon iconName="like"></app-global-icon>-->
-                                                            <nb-icon
-                                                                    [icon]="this.userRating === 'like' ? 'heart' : 'heart-outline'"></nb-icon>
+                                                            <!--<nb-icon *ngIf="this.userRating !== 'like'" icon="heart" pack="light" status="primary"></nb-icon>-->
+                                                            <fa-icon [icon]="this.faHeart" [ngStyle]="{'color': this.userRating === 'like' ? 'blue' : 'inherit'}"></fa-icon>
                                                         </div>
                                                         <div class="sharebook-container display-inline-flex overflow-hidden">
                                                             <span class="css-901oao sharebook-text-inherit text-font-family third-wheel-text-font-size line-height-calc r-1j6idkz padding-left-right r-d3hbe1 r-1wgg2b2 r-axxi2z text-overflow-wrap">
@@ -188,7 +192,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="sharebook-container flex-direction-row justify-content-flex-start"
+                                            <!--<div class="sharebook-container flex-direction-row justify-content-flex-start"
                                                  (click)="this.setDislike()"
                                                  [attr.aria-label]="tooltipDislike" [ngbTooltip]="this.tooltipDislike"
                                                  placement="auto" [openDelay]="700">
@@ -211,7 +215,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                             <div class="sharebook-container flex-direction-row justify-content-flex-start">
                                                 <div aria-expanded="false" aria-haspopup="true" aria-label="Share Tweet"
                                                      role="button" data-focusable="true" tabindex="0"

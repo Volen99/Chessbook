@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-profile-picture49x49',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile-picture49x49.component.scss']
 })
 export class ProfilePicture49x49Component implements OnInit {
+
+  @Input() profileImageUrlHttps: string;
 
   constructor() { }
 

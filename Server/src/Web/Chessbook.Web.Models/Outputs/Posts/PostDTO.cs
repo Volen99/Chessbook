@@ -93,14 +93,11 @@
         //[JsonProperty("quoted_status")]
         //public PostDTO QuotedTweetDTO { get; set; }
 
-        //[JsonProperty("retweet_count")]
-        //public int RetweetCount { get; set; }
+        public int ReshareCount { get; set; }
 
-        //[JsonProperty("retweeted")]
-        //public bool Retweeted { get; set; }
+        public bool Reshared { get; set; }
 
-        //[JsonProperty("retweeted_status")]
-        //public PostDTO RetweetedTweetDTO { get; set; }
+        public PostDTO ResharedStatus { get; set; }
 
         //[JsonProperty("possibly_sensitive")]
         //public bool PossiblySensitive { get; set; }

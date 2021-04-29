@@ -54,12 +54,20 @@ const routes: Routes = [
         loadChildren: () => import('./pages/notifications/notifications.module').then(m => m.NotificationsModule),
       },
       {
+        path: 'streamers',
+        loadChildren: () => import('./pages/streamers/streamers.module').then(m => m.StreamersModule),
+      },
+      {
+        path: 'connect',
+        loadChildren: () => import('./pages/connect/connect.module').then(m => m.ConnectModule),
+      },
+      {
         path: ':screenName',
         canActivate: [AuthGuard],
         loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule),
       },
       {
-        path: ':username/post/:id',
+        path: ':screenName/post/:id',
         loadChildren: () => import('./shared/posts/post-watch/post-watch.module').then(m => m.PostWatchModule),
       }
     ]

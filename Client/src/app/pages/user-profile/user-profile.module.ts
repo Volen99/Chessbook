@@ -13,26 +13,30 @@ import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.m
 import {NbActionsModule} from "../../sharebook-nebular/theme/components/actions/actions.module";
 import {ComponentsModule} from "../../components/components.module";
 import {UserProfileService} from "./user-profile.service";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
-    imports: [
-        UserProfileRoutingModule,
+  imports: [
+    UserProfileRoutingModule,
 
-        SharedMainModule,
-        // SharedFormModule,
-        // SharedUserSubscriptionModule,
-        // SharedModerationModule,
-        // SharedVideoMiniatureModule,
-        SharedGlobalIconModule,
-        SidebarColumnModule,
-        NbCardModule,
-        NbTabsetModule,
-        NbRouteTabsetModule,
-        NbButtonModule,
-        NbIconModule,
-        NbActionsModule,
-        ComponentsModule
-    ],
+    SharedMainModule,
+    // SharedFormModule,
+    // SharedUserSubscriptionModule,
+    // SharedModerationModule,
+    // SharedVideoMiniatureModule,
+    SharedGlobalIconModule,
+    SidebarColumnModule,
+    NbCardModule,
+    NbTabsetModule,
+    NbRouteTabsetModule,
+    NbButtonModule,
+    NbIconModule,
+    NbActionsModule,
+    ComponentsModule,
+    FontAwesomeModule,
+    SharedModule
+  ],
 
   declarations: [
     UserProfileComponent,

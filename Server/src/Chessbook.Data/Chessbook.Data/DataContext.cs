@@ -73,6 +73,14 @@
 
         public DbSet<GenericAttribute> GenericAttributes { get; set; }
 
+        public DbSet<TwitchLoginName> TwitchLoginNames { get; set; }
+
+        public DbSet<Relationship> Relationships { get; set; }
+
+        public DbSet<PostReshare> PostReshares { get; set; }
+
+
+
 
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 

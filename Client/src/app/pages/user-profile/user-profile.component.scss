@@ -9,6 +9,30 @@
 
 // @import "../../../sass/application";
 
+@import '../../theme/styles/themes';
+
+@include nb-install-component() {
+  .r-z32n2g {
+    background-color: nb-theme(color-primary-transparent-200);           // background-color: rgb(32, 35, 39);
+  }
+
+  .element-background-color-rgba {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  .r-13gxpu9 {
+    color: nb-theme(color-primary-default);
+  }
+
+  .icon-hover {
+    &:hover {
+      background-color: nb-theme(button-outline-primary-hover-background-color);
+      // border-color: nb-theme(button-outline-primary-hover-border-color);
+      color: nb-theme(button-outline-primary-hover-text-color);
+    }
+  }
+}
+
 
 nb-card {
   padding: 0;
@@ -348,3 +372,94 @@ nb-card {
 //    }
 //  }
 //}
+
+.r-6gpygo {
+  margin-bottom: 12px;
+}
+
+.r-1kb76zh {
+  margin-right: 8px;
+}
+
+.r-ero68b {
+  min-height: 40px;
+}
+
+.r-vkv6oe {
+  min-width: 40px;
+}
+
+
+.r-lrvibr {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+
+
+
+
+
+
+// follows you
+
+
+
+.r-z2wwpe {
+  border-radius: 4px;
+}
+
+.r-1q142lx {
+  flex-shrink: 0;
+}
+
+.r-n6v787 {
+  font-size: 13px;
+}
+
+.r-1cwl3u0 {
+  line-height: 16px;
+}
+
+.r-13hce6t {
+  margin-left: 4px;
+}
+
+.r-s1qlax {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+// end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -13,13 +13,13 @@ export interface IPoll {
 
   multiple: boolean;
 
-  votes_count: number;
+  votesCount: number;
 
-  voters_count: number;
+  votersCount: number;
 
   voted: true;
 
-  own_votes: number[];
+  ownVotes: number[];
 
   startDateUtc: Date;
 }

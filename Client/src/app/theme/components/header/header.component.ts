@@ -13,6 +13,7 @@ import {NbMenuService} from "../../../sharebook-nebular/theme/components/menu/me
 import {IPoll} from "../../../shared/posts/models/poll/poll";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
+import {faUser, faSignOutAlt} from '@fortawesome/pro-light-svg-icons';
 
 @Component({
   selector: 'ngx-header',
@@ -59,10 +60,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   getMenuItems() {
-    const userLink = this.user ?  '/admin/users/current/' : '';
+    const userLink = this.user ?  `/${this.user.screenName}` : '#';
     return [
-      { title: 'Profile', link: userLink, queryParams: { profile: true } },
-      { title: 'Log out', link: '/auth/logout' },
+      { icon: this.faUser, title: 'Profile', link: userLink, queryParams: { profile: true }},
+      { icon: this.faSignOutAlt, title: 'Log out', link: '/auth/logout' },
     ];
   }
 
@@ -95,6 +96,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   }
+
+  faUser = faUser;
+  faSignOutAlt = faSignOutAlt;
 
   poll: IPoll;
 

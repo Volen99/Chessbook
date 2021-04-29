@@ -527,6 +527,8 @@
 <!--    </div>-->
 <!--</div>-->
 
+
+
     <div class="sharebook-container bottom-0px left-0px r-1xcajam right-0px top-0px"> <!--r-11u3ssh was class-->
     </div>
 
@@ -550,11 +552,11 @@
                                 <div class="sharebook-container align-items-flex-start align-self-stretch justify-content-center min-height-30px header-left-icon-min-width-59px">
                                     <div aria-label="Close" role="button" data-focusable="true"
                                          tabindex="0"
-                                         class="close-button sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
+                                         class="icon-hover close-button sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
                                          style="margin-left: calc(5px + (-1 * (41px - 1.5em)) / 2);">
                                         <div dir="auto" class="align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
                                              (click)="this.dismiss()">
-                                            <nb-icon icon="close-outline"></nb-icon>
+                                            <fa-icon [styles]="this.svgStyles" [icon]="this.faAtom"></fa-icon>
                                             <span
                                                     class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
                                         </div>
@@ -793,12 +795,11 @@
                                                                 <div role="button"
                                                                      data-focusable="true"
                                                                      tabindex="0"
-                                                                     class="share-action-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty border-height-0px min-height-30px r-aj3cln outline-style-none created-at-dot transition-duration transition-property users-select-none"
+                                                                     class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty border-height-0px min-height-30px r-aj3cln outline-style-none created-at-dot transition-duration transition-property users-select-none"
                                                                      [nbPopover]="this.whoCanReplyComponent">
                                                                     <div dir="auto"
-                                                                         class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family third-wheel-text-font-size font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
-                                                                        <app-global-icon
-                                                                                iconName="earthSouthAmerica"></app-global-icon>
+                                                                         class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
+                                                                        <fa-icon [icon]="this.globeCurrent" style="font-size: 18px; margin-right: 0.5em;" ></fa-icon>
                                                                         <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                             <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.privacyClient}}</span>
                                                                         </span>
@@ -822,10 +823,9 @@
                                                                                  role="button"
                                                                                  data-focusable="true"
                                                                                  tabindex="0"
-                                                                                 class="share-action-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty  border-height-0px add-photos-or-video-margin upload-svg-margin-left-right add-photos-or-video-margin-left element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"> <!--border-width-1px-->
-                                                                                <div dir="auto"
-                                                                                     class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
-                                                                                    <nb-icon icon="image-outline"></nb-icon>
+                                                                                 class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty  border-height-0px add-photos-or-video-margin upload-svg-margin-left-right add-photos-or-video-margin-left element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"> <!--border-width-1px-->
+                                                                                <div dir="auto" class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
+                                                                                    <fa-icon size="1" [styles]="this.svgStyles" [icon]="this.faImagePolaroid"></fa-icon>
                                                                                     <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
                                                                                 </div>
                                                                             </div>
@@ -838,42 +838,28 @@
                                                                                     class="add-photos-or-video-default-input-height opacity-0 overflow-hidden position-absolute add-photos-or-video-default-input-width z-index-minus-1"
                                                                                     data-testid="fileInput"
                                                                                     appFileSelect>
-                                                                            <!--[uploader]="this.uploader"-->
-                                                                            <div aria-label="Add a GIF"
+                                                                            <!--<app-poll-button (click)="this.pollButtonHandler()" [onClick]="this.pollButtonHandler"></app-poll-button>-->
+                                                                            <div aria-label="Add poll"
                                                                                  role="button"
                                                                                  data-focusable="true"
                                                                                  tabindex="0"
-                                                                                 class="share-action-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty  border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none">
+                                                                                 class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty border-height-0px upload-svg-margin-left-right element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
+                                                                                 data-testid="scheduleOption"
+                                                                                 (click)="this.pollButtonHandler()">
                                                                                 <div dir="auto"
                                                                                      class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
-<!--                                                                                    <app-global-icon-->
-<!--                                                                                            iconName="uploadGif"></app-global-icon>-->
-<!--                                                                                    <span-->
-<!--                                                                                            class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>-->
-                                                                                    <nb-icon icon="gift-outline"></nb-icon>
+                                                                                    <fa-icon [icon]="this.faPoll" [styles]="this.svgStyles"></fa-icon>
+                                                                                    <span
+                                                                                            class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
                                                                                 </div>
                                                                             </div>
-<!--                                                                            <div aria-label="Add poll"-->
-<!--                                                                                 role="button"-->
-<!--                                                                                 data-focusable="true"-->
-<!--                                                                                 tabindex="0"-->
-<!--                                                                                 class="share-action-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty  border-height-0px upload-svg-margin-left-right element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none">-->
-<!--                                                                                <div dir="auto"-->
-<!--                                                                                     class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">-->
-<!--                                                                                    <app-global-icon-->
-<!--                                                                                            iconName="addPoll"></app-global-icon>-->
-<!--                                                                                    <span-->
-<!--                                                                                            class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>-->
-<!--                                                                                </div>-->
-<!--                                                                            </div>-->
-                                                                            <app-poll-button (click)="this.pollButtonHandler()" [onClick]="this.pollButtonHandler"></app-poll-button>
                                                                             <div class="sharebook-container">
                                                                                 <div aria-haspopup="true"
                                                                                      aria-label="Add emoji"
                                                                                      role="button"
                                                                                      data-focusable="true"
                                                                                      tabindex="0"
-                                                                                     class="share-action-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty  border-height-0px upload-svg-margin-left-right element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none z-index-plus-2">
+                                                                                     class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty  border-height-0px upload-svg-margin-left-right element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none z-index-plus-2">
                                                                                     <div dir="auto"
                                                                                          class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
                                                                                         <app-global-icon
@@ -887,22 +873,11 @@
                                                                                  role="button"
                                                                                  data-focusable="true"
                                                                                  tabindex="0"
-                                                                                 class="share-action-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty border-height-0px upload-svg-margin-left-right element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
+                                                                                 class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty border-height-0px upload-svg-margin-left-right element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
                                                                                  data-testid="scheduleOption">
                                                                                 <div dir="auto"
                                                                                      class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
-                                                                                    <svg viewBox="0 0 24 24"
-                                                                                         class="r-13gxpu9 svg-display-inline-block svg-fill-currentcolor svg-flex-shrink-0 svg-height max-width-100-per svg-position-relative svg-vertical-align users-select-none first-class-svg-width">
-                                                                                        <g>
-                                                                                            <path d="M-37.9 18c-.1-.1-.1-.1-.1-.2.1 0 .1.1.1.2z"></path>
-                                                                                            <path
-                                                                                                    d="M-37.9 18c-.1-.1-.1-.1-.1-.2.1 0 .1.1.1.2zM18 2.2h-1.3v-.3c0-.4-.3-.8-.8-.8-.4 0-.8.3-.8.8v.3H7.7v-.3c0-.4-.3-.8-.8-.8-.4 0-.8.3-.8.8v.3H4.8c-1.4 0-2.5 1.1-2.5 2.5v13.1c0 1.4 1.1 2.5 2.5 2.5h2.9c.4 0 .8-.3.8-.8 0-.4-.3-.8-.8-.8H4.8c-.6 0-1-.5-1-1V7.9c0-.3.4-.7 1-.7H18c.6 0 1 .4 1 .7v1.8c0 .4.3.8.8.8.4 0 .8-.3.8-.8v-5c-.1-1.4-1.2-2.5-2.6-2.5zm1 3.7c-.3-.1-.7-.2-1-.2H4.8c-.4 0-.7.1-1 .2V4.7c0-.6.5-1 1-1h1.3v.5c0 .4.3.8.8.8.4 0 .8-.3.8-.8v-.5h7.5v.5c0 .4.3.8.8.8.4 0 .8-.3.8-.8v-.5H18c.6 0 1 .5 1 1v1.2z"></path>
-                                                                                            <path
-                                                                                                    d="M15.5 10.4c-3.4 0-6.2 2.8-6.2 6.2 0 3.4 2.8 6.2 6.2 6.2 3.4 0 6.2-2.8 6.2-6.2 0-3.4-2.8-6.2-6.2-6.2zm0 11c-2.6 0-4.7-2.1-4.7-4.7s2.1-4.7 4.7-4.7 4.7 2.1 4.7 4.7c0 2.5-2.1 4.7-4.7 4.7z"></path>
-                                                                                            <path
-                                                                                                    d="M18.9 18.7c-.1.2-.4.4-.6.4-.1 0-.3 0-.4-.1l-3.1-2v-3c0-.4.3-.8.8-.8.4 0 .8.3.8.8v2.2l2.4 1.5c.2.2.3.6.1 1z"></path>
-                                                                                        </g>
-                                                                                    </svg>
+                                                                                    <fa-icon [icon]="this.faCode"></fa-icon>
                                                                                     <span
                                                                                             class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
                                                                                 </div>

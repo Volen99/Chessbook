@@ -16,34 +16,38 @@ import {VideoCommentAddComponent} from "./comment/video-comment-add.component";
 import {SharedMainModule} from "../shared-main/shared-main.module";
 import {SharedFormModule} from "../forms/shared-form.module";
 import {SharedGlobalIconModule} from "../shared-icons/shared-global-icon.module";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
-    declarations: [
-        VideoCommentsComponent,
-        VideoCommentAddComponent,
-        VideoCommentComponent,
-    ],
+  declarations: [
+    VideoCommentsComponent,
+    VideoCommentAddComponent,
+    VideoCommentComponent,
+  ],
 
-    imports: [
-        CommonModule,
+  imports: [
+    CommonModule,
 
-        SharedMainModule,
-        SharedFormModule,
-        SharedModerationModule,
-        SharedGlobalIconModule,
-        SharedVideoCommentModule,
-    ],
+    SharedMainModule,
+    SharedFormModule,
+    SharedModerationModule,
+    SharedGlobalIconModule,
+    SharedVideoCommentModule,
+    FontAwesomeModule,
+  ],
 
-    providers: [
-        PostsService,
-        TweetQueryGeneratorService,
-        TweetControllerService,
-        TweetQueryExecutorService,
-        TweetsRequesterService,
-        PostsApi,
-        TimelineApi,
-    ],
+  providers: [
+    PostsService,
+    TweetQueryGeneratorService,
+    TweetControllerService,
+    TweetQueryExecutorService,
+    TweetsRequesterService,
+    PostsApi,
+    TimelineApi,
+  ],
 
+  exports: [
+  ]
 })
 export class PostsModule {
 }

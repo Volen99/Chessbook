@@ -18,6 +18,8 @@ namespace Chessbook.Services.Data.Services.Entities
         /// <returns>Poll</returns>
         Task<PollDTO> GetPollByIdAsync<PollDTO>(int pollId);
 
+        Task<Poll> GetPollByIdClean(int pollId);
+
         /// <summary>
         /// Gets polls
         /// </summary>

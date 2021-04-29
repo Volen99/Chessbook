@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {faPoll} from '@fortawesome/pro-light-svg-icons';
 
 @Component({
   selector: 'app-poll-button',
@@ -13,6 +14,8 @@ export class PollButtonComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  faPoll = faPoll;
 
   handleClick = () => {
     this.onClick();

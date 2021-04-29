@@ -15,6 +15,7 @@ import {ServerService} from "../../../core/server/server.service";
 import {Notifier} from "../../../core/notification/notifier.service";
 import {getBytes} from "../../../../root-helpers/bytes";
 import {SharebookLimits} from "../../../helpers/sharebook-limits";
+import {faPen, faCamera} from '@fortawesome/pro-light-svg-icons';
 
 @Component({
   selector: 'my-actor-avatar-info',
@@ -40,7 +41,6 @@ export class ActorAvatarInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    debugger
     // this.serverService.getConfig()
     //   .subscribe(config => {
     //     this.maxAvatarSize = config.avatar.file.size.max;
@@ -58,8 +58,10 @@ export class ActorAvatarInfoComponent implements OnInit, OnChanges {
     }
   }
 
+  faPen = faPen;
+  faCamera = faCamera;
+
   onAvatarChange(input: HTMLInputElement) {
-    debugger
     this.avatarfileInput = new ElementRef(input);
 
     const avatarfile = this.avatarfileInput.nativeElement.files[0];
@@ -79,6 +81,8 @@ export class ActorAvatarInfoComponent implements OnInit, OnChanges {
   }
 
   hasAvatar() {
-    return !!this.avatarUrl;
+    // return !!this.avatarUrl;
+
+    return !this.user.profileImageUrlHttps.includes('default-avatar');
   }
 }

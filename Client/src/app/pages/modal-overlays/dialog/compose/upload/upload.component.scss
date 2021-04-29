@@ -20,21 +20,63 @@
       padding: 0rem 0rem;
     }
   }
+
+  //.icon-hover {
+  //  &:hover {
+  //    background-color: nb-theme(button-outline-primary-hover-background-color);
+  //    border-color: nb-theme(button-outline-primary-hover-border-color);
+  //    color: nb-theme(button-outline-primary-hover-text-color);
+  //  }
+  //}
 }
 
 
 
-.share-action-hover {
-  &:hover {
-    background-color: nb-theme(button-outline-primary-hover-background-color);
-    border-color: nb-theme(button-outline-primary-hover-border-color);
-    color: nb-theme(button-outline-primary-hover-text-color);
-  }
-}
+//.share-action-hover {
+//  &:hover {
+//    background-color: nb-theme(button-outline-primary-hover-background-color);
+//    border-color: nb-theme(button-outline-primary-hover-border-color);
+//    color: nb-theme(button-outline-primary-hover-text-color);
+//  }
+//}
 
 @import "./src/sass/application";
 
 /*15.11.2020, Sunday*/
+
+fa-icon {
+  > svg {
+    display: inline-block;
+    fill: currentcolor;
+    flex-shrink: 0;
+    width: 1.5em;
+    height: 1.5em;
+    max-width: 100%;
+    position: relative;
+    vertical-align: text-bottom;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+.tet {
+  display: inline-block !important;
+  fill: currentcolor !important;
+  flex-shrink: 0 !important;
+  width: 1.5em !important;
+  height: 1.5em !important;
+  max-width: 100% !important;
+  position: relative !important;
+  vertical-align: text-bottom !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+
+
 
 .close-button {
   &:hover {

@@ -18,6 +18,7 @@
     using Chessbook.Web.Models;
     using Chessbook.Services.Data.Services.Media;
     using Chessbook.Common;
+    using Chessbook.Web.Api.Factories;
 
     [Route("posts")]
     public class PostsController : BaseApiController
@@ -31,16 +32,18 @@
 
         private readonly IMediaService mediaService;
         private readonly IPictureService pictureService;
+        private readonly IUserModelFactory userModelFactory;
 
 
         public PostsController(IPostsService postService, IPollService pollService, IUserService userService, IMediaService mediaService,
-            IPictureService pictureService)
+            IPictureService pictureService, IUserModelFactory userModelFactory)
         {
             this.postService = postService;
             this.userService = userService;
             this.mediaService = mediaService;
             this.pollService = pollService;
             this.pictureService = pictureService;
+            this.userModelFactory = userModelFactory;
         }
 
         [HttpGet]
@@ -55,11 +58,19 @@
 
             var postDTOs = await this.postService.GetHomeTimeline<PostDTO>(User.GetUserId(), query.Count, skip);
 
-            foreach (var postDTO in postDTOs)
+            for (int i = 0; i < postDTOs.Count; i++)
             {
+                var postDTO = postDTOs[i];
+
+                if (postDTO.Reshared)
+                {
+                    postDTO = postDTO.ResharedStatus = await this.postService.GetResharedOriginal<PostDTO>(postDTO.Id);
+                }
+
+
                 postDTO.Entities.Poll = postDTO.Poll;
 
-                var picture = (await this.pictureService.GetPicturesByPostIdAsync(postDTO.Id)).FirstOrDefault();
+                var picture = (await this.pictureService.GetPicturesByProductIdAsync(postDTO.Id)).FirstOrDefault();
 
                 var pictureSize = 480;
 
@@ -88,6 +99,9 @@
                 // TODO: check for null
 
                 postDTO.User.ProfileImageUrlHttps = ChessbookConstants.SiteHttps + profilePictureUrl;
+
+                postDTO.Reshared = await this.postService.GetReshareStatus(postDTO.Id, User.GetUserId());
+                postDTO.ReshareCount = await this.postService.GetReshareCount(postDTO.Id);
             }
 
             return this.Ok(new
@@ -109,13 +123,15 @@
 
             var posts = await this.postService.GetUserProfileTimeline<PostDTO>(query.UserId, query.Count, skip);
 
-            var userDTO = await this.userService.GetById(User.GetUserId());
+            var userDTO = await this.userService.GetById(query.UserId);
             foreach (var post in posts)
             {
                 post.User = userDTO;
                 post.Entities.Poll = post.Poll;
 
-                var picture = (await this.pictureService.GetPicturesByPostIdAsync(post.Id)).FirstOrDefault();
+                post.User = await this.userModelFactory.PrepareCustomerModelAsync(post.User);
+
+                var picture = (await this.pictureService.GetPicturesByProductIdAsync(post.Id)).FirstOrDefault();
 
                 var pictureSize = 480;
 
@@ -168,13 +184,23 @@
             return this.Ok(query);
         }
 
+
+        [HttpPost]
+        [Route("reshare")]
+        public async Task<IActionResult> PostReshare([FromQuery] QueryRetweetParams query)
+        {
+            var post = await this.postService.CreateRetweet(query.Id, User.GetUserId(), query.TrimUser);
+
+            return this.Ok(post);
+        }
+
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetPost(int id)
         {
             var post = this.postService.GetById<PostDTO>(id);
 
-            var picture = (await this.pictureService.GetPicturesByPostIdAsync(post.Id)).FirstOrDefault();
+            var picture = (await this.pictureService.GetPicturesByProductIdAsync(post.Id, 1)).FirstOrDefault();
 
             var pictureSize = 480;
 
@@ -218,7 +244,52 @@
         {
             var users = await this.postService.GetLikers<UserDTO>(id);
 
+            for (int i = 0; i < users.Count(); i++)
+            {
+                users[i] = await this.userModelFactory.PrepareCustomerModelAsync(users[i]);
+            }
+
             return this.Ok(users);
+        }
+
+        [HttpPost]
+        [Route("Delete")]
+        public  async Task<IActionResult> Delete([FromQuery] int id)
+        {
+            //if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            //{
+            //    return AccessDeniedView();
+            //}
+
+            //try to get a product with the specified id
+            var product = await postService.GetByIdClean(id);
+            if (product == null)
+            {
+                return this.BadRequest("List");
+            }
+
+            //// a vendor should have access only to his products
+            //if (await _workContext.GetCurrentVendorAsync() != null && product.VendorId != (await _workContext.GetCurrentVendorAsync()).Id)
+            //    return RedirectToAction("List");
+
+            await this.postService.DeleteProductAsync(product);
+
+            return this.Ok("List");
+        }
+
+        [HttpPost]
+        [Route("unshare")]
+        public async Task<IActionResult> PostUnshare([FromQuery] int id)
+        {
+            var product = await postService.GetByIdClean(id);
+            if (product == null)
+            {
+                return this.BadRequest("List");
+            }
+
+            await this.postService.Unshare(product);
+
+            return this.Ok();
         }
 
         private async Task<List<MediaEntityDTO>> GetMedias(int[] mediasIds)

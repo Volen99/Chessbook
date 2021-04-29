@@ -221,28 +221,36 @@ export class Post /*implements IPost*/ {
     return this._postFromServer.contributors;
   }
 
-  get retweetCount(): number {
-    return this._postFromServer.retweetCount;
+  get reshareCount(): number {
+    return this._postFromServer.reshareCount;
   }
 
-  get retweeted(): boolean {
-    return this._postFromServer.retweeted;
+  set reshareCount(value: number) {
+    this._postFromServer.reshareCount += value;
+  }
+
+  get reshared(): boolean {
+    return this._postFromServer.reshared;
+  }
+
+  set reshared(value: boolean) {
+     this._postFromServer.reshared = value;
   }
 
   // get isRetweet(): boolean {
   //   return this._postFromServer.retweetedTweetDTO != null;
   // }
 
-  private _retweetedTweet: IPost;
+  private _resharedStatus: IPost;
 
-  get retweetedTweet(): IPost {
+  get resharedStatus(): IPost {
     // if (this._retweetedTweet == null) {
     //   this._retweetedTweet = this.client.factories.createTweet(this._tweetDTO.retweetedTweetDTO);
     // }
     //
     // return this._retweetedTweet;
 
-    return null;
+    return this._postFromServer.resharedStatus;
   }
 
   get quoteCount(): number {  // int?

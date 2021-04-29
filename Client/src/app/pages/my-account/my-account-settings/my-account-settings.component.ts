@@ -50,7 +50,6 @@ export class MyAccountSettingsComponent implements OnInit, AfterViewChecked {
         data => {
           this.notifier.success(`Avatar changed.`);
 
-          debugger
           // this.user.updateAccountAvatar(data.url); TODO: THIS IS THE RIGHT WAAAAAAAAAAAAAAAY!!
 
           this.user.profileImageUrlHttps = data.url;

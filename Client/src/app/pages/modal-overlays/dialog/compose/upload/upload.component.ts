@@ -1,3 +1,4 @@
+// I am back!! 💙 06.11.2020, Friday
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 
 import {FileUploader} from "./file-uploader.class";
@@ -8,9 +9,18 @@ import {NbDialogRef} from "../../../../../sharebook-nebular/theme/components/dia
 import {ShowcaseDialogComponent} from "../../../../../pages/modal-overlays/dialog/showcase-dialog/showcase-dialog.component";
 import {WhoCanReplyComponent} from "../../../popovers/components/who-can-reply/who-can-reply.component";
 import {PostPrivacy} from "../../../../../shared/models/enums/post-privacy";
-import {IPoll} from "../../../../../shared/posts/models/poll/poll";
-import {PostDetails} from "../../../../../shared/shared-main/post/post-details.model"; // I am back!! 💙 06.11.2020, Friday
-
+import {PostDetails} from "../../../../../shared/shared-main/post/post-details.model";
+import {IconDefinition} from "@fortawesome/fontawesome-common-types";
+import {
+  faGlobeAfrica,
+  faGlobeAmericas,
+  faGlobeAsia,
+  faGlobeEurope,
+  faImagePolaroid,
+  faPoll,
+  faAtom,
+  faCode,
+} from '@fortawesome/pro-light-svg-icons';
 
 @Component({
   selector: 'app-upload',
@@ -22,7 +32,7 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() replyPost: PostDetails;
 
-   initialPoll: any = {
+  initialPoll: any = {
     options: ['', ''],
     expires_in: 24 * 3600,
     multiple: false,
@@ -74,11 +84,20 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
     this.textPlaceholder = this.isPoll ? 'Ask a question...' : this.replyPost ? 'Post your reply' : `What's happening?`;
 
 
-
     this.uploader.response.subscribe(res => {
       this.response = res;
     });
 
+    this.getGlobe();
+
+  }
+
+  private globes: IconDefinition[] = [faGlobeEurope, faGlobeAsia, faGlobeAmericas, faGlobeAfrica];
+
+  globeCurrent: IconDefinition;
+
+  getGlobe() {
+    this.globeCurrent = this.globes[this.globes.length * Math.random() | 0];
   }
 
 
@@ -91,7 +110,28 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
   }
 
+  faPoll = faPoll;
+  faAtom = faAtom;
+  faCode = faCode;
 
+  // omg :D
+  svgStyles = {
+    'display': 'inline-block',
+    'fill': 'currentcolor',
+    'flex-shrink': '0',
+    'width': '1.5em',
+    'height': '1.5em',
+    'max-width': '100% ',
+    'position': 'relative',
+    'vertical-align': 'text-bottom',
+    '-moz-user-select': 'none',
+    '-ms-user-select': 'none',
+    '-webkit-user-select': 'none',
+    'user-select': 'none',
+  };
+
+
+  faImagePolaroid = faImagePolaroid;
 
 
   dismiss() {
@@ -157,7 +197,7 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
         let bytes = await fileCurrent.arrayBuffer();
 
         let uploadedImage = await this.uploadService.uploadTweetImageAsync(bytes, mediaType);
-        publishPostParameters.medias = [ uploadedImage ];
+        publishPostParameters.medias = [uploadedImage];
 
         if (this.replyPost) {
           publishPostParameters.inReplyToTweet = this.replyPost;
@@ -172,7 +212,6 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
 
       await this.postsService.publishTweetAsync(publishPostParameters);
     }
-
 
 
     this.text = '';
