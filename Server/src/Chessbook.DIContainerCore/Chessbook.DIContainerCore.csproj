@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Chessbook.Data\Chessbook.Data.Models\Chessbook.Data.Models.csproj" />
     <ProjectReference Include="..\Chessbook.Data\Chessbook.Data\Chessbook.Data.csproj" />
+    <ProjectReference Include="..\Chessbook.Services\Chessbook.Services.Common\Chessbook.Services.Common.csproj" />
     <ProjectReference Include="..\Chessbook.Services\Chessbook.Services.Data\Chessbook.Services.Data.csproj" />
     <ProjectReference Include="..\Chessbook.Services\Chessbook.Services\Chessbook.Services.csproj" />
   </ItemGroup>

@@ -12,6 +12,12 @@ import { SortMeta } from 'primeng/api';
 
 @Injectable()
 export class UsersService extends UserData {
+    getYourBirthday(userId: number) {
+        throw new Error('Method not implemented.');
+    }
+    updateCurrentPersonal(body: any): Observable<IUser> {
+        throw new Error('Method not implemented.');
+    }
     getUserWithCache(userId: number) {
         throw new Error('Method not implemented.');
     }

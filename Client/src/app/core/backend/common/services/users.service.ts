@@ -220,4 +220,12 @@ export class UsersService extends UserData {
       );
   }
 
+  updateCurrentPersonal(body: any): Observable<IUser> {
+    return this.api.updateCurrentPersonal(body);
+  }
+
+  getYourBirthday(userId: number) {
+    return this.api.getYourBirthday('birthday', userId);
+  }
+
 }

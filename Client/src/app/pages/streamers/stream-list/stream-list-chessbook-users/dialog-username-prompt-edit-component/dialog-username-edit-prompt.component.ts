@@ -1,6 +1,6 @@
-import {Component, Input, Optional} from '@angular/core';
-import { NbDialogRef } from '@nebular/theme';
-import {StreamersService} from "../../streamers.service";
+import {Component, Input, OnInit, Optional} from '@angular/core';
+import {StreamersService} from "../../../streamers.service";
+import {NbDialogRef} from "../../../../../sharebook-nebular/theme/components/dialog/dialog-ref";
 
 @Component({
   selector: 'app-dialog-name-edit-prompt',
@@ -12,15 +12,19 @@ export class DialogUsernameEditPromptComponent {
   @Input() body: string;
   @Input() username: string;
 
-  constructor(@Optional()  protected ref: NbDialogRef<DialogUsernameEditPromptComponent>) {}
+  constructor(protected ref: NbDialogRef<DialogUsernameEditPromptComponent>) {
+  }
 
   dismiss() {
     this.ref.close();
   }
 
   edit() {
-    debugger
     this.ref.close(this.newUsername);
+  }
+
+  back() {
+    this.isEdit = false;
   }
 
   isEdit = false;
@@ -29,5 +33,9 @@ export class DialogUsernameEditPromptComponent {
   handleEditClick() {
     this.newUsername = this.username;
     this.isEdit = true;
+  }
+
+  handleDeleteClick() {
+    this.ref.close('action-delete');
   }
 }

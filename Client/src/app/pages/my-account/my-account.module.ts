@@ -30,6 +30,9 @@ import { MyAccountThemeComponent } from './my-account-settings/my-account-theme/
 import {NbSelectModule} from "../../sharebook-nebular/theme/components/select/select.module";
 import {AuthModule} from "../../auth/auth.module";
 import {DialogUsernamePromptComponent} from "./my-account-settings/my-account-danger-zone/dialog-username-prompt/dialog-username-prompt.component";
+import { MyAccountPersonalDetailsComponent } from './my-account-settings/my-account-personal-details/my-account-personal-details.component';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {NbRadioModule} from "../../sharebook-nebular/theme/components/radio/radio.module";
 
 @NgModule({
   imports: [
@@ -55,6 +58,8 @@ import {DialogUsernamePromptComponent} from "./my-account-settings/my-account-da
     NbToggleModule,
     NbSelectModule,
     AuthModule,
+    FontAwesomeModule,
+    NbRadioModule,
   ],
 
   declarations: [
@@ -73,6 +78,7 @@ import {DialogUsernamePromptComponent} from "./my-account-settings/my-account-da
     MyAccountNotificationPreferencesComponent,
     MyAccountThemeComponent,
     DialogUsernamePromptComponent,
+    MyAccountPersonalDetailsComponent,
   ],
 
   exports: [

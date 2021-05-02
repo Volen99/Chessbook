@@ -19,6 +19,7 @@
     using Chessbook.Services.Data.Services.Media;
     using Chessbook.Common;
     using Chessbook.Web.Api.Factories;
+    using Chessbook.Data.Models.Media;
 
     [Route("posts")]
     public class PostsController : BaseApiController
@@ -67,34 +68,36 @@
                     postDTO = postDTO.ResharedStatus = await this.postService.GetResharedOriginal<PostDTO>(postDTO.Id);
                 }
 
-
-                postDTO.Entities.Poll = postDTO.Poll;
-
-                var picture = (await this.pictureService.GetPicturesByProductIdAsync(postDTO.Id)).FirstOrDefault();
-
-                var pictureSize = 480;
-
-                string displayUrl;
-                string expandUrl;
-
-                (expandUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture);
-                (displayUrl, _) = await this.pictureService.GetPictureUrlAsync(picture, pictureSize);
-
-                var pictureModel = new MediaEntityDTO
+                if (postDTO.HasMedia)
                 {
-                    Id = picture.Id,
-                    IdStr = picture.Id.ToString(),
-                    DisplayURL = ChessbookConstants.SiteHttps + displayUrl,
-                    ExpandedURL = ChessbookConstants.SiteHttps + expandUrl,
-                    MediaURL = picture.VirtualPath,
-                };
+                    postDTO.Entities.Poll = postDTO.Poll;
 
-                if (picture != null)
-                {
-                    postDTO.Entities.Medias.Add(pictureModel);
+                    var picture = (await this.pictureService.GetPicturesByProductIdAsync(postDTO.Id)).FirstOrDefault();
+
+                    var pictureSize = 480;
+
+                    string displayUrl;
+                    string expandUrl;
+
+                    (expandUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture);
+                    (displayUrl, _) = await this.pictureService.GetPictureUrlAsync(picture, pictureSize);
+
+                    var pictureModel = new MediaEntityDTO
+                    {
+                        Id = picture.Id,
+                        IdStr = picture.Id.ToString(),
+                        DisplayURL = ChessbookConstants.SiteHttps + displayUrl,
+                        ExpandedURL = ChessbookConstants.SiteHttps + expandUrl,
+                        MediaURL = picture.VirtualPath,
+                    };
+
+                    if (picture != null)
+                    {
+                        postDTO.Entities.Medias.Add(pictureModel);
+                    }
                 }
 
-                var profilePictureUrl = await this.pictureService.GetPictureUrlAsync(postDTO.User.ProfilePictureId, 73);
+                var profilePictureUrl = await this.pictureService.GetPictureUrlAsync(postDTO.User.ProfilePictureId, 73, true, defaultPictureType: PictureType.Avatar);
 
                 // TODO: check for null
 
@@ -131,28 +134,31 @@
 
                 post.User = await this.userModelFactory.PrepareCustomerModelAsync(post.User);
 
-                var picture = (await this.pictureService.GetPicturesByProductIdAsync(post.Id)).FirstOrDefault();
-
-                var pictureSize = 480;
-
-                string displayUrl;
-                string expandUrl;
-
-                (expandUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture);
-                (displayUrl, _) = await this.pictureService.GetPictureUrlAsync(picture, pictureSize);
-
-                var pictureModel = new MediaEntityDTO
+                if (post.HasMedia)
                 {
-                    Id = picture.Id,
-                    IdStr = picture.Id.ToString(),
-                    DisplayURL = ChessbookConstants.SiteHttps + displayUrl,
-                    ExpandedURL = ChessbookConstants.SiteHttps + expandUrl,
-                    MediaURL = picture.VirtualPath,
-                };
+                    var picture = (await this.pictureService.GetPicturesByProductIdAsync(post.Id)).FirstOrDefault();
 
-                if (picture != null)
-                {
-                    post.Entities.Medias.Add(pictureModel);
+                    var pictureSize = 480;
+
+                    string displayUrl;
+                    string expandUrl;
+
+                    (expandUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture);
+                    (displayUrl, _) = await this.pictureService.GetPictureUrlAsync(picture, pictureSize);
+
+                    var pictureModel = new MediaEntityDTO
+                    {
+                        Id = picture.Id,
+                        IdStr = picture.Id.ToString(),
+                        DisplayURL = ChessbookConstants.SiteHttps + displayUrl,
+                        ExpandedURL = ChessbookConstants.SiteHttps + expandUrl,
+                        MediaURL = picture.VirtualPath,
+                    };
+
+                    if (picture != null)
+                    {
+                        post.Entities.Medias.Add(pictureModel);
+                    }
                 }
             }
 

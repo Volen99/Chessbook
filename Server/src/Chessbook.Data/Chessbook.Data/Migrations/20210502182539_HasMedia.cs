@@ -2,23 +2,23 @@
 
 namespace Chessbook.Data.Migrations
 {
-    public partial class UserId : Migration
+    public partial class HasMedia : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "UserId",
-                table: "PostReshares",
-                type: "int",
+            migrationBuilder.AddColumn<bool>(
+                name: "HasMedia",
+                table: "Posts",
+                type: "bit",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: false);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "UserId",
-                table: "PostReshares");
+                name: "HasMedia",
+                table: "Posts");
         }
     }
 }

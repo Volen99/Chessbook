@@ -37,7 +37,7 @@ export class PostComment implements IPostComment {
     this.totalReplies = hash.totalReplies;
 
     if (this.user) {
-      this.by = UserData.CREATE_BY_STRING(this.user.name /*this.account.host*/);
+      this.by = UserData.CREATE_BY_STRING(this.user.displayName /*this.account.host*/);
       // this.accountAvatarUrl = UserData.GET_ACTOR_AVATAR_URL(this.users);
 
       const absoluteAPIUrl = getAbsoluteAPIUrl();
@@ -96,7 +96,7 @@ export class PostCommentAdmin {
     this.user = hash.user;
 
     if (this.user) {
-      this.by = UserData.CREATE_BY_STRING(this.user.name);
+      this.by = UserData.CREATE_BY_STRING(this.user.displayName);
       // this.accountAvatarUrl = UserData.GET_ACTOR_AVATAR_URL(this.users);
 
       this.user.localUrl = '/accounts/' + this.by;

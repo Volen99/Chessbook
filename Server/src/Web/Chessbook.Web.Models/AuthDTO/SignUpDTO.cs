@@ -2,7 +2,10 @@
 {
     public class SignUpDTO : LoginDTO
     {
-        public string FullName { get; set; }
+        public string DisplayName { get; set; }
+
+        public string Username { get; set; }
+
         public string ConfirmPassword { get; set; }
     }
 }

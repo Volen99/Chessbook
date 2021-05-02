@@ -63,6 +63,10 @@ export class UsersApi {
     return this.api.put(`${this.apiController}/current`, item);
   }
 
+  updateCurrentPersonal(item: any): Observable<any> {
+    return this.api.put(`${this.apiController}/personal`, item);
+  }
+
   update(item: any): Observable<any> {
     return this.api.put(`${this.apiController}/${item.id}`, item);
   }
@@ -113,5 +117,9 @@ export class UsersApi {
 
   getUsers(url: string, params: HttpParams) {
     return this.api.get(`${this.apiController}/${url}`, params);
+  }
+
+  getYourBirthday(url: string, id: number) {
+    return this.api.get(`${this.apiController}/${url}/${id}`);
   }
 }

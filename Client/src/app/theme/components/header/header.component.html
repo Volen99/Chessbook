@@ -21,7 +21,7 @@
     <nb-action class="user-action" *nbIsGranted="['view', 'current-user']">
       <nb-user [nbContextMenu]="userMenu"
                [onlyPicture]="userPictureOnly"
-               [name]="user?.name"
+               [name]="user?.displayName"
                [picture]="user?.profileImageUrlHttps | ngxAuthToken | async">
       </nb-user>
     </nb-action>

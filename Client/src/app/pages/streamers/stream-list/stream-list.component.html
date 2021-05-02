@@ -1,4 +1,4 @@
-<div class="margin-content">
+<div class="margin-content" nbInfiniteList [listenWindowScroll]="true" [threshold]="500" (bottomThreshold)="this.loadMoreStreams()">
     <div class="videos-header" style="height: 60px">
                 <div class="action-block">
                     <nb-actions size="medium">
@@ -17,21 +17,9 @@
                     </nb-actions>
 
                 </div>
-        <nb-actions *ngIf="this.isChessbookStreamers" size="small">
-            <nb-action *ngIf="!this.twitchLoginName" class="control-item" nbTooltip="Enter your Twitch username" (click)="this.open3()">
-                <a nbButton class="ml-2" status="primary">
-                    <fa-icon [icon]="this.faUserPlus" style="font-size: 18px"></fa-icon>
-                </a>
-            </nb-action>
-            <nb-action *ngIf="this.twitchLoginName" class="control-item" nbTooltip="Edit your Twitch username" (click)="this.deleteMe()">
-                <a nbButton class="ml-2" status="primary">
-                    <fa-icon [icon]="this.faUserCheck" style="font-size: 18px"></fa-icon>
-                </a>
-            </nb-action>
-        </nb-actions>
     </div>
 
-    <div class="no-results" i18n *ngIf="this.streams?.data.length <= 0">No chessbook user is streaming at the moment :(</div>
+    <div class="no-results" i18n *ngIf="this.streams?.data.length <= 0">Loading...</div>
     <div class="videos" style="padding-left: 6px"> <!--[ngClass]="{ 'display-as-row': displayAsRow() }"-->
         <ng-container *ngFor="let video of this.streams?.data;"> <!--trackBy: videoById;-->
             <!--            <h2 class="date-title" *ngIf="getCurrentGroupedDateLabel(video)">-->

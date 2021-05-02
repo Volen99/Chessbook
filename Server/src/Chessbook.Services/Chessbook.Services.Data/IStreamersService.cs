@@ -12,5 +12,7 @@ namespace Chessbook.Services.Data
 
         Task<string> EditUserLogin(string userLogin, int userId);
 
+        Task<string> DeleteUserLogin(string userLogin, int userId);
+
     }
 }

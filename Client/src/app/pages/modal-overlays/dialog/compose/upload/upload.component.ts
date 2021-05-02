@@ -135,6 +135,7 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
 
 
   dismiss() {
+    debugger
     this.ref.close();
   }
 
@@ -180,6 +181,7 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public async shareButtonHandler() {
+    debugger
     if (this.replyPost) {
       if (this.text) {
         this.text = this.replyPost.user.screenName + ' ' + this.text;
@@ -189,27 +191,27 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     let publishPostParameters = new PublishTweetParameters(this.text);
-    if (!this.isPoll) {
-      if (this.uploader.queue.length || String(this.text).trim().length) {
-        let fileCurrent = this.uploader.queue[0]._file;
+    if (this.uploader.queue.length) {
+      let fileCurrent = this.uploader.queue[0]._file;
 
-        let mediaType = fileCurrent.type;
-        let bytes = await fileCurrent.arrayBuffer();
+      let mediaType = fileCurrent.type;
+      let bytes = await fileCurrent.arrayBuffer();
 
-        let uploadedImage = await this.uploadService.uploadTweetImageAsync(bytes, mediaType);
-        publishPostParameters.medias = [uploadedImage];
+      let uploadedImage = await this.uploadService.uploadTweetImageAsync(bytes, mediaType);
+      publishPostParameters.medias = [uploadedImage];
 
-        if (this.replyPost) {
-          publishPostParameters.inReplyToTweet = this.replyPost;
-          publishPostParameters.addCustomQueryParameter('in_reply_to_screen_name', this.replyPost.user.screenName);
-        }
-
-        let postWithImage = await this.postsService.publishTweetAsync(publishPostParameters);
+      if (this.replyPost) {
+        publishPostParameters.inReplyToTweet = this.replyPost;
+        publishPostParameters.addCustomQueryParameter('in_reply_to_screen_name', this.replyPost.user.screenName);
       }
-    } else {
+
+      let postWithImage = await this.postsService.publishTweetAsync(publishPostParameters);
+    } else if (this.isPoll) {
       publishPostParameters.poll = this.initialPoll;
       publishPostParameters.hasPoll = true;
 
+      await this.postsService.publishTweetAsync(publishPostParameters);
+    } else if (String(this.text).trim().length) {
       await this.postsService.publishTweetAsync(publishPostParameters);
     }
 

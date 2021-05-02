@@ -76,7 +76,7 @@ export class PostComponent implements OnInit {
     if (this.isReshare) {
       this.socialContextProps = {
         screenName: this.post.user.screenName,
-        displayName: this.post.user.name,
+        displayName: this.post.user.displayName,
         faIcon: this.faShare,
       };
 
@@ -85,7 +85,8 @@ export class PostComponent implements OnInit {
     }
 
 
-    if (this.post.entities.medias) {
+    debugger
+    if (this.post.hasMedia) {
       this.picture = this.post.entities.medias[0].displayURL;
       this.mediaUrl = this.post.entities.medias[0].displayURL;
     }

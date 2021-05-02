@@ -162,7 +162,6 @@ export class TweetQueryGeneratorService {
   }
 
   public getPublishRetweetQuery(parameters: IPublishRetweetParameters): HttpParams {
-    debugger
     let tweetId = this.getTweetId(parameters.tweet);
     let params = new HttpParams(); // new StringBuilder(format(Resources.Tweet_Retweet_Publish, tweetId));
 

@@ -97,5 +97,7 @@
         public string SupplementalLanguage { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public bool HasMedia { get; set; }
     }
 }

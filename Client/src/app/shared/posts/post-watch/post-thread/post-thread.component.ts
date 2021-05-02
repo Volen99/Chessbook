@@ -135,7 +135,6 @@ export class PostThreadComponent implements OnInit {
   videoRouterLink: any[] = [];
 
   buildVideoLink () {
-    debugger
     if (!this.post.url) {
       this.videoRouterLink = [ `/${this.post.user.screenName}/post`, this.post.id ];
 

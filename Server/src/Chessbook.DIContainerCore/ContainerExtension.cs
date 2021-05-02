@@ -20,6 +20,10 @@
     using Chessbook.Core.JsonConverters;
     using Chessbook.Core.JsonConverters.Logic;
     using Chessbook.Services.Data;
+    using Nop.Core.Caching;
+    using Nop.Core.Configuration;
+    using Microsoft.Extensions.Caching.Memory;
+    using Nop.Services.Helpers;
 
     public static class ContainerExtension
     {
@@ -50,9 +54,9 @@
             services.AddTransient<IPostsService, PostsService>();
             services.AddTransient<IPollService, PollService>();
 
-            services.AddTransient<IPictureService, PictureService>();
-            services.AddTransient<INopFileProvider, NopFileProvider>();
-            services.AddTransient<IGenericAttributeService, GenericAttributeService>();
+            services.AddScoped<IPictureService, PictureService>();
+            services.AddScoped<INopFileProvider, NopFileProvider>();
+            services.AddScoped<IGenericAttributeService, GenericAttributeService>();
             services.AddTransient<IStreamersService, StreamersService>();
             services.AddTransient<IRelationshipService, RelationshipService>();
 
@@ -65,6 +69,27 @@
 
             services.AddTransient<IJsonObjectConverter, JsonObjectConverter>();
             services.AddTransient<IJsonConvertWrapper, JsonConvertWrapper>();
+
+            //static cache manager
+            //if (appSettings.DistributedCacheConfig.Enabled)
+            //{
+            //    services.AddScoped<ILocker, DistributedCacheManager>();
+            //    services.AddScoped<IStaticCacheManager, DistributedCacheManager>();
+            //}
+            //else
+            //{
+            //    services.AddSingleton<ILocker, MemoryCacheManager>();
+            //    services.AddSingleton<IStaticCacheManager, MemoryCacheManager>();
+            //}
+
+            services.AddSingleton<IMemoryCache>(new MemoryCache(new MemoryCacheOptions())); // might bug
+
+            services.AddSingleton<ILocker, MemoryCacheManager>();
+            services.AddSingleton<IStaticCacheManager, MemoryCacheManager>();
+
+            services.AddSingleton<AppSettings, AppSettings>(); // might bug
+
+            services.AddScoped<IDateTimeHelper, DateTimeHelper>();
         }
     }
 }

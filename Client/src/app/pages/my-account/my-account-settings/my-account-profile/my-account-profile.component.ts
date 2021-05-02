@@ -19,6 +19,24 @@ import {NbTokenService} from "../../../../sharebook-nebular/auth/services/token/
 import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {EMAIL_PATTERN, NUMBERS_PATTERN} from "../../../../auth/components";
 import {NbAuthOAuth2JWTToken} from "../../../../sharebook-nebular/auth/services/token/token";
+import {faChessKingAlt, faChessQueenAlt} from '@fortawesome/pro-solid-svg-icons';
+import {Util} from "leaflet";
+import formatNum = Util.formatNum;
+
+export enum Month {
+  Jan = 1,
+  Feb = 2,
+  Mar,
+  Apr,
+  May,
+  Jun,
+  Jul,
+  Aug,
+  Sep,
+  Oct,
+  Nov,
+  Dec,
+}
 
 @Component({
   selector: 'my-account-profile',
@@ -26,16 +44,28 @@ import {NbAuthOAuth2JWTToken} from "../../../../sharebook-nebular/auth/services/
   styleUrls: ['./my-account-profile.component.scss']
 })
 export class MyAccountProfileComponent implements OnInit, OnDestroy {
+
+
   userForm: FormGroup;
 
   protected readonly unsubscribe$ = new Subject<void>();
 
-  get login() { return this.userForm.get('login'); }
 
-  get email() { return this.userForm.get('email'); }
+  get email() {
+    return this.userForm.get('email');
+  }
+
+  get displayName() {
+    return this.userForm.get('displayName');
+  }
+
+  get description() {
+    return this.userForm.get('description');
+  }
 
 
   mode: UserFormMode;
+
   setViewMode(viewMode: UserFormMode) {
     this.mode = viewMode;
   }
@@ -49,29 +79,39 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
               private fb: FormBuilder) {
   }
 
+
+
   ngOnInit(): void {
+    let date = new Date();
+    for (let day = 1; day <= 31; day++) {
+      this.days.push(day);
+    }
+
+    for (let year = date.getFullYear(); year >= date.getFullYear() - 115; year--) {
+      this.years.push(year);
+    }
+
     this.initUserForm();
     this.loadUserData();
   }
 
+  genderSelected = '';
+
+  monthSelected: number;
+  daySelected: number;
+  yearSelected: number;
+
+  faChessKingAlt = faChessKingAlt;
+  faChessQueenAlt = faChessQueenAlt;
+
+  public months = Month;
+  public days: number[] = [];
+  public years: number[] = [];
+
   initUserForm() {
     this.userForm = this.fb.group({
-      id: this.fb.control(''),
-      role: this.fb.control(''),
-      firstName: this.fb.control('', [Validators.minLength(3), Validators.maxLength(20)]),
-      lastName: this.fb.control('', [Validators.minLength(3), Validators.maxLength(20)]),
-      login: this.fb.control('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
-      age: this.fb.control('', [Validators.required, Validators.min(1),
-        Validators.max(120), Validators.pattern(NUMBERS_PATTERN)]),
-      email: this.fb.control('', [
-        Validators.required,
-        Validators.pattern(EMAIL_PATTERN),
-      ]),
-      address: this.fb.group({
-        street: this.fb.control(''),
-        city: this.fb.control(''),
-        zipCode: this.fb.control(''),
-      }),
+      displayName: this.fb.control('', [Validators.minLength(3), Validators.maxLength(18)]),
+      description: this.fb.control('', [Validators.minLength(3), Validators.maxLength(140)]),
     });
   }
 
@@ -79,36 +119,43 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
     return this.mode !== UserFormMode.VIEW;
   }
 
+  changeMonth(month: number) {
+    this.monthSelected = month;
+  }
+
+  changeDay(day: number) {
+    this.daySelected = day;
+  }
+
+  changeYear(year: number) {
+    this.yearSelected = year;
+  }
+
 
   loadUserData() {
-    const id = this.route.snapshot.paramMap.get('id');
-    const isProfile = this.route.snapshot.queryParamMap.get('profile');
-    if (isProfile) {
-      this.setViewMode(UserFormMode.EDIT_SELF);
-      this.loadUser();
-    } else {
-      if (id) {
-        const currentUserId = this.userStore.getUser().id;
-        this.setViewMode(currentUserId.toString() === id ? UserFormMode.EDIT_SELF : UserFormMode.EDIT);
-        this.loadUser(id);
-      } else {
-        this.setViewMode(UserFormMode.ADD);
-      }
-    }
+    const currentUserId = this.userStore.getUser().id;
+
+    this.usersService.getYourBirthday(currentUserId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((birthday) => {
+        this.monthSelected = birthday.dateOfBirthMonth;
+        this.daySelected = birthday.dateOfBirthDay?.toString();
+        this.yearSelected = birthday.dateOfBirthYear?.toString();
+
+        this.genderSelected = birthday.gender;
+      });
+
+    this.loadUser(currentUserId);
   }
 
   loadUser(id?) {
-    const loadUser = this.mode === UserFormMode.EDIT_SELF
-      ? this.usersService.getCurrentUser() : this.usersService.get(id);
+    const loadUser = this.usersService.getCurrentUser();
     loadUser
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((user) => {
         this.userForm.setValue({
-          id: user.id ? user.id : '',
-          role: user.role ? user.role : '',
-          name: user.name ? user.name : '',
-          age: user.age ? user.age : '',
-          email: user.email,
+          displayName: user.displayName ? user.displayName : '',
+          description: user.description ? user.description : '',
         });
 
         // this is a place for value changes handling
@@ -123,22 +170,25 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    const user: IUser = this.convertToUser(this.userForm.value);
+    let body = {
+      displayName: this.userForm.get('displayName').value,
+      description: this.userForm.get('description').value,
+
+      gender: this.genderSelected,
+
+      dateOfBirthMonth: +this.monthSelected,
+      dateOfBirthDay: +this.daySelected,
+      dateOfBirthYear: +this.yearSelected,
+    };
 
     let observable = new Observable<IUser>();
-    if (this.mode === UserFormMode.EDIT_SELF) {
-      this.usersService.updateCurrent(user).subscribe((result: any) => {
-          this.tokenService.set(new NbAuthOAuth2JWTToken(result, 'email', new Date()));
-          this.handleSuccessResponse();
-        },
-        err => {
-          this.handleWrongResponse();
-        });
-    } else {
-      observable = user.id
-        ? this.usersService.update(user)
-        : this.usersService.create(user);
-    }
+    this.usersService.updateCurrentPersonal(body).subscribe((result: any) => {
+        this.tokenService.set(new NbAuthOAuth2JWTToken(result, 'email', new Date()));
+        this.handleSuccessResponse();
+      },
+      err => {
+        this.handleWrongResponse();
+      });
 
     observable
       .pipe(takeUntil(this.unsubscribe$))
@@ -151,7 +201,7 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
   }
 
   handleSuccessResponse() {
-    this.toasterService.success('', `Item ${this.mode === UserFormMode.ADD ? 'created' : 'updated'}!`);
+    this.toasterService.success('', `Profile updated!`);
     this.back();
   }
 
@@ -167,9 +217,6 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
-
-
 
 
   // @Input() user: IUser = null; // was User

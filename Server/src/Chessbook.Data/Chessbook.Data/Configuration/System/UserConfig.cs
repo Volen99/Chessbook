@@ -15,9 +15,9 @@
         {
             base.Configure(builder);
 
-            builder.Property(obj => obj.FirstName);
-            builder.Property(obj => obj.LastName);
-            builder.Property(obj => obj.Login).IsRequired();
+            builder.Property(obj => obj.DisplayName);
+            builder.Property(obj => obj.ScreenName);
+            // builder.Property(obj => obj.Login).IsRequired();
             builder.Property(obj => obj.Password);
             builder.Property(obj => obj.Email).IsRequired();
             builder.Property(obj => obj.Age);

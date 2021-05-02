@@ -11,10 +11,10 @@
 
     public class UserDTO : UserIdentifierDTO, IMapFrom<User>
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Login { get; set; }
+        public string DisplayName { get; set; }
+
         public string Email { get; set; }
+
         public int? Age { get; set; }
 
         public SettingsDTO Settings { get; set; }

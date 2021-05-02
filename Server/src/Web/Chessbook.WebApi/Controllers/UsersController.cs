@@ -26,6 +26,7 @@
     using Chessbook.Data.Models.Media;
     using Chessbook.Web.Api.Factories;
     using System.Collections.Generic;
+    using Chessbook.Core;
 
     [Route("users")]
     public class UsersController : BaseApiController
@@ -40,14 +41,14 @@
         private readonly IUserModelFactory userModelFactory;
 
         public UsersController(IUserService userService, JwtManager jwtManager, IAuthenticationService authService, IPostsService postsService,
-            IPictureService pictureService, IRelationshipService relationshipService, IUserModelFactory userModelFactory)
+            IPictureService pictureService, IGenericAttributeService genericAttributeService, IRelationshipService relationshipService, IUserModelFactory userModelFactory)
         {
             this.userService = userService;
             this.jwtManager = jwtManager;
             this.authService = authService;
             this.postsService = postsService;
             this.pictureService = pictureService;
-            // this.genericAttributeService = genericAttributeService;
+            this.genericAttributeService = genericAttributeService;
             this.relationshipService = relationshipService;
             this.userModelFactory = userModelFactory;
         }
@@ -283,7 +284,64 @@
 
             return this.Ok(model);
         }
+
+        [HttpPut]
+        [Route("personal")]
+        public async Task<IActionResult> PostEditPersonalDetails([FromBody] EditPersonalDetailsInputModel input)
+        {
+            var currentUserId = User.GetUserId();
+            var customer = await userService.GetByIdClean(currentUserId);
+
+            if (input.Description != null || input.DisplayName != null)
+            {
+                customer.Description = input.Description;
+                customer.DisplayName = input.DisplayName;
+
+                await this.userService.Update(customer);
+            }
+
+            await this.genericAttributeService.SaveAttributeAsync(customer, NopCustomerDefaults.GenderAttribute, input.Gender);
+
+            var dateOfBirth = input.ParseDateOfBirth();
+            await this.genericAttributeService.SaveAttributeAsync(customer, NopCustomerDefaults.DateOfBirthAttribute, dateOfBirth);
+
+            var newToken = await authService.GenerateToken(currentUserId);
+
+            return Ok(newToken);
+        }
+
+        [HttpGet]
+        [Route("birthday/{id:int}")]
+        public async Task<IActionResult> GetYourBirthday(int id)
+        {
+            var currentUserId = User.GetUserId();
+
+            if (currentUserId != id)
+            {
+                this.Unauthorized("Sorry hacker. Not this time 😎");
+            }
+
+            var customer = await userService.GetByIdClean(currentUserId);
+
+            var model = new GetYourBirthdayDTO();
+
+            var dateOfBirth = await this.genericAttributeService.GetAttributeAsync<DateTime?>(customer, NopCustomerDefaults.DateOfBirthAttribute);
+            if (dateOfBirth.HasValue)
+            {
+                model.DateOfBirthMonth = dateOfBirth.Value.Month;
+                model.DateOfBirthDay = dateOfBirth.Value.Day;
+                model.DateOfBirthYear = dateOfBirth.Value.Year;
+            }
+
+            var gender = await this.genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.GenderAttribute);
+
+            model.Gender = gender;
+
+            return this.Ok(model);
+        }
     }
+
+   
 
     public class GetProfileInputQueryModel
     {

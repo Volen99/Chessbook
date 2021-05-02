@@ -65,7 +65,6 @@ export class UserFollowService {
       .pipe(
         map(this.restExtractor.extractDataBool),
         tap(() => {
-          debugger
           this.myAccountSubscriptionCache[screenName] = false;
 
           this.myAccountSubscriptionCacheSubject.next(this.myAccountSubscriptionCache);

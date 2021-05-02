@@ -15,7 +15,7 @@
         class="message-block" [ngClass]="{ 'by-moderator': message.byModerator, 'by-me': isMessageByMe(message) }"
       >
 
-        <div class="author">{{ message.account.name }}</div>
+        <div class="author">{{ message.account.displayName }}</div>
 
         <div class="bubble">
           <div class="content" [innerHTML]="message.messageHtml"></div>

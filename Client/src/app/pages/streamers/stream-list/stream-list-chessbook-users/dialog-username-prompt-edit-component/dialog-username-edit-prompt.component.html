@@ -8,7 +8,7 @@
                 <button nbButton size="medium" ghost status="primary">
                     <nb-icon icon="edit-outline" (click)="handleEditClick()"></nb-icon>
                 </button>
-                <button nbButton size="medium" ghost status="primary">
+                <button nbButton size="medium" ghost status="primary" (click)="this.handleDeleteClick()">
                     <nb-icon icon="trash-2-outline"></nb-icon>
                 </button>
             </li>
@@ -19,7 +19,8 @@
 
     </nb-card-body>
     <nb-card-footer>
-        <button *ngIf="!this.isEdit" nbButton hero status="primary" (click)="this.dismiss()">Dismiss Dialog</button>
-        <button *ngIf="this.isEdit" nbButton hero status="primary" (click)="this.edit()">Edit</button>
+        <button *ngIf="!this.isEdit" nbButton hero status="primary" (click)="this.dismiss()">Close</button>
+        <button *ngIf="this.isEdit" nbButton hero status="primary" style="margin-right: 1rem;" (click)="this.edit()">Edit</button>
+        <button *ngIf="this.isEdit" nbButton hero status="warning" (click)="this.back()">Back</button>
     </nb-card-footer>
 </nb-card>

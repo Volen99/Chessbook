@@ -287,7 +287,7 @@
                 <ng-container *ngIf="this.posts?.length > 0;">
                   <app-post *ngFor="let post of this.posts; index as i"
                             [hasText]="!!post?.text"
-                            [hasMedia]="!!post?.entities.medias"
+                            [hasMedia]="post?.entities.medias.length >= 1"
                             [transform]="this?.setTransform(i)"
                             [mediaUrl]="post?.entities.medias?.shift().mediaURL"
                             [isPoll]="!!this?.post.entities.poll"

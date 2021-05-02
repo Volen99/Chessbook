@@ -60,7 +60,7 @@ export class NbPasswordAuthStrategyOptions extends NbAuthStrategyOptions {
       success: '/',
       failure: null,
     },
-    defaultErrors: ['Something went wrong, please try again.'],
+    defaultErrors: ['Email or username has already been taken.'],
     defaultMessages: ['You have been successfully registered.'],
   };
   requestPass?: boolean | NbPasswordStrategyModule = {

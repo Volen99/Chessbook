@@ -29,6 +29,7 @@ import {
   IGetRelationshipBetweenParameters
 } from "../../shared/shared-main/relationships/models/get-relationship-between-parameters.model";
 import {IRelationshipDetails} from "../../shared/shared-main/relationships/models/relationship-details.model";
+import {Month} from "../my-account/my-account-settings/my-account-profile/my-account-profile.component";
 
 
 @Component({
@@ -83,6 +84,8 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
 
   ngOnDestroy() {
   }
+
+  birthday: {};
 
   relationshipDetails: IRelationshipDetails;
 
@@ -151,15 +154,32 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
     return i * 388.7; // 😁
   }
 
+  month: string;
+  day: number;
+  year: number;
+
+  monthEnum = Month;
+
   private async onAccount(user: User) {
 
     // @ts-ignore
     this.profileCurrent = user.userDTO;
+    this.profileCurrent.createdOn = new Date(this.profileCurrent.createdOn);
+
+    const currentUserId = this.userStore.getUser().id;
+    if (currentUserId === this.profileCurrent.id) {
+      this.usersService.getYourBirthday(currentUserId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((birthday) => {
+          this.month = Month[birthday.dateOfBirthMonth];
+          this.day = birthday.dateOfBirthDay?.toString();
+          this.year = birthday.dateOfBirthYear?.toString();
+        });
+    }
 
     let relationshipBetweenParameters = new GetRelationshipBetweenParameters(this.userStore.getUser().id ,this.profileCurrent.id);
     this.relationshipsService.show(relationshipBetweenParameters)
       .subscribe((data: IRelationshipDetails) => {
-        debugger
         this.relationshipDetails = data;
       });
 

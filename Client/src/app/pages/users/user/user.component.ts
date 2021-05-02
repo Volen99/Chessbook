@@ -117,7 +117,7 @@ export class UserComponent implements OnInit, OnDestroy {
         this.userForm.setValue({
           id: user.id ? user.id : '',
           role: user.role ? user.role : '',
-          name: user.name ? user.name : '',
+          name: user.displayName ? user.displayName : '',
           age: user.age ? user.age : '',
           email: user.email,
         });

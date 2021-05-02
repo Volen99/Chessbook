@@ -30,7 +30,7 @@
 
                 <div class="actor-info">
                     <div class="actor-info-names">
-                        <div class="actor-info-display-name">{{ user.name }}</div>
+                        <div class="actor-info-display-name">{{ user.displayName }}</div>
                         <div class="actor-info-username">{{ user.screenName }}</div>
                     </div>
                     <div i18n class="actor-info-followers">{this.user?.friendsCount, plural, =1 {1 follower} other {{{ this.user?.friendsCount | myNumberFormatter }} followers}}</div>

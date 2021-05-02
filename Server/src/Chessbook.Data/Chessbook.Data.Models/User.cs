@@ -10,23 +10,14 @@
     {
         private const string REGEX_PROFILE_IMAGE_SIZE = "_[^\\W_]+(?=(?:\\.[a-zA-Z0-9_]+$))";
 
-        public string Login { get; set; }
-        public string Password { get; set; }
+        public string DisplayName { get; set; }
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string ScreenName { get; set; }
+
+        public string Password { get; set; }
 
         public string Email { get; set; }
         public int? Age { get; set; }
-
-
-
-
-
-
-        public string DisplayName { get; set; }
-
-        public int MyProperty { get; set; }
 
         // Audit info
         [DataType(DataType.DateTime)]
@@ -34,12 +25,6 @@
 
         [DataType(DataType.DateTime)]
         public DateTime? ModifiedOn { get; set; }
-
-        // public string IdStr { get; set; }         // TODO: Long int64 ids will lose value to "ToString()"!!!
-
-        public string Name { get; set; }
-
-        public string ScreenName { get; set; }
 
         public string Location { get; set; } // The user-defined location for this account’s profile. Not necessarily a location, nor machine-parseable
 
@@ -56,8 +41,6 @@
         public int FriendsCount { get; set; }                   // The number of users this account is following (AKA their "followings")
 
         public int ListedCount { get; set; }                    // The number of public lists that this user is a member of
-
-
 
         public int FavouritesCount { get; set; }                // The number of Feeds this user has liked in the account’s lifetime
 
@@ -88,8 +71,6 @@
         public string ProfileBackgroundImageUrlHttps { get; set; }
 
         public bool ProfileBackgroundTile { get; set; }
-
-        public string ProfileImageUrl { get; set; }
 
         public int ProfilePictureId { get; set; }
 
@@ -132,26 +113,6 @@
         public string TranslatorType { get; set; }
 
         public bool RequireSomeConsent { get; set; }
-
-        // public Enums.Gender Gender { get; set; }
-
-        // bday
-
-        public int Day { get; set; }
-
-        public int Month { get; set; }
-
-        public int Year { get; set; }
-
-        public string Visibility { get; set; }
-
-        public string VisibilityYear { get; set; }
-
-        // end
-
-
-
-
 
 
         // Account Settings

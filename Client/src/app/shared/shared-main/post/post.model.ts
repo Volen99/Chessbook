@@ -358,6 +358,8 @@ export class Post /*implements IPost*/ {
     return null;
   }
 
+  hasMedia: boolean;
+
   // #endregion
 
   // #region Tweetinvi API Attributes

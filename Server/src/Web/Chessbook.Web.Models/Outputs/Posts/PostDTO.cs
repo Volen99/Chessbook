@@ -76,6 +76,8 @@
         [JsonIgnore]
         public PollDTO Poll { get; set; }
 
+        public bool HasMedia { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
 

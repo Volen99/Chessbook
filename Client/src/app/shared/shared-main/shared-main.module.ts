@@ -75,6 +75,7 @@ import {ComponentsModule} from "../../components/components.module";
 import {NumberFormatterPipe} from "./angular/pipes/number-formatter.pipe";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {SocialContextComponent} from "./components/post/social-context/social-context.component";
+import {EnumToArrayPipe} from "./angular/pipes/enum-to-array.pipe";
 
 @NgModule({
   imports: [
@@ -111,6 +112,7 @@ import {SocialContextComponent} from "./components/post/social-context/social-co
     FromNowPipe,
     NumberFormatterPipe,
     BytesPipe,
+    EnumToArrayPipe,
     // DurationFormatterPipe,
     //
      InfiniteScrollerDirective,
@@ -175,8 +177,8 @@ import {SocialContextComponent} from "./components/post/social-context/social-co
     NumberFormatterPipe,
     // DurationFormatterPipe,
     //
-     InfiniteScrollerDirective,
-     SharebookTemplateDirective,
+    InfiniteScrollerDirective,
+    SharebookTemplateDirective,
     //
     ActionDropdownComponent,
     // ButtonComponent,
@@ -200,6 +202,7 @@ import {SocialContextComponent} from "./components/post/social-context/social-co
     BootstrapToggleDirective,
     PostComponent,
     ProfilePicture49x49Component,
+    EnumToArrayPipe,
     // EnumToArrayPipe,
     // FormDirective,
     // NextBtnDirective,

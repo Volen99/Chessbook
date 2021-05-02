@@ -31,10 +31,18 @@ namespace Chessbook.Web.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAccessToken()
+        public async Task<IActionResult> GetAccessToken([FromQuery] string cursor)
         {
             var accessTokenDTO = await this.ExecuteRequest<CreateTokenResponseDTO>($"https://id.twitch.tv/oauth2/token?client_id={TWITCH_CLIEND_ID}&client_secret={TWITCH_CLIENT_SECRET}&grant_type=client_credentials");
-            var streamsDTO = await this.ExecuteRequest<GetStreamsResponseDTO>("https://api.twitch.tv/helix/streams", accessTokenDTO.AccessToken);
+
+            var url = "https://api.twitch.tv/helix/streams?game_id=743&first=50";
+
+            if (cursor != null)
+            {
+                url = url.AddParameterToQuery("after", cursor);
+            }
+
+            var streamsDTO = await this.ExecuteRequest<GetStreamsResponseDTO>(url, accessTokenDTO.AccessToken);
 
             
 
@@ -44,22 +52,31 @@ namespace Chessbook.Web.Api.Controllers
 
         [HttpGet]
         [Route("users")] 
-        public async Task<IActionResult> GetChessbookUsersStream()
+        public async Task<IActionResult> GetChessbookUsersStream([FromQuery] string cursor)
         {
             var loginNames = await this.streamersService.GetAllLoginNames();
 
-            var url = $"https://api.twitch.tv/helix/streams";
+            if (loginNames == null)
+            {
+                return this.NoContent();
+            }
+
+            var url = $"https://api.twitch.tv/helix/streams?first=50";
 
             foreach (var loginName in loginNames)
             {
                 url = url.AddParameterToQuery("user_login", loginName);
             }
 
+            if (cursor != null)
+            {
+                url = url.AddParameterToQuery("after", cursor);
+            }
+
             var accessTokenDTO = await this.ExecuteRequest<CreateTokenResponseDTO>($"https://id.twitch.tv/oauth2/token?client_id={TWITCH_CLIEND_ID}&client_secret={TWITCH_CLIENT_SECRET}&grant_type=client_credentials");
             var streamsDTO = await this.ExecuteRequest<GetChessbookUsersStreamDTO>(url, accessTokenDTO.AccessToken);
 
             streamsDTO.TwitchLoginName = await this.streamersService.GetByUserId(User.GetUserId());
-
 
             return this.Ok(streamsDTO);
 
@@ -81,7 +98,13 @@ namespace Chessbook.Web.Api.Controllers
         {
             var res = await this.streamersService.SaveUserLogin(userLogin, User.GetUserId());
 
-            return this.Ok(res);
+            if (res == null)
+            {
+               var obj = new { message = "Username already exists" };
+               return this.Ok(obj);
+            }
+
+            return this.Ok(new { message = "Username successfully added" });
         }
 
         [HttpPost]
@@ -95,7 +118,21 @@ namespace Chessbook.Web.Api.Controllers
 
             var res = await this.streamersService.EditUserLogin(userLogin,input.UserId);
 
-            return this.Ok(res);
+            return this.Ok(new { username = res });
+        }
+
+        [HttpPost]
+        [Route("delete/{userLogin:length(3, 16)}")]
+        public async Task<IActionResult> DeleteTwitchUserLogin(string userLogin, [FromBody] EditTwitchLoginNameInputModel input)
+        {
+            if (input.UserId != User.GetUserId())
+            {
+                return this.Unauthorized("Haha, you can't trick me! You can't delete someone else twitch username 🙄..");
+            }
+
+            var res = await this.streamersService.DeleteUserLogin(userLogin, input.UserId);
+
+            return this.Ok(new { username = res });
         }
 
         private async Task<TDTO> ExecuteRequest<TDTO>(string url, string accessToken = null)

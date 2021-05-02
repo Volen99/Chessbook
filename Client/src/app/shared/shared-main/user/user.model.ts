@@ -80,13 +80,13 @@ export class User implements IUser {
     throw new Error("Cannot set the ScreenName of a users");
   }
 
-  get name(): string {
-    return this.userDTO.name;
+  get displayName(): string {
+    return this.userDTO.displayName;
   }
 
   // added 22.03.2021, Monday, 20:09 PM | songs i listen to at 3am on a school night when it's raining.
-  set name(value: string) {
-    this.userDTO.name = value;
+  set displayName(value: string) {
+    this.userDTO.displayName = value;
   }
 
   get description(): string {
@@ -101,8 +101,8 @@ export class User implements IUser {
     return this.userDTO.status;
   }
 
-  get createdAt(): Date {   // DateTimeOffset
-    return this.userDTO.createdAt;
+  get createdOn(): Date {   // DateTimeOffset
+    return new Date(this.userDTO.createdOn);
   }
 
   get location(): string {

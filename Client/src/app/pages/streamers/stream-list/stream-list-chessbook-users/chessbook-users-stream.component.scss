@@ -1,0 +1,86 @@
+@import '_bootstrap-variables';
+@import '_variables';
+@import '_mixins';
+@import '_miniature';
+
+$iconSize: 16px;
+
+//::ng-deep my-video-list-header {
+//  display: flex;
+//  flex-grow: 1;
+//}
+
+a {
+  text-decoration: none;
+}
+
+.videos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  //my-feed {
+  //  display: inline-block;
+  //  width: calc(#{$iconSize} - 2px);
+  //}
+
+  .moderation-block {
+
+    app-global-icon {
+      position: relative;
+      width: $iconSize;
+    }
+
+    margin-left: .4rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .text-control {
+    margin-left: 0.4rem;
+  }
+}
+
+.date-title {
+  font-size: 16px;
+  font-weight: $font-semibold;
+  margin-bottom: 20px;
+  margin-top: -10px;
+
+  // make the element span a full grid row within .videos grid
+  grid-column: 1 / -1;
+
+  &:not(:first-child) {
+    margin-top: .5rem;
+    padding-top: 20px;
+    border-top: 1px solid $separator-border-color;
+  }
+}
+
+.margin-content {
+  @include grid-videos-miniature-layout;
+}
+
+.display-as-row.videos {
+  margin-left: pvar(--horizontalMarginContent);
+  margin-right: pvar(--horizontalMarginContent);
+
+  .video-wrapper {
+    margin-bottom: 15px;
+  }
+}
+
+@media screen and (max-width: $mobile-view) {
+  .videos-header {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    margin-bottom: 10px;
+
+    .title-page {
+      margin-bottom: 10px;
+      margin-right: 0px;
+    }
+  }
+}

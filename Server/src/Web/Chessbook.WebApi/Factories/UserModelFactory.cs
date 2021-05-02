@@ -3,6 +3,7 @@ using Chessbook.Data.Models.Media;
 using Chessbook.Services.Data.Services.Entities;
 using Chessbook.Services.Data.Services.Media;
 using Chessbook.Web.Models;
+using Nop.Services.Helpers;
 using System;
 using System.Threading.Tasks;
 
@@ -12,11 +13,13 @@ namespace Chessbook.Web.Api.Factories
     {
         private readonly IPictureService pictureService;
         private readonly IPostsService postsService;
+        private readonly IDateTimeHelper dateTimeHelper;
 
-        public UserModelFactory(IPictureService pictureService, IPostsService postsService)
+        public UserModelFactory(IPictureService pictureService, IPostsService postsService, IDateTimeHelper dateTimeHelper)
         {
             this.pictureService = pictureService;
             this.postsService = postsService;
+            this.dateTimeHelper = dateTimeHelper;
         }
 
         public async Task<UserDTO> PrepareCustomerModelAsync(UserDTO model, bool excludeProperties = false)
@@ -27,6 +30,9 @@ namespace Chessbook.Web.Api.Factories
             model.ProfileImageUrlHttps = ChessbookConstants.SiteHttps + profilePictureUrl;
 
             model.StatusesCount = await this.postsService.GetPostsCountByUserId(model.Id);
+
+            model.CreatedOn = await dateTimeHelper.ConvertToUserTimeAsync(model.CreatedOn, DateTimeKind.Utc, model.Id);
+            // customerModel.LastActivityDate = await _dateTimeHelper.ConvertToUserTimeAsync(customer.LastActivityDateUtc, DateTimeKind.Utc);
 
             return model;
 

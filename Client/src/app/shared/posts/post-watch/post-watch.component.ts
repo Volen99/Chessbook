@@ -111,7 +111,6 @@ export class PostWatchComponent implements OnInit {
 
 
   private async onVideoFetched(post: PostDetails) {
-    debugger
     // @ts-ignore
     this.post = post.postFromServer;
 

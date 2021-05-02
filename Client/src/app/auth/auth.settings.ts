@@ -63,7 +63,7 @@ export const authOptions = {
       socialLinks: socialLinks,
     },
     validation: {
-      fullName: {
+      displayName: {
         required: true,
         minLength: 6,
         maxLength: 20,

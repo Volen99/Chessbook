@@ -23,7 +23,7 @@
           <div class="comment-account">
             <a [routerLink]="[ '/accounts', comment.by ]">
               <span class="comment-account-name" [ngClass]="{ 'video-author': video.user.id === comment.user.id }">
-                {{ comment.user.name }}
+                {{ comment.user.displayName }}
               </span>
 
               <span class="comment-account-fid ml-1">{{ comment.by }}</span>

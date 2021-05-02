@@ -18,10 +18,13 @@ import {NbActionsModule} from "../../sharebook-nebular/theme/components/actions/
 import {VideoTrendingHeaderComponent} from "./stream-list/stream-list-header/video-trending-header.component";
 import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.module";
 import {NbTooltipModule} from "../../sharebook-nebular/theme/components/tooltip/tooltip.module";
-import {DialogUsernamePromptComponent} from "./stream-list/dialog-username-prompt-component/dialog-username-prompt.component";
+import {DialogUsernamePromptComponent} from "./stream-list/stream-list-chessbook-users/dialog-username-prompt-component/dialog-username-prompt.component";
 import {NbInputModule} from "../../sharebook-nebular/theme/components/input/input.module";
-import {DialogUsernameEditPromptComponent} from "./stream-list/dialog-username-prompt-edit-component/dialog-username-edit-prompt.component";
+import {DialogUsernameEditPromptComponent} from "./stream-list/stream-list-chessbook-users/dialog-username-prompt-edit-component/dialog-username-edit-prompt.component";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.module";
+import { ChessbookUsersStreamComponent } from './stream-list/stream-list-chessbook-users/chessbook-users-stream.component';
+import {NbDialogModule} from "../../sharebook-nebular/theme/components/dialog/dialog.module";
 
 // 15.04.2021, Thursday, 10:31 AM | SOKO - We Might Be Dead By Tomorrow (lyrics on screen)
 @NgModule({
@@ -36,22 +39,25 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     VideoTrendingHeaderComponent,
     DialogUsernamePromptComponent,
     DialogUsernameEditPromptComponent,
+    ChessbookUsersStreamComponent,
   ],
 
-  imports: [
-    CommonModule,
-    StreamersRoutingModule,
-    SidebarColumnModule,
-    SharedMainModule,
-    NbCardModule,
-    SharedGlobalIconModule,
-    NbButtonModule,
-    NbActionsModule,
-    NbIconModule,
-    NbTooltipModule,
-    NbInputModule,
-    FontAwesomeModule,
-  ],
+    imports: [
+        CommonModule,
+        StreamersRoutingModule,
+        SidebarColumnModule,
+        SharedMainModule,
+        NbCardModule,
+        SharedGlobalIconModule,
+        NbButtonModule,
+        NbActionsModule,
+        NbIconModule,
+        NbTooltipModule,
+        NbInputModule,
+        FontAwesomeModule,
+        NbListModule,
+        NbDialogModule.forChild(),
+    ],
 
   providers: [
     StreamersService,

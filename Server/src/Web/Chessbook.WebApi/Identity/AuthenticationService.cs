@@ -67,7 +67,8 @@
                 string.IsNullOrEmpty(signUpDto.Email) ||
                 string.IsNullOrEmpty(signUpDto.Password) ||
                 string.IsNullOrEmpty(signUpDto.ConfirmPassword) ||
-                string.IsNullOrEmpty(signUpDto.FullName) ||
+                string.IsNullOrEmpty(signUpDto.DisplayName) ||
+                string.IsNullOrEmpty(signUpDto.Username) ||
                 signUpDto.Password != signUpDto.ConfirmPassword )
             {
                 return AuthResult<Token>.UnvalidatedResult;
@@ -75,11 +76,19 @@
 
             var newUser = new TUser
             {
-                Name = signUpDto.FullName,
-                ScreenName = "@" + signUpDto.FullName,
+                DisplayName = signUpDto.DisplayName,
+                ScreenName = "@" + signUpDto.Username,
                 Email = signUpDto.Email,
-                Login = signUpDto.FullName,
+                CreatedOn = DateTime.UtcNow,
             };
+
+            var doesUsernameExists = await this.userManager.FindByNameAsync(newUser.ScreenName);
+            var doesEmailExists = await this.userManager.FindByEmailAsync(newUser.Email);
+
+            if (doesUsernameExists != null || doesEmailExists != null)
+            {
+                return AuthResult<Token>.UnvalidatedResult;
+            }
 
             var result = await userManager.CreateAsync(newUser, signUpDto.Password);
 

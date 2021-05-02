@@ -71,16 +71,21 @@ export const defaultAuthOptions: any = {
     validation: {
       password: {
         required: true,
-        minLength: 4,
+        minLength: 6,
         maxLength: 50,
       },
       email: {
         required: true,
       },
-      fullName: {
+      displayName: {
         required: false,
         minLength: 4,
         maxLength: 50,
+      },
+      username: {
+        required: false,
+        minLength: 4,
+        maxLength: 15,
       },
     },
   },

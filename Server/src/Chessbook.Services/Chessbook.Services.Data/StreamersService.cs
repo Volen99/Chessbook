@@ -18,6 +18,15 @@ namespace Chessbook.Services.Data
 
         public async Task<string> SaveUserLogin(string userLogin, int userId)
         {
+            var doesExits = this.twitchLoginNamesRepository.All()
+                .Where(ul => ul.LoginName == userLogin)
+                .FirstOrDefault();
+
+            if (doesExits != null)
+            {
+                return null;
+            }
+
             var twitchLoginName = new TwitchLoginName
             {
                 LoginName = userLogin,
@@ -36,7 +45,7 @@ namespace Chessbook.Services.Data
                 .Select(ln => ln.LoginName)
                 .ToArrayAsync();
 
-            if (loginNames == null)
+            if (loginNames.Length == 0)
             {
                 return null;
             }
@@ -71,6 +80,18 @@ namespace Chessbook.Services.Data
 
             return newUserLogin;
 
+        }
+
+        public async Task<string> DeleteUserLogin(string userLogin, int userId)
+        {
+            var loginName = await this.twitchLoginNamesRepository.All()
+               .Where(ln => ln.UserId == userId)
+               .FirstOrDefaultAsync();
+
+            this.twitchLoginNamesRepository.Delete(loginName);
+            await this.twitchLoginNamesRepository.SaveChangesAsync();
+
+            return loginName.LoginName;
         }
     }
 }

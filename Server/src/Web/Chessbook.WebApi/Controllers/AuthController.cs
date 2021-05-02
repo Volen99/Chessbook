@@ -62,7 +62,9 @@
             var result = await authService.SignUp(signUpDto);
 
             if (result.Succeeded)
+            {
                 return Ok(new { token = result.Data });
+            }
 
             return BadRequest();
         }

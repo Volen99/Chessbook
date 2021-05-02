@@ -87,7 +87,7 @@
 
         public Task<string> GetNormalizedUserNameAsync(TUser user, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Task.FromResult(user.Login);
+            return Task.FromResult(user.ScreenName);
         }
 
         public Task<string> GetUserIdAsync(TUser user, CancellationToken cancellationToken = default(CancellationToken))
@@ -97,7 +97,7 @@
 
         public Task<string> GetUserNameAsync(TUser user, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Task.FromResult(user.Login);
+            return Task.FromResult(user.ScreenName);
         }
 
         public Task SetNormalizedUserNameAsync(TUser user, string normalizedName, CancellationToken cancellationToken = default(CancellationToken))
@@ -107,7 +107,7 @@
 
         public Task SetUserNameAsync(TUser user, string userName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            user.Login = userName;
+            user.ScreenName = userName;
             return Task.CompletedTask;
         }
 

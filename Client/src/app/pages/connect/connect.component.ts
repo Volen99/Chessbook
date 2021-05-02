@@ -40,7 +40,6 @@ export class ConnectComponent implements OnInit {
   loadMoreVideos(reset = false) {
     this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage).
     subscribe(({data}) => {
-      debugger
         this.hasDoneFirstQuery = true;
         this.lastQueryLength = data["item2"];
 

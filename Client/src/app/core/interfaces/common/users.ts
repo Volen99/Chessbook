@@ -16,13 +16,13 @@ import {UserRight} from "../../../shared/models/users/user-right.enum";
 import {Avatar} from "primeng/avatar";
 
 export interface IUser extends IUserIdentifier {
-  name?: string;
+  displayName?: string;
 
   status: IPost;
 
   description: string;
 
-  createdAt: Date;
+  createdOn: Date;
 
   // role: string;
   age: number;
@@ -156,6 +156,8 @@ export abstract class UserData {
 
   abstract updateCurrent(user: IUser): Observable<IUser>;
 
+  abstract updateCurrentPersonal(body: any): Observable<IUser>;
+
   abstract create(user: IUser): Observable<IUser>;
 
   abstract delete(id: number): Observable<boolean>;
@@ -183,6 +185,10 @@ export abstract class UserData {
   // abstract getUsers (parameters: { pagination: RestPagination, sort: SortMeta, search?: string }): Observable<ResultList<IUser>>;
 
   abstract getUsers(pageNumber: number, pageSize: number);
+
+  abstract getYourBirthday(userId: number);
+
+
 
   // end
 

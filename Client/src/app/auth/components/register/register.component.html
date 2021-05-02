@@ -16,22 +16,45 @@
 
 <div [formGroup]="registerForm" aria-labelledby="title">
   <div class="form-control-group">
-    <label for="input-name">Login:</label>
+    <label for="input-display-name">Display name:</label>
     <input  nbInput
             autofocus
             fullWidth
             fieldSize="large"
-            id="input-name"
-            formControlName="fullName"
-            [status]="login.dirty ? (login.invalid  ? 'danger' : 'success') : ''"
-            [attr.aria-invalid]="login.invalid && login.touched ? true : null"
+            id="input-display-name"
+            formControlName="displayName"
+            [status]="displayName.dirty ? (displayName.invalid  ? 'danger' : 'success') : ''"
+            [attr.aria-invalid]="displayName.invalid && displayName.touched ? true : null"
             placeholder="Login">
+    <ngx-validation-message label="displayName"
+                            [showMinLength]="displayName?.hasError('minlength') && displayName.touched"
+                            [showMaxLength]="displayName?.hasError('maxlength') && displayName.touched"
+                            [minLength]="minDisplayNameLength"
+                            [maxLength]="maxDisplayNameLength"
+                            [showRequired]="displayName?.errors?.required && displayName.touched">
+    </ngx-validation-message>
+  </div>
+
+  <div class="form-control-group">
+    <label for="input-username">Username:</label>
+    <input  nbInput
+            autofocus
+            fullWidth
+            fieldSize="large"
+            id="input-username"
+            formControlName="username"
+            [status]="username.dirty ? (username.invalid  ? 'danger' : 'success') : ''"
+            [attr.aria-invalid]="username.invalid && username.touched ? true : null"
+            placeholder="Login">
+    <div class="name-information text-hint" i18n>
+      The account name is a unique identifier of your account. It's as unique as an email address, which makes it easy for other people to interact with it.
+    </div>
     <ngx-validation-message label="Login"
-                            [showMinLength]="login?.hasError('minlength') && login.touched"
-                            [showMaxLength]="login?.hasError('maxlength') && login.touched"
-                            [minLength]="minLoginLength"
-                            [maxLength]="maxLoginLength"
-                            [showRequired]="login?.errors?.required && login.touched">
+                            [showMinLength]="username?.hasError('minlength') && username.touched"
+                            [showMaxLength]="username?.hasError('maxlength') && username.touched"
+                            [minLength]="minUsernameLength"
+                            [maxLength]="maxUsernameLength"
+                            [showRequired]="username?.errors?.required && username.touched">
     </ngx-validation-message>
   </div>
 

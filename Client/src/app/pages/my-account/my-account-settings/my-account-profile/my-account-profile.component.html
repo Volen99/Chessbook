@@ -3,38 +3,99 @@
     <nb-card-body>
         <div [formGroup]="userForm" class="container">
             <div class="form-group col-12 col-lg-8 col-xl-9">
-                <label for="inputLogin">Display name</label>
-                <input nbInput fullWidth id="inputLogin" formControlName="login"
-                       [status]="(login?.errors?.required || login?.hasError('minlength') || login?.hasError('maxlength')) && login.touched ? 'danger' : 'primary'"
+                <label for="inputDisplayName">Display name</label>
+                <input nbInput fullWidth id="inputDisplayName" formControlName="displayName"
+                       [status]="(displayName?.errors?.required || displayName?.hasError('minlength') || displayName?.hasError('maxlength')) && displayName.touched ? 'danger' : 'primary'"
                        class="form-control" placeholder="Display name">
-                <ngx-validation-message label="Login"
-                                        [showMinLength]="login?.hasError('minlength')"
-                                        [showMaxLength]="login?.hasError('maxlength')"
-                                        [showRequired]="login?.errors?.required && login.touched"
+                <ngx-validation-message label="displayName"
+                                        [showMinLength]="displayName?.hasError('minlength')"
+                                        [showMaxLength]="displayName?.hasError('maxlength')"
+                                        [showRequired]="displayName?.errors?.required && displayName.touched"
                                         minLength=6
-                                        maxLength=20></ngx-validation-message>
+                                        maxLength=20>
+                </ngx-validation-message>
             </div>
 
             <div class="form-group col-12 col-lg-8 col-xl-9">
-                <label for="description">Description</label>
-                <textarea nbInput fullWidth id="description" shape="rectangle" formControlName="description"
-                          [status]="(email?.errors?.required || email?.hasError('pattern')) && email.touched ? 'danger' : 'primary'"
+                <label for="inputDescription">Description</label>
+                <textarea nbInput fullWidth id="inputDescription" shape="rectangle" formControlName="description"
+                          [status]="(description?.errors?.required || description?.hasError('pattern')) && description.touched ? 'danger' : 'primary'"
                           class="form-control"
                           placeholder="Description">
                 </textarea>
                 <ngx-validation-message label="Description"
-                                        [showPattern]="email?.hasError('pattern') && email.touched"
-                                        [showRequired]="email?.errors?.required && email.touched" min=1
-                                        max=120></ngx-validation-message>
+                                        [showPattern]="description?.hasError('pattern') && description.touched"
+                                        [showRequired]="description?.errors?.required && description.touched" min=1 max=140>
+                </ngx-validation-message>
+            </div>
+
+            <div class="form-group col-12 col-lg-8 col-xl-9">
+                <div aria-label="Date of birth" role="group" class="sharebook-container r-1v1z2uz">
+                    <div dir="auto" class="css-901oao r-1fmj7o5 font-family r-a023e6 font-weight-700 r-rjixqe min-width-0px text-overflow-wrap">
+                        <span class="css-901oao paragraph text-font-family min-width-0px text-overflow-wrap">Gender</span></div>
+                    <div dir="auto" class="css-901oao third-wheel-color font-family r-a023e6 font-weight-400 r-rjixqe min-width-0px text-overflow-wrap">
+                        <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">This information won’t be displayed publicly.</span>
+                    </div>
+                    <div class="sharebook-container">
+                        <nb-radio-group [(value)]="this.genderSelected">
+                            <nb-radio [value]="'Female'" title="female"> <fa-icon [icon]="this.faChessQueenAlt" size="2x"></fa-icon> </nb-radio>
+                            <nb-radio [value]="'Male'" title="male"> <fa-icon [icon]="this.faChessKingAlt" size="2x"></fa-icon> </nb-radio>
+                        </nb-radio-group>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group col-12 col-lg-8 col-xl-9">
+                <div aria-label="Date of birth" role="group" class="sharebook-container r-1v1z2uz">
+                    <div dir="auto" class="css-901oao r-1fmj7o5 font-family r-a023e6 font-weight-700 r-rjixqe min-width-0px text-overflow-wrap">
+                        <span class="css-901oao paragraph text-font-family min-width-0px text-overflow-wrap">Date of birth</span></div>
+                    <div dir="auto" class="css-901oao third-wheel-color font-family r-a023e6 font-weight-400 r-rjixqe min-width-0px text-overflow-wrap">
+                        <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">This will not be shown publicly. Confirm your own age, even if this account is for a business or something else.</span>
+                    </div>
+                    <div class="sharebook-container">
+                        <div aria-label="Date of birth" role="group" class="sharebook-container flex-direction-row r-1r5su4o">
+                            <div class="sharebook-container r-kemksi main-left-right-vertical-border-color input-form-border border-width-1px r-16xksha r-1b7u577">
+                                <div dir="auto"
+                                     class="css-901oao third-wheel-color font-family r-n6v787 font-weight-400 r-1cwl3u0 min-width-0px r-1pn2ns4 r-tskmnb r-633pao position-absolute text-overflow-wrap">
+                                    <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Month</span></div>
+                                    <nb-select [selected]="this.monthSelected" (selectedChange)="this.changeMonth($event)" class="r-30o5oe element-background-color-rgba input-form-border-radius-0px input-form-border-width r-1fmj7o5 sharebook-cursor-pointer font-family r-1inkyih r-rjixqe r-crgep1 r-1wzrnnt outline-style-none r-t60dpp r-xd6kpl r-1pn2ns4 r-ttdzmv" >
+                                        <nb-option *ngFor="let month of this.months | enumToArray" [value]="month.index"> {{ month.name }}</nb-option>
+                                    </nb-select>
+                            </div>
+                            <div class="sharebook-container r-kemksi main-left-right-vertical-border-color input-form-border border-width-1px flex-grow-expand r-1b7u577">
+                                <div dir="auto"
+                                     class="css-901oao third-wheel-color font-family r-n6v787 font-weight-400 r-1cwl3u0 min-width-0px r-1pn2ns4 r-tskmnb r-633pao position-absolute text-overflow-wrap">
+                                    <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Day</span></div>
+                                <nb-select [selected]="this.daySelected" (selectedChange)="this.changeDay($event)" class="r-30o5oe element-background-color-rgba input-form-border-radius-0px input-form-border-width r-1fmj7o5 sharebook-cursor-pointer font-family r-1inkyih r-rjixqe r-crgep1 r-1wzrnnt outline-style-none r-t60dpp r-xd6kpl r-1pn2ns4 r-ttdzmv" >
+                                    <nb-option *ngFor="let day of this.days" value="{{day}}"> {{ day }}</nb-option>
+                                </nb-select>
+                            </div>
+                            <div class="sharebook-container r-kemksi main-left-right-vertical-border-color input-form-border border-width-1px flex-grow-expand">
+                                <div dir="auto"
+                                     class="css-901oao third-wheel-color font-family r-n6v787 font-weight-400 r-1cwl3u0 min-width-0px r-1pn2ns4 r-tskmnb r-633pao position-absolute text-overflow-wrap">
+                                    <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Year</span></div>
+                                <nb-select [selected]="this.yearSelected" (selectedChange)="this.changeYear($event)" class="r-30o5oe element-background-color-rgba input-form-border-radius-0px input-form-border-width r-1fmj7o5 sharebook-cursor-pointer font-family r-1inkyih r-rjixqe r-crgep1 r-1wzrnnt outline-style-none r-t60dpp r-xd6kpl r-1pn2ns4 r-ttdzmv" >
+                                    <nb-option *ngFor="let year of this.years" value="{{year}}"> {{ year }}</nb-option>
+                                </nb-select>
+<!--                                <svg viewBox="0 0 24 24"-->
+<!--                                     class="third-wheel-color r-4qtqp9 r-yyyyoo r-50lct3 r-fdch1b r-dnmrzs r-633pao position-absolute r-1pgswnq r-1plcrui r-1v2oles r-lrvibr">-->
+<!--                                    <g>-->
+<!--                                        <path d="M20.207 8.147c-.39-.39-1.023-.39-1.414 0L12 14.94 5.207 8.147c-.39-.39-1.023-.39-1.414 0-.39.39-.39 1.023 0 1.414l7.5 7.5c.195.196.45.294.707.294s.512-.098.707-.293l7.5-7.5c.39-.39.39-1.022 0-1.413z"></path>-->
+<!--                                    </g>-->
+<!--                                </svg>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </nb-card-body>
     <nb-card-footer>
-        <button nbButton status="primary" [disabled]="!userForm.valid" (click)="save()" hero>Submit</button>
-        <button nbButton status="info" (click)="back()" hero>Back</button>
+        <button nbButton status="primary" [disabled]="!userForm.valid" (click)="save()" hero>Save</button>
+<!--        <button nbButton status="info" (click)="back()" hero>Back</button>-->
     </nb-card-footer>
 </nb-card>
-
 
 
 <!--<div *ngIf="error" class="alert alert-danger">{{ error }}</div>-->

@@ -5,7 +5,8 @@
 
   nb-card {
     margin: 0;
-    height: calc(100vh - 2 * #{$auth-layout-padding});
+    // height: calc(100vh - 2 * #{$auth-layout-padding});
+    height: calc(111vh - 2 * #{$auth-layout-padding});
   }
 
   .navigation .link {
@@ -40,7 +41,8 @@
 
   ::ng-deep {
     nb-layout .layout .layout-container .content .columns nb-layout-column {
-      padding: $auth-layout-padding;
+      // padding: $auth-layout-padding;
+      padding: 0;
 
       @include media-breakpoint-down(sm) {
         padding: 0;

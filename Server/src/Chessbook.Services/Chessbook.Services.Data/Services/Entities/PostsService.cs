@@ -46,6 +46,7 @@
                 Text = query.Status,
                 UserId = userId,
                 CreatedAt = DateTime.UtcNow,
+                HasMedia = mediaIds == null ? false : true,
             };
 
             if (query.InReplyToStatusId.HasValue)

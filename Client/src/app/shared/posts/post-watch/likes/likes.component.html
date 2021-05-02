@@ -45,7 +45,7 @@
             </nb-card-header>
         <nb-list>
             <nb-list-item *ngFor="let user of this.users" class="cursor-pointer contact" (click)="this.userClickHandler(user.screenName)">
-                <nb-user [picture]="user.profileImageUrlHttps" [name]="user.name" [title]="user.screenName">
+                <nb-user [picture]="user.profileImageUrlHttps" [name]="user.displayName" [title]="user.screenName">
                 </nb-user>
                 <app-follow-button [account]="this.user"></app-follow-button>
             </nb-list-item>

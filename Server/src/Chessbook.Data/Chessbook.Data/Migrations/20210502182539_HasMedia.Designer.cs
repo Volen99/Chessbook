@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Chessbook.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210424025308_Initial")]
-    partial class Initial
+    [Migration("20210502182539_HasMedia")]
+    partial class HasMedia
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -622,6 +622,9 @@ namespace Chessbook.Data.Migrations
                     b.Property<string>("FullText")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("HasMedia")
+                        .HasColumnType("bit");
+
                     b.Property<string>("HashtagsIds")
                         .HasColumnType("nvarchar(max)");
 
@@ -737,6 +740,9 @@ namespace Chessbook.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ResharedPostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -932,9 +938,6 @@ namespace Chessbook.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Day")
-                        .HasColumnType("int");
-
                     b.Property<bool>("DefaultProfile")
                         .HasColumnType("bit");
 
@@ -972,9 +975,6 @@ namespace Chessbook.Data.Migrations
                     b.Property<int>("FavouritesCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("FollowRequestSent")
                         .HasColumnType("bit");
 
@@ -1010,17 +1010,10 @@ namespace Chessbook.Data.Migrations
                     b.Property<string>("Lang")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("ListedCount")
                         .HasColumnType("int");
 
                     b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Login")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MediaCount")
@@ -1028,15 +1021,6 @@ namespace Chessbook.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MyProperty")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Notifications")
                         .HasColumnType("bit");
@@ -1060,9 +1044,6 @@ namespace Chessbook.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ProfileBannerUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProfileImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfileLinkColor")
@@ -1124,15 +1105,6 @@ namespace Chessbook.Data.Migrations
 
                     b.Property<bool>("Verified")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Visibility")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VisibilityYear")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

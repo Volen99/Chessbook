@@ -370,18 +370,20 @@
                                                     <div class="sharebook-container background-color-lights-out height-53px left-right-padding-15px">
                                                         <div class="sharebook-container align-items-center flex-direction-row height-53px justify-content-center margin-left-right-auto header-max-width-1000px width-100-per">
                                                             <div class="sharebook-container align-items-flex-start align-self-stretch justify-content-center min-height-30px header-left-icon-min-width-59px">
-                                                                                                                        <div aria-label="Back" role="button" data-focusable="true"
-                                                                                                                             tabindex="0"
-                                                                                                                             class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
-                                                                                                                             style="margin-left: calc(5px + (-1 * (41px - 1.5em)) / 2);"
-                                                                                                                             (click)="this.back()">
-                                                                                                                            <div dir="auto"
-                                                                                                                                 class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
-                                                                                                                                <fa-icon [icon]="this.faLongArrowLeft" [styles]="this.svgStyles"></fa-icon>
+                                                                <div aria-label="Back" role="button"
+                                                                     data-focusable="true"
+                                                                     tabindex="0"
+                                                                     class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
+                                                                     style="margin-left: calc(5px + (-1 * (41px - 1.5em)) / 2);"
+                                                                     (click)="this.back()">
+                                                                    <div dir="auto"
+                                                                         class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
+                                                                        <fa-icon [icon]="this.faLongArrowLeft"
+                                                                                 [styles]="this.svgStyles"></fa-icon>
 
-                                                                                                                                <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
-                                                                                                                            </div>
-                                                                                                                        </div>
+                                                                        <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                             <div class="sharebook-container flex-grow-expand flex-shrink height-100-per justify-content-center">
                                                                 <div class="sharebook-container align-items-flex-start">
@@ -393,7 +395,7 @@
                                                                                 <div class="sharebook-container align-items-center display-inline-flex flex-direction-row max-width-100-per"><span
                                                                                         class="css-901oao sharebook-text-inherit sharebook-text lights-out-text-color font-family font-weight-800 inside-element-container-line-height min-width-0px white-space-nowrap text-overflow-wrap"><span
                                                                                         class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span
-                                                                                        class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.profileCurrent?.name}}</span></span></span>
+                                                                                        class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.profileCurrent?.displayName}}</span></span></span>
                                                                                     <span *ngIf="this.profileCurrent?.protected"
                                                                                           class="css-901oao sharebook-text-inherit flex-direction-row svg-flex-shrink-0 font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><svg
                                                                                             viewBox="0 0 24 24"
@@ -406,7 +408,8 @@
                                                                     </h2>
                                                                     <div dir="auto"
                                                                          class="css-901oao sharebook-text third-wheel-color font-family third-wheel-text-font-size font-weight-400 line-height-calc min-width-0px text-overflow-wrap">
-                                                                         <span class="videos-count" *ngIf="this.profileCurrent?.statusesCount">
+                                                                         <span class="videos-count"
+                                                                               *ngIf="this.profileCurrent?.statusesCount">
                                                                              {this.profileCurrent?.statusesCount, plural, =1 {1 Post} other {{{ this.profileCurrent?.statusesCount }} Posts}}
                                                                          </span>
 
@@ -452,7 +455,7 @@
                                 <div class="sharebook-container flex-grow-expand">
                                     <div class="sharebook-container margin-left-right-auto main-primary-column-max-width-600px width-100-per">
                                         <div class="sharebook-container"><a
-                                                routerLink="/{{this.profileCurrent?.name}}/header_photo"
+                                                routerLink="/{{this.profileCurrent?.displayName}}/header_photo"
                                                 role="link"
                                                 aria-hidden="true" tabindex="-1"
                                                 class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer outline-style-none transition-duration transition-property">
@@ -543,7 +546,7 @@
                                                                 <div dir="auto"
                                                                      class="css-901oao lights-out-text-color font-family heading-font-size font-weight-800 inside-element-container-line-height min-width-0px text-overflow-wrap">
                     <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span
-                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.profileCurrent?.name}}</span></span><span
+                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.profileCurrent?.displayName}}</span></span><span
                                                                         *ngIf="this.profileCurrent?.protected"
                                                                         class="css-901oao sharebook-text-inherit flex-direction-row svg-flex-shrink-0 font-family heading-font-size inside-element-container-line-height min-width-0px text-overflow-wrap"><svg
                                                                         viewBox="0 0 24 24"
@@ -557,7 +560,8 @@
                                                                      class="css-901oao sharebook-text third-wheel-color flex-direction-row font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                     <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.profileCurrent?.screenName}}</span>
                                                                 </div>
-                                                                <div *ngIf="this.relationshipDetails?.followedBy" dir="auto"
+                                                                <div *ngIf="this.relationshipDetails?.followedBy"
+                                                                     dir="auto"
                                                                      class="css-901oao sharebook-text align-items-center r-z32n2g r-z2wwpe third-wheel-color display-flex r-1q142lx font-family r-n6v787 font-weight-400 r-1cwl3u0 r-13hce6t min-width-0px r-s1qlax text-overflow-wrap">
                                                                     <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Follows you</span>
                                                                 </div>
@@ -569,27 +573,33 @@
                                                     <div class="sharebook-container">
                                                         <div dir="auto"
                                                              class="css-901oao lights-out-text-color font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"
-                                                             data-testid="UserDescription"><span
-                                                                class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">World Feed Bio </span><span
-                                                                class="css-901oao sharebook-text-inherit svg-display-inline-block meatballs-menu-height emoji-margin-left emoji-margin-right svg-position-relative r-h9hxbl"><div
-                                                                aria-label="Open book"
-                                                                class="sharebook-container display-inline-flex image-flex-expand left-0px overflow-hidden position-absolute r-h9hxbl image-z-index"
-                                                                title="Open book"
-                                                                style="height: 1.2em;"><div
-                                                                class="sharebook-container element-background-color-rgba image-background-position image-background-repeat emoji-background-size bottom-0px display-inline-flex height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
-                                                                style="background-image: url(&quot;https://abs-0.twimg.com/emoji/v2/svg/1f4d6.svg&quot;);"></div><img
-                                                                alt="Open book" draggable="false"
-                                                                src="https://abs-0.twimg.com/emoji/v2/svg/1f4d6.svg"
-                                                                class="sharebook-image"></div></span><span
-                                                                class="css-901oao sharebook-text-inherit svg-display-inline-block meatballs-menu-height emoji-margin-left emoji-margin-right svg-position-relative r-h9hxbl"><div
-                                                                aria-label="♥"
-                                                                class="sharebook-container display-inline-flex image-flex-expand left-0px overflow-hidden position-absolute r-h9hxbl image-z-index"
-                                                                style="height: 1.2em;"><div
-                                                                class="sharebook-container element-background-color-rgba image-background-position image-background-repeat emoji-background-size bottom-0px display-inline-flex height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
-                                                                style="background-image: url(&quot;https://abs-0.twimg.com/emoji/v2/svg/2665.svg&quot;);"></div><img
-                                                                alt="♥" draggable="false"
-                                                                src="https://abs-0.twimg.com/emoji/v2/svg/2665.svg"
-                                                                class="sharebook-image"></div></span>
+                                                             data-testid="UserDescription">
+                                                            <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.profileCurrent?.description}} </span>
+<!--                                                            <span class="css-901oao sharebook-text-inherit svg-display-inline-block meatballs-menu-height emoji-margin-left emoji-margin-right svg-position-relative r-h9hxbl">-->
+<!--                                                                <div aria-label="Open book"-->
+<!--                                                                     class="sharebook-container display-inline-flex image-flex-expand left-0px overflow-hidden position-absolute r-h9hxbl image-z-index"-->
+<!--                                                                     title="Open book"-->
+<!--                                                                     style="height: 1.2em;">-->
+<!--                                                                    <div-->
+<!--                                                                            class="sharebook-container element-background-color-rgba image-background-position image-background-repeat emoji-background-size bottom-0px display-inline-flex height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"-->
+<!--                                                                            style="background-image: url('https://abs-0.twimg.com/emoji/v2/svg/1f4d6.svg');"></div><img-->
+<!--                                                                        alt="Open book" draggable="false"-->
+<!--                                                                        src="https://abs-0.twimg.com/emoji/v2/svg/1f4d6.svg"-->
+<!--                                                                        class="sharebook-image">-->
+<!--                                                                </div>-->
+<!--                                                            </span>-->
+<!--                                                            <span class="css-901oao sharebook-text-inherit svg-display-inline-block meatballs-menu-height emoji-margin-left emoji-margin-right svg-position-relative r-h9hxbl">-->
+<!--                                                                <div aria-label="♥"-->
+<!--                                                                     class="sharebook-container display-inline-flex image-flex-expand left-0px overflow-hidden position-absolute r-h9hxbl image-z-index"-->
+<!--                                                                     style="height: 1.2em;">-->
+<!--                                                                    <div-->
+<!--                                                                            class="sharebook-container element-background-color-rgba image-background-position image-background-repeat emoji-background-size bottom-0px display-inline-flex height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"-->
+<!--                                                                            style="background-image: url('https://abs-0.twimg.com/emoji/v2/svg/2665.svg');"></div><img-->
+<!--                                                                        alt="♥" draggable="false"-->
+<!--                                                                        src="https://abs-0.twimg.com/emoji/v2/svg/2665.svg"-->
+<!--                                                                        class="sharebook-image">-->
+<!--                                                        </div>-->
+<!--                                                        </span>-->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -599,10 +609,10 @@
                                                          data-testid="UserProfileHeader_Items"><span
                                                             class="css-901oao sharebook-text-inherit third-wheel-color svg-display-inline-block font-family inside-element-container-line-height container-left-side-margin-right-10px min-width-0px text-overflow-wrap">
                                                         <fa-icon [icon]="this.faBirthdayCake"></fa-icon>
-                                                        Born May 3, 1999</span>
+                                                        Born {{this.month}} {{this.day}}, {{this.year}}</span>
                                                         <span class="css-901oao sharebook-text-inherit third-wheel-color svg-display-inline-block font-family inside-element-container-line-height container-left-side-margin-right-10px min-width-0px text-overflow-wrap">
                                                         <fa-icon [icon]="this.faCalendarAlt"></fa-icon>
-                                                            Joined July 2020
+                                                            Joined {{this.monthEnum[this.profileCurrent.createdOn.getUTCMonth()] + ' ' + this.profileCurrent.createdOn.getFullYear()}}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -614,7 +624,8 @@
                                                                 data-focusable="true"
                                                                 class="link sharebook-link sharebook-cursor-pointer css-901oao lights-out-text-color cursor-pointer font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"
                                                                 title="3">
-                                                            <span style="margin-right: 2px" class="css-901oao sharebook-text-inherit lights-out-text-color font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap">
+                                                            <span style="margin-right: 2px"
+                                                                  class="css-901oao sharebook-text-inherit lights-out-text-color font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                 <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                      {this.profileCurrent?.friendsCount, plural, =1 {1} other {{{ this.profileCurrent?.friendsCount | myNumberFormatter }}}}
                                                                 </span>
@@ -631,12 +642,14 @@
                                                            data-focusable="true"
                                                            class="link sharebook-link sharebook-cursor-pointer css-901oao lights-out-text-color cursor-pointer font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"
                                                            title="1">
-                                                            <span style="margin-right: 3px" class="css-901oao sharebook-text-inherit lights-out-text-color font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap">
+                                                            <span style="margin-right: 3px"
+                                                                  class="css-901oao sharebook-text-inherit lights-out-text-color font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                 <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                     {this.profileCurrent?.followersCount, plural, =1 {1} other {{{ this.profileCurrent?.followersCount| myNumberFormatter }}}}
                                                                 </span>
                                                             </span>
-                                                            <span style="margin-right: 3px" class="css-901oao sharebook-text-inherit third-wheel-color font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
+                                                            <span style="margin-right: 3px"
+                                                                  class="css-901oao sharebook-text-inherit third-wheel-color font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                 <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                     {this.profileCurrent?.followersCount, plural, =1 {Follower} other {Followers}}
                                                                 </span>
@@ -779,7 +792,7 @@
                                                     class="sharebook-link css-901oao border-width-0px r-1xk2f4g height-1px overflow-hidden r-wwvuq4 position-absolute width-1px"
                                                     id="accessible-list-2">
                                                     WorldFeedTest’s Posts</h1>
-                                                <div [attr.aria-label]="'Timeline: ' + this.profileCurrent?.name + '’s Posts'"
+                                                <div [attr.aria-label]="'Timeline: ' + this.profileCurrent?.displayName + '’s Posts'"
                                                      class="sharebook-container">
                                                     <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.posts.length) + 'px'}">
                                                         <ng-container *ngIf="this.posts?.length > 0;">

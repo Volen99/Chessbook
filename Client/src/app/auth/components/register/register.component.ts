@@ -14,11 +14,15 @@ import {NbAuthResult} from "../../../sharebook-nebular/auth/services/auth-result
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NgxRegisterComponent implements OnInit {
-  minLoginLength: number = this.getConfigValue(('forms.validation.fullName.minLength'));
-  maxLoginLength: number = this.getConfigValue(('forms.validation.fullName.maxLength'));
+  minDisplayNameLength: number = this.getConfigValue(('forms.validation.displayName.minLength'));
+  maxDisplayNameLength: number = this.getConfigValue(('forms.validation.displayName.maxLength'));
+  minUsernameLength: number = this.getConfigValue(('forms.validation.username.minLength'));
+  maxUsernameLength: number = this.getConfigValue(('forms.validation.username.maxLength'));
+
   minLength: number = this.getConfigValue('forms.validation.password.minLength');
   maxLength: number = this.getConfigValue('forms.validation.password.maxLength');
-  isFullNameRequired: boolean = this.getConfigValue('forms.validation.fullName.required');
+  isDisplayNameRequired: boolean = this.getConfigValue('forms.validation.displayName.required');
+  isUsernameRequired: boolean = this.getConfigValue('forms.validation.username.required');
   isEmailRequired: boolean = this.getConfigValue('forms.validation.email.required');
   isPasswordRequired: boolean = this.getConfigValue('forms.validation.password.required');
   redirectDelay: number = this.getConfigValue('forms.register.redirectDelay');
@@ -39,7 +43,8 @@ export class NgxRegisterComponent implements OnInit {
     protected router: Router) {
   }
 
-  get login() { return this.registerForm.get('fullName'); }
+  get displayName() { return this.registerForm.get('displayName'); }
+  get username() { return this.registerForm.get('username'); }      // screenName
   get email() { return this.registerForm.get('email'); }
   get password() { return this.registerForm.get('password'); }
   get confirmPassword() { return this.registerForm.get('confirmPassword'); }
@@ -47,10 +52,16 @@ export class NgxRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     const loginValidators = [
-      Validators.minLength(this.minLoginLength),
-      Validators.maxLength(this.maxLoginLength),
+      Validators.minLength(this.minDisplayNameLength),
+      Validators.maxLength(this.maxDisplayNameLength),
     ];
-    this.isFullNameRequired && loginValidators.push(Validators.required);
+    this.isDisplayNameRequired && loginValidators.push(Validators.required);
+
+    const usernameValidators = [
+      Validators.minLength(this.minUsernameLength),
+      Validators.maxLength(this.maxUsernameLength),
+    ];
+    this.isUsernameRequired && usernameValidators.push(Validators.required);
 
     const emailValidators = [
       Validators.pattern(EMAIL_PATTERN),
@@ -64,7 +75,8 @@ export class NgxRegisterComponent implements OnInit {
     this.isPasswordRequired && passwordValidators.push(Validators.required);
 
     this.registerForm = this.fb.group({
-      fullName: this.fb.control('', [...loginValidators]),
+      displayName: this.fb.control('', [...loginValidators]),
+      username: this.fb.control('', [...usernameValidators]),
       email: this.fb.control('', [...emailValidators]),
       password: this.fb.control('', [...passwordValidators]),
       confirmPassword: this.fb.control('', [...passwordValidators]),
@@ -86,6 +98,7 @@ export class NgxRegisterComponent implements OnInit {
       }
 
       const redirect = result.getRedirect();
+      debugger
       if (redirect) {
         setTimeout(() => {
           return this.router.navigateByUrl(redirect);

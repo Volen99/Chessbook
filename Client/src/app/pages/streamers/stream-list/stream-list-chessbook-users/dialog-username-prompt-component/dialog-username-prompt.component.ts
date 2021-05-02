@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NbDialogRef} from "../../../../sharebook-nebular/theme/components/dialog/dialog-ref";
+import {NbDialogRef} from "../../../../../sharebook-nebular/theme/components/dialog/dialog-ref";
 
 @Component({
   selector: 'app-dialog-username-prompt',

@@ -24,7 +24,6 @@ export class FollowButtonComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    debugger
     this.loadSubscribedStatus();
   }
 
@@ -90,12 +89,11 @@ export class FollowButtonComponent implements OnInit, OnChanges {
     forkJoin(observableBatch)
       .subscribe(
         () => {
-          debugger
           this.account.followersCount += 1;
 
           this.notifier.success(
             this.account
-              ? `Subscribed to all current channels of ${this.account.name}. You will be notified of all their new videos.`
+              ? `Subscribed to all current channels of ${this.account.displayName}. You will be notified of all their new videos.`
               : `Subscribed to {this.videoChannels[0].displayName}. You will be notified of all their new videos.`,
 
             `Subscribed`

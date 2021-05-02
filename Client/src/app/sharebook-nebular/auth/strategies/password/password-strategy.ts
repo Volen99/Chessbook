@@ -3,17 +3,17 @@
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
-import { Observable, of as observableOf } from 'rxjs';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
+import {Observable, of as observableOf} from 'rxjs';
+import {switchMap, map, catchError} from 'rxjs/operators';
 
-import { NbAuthResult } from '../../services/auth-result';
-import { NbAuthStrategy } from '../auth-strategy';
-import { NbAuthStrategyClass } from '../../auth.options';
-import { NbPasswordAuthStrategyOptions, passwordStrategyOptions } from './password-strategy-options';
-import { NbAuthIllegalTokenError } from '../../services/token/token';
+import {NbAuthResult} from '../../services/auth-result';
+import {NbAuthStrategy} from '../auth-strategy';
+import {NbAuthStrategyClass} from '../../auth.options';
+import {NbPasswordAuthStrategyOptions, passwordStrategyOptions} from './password-strategy-options';
+import {NbAuthIllegalTokenError} from '../../services/token/token';
 
 /**
  * The most common authentication provider for email/password strategy.
@@ -231,7 +231,7 @@ export class NbPasswordAuthStrategy extends NbAuthStrategy {
             this.getOption('messages.getter')(module, res, this.options));
         }),
         catchError((res) => {
-        return this.handleResponseError(res, module);
+          return this.handleResponseError(res, module);
         }),
       );
   }
@@ -337,7 +337,7 @@ export class NbPasswordAuthStrategy extends NbAuthStrategy {
     if (res instanceof HttpErrorResponse) {
       errors = this.getOption('errors.getter')(module, res, this.options);
     } else if (res instanceof NbAuthIllegalTokenError) {
-      errors.push(res.message)
+      errors.push(res.message);
     } else {
       errors.push('Something went wrong.');
     }
