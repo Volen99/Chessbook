@@ -5,5 +5,7 @@ export interface IPollOption {
 
   label: string;
 
-  votes: number;
+  numberOfVotes: number;
+
+  percentOfTotalVotes: number;
 }

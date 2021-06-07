@@ -1,4 +1,4 @@
-import {ClientScript} from "../plugins";
+import {ClientScript} from '../plugins/plugin-package-json.model';
 
 export interface ServerConfigPlugin {
   name: string
@@ -35,7 +35,7 @@ export interface ServerConfig {
     name: string
     shortDescription: string
     isNSFW: boolean
-    defaultNSFWPolicy: any // NSFWPolicyType
+    defaultNSFWPolicy: any
     defaultClientRoute: string
     customizations: {
       javascript: string
@@ -149,6 +149,15 @@ export interface ServerConfig {
     }
   }
 
+  banner: {
+    file: {
+      size: {
+        max: number
+      }
+      extensions: string[]
+    }
+  }
+
   video: {
     image: {
       size: {
@@ -200,7 +209,9 @@ export interface ServerConfig {
   broadcastMessage: {
     enabled: boolean
     message: string
-    level: any // BroadcastMessageLevel
+    level: any
     dismissable: boolean
   }
 }
+
+export type HTMLServerConfig = Omit<ServerConfig, 'signup'>;

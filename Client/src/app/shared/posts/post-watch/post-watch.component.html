@@ -74,7 +74,7 @@
                                     <div aria-label="Timeline: Conversation" class="sharebook-container">
                                         <div style="position: relative; min-height: 1215px;">
                                             <app-post-thread *ngIf="this.post"
-                                                    [hasText]="!!post?.text"
+                                                    [hasText]="!!post?.status"
                                                     [hasMedia]="!!post?.entities.medias"
                                                     [transform]="this?.setTransform(0)"
                                                     [isPoll]="!!post?.entities.poll"

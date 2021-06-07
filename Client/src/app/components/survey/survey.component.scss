@@ -194,8 +194,10 @@
 //}
 
 
-
-
+.survey-options-warning {
+  color: #b33430;
+  font-size: 0.9rem;
+}
 
 
 
@@ -219,11 +221,16 @@
   background: none;
   border: none;
   color: #3a729c;
-  font-size: 1.3rem;
+  font-size: 0.9rem;
   padding: 0;
+  padding-bottom: 16px;
 
   &:hover {
     background-color: transparent;
+  }
+
+  &:focus {
+    outline:0 !important;
   }
 }
 

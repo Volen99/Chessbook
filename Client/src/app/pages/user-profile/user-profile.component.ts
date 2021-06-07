@@ -63,26 +63,30 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
         map(params => params['screenName']),
         distinctUntilChanged(),
         switchMap(screenName => this.userProfileService.getProfile(screenName)),
-        tap(profile => this.onAccount(profile)),
+          tap(profile => this.onAccount(profile)),
         /*switchMap(user => this.postService.getProfilePosts({ user })),*/
         catchError(err => this.restExtractor.redirectTo404IfNotFound(err, 'other', [
           HttpStatusCode.BAD_REQUEST_400,
           HttpStatusCode.NOT_FOUND_404
         ]))
       )
-      .subscribe(
+      .subscribe((data) => {
+          super.ngOnInit();
+        }
         // videoChannels => this.videoChannels = videoChannels.data,
         //
         // err => this.notifier.error(err.message)
 
       );
 
-    super.ngOnInit();
 
-    this.initUser(); // not needed?
+    // this.initUser(); // not needed?
   }
 
   ngOnDestroy() {
+    if (this.routeSub) {
+      this.routeSub.unsubscribe();
+    }
   }
 
   birthday: {};
@@ -162,9 +166,12 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
 
   private async onAccount(user: User) {
 
+    debugger
     // @ts-ignore
     this.profileCurrent = user.userDTO;
     this.profileCurrent.createdOn = new Date(this.profileCurrent.createdOn);
+
+    this.reloadVideos();
 
     const currentUserId = this.userStore.getUser().id;
     if (currentUserId === this.profileCurrent.id) {

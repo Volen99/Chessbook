@@ -19,12 +19,17 @@
     using System.Reflection;
     using AutoMapperConfiguration = AutoMapper.Configuration;
     using Chessbook.Web.Api.Factories;
+    using Nop.Web.Framework.Infrastructure.Extensions;
+    using Ordering.SignalrHub;
 
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
             Configuration = configuration;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         protected IConfiguration Configuration { get; }
@@ -47,10 +52,12 @@
 
         public virtual void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureApplicationServices(Configuration, _webHostEnvironment);
+
             ConfigureIdentity(services);
             services.ConfigureAuth(Configuration);
             ConfigureDependencies(services);
-            RegisterMapping();
+            // RegisterMapping();
 
             services.ConfigureSwagger();
 
@@ -58,7 +65,10 @@
 
             services.AddAuthorization(opt => opt.RegisterPolicies());
 
-            services.AddTransient<IUserModelFactory, UserModelFactory>();
+            services.AddSignalR(options =>
+            {
+                options.EnableDetailedErrors = true;
+            });
 
             services
                 .AddControllers(opt =>
@@ -72,18 +82,21 @@
                 });
         }
 
-        public void Configure(IApplicationBuilder app, IHostEnvironment env, IDataBaseInitializer dataBaseInitializer)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env) // IDataBaseInitializer dataBaseInitializer
         {
-            AutoMapperConfig.RegisterMappings(typeof(SettingsDTO).GetTypeInfo().Assembly);
+            app.ConfigureRequestPipeline();
+            app.StartEngine();
 
-            if (dataBaseInitializer != null)
-            {
-                dataBaseInitializer.Initialize();
-            }
-            else
-            {
-                // TODO: add logging
-            }
+            // AutoMapperConfig.RegisterMappings(typeof(SettingsDTO).GetTypeInfo().Assembly);
+
+            //if (dataBaseInitializer != null)
+            //{
+            //    dataBaseInitializer.Initialize();
+            //}
+            //else
+            //{
+            //    // TODO: add logging
+            //}
 
             if (!env.IsDevelopment())
             {
@@ -92,7 +105,7 @@
 
             app.UseRouting();
 
-           /* app.UseCors("CorsPolicy"); was here!!!! */
+           /*app.UseCors("CorsPolicy"); was here!!!! */
 
             app.UseHttpsRedirection();
 
@@ -110,13 +123,14 @@
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
-            app.UseConfiguredSwagger();
+            // app.UseConfiguredSwagger();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<NotificationsHub>("/notificationhub");
                 endpoints.MapControllers();
             });
         }
@@ -126,7 +140,7 @@
             var config = new AutoMapperConfiguration.MapperConfigurationExpression();
             AutoMapperConfigAdmin.Configure(config);
             ConfigureMapping(config);
-            AutoMapper.Mapper.Initialize(config);
+            // AutoMapper.Mapper.Initialize(config);
         }
     }
 }

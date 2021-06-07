@@ -1,0 +1,32 @@
+<div class="media-gallery" style="{{this.style}}" #nodeRef>
+    <div [ngClass]="{'spoiler-button': true, 'spoiler-button--minified': this.visible && !this.uncached, 'spoiler-button--click-thru': this.uncached}">
+        spoilerButton
+    </div>
+
+    <ng-container *ngIf="this.standalone && this.isFullSizeEligible(); else multiple">
+        <app-item
+                [standalone]="this.standalone"
+                [autoplay]="this.autoplay"
+                [onClick]="this.handleClick"
+                [attachment]="this.media[0]"
+                [displayWidth]="this.width"
+                [visible]="this.visible">
+        </app-item>
+    </ng-container>
+
+    <ng-template #multiple>
+        <ng-container>
+            <app-item *ngFor="let attachment of this.media; let i = index"
+                      [autoplay]="this.autoplay"
+                      [onClick]="this.handleClick"
+                      [attachment]="this.attachment"
+                      [index]="i"
+                      [size]="this.sizeState"
+                      [displayWidth]="this.width"
+                      [visible]="this.visible || this.uncached">
+            </app-item>
+        </ng-container>
+    </ng-template>
+
+
+</div>

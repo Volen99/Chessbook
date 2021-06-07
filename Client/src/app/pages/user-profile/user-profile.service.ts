@@ -1,8 +1,5 @@
-import {environment} from "../../../environments/environment.prod";
 import {Observable, ReplaySubject} from "rxjs";
-import {HttpClient, HttpParams} from "@angular/common/http";
 import {RestExtractor} from "../../core/rest/rest-extractor";
-import {IUser} from "../../core/interfaces/common/users";
 import { catchError, map, tap } from 'rxjs/operators';
 import {User} from "../../shared/shared-main/user/user.model";
 import {Injectable} from "@angular/core";

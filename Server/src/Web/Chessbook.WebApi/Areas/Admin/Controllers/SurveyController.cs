@@ -31,7 +31,5 @@ namespace Chessbook.Web.Api.Areas.Admin
 
             return this.Ok(pollId);
         }
-
-        
     }
 }

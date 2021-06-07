@@ -66,14 +66,7 @@ export class AppComponent implements OnInit, OnDestroy {
   alive: boolean = true;
 
   ngOnInit(): void {
-    // this.analytics.trackPageViews();
-
-
-
-
-    this.initRouteEvents();
-
-
+    document.getElementById('incompatible-browser').className += ' browser-ok';
   }
 
   user: IUser;
@@ -105,65 +98,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private initRouteEvents() {
-    let resetScroll = true;
-    const eventsObs = this.router.events;
-
-    const scrollEvent = eventsObs.pipe(filter((e: Event): e is Scroll => e instanceof Scroll));
-
-    // Handle anchors/restore position
-    scrollEvent.subscribe(e => {
-      // scrollToAnchor first to preserve anchor position when using history navigation
-      if (e.anchor) {
-        setTimeout(() => {
-          this.viewportScroller.scrollToAnchor(e.anchor);
-        });
-
-        return;
-      }
-
-      if (e.position) {
-        return this.viewportScroller.scrollToPosition(e.position);
-      }
-
-      if (resetScroll) {
-        return this.viewportScroller.scrollToPosition([0, 0]);
-      }
-    });
-
-    const navigationEndEvent = eventsObs.pipe(filter((e: Event): e is NavigationEnd => e instanceof NavigationEnd));
-
-    // When we add the a-state parameter, we don't want to alter the scroll
-    navigationEndEvent.pipe(pairwise())
-      .subscribe(([e1, e2]) => {
-        try {
-          resetScroll = false;
-
-          const previousUrl = new URL(window.location.origin + e1.urlAfterRedirects);
-          const nextUrl = new URL(window.location.origin + e2.urlAfterRedirects);
-
-          if (previousUrl.pathname !== nextUrl.pathname) {
-            resetScroll = true;
-            return;
-          }
-
-          const nextSearchParams = nextUrl.searchParams;
-          nextSearchParams.delete('a-state');
-
-          const previousSearchParams = previousUrl.searchParams;
-
-          nextSearchParams.sort();
-          previousSearchParams.sort();
-
-          if (nextSearchParams.toString() !== previousSearchParams.toString()) {
-            resetScroll = true;
-          }
-        } catch (e) {
-          console.error('Cannot parse URL to check next scroll.', e);
-          resetScroll = true;
-        }
-      });
-
     // // Homepage redirection
     // navigationEndEvent.pipe(
     //   map(() => window.location.pathname),
@@ -189,5 +123,4 @@ export class AppComponent implements OnInit, OnDestroy {
     // eventsObs.pipe(
     //   filter((e: Event): e is RouteConfigLoadEnd => e instanceof RouteConfigLoadEnd)
     // ).subscribe(() => this.loadingBar.useRef().complete());
-  }
 }

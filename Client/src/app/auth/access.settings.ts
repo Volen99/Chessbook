@@ -6,6 +6,11 @@ export const authSettings = {
     view: ['devices', 'current-user'],
     edit: ['devices', 'current-user'],
   },
+  registered: {
+    parent: 'guest',
+    view: ['devices', 'current-user'],
+    edit: ['devices', 'current-user'],
+  },
   admin: {
     parent: 'user',
     view: ['devices', 'current-user', 'users'],

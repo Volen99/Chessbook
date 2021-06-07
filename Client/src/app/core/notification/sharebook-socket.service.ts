@@ -4,19 +4,77 @@ import {environment} from '../../../environments/environment';
 import {io, Socket} from 'socket.io-client';
 import {AuthService} from "../auth/auth.service";
 import {IUserNotification, UserNotification} from "../../shared/shared-main/users/user-notification.model";
+import {HubConnection, HubConnectionBuilder, LogLevel} from "@microsoft/signalr";
+import {InitUserService} from "../../theme/services/init-user.service";
+import {UserData} from "../interfaces/common/users";
+import {UsersService} from "../backend/common/services/users.service";
+import {NbAuthService} from "../../sharebook-nebular/auth/services/auth.service";
+import {map, switchMap} from "rxjs/operators";
+import {NbAuthToken} from "../../sharebook-nebular/auth/services/token/token";
+import {NbTokenLocalStorage} from "../../sharebook-nebular/auth/services/token/token-storage";
+import {IPost} from "../../shared/posts/models/tweet";
+import {AppInjector} from "../../app-injector";
 
-export type NotificationEvent = 'new' | 'read' | 'read-all'
+export type NotificationEvent = 'new' | 'read' | 'read-all';
 
 @Injectable()
 export class PeerTubeSocket {
-  private io: typeof io;
+  private _hubConnection: HubConnection;
+  private SignalrHubUrl: string = '';
+  private msgSignalrSource = new Subject();
+  msgReceived$ = this.msgSignalrSource.asObservable();
 
-  private notificationSubject = new Subject<{ type: NotificationEvent, notification?: IUserNotification }>();
+  constructor(
+    private authService: NbAuthService,
+    private auth: NbTokenLocalStorage,
+    private initUserService: InitUserService,
+    private ngZone: NgZone
+  ) {
+    if (this.initUserService.isReady) {
+      this.SignalrHubUrl = 'https://localhost:5001';
+      this.init();
+    } else {
+      this.initUserService.settingsLoaded$.subscribe(x => {
+        this.SignalrHubUrl = 'https://localhost:5001';
+        this.init();
+      });
+    }
+  }
 
-  private notificationSocket: Socket;
-  private liveVideosSocket: Socket;
+   stop() {
+    this._hubConnection.stop();
+  }
 
-  constructor(private auth: AuthService, private ngZone: NgZone) {
+  private init() {
+    if (this.authService.isAuthenticated()) {
+      this.register();
+      this.stablishConnection();
+      this.registerHandlers();
+    }
+  }
+
+  private register() {
+    this.ngZone.runOutsideAngular(() => {
+      this._hubConnection = new HubConnectionBuilder()
+        .withUrl(this.SignalrHubUrl + '/notificationhub', {
+          accessTokenFactory: () => this.auth.get().getValue()
+        })
+        .configureLogging(LogLevel.Information)
+        .withAutomaticReconnect()
+        .build();
+    });
+
+    // this._hubConnection = new HubConnectionBuilder()
+    //   .withUrl(this.SignalrHubUrl + '/notificationhub', {
+    //     accessTokenFactory: () => this.auth.get().getValue()
+    //   })
+    //   .configureLogging(LogLevel.Information)
+    //   .withAutomaticReconnect()
+    //   .build();
+  }
+
+  dispatchNotificationEvent(type: NotificationEvent, notification?: UserNotification) {
+    this.notificationSubject.next({type, notification});
   }
 
   async getMyNotificationsSocket() {
@@ -25,38 +83,45 @@ export class PeerTubeSocket {
     return this.notificationSubject.asObservable();
   }
 
-  async unsubscribeLiveVideos(videoId: number) {
-    if (!this.liveVideosSocket) return;
-
-    this.liveVideosSocket.emit('unsubscribe', {videoId});
+  private stablishConnection() {
+    Object.defineProperty(WebSocket, 'OPEN', {value: 1,});   // woaaw 😮
+    this._hubConnection.start()
+      .then(() => {
+        console.log('Hub connection started');
+      })
+      .catch(() => {
+        console.log('Error while establishing connection');
+      });
   }
 
-  dispatchNotificationEvent(type: NotificationEvent, notification?: IUserNotification) {
-    this.notificationSubject.next({type, notification});
-  }
-
-  private async initNotificationSocket() {
-    if (this.notificationSocket) return;
-
-    await this.importIOIfNeeded();
-
-    // Prevent protractor issues https://github.com/angular/angular/issues/11853
-    this.ngZone.runOutsideAngular(() => {
-      this.notificationSocket = this.io(environment.apiUrl + '/user-notifications', {
-        query: {accessToken: this.auth.getAccessToken()}
-      });
-
-      this.notificationSocket.on('new-notification', (n: IUserNotification) => {
-        this.ngZone.run(() => this.dispatchNotificationEvent('new', n));
-      });
+  private registerHandlers() {
+    this._hubConnection.on('SendNotification', (msg) => {
+      console.log(`Order ${msg.orderId} updated to ${msg.status}`);
+      // this.toastr.success('Updated to status: ' + msg.status, 'Order Id: ' + msg.orderId);
+      this.msgSignalrSource.next();
     });
 
   }
 
-  private async importIOIfNeeded() {
-    if (this.io) return;
+  private notificationSubject = new Subject<{ type: NotificationEvent, notification?: UserNotification }>();
 
-    this.io = (await import('socket.io-client')).io;
+
+
+  private async initNotificationSocket() {
+    this._hubConnection.on("newNotification", (n: UserNotification) => {
+      debugger
+      this.ngZone.run(() => this.dispatchNotificationEvent('new', n));
+    });
+  }
+
+  newPostAdded(post: IPost) {
+    // Only notify on public and published posts which are not blacklisted
+    if (!post) {
+      return;
+    }
+
+    debugger
+    this._hubConnection.invoke('SendNotification', { post });
   }
 
 }

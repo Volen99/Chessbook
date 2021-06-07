@@ -8,34 +8,47 @@
 <!--</div>-->
 
 <div class="row" style="margin: 0px">
-  <div class="col-12 col-lg-8 col-xl-9"> <!--form-group-->
-    <my-actor-avatar-info [user]="this.user" (avatarChange)="onAvatarChange($event)" (avatarDelete)="onAvatarDelete()"></my-actor-avatar-info>
-  </div>
+    <div class="col-12 col-lg-8 col-xl-9"> <!--form-group-->
+        <my-actor-avatar-info [user]="this.user" (avatarChange)="onAvatarChange($event)"
+                              (avatarDelete)="onAvatarDelete()"></my-actor-avatar-info>
+    </div>
 
-  <div class="col-12 col-lg-8 col-xl-9"> <!--form-group-->
-    <my-account-profile></my-account-profile> <!--  [user]="user" [userInformationLoaded]="userInformationLoaded"-->
-  </div>
-  <div class="col-12 col-lg-8 col-xl-9"> <!--form-group-->
-    <div class="anchor" id="notifications"></div>
-    <my-account-notification-preferences [user]="user" [userInformationLoaded]="userInformationLoaded"></my-account-notification-preferences>
-  </div>
-  <div class="col-12 col-lg-8 col-xl-9">
-    <app-my-account-theme></app-my-account-theme>
-  </div>
-  <div class="col-12 col-lg-8 col-xl-9">
-    <nb-card>
-      <nb-card-header>PASSWORD</nb-card-header>
-      <nb-card-body>
-        <ngx-reset-password-page [hide]="true"></ngx-reset-password-page>
-      </nb-card-body>
-    </nb-card>
-  </div>
-  <div class="form-group col-12 col-lg-8 col-xl-9">
-    <my-account-change-email [user]="this.user"></my-account-change-email>
-  </div>
-  <div class="form-group col-12 col-lg-8 col-xl-9">
-    <my-account-danger-zone [user]="this.user"></my-account-danger-zone>
-  </div>
+    <div class="col-12 col-lg-8 col-xl-9">
+        <nb-card>
+            <nb-card-header>BANNER</nb-card-header>
+            <nb-card-body>
+                <div class="card__img">
+                    <img alt="profile banner" [src]="this.user.profileBackgroundImageUrlHttps" />
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+
+    <div class="col-12 col-lg-8 col-xl-9"> <!--form-group-->
+        <my-account-profile></my-account-profile> <!--  [user]="user" [userInformationLoaded]="userInformationLoaded"-->
+    </div>
+    <div class="col-12 col-lg-8 col-xl-9"> <!--form-group-->
+        <div class="anchor" id="notifications"></div>
+        <my-account-notification-preferences [user]="user"
+                                             [userInformationLoaded]="this.userInformationLoaded"></my-account-notification-preferences>
+    </div>
+    <div class="col-12 col-lg-8 col-xl-9">
+        <app-my-account-theme></app-my-account-theme>
+    </div>
+    <div class="col-12 col-lg-8 col-xl-9">
+        <nb-card>
+            <nb-card-header>PASSWORD</nb-card-header>
+            <nb-card-body>
+                <ngx-reset-password-page [hide]="true"></ngx-reset-password-page>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="form-group col-12 col-lg-8 col-xl-9">
+        <my-account-change-email [user]="this.user"></my-account-change-email>
+    </div>
+    <div class="form-group col-12 col-lg-8 col-xl-9">
+        <my-account-danger-zone [user]="this.user"></my-account-danger-zone>
+    </div>
 </div>
 
 

@@ -92,7 +92,8 @@
     "no-trailing-whitespace": false, // muhahahaha
     "no-empty-interface": false,
     "unified-signatures": false,
-    "no-string-literal": false
+    "no-string-literal": false,
+    "one-variable-per-declaration": false
   },
   "rulesDirectory": [
     "codelyzer"

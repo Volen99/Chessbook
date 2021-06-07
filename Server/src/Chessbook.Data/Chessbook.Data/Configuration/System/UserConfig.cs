@@ -5,13 +5,13 @@
 
     using Chessbook.Data.Models;
 
-    public class UserConfig : BaseEntityConfig<User>
+    public class UserConfig : BaseEntityConfig<Customer>
     {
         public UserConfig() : base("Users")
         {
         }
 
-        public override void Configure(EntityTypeBuilder<User> builder)
+        public override void Configure(EntityTypeBuilder<Customer> builder)
         {
             base.Configure(builder);
 

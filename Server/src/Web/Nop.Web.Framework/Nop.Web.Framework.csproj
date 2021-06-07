@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Copyright>Copyright © Volen</Copyright>
+    <Company>Volencho's home</Company>
+    <Authors>Volencho</Authors>
+    <Version>4.4.0.0</Version>
+    <Description>Nop.Web.Framework is a class library project containing some common presentation things for Nop.Web project</Description>
+    <PackageLicenseUrl>https://www.nopcommerce.com/license</PackageLicenseUrl>
+    <PackageProjectUrl>https://www.nopcommerce.com/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Volen99/Sharebook</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
+    <PackageReference Include="BundlerMinifier.Core" Version="3.2.449" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="9.5.1" />
+    <PackageReference Include="Humanizer" Version="2.10.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="5.0.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.9" />
+    <PackageReference Include="WebMarkupMin.AspNetCore5" Version="2.9.2" />
+    <PackageReference Include="WebMarkupMin.NUglify" Version="2.9.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Chessbook.Core\Chessbook.Core.csproj" />
+    <ProjectReference Include="..\..\Chessbook.Data\Chessbook.Data\Chessbook.Data.csproj" />
+    <ProjectReference Include="..\..\Chessbook.Services\Chessbook.Services\Chessbook.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
+</Project>

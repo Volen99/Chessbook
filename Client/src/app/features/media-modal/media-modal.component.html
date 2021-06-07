@@ -1,0 +1,89 @@
+<!--<div class="modal-root__modal media-modal">-->
+<!--    <div class="media-modal__closer" role="presentation" (click)="this.onClose">-->
+<!--        <swiper-->
+<!--        style="width: 100%; height: 100%;"-->
+<!--        [slidesPerView]="3"-->
+<!--        [navigation]="true"-->
+<!--        [pagination]="{clickable: true}">-->
+<!--            <ng-container *ngFor="let image of this.media">-->
+<!--                <app-image-loader-->
+<!--                        [previewSrc]="image.thumbImageUrl"-->
+<!--                        [src]="image.fullSizeImageUrl"-->
+<!--                        [width]="image.meta['original'].width"-->
+<!--                        [height]="image.meta['original'].height"-->
+<!--                        [onClick]="this.toggleNavigation"-->
+<!--                        [zoomButtonHidden]="this.zoomButtonHidden">-->
+<!--                </app-image-loader>-->
+<!--            </ng-container>-->
+<!--        </swiper>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<!--<ng-container *ngFor="let image of this.media">-->
+<!--    <app-image-loader-->
+<!--            [previewSrc]="image.thumbImageUrl"-->
+<!--            [src]="image.fullSizeImageUrl"-->
+<!--            [width]="image.meta['original'].width"-->
+<!--            [height]="image.meta['original'].height"-->
+<!--            [onClick]="this.toggleNavigation"-->
+<!--            [zoomButtonHidden]="this.zoomButtonHidden">-->
+<!--    </app-image-loader>-->
+<!--</ng-container>-->
+
+<!--put 'modal-root__modal' as class in the first div, so you can slide photos with mouse 😎-->
+<div> <!--class="modal-root__modal media-modal"-->
+    <div class="media-modal__closer" role="presentation" (click)="this.onClose()">
+        <!--style="width: 100%; height: 100%;"-->
+        <swiper *ngIf="this.swipeType == 'component'" class="swiper-container"
+                [config]="config"
+                [disabled]="this.disabled"
+                [index]="this.getIndex()"
+                (indexChange)="this.handleSwipe($event)"
+                (swiperTransitionEnd)="this.handleTransitionEnd()">
+            <app-image-loader *ngFor="let image of this.media"
+                              [previewSrc]="image.thumbImageUrl"
+                              [src]="image.fullSizeImageUrl"
+                              [width]="image.meta['original'].width || null"
+                              [height]="image.meta['original'].height || null"
+                              [zoomButtonHidden]="this.zoomButtonHidden"
+                              [onClick]="this.toggleNavigation">
+            </app-image-loader>
+        </swiper>
+    </div>
+
+    <div [ngClass]="{'media-modal__navigation': true, 'media-modal__navigation--hidden': this.navigationHidden}">
+        <fa-icon [icon]="this.faTimes" size="3x" class="media-modal__close" title="Close" (click)="this.onClose()"></fa-icon>
+
+        <button *ngIf="this.media.length > 1" tabIndex='0' class="media-modal__nav media-modal__nav--left"
+                (click)="this.handlePrevClick()"
+                aria-label={intl.formatMessage(messages.previous)}>
+            <fa-icon id="chevron-left" [icon]="this.faChevronLeft" size="2x" fixedWidth></fa-icon>
+        </button>
+        <button *ngIf="this.media.length > 1" tabIndex='0' class="media-modal__nav  media-modal__nav--right"
+                (click)="this.handleNextClick()"
+                aria-label={intl.formatMessage(messages.previous)}>
+            <fa-icon id="chevron-right" [icon]="this.faChevronRight" size="2x" fixedWidth></fa-icon>
+        </button>
+
+        <div class="media-modal__overlay">
+            <ul *ngIf="this.media.length > 1" class="media-modal__pagination">
+                <button [ngClass]="{'media-modal__page-dot': true, 'active': i === this.getIndex()}" [attr.data-index]="i"
+                        *ngFor="let item of this.media; let i = index;" (click)="this.handleChangeIndex($event)">
+                    {{i + 1}}
+                </button>
+            </ul>
+            <div class="picture-in-picture__footer">
+                <fa-icon [icon]="this.faComment" class="status__action-bar-button icon-button" style="font-size: 18px;width: auto;line-height: 18px;"></fa-icon>
+                <fa-icon [icon]="this.faShare" class="status__action-bar-button icon-button" style="font-size: 18px;width: auto;line-height: 18px;"></fa-icon>
+                <fa-icon [icon]="this.faHeart" class="status__action-bar-button icon-button star-icon" style="font-size: 18px;width: auto;line-height: 18px;"></fa-icon>
+            </div>
+            <!--{statusId && <Footer statusId={statusId} withOpenButton onClose={onClose} />}-->
+        </div>
+    </div>
+</div>
+
+
+
+
+

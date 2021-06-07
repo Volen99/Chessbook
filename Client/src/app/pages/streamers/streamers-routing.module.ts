@@ -10,6 +10,11 @@ const routes: Routes = [
   {
     path: '',
     component: StreamersComponent,
+    data: {
+      meta: {
+        title: `Streamers`
+      }
+    },
     children: [
       {
         path: '',

@@ -1,0 +1,225 @@
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component, EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit, Output, Renderer2,
+  SimpleChanges, ViewChild
+} from '@angular/core';
+import {IMediaEntity} from "../../shared/post-object/Entities/interfaces/IMediaEntity";
+
+import {
+  faComment,
+  faShare,
+  faHeart,
+} from '@fortawesome/pro-light-svg-icons';
+
+
+import {
+  faChevronLeft,
+  faChevronRight,
+  faTimes,
+} from '@fortawesome/pro-solid-svg-icons';
+import {getAverageFromBlurhash} from "../../shared/core-utils/miscs/blurhash";
+
+
+import {SwiperComponent, SwiperDirective} from 'ngx-swiper-wrapper';
+import {SwiperOptions} from 'swiper';
+import {PaginationOptions} from 'swiper/types/components/pagination';
+import {ScrollbarOptions} from 'swiper/types/components/scrollbar';
+
+@Component({
+  selector: 'app-media-modal',
+  templateUrl: './media-modal.component.html',
+  styleUrls: ['./media-modal.component.scss']
+})
+export class MediaModalComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+  @ViewChild(SwiperComponent, { static: false }) componentRef?: SwiperComponent;
+
+  @Input() media: IMediaEntity[];
+  @Input() postId: number;
+  @Input() index: number;
+  @Input() onClose: () => any;
+  // @Input() onChangeBackgroundColor: (backgroundColor: any) => any;
+  @Output() backgroundColorChange = new EventEmitter<any>();
+
+  constructor() {
+  }
+
+  ngAfterViewInit(): void {
+    window.addEventListener('keydown', this.handleKeyDown, false);
+
+    // if (this.context.router) {
+    //   const history = this.context.router.history;
+    //
+    //   history.push(history.location.pathname, previewState);
+    //
+    //   this.unlistenHistory = history.listen(() => {
+    //     this.props.onClose();
+    //   });
+    // }
+
+    if (this.componentRef) {
+      // TODO: :(
+      let swiper = document.querySelector('swiper');
+      if (swiper) {
+        swiper.firstElementChild.setAttribute('style', 'z-index: -1');
+      }
+    }
+
+
+
+
+    this._sendBackgroundColor();
+  }
+
+  ngOnInit(): void {
+  }
+
+  // componentDidUpdate
+  // https://stackoverflow.com/questions/44811723/ngonchanges-tracking-previous-value-and-new-value ♥
+  ngOnChanges(changes: SimpleChanges): void {
+    let {index} = changes;
+    if (index) {
+      if (index.previousValue !== this.indexState) {
+        this._sendBackgroundColor();
+      }
+    }
+
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('keydown', this.handleKeyDown);
+
+    // if (this.context.router) {
+    //   this.unlistenHistory();
+    //
+    //   if (this.context.router.history.location.state === previewState) {
+    //     this.context.router.history.goBack();
+    //   }
+    // }
+
+    // this.onChangeBackgroundColor(null);
+
+    this.backgroundColorChange.emit(null);
+  }
+
+  // you can't use 100vh, because the viewport height is taller
+  // than the visible part of the document in some mobile
+  // browsers when it's address bar is visible.
+  // https://developers.google.com/web/updates/2016/12/url-bar-resizing
+  swipeableViewsStyle = {
+    width: '100%',
+    height: '100%',
+  };
+
+
+  public swipeType: string = 'component';
+
+  public disabled: boolean = false;
+
+  public config: SwiperOptions = {
+    a11y: {enabled: true},
+    direction: 'horizontal',
+    slidesPerView: 1,
+    keyboard: false,
+    mousewheel: false,
+    scrollbar: false,
+    navigation: false,
+    pagination: false,
+  };
+
+  indexState: number | null;
+  navigationHidden: boolean;
+  zoomButtonHidden: boolean;
+
+  faChevronLeft = faChevronLeft;
+  faChevronRight = faChevronRight;
+  faTimes = faTimes;
+
+  faComment = faComment;
+  faShare = faShare;
+  faHeart = faHeart;
+
+  handleSwipe = (index) => {
+    this.indexState = index % this.media.length;
+  };
+
+  handleTransitionEnd = () => {
+    this.zoomButtonHidden = false;
+  };
+
+  handleNextClick = () => {
+    this.indexState = (this.getIndex() + 1) % this.media.length;
+    this.zoomButtonHidden = true;
+
+    if (this.media.length > 1) {
+      this._sendBackgroundColor();
+    }
+  };
+
+  handlePrevClick = () => {
+    this.indexState = (this.media.length + this.getIndex() - 1) % this.media.length;
+    this.zoomButtonHidden = true;
+
+    if (this.media.length > 1) {
+      this._sendBackgroundColor();
+    }
+  };
+
+  handleChangeIndex = (e) => {
+    const index = Number(e.currentTarget.getAttribute('data-index'));
+
+    this.indexState = index % this.media.length;
+    this.zoomButtonHidden = true;
+
+    if (this.media.length > 1) {
+      this._sendBackgroundColor();
+    }
+  };
+
+  getIndex() {
+    return this.indexState != null ? this.indexState : this.index;
+  }
+
+  handleKeyDown = (e) => {
+    switch (e.key) {
+      case 'ArrowLeft':
+        this.handlePrevClick();
+        e.preventDefault();
+        e.stopPropagation();
+        break;
+      case 'ArrowRight':
+        this.handleNextClick();
+        e.preventDefault();
+        e.stopPropagation();
+        break;
+    }
+  };
+
+  toggleNavigation = () => {
+    this.navigationHidden = !this.navigationHidden;
+  };
+
+  handleStatusClick = e => {
+    if (e.button === 0 && !(e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      // this.context.router.history.push(`/statuses/${this.props.statusId}`);
+    }
+  };
+
+  _sendBackgroundColor() {
+    const index = this.getIndex();
+    const blurhash = this.media[index].blurhash;
+
+    if (blurhash) {
+      const backgroundColor = getAverageFromBlurhash(blurhash);
+
+      this.backgroundColorChange.emit(backgroundColor);
+    }
+  }
+
+
+}

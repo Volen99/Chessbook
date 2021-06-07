@@ -156,6 +156,11 @@
         public static string AvatarPictureIdAttribute => "AvatarPictureId";
 
         /// <summary>
+        /// Gets a name of generic attribute to store the value of 'ProfileBannerId'
+        /// </summary>
+        public static string ProfileBannerIdAttribute => "ProfileBannerId";
+
+        /// <summary>
         /// Gets a name of generic attribute to store the value of 'ForumPostCount'
         /// </summary>
         public static string ForumPostCountAttribute => "ForumPostCount";

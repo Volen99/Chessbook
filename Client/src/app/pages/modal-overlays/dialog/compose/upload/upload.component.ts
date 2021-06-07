@@ -1,6 +1,7 @@
 // I am back!! 💙 06.11.2020, Friday
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 
+import { length } from 'stringz';
 import {FileUploader} from "./file-uploader.class";
 import {UploadService} from "./upload.service";
 import {PostsService} from "../../../../../shared/posts/posts.service";
@@ -18,14 +19,18 @@ import {
   faGlobeEurope,
   faImagePolaroid,
   faPoll,
-  faAtom,
+  faTimes,
   faCode,
 } from '@fortawesome/pro-light-svg-icons';
+
+import {countableText} from "../../../../../features/compose/util/counter";
+import {UserStore} from "../../../../../core/stores/user.store";
+import {IUser} from "../../../../../core/interfaces/common/users";
 
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.scss']
+  styleUrls: ['./upload.component.scss'],
 })
 export class UploadComponent implements OnInit, OnChanges, OnDestroy {
   @Input() title: string;
@@ -38,13 +43,15 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
     multiple: false,
   };
 
-  public whoCanReplyComponent = WhoCanReplyComponent;
+  private readonly defaultTweetBtnClassName = 'r-urgr8i';
+  private readonly hoveredTweetBtnClassName = 'r-1q3imqu';
 
   privacy: PostPrivacy = PostPrivacy.EVERYONE;
   privacyClient: string = 'Everyone can reply';
 
-  private readonly defaultTweetBtnClassName = 'r-urgr8i';
-  private readonly hoveredTweetBtnClassName = 'r-1q3imqu';
+  private globes: IconDefinition[] = [faGlobeEurope, faGlobeAsia, faGlobeAmericas, faGlobeAfrica];
+
+
 
   @Input() text: string = '';
   @Output() textChange = new EventEmitter<string>();
@@ -55,7 +62,8 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private uploadService: UploadService,
               private postsService: PostsService,
-              protected ref: NbDialogRef<ShowcaseDialogComponent>) {
+              protected ref: NbDialogRef<ShowcaseDialogComponent>,
+  private userstore: UserStore) {
     this.hasBaseDropZoneOver = false;
     this.hasAnotherDropZoneOver = false;
 
@@ -78,8 +86,11 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  user: IUser;
   ngOnInit(): void {
     this.response = '';
+
+    this.user = this.userstore.getUser();
 
     this.textPlaceholder = this.isPoll ? 'Ask a question...' : this.replyPost ? 'Post your reply' : `What's happening?`;
 
@@ -92,15 +103,6 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
 
   }
 
-  private globes: IconDefinition[] = [faGlobeEurope, faGlobeAsia, faGlobeAmericas, faGlobeAfrica];
-
-  globeCurrent: IconDefinition;
-
-  getGlobe() {
-    this.globeCurrent = this.globes[this.globes.length * Math.random() | 0];
-  }
-
-
   ngOnChanges(changes: SimpleChanges) {
     if (this.initialPoll.options.length > 2) {
       this.isPoll = true;
@@ -110,9 +112,26 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
   }
 
+  public rurgr8iOrR1q3imqu = this.defaultTweetBtnClassName;
+  public whoCanReplyComponent = WhoCanReplyComponent;
+
+  anyMedia: boolean;
+
+  globeCurrent: IconDefinition;
+
   faPoll = faPoll;
-  faAtom = faAtom;
+  faTimes = faTimes;
   faCode = faCode;
+
+  faImagePolaroid = faImagePolaroid;
+
+  helpVisible = true;
+
+  uploader: FileUploader;
+  hasBaseDropZoneOver: boolean;
+  hasAnotherDropZoneOver: boolean;
+  response: string;
+
 
   // omg :D
   svgStyles = {
@@ -131,23 +150,6 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
   };
 
 
-  faImagePolaroid = faImagePolaroid;
-
-
-  dismiss() {
-    debugger
-    this.ref.close();
-  }
-
-
-  public helpVisible = true;
-
-  public uploader: FileUploader;
-  public hasBaseDropZoneOver: boolean;
-  public hasAnotherDropZoneOver: boolean;
-  public response: string;
-
-
   public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
   }
@@ -160,7 +162,27 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
 
   }
 
-  public rurgr8iOrR1q3imqu = this.defaultTweetBtnClassName;
+
+  canSubmit() {
+    this.anyMedia = this.uploader.queue.length > 0;
+
+    const fulltext = this.getFulltextForCharacterCounting();
+    const isOnlyWhitespace = fulltext.length !== 0 && fulltext.trim().length === 0;
+
+    return !(length(fulltext) > 440 || (isOnlyWhitespace && !this.anyMedia));
+  }
+
+  getFulltextForCharacterCounting = () => {
+    return ['', countableText(this.text)].join('');
+  }
+
+
+  dismiss() {
+    this.ref.close();
+  }
+
+
+
 
   public async tweetBtnMouseEnter(event: MouseEvent) {
     this.changeTweetBtnBackgroundColorClassName();
@@ -171,6 +193,8 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
 
   updateValue(value) {
     this.text = value.innerText;
+
+    this.getFulltextForCharacterCounting();
     // this.textChange.emit(value.innerText);
   }
 
@@ -181,7 +205,10 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public async shareButtonHandler() {
-    debugger
+    if (!this.canSubmit()) {
+      return;
+    }
+
     if (this.replyPost) {
       if (this.text) {
         this.text = this.replyPost.user.screenName + ' ' + this.text;
@@ -191,20 +218,26 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     let publishPostParameters = new PublishTweetParameters(this.text);
+    let medias = [];
     if (this.uploader.queue.length) {
-      let fileCurrent = this.uploader.queue[0]._file;
+      for (const file of this.uploader.queue) {
+        let fileCurrent = file._file;
 
-      let mediaType = fileCurrent.type;
-      let bytes = await fileCurrent.arrayBuffer();
+        let mediaType = fileCurrent.type;
+        let bytes = await fileCurrent.arrayBuffer();
 
-      let uploadedImage = await this.uploadService.uploadTweetImageAsync(bytes, mediaType);
-      publishPostParameters.medias = [uploadedImage];
+        let uploadedImage = await this.uploadService.uploadBinaryAsync(bytes, mediaType)
+          .then((data) => {
+            medias.push(data);
+          });
+      }
 
       if (this.replyPost) {
         publishPostParameters.inReplyToTweet = this.replyPost;
         publishPostParameters.addCustomQueryParameter('in_reply_to_screen_name', this.replyPost.user.screenName);
       }
 
+      publishPostParameters.medias = medias;
       let postWithImage = await this.postsService.publishTweetAsync(publishPostParameters);
     } else if (this.isPoll) {
       publishPostParameters.poll = this.initialPoll;
@@ -227,6 +260,11 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
     this.isPoll = !this.isPoll;
 
     this.textPlaceholder = !this.isPoll ? `What's happening?` : 'Ask a question...';
+  }
+
+
+  getGlobe() {
+    this.globeCurrent = this.globes[this.globes.length * Math.random() | 0];
   }
 
   private changeTweetBtnBackgroundColorClassName(): void {

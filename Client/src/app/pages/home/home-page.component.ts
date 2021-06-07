@@ -54,6 +54,7 @@ export class HomePageComponent extends AbstractPostList implements OnInit {
   }
 
   getPostsObservable(page: number): Observable<{ data: Post[] }> {
+    debugger
     const newPagination = immutableAssign(this.pagination, {currentPage: page});
 
     return this.postsService.getHomeTimelinePosts(new GetHomeTimelineParameters(newPagination, this.sort, true));

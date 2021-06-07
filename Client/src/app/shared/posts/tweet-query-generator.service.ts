@@ -94,8 +94,10 @@ export class TweetQueryGeneratorService {
     params = this.restService.addParameterToQuery(params, "long", parameters.coordinates?.longitude.toString(/*CultureInfo.InvariantCulture*/));
 
     if (parameters.mediaIds.length > 0) {
-      let mediaIdsParameter = parameters.mediaIds.map(x => x.toString(/*CultureInfo.InvariantCulture*/)).join(', ');
-      params = this.restService.addParameterToQuery(params, "media_ids", mediaIdsParameter);
+      // let mediaIdsParameter = parameters.mediaIds.map(x => x.toString(/*CultureInfo.InvariantCulture*/)).join(', ');
+      let media_ids = parameters.mediaIds.map(x => x.toString());
+      // params = this.restService.addParameterToQuery(params, "media_ids", mediaIdsParameter);
+      params = this.restService.addObjectParams(params, { media_ids });
     }
 
     params = this.restService.addParameterToQuery(params, "place_id", parameters.placeId);
@@ -204,6 +206,7 @@ export class TweetQueryGeneratorService {
 
     params = this.restService.addParameterToQuery(params, "id", this.getTweetId(parameters.tweet));
     params = this.restService.addParameterToQuery(params, "rate_type", parameters.rateType.toString());
+    params = this.restService.addParameterToQuery(params, "is_up", parameters.isUp.toString());
     params = this.restService.addParameterToQuery(params, "include_entities", parameters.includeEntities);
     params = this.restService.addFormattedParameterToQuery(params, parameters.formattedCustomQueryParameters);
 

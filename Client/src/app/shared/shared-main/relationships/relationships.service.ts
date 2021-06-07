@@ -11,7 +11,6 @@ export class RelationshipsService {
   }
 
   show(parameters: IGetRelationshipBetweenParameters) {
-    debugger
     let params = new HttpParams();
 
     params = this.restService.addParameterToQuery(params, "source_id", parameters.SourceUser.idStr);

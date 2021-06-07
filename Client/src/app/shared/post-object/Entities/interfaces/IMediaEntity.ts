@@ -32,10 +32,16 @@ export interface IMediaEntity extends IEquatable<IMediaEntity> {
   indices: number[];
 
   // Dimensions related with the different possible views of a same Media element
-  sizes: Map<string, IMediaEntitySize>;
+  meta: Map<string, IMediaEntitySize>;   // sizes
 
   // Video metadata
   videoDetails: IVideoInformationEntity;
+
+  fullSizeImageUrl: string;
+  imageUrl: string;
+  thumbImageUrl: string;
+
+  blurhash: string;
 }
 
 

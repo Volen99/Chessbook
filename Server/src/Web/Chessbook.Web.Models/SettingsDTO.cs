@@ -1,4 +1,6 @@
-﻿namespace Chessbook.Web.Models
+﻿using Nop.Core.Configuration;
+
+namespace Chessbook.Web.Models
 {
     public class SettingsDTO
     {

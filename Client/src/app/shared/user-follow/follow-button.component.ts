@@ -16,6 +16,7 @@ import {IUser} from "../../core/interfaces/common/users";
 })
 export class FollowButtonComponent implements OnInit, OnChanges {
   @Input() account: IUser;
+  @Input() users: IUser[];
 
   constructor(private userStore: UserStore,
               private userFollowService: UserFollowService,
@@ -75,16 +76,15 @@ export class FollowButtonComponent implements OnInit, OnChanges {
   localSubscribe() {
     const subscribedStatus = this.subscribeStatus(false);
 
-    // const observableBatch = this.videoChannels
-    //   .map(videoChannel => this.getChannelHandler(videoChannel))
-    //   .filter(handle => subscribedStatus.includes(handle))
-    //   .map(handle => this.userSubscriptionService.addSubscription(handle));
+    // let observableBatch: any;
+    // if (subscribedStatus.includes(this.account.screenName)) {
+    //   observableBatch = this.userFollowService.addSubscription(this.account.screenName);
+    // }
 
-
-    let observableBatch: any;
-    if (subscribedStatus.includes(this.account.screenName)) {
-      observableBatch = this.userFollowService.addSubscription(this.account.screenName);
-    }
+    const observableBatch = this.users
+      .map(videoChannel => videoChannel.screenName)
+      .filter(handle => subscribedStatus.includes(handle))
+      .map(handle => this.userFollowService.addSubscription(handle));
 
     forkJoin(observableBatch)
       .subscribe(
@@ -107,10 +107,7 @@ export class FollowButtonComponent implements OnInit, OnChanges {
   localUnsubscribe() {
     const subscribeStatus = this.subscribeStatus(true); // returns array of screenNames
 
-    let arr = [];
-    arr.push(this.account);
-
-    const observableBatch = arr
+    const observableBatch = this.users
       .map(videoChannel => videoChannel.screenName)
       .filter(handle => subscribeStatus.includes(handle))
       .map(handle => this.userFollowService.deleteSubscription(handle));
@@ -142,16 +139,30 @@ export class FollowButtonComponent implements OnInit, OnChanges {
       return;
     }
 
-    const handle = this.account.screenName;    // this.getChannelHandler(videoChannel);
-    this.subscribed.set(handle, false);
+    for (const user of this.users) {
+      const handle = user.screenName;
+      this.subscribed.set(handle, false);
 
-    merge(this.userFollowService.listenToSubscriptionCacheChange(handle),
-          this.userFollowService.doesSubscriptionExist(handle)
-    ).subscribe(
-      res => this.subscribed.set(handle, res),
+      merge(
+        this.userFollowService.listenToSubscriptionCacheChange(handle),
+        this.userFollowService.doesSubscriptionExist(handle)
+      ).subscribe(
+        res => this.subscribed.set(handle, res),
 
-      err => this.notifier.error(err.message)
-    );
+        err => this.notifier.error(err.message)
+      );
+    }
+
+    // const handle = this.account.screenName;    // this.getChannelHandler(videoChannel);
+    // this.subscribed.set(handle, false);
+    //
+    // merge(this.userFollowService.listenToSubscriptionCacheChange(handle),
+    //       this.userFollowService.doesSubscriptionExist(handle)
+    // ).subscribe(
+    //   res => this.subscribed.set(handle, res),
+    //
+    //   err => this.notifier.error(err.message)
+    // );
   }
 
   isFollowingButtonHovered = false;

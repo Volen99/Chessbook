@@ -13,6 +13,7 @@ import {RelationshipsApi} from "./shared-main/relationships/backend/relationship
 import {FollowButtonComponent} from "./user-follow/follow-button.component";
 import {UserFollowService} from "./user-follow/user-follow.service";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {SurveyService} from "./services/survey.service";
 
 @NgModule({
   declarations: [TimelineContainerComponent, ShareButtonComponent, VideoListHeaderComponent, FollowButtonComponent],
@@ -33,6 +34,7 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     RelationshipsService,
     RelationshipsApi,
     UserFollowService,
+    SurveyService,
   ]
 })
 export class SharedModule {

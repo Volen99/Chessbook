@@ -6,6 +6,7 @@ import { EMAIL_PATTERN } from '../constants';
 import {NB_AUTH_OPTIONS, NbAuthSocialLink} from "../../../sharebook-nebular/auth/auth.options";
 import {NbAuthService} from "../../../sharebook-nebular/auth/services/auth.service";
 import {NbAuthResult} from "../../../sharebook-nebular/auth/services/auth-result";
+import {PeerTubeSocket} from "../../../core/notification/sharebook-socket.service";
 
 @Component({
   selector: 'ngx-register',
@@ -98,7 +99,6 @@ export class NgxRegisterComponent implements OnInit {
       }
 
       const redirect = result.getRedirect();
-      debugger
       if (redirect) {
         setTimeout(() => {
           return this.router.navigateByUrl(redirect);

@@ -11,11 +11,16 @@ import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.m
 import {NbRouteTabsetModule} from "../../sharebook-nebular/theme/components/route-tabset/route-tabset.module";
 import {ComponentsModule} from "../../components/components.module";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {UserNotificationsComponent} from "./user-notifications/user-notifications.component";
 
 @NgModule({
   declarations: [
     NotificationsComponent,
     MentionsComponent,
+    UserNotificationsComponent
+  ],
+  exports: [
+    UserNotificationsComponent
   ],
   imports: [
     NotificationsRoutingModule,

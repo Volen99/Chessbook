@@ -23,7 +23,7 @@
                                 <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.posts.length) + 'px'}">
                                     <ng-container *ngIf="this.posts?.length > 0;">
                                         <app-post *ngFor="let post of this.posts; let i = index"
-                                                  [hasText]="!!post?.text"
+                                                  [hasText]="!!post?.status"
                                                   [hasMedia]="!!post?.entities.medias"
                                                   [transform]="this.setTransform(i)"
                                                   [isPoll]="!!post?.entities.poll"

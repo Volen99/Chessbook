@@ -16,7 +16,7 @@
 
         public ContextSession GetCurrentContext()
         {
-            if (_accessor.HttpContext.User != null && _accessor.HttpContext.User.Identity.IsAuthenticated)
+            if (_accessor.HttpContext != null &&_accessor.HttpContext.User != null && _accessor.HttpContext.User.Identity.IsAuthenticated) // _accessor != null by mi
             {
                 var currentUserId = _accessor.HttpContext.User.GetUserId();
 

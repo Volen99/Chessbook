@@ -72,8 +72,6 @@
 
         public bool ProfileBackgroundTile { get; set; }
 
-        public int ProfilePictureId { get; set; }
-
         public string ProfileBannerUrl { get; set; }
 
         public string ProfileLinkColor { get; set; }
@@ -144,6 +142,17 @@
         public int StartSleepHour { get; set; }
 
         public int EndSleepHour { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the customer is active
+        /// </summary>
+        public bool Active { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the customer is required to re-login
+        /// </summary>
+        public bool RequireReLogin { get; set; }
+
 
         public virtual UserPhoto Photo { get; set; }
         public virtual Settings Settings { get; set; }

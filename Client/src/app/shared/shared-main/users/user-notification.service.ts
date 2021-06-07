@@ -13,18 +13,19 @@ import {UserNotificationSetting} from "../../models/users/user-notification-sett
 import {UserData} from "../../../core/interfaces/common/users";
 import {UserStore} from "../../../core/stores/user.store";
 import {PeerTubeSocket} from "../../../core/notification/sharebook-socket.service";
+import {HttpService} from "../../../core/backend/common/api/http.service";
 
 @Injectable()
 export class UserNotificationService {
-  static BASE_NOTIFICATIONS_URL = environment.apiUrl + '/api/v1/users/me/notifications';
-  static BASE_NOTIFICATION_SETTINGS = environment.apiUrl + '/api/v1/users/me/notification-settings';
+  static BASE_NOTIFICATIONS_URL = 'users/me/notifications';
+  static BASE_NOTIFICATION_SETTINGS = 'users/me/notification-settings';
 
   constructor(
-    private authHttp: HttpClient,
-    private userStore: UserStore, // AuthService,
+    private authHttp: HttpService,
+    private auth: AuthService,
     private restExtractor: RestExtractor,
     private restService: RestService,
-    private peertubeSocket: PeerTubeSocket,
+    private peertubeSocket: PeerTubeSocket
   ) {
   }
 
@@ -39,7 +40,9 @@ export class UserNotificationService {
     let params = new HttpParams();
     params = this.restService.addRestGetParams(params, this.restService.componentPaginationToRestPagination(pagination), sort);
 
-    if (unread) params = params.append('unread', `${unread}`);
+    if (unread) {
+      params = params.append('unread', `${unread}`);
+    }
 
     const headers = ignoreLoadingBar ? {ignoreLoadingBar: ''} : undefined;
 
@@ -72,7 +75,7 @@ export class UserNotificationService {
     return this.authHttp.post(url, body, {headers})
       .pipe(
         map(this.restExtractor.extractDataBool),
-        tap(() => this.peertubeSocket.dispatchNotificationEvent('read')),
+        // tap(() => this.peertubeSocket.dispatchNotificationEvent('read')),
         catchError(res => this.restExtractor.handleError(res))
       );
   }
@@ -84,7 +87,7 @@ export class UserNotificationService {
     return this.authHttp.post(url, {}, {headers})
       .pipe(
         map(this.restExtractor.extractDataBool),
-        tap(() => this.peertubeSocket.dispatchNotificationEvent('read-all')),
+       // tap(() => this.peertubeSocket.dispatchNotificationEvent('read-all')),
         catchError(res => this.restExtractor.handleError(res))
       );
   }
@@ -99,7 +102,7 @@ export class UserNotificationService {
       );
   }
 
-  private formatNotification(notification: IUserNotification) {
-    return new UserNotification(notification, this.userStore.getUser());
+  private formatNotification(notification: UserNotification) {
+    return new UserNotification(notification, this.auth.getUser());
   }
 }

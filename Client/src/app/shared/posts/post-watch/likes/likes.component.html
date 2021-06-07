@@ -44,10 +44,10 @@
                 </div>
             </nb-card-header>
         <nb-list>
-            <nb-list-item *ngFor="let user of this.users" class="cursor-pointer contact" (click)="this.userClickHandler(user.screenName)">
-                <nb-user [picture]="user.profileImageUrlHttps" [name]="user.displayName" [title]="user.screenName">
+            <nb-list-item *ngFor="let user of this.users" class="contact">
+                <nb-user style="cursor: pointer" [picture]="user.profileImageUrlHttps" [name]="user.displayName" [title]="user.screenName" (click)="this.userClickHandler(user.screenName)">
                 </nb-user>
-                <app-follow-button [account]="this.user"></app-follow-button>
+                <app-follow-button *ngIf="!this.isManageable(user)" [account]="user" [users]="this.users"></app-follow-button>
             </nb-list-item>
         </nb-list>
     </nb-card>

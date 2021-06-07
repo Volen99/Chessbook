@@ -8,13 +8,15 @@ import {NbIconModule} from "../sharebook-nebular/theme/components/icon/icon.modu
 import {NbSelectModule} from "../sharebook-nebular/theme/components/select/select.module";
 import {NbInputModule} from "../sharebook-nebular/theme/components/input/input.module";
 import {NbButtonModule} from "../sharebook-nebular/theme/components/button/button.module";
-import {SurveyService} from "./survey/survey.service";
+import {SurveyService} from "../shared/services/survey.service";
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
     declarations: [SurveyComponent, AdminComponent, OptionComponent],
     imports: [
         CommonModule,
+        SharedModule,
         AdminRoutingModule,
         NbCardModule,
         NbIconModule,

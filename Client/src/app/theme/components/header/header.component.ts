@@ -110,6 +110,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.http.get(this.apiUrl + '/poll/survey')
         .pipe(takeUntil(this.destroy$))
         .subscribe((poll: IPoll) => {
+          debugger
           this.poll = poll;
           this.poll.startDateUtc = new Date(poll.startDateUtc);
         });

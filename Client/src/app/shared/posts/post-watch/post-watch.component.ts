@@ -134,7 +134,7 @@ export class PostWatchComponent implements OnInit {
   }
 
   private async setVideoDescriptionHTML() {
-    const html = await this.markdownService.textMarkdownToHTML(this.post.text);
+    const html = await this.markdownService.textMarkdownToHTML(this.post.status);
     // this.videoHTMLDescription = await this.markdownService.processVideoTimestamps(html);
   }
 

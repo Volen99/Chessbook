@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Chessbook.Web.Models.Outputs.Polls
 {
-    public class PollOptionDTO : IMapFrom<PollOption>, IMapTo<PollOption>
+    public class PollOptionDTO : IMapFrom<PollAnswer>, IMapTo<PollAnswer>
     {
         public int Id { get; set; }
 

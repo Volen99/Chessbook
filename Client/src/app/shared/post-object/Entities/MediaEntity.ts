@@ -32,7 +32,7 @@ export class MediaEntity implements IMediaEntity {
   public indices: number[];
 
   // [JsonProperty("sizes")]
-  public sizes: Map<string, IMediaEntitySize>;
+  public meta: Map<string, IMediaEntitySize>;
 
   // [JsonProperty("video_info")]
   // [JsonConverter(typeof(JsonPropertyConverterRepository))]

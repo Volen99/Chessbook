@@ -1,0 +1,12 @@
+<div *ngIf="!this.visible" class="modal-root" style="opacity: 0"></div>  <!--#nodeRef-->
+
+<div class="modal-root" #nodeRef> <!--*ngIf="this.visible-->"
+    <div [ngStyle]="{ pointerEvents: this.visible ? 'auto' : 'none' }">
+        <div role='presentation' class="modal-root__overlay" (click)="this.onClose()" [ngStyle]="{ backgroundColor: this.backgroundColorState ?
+        'rgba(' + this.backgroundColorState.r + ',' + this.backgroundColorState.g + ',' + this.backgroundColorState.b + ',' + 0.7 + ')' : null }">
+        </div>
+    <div role='dialog' class="modal-root__container">
+        <ng-content></ng-content>
+    </div>
+</div>
+</div>

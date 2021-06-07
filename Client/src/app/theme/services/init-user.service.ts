@@ -5,9 +5,15 @@ import {IUser, UserData} from "../../core/interfaces/common/users";
 import {NbThemeService} from "../../sharebook-nebular/theme/services/theme.service";
 import {NbJSThemesRegistry} from "../../sharebook-nebular/theme/services/js-themes-registry.service";
 import {UserStore} from "../../core/stores/user.store";
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class InitUserService {
+  // observable that is fired when user is loaded from server
+  private settingsLoadedSource = new Subject();
+  settingsLoaded$ = this.settingsLoadedSource.asObservable();
+  isReady: boolean = false;
+
   constructor(protected userStore: UserStore, protected usersService: UserData,
               protected jsThemes: NbJSThemesRegistry, protected themeService: NbThemeService) {
 
@@ -19,6 +25,9 @@ export class InitUserService {
         if (user) {
           this.userStore.setUser(user);
 
+          this.isReady = true;
+          this.settingsLoadedSource.next();
+
           if (user.settings && user.settings.themeName) {
             if (this.jsThemes.has(user.settings.themeName)
               && !!this.jsThemes.get(user.settings.themeName).variables.initialized) {
@@ -26,6 +35,8 @@ export class InitUserService {
             }
           }
         }
+
+
       }));
   }
 }

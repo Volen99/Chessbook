@@ -9,7 +9,7 @@
     {
         public UserProfile()
         {
-            CreateMap<User, UserDTO>()
+            CreateMap<Customer, UserDTO>()
                 //.ForMember(d => d.Address,
                 //    opt => opt.MapFrom(src => new AddressDTO(src.AddressCity, src.AddressStreet, src.AddressZipCode,
                 //        src.AddressLat, src.AddressLng)))

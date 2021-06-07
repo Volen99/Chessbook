@@ -32,24 +32,27 @@ export class NotificationComponent implements OnInit, OnDestroy {
     private screenService: ScreenService,
     private peertubeSocket: PeerTubeSocket,
     private notifier: Notifier,
-    private router: Router
+    private router: Router,
   ) {
   }
 
   ngOnInit() {
-    // this.userNotificationService.countUnreadNotifications()
-    //   .subscribe(
-    //     result => {
-    //       this.unreadNotifications = Math.min(result, 99); // Limit number to 99
-    //       this.subscribeToNotifications();
-    //     },
-    //
-    //     err => this.notifier.error(err.message)
-    //   );
-    //
-    // this.routeSub = this.router.events
-    //   .pipe(filter(event => event instanceof NavigationEnd))
-    //   .subscribe(() => this.closePopover());
+    this.userNotificationService.countUnreadNotifications()
+      .subscribe(
+        result => {
+          this.unreadNotifications = Math.min(result, 99); // Limit number to 99
+          this.subscribeToNotifications();
+        },
+
+        err => this.notifier.error(err.message)
+      );
+
+    this.routeSub = this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => this.closePopover());
+
+    // this.peertubeSocket.msgReceived$
+    //   .subscribe(x => this.getOrders());
   }
 
   ngOnDestroy() {
@@ -105,5 +108,6 @@ export class NotificationComponent implements OnInit, OnDestroy {
       if (data.type === 'read') return this.unreadNotifications--;
       if (data.type === 'read-all') return this.unreadNotifications = 0;
     });
+
   }
 }

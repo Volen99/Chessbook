@@ -1,7 +1,7 @@
 <div class="poll">
     <ul>
         <!--poll.get('options').map((option, i) => this.renderOption(option, i, showResults))-->
-        <ng-container *ngFor="let option of this.poll.options; let i = index">
+        <ng-container *ngFor="let option of this.poll.answers; let i = index">
             <app-render-option [poll]="this.poll" [option]="option" [optionIndex]="i" [showResults]="this.showResults"></app-render-option>
         </ng-container>
     </ul>

@@ -7,7 +7,6 @@
     using Chessbook.Services.Data.Services;
     using Chessbook.Services.Data.Services.Entities;
     using Chessbook.Web.Api.Identity;
-    using Chessbook.Web.Api.Interfaces;
     using Chessbook.Web.Models;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
@@ -27,6 +26,13 @@
     using Chessbook.Web.Api.Factories;
     using System.Collections.Generic;
     using Chessbook.Core;
+    using Nop.Services.Logging;
+    using Nop.Web.Areas.Admin.Models.Customers;
+    using Chessbook.Services.Authentication;
+    using Chessbook.Web.Api.Models.Posts;
+    using Chessbook.Services.Notifications;
+    using Chessbook.Core.Domain.Notifications;
+    using Chessbook.Services.Notifications.Settings;
 
     [Route("users")]
     public class UsersController : BaseApiController
@@ -39,9 +45,16 @@
         private readonly IGenericAttributeService genericAttributeService;
         private readonly IRelationshipService relationshipService;
         private readonly IUserModelFactory userModelFactory;
+        private readonly ICustomerActivityService _customerActivityService;
+        private readonly IUserNotificationService notificationsService;
+        private readonly INotificationsSettingsService notificationsSettingsService;
+        private readonly IUserNotificationSettingModelFactory userNotificationSettingModelFactory;
+        private readonly IUserNotificationModelFactory userNotificationModelFactory;
 
         public UsersController(IUserService userService, JwtManager jwtManager, IAuthenticationService authService, IPostsService postsService,
-            IPictureService pictureService, IGenericAttributeService genericAttributeService, IRelationshipService relationshipService, IUserModelFactory userModelFactory)
+            IPictureService pictureService, IGenericAttributeService genericAttributeService, IRelationshipService relationshipService, IUserModelFactory userModelFactory,
+            ICustomerActivityService customerActivityService, IUserNotificationService notificationsService, INotificationsSettingsService notificationsSettingsService,
+            IUserNotificationSettingModelFactory userNotificationSettingModelFactory, IUserNotificationModelFactory userNotificationModelFactory)
         {
             this.userService = userService;
             this.jwtManager = jwtManager;
@@ -51,21 +64,26 @@
             this.genericAttributeService = genericAttributeService;
             this.relationshipService = relationshipService;
             this.userModelFactory = userModelFactory;
+            _customerActivityService = customerActivityService;
+            this.notificationsService = notificationsService;
+            this.notificationsSettingsService = notificationsSettingsService;
+            this.userNotificationSettingModelFactory = userNotificationSettingModelFactory;
+            this.userNotificationModelFactory = userNotificationModelFactory;
         }
 
-        [HttpGet]
-        [Route("")]
-        // [Authorize(Policy = "AdminOnly")]
-        public async Task<IActionResult> GetDataForGrid([FromQuery] UsersGridFilter filter)
-        {
-            filter = filter ?? new UsersGridFilter();
-            var users = await userService.GetDataForGrid(filter);
-            return Ok(users);
-        }
+        //[HttpGet]
+        //[Route("")]
+        //// [Authorize(Policy = "AdminOnly")]
+        //public async Task<IActionResult> GetDataForGrid([FromQuery] UsersGridFilter filter)
+        //{
+        //    filter = filter ?? new UsersGridFilter();
+        //    var users = await userService.GetDataForGrid(filter);
+        //    return Ok(users);
+        //}
 
         [HttpGet]
         [Route("all")]
-        public async Task<IActionResult> GetAllUsers(int pageNumber = 1, int pageSize = 3)
+        public async Task<IActionResult> GetAllUsers(int pageNumber = 0, int pageSize = 3)
         {
             var filter = new UsersGridFilter
             {
@@ -73,27 +91,36 @@
                 PageSize = pageSize,
             };
 
-            var users = await this.userService.GetAllUsers(filter, User.GetUserId());
+            var users = await this.userService.GetAllCustomersAsync(null , null, 0, 0, new int[] { 3, }, null, null, null, null, 0, 0, null, null, null, null, pageNumber, pageSize);
 
-            var usersDTO = users.Item1.MapTo<IList<UserDTO>>();
-
-            for (int i = 0; i < usersDTO.Count; i++)
+            var model = new List<CustomerModel>();
+            foreach (var user in users)
             {
-                usersDTO[i] = await this.userModelFactory.PrepareCustomerModelAsync(usersDTO[i]);
+                model.Add(await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), user));
             }
 
-            var tupe = new Tuple<IList<UserDTO>, int>(usersDTO, users.Item2);
+            return this.Ok(model);
+        }
 
-            // Thanks https://stackoverflow.com/questions/7397207/json-net-error-self-referencing-loop-detected-for-type ♥
-            var res = JsonConvert.SerializeObject(tupe, Formatting.Indented,
-               new JsonSerializerSettings
-               {
-                   PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                   ContractResolver = new CamelCasePropertyNamesContractResolver(),
+        [HttpGet]
+        [Route("who_to_follow")]
+        public async Task<IActionResult> GetWhoToFollowUsers(int pageNumber = 0, int pageSize = 3)
+        {
+            var filter = new UsersGridFilter
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+            };
 
-               });
+            var users = await this.userService.GetWhoToFollowUsers(filter, User.GetUserId(), new int[] { 3, }, false);
 
-            return this.Ok(res);
+            var model = new List<CustomerModel>();
+            foreach (var user in users)
+            {
+                model.Add(await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), user));
+            }
+
+            return this.Ok(model);
         }
 
         [HttpGet]
@@ -101,7 +128,7 @@
         [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Get(int id)
         {
-            var user = await userService.GetById(id);
+            var user = await userService.GetCustomerByIdAsync(id);
 
             user.StatusesCount = await this.postsService.GetPostsCountByUserId(user.Id);
 
@@ -115,9 +142,9 @@
             var currentUserId = User.GetUserId();
             if (currentUserId > 0)
             {
-                var model = await userService.GetById(currentUserId);
+                var user = await userService.GetCustomerByIdAsync(currentUserId);
 
-                model = await this.userModelFactory.PrepareCustomerModelAsync(model);
+                var model = await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), user);
 
                 return this.Ok(model);
             }
@@ -135,8 +162,8 @@
                 return BadRequest();
             }
 
-            var result = await userService.Edit(userDto);
-            return Ok(result);
+            // var result = await userService.Edit(userDto);
+            return Ok(new object());
         }
 
         [HttpPut]
@@ -145,10 +172,12 @@
         public async Task<IActionResult> Edit(int id, UserDTO userDto)
         {
             if (id != userDto.Id)
+            {
                 return BadRequest();
+            }
 
-            var result = await userService.Edit(userDto);
-            return Ok(result);
+            // var result = await userService.Edit(userDto);
+            return Ok(new object());
         }
 
         [HttpPut]
@@ -160,7 +189,7 @@
             {
                 return BadRequest();
             }
-            await userService.Edit(userDto);
+            // await userService.Edit(userDto);
 
             var newToken = await authService.GenerateToken(currentUserId);
 
@@ -171,30 +200,77 @@
         [Route("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await userService.Delete(id);
-            return Ok(result);
-        }
-
-        [HttpGet]
-        [Route("{userId:int}/photo")]
-        [AllowAnonymous]
-        public async Task<IActionResult> UserPhoto(int userId, string token)
-        {
-            var user = jwtManager.GetPrincipal(token);
-            if (user == null || !user.Identity.IsAuthenticated)
+            // try to get a customer with the specified id
+            var customer = await this.userService.GetCustomerByIdAsync(id);
+            if (customer == null)
             {
-                return Unauthorized();
+                return this.BadRequest("List");
             }
 
-            var photoContent = await userService.GetUserPhoto(userId);
-
-            if (photoContent == null)
+            try
             {
-                return NoContent();
-            }
+                //  attempts to delete the user, if it is the last active administrator
+                if (await this.userService.IsAdminAsync(customer) && !await SecondAdminAccountExistsAsync(customer))
+                {
+                    // _notificationService.ErrorNotification(await _localizationService.GetResourceAsync("Admin.Customers.Customers.AdminAccountShouldExists.DeleteAdministrator"));
+                    return RedirectToAction("Edit", new { id = customer.Id });
+                }
 
-            return File(photoContent, contentType: "image/png");
+                var currentUserId = User.GetUserId();
+                var userCurrent = await userService.GetCustomerByIdAsync(currentUserId);
+
+                // ensure that the current customer cannot delete "Administrators" if he's not an admin himself
+                if (await this.userService.IsAdminAsync(customer) && !await this.userService.IsAdminAsync(userCurrent))
+                {
+                    // _notificationService.ErrorNotification(await _localizationService.GetResourceAsync("Admin.Customers.Customers.OnlyAdminCanDeleteAdmin"));
+                    return RedirectToAction("Edit", new { id = customer.Id });
+                }
+
+                // delete
+                await this.userService.DeleteCustomerAsync(customer);
+
+                //// remove newsletter subscription (if exists)
+                //foreach (var store in await _storeService.GetAllStoresAsync())
+                //{
+                //    var subscription = await _newsLetterSubscriptionService.GetNewsLetterSubscriptionByEmailAndStoreIdAsync(customer.Email, store.Id);
+                //    if (subscription != null)
+                //        await _newsLetterSubscriptionService.DeleteNewsLetterSubscriptionAsync(subscription);
+                //}
+
+                // activity log
+                await _customerActivityService.InsertActivityAsync("DeleteCustomer", string.Format("Deleted a customer (ID = {0})", customer.Id), customer);
+
+                // _notificationService.SuccessNotification(await _localizationService.GetResourceAsync("Admin.Customers.Customers.Deleted"));
+
+                return RedirectToAction("List");
+            }
+            catch (Exception exc)
+            {
+                // _notificationService.ErrorNotification(exc.Message);
+                return RedirectToAction("Edit", new { id = customer.Id });
+            }
         }
+
+        //[HttpGet]
+        //[Route("{userId:int}/photo")]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> UserPhoto(int userId, string token)
+        //{
+        //    var user = jwtManager.GetPrincipal(token);
+        //    if (user == null || !user.Identity.IsAuthenticated)
+        //    {
+        //        return Unauthorized();
+        //    }
+
+        //    var photoContent = await userService.GetUserPhoto(userId);
+
+        //    if (photoContent == null)
+        //    {
+        //        return NoContent();
+        //    }
+
+        //    return File(photoContent, contentType: "image/png");
+        //}
 
         [HttpPost]
         [Route("avatar")]
@@ -206,15 +282,20 @@
             //    return Unauthorized();
             //}
 
-            var uploadedFile = this.Request.Form.Files.FirstOrDefault();
-
             var currentUserId = User.GetUserId();
-            var customer = await userService.GetByIdClean(currentUserId);
+            var customer = await userService.GetCustomerByIdAsync(currentUserId);
+
+            if (!await userService.IsRegisteredAsync(customer)) {
+                return Challenge();
+            }
+
+            var uploadedFile = this.Request.Form.Files.FirstOrDefault();
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    var customerAvatar = await this.pictureService.GetPictureByIdAsync(await this.genericAttributeService.GetAttributeAsync<int>(customer, NopCustomerDefaults.AvatarPictureIdAttribute));
                     if (uploadedFile != null && !string.IsNullOrEmpty(uploadedFile.FileName))
                     {
                         var avatarMaxSize = 1024 * 1024 * 2;
@@ -224,9 +305,15 @@
                         }
 
                         var customerPictureBinary = await this.GetDownloadBitsAsync(uploadedFile);
-                        var customerAvatar = await this.pictureService.InsertPictureAsync(customerPictureBinary, uploadedFile.ContentType, null);
+                        customerAvatar = await this.pictureService.InsertPictureAsync(customerPictureBinary, uploadedFile.ContentType, null);
 
-                        await this.userService.SaveAvatarId(customer.Id, customerAvatar.Id);
+                        var customerAvatarId = 0;
+                        if (customerAvatar != null)
+                        {
+                            customerAvatarId = customerAvatar.Id;
+                        }
+
+                        await this.genericAttributeService.SaveAttributeAsync(customer, NopCustomerDefaults.AvatarPictureIdAttribute, customerAvatarId);
 
                         var avatarUrl = await this.pictureService.GetPictureUrlAsync(customerAvatar.Id, 400, false);
 
@@ -267,20 +354,29 @@
         public async Task<IActionResult> GetUserPostRating(int postId)
         {
             var currentUserId = User.GetUserId();
-            var postRateDTO = await this.postsService.LoadUserPostRate(currentUserId, postId);
+            var user = await this.userService.GetCustomerByIdAsync(currentUserId);
+            var postVote = await this.postsService.GetPostVoteAsync(postId, user);
 
-            return this.Ok(postRateDTO);
+            if (postVote == null)
+            {
+                return this.Ok(new PostRateModel { Type = false });
+            }
+
+            return this.Ok(new PostRateModel { Type = postVote.IsUp });
         }
 
-
-
         [HttpGet]
-        [Route("profile/{screenName:length(3,16)}")] // WTF...
+        [Route("profile/{screenName:length(3,32)}")] // WTF...
         public async Task<IActionResult> GetProfile(string screenName)
         {
-            var model = await this.userService.GetByScreenName(screenName);
+            if (!screenName.StartsWith('@'))
+            {
+                screenName = "@" + screenName;
+            }
 
-            model = await this.userModelFactory.PrepareCustomerModelAsync(model);
+            var user = await this.userService.GetCustomerByUsernameAsync(screenName);
+
+            var model = await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), user);
 
             return this.Ok(model);
         }
@@ -290,7 +386,7 @@
         public async Task<IActionResult> PostEditPersonalDetails([FromBody] EditPersonalDetailsInputModel input)
         {
             var currentUserId = User.GetUserId();
-            var customer = await userService.GetByIdClean(currentUserId);
+            var customer = await userService.GetCustomerByIdAsync(currentUserId);
 
             if (input.Description != null || input.DisplayName != null)
             {
@@ -321,7 +417,7 @@
                 this.Unauthorized("Sorry hacker. Not this time 😎");
             }
 
-            var customer = await userService.GetByIdClean(currentUserId);
+            var customer = await userService.GetCustomerByIdAsync(currentUserId);
 
             var model = new GetYourBirthdayDTO();
 
@@ -338,6 +434,53 @@
             model.Gender = gender;
 
             return this.Ok(model);
+        }
+
+        [HttpGet]
+        [Route("me/notifications")]
+        public async Task<IActionResult> GetUnreadNotifications([FromQuery] QueryGetMyNotifications input)
+        {
+            var notifications = await this.notificationsService.List(User.GetUserId(), input.Start, input.Count, input.Sort, input.Unread);
+
+            var models = notifications.Select(notification => this.userNotificationModelFactory.PrepareUserNotificationModelAsync(notification).Result).ToList();
+
+            return this.Ok(new
+            {
+                data = models,
+                total = models.Count,
+            });
+        }
+
+        [HttpPut]
+        [Route("me/notification-settings")]
+        [Authorize]
+        public async Task<IActionResult> UpdateNotificationSettings([FromBody] UserNotificationSettingModel body)
+        {
+            var userNotificationSettings = await this.notificationsSettingsService.GetByUserId(User.GetUserId());
+
+            userNotificationSettings.AbuseAsModerator = body.AbuseAsModerator;
+            userNotificationSettings.AbuseNewMessage = body.AbuseNewMessage;
+            userNotificationSettings.AbuseStateChange = body.AbuseStateChange;
+            userNotificationSettings.BlacklistOnMyVideo = body.BlacklistOnMyVideo;
+            userNotificationSettings.CommentMention = body.CommentMention;
+            userNotificationSettings.MyVideoPublished = body.MyVideoPublished;
+            userNotificationSettings.NewCommentOnMyVideo = body.NewCommentOnMyVideo;
+            userNotificationSettings.NewFollow = body.NewFollow;
+            userNotificationSettings.NewUserRegistration = body.NewUserRegistration;
+            userNotificationSettings.NewVideoFromSubscription = body.NewVideoFromSubscription;
+            userNotificationSettings.VideoAutoBlacklistAsModerator = body.VideoAutoBlacklistAsModerator;
+
+            await this.notificationsSettingsService.UpdateUserNotificationSettingModelAsync(userNotificationSettings);
+
+            return this.NoContent();
+        }
+
+
+        private async Task<bool> SecondAdminAccountExistsAsync(Customer customer)
+        {
+            var customers = await this.userService.GetAllCustomersAsync(customerRoleIds: new[] { (await this.userService.GetCustomerRoleBySystemNameAsync(NopCustomerDefaults.AdministratorsRoleName)).Id });
+
+            return customers.Any(c => c.Active && c.Id != customer.Id);
         }
     }
 

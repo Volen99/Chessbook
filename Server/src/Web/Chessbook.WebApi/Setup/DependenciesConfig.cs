@@ -6,7 +6,7 @@ using Chessbook.Data.Models;
 using Chessbook.DIContainerCore;
 using Chessbook.Services.Data.Services;
 using Chessbook.Web.Api.Identity;
-using Chessbook.Web.Api.Interfaces;
+using Chessbook.Services.Authentication;
 
 namespace Chessbook.Web.Api.Setup
 {
@@ -16,14 +16,14 @@ namespace Chessbook.Web.Api.Setup
         {
             services.AddHttpContextAccessor();
 
-            services.AddScoped<ICurrentContextProvider, CurrentContextProvider>();
+            // services.AddScoped<ICurrentContextProvider, CurrentContextProvider>();
 
             services.AddSingleton<JwtManager>();
 
             ContainerExtension.Initialize(services, connectionString);
 
-            services.AddTransient<IAuthenticationService, AuthenticationService<User>>();
-            services.AddTransient<IRoleService, RoleService<User, Role>>();
+            // services.AddTransient<IAuthenticationService, AuthenticationService<Customer>>();
+            services.AddTransient<IRoleService, RoleService<Customer, Role>>();
         }
     }
 }

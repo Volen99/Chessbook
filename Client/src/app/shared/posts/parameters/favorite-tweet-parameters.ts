@@ -9,6 +9,7 @@ export interface IFavoriteTweetParameters extends ICustomRequestParameters {
   tweet: ITweetIdentifier;
 
   rateType: UserVideoRateType;
+  isUp: boolean;
 
   // Include the tweet entities
   includeEntities?: boolean;
@@ -27,10 +28,12 @@ export class FavoriteTweetParameters extends CustomRequestParameters implements 
 
     this.tweet = tweetCurrent;
     this.rateType = rateType;
+    this.isUp = rateType === 'like';
   }
 
   public tweet: ITweetIdentifier;
   public rateType: UserVideoRateType;
+  public isUp: boolean;
   public includeEntities?: boolean;
 }
 

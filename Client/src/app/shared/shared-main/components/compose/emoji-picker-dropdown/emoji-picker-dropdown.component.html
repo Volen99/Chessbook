@@ -1,0 +1,23 @@
+<div class="emoji-picker-dropdown" (keydown)="this.handleKeyDown($event)">
+    <div class="emoji-button" role="button" tabindex="0" [title]="this.title" [attr.aria-label]="this.title" [attr.aria-expanded]="this.active" (click)="this.onToggle($event)" (keydown)="this.onToggle($event)">
+        <ng-container *ngIf="this.button; else els">{{this.button}}</ng-container>
+
+        <ng-template #els>
+            <img alt="🙂" src="/assets/images/1f602.svg" [ngClass]="{'emojione': true, 'pulse-loading': this.active && this.loading}"/>
+        </ng-template>
+
+        <ng-template cdkConnectedOverlay
+                [cdkConnectedOverlayOrigin]="this.findTarget()"
+                [cdkConnectedOverlayOpen]="this.active">
+            <app-emoji-picker-menu
+                    [custom_emojis]="this.custom_emojis"
+                    [loading]="this.loading"
+            [onClose]="this.onHideDropdown"
+            [onPick]="this.onPickEmoji"
+            [onSkinTone]="this.onSkinTone"
+            [skinTone]="this.skinTone"
+            [frequentlyUsedEmojis]="this.frequentlyUsedEmojis">
+            </app-emoji-picker-menu>
+        </ng-template>
+    </div>
+</div>

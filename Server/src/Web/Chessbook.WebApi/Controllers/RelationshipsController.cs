@@ -1,6 +1,7 @@
 ﻿using Chessbook.Data.Models;
 using Chessbook.Services.Data;
 using Chessbook.Services.Data.Services;
+using Chessbook.Web.Api.Factories;
 using Chessbook.Web.Api.Identity;
 using Chessbook.Web.Models.Inputs;
 using Chessbook.Web.Models.Outputs;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,40 +20,55 @@ namespace Chessbook.Web.Api.Controllers
     {
         private readonly IRelationshipService relationshipService;
         private readonly IUserService userService;
+        private readonly IRelationshipModelFactory relationshipModelFactory;
 
-        public RelationshipsController(IRelationshipService relationshipService, IUserService userService)
+        public RelationshipsController(IRelationshipService relationshipService, IUserService userService, IRelationshipModelFactory relationshipModelFactory)
         {
             this.relationshipService = relationshipService;
             this.userService = userService;
+            this.relationshipModelFactory = relationshipModelFactory;
         }
 
         [HttpGet]
         [Route("show")]
         public async Task<IActionResult> GetRelationship([FromQuery] QueryGetRelationshipInput input)
         {
-            var relationship = await this.relationshipService.GetByUsersId<RelationshipDetailsDTO>(input.SourceId, input.TargetId);
+            var relationship = await this.relationshipService.GetByUsersId(input.SourceId, input.TargetId);
 
-            return this.Ok(relationship);
+            var model = this.relationshipModelFactory.PrepareRelationshipModel(relationship);
+
+            return this.Ok(model);
         }
 
         [HttpGet]
         [Route("exist")]
-        public async Task<IActionResult> GetFollowExist([FromQuery] string screenName)
+        public async Task<IActionResult> GetFollowExist([FromQuery] string[] screenNames)
         {
-            var targetUser = await this.userService.GetByScreenName(screenName);
-
-            if (targetUser == null)
+            var dic = new Dictionary<string, bool>();
+            foreach (var screenName in screenNames)
             {
-                return this.BadRequest("Sorry bro, such username does not exists :| I am sure it is Volen's mistake tho, aka the creator of this website :D");
+                var targetUser = await this.userService.GetCustomerByUsernameAsync(screenName);
+
+                if (targetUser == null)
+                {
+                    return this.BadRequest("Sorry bro, such username does not exists :| I am sure it is Volencho's mistake tho, aka the creator of this website :D");
+                }
+
+                var currentUserId = User.GetUserId();
+
+                var relationship = await this.relationshipService.GetByUsersId(currentUserId, targetUser.Id);
+
+                var model = this.relationshipModelFactory.PrepareRelationshipModel(relationship);
+
+                if (!dic.ContainsKey(screenName))
+                {
+                    dic.Add(screenName, model.Following);
+                }
+
+                // var result = "{" + $"\"{screenName}\"" + ":" + $"{model.Following.ToString().ToLower()}" + "}";                      // omg
             }
 
-            var currentUserId = User.GetUserId();
-
-            var relationship = await this.relationshipService.GetByUsersId<RelationshipDetailsDTO>(currentUserId, targetUser.Id);
-
-            var result = "{" + $"\"{screenName}\"" + ":" + $"{relationship.Following.ToString().ToLower()}" + "}";
-
-            return this.Ok(result);
+            return this.Ok(dic);
         }
 
         [HttpPost]
@@ -63,7 +80,7 @@ namespace Chessbook.Web.Api.Controllers
             // Follow
             if (input.ScreenName != null)
             {
-                var targetUser = await this.userService.GetByScreenName(input.ScreenName);
+                var targetUser = await this.userService.GetCustomerByUsernameAsync(input.ScreenName);
 
                 var yourRelationship = await this.relationshipService.GetByUsersId(currentUserId, targetUser.Id);
                 var crushRelationship = await this.relationshipService.GetByUsersId(targetUser.Id, currentUserId);
@@ -71,24 +88,23 @@ namespace Chessbook.Web.Api.Controllers
                 yourRelationship.Following = true;
                 crushRelationship.FollowedBy = true;
 
-                var relationshipDetails = await this.relationshipService.Update<RelationshipDetailsDTO>(yourRelationship);
-                await this.relationshipService.Update<RelationshipDetailsDTO>(crushRelationship);
+                await this.relationshipService.Update(yourRelationship);
+                await this.relationshipService.Update(crushRelationship);
 
                 // update users followings
-
-                var sourceUser = await this.userService.GetByIdClean(currentUserId);
-                var crushUser = await this.userService.GetByIdClean(targetUser.Id);
+                var sourceUser = await this.userService.GetCustomerByIdAsync(currentUserId);
+                var crushUser = await this.userService.GetCustomerByIdAsync(targetUser.Id);
 
                 sourceUser.FriendsCount += 1;
                 crushUser.FollowersCount += 1;
 
                 await this.userService.Update(sourceUser);
                 await this.userService.Update(crushUser);
+
+                var model = this.relationshipModelFactory.PrepareRelationshipModel(yourRelationship);
                 
-                return this.Ok(relationshipDetails);
+                return this.Ok(model);
             }
-
-
 
             return this.BadRequest();
         }
@@ -104,7 +120,7 @@ namespace Chessbook.Web.Api.Controllers
 
             var currentUserId = User.GetUserId();
 
-            var targetUser = await this.userService.GetByScreenName(screenName);
+            var targetUser = await this.userService.GetCustomerByUsernameAsync(screenName);
 
             var yourRelationship = await this.relationshipService.GetByUsersId(currentUserId, targetUser.Id);
             var crushRelationship = await this.relationshipService.GetByUsersId(targetUser.Id, currentUserId);
@@ -112,14 +128,13 @@ namespace Chessbook.Web.Api.Controllers
             yourRelationship.Following = false;
             crushRelationship.FollowedBy = false;
 
-            var relationshipDetails = await this.relationshipService.Update<RelationshipDetailsDTO>(yourRelationship);
-            await this.relationshipService.Update<RelationshipDetailsDTO>(crushRelationship);
+            await this.relationshipService.Update(yourRelationship);
+            await this.relationshipService.Update(crushRelationship);
 
 
             // update users followings
-
-            var sourceUser = await this.userService.GetByIdClean(currentUserId);
-            var crushUser = await this.userService.GetByIdClean(targetUser.Id);
+            var sourceUser = await this.userService.GetCustomerByIdAsync(currentUserId);
+            var crushUser = await this.userService.GetCustomerByIdAsync(targetUser.Id);
 
             sourceUser.FriendsCount -= 1;
             crushUser.FollowersCount -= 1;
@@ -127,7 +142,9 @@ namespace Chessbook.Web.Api.Controllers
             await this.userService.Update(sourceUser);
             await this.userService.Update(crushUser);
 
-            return this.Ok(relationshipDetails);
+            var model = this.relationshipModelFactory.PrepareRelationshipModel(yourRelationship);
+
+            return this.Ok(model);
         }
     }
 }

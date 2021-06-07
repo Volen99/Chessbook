@@ -23,7 +23,7 @@ export class ConnectComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getUsers(1, 40)
       .subscribe((data) => {
-        this.users = data["item1"];
+        this.users = data;
       });
   }
 
@@ -41,15 +41,15 @@ export class ConnectComponent implements OnInit {
     this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage).
     subscribe(({data}) => {
         this.hasDoneFirstQuery = true;
-        this.lastQueryLength = data["item2"];
+        this.lastQueryLength = data;
 
         if (reset) {
           this.users = [];
         }
 
-        this.users = this.users.concat(data["item1"]);
+        this.users = this.users.concat(data);
 
-        this.onDataSubject.next(data["item1"]);
+        this.onDataSubject.next(data);
       },
 
       error => {

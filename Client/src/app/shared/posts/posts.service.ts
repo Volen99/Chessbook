@@ -44,6 +44,7 @@ import {PostFilter} from "./models/post-query.type";
 import {User} from "../shared-main/user/user.model";
 import {GetUserTimelineParameters, IGetUserTimelineParameters} from "../models/timeline/get-user-timeline-parameters";
 import {UserQueryParameterGeneratorService} from "../services/user-query-parameter-generator.service";
+import {IMediaEntity} from "../post-object/Entities/interfaces/IMediaEntity";
 
 @Injectable()
 export class PostsService {
@@ -98,6 +99,7 @@ export class PostsService {
 
   public async publishTweetAsync(textOrParameters: string | IPublishTweetParameters): Promise<IPost> {
     let parameters: IPublishTweetParameters;
+    debugger
     if (this.isIPublishTweetParameters(textOrParameters)) {
       parameters = textOrParameters;
     } else {
@@ -403,7 +405,6 @@ export class PostsService {
   }
 
   private setVideoRate(id: number, rateType: UserVideoRateType) {
-
     let params = this.tweetQueryGeneratorService.getCreateFavoriteTweetQuery(new FavoriteTweetParameters(id, rateType));
 
     return this.postsApi.votePostAsync(params)
@@ -447,6 +448,12 @@ export class PostsService {
     let url = `likers/${postId}`;
 
     return this.postsApi.getLikers(url);
+  }
+
+  getPostPhotos(postId: number): Observable<IMediaEntity[]> {
+    let url = `post/${postId}/photo`;
+
+    return this.postsApi.getPostPhotos(url);
   }
 
   // #endregion

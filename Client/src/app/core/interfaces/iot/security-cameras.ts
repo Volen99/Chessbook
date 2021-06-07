@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import {IMediaEntity} from "../../../shared/post-object/Entities/interfaces/IMediaEntity";
 
 export interface Camera {
   title: string;
@@ -6,5 +7,5 @@ export interface Camera {
 }
 
 export abstract class SecurityCamerasData {
-  abstract getCamerasData(): Observable<Camera[]>;
+  abstract getCamerasData(postId: number): Observable<IMediaEntity[]>;
 }

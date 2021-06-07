@@ -20,6 +20,9 @@
 
 // install the framework and custom global styles
 @include nb-install() {
+  // by mi
+  // https://github.com/akveo/nebular/issues/1806
+  // end
 
   // framework global styles
   @include nb-theme-global();

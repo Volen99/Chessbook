@@ -1,0 +1,16 @@
+.emoji-picker-dropdown__menu {
+  background: #ffffff;
+  position: absolute;
+  box-shadow: 4px 4px 6px rgba(#000000, 0.4);
+  border-radius: 4px;
+  margin-top: 5px;
+  z-index: 2;
+
+  .emoji-mart-scroll {
+    transition: opacity 200ms ease;
+  }
+
+  &.selecting .emoji-mart-scroll {
+    opacity: 0.5;
+  }
+}

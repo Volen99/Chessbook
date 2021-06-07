@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import {Injector, NgModule} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -27,19 +27,43 @@ import {ModalOverlaysModule} from "./pages/modal-overlays/modal-overlays.module"
 import {NotificationComponent} from "./sharebook-nebular/theme/components/menu/notification.component";
 import {LoggedOutHomeComponent} from "./logged-out-home/logged-out-home.component";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {setAppInjector} from "./app-injector";
+import { MediaModalComponent } from './features/media-modal/media-modal.component';
+import { ModalRootComponent } from './features/modal-root/modal-root.component';
+import { ImageLoaderComponent } from './features/image-loader/image-loader.component';
+import { ZoomableImageComponent } from './features/zoomable-image/zoomable-image.component';
+import { MediaContainerComponent } from './features/media-container/media-container.component';
+
+import { SwiperModule } from 'ngx-swiper-wrapper';
+import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import {NotFoundComponent} from "./pages/page-not-found/not-found.component";
+import {NbCardModule} from "./sharebook-nebular/theme/components/card/card.module";
+import {NbButtonModule} from "./sharebook-nebular/theme/components/button/button.module";
+import {ServerService} from "./core/server/server.service";
+
+const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+  direction: 'horizontal',
+  slidesPerView: 'auto'
+};
 
 @NgModule({
   declarations: [
     AppComponent,
     LoggedOutHomeComponent,
     EmptyComponent,
+    MediaModalComponent,
+    ModalRootComponent,
+    ImageLoaderComponent,
+    ZoomableImageComponent,
+    MediaContainerComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
 
     HttpClientModule,
-    AppRoutingModule,
     SharedFormModule,
     SharedGlobalIconModule, // not used in appModule?!
 
@@ -68,13 +92,26 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     NbMenuModule,
 
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+
+    SwiperModule,
+    NbCardModule,
+    NbButtonModule,
+
+    AppRoutingModule, // Put it after all the module because it has the 4õ4 route
+
 
   ],
   bootstrap: [AppComponent],
-  providers: [PagesMenu],
+  providers: [PagesMenu,  {
+    provide: SWIPER_CONFIG,
+    useValue: DEFAULT_SWIPER_CONFIG
+  }],
   exports: [
   ]
 })
 export class AppModule {
+  constructor(injector: Injector) {
+    setAppInjector(injector);
+  }
 }

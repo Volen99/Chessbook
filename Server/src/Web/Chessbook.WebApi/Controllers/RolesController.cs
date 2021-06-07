@@ -5,8 +5,8 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using Chessbook.Web.Api.Interfaces;
     using Chessbook.Web.Models.AuthDTO;
+    using Chessbook.Services.Authentication;
 
     [Route("users/{id:int}/roles")]
     [Authorize(Policy = "AdminOnly")]

@@ -408,8 +408,7 @@
                                                                     </h2>
                                                                     <div dir="auto"
                                                                          class="css-901oao sharebook-text third-wheel-color font-family third-wheel-text-font-size font-weight-400 line-height-calc min-width-0px text-overflow-wrap">
-                                                                         <span class="videos-count"
-                                                                               *ngIf="this.profileCurrent?.statusesCount">
+                                                                         <span class="videos-count" *ngIf="this.profileCurrent?.statusesCount">
                                                                              {this.profileCurrent?.statusesCount, plural, =1 {1 Post} other {{{ this.profileCurrent?.statusesCount }} Posts}}
                                                                          </span>
 
@@ -467,9 +466,9 @@
                                                          class="sharebook-container bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">
                                                         <div
                                                                 class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
-                                                                [style.background-image]="'url(' + this.profileCurrent?.profileImageUrlHttps +')'"></div>
+                                                                [style.background-image]="'url(' + this.profileCurrent?.profileBackgroundImageUrlHttps +')'"></div>
                                                         <img alt="" draggable="true"
-                                                             [src]="this.profileCurrent?.profileImageUrlHttps"
+                                                             [src]="this.profileCurrent?.profileBackgroundImageUrlHttps"
                                                              class="sharebook-image"></div>
                                                 </div>
                                             </div>
@@ -523,8 +522,8 @@
                                                                 <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
                                                             </div>
                                                         </div>
-                                                        <app-follow-button *ngIf="!this.isManageable()"
-                                                                           [account]="this.profileCurrent"></app-follow-button>
+                                                        <app-follow-button *ngIf="!this.isManageable() && this.profileCurrent"
+                                                                           [account]="this.profileCurrent" [users]="[this.profileCurrent]"></app-follow-button>
                                                         <a *ngIf="this.isManageable()" nbButton size="medium"
                                                            status="primary"
                                                            shape="round" outline
@@ -606,13 +605,14 @@
                                                 <div class="sharebook-container display-block r-15d164r">
                                                     <div dir="auto"
                                                          class="css-901oao lights-out-text-color font-family font-size-15px font-weight-400 r-1vglu5a min-width-0px text-overflow-wrap"
-                                                         data-testid="UserProfileHeader_Items"><span
-                                                            class="css-901oao sharebook-text-inherit third-wheel-color svg-display-inline-block font-family inside-element-container-line-height container-left-side-margin-right-10px min-width-0px text-overflow-wrap">
-                                                        <fa-icon [icon]="this.faBirthdayCake"></fa-icon>
-                                                        Born {{this.month}} {{this.day}}, {{this.year}}</span>
+                                                         data-testid="UserProfileHeader_Items">
+                                                        <span *ngIf="this.isManageable()" class="css-901oao sharebook-text-inherit third-wheel-color svg-display-inline-block font-family inside-element-container-line-height container-left-side-margin-right-10px min-width-0px text-overflow-wrap">
+                                                            <fa-icon [icon]="this.faBirthdayCake"></fa-icon>
+                                                            Born {{this.month}} {{this.day}}, {{this.year}}
+                                                        </span>
                                                         <span class="css-901oao sharebook-text-inherit third-wheel-color svg-display-inline-block font-family inside-element-container-line-height container-left-side-margin-right-10px min-width-0px text-overflow-wrap">
-                                                        <fa-icon [icon]="this.faCalendarAlt"></fa-icon>
-                                                            Joined {{this.monthEnum[this.profileCurrent.createdOn.getUTCMonth()] + ' ' + this.profileCurrent.createdOn.getFullYear()}}
+                                                            <fa-icon [icon]="this.faCalendarAlt"></fa-icon>
+                                                            Joined {{this.monthEnum[this.profileCurrent?.createdOn.getUTCMonth() + 1] + ' ' + this.profileCurrent?.createdOn.getFullYear()}}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -797,7 +797,7 @@
                                                     <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.posts.length) + 'px'}">
                                                         <ng-container *ngIf="this.posts?.length > 0;">
                                                             <app-post *ngFor="let post of this.posts; let i = index"
-                                                                      [hasText]="!!post?.text"
+                                                                      [hasText]="!!post?.status"
                                                                       [hasMedia]="!!post?.entities.medias"
                                                                       [transform]="this?.setTransform(i)"
                                                                       [isPoll]="!!post?.entities.poll"

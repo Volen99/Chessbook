@@ -15,6 +15,9 @@ import {NbButtonModule} from "../sharebook-nebular/theme/components/button/butto
 import {NbCardModule} from "../sharebook-nebular/theme/components/card/card.module";
 import {NbProgressBarModule} from "../sharebook-nebular/theme/components/progress-bar/progress-bar.module";
 import { EmptyStateComponent } from './empty-state/empty-state.component';
+import { MediaGalleryComponent } from './media-gallery/media-gallery.component';
+import { BlurhashComponent } from './blurhash/blurhash.component';
+import { ItemComponent } from './media-gallery/item/item.component';
 
 const COMPONENTS = [
   NgxValidationMessageComponent,
@@ -34,7 +37,7 @@ const COMPONENTS = [
     NbProgressBarModule,
   ],
   exports: [...COMPONENTS, PollComponent, SurveyComponent, EmptyStateComponent],
-  declarations: [...COMPONENTS, PollComponent, RenderOptionComponent, SurveyComponent, EmptyStateComponent],
+  declarations: [...COMPONENTS, PollComponent, RenderOptionComponent, SurveyComponent, EmptyStateComponent, MediaGalleryComponent, BlurhashComponent, ItemComponent],
   entryComponents: [
     NgxFilterByNumberComponent,
   ],

@@ -8,7 +8,6 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {Observable, of as observableOf} from 'rxjs';
 import {switchMap, map, catchError} from 'rxjs/operators';
-import {NB_WINDOW} from '@nebular/theme';
 
 import {NbAuthStrategy} from '../auth-strategy';
 import {NbAuthIllegalTokenError, NbAuthRefreshableToken, NbAuthToken} from '../../services/token/token';
@@ -20,6 +19,7 @@ import {
   NbOAuth2GrantType, NbOAuth2ClientAuthMethod,
 } from './oauth2-strategy.options';
 import {NbAuthStrategyClass} from '../../auth.options';
+import {NB_WINDOW} from "../../../theme/theme.options";
 
 
 /**
@@ -360,7 +360,6 @@ export class NbOAuth2AuthStrategy extends NbAuthStrategy {
 
 
   protected handleResponseError(res: any): Observable<NbAuthResult> {
-    debugger
     let errors = [];
     if (res instanceof HttpErrorResponse) {
       if (res.error.error_description) {

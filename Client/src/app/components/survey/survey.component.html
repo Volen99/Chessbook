@@ -33,24 +33,25 @@
             <div *ngIf="!this.showResults" class="survey-options-component">
                 <div class="survey-options-options">
                     <nb-radio-group [(value)]="this.selected">
-                            <nb-radio *ngFor="let option of this.poll.options; let i = index" [value]="option.id" (valueChange)="this.handleOptionChange($event)">{{option.label}}</nb-radio>
+                            <nb-radio *ngFor="let option of this.poll.answers; let i = index" [value]="option.id" (valueChange)="this.handleOptionChange($event)">{{option.label}}</nb-radio>
                     </nb-radio-group>
+                    <p *ngIf="this.alreadyVotedWarning" class="survey-options-warning">Already voted on this survey</p>
                 </div>
                 <button nbButton size="large" status="primary" shape="rectangle" (click)="this.handleVote()">Submit</button>
             </div>
             <div *ngIf="this.showResults">
-                <ng-container *ngFor="let option of this.poll.options">
+                <ng-container *ngFor="let option of this.poll.answers">
                     <div>
                         <div class="survey-results-label-title text-basic">
-                            {{this.option.label}} <span class="survey-results-subtitle">({{this.calcPercent(option)}}%, {{option.votes}} Votes)</span>
+                            {{this.option.label}} <span class="survey-results-subtitle">({{this.getOptionPercentage(option.percentOfTotalVotes)}}%, {option.numberOfVotes, plural, =1 {1 Vote} other {{{ option.numberOfVotes}} Votes }})</span>
                         </div>
-                        <nb-progress-bar size="tiny" [value]="option.votes" status="primary"></nb-progress-bar>
+                        <nb-progress-bar size="tiny" [value]="option.percentOfTotalVotes" status="primary"></nb-progress-bar>
                     </div>
                 </ng-container>
             </div>
             <div class="survey-view-footer">
-                <p class="paragraph-2 text-hint">Created on {{this.getNormalizedDate(this.poll.startDateUtc)}} | {{this.poll.votesCount}} Votes | 997 Comments</p>
-                <button nbButton status="info" class="survey-view-results-button" style="padding-top: 0px; padding-bottom: 15px" (click)="this.handleShowResults()" ghost>{{!this.showResults ? 'View Results' : 'Back to Vote'}}</button>
+                <p class="paragraph-2 text-hint">Created on {{this.getNormalizedDate(this.poll.startDateUtc)}} | {this.poll.totalVotes, plural, =1 {1 Vote} other {{{ this.poll.totalVotes}} Votes }} | {this.poll.views, plural, =1 {1 View} other {{{ this.poll.views}} Views }}</p>
+                <button class="survey-view-results-button" (click)="this.handleShowResults()">{{!this.showResults ? 'View Results' : 'Back to Vote'}}</button>
             </div>
         </div>
     </div>

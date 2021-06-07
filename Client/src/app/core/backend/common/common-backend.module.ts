@@ -8,9 +8,9 @@ import { CountryData } from '../../interfaces/common/countries';
 import { CountriesService } from './services/countries.service';
 import { CountriesApi } from './api/countries.api';
 import { SettingsApi } from './api/settings.api';
-import { NbAuthModule } from '@nebular/auth';
 import { SettingsData } from '../../interfaces/common/settings';
 import { SettingsService } from './services/settings.service';
+import {NbAuthModule} from "../../../sharebook-nebular/auth/auth.module";
 
 const API = [UsersApi, CountriesApi, SettingsApi, HttpService];
 

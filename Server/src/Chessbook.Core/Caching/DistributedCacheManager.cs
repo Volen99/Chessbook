@@ -147,20 +147,28 @@ namespace Nop.Core.Caching
             //we use "PerRequestCache" to cache a loaded object in memory for the current HTTP request.
             //this way we won't connect to Redis server many times per HTTP request (e.g. each time to load a locale or setting)
             if (_perRequestCache.IsSet(key.Key))
+            {
                 return _perRequestCache.Get(key.Key, () => default(T));
+            }
 
             if (key.CacheTime <= 0)
+            {
                 return await acquire();
+            }
 
             var (isSet, item) = await TryGetItemAsync<T>(key);
 
             if (isSet)
+            {
                 return item;
+            }
 
             var result = await acquire();
 
             if (result != null)
+            {
                 await SetAsync(key, result);
+            }
 
             return result;
         }

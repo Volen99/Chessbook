@@ -30,6 +30,12 @@ import {faShare as faShareSolid} from '@fortawesome/pro-solid-svg-icons';
 import {NbMenuService} from "../../../../sharebook-nebular/theme/components/menu/menu.service";
 import {IPost} from "../../../posts/models/tweet";
 import {Post} from "../../post/post.model";
+import {MediaModalComponent} from "../../../../features/media-modal/media-modal.component";
+import {ModalRootComponent} from "../../../../features/modal-root/modal-root.component";
+import {MediaContainerComponent} from "../../../../features/media-container/media-container.component";
+import {Router} from "@angular/router";
+import {PeerTubeSocket} from "../../../../core/notification/sharebook-socket.service";
+
 
 export interface ISocialContextProps {
   screenName: string;
@@ -46,7 +52,6 @@ export class PostComponent implements OnInit {
   @Input() public transform: number = 0;
   @Input() public hasText = false;
   @Input() public hasMedia = false;
-  @Input() public mediaUrl: string;
   @Input() public isPoll: boolean;
   @Input() public isReshare: boolean;
   @Input() post: PostDetails = null;
@@ -58,12 +63,15 @@ export class PostComponent implements OnInit {
 
   oldPost: PostDetails;
 
-  constructor(private domSanitizer: DomSanitizer,
+  constructor(private router: Router,
+              private domSanitizer: DomSanitizer,
               private userStore: UserStore,
               private postService: PostsService,
               private dialogService: NbDialogService,
               private markdownService: MarkdownService,
-              protected notifier: Notifier,) {
+              protected notifier: Notifier,
+              private socket: PeerTubeSocket,
+              ) {
     this.tooltipDislike = `Dislike`;
 
     this.faAlarmExclamation = faAlarmExclamation;
@@ -82,13 +90,6 @@ export class PostComponent implements OnInit {
 
       // @ts-ignore
       this.post = this.post.resharedStatus;
-    }
-
-
-    debugger
-    if (this.post.hasMedia) {
-      this.picture = this.post.entities.medias[0].displayURL;
-      this.mediaUrl = this.post.entities.medias[0].displayURL;
     }
 
     // by mi
@@ -168,6 +169,10 @@ export class PostComponent implements OnInit {
   @Input()
   set picture(value: string) {
     this.imageBackgroundStyle = value ? this.domSanitizer.bypassSecurityTrustStyle(`url(${value})`) : null;
+  }
+
+  getSaveStyle(value: string) {
+    return this.imageBackgroundStyle = value ? this.domSanitizer.bypassSecurityTrustStyle(`url(${value})`) : null;
   }
 
   setLike() {
@@ -270,6 +275,46 @@ export class PostComponent implements OnInit {
     this.removeVideoFromArray(this.oldPost);
   }
 
+  handleOpenMedia(media, index) {
+    // const reactComponents = document.querySelectorAll('[data-component]');
+    //
+    // import('../../../../features/media-container/media-container.component')
+    //   .then(( {MediaContainerComponent} ) => {
+    //     [].forEach.call(reactComponents, (component) => {
+    //       [].forEach.call(component.children, (child) => {
+    //         component.removeChild(child);
+    //       });
+    //     });
+    //
+    //     const content = document.createElement('div');
+    //
+    //     // ReactDOM.render(<MediaContainer locale={locale} components={reactComponents} />, content);
+    //     document.body.appendChild(content);
+    //     // scrollToDetailedStatus();
+    //
+    //     debugger
+    //
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //    // scrollToDetailedStatus();
+    //   });
+
+    this.dialogService.open(MediaContainerComponent, {
+      context: {
+        media,
+        index,
+      },
+
+    });
+
+  }
+
+  handleExpandClick() {
+    debugger
+    this.router.navigate([`/${this.post.user.screenName}/post`, this.post.id]);
+  }
+
   private checkUserRating() {
     // Unlogged users do not have ratings
     if (this.isUserLoggedIn() === false) {
@@ -280,7 +325,7 @@ export class PostComponent implements OnInit {
       .subscribe(
         ratingObject => {
           if (ratingObject) {
-            this.userRating = ratingObject.type;
+            this.userRating = ratingObject.type === true ? 'like' : 'none';
 
             this.updateLikeStuff(this.userRating);
           }
@@ -334,7 +379,7 @@ export class PostComponent implements OnInit {
 
   private async init() {
     // Before HTML rendering restore line feed for markdown list compatibility
-    const postText = this.post.text.replace(/<br.?\/?>/g, '\r\n');
+    const postText = this.post.status.replace(/<br.?\/?>/g, '\r\n');
     const html = await this.markdownService.textMarkdownToHTML(postText, true, true);
     // this.sanitizedCommentHTML = await this.markdownService.processVideoTimestamps(html);
     this.sanitizedCommentHTML = html;

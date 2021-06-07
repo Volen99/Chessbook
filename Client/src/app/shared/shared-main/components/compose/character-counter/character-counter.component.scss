@@ -1,0 +1,17 @@
+$warning-red: #ff5050 !default;      // Sunset Orange
+
+.character-counter {
+  cursor: default;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(110, 118, 125);
+
+  &.character-counter--over {
+    color: $warning-red;
+  }
+
+  &.character-counter--almost-over {
+    color: #fdab1e;
+  }
+}

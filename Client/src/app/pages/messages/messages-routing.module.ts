@@ -8,6 +8,11 @@ const routes: Routes = [
   {
     path: '',
     component: MessagesComponent,
+    data: {
+      meta: {
+        title: `Messages`
+      }
+    },
     children: [
       {
         path: ':id',

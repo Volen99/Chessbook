@@ -3,7 +3,9 @@ import {IPoll} from "../../shared/posts/models/poll/poll";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {IPollOption} from "../../shared/posts/models/poll/poll-option";
-import { NbDateService } from 'app/sharebook-nebular/theme/components/calendar-kit/services/date.service';
+import {NbDateService} from 'app/sharebook-nebular/theme/components/calendar-kit/services/date.service';
+import {Month} from "../../pages/my-account/my-account-settings/my-account-profile/my-account-profile.component";
+import {SurveyService} from "../../shared/services/survey.service";
 
 @Component({
   selector: 'app-survey',
@@ -19,33 +21,35 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges, OnDest
 
   private _timer: any;
 
-  constructor(private http: HttpClient, private dateService: NbDateService<Date>) {
+  constructor(private http: HttpClient, private surveyService: SurveyService, private dateService: NbDateService<Date>) {
   }
 
   ngOnInit(): void {
     this.timeRemaining = this.expired ? 'Closed :(' : this.poll.expires_at;
-    this.showResults   = this.poll.voted || this.expired;
-    this.disabled      = false; // this.disabled || Object.entries(this.selected).every(item => !item);
+    this.showResults = this.poll.alreadyVoted || this.expired;
+    this.disabled = false; // this.disabled || Object.entries(this.selected).every(item => !item);
 
 
     if (this.poll.votersCount !== null && this.poll.votersCount !== undefined) {
       this.votesCount = this.poll.votersCount;
     } else {
-      this.votesCount = this.poll.votesCount;
+      this.votesCount = this.poll.totalVotes;
     }
 
     this._setupTimer();
 
   }
 
-  calcPercent(option: IPollOption) {
-     this.percent = this.poll.votesCount === 0 ? 0 : (option.votes / this.poll.votesCount) * 100;
+  alreadyVotedWarning = false;
 
-     return Math.round(this.percent);
+  calcPercent(option: IPollOption) {
+    this.percent = this.poll.totalVotes === 0 ? 0 : (option.numberOfVotes / this.poll.totalVotes) * 100;
+
+    return Math.round(this.percent);
   }
 
   getNormalizedDate(date: Date) {
-    return date.getMonth() + ' ' + date.getFullYear();
+    return Month[(date.getUTCMonth() + 1)] + ' ' + date.getUTCDate() + ', ' + date.getUTCFullYear();
   }
 
   ngAfterViewInit(): void {
@@ -72,7 +76,6 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   expired: any = null;
 
 
-
   pollVotesCount: number;
   percent: number;
   leading: any;
@@ -83,16 +86,24 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   votesCount: any = null;
 
 
-
   handleVote = () => {
     if (this.disabled) {
       return;
     }
 
-    this.http.post(this.apiUrl + `/poll/vote/${this.selected}`, {})
-        .subscribe((data) => {
-          this.showResults = true;
-        });
+    if (this.poll.alreadyVoted) {
+      this.alreadyVotedWarning = true;
+
+      return;
+    }
+
+    this.surveyService.vote(this.selected)
+      .subscribe((data: IPoll) => {
+        this.poll = data;
+
+        this.poll.startDateUtc = new Date(data.startDateUtc);
+        this.showResults = true;
+      });
   }
 
   get apiUrl(): string {
@@ -105,7 +116,7 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     }
 
     this.refresh();
-  }
+  };
 
   timeRemaining: any;
   showResults: boolean;
@@ -122,7 +133,7 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges, OnDest
 
   handleOptionChange = (value) => {  // { target: { value } }
     this._toggleOption(value);
-  }
+  };
 
   handleOptionKeyPress = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -130,18 +141,23 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges, OnDest
       e.stopPropagation();
       e.preventDefault();
     }
-  }
+  };
 
 
   private _toggleOption = value => {
-      const tmp = {};
-      tmp[value] = true;
-      this.selected = tmp;
-  }
+    const tmp = {};
+    tmp[value] = true;
+    this.selected = tmp;
+  };
 
   // by mi
 
   handleShowResults() {
     this.showResults = !this.showResults;
+    this.alreadyVotedWarning = false;
+  }
+
+  getOptionPercentage(percentOfTotalVotes: number) {
+    return Math.round(percentOfTotalVotes);
   }
 }

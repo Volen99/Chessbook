@@ -6,6 +6,11 @@ const routes: Routes = [
   {
     path: '',
     component: HomePageComponent,
+    data: {
+      meta: {
+        title: `Home`
+      }
+    },
     loadChildren: () => import('../../shared/timeline/timeline.module').then(m => m.TimelineModule),
   }
 ];

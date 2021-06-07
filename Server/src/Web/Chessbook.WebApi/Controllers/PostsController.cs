@@ -11,7 +11,6 @@
     using Chessbook.Web.Api.Identity;
     using Chessbook.Web.Models.Inputs;
     using Chessbook.Web.Models.Inputs.Posts;
-    using Chessbook.Web.Models.Outputs.Posts;
     using Chessbook.Data.Models.Polls;
     using Chessbook.Web.Models.Polls;
     using Chessbook.Web.Models.Outputs.Polls;
@@ -20,6 +19,12 @@
     using Chessbook.Common;
     using Chessbook.Web.Api.Factories;
     using Chessbook.Data.Models.Media;
+    using Chessbook.Web.Api.Areas.Admin.Models.Post;
+    using Nop.Services.Logging;
+    using Chessbook.Services.Localization;
+    using Nop.Web.Areas.Admin.Models.Customers;
+    using Chessbook.Data.Models.Post;
+    using Chessbook.Web.Api.Lib;
 
     [Route("posts")]
     public class PostsController : BaseApiController
@@ -34,10 +39,13 @@
         private readonly IMediaService mediaService;
         private readonly IPictureService pictureService;
         private readonly IUserModelFactory userModelFactory;
-
+        private readonly IPostModelFactory _productModelFactory;
+        private readonly ICustomerActivityService customerActivityService;
+        private readonly ILocaleStringResourceService localeStringResourceService;
 
         public PostsController(IPostsService postService, IPollService pollService, IUserService userService, IMediaService mediaService,
-            IPictureService pictureService, IUserModelFactory userModelFactory)
+            IPictureService pictureService, IUserModelFactory userModelFactory, IPostModelFactory productModelFactory,
+            ICustomerActivityService customerActivityService, ILocaleStringResourceService localeStringResourceService)
         {
             this.postService = postService;
             this.userService = userService;
@@ -45,6 +53,9 @@
             this.pollService = pollService;
             this.pictureService = pictureService;
             this.userModelFactory = userModelFactory;
+            this._productModelFactory = productModelFactory;
+            this.customerActivityService = customerActivityService;
+            this.localeStringResourceService = localeStringResourceService;
         }
 
         [HttpGet]
@@ -57,60 +68,55 @@
                 skip = query.Start;
             }
 
-            var postDTOs = await this.postService.GetHomeTimeline<PostDTO>(User.GetUserId(), query.Count, skip);
-
-            for (int i = 0; i < postDTOs.Count; i++)
+            var posts = await this.postService.GetHomeTimeline(User.GetUserId(), query.Count, skip);
+            var models = new List<PostModel>();
+            for (int i = 0; i < posts.Count; i++)
             {
-                var postDTO = postDTOs[i];
+                var postCurrent = posts[i];
 
-                if (postDTO.Reshared)
+                var model = (await _productModelFactory.PreparePostModelAsync(postCurrent));
+                models.Add(model);
+
+                //if (postDTO.Reshared)
+                //{
+                //    postDTO = postDTO.ResharedStatus = await this.postService.GetResharedOriginal<PostModel>(postDTO.Id);
+                //}
+
+                if (postCurrent.HasMedia)
                 {
-                    postDTO = postDTO.ResharedStatus = await this.postService.GetResharedOriginal<PostDTO>(postDTO.Id);
+                    //var picture = (await this.pictureService.GetPicturesByProductIdAsync(postDTO.Id)).FirstOrDefault();
+
+                    //var pictureSize = 480;
+
+                    //string displayUrl;
+                    //string expandUrl;
+
+                    //(expandUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture);
+                    //(displayUrl, _) = await this.pictureService.GetPictureUrlAsync(picture, pictureSize);
+
+                    //var pictureModel = new MediaEntityDTO
+                    //{
+                    //    Id = picture.Id,
+                    //    IdStr = picture.Id.ToString(),
+                    //    DisplayURL = ChessbookConstants.SiteHttps + displayUrl,
+                    //    ExpandedURL = ChessbookConstants.SiteHttps + expandUrl,
+                    //    MediaURL = picture.VirtualPath,
+                    //};
+
+                    //if (picture != null)
+                    //{
+                    //    postDTO.Entities.Medias.Add(pictureModel);
+                    //}
                 }
 
-                if (postDTO.HasMedia)
-                {
-                    postDTO.Entities.Poll = postDTO.Poll;
-
-                    var picture = (await this.pictureService.GetPicturesByProductIdAsync(postDTO.Id)).FirstOrDefault();
-
-                    var pictureSize = 480;
-
-                    string displayUrl;
-                    string expandUrl;
-
-                    (expandUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture);
-                    (displayUrl, _) = await this.pictureService.GetPictureUrlAsync(picture, pictureSize);
-
-                    var pictureModel = new MediaEntityDTO
-                    {
-                        Id = picture.Id,
-                        IdStr = picture.Id.ToString(),
-                        DisplayURL = ChessbookConstants.SiteHttps + displayUrl,
-                        ExpandedURL = ChessbookConstants.SiteHttps + expandUrl,
-                        MediaURL = picture.VirtualPath,
-                    };
-
-                    if (picture != null)
-                    {
-                        postDTO.Entities.Medias.Add(pictureModel);
-                    }
-                }
-
-                var profilePictureUrl = await this.pictureService.GetPictureUrlAsync(postDTO.User.ProfilePictureId, 73, true, defaultPictureType: PictureType.Avatar);
-
-                // TODO: check for null
-
-                postDTO.User.ProfileImageUrlHttps = ChessbookConstants.SiteHttps + profilePictureUrl;
-
-                postDTO.Reshared = await this.postService.GetReshareStatus(postDTO.Id, User.GetUserId());
-                postDTO.ReshareCount = await this.postService.GetReshareCount(postDTO.Id);
+                //postDTO.Reshared = await this.postService.GetReshareStatus(postDTO.Id, User.GetUserId());
+                //postDTO.ReshareCount = await this.postService.GetReshareCount(postDTO.Id);
             }
 
             return this.Ok(new
             {
-                data = postDTOs,
-                total = postDTOs.Count(),
+                data = models,
+                total = models.Count,
             });
         }
 
@@ -124,57 +130,66 @@
                 skip = query.Start;
             }
 
-            var posts = await this.postService.GetUserProfileTimeline<PostDTO>(query.UserId, query.Count, skip);
 
-            var userDTO = await this.userService.GetById(query.UserId);
-            foreach (var post in posts)
+            var posts = await this.postService.GetUserProfileTimeline(query.UserId, true, query.Start, query.Count);
+            var models = new List<PostModel>();
+            for (int i = 0; i < posts.Count; i++)
             {
-                post.User = userDTO;
-                post.Entities.Poll = post.Poll;
+                var postCurrent = posts[i];
 
-                post.User = await this.userModelFactory.PrepareCustomerModelAsync(post.User);
+                var model = (await _productModelFactory.PreparePostModelAsync(postCurrent));
+                models.Add(model);
 
-                if (post.HasMedia)
+                //if (postDTO.Reshared)
+                //{
+                //    postDTO = postDTO.ResharedStatus = await this.postService.GetResharedOriginal<PostModel>(postDTO.Id);
+                //}
+
+                if (postCurrent.HasMedia)
                 {
-                    var picture = (await this.pictureService.GetPicturesByProductIdAsync(post.Id)).FirstOrDefault();
+                    //var picture = (await this.pictureService.GetPicturesByProductIdAsync(postDTO.Id)).FirstOrDefault();
 
-                    var pictureSize = 480;
+                    //var pictureSize = 480;
 
-                    string displayUrl;
-                    string expandUrl;
+                    //string displayUrl;
+                    //string expandUrl;
 
-                    (expandUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture);
-                    (displayUrl, _) = await this.pictureService.GetPictureUrlAsync(picture, pictureSize);
+                    //(expandUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture);
+                    //(displayUrl, _) = await this.pictureService.GetPictureUrlAsync(picture, pictureSize);
 
-                    var pictureModel = new MediaEntityDTO
-                    {
-                        Id = picture.Id,
-                        IdStr = picture.Id.ToString(),
-                        DisplayURL = ChessbookConstants.SiteHttps + displayUrl,
-                        ExpandedURL = ChessbookConstants.SiteHttps + expandUrl,
-                        MediaURL = picture.VirtualPath,
-                    };
+                    //var pictureModel = new MediaEntityDTO
+                    //{
+                    //    Id = picture.Id,
+                    //    IdStr = picture.Id.ToString(),
+                    //    DisplayURL = ChessbookConstants.SiteHttps + displayUrl,
+                    //    ExpandedURL = ChessbookConstants.SiteHttps + expandUrl,
+                    //    MediaURL = picture.VirtualPath,
+                    //};
 
-                    if (picture != null)
-                    {
-                        post.Entities.Medias.Add(pictureModel);
-                    }
+                    //if (picture != null)
+                    //{
+                    //    postDTO.Entities.Medias.Add(pictureModel);
+                    //}
                 }
+
+                //postDTO.Reshared = await this.postService.GetReshareStatus(postDTO.Id, User.GetUserId());
+                //postDTO.ReshareCount = await this.postService.GetReshareCount(postDTO.Id);
             }
 
             return this.Ok(new
             {
-                data = posts,
-                total = posts.Count(),
+                data = models,
+                total = models.Count(),
             });
         }
 
         [HttpPost]
         public async Task<IActionResult> PostPublish([FromQuery] QueryPostParams query, [FromBody] PollCreateBody pollBody)
         {
+            Post post = null;
             if (!query.HasPoll)
             {
-                var post = await this.postService.CreateAsync(query, User.GetUserId(), query.MediaIds);
+                post = await this.postService.CreateAsync(query, User.GetUserId(), query.MediaIds);
             }
             else
             {
@@ -182,12 +197,14 @@
 
                 var options = await this.pollService.InsertPollAnswerAsync(pollId, pollBody.Options);
 
-                var post = await this.postService.CreateAsync(query, User.GetUserId(), null, pollId);
+                post = await this.postService.CreateAsync(query, User.GetUserId(), null, pollId);
             }
 
+            var postUser = await this.userService.GetCustomerByIdAsync(post.UserId);
+            post.User = postUser;
 
-
-            return this.Ok(query);
+            Notifier.Instance.NotifyOnNewVideoIfNeeded(post);
+            return this.Ok(post);
         }
 
 
@@ -204,42 +221,11 @@
         [Route("{id}")]
         public async Task<IActionResult> GetPost(int id)
         {
-            var post = this.postService.GetById<PostDTO>(id);
+            var post = await this.postService.GetPostByIdAsync(id);
 
-            var picture = (await this.pictureService.GetPicturesByProductIdAsync(post.Id, 1)).FirstOrDefault();
+            var model = await this._productModelFactory.PreparePostModelAsync(post);
 
-            var pictureSize = 480;
-
-            string displayUrl;
-            string expandUrl;
-
-            (expandUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture);
-            (displayUrl, _) = await this.pictureService.GetPictureUrlAsync(picture, pictureSize);
-
-            var pictureModel = new MediaEntityDTO
-            {
-                Id = picture.Id,
-                IdStr = picture.Id.ToString(),
-                DisplayURL = ChessbookConstants.SiteHttps + displayUrl,
-                ExpandedURL = ChessbookConstants.SiteHttps + expandUrl,
-                MediaURL = picture.VirtualPath,
-            };
-
-            if (picture != null)
-            {
-                post.Entities.Medias.Add(pictureModel);
-            }
-            else if (post.PollId != 0)
-            {
-                var poll = await this.pollService.GetPollByIdAsync<PollDTO>(post.PollId);
-                var pollOptions = await this.pollService.GetPollAnswerByPollAsync<PollOptionDTO>(poll.Id);
-
-                poll.Options = pollOptions;
-
-                post.Entities.Poll = poll;
-            }
-
-            return this.Ok(post);
+            return this.Ok(model);
         }
 
 
@@ -248,67 +234,73 @@
         [Route("likers/{id}")]
         public async Task<IActionResult> Likers(int id)
         {
-            var users = await this.postService.GetLikers<UserDTO>(id);
+            var users = await this.postService.GetLikers(id);
 
-            for (int i = 0; i < users.Count(); i++)
+            var models = new List<CustomerModel>();
+            foreach (var user in users)
             {
-                users[i] = await this.userModelFactory.PrepareCustomerModelAsync(users[i]);
+                models.Add(await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), user));
             }
 
-            return this.Ok(users);
+            return this.Ok(models);
         }
 
         [HttpPost]
         [Route("Delete")]
-        public  async Task<IActionResult> Delete([FromQuery] int id)
+        public async Task<IActionResult> Delete([FromQuery] int id)
         {
-            //if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
-            //{
-            //    return AccessDeniedView();
-            //}
-
-            //try to get a product with the specified id
-            var product = await postService.GetByIdClean(id);
+            // try to get a product with the specified id
+            var product = await this.postService.GetPostByIdAsync(id);
             if (product == null)
             {
                 return this.BadRequest("List");
             }
 
-            //// a vendor should have access only to his products
-            //if (await _workContext.GetCurrentVendorAsync() != null && product.VendorId != (await _workContext.GetCurrentVendorAsync()).Id)
-            //    return RedirectToAction("List");
 
             await this.postService.DeleteProductAsync(product);
 
-            return this.Ok("List");
+            //activity log
+            await this.customerActivityService.InsertActivityAsync("DeleteProduct", string.Format(await this.localeStringResourceService.GetResourceAsync("ActivityLog.DeleteProduct"), product.Id), product);
+
+            // _notificationService.SuccessNotification(await this.localeStringResourceService.GetResourceAsync("Admin.Catalog.Products.Deleted"));
+
+            return RedirectToAction("List");
         }
 
         [HttpPost]
         [Route("unshare")]
         public async Task<IActionResult> PostUnshare([FromQuery] int id)
         {
-            var product = await postService.GetByIdClean(id);
-            if (product == null)
-            {
-                return this.BadRequest("List");
-            }
+            //var product = await postService.GetByIdClean(id);
+            //if (product == null)
+            //{
+            //    return this.BadRequest("List");
+            //}
 
-            await this.postService.Unshare(product);
+            //await this.postService.Unshare(product);
 
             return this.Ok();
         }
 
-        private async Task<List<MediaEntityDTO>> GetMedias(int[] mediasIds)
+        [HttpGet]
+        [Route("post/{postId:int}/photo")]
+        public async Task<IActionResult> GetPostPhoto(int postId)
         {
-            var mediaEntities = new List<MediaEntityDTO>();
-            for (int i = 0; i < mediasIds.Length; i++)
+            var post = await this.postService.GetPostByIdAsync(postId);
+
+            if (post == null)
             {
-                var mediaCurrent = await this.mediaService.GetMediaById<MediaEntityDTO>(mediasIds[i]);
-                mediaEntities.Add(mediaCurrent);
+                return this.BadRequest("No such post");
             }
 
-            return mediaEntities;
-        }
+            var model = await this._productModelFactory.PreparePostModelAsync(post);
 
+            if (!model.HasMedia)
+            {
+                return this.BadRequest("This post does not have media, Mr. Hacker :|");
+            }
+
+            return this.Ok(model.Entities.Medias);
+        }
     }
 }

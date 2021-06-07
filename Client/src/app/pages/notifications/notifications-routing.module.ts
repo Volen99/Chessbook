@@ -7,6 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: NotificationsComponent,
+    data: {
+      meta: {
+        title: `Notifications`
+      }
+    },
     children: [
       {
         path: 'mentions',

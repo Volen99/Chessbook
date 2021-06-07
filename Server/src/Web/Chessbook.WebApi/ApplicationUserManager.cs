@@ -9,16 +9,16 @@
 
     using Chessbook.Data.Models;
 
-    public class ApplicationUserManager : UserManager<User>
+    public class ApplicationUserManager : UserManager<Customer>
     {
-        public ApplicationUserManager(IUserStore<User> store, IOptions<IdentityOptions> optionsAccessor, IPasswordHasher<User> passwordHasher,
-            IEnumerable<IUserValidator<User>> userValidators, IEnumerable<IPasswordValidator<User>> passwordValidators, ILookupNormalizer keyNormalizer,
-            IdentityErrorDescriber errors, IServiceProvider services, ILogger<UserManager<User>> logger)
+        public ApplicationUserManager(IUserStore<Customer> store, IOptions<IdentityOptions> optionsAccessor, IPasswordHasher<Customer> passwordHasher,
+            IEnumerable<IUserValidator<Customer>> userValidators, IEnumerable<IPasswordValidator<Customer>> passwordValidators, ILookupNormalizer keyNormalizer,
+            IdentityErrorDescriber errors, IServiceProvider services, ILogger<UserManager<Customer>> logger)
             : base(store, optionsAccessor, passwordHasher, userValidators, passwordValidators, keyNormalizer, errors, services, logger)
         {
         }
 
-        public override async Task<IdentityResult> ChangePasswordAsync(User user, string currentPassword, string newPassword)
+        public override async Task<IdentityResult> ChangePasswordAsync(Customer user, string currentPassword, string newPassword)
         {
             if (user == null)
             {

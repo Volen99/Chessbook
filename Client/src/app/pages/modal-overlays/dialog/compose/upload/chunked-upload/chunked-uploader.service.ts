@@ -13,16 +13,16 @@ import {IMedia} from "../../../../../../shared/models/upload/media/media";
 import {UploadQueryGeneratorService} from "../query/upload-query-generator.service";
 import {Media} from "./core/media";
 import {Observable} from "rxjs";
+import {AppInjector} from "../../../../../../app-injector";
 
 @Injectable()
 export class ChunkedUploaderService implements IChunkedUploader {
-  private readonly _media: IMedia;
+  private /*readonly*/ _media: IMedia;
 
   private _expectedBinaryLength?: number;
-  private readonly _result: ChunkUploadResult;
+  private /*readonly*/ _result: ChunkUploadResult;
 
-  constructor(private uploadQueryGeneratorService: UploadQueryGeneratorService,
-              private uploadApi: UploadApi) {     // media comes through ctor?! 😲
+  constructor(private uploadQueryGeneratorService: UploadQueryGeneratorService, private uploadApi: UploadApi) {     // media comes through ctor?! 😲
     this._media = new Media();
 
     this._result = new ChunkUploadResult();
@@ -100,8 +100,8 @@ export class ChunkedUploaderService implements IChunkedUploader {
     let isSuccessStatusCode: any;
     await this.uploadApi.appendAsync(formData, appendQuery)
         .toPromise()
-        .then((data) => {
-          isSuccessStatusCode = data;
+        .then(response => {
+          isSuccessStatusCode = true; // uh, what if it is not true? If it goes to "then" then it is always true? Idk :(
         });
 
     // @ts-ignore
@@ -136,6 +136,10 @@ export class ChunkedUploaderService implements IChunkedUploader {
 
     this._result.finalize = finalizeTwitterResult;
 
+
+    // by miiiiiiii aaaaaaaaaaaaaaaaaaaaaaaaaaa
+    this.nextSegmentIndex = 0;
+
     return finalizeTwitterResult != null;     // finalizeTwitterResult.response.isSuccessStatusCode;
   }
 
@@ -155,6 +159,18 @@ export class ChunkedUploaderService implements IChunkedUploader {
         this._media.data = allSegments.reduce((acc, cur) => [...acc, ...cur.value], []); // SelectMany(x => x.Value)
       }
     }
+  }
+
+  public createChunkedUploader() {
+    // @ts-ignore
+    this._media = new Media();
+
+    this._result = new ChunkUploadResult();
+    this._result.media = this._media;
+
+    this.uploadedSegments = new Map<number, Uint8Array>();  // dic
+
+    this._expectedBinaryLength = undefined;
   }
 
   private UploadInitModel = class {

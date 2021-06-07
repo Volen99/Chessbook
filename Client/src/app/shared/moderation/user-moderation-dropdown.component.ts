@@ -11,7 +11,6 @@ import { Notifier } from 'app/core/notification/notifier.service';
 import {DropdownAction} from "../shared-main/buttons/action-dropdown.component";
 import {User} from "../shared-main/user/user.model";
 import {BulkRemoveCommentsOfBody} from "../models/bulk/bulk-remove-comments-of-body.model";
-import {NbAuthService} from "@nebular/auth";
 import {AuthService} from "../../core/auth/auth.service";
 
 @Component({

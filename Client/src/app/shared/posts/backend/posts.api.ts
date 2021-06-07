@@ -55,6 +55,10 @@ export class PostsApi {
         return this.api.get(`${this.apiController}/${url}`, {params});
     }
 
+    getPostPhotos(url: string) {
+        return this.api.get(`${this.apiController}/${url}`);
+    }
+
 
     // // Publish Retweet
     // publishRetweetAsync(parameters: IPublishRetweetParameters): Promise<ITwitterResult<ITweetDTO>>;
@@ -74,7 +78,7 @@ export class PostsApi {
     }
 
     votePostAsync(params: HttpParams): Observable<any> {
-        return this.api.put(this.voteApiController, {}, {params});
+        return this.api.post(this.voteApiController, {}, {params});
     }
 
     getLikers(url: string) {

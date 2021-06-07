@@ -6,6 +6,11 @@ const routes: Routes = [
   {
     path: '',
     component: ConnectComponent,
+    data: {
+      meta: {
+        title: `Connect`
+      }
+    },
   }
 ];
 

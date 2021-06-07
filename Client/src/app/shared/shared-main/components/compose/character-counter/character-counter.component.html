@@ -1,0 +1,14 @@
+<span *ngIf="this.diff < 0; else els" class="character-counter character-counter--over">
+    {{this.diff}}
+</span>
+
+
+<ng-template #els>
+    <span *ngIf="this.diff < 21" class="character-counter character-counter--almost-over">
+        {{this.diff}}
+    </span>
+
+    <span *ngIf="this.diff > 20" class="character-counter">
+        {{this.diff}}
+    </span>
+</ng-template>

@@ -24,6 +24,7 @@
     using Nop.Core.Configuration;
     using Microsoft.Extensions.Caching.Memory;
     using Nop.Services.Helpers;
+    using Chessbook.Common;
 
     public static class ContainerExtension
     {
@@ -34,29 +35,29 @@
             services.AddScoped<IDataBaseInitializer, DataBaseInitializer>();
 
             // Data repositories
-            services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
-            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            //services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
+            //services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<ISettingsService, SettingsService>();
-            services.AddTransient<ISettingsRepository, SettingsRepository>();
-            services.AddTransient<IUserPhotoRepository, UserPhotoRepository>();
-            services.AddTransient<IUserService, UserService<User>>();
-            services.AddTransient<IUserRepository<User>, UserRepository>();
-            services.AddTransient<IIdentityUserRepository<User>, IdentityUserRepository>();
-            services.AddTransient<IRoleRepository<Role>, RoleRepository>();
-            services.AddTransient<IUserRoleRepository<UserRole>, UserRoleRepository>();
-            services.AddTransient<IUserClaimRepository<UserClaim>, UserClaimRepository>();
+            //services.AddTransient<ISettingsService, SettingsService>();
+            //services.AddTransient<ISettingsRepository, SettingsRepository>();
+            //services.AddTransient<IUserPhotoRepository, UserPhotoRepository>();
+            // services.AddTransient<IUserService, UserService<Customer>>();
+            //services.AddTransient<IUserRepository<User>, UserRepository>();
+            //services.AddTransient<IIdentityUserRepository<User>, IdentityUserRepository>();
+            //services.AddTransient<IRoleRepository<Role>, RoleRepository>();
+            //services.AddTransient<IUserRoleRepository<UserRole>, UserRoleRepository>();
+            //services.AddTransient<IUserClaimRepository<UserClaim>, UserClaimRepository>();
 
             services.AddTransient<IUploadService, UploadService>();
             services.AddTransient<IMediaService, MediaService>();
             services.AddTransient<IPostsService, PostsService>();
-            services.AddTransient<IPollService, PollService>();
+            // services.AddTransient<IPollService, PollService>();
 
-            services.AddScoped<IPictureService, PictureService>();
+            // services.AddScoped<IPictureService, PictureService>();
             services.AddScoped<INopFileProvider, NopFileProvider>();
-            services.AddScoped<IGenericAttributeService, GenericAttributeService>();
+           //  services.AddScoped<IGenericAttributeService, GenericAttributeService>();
             services.AddTransient<IStreamersService, StreamersService>();
             services.AddTransient<IRelationshipService, RelationshipService>();
 
@@ -82,14 +83,17 @@
             //    services.AddSingleton<IStaticCacheManager, MemoryCacheManager>();
             //}
 
-            services.AddSingleton<IMemoryCache>(new MemoryCache(new MemoryCacheOptions())); // might bug
+            // services.AddSingleton<IMemoryCache>(new MemoryCache(new MemoryCacheOptions())); // might bug
 
-            services.AddSingleton<ILocker, MemoryCacheManager>();
-            services.AddSingleton<IStaticCacheManager, MemoryCacheManager>();
+            //services.AddSingleton<ILocker, MemoryCacheManager>();
+            //services.AddSingleton<IStaticCacheManager, MemoryCacheManager>();
 
-            services.AddSingleton<AppSettings, AppSettings>(); // might bug
+            // services.AddSingleton<AppSettings, AppSettings>(); // might bug
 
-            services.AddScoped<IDateTimeHelper, DateTimeHelper>();
+            // services.AddScoped<IDateTimeHelper, DateTimeHelper>();
+
+            // services.AddHttpContextAccessor();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
         }
     }
 }

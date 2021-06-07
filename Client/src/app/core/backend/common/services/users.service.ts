@@ -152,7 +152,7 @@ export class UsersService extends UserData {
     params = this.restService.addParameterToQuery(params,'pageNumber', pageNumber);
     params = this.restService.addParameterToQuery(params,'pageSize', pageSize);
 
-    return this.api.getUsers('all', params);
+    return this.api.getUsers('who_to_follow', params);
   }
 
   changeEmail(password: string, newEmail: string) {

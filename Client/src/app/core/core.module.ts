@@ -25,6 +25,8 @@ import {IotBackendModule} from "./backend/iot/iot-backend.module";
 import {PeerTubeSocket} from "./notification/sharebook-socket.service";
 import {ServerService} from "./server/server.service";
 import {RedirectService} from "./routing/redirect.service";
+import {MetaService} from "./routing/meta.service";
+import {MetaGuard} from "./routing/meta-guard.service";
 
 export const NB_CORE_PROVIDERS = [
   ...CommonMockModule.forRoot().providers,
@@ -86,6 +88,9 @@ export class CoreModule {
         RedirectService,
         Notifier,
         PeerTubeSocket,
+
+        MetaService,
+        MetaGuard,
       ],
     };
   }

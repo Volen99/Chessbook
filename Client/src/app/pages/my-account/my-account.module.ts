@@ -33,6 +33,7 @@ import {DialogUsernamePromptComponent} from "./my-account-settings/my-account-da
 import { MyAccountPersonalDetailsComponent } from './my-account-settings/my-account-personal-details/my-account-personal-details.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {NbRadioModule} from "../../sharebook-nebular/theme/components/radio/radio.module";
+import {NotificationsModule} from "../notifications/notifications.module";
 
 @NgModule({
   imports: [
@@ -60,6 +61,7 @@ import {NbRadioModule} from "../../sharebook-nebular/theme/components/radio/radi
     AuthModule,
     FontAwesomeModule,
     NbRadioModule,
+    NotificationsModule,
   ],
 
   declarations: [

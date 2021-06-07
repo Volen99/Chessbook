@@ -16,7 +16,7 @@ export interface IPost extends ITweetIdentifier {
   createdAt: Date; // DateTimeOffset;
 
   // Formatted text of the tweet.
-  text: string;
+  status: string;
 
   // Prefix of an extended tweet.
   prefix: string;

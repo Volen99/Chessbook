@@ -5,7 +5,7 @@ export interface IPoll {
 
   question: string;
 
-  options: IPollOption[];
+  answers: IPollOption[];
 
   expires_at: Date;
 
@@ -13,13 +13,15 @@ export interface IPoll {
 
   multiple: boolean;
 
-  votesCount: number;
+  totalVotes: number;
 
   votersCount: number;
 
-  voted: true;
+  alreadyVoted: true;
 
   ownVotes: number[];
+
+  views: number;
 
   startDateUtc: Date;
 }

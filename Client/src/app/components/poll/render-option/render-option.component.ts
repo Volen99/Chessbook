@@ -22,9 +22,9 @@ export class RenderOptionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.pollVotesCount = this.poll.votersCount || this.poll.votesCount;
+    this.pollVotesCount = this.poll.votersCount || this.poll.totalVotes;
     this.percent = this.pollVotesCount === 0 ? 0 : (this.option.votes_count / this.pollVotesCount) * 100;
-    this.leading = this.poll.options.filter(other => other.label === this.option.title).every(other => this.option.votes_count >= other.votes);
+    this.leading = this.poll.answers.filter(other => other.label === this.option.title).every(other => this.option.votes_count >= other.numberOfVotes);
       /*this.active = !!this.selected[`${this.optionIndex}`];*/
     this.voted = this.option.voted || (this.poll.ownVotes && this.poll.ownVotes.includes(this.optionIndex));
   }

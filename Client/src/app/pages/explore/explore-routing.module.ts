@@ -7,6 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: ExploreComponent,
+    data: {
+      meta: {
+        title: `Explore`
+      }
+    },
   }
 ];
 

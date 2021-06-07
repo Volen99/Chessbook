@@ -1,4 +1,4 @@
-﻿import {inject, Inject, Injectable, InjectionToken} from "@angular/core";
+﻿import {inject, Inject, Injectable, InjectionToken, Injector} from "@angular/core";
 
 import {IUploadParameters} from "../../../../../../shared/models/upload/upload-binary-parameters";
 import {IAddMediaMetadataParameters} from "../../../../../../shared/models/upload/add-media-metadata-parameters";
@@ -8,10 +8,12 @@ import {ChunkUploadAppendParameters} from "../../../../../../shared/models/uploa
 import {MediaCategory} from "../../../../../../shared/models/enums/media-category";
 import {Resources} from "../../../../../../helpers/resourse";
 import {TimeSpan} from "../shared/timespan";
-import {IChunkUploadResult} from "./core/chunk-uploader-result";
+import {ChunkUploadResult, IChunkUploadResult} from "./core/chunk-uploader-result";
 import {IMedia} from "../../../../../../shared/models/upload/media/media";
 import {IUploadedMediaInfo} from "../../../../../../shared/models/upload/media/uploaded-media-info";
 import {ChunkedUploaderService} from "./chunked-uploader.service";
+import {AppInjector} from "../../../../../../app-injector";
+import {Media} from "./core/media";
 
 export interface IUploadQueryExecutorService {
   // Upload a binary
@@ -23,11 +25,13 @@ export interface IUploadQueryExecutorService {
 
 @Injectable()
 export class UploadQueryExecutorService {
-  constructor(private chunkedUploaderService: ChunkedUploaderService) {
+  constructor(/*private chunkedUploaderService: ChunkedUploaderService*/) {
   }
 
   public async uploadBinaryAsync(uploadQueryParameters: IUploadParameters): Promise<IChunkUploadResult> {
     let binary: ArrayBuffer = uploadQueryParameters.binary;
+
+    let chunkedUploaderService = this.createChunkedUploader();
 
     let initParameters = new ChunkUploadInitParameters(uploadQueryParameters.queryMediaType);
     initParameters.totalBinaryLength = binary.byteLength;
@@ -36,10 +40,10 @@ export class UploadQueryExecutorService {
     initParameters.additionalOwnerIds = uploadQueryParameters.additionalOwnerIds;
     initParameters.customRequestParameters = uploadQueryParameters.initCustomRequestParameters;
 
-    let initOperationSucceeded = await this.chunkedUploaderService.initAsync(initParameters);
+    let initOperationSucceeded = await chunkedUploaderService.initAsync(initParameters);
 
     if (initOperationSucceeded === false) {
-      return this.chunkedUploaderService.result;
+      return chunkedUploaderService.result;
     }
 
     let binaryChunks = UploadQueryExecutorService.getBinaryChunks(binary, uploadQueryParameters.maxChunkSize);
@@ -53,23 +57,22 @@ export class UploadQueryExecutorService {
 
       let startUploadedSize = uploadedSize;
       // Must be `media`, if using the real media type as content id, Twitter does not accept when invoking .Finalize().
-      let appendParameters = new ChunkUploadAppendParameters(binaryChunk,  uploadQueryParameters.queryMediaType, uploadQueryParameters.timeout);
+      let appendParameters = new ChunkUploadAppendParameters(binaryChunk, uploadQueryParameters.queryMediaType, uploadQueryParameters.timeout);
       appendParameters.uploadProgressChanged = (args) => {
         uploadedSize = startUploadedSize + args.NumberOfBytesUploaded;
       };
       appendParameters.customRequestParameters = uploadQueryParameters.appendCustomRequestParameters;
 
 
-
-      let appendOperationSucceeded = await this.chunkedUploaderService.appendAsync(appendParameters);
+      let appendOperationSucceeded = await chunkedUploaderService.appendAsync(appendParameters);
       if (appendOperationSucceeded === false) {
-        return this.chunkedUploaderService.result;
+        return chunkedUploaderService.result;
       }
     }
 
-    let finalizeSucceeded: boolean = await this.chunkedUploaderService.finalizeAsync(uploadQueryParameters.finalizeCustomRequestParameters); // .ConfigureAwait(false);
+    let finalizeSucceeded: boolean = await chunkedUploaderService.finalizeAsync(uploadQueryParameters.finalizeCustomRequestParameters); // .ConfigureAwait(false);
     if (finalizeSucceeded) {
-      let result = this.chunkedUploaderService.result;
+      let result = chunkedUploaderService.result;
       // uploadQueryParameters.uploadStateChanged(new MediaUploadProgressChangedEventArgs(UploadProgressState.COMPLETED, uploadedSize, totalSize));
 
       let category = uploadQueryParameters.mediaCategory;
@@ -81,7 +84,7 @@ export class UploadQueryExecutorService {
       // }
     }
 
-    return this.chunkedUploaderService.result;
+    return chunkedUploaderService.result;
   }
 
   private static async calculateSizeAsync(contentId: string, binary: ArrayBuffer): Promise<number> {
@@ -109,6 +112,15 @@ export class UploadQueryExecutorService {
     }
 
     return result;
+  }
+
+  // OMGGGGGGGGGGGGGGGGGGGGGGGGG 20.05.2021 | Lost Frequencies - Are You With Me (Official Music Video)
+  private createChunkedUploader(): ChunkedUploaderService {
+    let uploader = AppInjector.get(ChunkedUploaderService);
+
+    uploader.createChunkedUploader();
+
+    return uploader;
   }
 
   // public addMediaMetadataAsync(metadata: IAddMediaMetadataParameters): Promise<ITwitterResult> {

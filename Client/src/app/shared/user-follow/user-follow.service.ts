@@ -111,17 +111,15 @@ export class UserFollowService {
     );
   }
 
-  private doSubscriptionsExist(screenName: string[]): Observable<SubscriptionExistResult> {
+  private doSubscriptionsExist(screenNames: string[]): Observable<SubscriptionExistResult> {
     const url = this.apiController + '/exist';
     let params = new HttpParams();
 
-    params = this.restService.addObjectParams(params, {screenName});
+    params = this.restService.addObjectParams(params, { screenNames });
 
-    debugger
-    return this.http.get<SubscriptionExistResult>(url, {params})
+    return this.http.get<SubscriptionExistResult>(url, { params })
       .pipe(
         tap(res => {
-          debugger
           this.myAccountSubscriptionCache = {
             ...this.myAccountSubscriptionCache,
             ...res

@@ -13,6 +13,33 @@ $assets-path: '../../assets/';
 //@import './ng-select.scss';
 
 
+body {
+  &.with-modals {
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    &--active {
+      overflow-y: hidden;
+    }
+  }
+
+  &.with-modals--active {
+    overflow-y: hidden;
+  }
+}
+
+div[data-component] {
+  width: 100%;
+}
+
+noscript,
+#incompatible-browser {
+  display: block;
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 1rem auto;
+}
+
 // The Great CSS Refactoring starts 11.02.2021, Thursday, 17:56 PM | Samurai ☯ Japanese Lofi HipHop Mix
 
 .sharebook-container {
@@ -420,6 +447,10 @@ $assets-path: '../../assets/';
 }
 
 .svg-position-relative {
+  position: relative;
+}
+
+.position-relative {
   position: relative;
 }
 

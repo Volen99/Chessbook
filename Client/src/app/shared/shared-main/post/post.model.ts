@@ -52,9 +52,9 @@ export class Post /*implements IPost*/ {
     this._postFromServer.idStr = value;
   }
 
-  get text(): string {
-    if (this._postFromServer.text != null) {
-      return this._postFromServer.text;
+  get status(): string {
+    if (this._postFromServer.status != null) {
+      return this._postFromServer.status;
     }
 
     if (this._postFromServer.fullText == null) {
@@ -68,12 +68,12 @@ export class Post /*implements IPost*/ {
     let contentStartIndex: number = (this.displayTextRange)[0];
     let contentEndIndex: number = (this.displayTextRange)[1];
 
-    return this.text; // UnicodeHelper.substringByTextElements(this._tweetDTO.fullText, contentStartIndex, contentEndIndex - contentStartIndex);
+    return this.status; // UnicodeHelper.substringByTextElements(this._tweetDTO.fullText, contentStartIndex, contentEndIndex - contentStartIndex);
   }
 
 
-  set text(value: string) {
-    this._postFromServer.text = value;
+  set status(value: string) {
+    this._postFromServer.status = value;
   }
 
   get prefix(): string {
@@ -99,7 +99,7 @@ export class Post /*implements IPost*/ {
   }
 
   get fullText(): string {
-    return this._postFromServer.fullText ?? this._postFromServer.fullText ?? this._postFromServer.text;
+    return this._postFromServer.fullText ?? this._postFromServer.fullText ?? this._postFromServer.status;
   }
 
   set fullText(value: string) {

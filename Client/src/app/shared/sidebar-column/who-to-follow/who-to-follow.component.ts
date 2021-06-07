@@ -14,7 +14,7 @@ export class WhoToFollowComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getUsers(1, 40)
         .subscribe((data) => {
-          this.users = data["item1"];
+          this.users = data;
         });
   }
 

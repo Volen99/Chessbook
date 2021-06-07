@@ -11,6 +11,12 @@ import {IUser} from "../../../../core/interfaces/common/users";
 import {UserVideoRateType} from "../../models/rate/user-video-rate.type";
 import {UploadComponent} from "../../../../pages/modal-overlays/dialog/compose/upload/upload.component";
 import {LikesComponent} from "../likes/likes.component";
+import {faHeart as faHeartSolid} from "@fortawesome/pro-solid-svg-icons";
+import {
+  faComment,
+  faShare,
+  faHeart,
+} from '@fortawesome/pro-light-svg-icons';
 
 @Component({
   selector: 'app-post-thread',
@@ -41,14 +47,6 @@ export class PostThreadComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if(this.post.entities.medias) {
-      this.picture = this.post.entities.medias[0].expandedURL;
-      this.mediaUrl = this.post.entities.medias[0].expandedURL;
-    }
-
-
-
-
     // by mi
     this.userStore.onUserStateChange()
       .pipe(
@@ -61,16 +59,28 @@ export class PostThreadComponent implements OnInit {
 
     this.checkUserRating();
 
+    this.svgLikeStyles.color = this.userRating === 'like' ? 'blue' : 'inherit';
+
     // this.init();
 
     this.buildVideoLink();
   }
 
+  getSaveStyle(value: string) {
+    return this.imageBackgroundStyle = value ? this.domSanitizer.bypassSecurityTrustStyle(`url(${value})`) : null;
+  }
+
+  faComment = faComment;
+  faShare = faShare;
+  faHeart = faHeart;
+
   style = {height: 0};
 
   sanitizedCommentHTML = '';
 
-
+  svgLikeStyles = {
+    'color': 'inherit',    // blue is such a beautiful color 💙
+  };
 
   meatballsMenu = this.getMenuItems();
 
@@ -182,7 +192,9 @@ export class PostThreadComponent implements OnInit {
       .subscribe(
         ratingObject => {
           if (ratingObject) {
-            this.userRating = ratingObject.type;
+            this.userRating = ratingObject.type === true ? 'like' : 'none';
+
+            this.updateLikeStuff(this.userRating);
           }
         },
 
@@ -224,18 +236,30 @@ export class PostThreadComponent implements OnInit {
     this.post.favoriteCount += likesToIncrement;
     this.post.dislikeCount += dislikesToIncrement;
 
+    this.updateLikeStuff(newRating);
+
     // this.post.buildLikeAndDislikePercents();
     // this.setVideoLikesBarTooltipText();
   }
 
   private async init() {
     // Before HTML rendering restore line feed for markdown list compatibility
-    const postText = this.post.text.replace(/<br.?\/?>/g, '\r\n');
+    const postText = this.post.status.replace(/<br.?\/?>/g, '\r\n');
     const html = await this.markdownService.textMarkdownToHTML(postText, true, true);
     // this.sanitizedCommentHTML = await this.markdownService.processVideoTimestamps(html);
     this.sanitizedCommentHTML = html;
 
 
+  }
+
+  private updateLikeStuff(rating: UserVideoRateType) {
+    if (rating === 'like') {
+      this.faHeart = faHeartSolid;
+      this.tooltipLike = 'Unlike';
+    } else {
+      this.faHeart = faHeart;
+      this.tooltipLike = 'Like';
+    }
   }
 
 }

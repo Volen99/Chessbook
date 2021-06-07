@@ -4,6 +4,7 @@ import {ShowcaseDialogComponent} from "../../../../pages/modal-overlays/dialog/s
 import {Router} from "@angular/router";
 import {PostsService} from "../../posts.service";
 import {IUser} from "../../../../core/interfaces/common/users";
+import {UserStore} from "../../../../core/stores/user.store";
 
 @Component({
   selector: 'app-likes',
@@ -15,7 +16,8 @@ export class LikesComponent implements OnInit {
   @Input() title: string;
   @Input() postId: number;
 
-  constructor(protected ref: NbDialogRef<ShowcaseDialogComponent>, private router: Router, private postService: PostsService) { }
+  constructor(protected ref: NbDialogRef<ShowcaseDialogComponent>, private router: Router, private postService: PostsService,
+              private userStore: UserStore) { }
 
   ngOnInit(): void {
     this.postService.getLikers(this.postId)
@@ -39,7 +41,11 @@ export class LikesComponent implements OnInit {
   }
 
   userClickHandler(screenName: string) {
-    this.router.navigate([`/${screenName}`]);
+    this.router.navigate([`/${screenName.substring(1)}`]);
+  }
+
+  isManageable (user: IUser) {
+    return user?.id === this.userStore.getUser().id;
   }
 
 }

@@ -6,6 +6,7 @@
     using Chessbook.Services.Data.Services;
     using Chessbook.Web.Api.Identity;
     using Chessbook.Web.Models;
+    using Chessbook.Data.Models;
 
     [Route("settings")]
     public class SettingsController : BaseApiController
@@ -42,9 +43,28 @@
             var currentUserId = User.GetUserId();
             if (currentUserId > 0)
             {
-                dto.Id = currentUserId;
-                var result = await settingsService.Edit(dto);
-                return Ok(result);
+                var settingCurrent = await this.settingsService.GetById(currentUserId);
+
+                if (settingCurrent == null)
+                {
+                    settingCurrent = new Settings
+                    {
+                        CustomerId = currentUserId,
+                        ThemeName = dto.ThemeName,
+                    };
+
+                    await this.settingsService.CreateAsync(settingCurrent);
+
+                    return Ok(dto);
+                }
+
+                settingCurrent.CustomerId = currentUserId;
+                settingCurrent.ThemeName = dto.ThemeName;
+
+
+                var result = await settingsService.Edit(settingCurrent);
+
+                return Ok(dto);
             }
 
             return Unauthorized();

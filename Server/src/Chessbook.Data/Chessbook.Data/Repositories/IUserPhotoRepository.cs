@@ -5,8 +5,8 @@
     using Chessbook.Data.Models;
     using Chessbook.Data.Models.System;
 
-    public interface IUserPhotoRepository
-    {
-        Task<UserPhoto> Get(int id, ContextSession session);
-    }
+    //public interface IUserPhotoRepository
+    //{
+    //    Task<UserPhoto> Get(int id, ContextSession session);
+    //}
 }

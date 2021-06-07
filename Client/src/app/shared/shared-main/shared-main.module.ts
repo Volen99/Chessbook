@@ -1,5 +1,5 @@
 import {CommonModule, DatePipe} from '@angular/common';
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
 
 import {SharedGlobalIconModule} from "../shared-icons/shared-global-icon.module";
@@ -13,6 +13,7 @@ import {InfiniteScrollerDirective} from "./angular/directives/infinite-scroller.
 import {SharebookTemplateDirective} from "./angular/directives/sharebook-template.directive";
 import {BytesPipe} from "./angular/pipes/bytes.pipe";
 import {ActionDropdownComponent} from "./buttons/action-dropdown.component";
+import {OverlayModule} from '@angular/cdk/overlay';
 // import { SharedModule as PrimeSharedModule } from 'primeng/api';
 // import { ClipboardModule } from '@angular/cdk/clipboard';
 // import { HttpClientModule } from '@angular/common/http';
@@ -67,7 +68,6 @@ import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.m
 import {NbContextMenuModule} from "../../sharebook-nebular/theme/components/context-menu/context-menu.module";
 import {UserHistoryService} from "./users/user-history.service";
 import {UserNotificationService} from "./users/user-notification.service";
-import {UserNotificationsComponent} from "./users/user-notifications.component";
 import {ActorAvatarInfoComponent} from "./account/actor-avatar-info.component";
 import {NbUserModule} from "../../sharebook-nebular/theme/components/user/user.module";
 import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";
@@ -76,6 +76,15 @@ import {NumberFormatterPipe} from "./angular/pipes/number-formatter.pipe";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {SocialContextComponent} from "./components/post/social-context/social-context.component";
 import {EnumToArrayPipe} from "./angular/pipes/enum-to-array.pipe";
+import {CharacterCounterComponent} from "./components/compose/character-counter/character-counter.component";
+import {
+  EmojiPickerDropdownComponent, EmojiPickerMenuComponent,
+  ModifierPickerComponent,
+  ModifierPickerMenuComponent
+} from './components/compose/emoji-picker-dropdown/emoji-picker-dropdown.component';
+import {PickerModule} from "@ctrl/ngx-emoji-mart";
+import {EmojiModule} from "@ctrl/ngx-emoji-mart/ngx-emoji";
+import { AnimatedNumberComponent } from './components/animated-number/animated-number.component';
 
 @NgModule({
   imports: [
@@ -102,7 +111,10 @@ import {EnumToArrayPipe} from "./angular/pipes/enum-to-array.pipe";
     NbUserModule,
     NbCardModule,
     ComponentsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    OverlayModule,
+    PickerModule,
+    EmojiModule,
   ],
 
   declarations: [
@@ -135,7 +147,6 @@ import {EnumToArrayPipe} from "./angular/pipes/enum-to-array.pipe";
     // TopMenuDropdownComponent,
     //
     // UserQuotaComponent,
-    UserNotificationsComponent,
     StaticHeaderComponent,
     BootstrapToggleDirective,
     PostComponent,
@@ -148,7 +159,14 @@ import {EnumToArrayPipe} from "./angular/pipes/enum-to-array.pipe";
     // GroupByPipe,
     // BootstrapToggleDirective,
 
-    SocialContextComponent
+    SocialContextComponent,
+    CharacterCounterComponent,
+    ModifierPickerMenuComponent,
+    ModifierPickerComponent,
+    EmojiPickerDropdownComponent,
+    EmojiPickerMenuComponent,
+    AnimatedNumberComponent,
+
   ],
 
   exports: [
@@ -197,12 +215,13 @@ import {EnumToArrayPipe} from "./angular/pipes/enum-to-array.pipe";
     // TopMenuDropdownComponent,
     //
     // UserQuotaComponent,
-    UserNotificationsComponent,
     StaticHeaderComponent,
     BootstrapToggleDirective,
     PostComponent,
     ProfilePicture49x49Component,
     EnumToArrayPipe,
+    CharacterCounterComponent,
+    EmojiPickerDropdownComponent,
     // EnumToArrayPipe,
     // FormDirective,
     // NextBtnDirective,
@@ -232,7 +251,7 @@ import {EnumToArrayPipe} from "./angular/pipes/enum-to-array.pipe";
     // VideoCaptionService,
     //
     // VideoChannelService
-  ]
+  ],
 })
 export class SharedMainModule {
 }

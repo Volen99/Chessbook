@@ -17,6 +17,7 @@
     using Chessbook.Data.Models.Polls;
     using Chessbook.Data.Models.Media;
     using Nop.Core.Domain.Common;
+    using Nop.Core.Domain.Catalog;
 
     public class DataContext : DbContext
     {
@@ -27,7 +28,7 @@
 
         public ContextSession Session { get; set; }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Customer> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<UserClaim> UserClaims { get; set; }
@@ -64,7 +65,7 @@
         public DbSet<ContactPhoto> ContactPhotos { get; set; }
 
         public DbSet<Poll> Polls { get; set; }
-        public DbSet<PollOption> PollAnswers { get; set; }
+        public DbSet<PollAnswer> PollAnswers { get; set; }
         public DbSet<PollVotingRecord> PollVotingRecords { get; set; }
 
         public DbSet<Picture> Pictures { get; set; }

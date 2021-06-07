@@ -1,21 +1,39 @@
-import {Component, OnDestroy, OnInit,} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {faCog} from '@fortawesome/pro-light-svg-icons';
+import {UserNotificationsComponent} from "./user-notifications/user-notifications.component";
+
+type NotificationSortType = 'createdAt' | 'read';
 
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.scss']
 })
-export class NotificationsComponent implements OnInit, OnDestroy {
-  constructor() {
+export class NotificationsComponent {
+  @ViewChild('userNotification', {static: true}) userNotification: UserNotificationsComponent;
+
+  _notificationSortType: NotificationSortType = 'createdAt';
+
+  get notificationSortType() {
+    return !this.hasUnreadNotifications()
+      ? 'createdAt'
+      : this._notificationSortType;
   }
 
-  ngOnInit() {
-
+  set notificationSortType(type: NotificationSortType) {
+    this._notificationSortType = type;
   }
 
-  ngOnDestroy() {
+  markAllAsRead() {
+    this.userNotification.markAllAsRead();
+  }
 
+  hasUnreadNotifications() {
+    return this.userNotification.notifications.filter(n => n.read === false).length !== 0;
+  }
+
+  onChangeSortColumn() {
+    this.userNotification.changeSortColumn(this.notificationSortType);
   }
 
   faCog = faCog;
@@ -27,7 +45,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     },
     {
       title: 'Mentions',
-      route: [ '/notifications/mentions' ],
+      route: ['/notifications/mentions'],
     },
   ];
 }

@@ -3,13 +3,12 @@
     using Newtonsoft.Json;
     using Chessbook.Data.Models;
     using Chessbook.Services.Mapping;
-    using Chessbook.Web.Models.Outputs.Posts;
     using Chessbook.Web.Models.Users;
     using System;
     using System.Collections.Generic;
     using AutoMapper;
 
-    public class UserDTO : UserIdentifierDTO, IMapFrom<User>
+    public class UserDTO : UserIdentifierDTO, IMapFrom<Customer>
     {
         public string DisplayName { get; set; }
 
@@ -98,9 +97,6 @@
 
         //[JsonProperty("withheld_scope")]
         //public string WithheldScope { get; set; }
-
-        [JsonIgnore]
-        public int ProfilePictureId { get; set; }
 
         public bool FollowedBy { get; set; }
 

@@ -1,0 +1,13 @@
+<ng-container>
+    <fa-icon
+            [icon]="this.faCompress"
+            [ngClass]="'media-modal__zoom-button ' + this.zoomButtonShouldHide"
+            [title]="this.zoomButtonTitle"
+            (click)="this.handleZoomClick($event)"
+            style="font-size: 30px">Icon here</fa-icon> <!--Fontawesome's fa-compress fa-expand is larger than fa-close-->
+    <div class="zoomable-image" [style]="'overflow: ' + this.overflow" #containerRef>
+        <img role="presentation" [alt]="this.alt" [title]="this.alt" [src]="this.src" [width]="this.width" [height]="this.height"
+        style="transform: scale({{this.scale}}) translate(-{{this.lockTranslate.x}}px, -{{this.lockTranslate.y}}px; transformOrigin: 0 0" draggable="false"
+             (click)="this.handleClick($event)" (mousedown)="this.handleMouseDown($event)" #imageRef>
+    </div>
+</ng-container>

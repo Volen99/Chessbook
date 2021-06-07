@@ -1,0 +1,18 @@
+<div [ngClass]="{'image-loader': true, 'image-loader--loading': this.loading, 'image-loader--amorphous': !this.hasSize()}">
+    <!--<LoadingBar loading={loading ? 1 : 0} className='loading-bar' style={{ width: this.state.width || width }} />-->
+    <ng-container *ngIf="this.loading; else zoomImage">
+        <canvas class="image-loader__preview-canvas" [width]="this.width" [height]="this.height" #can></canvas>              <!--ref={this.setCanvasRef}-->
+    </ng-container>
+    <ng-template #zoomImage>
+            <app-zoomable-image
+                    [alt]="this.alt"
+                    [src]="this.src"
+                    [onClick]="this.onClick"
+                    [width]="this.width"
+                    [height]="this.height"
+                    [zoomButtonHidden]="this.zoomButtonHidden"
+            style="width: inherit; height: inherit;">
+            </app-zoomable-image>
+    </ng-template>
+
+</div>

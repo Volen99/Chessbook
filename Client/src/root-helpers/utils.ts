@@ -46,8 +46,7 @@ function importModule(path: string) {
     script.onload = () => {
       resolve(window[vector]);
       destructor();
-    };
-    const absURL = (environment.apiUrl || window.location.origin) + path;
+    };    const absURL = (environment.apiUrl || window.location.origin) + path;
     const loader = `import * as m from "${absURL}"; window.${vector} = m;`; // export Module
     const blob = new Blob([ loader ], { type: 'text/javascript' });
     script.src = URL.createObjectURL(blob);
@@ -62,7 +61,6 @@ function wait(ms: number) {
     setTimeout(() => res(), ms);                              // null by mi: res(null)
   });
 }
-
 export {
   copyToClipboard,
   importModule,

@@ -8,7 +8,7 @@
     {
         public int Id { get; set; }
 
-        [BindProperty(Name = "rate_type")]
-        public PostRateType RateType { get; set; }
+        [BindProperty(Name = "is_up")]
+        public bool IsUp { get; set; }
     }
 }

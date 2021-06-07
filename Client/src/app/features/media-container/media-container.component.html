@@ -1,0 +1,10 @@
+<ng-container>
+    <app-modal-root [backgroundColor]="this.backgroundColor" [onClose]="this.handleCloseMedia">
+        <app-media-modal *ngIf="this.mediaState"
+                         [media]="this.mediaState"
+                         [index]="this.indexState || 0"
+                         [onClose]="this.handleCloseMedia"
+                         (backgroundColorChange)="this.setBackgroundColor($event)">
+        </app-media-modal>
+    </app-modal-root>
+</ng-container>

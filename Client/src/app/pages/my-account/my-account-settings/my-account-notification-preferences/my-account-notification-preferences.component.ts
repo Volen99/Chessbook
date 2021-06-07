@@ -1,6 +1,6 @@
 import {debounce} from 'lodash-es';
 import {Subject} from 'rxjs';
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {User} from "../../../../shared/shared-main/user/user.model";
 import {
   UserNotificationSetting,
@@ -10,13 +10,18 @@ import {UserRight} from "../../../../shared/models/users/user-right.enum";
 import {ServerService} from "../../../../core/server/server.service";
 import {Notifier} from "../../../../core/notification/notifier.service";
 import {UserNotificationService} from "../../../../shared/shared-main/users/user-notification.service";
+import {takeUntil} from "rxjs/operators";
+import {IUser} from "../../../../core/interfaces/common/users";
+import {UserStore} from "../../../../core/stores/user.store";
+import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {NbGlobalPhysicalPosition} from "../../../../sharebook-nebular/theme/components/cdk/overlay/position-helper";
 
 @Component({
   selector: 'my-account-notification-preferences',
   templateUrl: './my-account-notification-preferences.component.html',
   styleUrls: ['./my-account-notification-preferences.component.scss']
 })
-export class MyAccountNotificationPreferencesComponent implements OnInit {
+export class MyAccountNotificationPreferencesComponent implements OnInit, OnDestroy {
   @Input() user: User = null;
   @Input() userInformationLoaded: Subject<any>;
 
@@ -25,11 +30,12 @@ export class MyAccountNotificationPreferencesComponent implements OnInit {
   webNotifications: { [id in keyof UserNotificationSetting]: boolean } = {} as any;
   labelNotifications: { [id in keyof UserNotificationSetting]: string } = {} as any;
   rightNotifications: { [id in keyof Partial<UserNotificationSetting>]: UserRight } = {} as any;
-  emailEnabled = false;
+  emailEnabled = true;
 
   private savePreferences = debounce(this.savePreferencesImpl.bind(this), 500);
 
-  constructor(private userNotificationService: UserNotificationService, private serverService: ServerService, private notifier: Notifier) {
+  constructor(private userNotificationService: UserNotificationService, private serverService: ServerService, private notifier: Notifier,
+              private userStore: UserStore, private toasterService: NbToastrService) {
     this.labelNotifications = {
       newVideoFromSubscription: `New video from your subscriptions`,
       newCommentOnMyVideo: `New comment on your video`,
@@ -57,13 +63,29 @@ export class MyAccountNotificationPreferencesComponent implements OnInit {
     };
   }
 
+  private destroy$: Subject<void> = new Subject<void>();
+
   ngOnInit() {
     // this.serverService.getConfig()
     //   .subscribe(config => {
     //     this.emailEnabled = config.email.enabled;
     //   });
 
-    this.userInformationLoaded.subscribe(() => this.loadNotificationSettings());
+    // this.userInformationLoaded.subscribe(() => this.loadNotificationSettings());
+
+    this.userStore.onUserStateChange()
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe((user: IUser) => {
+        debugger
+        this.loadNotificationSettings();
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   hasUserRight(field: keyof UserNotificationSetting) {
@@ -79,15 +101,21 @@ export class MyAccountNotificationPreferencesComponent implements OnInit {
   }
 
   updateEmailSetting(field: keyof UserNotificationSetting, value: boolean) {
-    if (value === true) this.user.notificationSettings[field] |= UserNotificationSettingValue.EMAIL;
-    else this.user.notificationSettings[field] &= ~UserNotificationSettingValue.EMAIL;
+    if (value === true) {
+      this.user.notificationSettings[field] |= UserNotificationSettingValue.EMAIL;
+    } else {
+      this.user.notificationSettings[field] &= ~UserNotificationSettingValue.EMAIL;
+    }
 
     this.savePreferences();
   }
 
   updateWebSetting(field: keyof UserNotificationSetting, value: boolean) {
-    if (value === true) this.user.notificationSettings[field] |= UserNotificationSettingValue.WEB;
-    else this.user.notificationSettings[field] &= ~UserNotificationSettingValue.WEB;
+    if (value === true) {
+      this.user.notificationSettings[field] |= UserNotificationSettingValue.WEB;
+    } else {
+      this.user.notificationSettings[field] &= ~UserNotificationSettingValue.WEB;
+    }
 
     this.savePreferences();
   }
@@ -96,14 +124,17 @@ export class MyAccountNotificationPreferencesComponent implements OnInit {
     this.userNotificationService.updateNotificationSettings(this.user.notificationSettings)
       .subscribe(
         () => {
-          this.notifier.success(`Preferences saved`, undefined, 2000);
+          this.toasterService.success('Preferences saved', 'Success', {
+            position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
+          });
         },
 
-        err => this.notifier.error(err.message)
+        err => console.error(err.message)
       );
   }
 
   private loadNotificationSettings() {
+    debugger
     for (const key of Object.keys(this.user.notificationSettings)) {
       const value = this.user.notificationSettings[key];
       this.emailNotifications[key] = value & UserNotificationSettingValue.EMAIL;

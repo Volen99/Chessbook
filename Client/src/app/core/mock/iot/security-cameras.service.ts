@@ -1,30 +1,17 @@
 import { Injectable } from '@angular/core';
 import { of as observableOf, Observable } from 'rxjs';
 import { Camera, SecurityCamerasData } from '../../interfaces/iot/security-cameras';
+import {IMediaEntity} from "../../../shared/post-object/Entities/interfaces/IMediaEntity";
+import {PostsService} from "../../../shared/posts/posts.service";
 
 @Injectable()
 export class SecurityCamerasService extends SecurityCamerasData {
 
-  private cameras: Camera[] = [
-    {
-      title: 'Camera #1',
-      source: 'assets/images/camera1.jpg',
-    },
-    {
-      title: 'Camera #2',
-      source: 'assets/images/camera2.jpg',
-    },
-    {
-      title: 'Camera #3',
-      source: 'assets/images/camera3.jpg',
-    },
-    {
-      title: 'Camera #4',
-      source: 'assets/images/camera4.jpg',
-    },
-  ];
+  constructor(private postService: PostsService) {
+    super();
+  }
 
-  getCamerasData(): Observable<Camera[]> {
-    return observableOf(this.cameras);
+  getCamerasData(postId: number): Observable<IMediaEntity[]> {
+    return this.postService.getPostPhotos(postId);
   }
 }

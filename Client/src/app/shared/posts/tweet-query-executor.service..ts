@@ -15,6 +15,8 @@ import {TweetQueryGeneratorService} from "./tweet-query-generator.service";
 import {PostsApi} from "./backend/posts.api";
 import {ITweetDTO} from "./models/DTO/tweet-dto";
 import {addWarning} from "@angular-devkit/build-angular/src/utils/webpack-diagnostics";
+import {PeerTubeSocket} from "../../core/notification/sharebook-socket.service";
+import {UserStore} from "../../core/stores/user.store";
 
 // export interface ITweetQueryExecutor {
 //   getTweetAsync(parameters: IGetTweetParameters): Promise<ITwitterResult<ITweetDTO>>;
@@ -53,7 +55,7 @@ import {addWarning} from "@angular-devkit/build-angular/src/utils/webpack-diagno
 export class TweetQueryExecutorService {
 
   constructor(private tweetQueryGeneratorService: TweetQueryGeneratorService,
-              private postsApi: PostsApi) {
+              private postsApi: PostsApi,  private socket: PeerTubeSocket, private userStore: UserStore) {
   }
 
   // public async getTweetAsync(parameters: IGetTweetParameters): Promise<ITweetDTO> {
@@ -86,8 +88,9 @@ export class TweetQueryExecutorService {
 
     return await this.postsApi.publishTweetAsync(params, body)
         .toPromise()
-        .then(data => {
-          return data;
+        .then(post => {
+          // this.socket.newPostAdded(post); // this.userStore.getUser().id,
+          return post;
         });
   }
 

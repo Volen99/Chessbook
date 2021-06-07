@@ -5,13 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
+    <PackageReference Include="Humanizer" Version="2.10.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="5.0.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="System.Linq.Async" Version="5.0.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.9" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Chessbook.Data\Chessbook.Data.Models\Chessbook.Data.Models.csproj" ReferenceOutputAssembly="true" />
     <ProjectReference Include="..\Chessbook.Services\Chessbook.Services.Data\Chessbook.Services.Data.csproj" ReferenceOutputAssembly="true" />
     <ProjectReference Include="..\Chessbook.Services\Chessbook.Services.Mapping\Chessbook.Services.Mapping.csproj" ReferenceOutputAssembly="true" />
+    <ProjectReference Include="..\Chessbook.Services\Chessbook.Services\Chessbook.Services.csproj" />
   </ItemGroup>
 
 </Project>

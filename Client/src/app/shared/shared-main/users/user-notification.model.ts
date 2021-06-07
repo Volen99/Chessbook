@@ -12,8 +12,8 @@ export interface IUserNotification {
   type: UserNotificationType;
   read: boolean;
 
-  video?: VideoInfo & {
-    channel: ActorInfo
+  post?: VideoInfo & {
+    user: IUser
   };
 
   videoImport?: {
@@ -79,8 +79,8 @@ export class UserNotification implements IUserNotification {
   type: UserNotificationType;
   read: boolean;
 
-  video?: VideoInfo & {
-    channel: ActorInfo & { avatarUrl?: string }
+  post?: VideoInfo & {
+    user: IUser & { avatarUrl?: string }
   };
 
   videoImport?: {
@@ -158,8 +158,10 @@ export class UserNotification implements IUserNotification {
     // We assume that some fields exist
     // To prevent a notification popup crash in case of bug, wrap it inside a try/catch
     try {
-      this.video = hash.video;
-      if (this.video) this.setVideoChannelAvatarUrl(this.video.channel);
+      this.post = hash.post;
+      if (this.post) {
+        this.setVideoChannelAvatarUrl(this.post.user);
+      }
 
       this.videoImport = hash.videoImport;
 
@@ -183,11 +185,11 @@ export class UserNotification implements IUserNotification {
 
       switch (this.type) {
         case UserNotificationType.NEW_VIDEO_FROM_SUBSCRIPTION:
-          this.videoUrl = this.buildVideoUrl(this.video);
+          this.videoUrl = this.buildVideoUrl(this.post);
           break;
 
         case UserNotificationType.UNBLACKLIST_ON_MY_VIDEO:
-          this.videoUrl = this.buildVideoUrl(this.video);
+          this.videoUrl = this.buildVideoUrl(this.post);
           break;
 
         case UserNotificationType.NEW_COMMENT_ON_MY_VIDEO:
@@ -221,7 +223,7 @@ export class UserNotification implements IUserNotification {
         case UserNotificationType.VIDEO_AUTO_BLACKLIST_FOR_MODERATORS:
           this.videoAutoBlacklistUrl = '/admin/moderation/video-auto-blacklist/list';
           // Backward compatibility where we did not assign videoBlacklist to this type of notification before
-          if (!this.videoBlacklist) this.videoBlacklist = {id: null, video: this.video};
+          if (!this.videoBlacklist) this.videoBlacklist = {id: null, video: this.post};
 
           this.videoUrl = this.buildVideoUrl(this.videoBlacklist.video);
           break;
@@ -231,7 +233,7 @@ export class UserNotification implements IUserNotification {
           break;
 
         case UserNotificationType.MY_VIDEO_PUBLISHED:
-          this.videoUrl = this.buildVideoUrl(this.video);
+          this.videoUrl = this.buildVideoUrl(this.post);
           break;
 
         case UserNotificationType.MY_VIDEO_IMPORT_SUCCESS:
@@ -268,12 +270,13 @@ export class UserNotification implements IUserNotification {
     }
   }
 
-  private buildVideoUrl(video: { uuid: string }) {
-    return '/videos/watch/' + video.uuid;
+  private buildVideoUrl(video: { id: number }) {
+    return '/' + this.post.user.screenName + '/post/' + this.post.id;
   }
 
-  private buildAccountUrl(account: { name: string, host: string }) {
-    return '/accounts/' + UserData.CREATE_BY_STRING(account.name, /*account.host*/);
+  private buildAccountUrl(account: { name: string }) {
+    debugger
+    return '/' + UserData.CREATE_BY_STRING(account.name, /*account.host*/);
   }
 
   private buildVideoImportUrl() {
@@ -284,15 +287,19 @@ export class UserNotification implements IUserNotification {
     return videoImport.targetUrl || videoImport.magnetUri || videoImport.torrentName;
   }
 
-  private buildCommentUrl(comment: { video: { uuid: string }, threadId: number }) {
+  private buildCommentUrl(comment: { video: { id: number }, threadId: number }) {
     return [this.buildVideoUrl(comment.video), {threadId: comment.threadId}];
   }
 
   private setAccountAvatarUrl(actor: { avatarUrl?: string, avatar?: { url?: string, path: string } }) {
-    actor.avatarUrl = UserData.GET_ACTOR_AVATAR_URL(actor);
+    // actor.avatarUrl = UserData.GET_ACTOR_AVATAR_URL(actor);
+
+    return actor.avatarUrl;
   }
 
   private setVideoChannelAvatarUrl(actor: { avatarUrl?: string, avatar?: { url?: string, path: string } }) {
-    // actor.avatarUrl = VideoChannel.GET_ACTOR_AVATAR_URL(actor);
+    // actor.avatarUrl = UserData.GET_ACTOR_AVATAR_URL(actor);
+
+    return actor.avatarUrl;
   }
 }
