@@ -9,17 +9,21 @@
 
 <div class="row" style="margin: 0px">
     <div class="col-12 col-lg-8 col-xl-9"> <!--form-group-->
-        <my-actor-avatar-info [user]="this.user" (avatarChange)="onAvatarChange($event)"
-                              (avatarDelete)="onAvatarDelete()"></my-actor-avatar-info>
+        <nb-card>
+            <nb-card-body>
+                <my-actor-avatar-edit [actor]="user" (avatarChange)="onAvatarChange($event)" (avatarDelete)="onAvatarDelete()"></my-actor-avatar-edit>
+            </nb-card-body>
+        </nb-card>
     </div>
 
     <div class="col-12 col-lg-8 col-xl-9">
         <nb-card>
             <nb-card-header>BANNER</nb-card-header>
             <nb-card-body>
-                <div class="card__img">
-                    <img alt="profile banner" [src]="this.user.profileBackgroundImageUrlHttps" />
-                </div>
+                <my-actor-banner-edit
+                        *ngIf="user" [previewImage]="true"
+                        [actor]="user" (bannerChange)="onBannerChange($event)" (bannerDelete)="onBannerDelete()"
+                ></my-actor-banner-edit>
             </nb-card-body>
         </nb-card>
     </div>
@@ -44,10 +48,15 @@
         </nb-card>
     </div>
     <div class="form-group col-12 col-lg-8 col-xl-9">
-        <my-account-change-email [user]="this.user"></my-account-change-email>
+        <nb-card>
+            <nb-card-header>EMAIL</nb-card-header>
+            <nb-card-body>
+                <my-account-change-email></my-account-change-email>
+            </nb-card-body>
+        </nb-card>
     </div>
     <div class="form-group col-12 col-lg-8 col-xl-9">
-        <my-account-danger-zone [user]="this.user"></my-account-danger-zone>
+        <my-account-danger-zone [screenName]="this.user?.screenName"></my-account-danger-zone>
     </div>
 </div>
 

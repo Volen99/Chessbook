@@ -54,7 +54,6 @@ export class ModalRootComponent implements OnInit, AfterContentInit, AfterViewIn
           // immediately selectable, we have to wait for observers to run, as
           // described in https://github.com/WICG/inert#performance-and-gotchas
           Promise.resolve().then(() => {
-            debugger
             // @ts-ignore
             this.activeElement.focus({ preventScroll: true });
             this.activeElement = null;
@@ -76,7 +75,6 @@ export class ModalRootComponent implements OnInit, AfterContentInit, AfterViewIn
 
   // componentDidUpdate
   ngOnChanges(changes: SimpleChanges): void {
-    debugger
     let {backgroundColor} = changes;
     if (backgroundColor) {
       if (this.backgroundColor) {
@@ -102,7 +100,6 @@ export class ModalRootComponent implements OnInit, AfterContentInit, AfterViewIn
   backgroundColorState: any;
 
   handleKeyUp = (e) => {
-    debugger
     if ((e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27)
       && !!this.children) {
       this.onClose();

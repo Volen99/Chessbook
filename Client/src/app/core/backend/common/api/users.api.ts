@@ -103,6 +103,10 @@ export class UsersApi {
     return this.api.post<{avatar: Avatar}>(`${this.apiController}/${url}`, avatarForm);
   }
 
+  changeBanner(url, bannerForm: FormData) {
+    return this.api.post<{avatar: Avatar}>(`${this.apiController}/${url}`, bannerForm);
+  }
+
   updateMyProfile(url: string, profile: UserUpdateMe) {
     return this.api.put(url, profile);
   }
@@ -112,6 +116,10 @@ export class UsersApi {
   }
 
   deleteAvatar(url: string) {
+    return this.api.delete(`${this.apiController}/${url}`);
+  }
+
+  deleteBanner(url: string) {
     return this.api.delete(`${this.apiController}/${url}`);
   }
 

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { MessagesRoutingModule } from './messages-routing.module';
 import { MessagesComponent } from './messages.component';
 import { DetailHeaderMessageSelectedComponent } from './detail-header-message-selected/detail-header-message-selected.component';
-import { SharedGlobalIconModule } from '../../shared/shared-icons/shared-global-icon.module';
 import {SharedMainModule} from "../../shared/shared-main/shared-main.module";
 import {DetailHeaderNoMessageSelectedComponent} from "./detail-header-no-message-selected/detail-header-no-message-selected.component";
 import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";
@@ -28,7 +27,6 @@ import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/bu
   imports: [
     CommonModule,
     MessagesRoutingModule,
-    SharedGlobalIconModule,
     SharedMainModule,
     NbCardModule,
     NbTabsetModule,

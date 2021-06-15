@@ -22,6 +22,10 @@ import {VideoCommentService} from "../../shared-post-comment/video-comment.servi
 import {VIDEO_COMMENT_TEXT_VALIDATOR} from "../../forms/form-validators/video-comment-validators";
 import {IPostCommentCreate} from "../../shared-post-comment/models/post-comment-model";
 
+import {
+  faTimes,
+} from '@fortawesome/pro-light-svg-icons';
+
 @Component({
   selector: 'app-video-comment-add',
   templateUrl: './video-comment-add.component.html',
@@ -90,6 +94,8 @@ export class VideoCommentAddComponent extends FormReactive implements OnChanges,
       this.patchTextValue(changes.textValue.currentValue, true);
     }
   }
+
+  faTimes = faTimes;
 
   onValidKey() {
     this.check();

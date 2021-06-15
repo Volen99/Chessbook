@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "sharebook": {
+    "Chessbook": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -28,6 +28,7 @@
               "src/favicon.ico",
               "src/favicon.png",
               "src/web.config",
+              "src/manifest.webmanifest",
               {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
@@ -48,10 +49,7 @@
               "src/sass/application.scss"
             ],
             "scripts": [
-              "node_modules/pace-js/pace.min.js",
-              "node_modules/echarts/dist/echarts.min.js",
-              "node_modules/echarts/dist/extension/bmap.min.js",
-              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/pace-js/pace.min.js"
             ],
             "allowedCommonJsDependencies": [
               "angular2-chartjs",
@@ -82,14 +80,26 @@
               "url",
               "parse-srcset",
               "postcss"
-            ]
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "100kb"
                 }
               ],
               "optimization": true,
@@ -113,18 +123,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sharebook:build"
+            "browserTarget": "Chessbook:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "sharebook:build:production"
+              "browserTarget": "Chessbook:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sharebook:build"
+            "browserTarget": "Chessbook:build"
           }
         },
         "test": {
@@ -135,10 +145,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
-              "node_modules/pace-js/pace.min.js",
-              "node_modules/echarts/dist/echarts.min.js",
-              "node_modules/echarts/dist/extension/bmap.min.js",
-              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/pace-js/pace.min.js"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
@@ -157,6 +164,7 @@
               "src/assets",
               "src/favicon.ico",
               "src/favicon.png",
+              "src/manifest.webmanifest",
               {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
@@ -173,12 +181,14 @@
               "src/tsconfig.spec.json"
             ],
             "typeCheck": true,
-            "exclude": []
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
     },
-    "sharebook-e2e": {
+    "Chessbook-e2e": {
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
@@ -187,7 +197,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "sharebook:serve"
+            "devServerTarget": "Chessbook:serve"
           }
         },
         "lint": {
@@ -196,7 +206,9 @@
             "tsConfig": [
               "e2e/tsconfig.e2e.json"
             ],
-            "exclude": []
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }

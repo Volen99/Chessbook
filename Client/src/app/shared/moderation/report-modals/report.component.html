@@ -1,7 +1,7 @@
 <ng-template #modal>
   <div class="modal-header">
     <h4 class="modal-title">{{ modalTitle }}</h4>
-    <app-global-icon iconName="cross" aria-label="Close" role="button" (click)="hide()"></app-global-icon>
+    <fa-icon [icon]="this.faTimes" aria-label="Close" role="button" (click)="hide()"></fa-icon>
   </div>
 
   <div class="modal-body">

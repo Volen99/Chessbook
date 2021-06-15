@@ -6,11 +6,11 @@
         </p>
         <div class="form-group">
             <label for="username" class="text-hint">Type your username to confirm</label>
-            <input id="username" #name nbInput fullWidth>
+            <input id="username" nbInput fullWidth [(ngModel)]="inputValue">
         </div>
     </nb-card-body>
     <nb-card-footer>
         <button class="cancel" nbButton status="primary" (click)="this.dismiss()">Cancel</button>
-        <button nbButton status="danger" (click)="this.submit(name.value)">Submit</button>
+        <button nbButton status="danger" (click)="this.submit()" [disabled]="this.isConfirmationDisabled()">Submit</button>
     </nb-card-footer>
 </nb-card>

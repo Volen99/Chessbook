@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {faFire, faUserCheck, faUserPlus} from '@fortawesome/pro-light-svg-icons';
+import {faUsers as faUsersSolid} from '@fortawesome/pro-solid-svg-icons';
 import {faUsers} from '@fortawesome/pro-solid-svg-icons';
 import {DialogUsernamePromptComponent} from "./dialog-username-prompt-component/dialog-username-prompt.component";
 import {StreamersService} from "../../streamers.service";
@@ -35,7 +36,7 @@ export class ChessbookUsersStreamComponent implements OnInit {
   names: string[] = [];
 
   faFire = faFire;
-  faUsers = faUsers;
+  faUsersSolid = faUsersSolid;
   faUserPlus = faUserPlus;
   faUserCheck = faUserCheck;
 

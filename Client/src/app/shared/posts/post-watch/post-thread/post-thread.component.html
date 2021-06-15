@@ -56,7 +56,7 @@
                                                                 </div>
                                                                 <div *ngIf="this.post.user?.protected" dir="auto"
                                                                      class="css-901oao lights-out-text-color flex-direction-row svg-flex-shrink-0 font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
-                                                                    <app-global-icon iconName="protected"></app-global-icon>
+                                                                    <fa-icon [icon]="this.faLock"></fa-icon>
                                                                 </div>
                                                             </div>
                                                             <div class="sharebook-container flex-direction-row flex-shrink">
@@ -318,7 +318,6 @@
                                                  class="css-901oao r-9ilb82 align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
                                                 <div class="sharebook-container display-inline-flex">
                                                     <div class="sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
-                                                    <!--<app-global-icon iconName="like"></app-global-icon>-->
                                                     <fa-icon [icon]="this.faHeart" [ngStyle]="{'color': this.userRating === 'like' ? 'blue' : 'inherit'}" style="font-size: 21px"></fa-icon>
                                                 </div>
                                                 <div class="sharebook-container display-inline-flex overflow-hidden">

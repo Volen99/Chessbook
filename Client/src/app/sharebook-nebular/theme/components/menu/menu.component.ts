@@ -19,16 +19,21 @@ import {convertToBoolProperty, NbBooleanInput} from '../helpers';
 import {NB_WINDOW} from '../../theme.options';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {NbLayoutDirectionService} from '../../services/direction.service';
-import {faHouse, faHashtag, faBell, faEnvelope, faUser, faTv} from '@fortawesome/pro-light-svg-icons';
+import {faHouse, faHashtag, faBell, faEnvelope, faUser, faTv, faEllipsisH, faChevronLeft, faChevronRight, faChevronDown, faChartLine} from '@fortawesome/pro-light-svg-icons';
 import {
   faHouse as faHouseSolid,
   faHashtag as faHashtagSolid,
   faBell as faBellSolid,
   faEnvelope as faEnvelopeSolid,
   faUser as faUserSolid,
-  faTv as faTvSolid
+  faTv as faTvSolid,
+  faChartLine as faChartLineSolid,
 } from '@fortawesome/pro-solid-svg-icons';
 import {IconDefinition} from "@fortawesome/fontawesome-common-types";
+import {IUser} from "../../../../core/interfaces/common/users";
+import {NbDialogService} from "../dialog/dialog.service";
+import {KeyboardShortcutsComponent} from "../layout/hotkeys/keyboard-shortcuts.component";
+import {HotkeysService} from "angular2-hotkeys";
 
 export enum NbToggleStates {
   Expanded = 'expanded',
@@ -81,6 +86,17 @@ export class NbMenuItemComponent implements DoCheck, AfterViewInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  moreMenu = this.getMenuItems();
+
+  faEllipsisH = faEllipsisH;
+
+
+  private getMenuItems() {
+    return [
+      {icon: this.faEllipsisH, title: `Embed Post`, link: '#'},
+    ];
+  }
+
   onToggleSubMenu(item: NbMenuItem) {
     this.toggleSubMenu.emit(item);
   }
@@ -97,14 +113,18 @@ export class NbMenuItemComponent implements DoCheck, AfterViewInit, OnDestroy {
     this.itemClick.emit(item);
   }
 
-  getExpandStateIcon(): string {
+  getExpandStateIcon(): any /*string*/ {
+    if (this.menuItem.title.includes('More') || this.menuItem.title.includes('shortcuts')) {
+      return;
+    }
+
     if (this.menuItem.expanded) {
-      return 'chevron-down-outline';
+      return faChevronDown;
     }
 
     return this.directionService.isLtr()
-      ? 'chevron-left-outline'
-      : 'chevron-right-outline';
+      ? faChevronLeft
+      : faChevronRight;
   }
 }
 
@@ -269,7 +289,8 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(@Inject(NB_WINDOW) protected window,
               @Inject(PLATFORM_ID) protected platformId,
               protected menuInternalService: NbMenuInternalService,
-              protected router: Router) {
+              protected router: Router,
+              private hotkeysService: HotkeysService,) {
   }
 
   ngOnInit() {
@@ -317,6 +338,9 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(() => {
         this.menuInternalService.selectFromUrl(this.items, this.tag, this.autoCollapse);
       });
+
+    this.hotkeysService.cheatSheetToggle
+      .subscribe(isOpen => this.helpVisible = isOpen);
   }
 
   ngAfterViewInit() {
@@ -354,6 +378,7 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     envelope: faEnvelope,
     user: faUser,
     tv: faTv,
+    'chart-line': faChartLine,
   };
 
   solidIconsObj = {
@@ -363,18 +388,44 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     envelope: faEnvelopeSolid,
     user: faUserSolid,
     tv: faTvSolid,
+    'chart-line': faChartLineSolid,
   };
 
   lastIconClicked: IconDefinition;
+  helpVisible = false;
 
   // I mean, it works...
   onItemClick(item: NbMenuItem | any) {
+    debugger
     if (!this.tag) {
+
+      if (item.icon.iconName === 'alicorn') {
+        this.hotkeysService.cheatSheetToggle.next(!this.helpVisible);
+          return;
+      }
+
       if (this.lastIconClicked) {
         this.lastIconClicked = this.lightIconsObj[this.lastIconClicked.iconName];
 
         // @ts-ignore
         let last = this.items.filter(mi => mi.icon.iconName === this.lastIconClicked.iconName)[0];
+
+        if (!last) {
+          // @ts-ignore
+          for (const item of this.items) {
+              if (item.children) {
+                                                            // @ts-ignore
+                let hasFound = item.children.filter(mi => mi.icon.iconName === this.lastIconClicked.iconName)[0];
+                if (hasFound) {
+                  last = hasFound;
+                }
+              }
+          }
+        }
+
+        if (!last) {
+          return;
+        }
 
         last.icon = this.lightIconsObj[this.lastIconClicked.iconName];
       }
@@ -388,6 +439,12 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.menuInternalService.itemClick(item, this.tag);
   }
+
+  // open() {
+  //   this.dialogService.open(KeyboardShortcutsComponent, {
+  //
+  //   });
+  // }
 
   ngOnDestroy() {
     this.destroy$.next();

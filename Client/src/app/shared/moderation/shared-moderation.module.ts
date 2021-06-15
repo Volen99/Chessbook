@@ -8,19 +8,19 @@ import {UserBanModalComponent} from './user-ban-modal.component';
 import {UserModerationDropdownComponent} from './user-moderation-dropdown.component';
 import {VideoBlockComponent} from './video-block.component';
 import {VideoBlockService} from './video-block.service';
-import {SharedGlobalIconModule} from "../shared-icons/shared-global-icon.module";
 import {SharedVideoCommentModule} from "../shared-post-comment/shared-video-comment.module";
 import {SharedFormModule} from "../forms/shared-form.module";
 import {CommentReportComponent} from "./report-modals/comment-report.component";
 import {VideoReportComponent} from "./report-modals/video-report.component";
 import {AccountReportComponent} from "./report-modals/account-report.component";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   imports: [
     SharedMainModule,
     SharedFormModule,
-    SharedGlobalIconModule,
-    SharedVideoCommentModule
+    SharedVideoCommentModule,
+    FontAwesomeModule
   ],
 
   declarations: [

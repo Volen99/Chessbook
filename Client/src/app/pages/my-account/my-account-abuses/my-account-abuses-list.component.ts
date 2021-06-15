@@ -1,4 +1,7 @@
-import { Component } from '@angular/core'
+import { Component } from '@angular/core';
+import {
+  faFlag,
+} from '@fortawesome/pro-light-svg-icons';
 
 @Component({
   selector: 'my-account-abuses-list',
@@ -6,5 +9,5 @@ import { Component } from '@angular/core'
   styleUrls: [ ]
 })
 export class MyAccountAbusesListComponent {
-
+  faFlag = faFlag;
 }

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../../shared/shared-main/user/user.model";
 import {AuthService} from "../../../../core/auth/auth.service";
 import {Notifier} from "../../../../core/notification/notifier.service";
@@ -15,8 +15,8 @@ import {ShowcaseDialogComponent} from "../../../modal-overlays/dialog/showcase-d
   templateUrl: './my-account-danger-zone.component.html',
   styleUrls: ['./my-account-danger-zone.component.scss']
 })
-export class MyAccountDangerZoneComponent {
-  @Input() user: IUser = null;
+export class MyAccountDangerZoneComponent implements OnInit {
+  @Input() screenName: string;
 
   constructor(
     private authService: AuthService,
@@ -27,37 +27,20 @@ export class MyAccountDangerZoneComponent {
     private dialogService: NbDialogService) {
   }
 
+  ngOnInit(): void {
+    if (this.screenName) {
+      this.screenName = this.screenName.substring(1);
+    }
+  }
+
   async deleteMe() {
     this.dialogService.open(ShowcaseDialogComponent, {
       context: {
         title: 'Delete your account',
-        body: 'Are you sure you want to delete your account? This will delete all your data, including channels, videos and comments. Content cached by other servers and other third-parties might make longer to be deleted.',
-        username: this.user.screenName,
+        body: 'Are you sure you want to delete your account? This will delete all your data, including account, posts, shares, replies and any stalemate tricks left. You are resigning the game.',
+        screenName: this.screenName,
       },
       closeOnEsc: true,
     });
-
-    //
-    // const res = await this.confirmService.confirmWithInput(
-    //   `Are you sure you want to delete your account? This will delete all your data, including channels, videos and comments. Content cached by other servers and other third-parties might make longer to be deleted.`,
-    //   `Type your username to confirm`,
-    //   this.user.screenName,
-    //   `Delete your account`,
-    //   `Delete my account`
-    // );
-    // if (res === false) {
-    //   return;
-    // }
-    //
-    // this.userService.deleteMe().subscribe(
-    //   () => {
-    //     this.notifier.success(`Your account is deleted.`);
-    //
-    //     this.authService.logout();
-    //     this.redirectService.redirectToHomepage();
-    //   },
-    //
-    //   err => this.notifier.error(err.message)
-    // );
   }
 }

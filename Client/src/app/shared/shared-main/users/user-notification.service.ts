@@ -3,7 +3,6 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment} from '../../../../environments/environment';
 import {IUserNotification, UserNotification} from './user-notification.model';
-import {SortMeta} from 'primeng/api';
 import {AuthService} from "../../../core/auth/auth.service";
 import {RestExtractor} from "../../../core/rest/rest-extractor";
 import {RestService} from "../../../core/rest/rest.service";
@@ -14,6 +13,7 @@ import {UserData} from "../../../core/interfaces/common/users";
 import {UserStore} from "../../../core/stores/user.store";
 import {PeerTubeSocket} from "../../../core/notification/sharebook-socket.service";
 import {HttpService} from "../../../core/backend/common/api/http.service";
+import {SortMeta} from "primeng/api";
 
 @Injectable()
 export class UserNotificationService {
@@ -57,12 +57,8 @@ export class UserNotificationService {
       );
   }
 
-  countUnreadNotifications() {
-    return this.listMyNotifications({
-      pagination: {currentPage: 1, itemsPerPage: 0},
-      ignoreLoadingBar: true,
-      unread: true
-    })
+  countUnreadNotifications () {
+    return this.listMyNotifications({ pagination: { currentPage: 1, itemsPerPage: 0 }, ignoreLoadingBar: true, unread: true })
       .pipe(map(n => n.total));
   }
 
@@ -87,7 +83,7 @@ export class UserNotificationService {
     return this.authHttp.post(url, {}, {headers})
       .pipe(
         map(this.restExtractor.extractDataBool),
-       // tap(() => this.peertubeSocket.dispatchNotificationEvent('read-all')),
+        tap(() => this.peertubeSocket.dispatchNotificationEvent('read-all')),
         catchError(res => this.restExtractor.handleError(res))
       );
   }

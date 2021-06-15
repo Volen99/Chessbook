@@ -75,6 +75,7 @@
                 var postCurrent = posts[i];
 
                 var model = (await _productModelFactory.PreparePostModelAsync(postCurrent));
+
                 models.Add(model);
 
                 //if (postDTO.Reshared)

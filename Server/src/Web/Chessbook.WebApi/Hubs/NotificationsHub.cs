@@ -30,41 +30,41 @@ namespace Ordering.SignalrHub
 
         public async Task SendNotification(UserNotificationModelForApi notification)
         {
-            // List all followers that are users
-            var users = await userNotificationService.ListUserSubscribersOf(notification.Post.User.Id);
+            //// List all followers that are users
+            //var users = await userNotificationService.ListUserSubscribersOf(notification.Post.User.Id);
 
-            var logger = EngineContext.Current.Resolve<ILogger>();
+            //var logger = EngineContext.Current.Resolve<ILogger>();
 
-            await logger.InformationAsync(string.Format($"Notifying {0} users of new video {1}.", users.Count, notification.Post.Urls));
-
-
-            UserNotificationSettingValue SettingGetter(UserNotificationModelForApi user)
-            {
-                return user.NotificationSetting.NewVideoFromSubscription;
-            }
-
-            async Task<UserNotificationModel> NotificationCreator(UserNotification user)
-            {
-                var res = await this.userNotificationService.Create(UserNotificationType.NEW_VIDEO_FROM_SUBSCRIPTION, user.User.Id, notification.Post.Id);
-                res.Post = notification.Post;
-
-                var userNotificationModel = await this.userNotificationModelFactory.PrepareUserNotificationModelAsync(res);
-
-                return userNotificationModel;
-            }
-
-            // email here
+            //await logger.InformationAsync(string.Format($"Notifying {0} users of new video {1}.", users.Count, notification.Post.Urls));
 
 
-            // Abstract it!! Aka make a "Notifier" class and call .Notify(...);
+            //UserNotificationSettingValue SettingGetter(UserNotificationModelForApi user)
+            //{
+            //    return user.NotificationSetting.NewVideoFromSubscription;
+            //}
+
+            //async Task<UserNotificationModel> NotificationCreator(UserNotification user)
+            //{
+            //    var res = await this.userNotificationService.Create(UserNotificationType.NEW_VIDEO_FROM_SUBSCRIPTION, user.User.Id, notification.Post.Id);
+            //    res.Post = notification.Post;
+
+            //    var userNotificationModel = await this.userNotificationModelFactory.PrepareUserNotificationModelAsync(res);
+
+            //    return userNotificationModel;
+            //}
+
+            //// email here
 
 
-            foreach (var user in users)
-            {
-                var notificationCurrent = await NotificationCreator(user);
+            //// Abstract it!! Aka make a "Notifier" class and call .Notify(...);
 
-                await this.Clients.Caller.SendAsync("newNotification", notificationCurrent);
-            }
+
+            //foreach (var user in users)
+            //{
+            //    var notificationCurrent = await NotificationCreator(user);
+
+            //    await this.Clients.Caller.SendAsync("newNotification", notificationCurrent);
+            //}
 
 
 

@@ -148,7 +148,7 @@ $video-info-margin-left: 44px;
                 color: pvar(--activatedActionButtonColor);
               }
 
-              app-global-icon {
+              fa-icon {
                 @include apply-svg-color(pvar(--activatedActionButtonColor));
               }
             }
@@ -158,7 +158,7 @@ $video-info-margin-left: 44px;
                 color: pvar(--activatedActionButtonColor);
               }
 
-              app-global-icon {
+              fa-icon {
                 @include apply-svg-color(pvar(--activatedActionButtonColor));
               }
             }
@@ -166,13 +166,13 @@ $video-info-margin-left: 44px;
             &.action-button-support {
               color: pvar(--supportButtonColor);
 
-              app-global-icon {
+              fa-icon {
                 @include apply-svg-color(pvar(--supportButtonColor));
               }
             }
 
             &.action-button-support {
-              app-global-icon {
+              fa-icon {
                 ::ng-deep path:first-child {
                   fill: pvar(--supportButtonHeartColor) !important;
                 }
@@ -180,7 +180,7 @@ $video-info-margin-left: 44px;
             }
 
             &.action-button-save {
-              app-global-icon {
+              fa-icon {
                 top: 0 !important;
                 right: -1px;
               }

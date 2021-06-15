@@ -3,6 +3,7 @@ using Chessbook.Services.Data;
 using Chessbook.Services.Data.Services;
 using Chessbook.Web.Api.Factories;
 using Chessbook.Web.Api.Identity;
+using Chessbook.Web.Api.Lib;
 using Chessbook.Web.Models.Inputs;
 using Chessbook.Web.Models.Outputs;
 using Microsoft.AspNetCore.Mvc;
@@ -102,7 +103,9 @@ namespace Chessbook.Web.Api.Controllers
                 await this.userService.Update(crushUser);
 
                 var model = this.relationshipModelFactory.PrepareRelationshipModel(yourRelationship);
-                
+
+                Notifier.Instance.NotifyOfNewUserFollow(yourRelationship);
+
                 return this.Ok(model);
             }
 

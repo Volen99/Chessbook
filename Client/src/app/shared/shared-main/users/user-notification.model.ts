@@ -274,9 +274,8 @@ export class UserNotification implements IUserNotification {
     return '/' + this.post.user.screenName + '/post/' + this.post.id;
   }
 
-  private buildAccountUrl(account: { name: string }) {
-    debugger
-    return '/' + UserData.CREATE_BY_STRING(account.name, /*account.host*/);
+  private buildAccountUrl(account: { screenName: string }) {
+    return '/' + UserData.CREATE_BY_STRING(account.screenName, /*account.host*/);
   }
 
   private buildVideoImportUrl() {

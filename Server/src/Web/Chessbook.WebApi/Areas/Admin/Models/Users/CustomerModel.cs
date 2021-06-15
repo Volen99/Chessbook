@@ -79,10 +79,6 @@ namespace Nop.Web.Areas.Admin.Models.Customers
 
         public string ProfileBackgroundColor { get; set; }
 
-        public string ProfileBackgroundImageUrl { get; set; }
-
-        public string ProfileBackgroundImageUrlHttps { get; set; }
-
         public string ProfileBannerURL { get; set; }
 
         public string ProfileTextColor { get; set; }

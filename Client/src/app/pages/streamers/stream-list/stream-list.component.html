@@ -3,15 +3,15 @@
                 <div class="action-block">
                     <nb-actions size="medium">
                         <nb-action class="control-item">
-                            <a class="ml-2" routerLink="./">
-                                <fa-icon [icon]="this.faFire" style="font-size: 15px"></fa-icon>
-                                <span class="text-control">Top chess streamers</span>
+                            <a class="ml-2" routerLink="./"  routerLinkActive="active">
+                                <fa-icon [icon]="this.faFireSolid" style="font-size: 15px"></fa-icon>
+                                <span class="header-link-title subtitle">Top chess streamers</span>
                             </a>
                         </nb-action>
                         <nb-action class="control-item">
-                            <a routerLink="./users" class="ml-2">
+                            <a routerLink="./users" class="ml-2" routerLinkActive="active">
                                 <fa-icon [icon]="this.faUsers" style="font-size: 15px"></fa-icon>
-                                <span class="text-control">Chessbook streamers</span>
+                                <span class="header-link-title subtitle">Chessbook streamers</span>
                             </a>
                         </nb-action>
                     </nb-actions>

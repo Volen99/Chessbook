@@ -11,6 +11,10 @@ import {Notifier} from "../../core/notification/notifier.service";
 import {AuthService} from "../../core/auth/auth.service";
 import {FormValidatorService} from "../forms/form-validator.service";
 
+import {
+  faTimes,
+} from '@fortawesome/pro-light-svg-icons';
+
 @Component({
   selector: 'my-abuse-message-modal',
   templateUrl: './abuse-message-modal.component.html',
@@ -47,6 +51,8 @@ export class AbuseMessageModalComponent extends FormReactive implements OnInit {
       message: ABUSE_MESSAGE_VALIDATOR
     });
   }
+
+  faTimes = faTimes;
 
   openModal(abuse: UserAbuse) {
     this.abuse = abuse;

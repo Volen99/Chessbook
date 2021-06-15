@@ -48,20 +48,15 @@
 
 <script type="text/javascript">
     function displayIncompatibleBrowser () {
-        var elem = document.getElementById('incompatible-browser')
+        var elem = document.getElementById('incompatible-browser');
         if (elem.className.indexOf('browser-ok') === -1) {
             elem.style.display = 'block'
-        }
-
-        var el = document.getElementById('nb-global-spinner')
-        if (el) {
-            el.style['display'] = 'none';
         }
     }
 
     window.onerror = function () {
         displayIncompatibleBrowser()
-    }
+    };
 
     if (/MSIE|Trident/.test(window.navigator.userAgent) ) {
         displayIncompatibleBrowser()

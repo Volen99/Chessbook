@@ -5,7 +5,6 @@ import { TimelineModule } from '../../shared/timeline/timeline.module';
 import { SidebarColumnModule } from '../../shared/sidebar-column/sidebar-column.module';
 import { ExploreRoutingModule } from './explore-routing.module';
 import { ExploreComponent } from './explore.component';
-import { SharedGlobalIconModule } from '../../shared/shared-icons/shared-global-icon.module';
 import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";
 import {ExploreService} from "./explore.service";
 import {SharedMainModule} from "../../shared/shared-main/shared-main.module";
@@ -22,7 +21,6 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
         CommonModule,
         TimelineModule,
         SidebarColumnModule,
-        SharedGlobalIconModule,
         NbCardModule,
         SharedMainModule,
         NbListModule,

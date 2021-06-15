@@ -26,7 +26,7 @@ type ParseQueryStringFilterResult = {
 @Injectable()
 export class RestService {
 
-  addRestGetParams(params: HttpParams, pagination?: RestPagination, sort?: any | string) {
+  addRestGetParams(params: HttpParams, pagination?: RestPagination, sort?: SortMeta | string) {
     let newParams = params;
 
     if (pagination !== undefined) {

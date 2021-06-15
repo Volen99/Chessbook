@@ -33,6 +33,7 @@
     using Chessbook.Services.Notifications;
     using Chessbook.Core.Domain.Notifications;
     using Chessbook.Services.Notifications.Settings;
+    using Nop.Services.Customers;
 
     [Route("users")]
     public class UsersController : BaseApiController
@@ -50,11 +51,13 @@
         private readonly INotificationsSettingsService notificationsSettingsService;
         private readonly IUserNotificationSettingModelFactory userNotificationSettingModelFactory;
         private readonly IUserNotificationModelFactory userNotificationModelFactory;
+        private readonly ICustomerRegistrationService customerRegistrationService;
 
         public UsersController(IUserService userService, JwtManager jwtManager, IAuthenticationService authService, IPostsService postsService,
             IPictureService pictureService, IGenericAttributeService genericAttributeService, IRelationshipService relationshipService, IUserModelFactory userModelFactory,
             ICustomerActivityService customerActivityService, IUserNotificationService notificationsService, INotificationsSettingsService notificationsSettingsService,
-            IUserNotificationSettingModelFactory userNotificationSettingModelFactory, IUserNotificationModelFactory userNotificationModelFactory)
+            IUserNotificationSettingModelFactory userNotificationSettingModelFactory, IUserNotificationModelFactory userNotificationModelFactory,
+            ICustomerRegistrationService customerRegistrationService)
         {
             this.userService = userService;
             this.jwtManager = jwtManager;
@@ -69,6 +72,7 @@
             this.notificationsSettingsService = notificationsSettingsService;
             this.userNotificationSettingModelFactory = userNotificationSettingModelFactory;
             this.userNotificationModelFactory = userNotificationModelFactory;
+            this.customerRegistrationService = customerRegistrationService;
         }
 
         //[HttpGet]
@@ -196,12 +200,43 @@
             return Ok(newToken);
         }
 
-        [HttpDelete]
-        [Route("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpPut]
+        [Authorize]
+        [Route("me/edit-email")]
+        public async Task<IActionResult> ChangeEmail([FromBody] EditEmailInputModel input)
         {
             // try to get a customer with the specified id
-            var customer = await this.userService.GetCustomerByIdAsync(id);
+            var customer = await this.userService.GetCustomerByIdAsync(User.GetUserId());
+            if (customer == null || customer.Deleted)
+            {
+                return this.BadRequest("List");
+            }
+
+            //email
+            if (!string.IsNullOrWhiteSpace(input.Email))
+            {
+                await this.customerRegistrationService.SetEmailAsync(customer, input.Email, false);
+            }
+            else
+            {
+                customer.Email = input.Email;
+            }
+
+            await this.userService.UpdateCustomerAsync(customer);
+
+            var newToken = await authService.GenerateToken(customer.Id); // hmm
+
+            return this.Ok(newToken);
+        }
+
+        [HttpDelete]
+        [Route("me/delete")]
+        public async Task<IActionResult> Delete()
+        {
+            var myId = User.GetUserId();
+
+            // try to get a customer with the specified id
+            var customer = await this.userService.GetCustomerByIdAsync(myId);
             if (customer == null)
             {
                 return this.BadRequest("List");
@@ -242,12 +277,11 @@
 
                 // _notificationService.SuccessNotification(await _localizationService.GetResourceAsync("Admin.Customers.Customers.Deleted"));
 
-                return RedirectToAction("List");
+                return this.NoContent();
             }
             catch (Exception exc)
             {
-                // _notificationService.ErrorNotification(exc.Message);
-                return RedirectToAction("Edit", new { id = customer.Id });
+                return this.BadRequest(exc.Message);
             }
         }
 
@@ -333,6 +367,66 @@
             return this.BadRequest();
         }
 
+        [HttpPost]
+        [Route("banner")]
+        public async Task<IActionResult> UploadBanner()
+        {
+            //var user = jwtManager.GetPrincipal(token);
+            //if (user == null || !user.Identity.IsAuthenticated)
+            //{
+            //    return Unauthorized();
+            //}
+
+            var currentUserId = User.GetUserId();
+            var customer = await userService.GetCustomerByIdAsync(currentUserId);
+
+            if (!await userService.IsRegisteredAsync(customer))
+            {
+                return Challenge();
+            }
+
+            var uploadedFile = this.Request.Form.Files.FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var customerBanner = await this.pictureService.GetPictureByIdAsync(await this.genericAttributeService.GetAttributeAsync<int>(customer, NopCustomerDefaults.ProfileBannerIdAttribute));
+                    if (uploadedFile != null && !string.IsNullOrEmpty(uploadedFile.FileName))
+                    {
+                        var bannerMaxSize = 1024 * 1024 * 5;
+                        if (uploadedFile.Length > bannerMaxSize)
+                        {
+                            this.BadRequest("throw new NopException(string.Format(await _localizationService.GetResourceAsync('Account.Avatar.MaximumUploadedFileSize'), avatarMaxSize));");
+                        }
+
+                        var customerPictureBinary = await this.GetDownloadBitsAsync(uploadedFile);
+                        customerBanner = await this.pictureService.InsertPictureAsync(customerPictureBinary, uploadedFile.ContentType, null);
+
+                        var customerBannerId = 0;
+                        if (customerBanner != null)
+                        {
+                            customerBannerId = customerBanner.Id;
+                        }
+
+                        await this.genericAttributeService.SaveAttributeAsync(customer, NopCustomerDefaults.ProfileBannerIdAttribute, customerBannerId);
+
+                        var profileBannerUrl = await this.pictureService.GetPictureUrlAsync(customerBanner.Id, 1500, true, defaultPictureType: PictureType.Banner);
+
+                        return this.Ok(new { url = ChessbookConstants.SiteHttps + profileBannerUrl });
+
+                    }
+                }
+                catch (Exception exc)
+                {
+                    ModelState.AddModelError("", exc.Message);
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return this.BadRequest();
+        }
+
         /// <summary>
         /// Gets the download binary array
         /// </summary>
@@ -375,6 +469,11 @@
             }
 
             var user = await this.userService.GetCustomerByUsernameAsync(screenName);
+
+            if (user == null)
+            {
+                return this.NotFound();
+            }
 
             var model = await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), user);
 
@@ -436,19 +535,40 @@
             return this.Ok(model);
         }
 
+        [Authorize]
         [HttpGet]
         [Route("me/notifications")]
         public async Task<IActionResult> GetUnreadNotifications([FromQuery] QueryGetMyNotifications input)
         {
             var notifications = await this.notificationsService.List(User.GetUserId(), input.Start, input.Count, input.Sort, input.Unread);
 
-            var models = notifications.Select(notification => this.userNotificationModelFactory.PrepareUserNotificationModelAsync(notification).Result).ToList();
+            if (notifications.Count > 0)
+            {
+                var models = notifications.Select(notification => this.userNotificationModelFactory.PrepareUserNotificationModelAsync(notification).Result).ToList();
+                return this.Ok(new
+                {
+                    data = models,
+                    total = notifications.TotalCount,
+                });
+            }
 
             return this.Ok(new
             {
-                data = models,
-                total = models.Count,
+                data = notifications,
+                total = notifications.TotalCount,
             });
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("me/notifications/read-all")]
+        public async Task<IActionResult> ReadAll()
+        {
+            var userId = User.GetUserId();
+
+            await this.notificationsService.ReadAll(userId);
+
+            return this.NoContent();
         }
 
         [HttpPut]

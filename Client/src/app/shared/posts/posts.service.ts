@@ -99,7 +99,6 @@ export class PostsService {
 
   public async publishTweetAsync(textOrParameters: string | IPublishTweetParameters): Promise<IPost> {
     let parameters: IPublishTweetParameters;
-    debugger
     if (this.isIPublishTweetParameters(textOrParameters)) {
       parameters = textOrParameters;
     } else {

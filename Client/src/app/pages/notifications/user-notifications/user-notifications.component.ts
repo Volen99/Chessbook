@@ -65,7 +65,6 @@ export class UserNotificationsComponent implements OnInit {
       .subscribe(
         result => {
           console.log(result);
-          debugger
           // @ts-ignore
           this.notifications = reset ? result.data : this.notifications.concat(result.data);
           this.componentPagination.totalItems = result.total;

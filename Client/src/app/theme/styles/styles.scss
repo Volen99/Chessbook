@@ -12,17 +12,22 @@
 @import '../../../../node_modules/bootstrap/scss/mixins';
 @import '../../../../node_modules/bootstrap/scss/grid';
 
+@import './material/angular-material';
+
 // loading progress bar theme
 @import 'pace.theme';
 
 @import 'layout';
 @import 'overrides';
+@import './material/material-overrides';
 
 // install the framework and custom global styles
 @include nb-install() {
   // by mi
   // https://github.com/akveo/nebular/issues/1806
   // end
+
+  @include angular-material();
 
   // framework global styles
   @include nb-theme-global();
@@ -33,6 +38,7 @@
   @include ngx-pace-theme();
 
   @include nb-overrides();
+  @include material-overrides();
 };
 
 /* Importing Bootstrap SCSS file. */

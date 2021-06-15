@@ -6,8 +6,8 @@ import { NbMenuService, NbMenuInternalService } from './menu.service';
 import { NbIconModule } from '../icon/icon.module';
 import { NbBadgeModule } from '../badge/badge.module';
 import {NotificationComponent} from "./notification.component";
-import {NgbPopoverModule} from "@ng-bootstrap/ng-bootstrap";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {NgbPopoverModule} from "@ng-bootstrap/ng-bootstrap";
 
 const nbMenuComponents = [NbMenuComponent, NbMenuItemComponent];
 
@@ -18,8 +18,8 @@ const NB_MENU_PROVIDERS = [NbMenuService, NbMenuInternalService];
     NbSharedModule,
     NbIconModule,
     NbBadgeModule,
-    NgbPopoverModule,
     FontAwesomeModule,
+    NgbPopoverModule,
   ],
   declarations: [...nbMenuComponents, NotificationComponent],
   exports: [...nbMenuComponents],

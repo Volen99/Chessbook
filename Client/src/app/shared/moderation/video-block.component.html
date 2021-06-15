@@ -2,7 +2,7 @@
   <div class="modal-header">
     <h4 i18n class="modal-title" *ngIf="!post.isLive">Block video "{{ post.name }}"</h4>
     <h4 i18n class="modal-title" *ngIf="post.isLive">Block live "{{ post.name }}"</h4>
-    <app-global-icon iconName="cross" aria-label="Close" role="button" (click)="hide()"></app-global-icon>
+    <fa-icon [icon]="this.faTimes" aria-label="Close" role="button" (click)="hide()"></fa-icon>
   </div>
 
   <div class="modal-body">

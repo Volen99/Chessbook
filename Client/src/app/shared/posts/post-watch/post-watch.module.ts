@@ -8,7 +8,6 @@ import {NbCardModule} from "../../../sharebook-nebular/theme/components/card/car
 import {NbIconModule} from "../../../sharebook-nebular/theme/components/icon/icon.module";
 import { PostThreadComponent } from './post-thread/post-thread.component';
 import {NbContextMenuModule} from "../../../sharebook-nebular/theme/components/context-menu/context-menu.module";
-import {SharedGlobalIconModule} from "../../shared-icons/shared-global-icon.module";
 import { LikesComponent } from './likes/likes.component';
 import {NbListModule} from "../../../sharebook-nebular/theme/components/list/list.module";
 import {NbUserModule} from "../../../sharebook-nebular/theme/components/user/user.module";
@@ -35,7 +34,6 @@ const SERVICES = [
     NbCardModule,
     NbIconModule,
     NbContextMenuModule,
-    SharedGlobalIconModule,
     NbListModule,
     NbUserModule,
     SharedModule,

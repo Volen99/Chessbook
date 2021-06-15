@@ -62,5 +62,10 @@ namespace Chessbook.Services.Data
         {
             await this.relationshipsRepository.UpdateAsync(relationship);
         }
+
+        public async Task<Relationship> GetByIdAsync(int id)
+        {
+            return await this.relationshipsRepository.GetByIdAsync(id, cache => default);
+        }
     }
 }

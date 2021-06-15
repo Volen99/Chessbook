@@ -1,6 +1,12 @@
 import {Component, ViewChild} from '@angular/core';
 import {UserNotificationsComponent} from "../../notifications/user-notifications/user-notifications.component";
 
+import {
+  faCog,
+  faCheck,
+  faCheckCircle,
+} from '@fortawesome/pro-light-svg-icons';
+
 type NotificationSortType = 'createdAt' | 'read';
 
 @Component({
@@ -21,6 +27,10 @@ export class MyAccountNotificationsComponent {
   set notificationSortType(type: NotificationSortType) {
     this._notificationSortType = type;
   }
+
+  faCog = faCog;
+  faCheck = faCheck;
+  faCheckCircle = faCheckCircle;
 
   markAllAsRead() {
     this.userNotification.markAllAsRead();

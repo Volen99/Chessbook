@@ -10,7 +10,6 @@ import { AuthModule } from './auth/auth.module';
 
 import {EmptyComponent} from "./empty.component";
 import {SharedMainModule} from "./shared/shared-main/shared-main.module";
-import {SharedGlobalIconModule} from "./shared/shared-icons/shared-global-icon.module";
 import {SharedModule} from "./shared/shared.module";
 import {SharedFormModule} from "./shared/forms/shared-form.module";
 import {NbSidebarModule} from "./sharebook-nebular/theme/components/sidebar/sidebar.module";
@@ -65,7 +64,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 
     HttpClientModule,
     SharedFormModule,
-    SharedGlobalIconModule, // not used in appModule?!
 
 
     AuthModule.forRoot(),

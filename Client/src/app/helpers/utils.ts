@@ -3,6 +3,7 @@ import {environment} from '../../environments/environment';
 import {HttpErrorResponse} from "@angular/common/http";
 import {Notifier} from "../core/notification/notifier.service";
 import {HttpStatusCode} from "../shared/core-utils/miscs";
+import {NbToastrService} from "../sharebook-nebular/theme/components/toastr/toastr.service";
 
 export type SbNullableInput = string | null | undefined;
 export type SbBooleanInput = boolean | SbNullableInput;
@@ -178,10 +179,40 @@ export function convertToBoolProperty(val: any): boolean {
   return !!val;
 }
 
+function genericUploadErrorHandler(parameters: {
+  err: Pick<HttpErrorResponse, 'message' | 'status' | 'headers'>
+  name: string
+  notifier: NbToastrService
+  sticky?: boolean
+}) {
+  const {err, name, notifier, sticky} = {sticky: false, ...parameters};
+  const title = `The upload failed`;
+  let message = err.message;
+
+  if (err instanceof ErrorEvent) { // network error
+    message = `The connection was interrupted`;
+    notifier.danger(message, title, null ); // sticky
+  } else if (err.status === HttpStatusCode.INTERNAL_SERVER_ERROR_500) {
+    message = `The server encountered an error`;
+    notifier.danger(message, title, null);
+  } else if (err.status === HttpStatusCode.REQUEST_TIMEOUT_408) {
+    message = `Your ${name} file couldn't be transferred before the set timeout (usually 10min)`;
+    notifier.danger(message, title, null);
+  } else if (err.status === HttpStatusCode.PAYLOAD_TOO_LARGE_413) {
+    const maxFileSize = err.headers?.get('X-File-Maximum-Size') || '8G';
+    message = `Your ${name} file was too large (max. size: ${maxFileSize})`;
+    notifier.danger(message, title, null);
+  } else {
+    notifier.danger(err.message, title);
+  }
+
+  return message;
+}
+
 function uploadErrorHandler(parameters: {
   err: HttpErrorResponse
   name: string
-  notifier: Notifier
+  notifier: NbToastrService
   sticky?: boolean
 }) {
   const {err, name, notifier, sticky} = {sticky: false, ...parameters};
@@ -190,16 +221,16 @@ function uploadErrorHandler(parameters: {
 
   if (err instanceof ErrorEvent) { // network error
     message = $localize`The connection was interrupted`;
-    notifier.error(message, title, null, sticky);
+    notifier.danger(message, title, null); // sticky
   } else if (err.status === HttpStatusCode.REQUEST_TIMEOUT_408) {
     message = $localize`Your ${name} file couldn't be transferred before the set timeout (usually 10min)`;
-    notifier.error(message, title, null, sticky);
+    notifier.danger(message, title, null);
   } else if (err.status === HttpStatusCode.PAYLOAD_TOO_LARGE_413) {
     const maxFileSize = err.headers?.get('X-File-Maximum-Size') || '8G';
     message = $localize`Your ${name} file was too large (max. size: ${maxFileSize})`;
-    notifier.error(message, title, null, sticky);
+    notifier.danger(message, title, null);
   } else {
-    notifier.error(err.message, title);
+    notifier.danger(err.message, title);
   }
 
   return message;
@@ -221,4 +252,5 @@ export {
   isInViewport,
   isXPercentInViewport,
   uploadErrorHandler,
+  genericUploadErrorHandler,
 };

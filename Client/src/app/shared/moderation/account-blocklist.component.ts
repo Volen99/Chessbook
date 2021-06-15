@@ -6,6 +6,10 @@ import {RestPagination} from "../../core/rest/rest-pagination";
 import {RestTable} from "../../core/rest/rest-table";
 import {User} from "../shared-main/user/user.model";
 
+import {
+  faUserTimes,
+} from '@fortawesome/pro-light-svg-icons';
+
 @Directive()
 // tslint:disable-next-line: directive-class-suffix
 export class GenericAccountBlocklistComponent extends RestTable implements OnInit {
@@ -27,6 +31,8 @@ export class GenericAccountBlocklistComponent extends RestTable implements OnIni
   ngOnInit() {
     this.initialize();
   }
+
+  faUserTimes = faUserTimes;
 
   switchToDefaultAvatar($event: Event) {
     ($event.target as HTMLImageElement).src = User.GET_DEFAULT_AVATAR_URL();

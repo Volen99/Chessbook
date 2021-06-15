@@ -4,12 +4,17 @@
 <!--        <app-sidebar-column></app-sidebar-column>-->
 <!--    </div>-->
 <!--</div>-->
-
 <div class="infinite-cards row" appInfiniteScroller (nearOfBottom)="onNearOfBottom()" [autoInit]="true" [dataObservable]="onDataSubject.asObservable()" style="margin: 0px">
     <div class="col-md-12 col-lg-7 col-xxxl-6 r-yfoy6g r-18bvks7 main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1 main-left-right-vertical-border-color" style="padding-left: 0px"> <!--style="padding-left: 0px-->
         <nb-card style="width: 102.6%"> <!--inner container to fit vertical border-->
             <app-timeline-cards-header></app-timeline-cards-header>
-            <div class="sharebook-container ocean-line border-bottom-color border-bottom-style-solid border-bottom-width-1px r-2sztyj r-1efd50x r-5kkj8d"></div>
+            <div class="sharebook-container ocean-line border-bottom-color border-bottom-style-solid border-bottom-width-1px r-2sztyj r-1efd50x r-5kkj8d">
+                <ng-lottie *ngIf="this.isFishSwimming" [@fadeIn]="fadeIn" [options]="this.lottieOptions" (animationCreated)="animationCreated($event)" [styles]="this.styles"
+                #lottieComponent>
+
+                </ng-lottie>
+            </div>
+
             <div class="sharebook-container margin-left-right-auto main-primary-column-max-width-600px width-100-per">
                 <div class="sharebook-container">
                     <div class="sharebook-container">

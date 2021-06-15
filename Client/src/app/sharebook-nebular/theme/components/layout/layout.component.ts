@@ -112,11 +112,12 @@ import { NbOverlayContainerAdapter } from '../cdk/adapter/overlay-container-adap
   selector: 'nb-layout',
   styleUrls: ['./layout.component.scss'],
   template: `
-    <div class="scrollable-container" #scrollableContainer (scroll)="onScroll($event)">
+      <div class="scrollable-container" #scrollableContainer (scroll)="onScroll($event)">
       <div class="layout" #layoutContainer>
-        <ng-content select="nb-layout-header:not([subheader])"></ng-content>
+          <ng-content select="nb-layout-header:not([subheader])"></ng-content>
         <div class="layout-container">
-          <ng-content select="nb-sidebar"></ng-content>
+            <app-keyboard-shortcuts></app-keyboard-shortcuts>
+            <ng-content select="nb-sidebar"></ng-content>
           <div class="content" [class.center]="centerValue">
             <ng-content select="nb-layout-header[subheader]"></ng-content>
             <div class="columns">

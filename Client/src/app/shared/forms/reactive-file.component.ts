@@ -1,6 +1,6 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {GlobalIconName} from "../shared-icons/global-icon.component";
+import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 
 @Component({
   selector: 'app-reactive-file',
@@ -20,7 +20,7 @@ export class ReactiveFileComponent implements OnInit, ControlValueAccessor {
   @Input() extensions: string[] = [];
   @Input() maxFileSize: number;
   @Input() displayFilename = false;
-  @Input() icon: GlobalIconName;
+  @Input() icon: IconDefinition;
 
   @Output() fileChanged = new EventEmitter<Blob>();
 

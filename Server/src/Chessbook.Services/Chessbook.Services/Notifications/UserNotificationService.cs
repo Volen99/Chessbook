@@ -22,45 +22,41 @@ namespace Chessbook.Services.Notifications
             this.userNotificationSettingModelRepository = userNotificationSettingModelRepository;
         }
 
-        public async Task<UserNotification> Create(UserNotificationType type, int userId, int postId)
+        public async Task<UserNotification> Create(UserNotificationType type, int userId, int entityId)
         {
             var notification = new UserNotification
             {
                 Type = type,
                 UserId = userId,
-                PostId = postId,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
             };
+
+            if (type == UserNotificationType.NEW_VIDEO_FROM_SUBSCRIPTION)
+            {
+                notification.PostId = entityId;
+            }
+            else if (type == UserNotificationType.NEW_FOLLOW)
+            {
+                notification.RelationshipId = entityId;
+            }
 
             await this.userNotificationRepository.InsertAsync(notification);
 
             return notification;
         }
 
-        public Task<UserNotification> InsertUserNotificationAsync(UserNotificationSettingModel notification)
-        {
-            var userNotification = new UserNotification
-            {
-            };
-
-            return default(Task<UserNotification>);
-        }
-
-        public Task<UserNotification> InsertUserNotificationAsync(UserNotificationModelForApi notification)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public async Task<IPagedList<UserNotification>> List(int userId, int start, int count, string sort, bool? unread)
         {
+            var getOnlyTotalCount = string.IsNullOrEmpty(sort) ? true : false;
+
             var userNotifications = await this.userNotificationRepository.GetAllPagedAsync(query =>
             {
                 query = query.Where(p => p.UserId == userId);
 
-                if (unread != null)
+                if (unread.HasValue)
                 {
-                    query.Where(n => n.Read == !unread);
+                    query = query.Where(n => n.Read == !unread.Value);
                 }
 
                 //query = ascSort
@@ -69,15 +65,24 @@ namespace Chessbook.Services.Notifications
 
                 return query;
 
-            }, start, count);
+            }, start, count, getOnlyTotalCount);
 
             return userNotifications;
 
         }
 
-        public Task<List<UserNotification>> ListUserSubscribersOf(int userId)
+        public async Task ReadAll(int userId)
         {
-            return null;
+            var allCurrentUserNotifications = this.userNotificationRepository.Table
+                .Where(un => un.UserId == userId)
+                .ToList();
+
+            foreach (var userNotification in allCurrentUserNotifications)
+            {
+                userNotification.Read = true;
+            }
+
+            await this.userNotificationRepository.UpdateAsync(allCurrentUserNotifications);
         }
     }
 }

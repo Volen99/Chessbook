@@ -2,14 +2,24 @@ import {Component, HostBinding, Inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {VideoListHeaderComponent} from "../../../../shared/post-miniature/video-list-header.component";
-import {GlobalIconName} from "../../../../shared/shared-icons/global-icon.component";
 import {RedirectService} from "../../../../core/routing/redirect.service";
 import {ServerService} from "../../../../core/server/server.service";
 import {AuthService} from "../../../../core/auth/auth.service";
+import {IconDefinition} from "@fortawesome/fontawesome-common-types";
+
+import {
+  faChartLine,
+  faThumbsUp,
+  faAward,
+} from '@fortawesome/pro-light-svg-icons';
+
+import {
+  faFlame,
+} from '@fortawesome/pro-solid-svg-icons';
 
 interface VideoTrendingHeaderItem {
   label: string;
-  iconName: GlobalIconName;
+  iconName: IconDefinition;
   value: string;
   tooltip?: string;
   hidden?: boolean;
@@ -28,38 +38,37 @@ export class VideoTrendingHeaderComponent extends VideoListHeaderComponent imple
   private algorithmChangeSub: Subscription;
 
   constructor(@Inject('data') public data: any,
-    private route: ActivatedRoute,
-    private router: Router,
-    private auth: AuthService,
-    private serverService: ServerService
+              private route: ActivatedRoute,
+              private router: Router,
+              private auth: AuthService,
+              private serverService: ServerService,
+              private redirectService: RedirectService,
   ) {
     super(data);
     this.buttons = [
       {
         label: `:A variant of Trending videos based on the number of recent interactions, minus user history:Best`,
-        // @ts-ignore
-        iconName: 'award',
+        iconName: this.faAward,
         value: 'best',
         tooltip: `Videos with the most interactions for recent videos, minus user history`,
         hidden: true
       },
       {
         label: `:A variant of Trending videos based on the number of recent interactions:Hot`,
-        // @ts-ignore
-        iconName: 'flame',
+        iconName: this.faFlame,
         value: 'hot',
         tooltip: `Videos with the most interactions for recent videos`,
         hidden: true
       },
       {
         label: `:Main variant of Trending videos based on number of recent views:Views`,
-        iconName: 'trending',
+        iconName: this.faChartLine,
         value: 'most-viewed',
         tooltip: `Videos with the most views during the last 24 hours`
       },
       {
         label: `:A variant of Trending videos based on the number of likes:Likes`,
-        iconName: 'like',
+        iconName: this.faThumbsUp,
         value: 'most-liked',
         tooltip: `Videos that have the most likes`
       }
@@ -85,12 +94,7 @@ export class VideoTrendingHeaderComponent extends VideoListHeaderComponent imple
 
     this.algorithmChangeSub = this.route.queryParams.subscribe(
       queryParams => {
-        const algorithm = queryParams['alg'];
-        if (algorithm) {
-          this.data.model = algorithm;
-        } else {
-          this.data.model = RedirectService.DEFAULT_TRENDING_ALGORITHM;
-        }
+        this.data.model = queryParams['alg'] || this.redirectService.getDefaultTrendingAlgorithm();
       }
     );
   }
@@ -99,8 +103,13 @@ export class VideoTrendingHeaderComponent extends VideoListHeaderComponent imple
     if (this.algorithmChangeSub) this.algorithmChangeSub.unsubscribe();
   }
 
+  faChartLine = faChartLine;
+  faThumbsUp = faThumbsUp;
+  faFlame = faFlame;
+  faAward = faAward;
+
   setSort() {
-    const alg = this.data.model !== RedirectService.DEFAULT_TRENDING_ALGORITHM
+    const alg = this.data.model !== this.redirectService.getDefaultTrendingAlgorithm()
       ? this.data.model
       : undefined;
 

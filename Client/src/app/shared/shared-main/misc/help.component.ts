@@ -8,9 +8,9 @@ import {
   QueryList,
   TemplateRef
 } from '@angular/core';
-import {GlobalIconName} from "../../shared-icons/global-icon.component";
 import {SharebookTemplateDirective} from "../angular/directives/sharebook-template.directive";
 import {ENHANCED_RULES, TEXT_RULES} from "../../../core/utils/markdown";
+import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 
 @Component({
   selector: 'app-help',
@@ -21,7 +21,7 @@ import {ENHANCED_RULES, TEXT_RULES} from "../../../core/utils/markdown";
 export class HelpComponent implements OnInit, OnChanges, AfterContentInit {
   @Input() helpType: 'custom' | 'markdownText' | 'markdownEnhanced' = 'custom';
   @Input() tooltipPlacement = 'right auto';
-  @Input() iconName: GlobalIconName = 'help';
+  @Input() iconName: IconDefinition;
   @Input() title = $localize`Get help`;
   @Input() autoClose = 'outside';
 

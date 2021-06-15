@@ -11,6 +11,13 @@ import {LocalStorageService} from 'app/core/wrappers/storage.service';
 import {Observable} from 'rxjs';
 import {immutableAssign, scrollToTop} from "../../helpers/utils";
 
+import {
+  faSmileWink,
+  faHandHoldingHeart,
+  faImagePolaroid,
+  faPoll,
+} from '@fortawesome/pro-light-svg-icons';
+
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
@@ -42,6 +49,11 @@ export class TimelineComponent extends AbstractPostList implements OnInit {
     //     super.posts = posts;
     //   });
   }
+
+  faSmileWink = faSmileWink;
+  faHandHoldingHeart = faHandHoldingHeart;
+  faImagePolaroid = faImagePolaroid;
+  faPoll = faPoll
 
   titlePage: string;
 

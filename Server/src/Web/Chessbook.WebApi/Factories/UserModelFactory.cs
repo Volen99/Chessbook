@@ -21,7 +21,6 @@ namespace Chessbook.Web.Api.Factories
         private readonly IPostsService postsService;
         private readonly IGenericAttributeService genericAttributeService;
         private readonly IDateTimeHelper dateTimeHelper;
-        private readonly ICurrentUserService currentUserService;
         private readonly IUserService userService;
         private readonly ISettingsService settingsService;
         private readonly INotificationsSettingsService notificationsSettingsService;
@@ -29,15 +28,14 @@ namespace Chessbook.Web.Api.Factories
 
         public UserModelFactory(IPictureService pictureService, IPostsService postsService,
              IGenericAttributeService genericAttributeService, IDateTimeHelper dateTimeHelper,
-             ICurrentUserService currentUserService, IUserService userService,
-             ISettingsService settingsService, INotificationsSettingsService notificationsSettingsService,
+             IUserService userService, ISettingsService settingsService,
+             INotificationsSettingsService notificationsSettingsService,
              IUserNotificationSettingModelFactory userNotificationSettingModelFactory)
         {
             this.pictureService = pictureService;
             this.postsService = postsService;
             this.genericAttributeService = genericAttributeService;
             this.dateTimeHelper = dateTimeHelper;
-            this.currentUserService = currentUserService;
             this.userService = userService;
             this.settingsService = settingsService;
             this.notificationsSettingsService = notificationsSettingsService;
@@ -96,7 +94,7 @@ namespace Chessbook.Web.Api.Factories
             // banner
             var profileBannerPictureId = await this.genericAttributeService.GetAttributeAsync<int>(userCurrent, NopCustomerDefaults.ProfileBannerIdAttribute);
             var profileBannerUrl = await this.pictureService.GetPictureUrlAsync(profileBannerPictureId, 1500, true, defaultPictureType: PictureType.Banner);
-            model.ProfileBackgroundImageUrlHttps = ChessbookConstants.SiteHttps + profileBannerUrl;
+            model.ProfileBannerURL = ChessbookConstants.SiteHttps + profileBannerUrl;
 
             // posts
             model.StatusesCount = await this.postsService.GetPostsCountByUserId(model.Id);
@@ -120,9 +118,11 @@ namespace Chessbook.Web.Api.Factories
         public virtual async Task<string> PrepareCustomerAvatarModelAsync(int userId)
         {
             var userCurrent = await this.userService.GetCustomerByIdAsync(userId);
-            string avatarUrl = ChessbookConstants.SiteHttps + await this.pictureService.GetPictureUrlAsync(await this.genericAttributeService.GetAttributeAsync<int>(userCurrent, NopCustomerDefaults.AvatarPictureIdAttribute), 400, false);
 
-            return avatarUrl;
+            var avatarPictureId = await this.genericAttributeService.GetAttributeAsync<int>(userCurrent, NopCustomerDefaults.AvatarPictureIdAttribute);
+            var avatarUrl = await this.pictureService.GetPictureUrlAsync(avatarPictureId, 400, true, defaultPictureType: PictureType.Avatar);
+
+            return ChessbookConstants.SiteHttps + avatarUrl;
         }
     }
 }

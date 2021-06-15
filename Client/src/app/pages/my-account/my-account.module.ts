@@ -15,7 +15,6 @@ import {NbTabsetModule} from "../../sharebook-nebular/theme/components/tabset/ta
 import {NbRouteTabsetModule} from "../../sharebook-nebular/theme/components/route-tabset/route-tabset.module";
 import {SharedMainModule} from "../../shared/shared-main/shared-main.module";
 import {SharedModerationModule} from "../../shared/moderation/shared-moderation.module";
-import {SharedGlobalIconModule} from "../../shared/shared-icons/shared-global-icon.module";
 import {SharedAbuseListModule} from "../../shared/shared-abuse-list/shared-abuse-list.module";
 import {SharedFormModule} from "../../shared/forms/shared-form.module";
 import {MyAccountChangeEmailComponent} from "./my-account-settings/my-account-change-email/my-account-change-email.component";
@@ -34,6 +33,7 @@ import { MyAccountPersonalDetailsComponent } from './my-account-settings/my-acco
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {NbRadioModule} from "../../sharebook-nebular/theme/components/radio/radio.module";
 import {NotificationsModule} from "../notifications/notifications.module";
+import {SharedActorImageEditModule} from "../../shared/shared-actor-image-edit/shared-actor-image-edit.module";
 
 @NgModule({
   imports: [
@@ -47,7 +47,6 @@ import {NotificationsModule} from "../notifications/notifications.module";
     SharedFormModule,
     SharedModerationModule,
     // SharedUserInterfaceSettingsModule,
-    SharedGlobalIconModule,
     SharedAbuseListModule,
     // SharedShareModal,
     NbTabsetModule,
@@ -62,6 +61,7 @@ import {NotificationsModule} from "../notifications/notifications.module";
     FontAwesomeModule,
     NbRadioModule,
     NotificationsModule,
+    SharedActorImageEditModule,
   ],
 
   declarations: [

@@ -5,7 +5,7 @@
       <ng-container i18n *ngIf="!isAdminView">Messages with the moderation team</ng-container>
     </h4>
 
-    <app-global-icon iconName="cross" aria-label="Close" role="button" (click)="hide()"></app-global-icon>
+    <fa-icon [icon]="this.faTimes" aria-label="Close" role="button" (click)="hide()"></fa-icon>
   </div>
 
   <div class="modal-body">

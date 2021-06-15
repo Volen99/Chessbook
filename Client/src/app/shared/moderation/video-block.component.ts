@@ -8,6 +8,9 @@ import {Post} from "../shared-main/post/post.model";
 import {FormValidatorService} from "../forms/form-validator.service";
 import {VIDEO_BLOCK_REASON_VALIDATOR} from "../forms/form-validators/video-block-validators";
 import { Notifier } from 'app/core/notification/notifier.service';
+import {
+  faTimes,
+} from '@fortawesome/pro-light-svg-icons';
 
 @Component({
   selector: 'app-video-block',
@@ -41,6 +44,8 @@ export class VideoBlockComponent extends FormReactive implements OnInit {
       unfederate: null
     }, defaultValues);
   }
+
+  faTimes = faTimes;
 
   show() {
     this.openedModal = this.modalService.open(this.modal, {centered: true, keyboard: false});

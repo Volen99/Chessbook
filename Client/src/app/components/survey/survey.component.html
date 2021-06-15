@@ -1,34 +1,6 @@
-<!--<div class="poll">-->
-<!--    <h3 class="survey-view-question">{{this.poll.question}}</h3>-->
-<!--    <ul>-->
-<!--        &lt;!&ndash;poll.get('options').map((option, i) => this.renderOption(option, i, showResults))&ndash;&gt;-->
-<!--        <ng-container *ngFor="let option of this.poll.options; let i = index">-->
-<!--            <app-render-option [poll]="this.poll" [option]="option" [optionIndex]="i"-->
-<!--                               [showResults]="this.showResults"></app-render-option>-->
-<!--        </ng-container>-->
-<!--    </ul>-->
-
-<!--    <div class="poll__footer">-->
-<!--        <button *ngIf="!this.showResults" class="button button-secondary" [disabled]="this.disabled"-->
-<!--                (click)="this.handleVote()">Vote-->
-<!--        </button>-->
-<!--        <span *ngIf="this.showResults && !this.disabled"><button class="poll__link" (click)="this.handleRefresh()">Refresh</button> · </span>-->
-<!--        {{this.votesCount}}-->
-<!--        <span *ngIf="this.poll.expires_at"> · {{this.timeRemaining}}</span>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<nb-card>-->
-<!--    <nb-card-body>-->
-<!--        <nb-card-footer>-->
-<!--            -->
-<!--        </nb-card-footer>-->
-<!--    </nb-card-body>-->
-<!--</nb-card>-->
-
 <div class="section-container-component">
     <div class="section-content-component survey-view-content">
-        <h1 class="text-basic">{{this.poll.question}}</h1>
+        <h1 *ngIf="!this.showResults" class="text-basic" style="font-size: 1.8rem">{{this.poll.question}}</h1>
         <div>
             <div *ngIf="!this.showResults" class="survey-options-component">
                 <div class="survey-options-options">
@@ -56,8 +28,4 @@
         </div>
     </div>
 </div>
-
-<!--                    <div class="survey-results-progress">-->
-<!--                        <div class="survey-results-progress-bar" style="width: 10%;"></div>-->
-<!--                    </div>-->
 

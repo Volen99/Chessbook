@@ -28,7 +28,7 @@
         /// A task that represents the asynchronous operation
         /// The task result contains the entity entry
         /// </returns>
-        Task<TEntity> GetByIdAsync(int? id, Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true);
+        Task<TEntity> GetByIdAsync(int? id, Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = false);
 
         /// <summary>
         /// Get entity entries by identifiers
@@ -40,7 +40,7 @@
         /// A task that represents the asynchronous operation
         /// The task result contains the entity entries
         /// </returns>
-        Task<IList<TEntity>> GetByIdsAsync(IList<int> ids, Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true);
+        Task<IList<TEntity>> GetByIdsAsync(IList<int> ids, Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = false);
 
         /// <summary>
         /// Get all entity entries
@@ -53,7 +53,7 @@
         /// The task result contains the entity entries
         /// </returns>
         Task<IList<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
-            Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true);
+            Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = false);
 
         /// <summary>
         /// Get all entity entries
@@ -66,7 +66,7 @@
         /// The task result contains the entity entries
         /// </returns>
         Task<IList<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null,
-            Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true);
+            Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = false);
 
         /// <summary>
         /// Get all entity entries
@@ -76,7 +76,7 @@
         /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>Entity entries</returns>
         IList<TEntity> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
-            Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true);
+            Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = false);
 
         /// <summary>
         /// Get all entity entries
@@ -89,7 +89,7 @@
         /// The task result contains the entity entries
         /// </returns>
         Task<IList<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func,
-            Func<IStaticCacheManager, Task<CacheKey>> getCacheKey, bool includeDeleted = true);
+            Func<IStaticCacheManager, Task<CacheKey>> getCacheKey, bool includeDeleted = false);
 
         /// <param name="func">Function to select entries</param>
         /// <param name="pageIndex">Page index</param>
@@ -101,7 +101,7 @@
         /// The task result contains the paged list of entity entries
         /// </returns>
         Task<IPagedList<TEntity>> GetAllPagedAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
-            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = true);
+            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = false);
 
         /// <param name="func">Function to select entries</param>
         /// <param name="pageIndex">Page index</param>
@@ -113,7 +113,7 @@
         /// The task result contains the paged list of entity entries
         /// </returns>
         Task<IPagedList<TEntity>> GetAllPagedAsync(Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null,
-            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = true);
+            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = false);
 
         /// <summary>
         /// Insert the entity entry

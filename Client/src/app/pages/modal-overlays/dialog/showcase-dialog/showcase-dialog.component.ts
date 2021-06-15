@@ -1,5 +1,8 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NbDialogRef} from "../../../../sharebook-nebular/theme/components/dialog/dialog-ref";
+import {UsersService} from "../../../../core/backend/common/services/users.service";
+import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {RedirectService} from "../../../../core/routing/redirect.service";
 
 @Component({
   selector: 'ngx-showcase-dialog',
@@ -7,22 +10,41 @@ import {NbDialogRef} from "../../../../sharebook-nebular/theme/components/dialog
   styleUrls: ['showcase-dialog.component.scss'],
 })
 export class ShowcaseDialogComponent {
-
   @Input() title: string;
   @Input() body: string;
-  @Input() username: string;
+  @Input() screenName: string;
 
-  constructor(protected ref: NbDialogRef<ShowcaseDialogComponent>) {}
+  constructor(protected ref: NbDialogRef<ShowcaseDialogComponent>, private userService: UsersService,
+              private toastrService: NbToastrService, private redirectService: RedirectService) {
+  }
+
+  inputValue = '';
 
   dismiss() {
     this.ref.close();
   }
 
-  submit(username: string) {
-    if (this.username !== username) {
-      return;
+  submit() {
+    this.userService.deleteMe().subscribe(
+      () => {
+        this.toastrService.success(`Your account is deleted.`);
+
+        this.ref.close(this.screenName);
+        this.redirectService.redirectToLogout();
+      },
+
+      err => this.toastrService.danger(err.message)
+    );
+
+    this.ref.close(this.screenName);
+  }
+
+  isConfirmationDisabled() {
+    // No input validation
+    if (!this.screenName) {
+      return false;
     }
 
-    this.ref.close(username);
+    return this.screenName !== this.inputValue;
   }
 }

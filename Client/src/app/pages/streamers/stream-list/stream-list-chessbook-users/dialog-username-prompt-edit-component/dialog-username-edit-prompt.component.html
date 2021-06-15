@@ -5,8 +5,8 @@
         <ul *ngIf="!this.isEdit">
             <li style="font-size: 22px;">
                 {{ this.username }}
-                <button nbButton size="medium" ghost status="primary">
-                    <nb-icon icon="edit-outline" (click)="handleEditClick()"></nb-icon>
+                <button nbButton size="medium" ghost status="primary" (click)="handleEditClick()">
+                    <nb-icon icon="edit-outline"></nb-icon>
                 </button>
                 <button nbButton size="medium" ghost status="primary" (click)="this.handleDeleteClick()">
                     <nb-icon icon="trash-2-outline"></nb-icon>

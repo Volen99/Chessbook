@@ -1,9 +1,15 @@
 import {Component, Input} from '@angular/core';
-import {GlobalIconName} from "../../shared-icons/global-icon.component";
+import {IconDefinition} from "@fortawesome/fontawesome-common-types";
+
+import {
+  faEllipsisH,
+  faEllipsisV,
+  faImagePolaroid,
+} from '@fortawesome/pro-light-svg-icons';
 
 export type DropdownAction<T> = {
   label?: string
-  iconName?: GlobalIconName
+  iconName?: IconDefinition
   description?: string
   title?: string
   handler?: (a: T) => any
@@ -35,6 +41,10 @@ export class ActionDropdownComponent<T> {
 
   @Input() label: string;
   @Input() theme: DropdownTheme = 'grey';
+
+  faEllipsisH = faEllipsisH;
+  faEllipsisV = faEllipsisV;
+  faImagePolaroid = faImagePolaroid;
 
   getActions(): DropdownAction<T>[][] {
     if (this.actions.length !== 0 && Array.isArray(this.actions[0])) return this.actions as DropdownAction<T>[][];

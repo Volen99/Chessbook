@@ -168,7 +168,6 @@ export class ZoomableImageComponent implements OnInit, OnChanges, OnDestroy, Aft
 
     this.initZoomMatrix();
 
-    debugger
     this.overflow = this.scale === MIN_SCALE ? 'hidden' : 'scroll';
     this.zoomButtonShouldHide = this.navigationHidden || this.zoomButtonHidden || this.zoomMatrix.rate <= MIN_SCALE ? 'media-modal__zoom-button--hidden' : '';
     this.zoomButtonTitle = this.zoomState === 'compress' ? 'compress' : 'expand';

@@ -156,17 +156,17 @@ export class UsersService extends UserData {
   }
 
   changeEmail(password: string, newEmail: string) {
-    const url = /*UsersService.BASE_USERS_URL +*/ 'me';
+    const url = /*UsersService.BASE_USERS_URL +*/ 'me/edit-email';
     const body: UserUpdateMe = {
       currentPassword: password,
       email: newEmail
     };
 
-    return this.api.changeEmail(url, body)
-      .pipe(
-        map(this.restExtractor.extractDataBool),
-        catchError(err => this.restExtractor.handleError(err))
-      );
+    return this.api.changeEmail(url, body);
+      // .pipe(
+      //   map(this.restExtractor.extractDataBool),
+      //   catchError(err => this.restExtractor.handleError(err))
+      // );
   }
 
   changePassword(currentPassword: string, newPassword: string) {
@@ -190,8 +190,15 @@ export class UsersService extends UserData {
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 
+  changeBanner(bannerForm: FormData) {
+    const url = 'banner';
+
+    return this.api.changeAvatar(url, bannerForm)
+      .pipe(catchError(err => this.restExtractor.handleError(err)));
+  }
+
   deleteMe() {
-    const url = 'me';
+    const url = 'me/delete';
 
     return this.api.deleteMe(url)
       .pipe(
@@ -204,6 +211,16 @@ export class UsersService extends UserData {
     const url = 'me/avatar';
 
     return this.api.deleteAvatar(url)
+      .pipe(
+        map(this.restExtractor.extractDataBool),
+        catchError(err => this.restExtractor.handleError(err))
+      );
+  }
+
+  deleteBanner () {
+    const url = 'me/banner';
+
+    return this.api.deleteBanner(url)
       .pipe(
         map(this.restExtractor.extractDataBool),
         catchError(err => this.restExtractor.handleError(err))

@@ -203,7 +203,7 @@ export abstract class UserData {
     }
   }
 
-  static CREATE_BY_STRING(accountName: string /*host: string, forceHostname = false*/) {
+  static CREATE_BY_STRING(screenName: string /*host: string, forceHostname = false*/) {
     const absoluteAPIUrl = getAbsoluteAPIUrl();
     const thisHost = new URL(absoluteAPIUrl).host;
 
@@ -211,7 +211,7 @@ export abstract class UserData {
     //   return accountName;
     // }
 
-    return '@' + accountName;  // accountName + '@' + host
+    return screenName.substring(1);  // accountName + '@' + host
   }
 
   static IS_LOCAL(host: string) {

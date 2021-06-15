@@ -9,7 +9,6 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.module";
 import {NbUserModule} from "../../sharebook-nebular/theme/components/user/user.module";
 import {SharedModule} from "../../shared/shared.module";
-import {SharedGlobalIconModule} from "../../shared/shared-icons/shared-global-icon.module";
 import {SharedMainModule} from "../../shared/shared-main/shared-main.module";
 
 @NgModule({
@@ -25,7 +24,6 @@ import {SharedMainModule} from "../../shared/shared-main/shared-main.module";
     NbListModule,
     NbUserModule,
     SharedModule,
-    SharedGlobalIconModule,
     SharedMainModule,
   ]
 })

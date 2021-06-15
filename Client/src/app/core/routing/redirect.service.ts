@@ -1,44 +1,41 @@
 import {Injectable} from '@angular/core';
 import {NavigationCancel, NavigationEnd, Router} from '@angular/router';
+
 import {ServerService} from "../server/server.service";
 
 @Injectable()
 export class RedirectService {
   // Default route could change according to the instance configuration
-  static INIT_DEFAULT_ROUTE = '/videos/trending';
-  static DEFAULT_ROUTE = RedirectService.INIT_DEFAULT_ROUTE;
+  static INIT_DEFAULT_ROUTE = '/home';
   static INIT_DEFAULT_TRENDING_ALGORITHM = 'most-viewed';
-  static DEFAULT_TRENDING_ALGORITHM = RedirectService.INIT_DEFAULT_TRENDING_ALGORITHM;
 
   private previousUrl: string;
   private currentUrl: string;
 
   private redirectingToHomepage = false;
+  private defaultTrendingAlgorithm = RedirectService.INIT_DEFAULT_TRENDING_ALGORITHM;
+  private defaultRoute = RedirectService.INIT_DEFAULT_ROUTE;
 
-  constructor(private router: Router, private serverService: ServerService) {
+  constructor(private router: Router, private serverService: ServerService
+  ) {
     // The config is first loaded from the cache so try to get the default route
-    // const tmpConfig = this.serverService.getTmpConfig();
-    // if (tmpConfig?.instance?.defaultClientRoute) {
-    //   RedirectService.DEFAULT_ROUTE = tmpConfig.instance.defaultClientRoute;
-    // }
-    // if (tmpConfig?.trending?.videos?.algorithms?.default) {
-    //   RedirectService.DEFAULT_TRENDING_ALGORITHM = tmpConfig.trending.videos.algorithms.default;
-    // }
-    //
-    // // Load default route
-    // this.serverService.getConfig()
-    //   .subscribe(config => {
-    //     const defaultRouteConfig = config.instance.defaultClientRoute;
-    //     const defaultTrendingConfig = config.trending.videos.algorithms.default;
-    //
-    //     if (defaultRouteConfig) {
-    //       RedirectService.DEFAULT_ROUTE = defaultRouteConfig;
-    //     }
-    //
-    //     if (defaultTrendingConfig) {
-    //       RedirectService.DEFAULT_TRENDING_ALGORITHM = defaultTrendingConfig;
-    //     }
-    //   });
+    const tmpConfig = this.serverService.getTmpConfig();
+    if (tmpConfig?.instance?.defaultClientRoute) {
+      this.defaultRoute = tmpConfig.instance.defaultClientRoute;
+    }
+    if (tmpConfig?.trending?.videos?.algorithms?.default) {
+      this.defaultTrendingAlgorithm = tmpConfig.trending.videos.algorithms.default;
+    }
+
+    // Load default route
+    this.serverService.getConfig()
+      .subscribe(config => {
+        const defaultRouteConfig = config.instance.defaultClientRoute;
+        const defaultTrendingConfig = config.trending.videos.algorithms.default;
+
+        if (defaultRouteConfig) this.defaultRoute = defaultRouteConfig;
+        if (defaultTrendingConfig) this.defaultTrendingAlgorithm = defaultTrendingConfig;
+      });
 
     // Track previous url
     this.currentUrl = this.router.url;
@@ -50,6 +47,14 @@ export class RedirectService {
     });
   }
 
+  getDefaultRoute() {
+    return this.defaultRoute;
+  }
+
+  getDefaultTrendingAlgorithm() {
+    return this.defaultTrendingAlgorithm;
+  }
+
   redirectToPreviousRoute() {
     const exceptions = [
       '/verify-account',
@@ -58,7 +63,9 @@ export class RedirectService {
 
     if (this.previousUrl) {
       const isException = exceptions.find(e => this.previousUrl.startsWith(e));
-      if (!isException) return this.router.navigateByUrl(this.previousUrl);
+      if (!isException) {
+        return this.router.navigateByUrl(this.previousUrl);
+      }
     }
 
     return this.redirectToHomepage();
@@ -71,19 +78,27 @@ export class RedirectService {
 
     this.redirectingToHomepage = true;
 
-    console.log('Redirecting to %s...', RedirectService.DEFAULT_ROUTE);
+    console.log('Redirecting to %s...', this.defaultRoute);
 
-    this.router.navigateByUrl(RedirectService.DEFAULT_ROUTE, {skipLocationChange})
+    this.router.navigateByUrl(this.defaultRoute, {skipLocationChange})
       .then(() => this.redirectingToHomepage = false)
       .catch(() => {
         this.redirectingToHomepage = false;
 
-        console.error('Cannot navigate to %s, resetting default route to %s.', RedirectService.DEFAULT_ROUTE, RedirectService.INIT_DEFAULT_ROUTE
+        console.error(
+          'Cannot navigate to %s, resetting default route to %s.',
+          this.defaultRoute,
+          RedirectService.INIT_DEFAULT_ROUTE
         );
 
-        RedirectService.DEFAULT_ROUTE = RedirectService.INIT_DEFAULT_ROUTE;
-        return this.router.navigateByUrl(RedirectService.DEFAULT_ROUTE, {skipLocationChange});
+        this.defaultRoute = RedirectService.INIT_DEFAULT_ROUTE;
+        return this.router.navigateByUrl(this.defaultRoute, {skipLocationChange});
       });
 
+  }
+
+  // by mi
+  redirectToLogout(skipLocationChange = false) {
+    return this.router.navigateByUrl('/auth/logout', {skipLocationChange});
   }
 }

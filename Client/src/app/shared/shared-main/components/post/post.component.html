@@ -37,8 +37,7 @@
                                                                 </div>
                                                                 <div *ngIf="this.post.user?.protected" dir="auto"
                                                                      class="css-901oao lights-out-text-color flex-direction-row svg-flex-shrink-0 font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
-                                                                    <app-global-icon
-                                                                            iconName="protected"></app-global-icon>
+                                                                    <fa-icon [icon]="this.faLockAlt"></fa-icon>
                                                                 </div>
                                                             </div>
                                                             <div class="sharebook-container flex-direction-row flex-shrink r-1f6r7vd">
@@ -268,7 +267,6 @@
                                                          class="css-901oao r-9ilb82 align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
                                                         <div class="sharebook-container display-inline-flex">
                                                             <div class="icon-hover sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
-                                                            <!--<app-global-icon iconName="like"></app-global-icon>-->
                                                             <!--<nb-icon *ngIf="this.userRating !== 'like'" icon="heart" pack="light" status="primary"></nb-icon>-->
                                                             <fa-icon [icon]="this.faHeart"
                                                                      [ngStyle]="{'color': this.userRating === 'like' ? 'blue' : 'inherit'}"></fa-icon>
@@ -314,7 +312,7 @@
                                                          class="css-901oao align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
                                                         <div class="sharebook-container display-inline-flex">
                                                             <div class="sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
-                                                            <app-global-icon iconName="share"></app-global-icon>
+                                                            <fa-icon [icon]="this.faShare"></fa-icon>
                                                         </div>
                                                         <div class="sharebook-container display-inline-flex overflow-hidden"><span
                                                                 class="css-901oao sharebook-text-inherit text-font-family third-wheel-text-font-size line-height-calc r-1j6idkz padding-left-right r-d3hbe1 r-1wgg2b2 r-axxi2z text-overflow-wrap"></span>

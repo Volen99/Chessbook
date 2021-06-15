@@ -166,7 +166,6 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
 
   private async onAccount(user: User) {
 
-    debugger
     // @ts-ignore
     this.profileCurrent = user.userDTO;
     this.profileCurrent.createdOn = new Date(this.profileCurrent.createdOn);

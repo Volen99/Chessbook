@@ -1,10 +1,10 @@
 <div class="feed">
-  <app-global-icon
+  <fa-icon
     role="button" aria-label="Open syndication dropdown" i18n-aria-label
     *ngIf="syndicationItems.length !== 0" [ngbPopover]="feedsList" [autoClose]="true" placement="bottom left auto"
-    class="icon-syndication" iconName="syndication"
+    class="icon-syndication" [icon]="this.faSatelliteDish"
   >
-  </app-global-icon>
+  </fa-icon>
 
   <ng-template #feedsList>
     <a *ngFor="let item of syndicationItems" [href]="item.url" target="_blank" rel="noopener noreferrer">{{ item.label }}</a>

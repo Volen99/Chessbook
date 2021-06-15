@@ -35,7 +35,6 @@ export class PostMediaDetailComponent implements OnInit, OnDestroy {
     this.paramsSub = this.route.params.subscribe(routeParams => {
       const postId = routeParams['id'];
       const photoId = routeParams['photoId'];   // TODO: fix if it is null
-      debugger
       if (postId && photoId) {
         this.securityCamerasService.getCamerasData(postId)
           .pipe(takeUntil(this.destroy$))

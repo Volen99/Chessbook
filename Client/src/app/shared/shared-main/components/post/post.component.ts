@@ -24,9 +24,9 @@ import {
   faCode,
   faFlag,
   faTrashAlt,
+
 } from '@fortawesome/pro-light-svg-icons';
-import {faHeart as faHeartSolid} from '@fortawesome/pro-solid-svg-icons';
-import {faShare as faShareSolid} from '@fortawesome/pro-solid-svg-icons';
+import {faHeart as faHeartSolid, faShare as faShareSolid, faLockAlt} from '@fortawesome/pro-solid-svg-icons';
 import {NbMenuService} from "../../../../sharebook-nebular/theme/components/menu/menu.service";
 import {IPost} from "../../../posts/models/tweet";
 import {Post} from "../../post/post.model";
@@ -125,6 +125,7 @@ export class PostComponent implements OnInit {
   faComment = faComment;
   faShare = faShare;
   faHeart = faHeart;
+  faLockAlt = faLockAlt;
 
   // meatballs menu
   faUserTimes = faUserTimes;
@@ -266,11 +267,8 @@ export class PostComponent implements OnInit {
   async deletePost(postId: number, unshare: boolean) {
     await this.postService.destroyTweetAsync(postId, unshare)
       .then((data) => {
-        debugger
-
       });
 
-    debugger
     this.notifier.success(`Post ${this.oldPost.id} deleted.`);
     this.removeVideoFromArray(this.oldPost);
   }
@@ -311,7 +309,6 @@ export class PostComponent implements OnInit {
   }
 
   handleExpandClick() {
-    debugger
     this.router.navigate([`/${this.post.user.screenName}/post`, this.post.id]);
   }
 

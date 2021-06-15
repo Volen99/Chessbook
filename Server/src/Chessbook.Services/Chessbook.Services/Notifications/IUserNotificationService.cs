@@ -1,8 +1,7 @@
-﻿using Chessbook.Core.Domain.Notifications;
-using Chessbook.Web.Models.Inputs;
+﻿using System.Threading.Tasks;
+
+using Chessbook.Core.Domain.Notifications;
 using Nop.Core;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Chessbook.Services.Notifications
 {
@@ -12,8 +11,6 @@ namespace Chessbook.Services.Notifications
 
         Task<IPagedList<UserNotification>> List(int userId, int start, int count, string sort, bool? unread);
 
-        Task<UserNotification> InsertUserNotificationAsync(UserNotificationModelForApi notification);
-
-        Task<List<UserNotification>> ListUserSubscribersOf(int userId);
+        Task ReadAll(int userI);
     }
 }

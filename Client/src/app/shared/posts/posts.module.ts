@@ -15,7 +15,6 @@ import {VideoCommentComponent} from "./comment/video-comment.component";
 import {VideoCommentAddComponent} from "./comment/video-comment-add.component";
 import {SharedMainModule} from "../shared-main/shared-main.module";
 import {SharedFormModule} from "../forms/shared-form.module";
-import {SharedGlobalIconModule} from "../shared-icons/shared-global-icon.module";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
@@ -31,7 +30,6 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     SharedMainModule,
     SharedFormModule,
     SharedModerationModule,
-    SharedGlobalIconModule,
     SharedVideoCommentModule,
     FontAwesomeModule,
   ],

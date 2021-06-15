@@ -12,7 +12,6 @@ import { StreamListComponent } from './stream-list/stream-list.component';
 import {VideoMiniatureComponent} from "./stream-list/stream-miniature/video-miniature.component";
 import {VideoThumbnailComponent} from "./stream-list/shared-thumbnail/video-thumbnail.component";
 import {VideoViewsCounterComponent} from "./stream-list/video-views-counter.component";
-import {SharedGlobalIconModule} from "../../shared/shared-icons/shared-global-icon.module";
 import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/button.module";
 import {NbActionsModule} from "../../sharebook-nebular/theme/components/actions/actions.module";
 import {VideoTrendingHeaderComponent} from "./stream-list/stream-list-header/video-trending-header.component";
@@ -48,7 +47,6 @@ import {NbDialogModule} from "../../sharebook-nebular/theme/components/dialog/di
         SidebarColumnModule,
         SharedMainModule,
         NbCardModule,
-        SharedGlobalIconModule,
         NbButtonModule,
         NbActionsModule,
         NbIconModule,

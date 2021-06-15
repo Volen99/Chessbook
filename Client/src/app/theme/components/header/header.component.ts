@@ -40,8 +40,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       name: 'Cosmic',
     },
     {
-      value: 'corporate',
-      name: 'Corporate',
+      value: 'material-light',
+      name: 'Material Light',
+    },
+    {
+      value: 'material-dark',
+      name: 'Material Dark',
     },
   ];
 

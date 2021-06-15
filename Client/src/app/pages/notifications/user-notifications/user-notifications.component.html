@@ -147,10 +147,7 @@
         </a>
 
         <div class="message" i18n>
-          <a (click)="markAsRead(notification)" [routerLink]="notification.accountUrl">{{ notification.actorFollow.follower.displayName }}</a> is following
-
-          <ng-container *ngIf="notification.actorFollow.following.type === 'channel'">your channel {{ notification.actorFollow.following.displayName }}</ng-container>
-          <ng-container *ngIf="notification.actorFollow.following.type === 'account'">your account</ng-container>
+          <a (click)="markAsRead(notification)" [routerLink]="notification.accountUrl">{{ notification.actorFollow.follower.displayName }}</a> started following you
         </div>
       </ng-container>
 

@@ -8,6 +8,10 @@ import {Notifier} from "../../core/notification/notifier.service";
 import {AbuseService} from "../moderation/abuse.service";
 import {ABUSE_MODERATION_COMMENT_VALIDATOR} from "../forms/form-validators/abuse-validators";
 
+import {
+  faTimes,
+} from '@fortawesome/pro-light-svg-icons';
+
 @Component({
   selector: 'my-moderation-comment-modal',
   templateUrl: './moderation-comment-modal.component.html',
@@ -34,6 +38,8 @@ export class ModerationCommentModalComponent extends FormReactive implements OnI
       moderationComment: ABUSE_MODERATION_COMMENT_VALIDATOR
     });
   }
+
+  faTimes = faTimes;
 
   openModal(abuseToComment: AdminAbuse) {
     this.abuseToComment = abuseToComment;

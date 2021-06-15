@@ -11,12 +11,12 @@ import {PreviewUploadComponent} from './preview-upload.component';
 import {ReactiveFileComponent} from './reactive-file.component';
 import {TextareaAutoResizeDirective} from './textarea-autoresize.directive';
 import {TimestampInputComponent} from './timestamp-input.component';
-import {SharedGlobalIconModule} from "../shared-icons/shared-global-icon.module";
 import {SelectChannelComponent} from "./select/select-channel.component";
 import {SelectOptionsComponent} from "./select/select-options.component";
 import {SelectTagsComponent} from "./select/select-tags.component";
 import {SelectCheckboxComponent} from "./select/select-checkbox.component";
 import {NgSelectModule} from "@ng-select/ng-select";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   imports: [
@@ -24,10 +24,10 @@ import {NgSelectModule} from "@ng-select/ng-select";
     ReactiveFormsModule,
 
     // InputMaskModule,
-     NgSelectModule,
+    NgSelectModule,
 
     SharedMainModule,
-    SharedGlobalIconModule
+    FontAwesomeModule,
   ],
 
   declarations: [

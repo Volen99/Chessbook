@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {IUser} from "../../core/interfaces/common/users";
-import {PostsService} from "../../shared/posts/posts.service";
 import {Router} from "@angular/router";
 import {Subject} from "rxjs/Subject";
 import {ComponentPaginationLight} from "../../core/rest/component-pagination.model";
 import {UsersService} from "../../core/backend/common/services/users.service";
+import {
+  faCog,
+} from '@fortawesome/pro-light-svg-icons';
 
 @Component({
   selector: 'app-connect',
@@ -26,6 +28,8 @@ export class ConnectComponent implements OnInit {
         this.users = data;
       });
   }
+
+  faCog = faCog;
 
   pagination: ComponentPaginationLight = {
     currentPage: 1,

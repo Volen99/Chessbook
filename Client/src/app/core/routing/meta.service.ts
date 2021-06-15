@@ -22,7 +22,6 @@ export class MetaService {
   }
 
   setTitle(subTitle?: string) {
-    debugger
     let title = '';
     if (subTitle) title += `${subTitle} / `;
 

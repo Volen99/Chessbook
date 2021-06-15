@@ -1,0 +1,17 @@
+<nb-card>
+    <nb-card-header>
+        <h1>
+            <fa-icon [icon]="this.faTrophy"></fa-icon>
+            <span style="padding-left: 1rem;">Live Chess Ratings</span>
+        </h1>
+
+    </nb-card-header>
+
+    <nb-card-body>
+        <ng2-smart-table class="example-smart-table"
+                         [settings]="settings"
+                         [source]="source"
+                         (deleteConfirm)="onDeleteConfirm($event)">
+        </ng2-smart-table>
+    </nb-card-body>
+</nb-card>

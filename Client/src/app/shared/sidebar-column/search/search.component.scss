@@ -13,6 +13,18 @@
     background-color: nb-theme(color-primary-transparent-100);
   }
 
+  ::ng-deep [nbInput].status-basic {
+    background-color: nb-theme(color-primary-transparent-100);
+  }
+
+  [nbInput].status-basic:focus {
+    border-width: 1px !important;
+  }
+
+  #searchBox_search_input {
+    border-width: 0px;
+  }
+
   .element-background-color-rgba {
     background-color: rgba(0, 0, 0, 0);
   }

@@ -46,6 +46,14 @@ export class MyAccountThemeComponent implements OnInit {
       value: 'corporate',
       name: 'Corporate',
     },
+    {
+      value: 'material-light',
+      name: 'Material Light',
+    },
+    {
+      value: 'material-dark',
+      name: 'Material Dark',
+    },
   ];
 
   currentTheme = 'default';

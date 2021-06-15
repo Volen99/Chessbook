@@ -928,6 +928,16 @@
   }
 }
 
+@mixin margin-right ($value) {
+  @supports (margin-inline-end: $value) {
+    margin-inline-end: $value;
+  }
+
+  @supports not (margin-inline-end: $value) {
+    margin-right: $value;
+  }
+}
+
 @mixin play-icon ($width, $height) {
   width: 0;
   height: 0;

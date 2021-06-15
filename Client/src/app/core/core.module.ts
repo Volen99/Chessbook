@@ -1,9 +1,9 @@
-import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MessageService } from 'primeng/api';
+import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MessageService} from 'primeng/api';
 import {CommonMockModule} from "../core/mock/common/common-mock.module";
 import {CommonBackendModule} from "../core/backend/common/common-backend.module";
-import {AnalyticsService, LayoutService, PlayerService, StateService} from "../core/utils";
+import {LayoutService, PlayerService, StateService} from "../core/utils";
 import {throwIfAlreadyLoaded} from "../core/module-import-guard";
 import {UserStore} from "../core/stores/user.store";
 import {UsersService} from "../core/backend/common/services/users.service";
@@ -27,6 +27,8 @@ import {ServerService} from "./server/server.service";
 import {RedirectService} from "./routing/redirect.service";
 import {MetaService} from "./routing/meta.service";
 import {MetaGuard} from "./routing/meta-guard.service";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {HotkeyModule} from "angular2-hotkeys";
 
 export const NB_CORE_PROVIDERS = [
   ...CommonMockModule.forRoot().providers,
@@ -35,7 +37,6 @@ export const NB_CORE_PROVIDERS = [
   // ...EcommerceMockModule.forRoot().providers,
   ...IotBackendModule.forRoot().providers,
 
-  AnalyticsService,
   LayoutService,
   PlayerService,
   StateService,
@@ -49,11 +50,17 @@ export const NB_CORE_PROVIDERS = [
 @NgModule({
   imports: [
     CommonModule,
-  ],
-  exports: [
-    NbAuthModule,
+    FontAwesomeModule,
+
+    HotkeyModule.forRoot({
+      cheatSheetCloseEsc: true,
+    })
   ],
   declarations: [],
+  exports: [
+    NbAuthModule,
+    // KeyboardShortcutsComponent, // You don't use it here, coz you can't import 2 Core Modules :(
+  ],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
@@ -69,9 +76,6 @@ export class CoreModule {
         UsersService,
         InitUserService,
         SettingsService,
-
-
-
 
 
         ServerService,

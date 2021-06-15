@@ -53,7 +53,7 @@
 <ng-template #visitorModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title" i18n>You are one step away from commenting</h4>
-    <app-global-icon iconName="cross" aria-label="Close" role="button" (click)="hideModals()"></app-global-icon>
+    <fa-icon [icon]="this.faTimes" aria-label="Close" role="button" (click)="hideModals()"></fa-icon>
   </div>
   <div class="modal-body">
     <span i18n>
@@ -78,7 +78,7 @@
 <ng-template #emojiModal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title" i18n>Markdown Emoji List</h4>
-    <app-global-icon iconName="cross" aria-label="Close" role="button" (click)="hideModals()"></app-global-icon>
+    <fa-icon [icon]="this.faTimes" aria-label="Close" role="button" (click)="hideModals()"></fa-icon>
   </div>
   <div class="modal-body">
     <div class="emoji-flex">

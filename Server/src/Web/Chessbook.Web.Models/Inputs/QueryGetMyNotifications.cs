@@ -8,7 +8,7 @@
 
         public string Sort { get; set; }
 
-        public bool Unread { get; set; }
+        public bool? Unread { get; set; }
 
     }
 }

@@ -444,26 +444,38 @@ namespace Chessbook.Services.Authentication
         public virtual async Task SetEmailAsync(Customer customer, string newEmail, bool requireValidation)
         {
             if (customer == null)
+            {
                 throw new ArgumentNullException(nameof(customer));
+            }
 
             if (newEmail == null)
+            {
                 throw new NopException("Email cannot be null");
+            }
 
             newEmail = newEmail.Trim();
             var oldEmail = customer.Email;
 
             if (!CommonHelper.IsValidEmail(newEmail))
+            {
                 throw new NopException(await this.localeStringResourceService.GetResourceAsync("Account.EmailUsernameErrors.NewEmailIsNotValid"));
+            }
 
             if (newEmail.Length > 100)
+            {
                 throw new NopException(await this.localeStringResourceService.GetResourceAsync("Account.EmailUsernameErrors.EmailTooLong"));
+            }
 
             var customer2 = await _customerService.GetCustomerByEmailAsync(newEmail);
             if (customer2 != null && customer.Id != customer2.Id)
-                throw new NopException(await this.localeStringResourceService.GetResourceAsync("Account.EmailUsernameErrors.EmailAlreadyExists"));
-
-            if (requireValidation)
             {
+                throw new NopException(await this.localeStringResourceService.GetResourceAsync("Account.EmailUsernameErrors.EmailAlreadyExists"));
+            }
+
+            if (requireValidation) // TODO: look at this before production!!!!!!!!
+            {
+                throw new NotImplementedException();
+
                 //// re-validate email
                 //customer.EmailToRevalidate = newEmail;
                 //await _customerService.UpdateCustomerAsync(customer);
@@ -478,7 +490,9 @@ namespace Chessbook.Services.Authentication
                 await _customerService.UpdateCustomerAsync(customer);
 
                 if (string.IsNullOrEmpty(oldEmail) || oldEmail.Equals(newEmail, StringComparison.InvariantCultureIgnoreCase))
+                {
                     return;
+                }
 
                 ////update newsletter subscription (if required)
                 //foreach (var store in await _storeService.GetAllStoresAsync())

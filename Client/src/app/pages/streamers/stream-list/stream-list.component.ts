@@ -2,8 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpParams} from "@angular/common/http";
 
-import {faUsers} from '@fortawesome/pro-solid-svg-icons';
-import {faFire, faUserPlus, faUserCheck} from '@fortawesome/pro-light-svg-icons';
+import {faUserPlus, faUserCheck, faUsers} from '@fortawesome/pro-light-svg-icons';
+import {faFire as faFireSolid, faUsers as faUsersSolid} from '@fortawesome/pro-solid-svg-icons';
 
 import {IStreams} from "../models/streams-model";
 import {StreamersService} from "../streamers.service";
@@ -37,8 +37,9 @@ export class StreamListComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  faFire = faFire;
+  faFireSolid = faFireSolid;
   faUsers = faUsers;
+  faUsersSolid = faUsersSolid;
   faUserPlus = faUserPlus;
   faUserCheck = faUserCheck;
 

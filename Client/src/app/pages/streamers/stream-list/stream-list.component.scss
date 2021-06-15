@@ -3,7 +3,24 @@
 @import '_mixins';
 @import '_miniature';
 
+@import '../../../theme/styles/themes';
+
 $iconSize: 16px;
+
+// TODO: plz consider making it a menu
+@include nb-install-component() {
+  .active {
+    span {
+      color: nb-theme(color-primary-default);
+    }
+
+    color: nb-theme(color-primary-default);
+  }
+
+  a {
+    color: nb-theme(text-basic-color);
+  }
+}
 
 //::ng-deep my-video-list-header {
 //  display: flex;
@@ -13,6 +30,12 @@ $iconSize: 16px;
 a {
   text-decoration: none;
 }
+
+
+
+//a.nav-link.active {
+//
+//}
 
 .videos-header {
   display: flex;
@@ -26,7 +49,7 @@ a {
 
   .moderation-block {
 
-    app-global-icon {
+    fa-icon {
       position: relative;
       width: $iconSize;
     }
@@ -37,7 +60,7 @@ a {
     align-items: center;
   }
 
-  .text-control {
+  .header-link-title {
     margin-left: 0.4rem;
   }
 }

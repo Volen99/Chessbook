@@ -2,6 +2,7 @@
 using Chessbook.Data.Models;
 using Chessbook.Data.Models.Post;
 using Chessbook.Services.Data;
+using Chessbook.Services.Data.Services;
 using Chessbook.Services.Notifications;
 using Chessbook.Services.Notifications.Settings;
 using Chessbook.Web.Api.Factories;
@@ -22,8 +23,10 @@ namespace Chessbook.Web.Api.Lib
     {
         private static Notifier instance;
 
+        // Ask Kenov about immediately 'newing' it
         private INotificationsSettingsService userNotificationSettingsService = EngineContext.Current.Resolve<INotificationsSettingsService>();
         private IUserNotificationService userNotificationService = EngineContext.Current.Resolve<IUserNotificationService>();
+        private IUserService userService = EngineContext.Current.Resolve<IUserService>();
 
         private Notifier()
         {
@@ -42,9 +45,9 @@ namespace Chessbook.Web.Api.Lib
 
         }
 
-        public void NotifyOfNewUserFollow()
+        public void NotifyOfNewUserFollow(Relationship relationship)
         {
-
+            this.NotifyUserOfNewActorFollow(relationship);
         }
 
         private async Task NotifySubscribersOfNewVideo(Post post)
@@ -81,6 +84,46 @@ namespace Chessbook.Web.Api.Lib
             await this.Notify<UserNotificationSettingModel>(users, SettingGetter, NotificationCreator);
         }
 
+        private async Task NotifyUserOfNewActorFollow(Relationship relationship)
+        {
+            var theFollowedUser = await this.userNotificationSettingsService.GetByUserId(relationship.TargetId);
+            var followerAccount = await this.userNotificationSettingsService.GetByUserId(relationship.SourceId);
+
+            if (theFollowedUser == null)
+            {
+                return;
+            }
+
+            // check if blocked
+
+
+            var logger = EngineContext.Current.Resolve<ILogger>();
+
+            await logger.InformationAsync(string.Format($"Notifying {0} users of new follower {1}.", theFollowedUser.Customer.ScreenName, followerAccount.Customer.ScreenName));
+
+            Func<UserNotificationSettingModel, UserNotificationSettingValue> SettingGetter = delegate (UserNotificationSettingModel user)
+            {
+                return user.NewFollow;
+            };
+
+            Func<UserNotificationSettingModel, Task<UserNotificationModel>> NotificationCreator = async delegate (UserNotificationSettingModel user)
+            {
+                var res = await this.userNotificationService.Create(UserNotificationType.NEW_FOLLOW, user.CustomerId, relationship.Id);
+                res.Relationship = relationship;
+
+                var userNotificationModelFactory = EngineContext.Current.Resolve<IUserNotificationModelFactory>();
+
+                var userNotificationModel = await userNotificationModelFactory.PrepareUserNotificationModelAsync(res);
+
+                return userNotificationModel;
+            };
+
+            // email
+
+            await this.Notify<UserNotificationSettingModel>(new List<UserNotificationSettingModel>() { theFollowedUser }, SettingGetter, NotificationCreator);
+
+        }
+
         private async Task Notify<T>(List<T> users, Func<UserNotificationSettingModel, UserNotificationSettingValue> settingGetter, Func<UserNotificationSettingModel, Task<UserNotificationModel>> notificationCreator) where T : UserNotificationSettingModel
         {
             // const
@@ -99,13 +142,6 @@ namespace Chessbook.Web.Api.Lib
                 //}
             }
         }
-
-        //private bool isEmailEnabled(UserNotificationSettingModel user, UserNotificationSettingValue value)
-        //{
-        //    // if (CONFIG.SIGNUP.REQUIRES_EMAIL_VERIFICATION === true && user.emailVerified === false) return false;
-
-        //    // return value & UserNotificationSettingValue.EMAIL;
-        //}
 
         public static Notifier Instance
         {

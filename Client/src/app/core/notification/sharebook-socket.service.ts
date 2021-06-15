@@ -109,7 +109,6 @@ export class PeerTubeSocket {
 
   private async initNotificationSocket() {
     this._hubConnection.on("newNotification", (n: UserNotification) => {
-      debugger
       this.ngZone.run(() => this.dispatchNotificationEvent('new', n));
     });
   }
@@ -120,7 +119,6 @@ export class PeerTubeSocket {
       return;
     }
 
-    debugger
     this._hubConnection.invoke('SendNotification', { post });
   }
 

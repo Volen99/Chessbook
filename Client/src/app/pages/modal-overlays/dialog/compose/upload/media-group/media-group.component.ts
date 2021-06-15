@@ -1,5 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FileItem} from "../file-item.class";
+import {
+  faTimes,
+} from '@fortawesome/pro-light-svg-icons';
 
 @Component({
   selector: 'app-media-group',
@@ -13,6 +16,8 @@ export class MediaGroupComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  faTimes = faTimes;
 
   public isCloseIconHovered = false;
 

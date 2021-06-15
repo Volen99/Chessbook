@@ -1,0 +1,137 @@
+<div class="sharebook-container backface-visibility-hidden r-1d2f490 r-12vffkv r-1xcajam right-0px cfp-hotkeys-container fade"
+     [ngClass]="{'in': this.helpVisible}">
+    <div class="sharebook-container r-12vffkv">
+        <div class="sharebook-container r-12vffkv">
+            <div class="sharebook-container bottom-0px display-block r-1d2f490 position-relative right-0px top-0px">
+                <div class="r-1oszu61 border-style-solid r-1yadl64 bottom-0px input-form-box-sizing display-block flex-direction-column r-1d2f490 input-form-margin input-form-min-height min-width-0px input-form-padding position-relative right-0px top-0px z-index-minus-1">
+                    <div class="sharebook-container align-self-stretch flex-grow-expand flex-shrink">
+                        <div data-focusable="true" tabindex="0" class="sharebook-container"></div>
+                        <div data-focusable="true" tabindex="0"
+                             class="sharebook-container align-items-center flex-direction-row height-100-per justify-content-center r-1xcajam top-0px r-g6jmlv">
+                            <div class="sharebook-container r-11z020y bottom-0px r-1d2f490 r-1xcajam right-0px top-0px"></div>
+                            <div aria-labelledby="modal-header" role="dialog" aria-modal="true"
+                                 class="sharebook-container border-radius-16px flex-shrink r-rsyp9y r-1pjcn9w modal-min-width-600px overflow-hidden">
+                                <div class="sharebook-container r-kemksi input-form-border-radius flex-grow-expand flex-shrink">
+                                    <div class="sharebook-container height-53px r-136ojw6">
+                                        <div class="sharebook-container">
+                                            <div class="sharebook-container r-kemksi border-bottom-color border-bottom-style-solid border-bottom-width-1px r-kicko2 r-notknq height-53px">
+                                                <div class="sharebook-container align-items-center flex-direction-row height-53px justify-content-center margin-left-right-auto main-primary-column-max-width-600px r-ymttw5 width-100-per">
+                                                    <div class="sharebook-container align-items-flex-start align-self-stretch justify-content-center r-15ysp7h r-s8bhmr"> <!--start here button-->
+                                                        <div aria-label="Close" role="button" tabindex="0"
+                                                             class="icon-hover cursor-pointer sharebook-container r-1niwhzg element-border-color-rgba border-radius-9999px border-style-solid border-width-1px border-height-0px r-ero68b r-vkv6oe outline-style-none element-left-right-padding-0px transition-duration transition-property r-lrvibr"
+                                                             style="margin-left: calc(4px + (-1 * (42px - 1.5em)) / 2);">
+                                                            <div dir="auto"
+                                                                 class="css-901oao align-items-center close-button-color display-flex flex-direction flex-grow-expand font-family r-a023e6 font-weight justify-content-center r-rjixqe max-width-100-per min-width-0px text-align-center text-overflow-wrap"
+                                                                 (click)="this.toggleCheatSheet()">
+                                                                <fa-icon [icon]="this.faTimes" [styles]="this.svgStyles"></fa-icon>
+                                                                <span class="css-901oao sharebook-text-inherit sharebook-text text-font-family min-width-0px text-overflow-wrap"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="sharebook-container flex-grow-expand flex-shrink height-100-per justify-content-center">
+                                                        <div class="sharebook-container align-items-flex-start">
+                                                            <h2 aria-level="2" dir="auto" role="heading"
+                                                                class="sharebook-link css-901oao sharebook-text lights-out-text-color font-family heading-font-size font-weight-800 inside-element-container-line-height min-width-0px text-overflow-wrap">
+                                                                <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.title}}</span>
+                                                            </h2></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="sharebook-container flex-grow-expand flex-shrink margin-left-right-auto main-primary-column-max-width-600px width-100-per">
+                                        <div class="sharebook-container flex-grow-expand flex-shrink modal-overflow-auto">
+                                            <div class="sharebook-container flex-direction-row r-1sp51qo r-k8qxaj">
+                                                <div class="sharebook-container flex-expand">
+                                                    <div class="sharebook-container justify-content-space-between r-1j3t67a r-f727ji r-1f1sjgu">
+                                                        <h2 aria-level="2" role="heading"
+                                                            class="sharebook-link sharebook-container flex-direction-row">
+                                                            <div class="sharebook-container align-self-flex-start height-20px justify-content-center margin-top-2px"></div>
+                                                            <div dir="auto"
+                                                                 class="css-901oao css-cens5h r-1fmj7o5 font-family r-1b6yd1w r-1vr29t4 r-ad9z0x min-width-0px text-overflow-wrap"
+                                                                 style="-webkit-line-clamp: 3;"><span
+                                                                    class="css-901oao css-16my406 font-family r-ad9z0x min-width-0px text-overflow-wrap">Navigation</span>
+                                                            </div>
+                                                        </h2>
+                                                    </div>
+                                                    <ul role="list"
+                                                        class="sharebook-link sharebook-container r-16cnnyw main-right-vertical-border-right-width border-style-solid r-zso239 r-1qfoi16">
+                                                        <li aria-label="Shortcut help: ?" role="listitem"
+                                                            class="sharebook-link sharebook-container flex-direction-row justify-content-space-between r-vlx1xi r-hrzydr"
+                                                            *ngFor="let hotkey of this.navigationalHotkeys">
+                                                            <div dir="auto"
+                                                                 class="css-901oao r-1fmj7o5 font-family font-size-15px font-weight-400 r-ad9z0x min-width-0px text-overflow-wrap">
+                                                                <span class="css-901oao css-16my406 font-family r-ad9z0x min-width-0px text-overflow-wrap">{{hotkey.description}}</span>
+                                                            </div>
+                                                            <div class="sharebook-container align-items-center flex-direction-row">
+                                                                <div dir="auto"
+                                                                     class="css-901oao r-1ysxnx4 r-16cnnyw input-form-border-radius border-style-solid border-width-1px r-16ftvwr r-1fmj7o5 r-1yh73n font-size-15px font-weight-400 r-ad9z0x r-tu5rn7 r-ou255f r-1cy8qmm text-align-center text-overflow-wrap">
+                                                                    {{hotkey.formatted[0].split(' ')[0]}}
+                                                                </div>
+                                                                <ng-container *ngIf="hotkey.formatted[0].includes(' ')">
+                                                                    <div dir="auto"
+                                                                         class="css-901oao r-1fmj7o5 font-family font-size-15px font-weight-400 r-ad9z0x r-id7aif min-width-0px text-overflow-wrap">
+                                                                        <span class="css-901oao css-16my406 r-poiln3 min-width-0px text-overflow-wrap">+</span>
+                                                                    </div>
+                                                                    <div dir="auto"
+                                                                         class="css-901oao r-1ysxnx4 r-16cnnyw input-form-border-radius border-style-solid border-width-1px r-16ftvwr r-1fmj7o5 r-1yh73n font-size-15px font-weight-400 r-ad9z0x r-tu5rn7 r-ou255f r-1cy8qmm text-align-center text-overflow-wrap">
+                                                                        {{hotkey.formatted[0].split(' ')[1]}}
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="sharebook-container flex-expand">
+                                                    <div class="sharebook-container justify-content-space-between r-1j3t67a r-1hfyk0a r-1w50u8q">
+                                                        <h2 aria-level="2" role="heading"
+                                                            class="sharebook-link sharebook-container flex-direction-row">
+                                                            <div class="sharebook-container align-self-flex-start height-20px justify-content-center margin-top-2px"></div>
+                                                            <div dir="auto"
+                                                                 class="css-901oao css-cens5h r-1fmj7o5 font-family r-1b6yd1w r-1vr29t4 r-ad9z0x min-width-0px text-overflow-wrap"
+                                                                 style="-webkit-line-clamp: 3;"><span
+                                                                    class="css-901oao css-16my406 font-family r-ad9z0x min-width-0px text-overflow-wrap">Actions</span>
+                                                            </div>
+                                                        </h2>
+                                                    </div>
+                                                    <ul role="list" class="sharebook-link sharebook-container">
+                                                        <li aria-label="{{hotkey.description}}}: {{hotkey.combo}}}"
+                                                            role="listitem"
+                                                            class="sharebook-link sharebook-container flex-direction-row justify-content-space-between r-vlx1xi r-hrzydr"
+                                                            *ngFor="let hotkey of this.actionsHotkeys">
+                                                            <div dir="auto"
+                                                                 class="css-901oao r-1fmj7o5 font-family font-size-15px font-weight-400 r-ad9z0x min-width-0px text-overflow-wrap">
+                                                                <span class="css-901oao css-16my406 font-family r-ad9z0x min-width-0px text-overflow-wrap">{{hotkey.description}}</span>
+                                                            </div>
+                                                            <div class="sharebook-container align-items-center flex-direction-row">
+                                                                <div dir="auto"
+                                                                     class="css-901oao r-1ysxnx4 r-16cnnyw input-form-border-radius border-style-solid border-width-1px r-16ftvwr r-1fmj7o5 r-1yh73n font-size-15px font-weight-400 r-ad9z0x r-tu5rn7 r-ou255f r-1cy8qmm text-align-center text-overflow-wrap">
+                                                                    {{hotkey.combo[0].split(' ')[0]}}
+                                                                </div>
+                                                                <ng-container *ngIf="hotkey.combo[0].includes(' ')">
+                                                                    <div dir="auto"
+                                                                         class="css-901oao r-1fmj7o5 font-family font-size-15px font-weight-400 r-ad9z0x r-id7aif min-width-0px text-overflow-wrap">
+                                                                        <span class="css-901oao css-16my406 r-poiln3 min-width-0px text-overflow-wrap">+</span>
+                                                                    </div>
+                                                                    <div dir="auto"
+                                                                         class="css-901oao r-1ysxnx4 r-16cnnyw input-form-border-radius border-style-solid border-width-1px r-16ftvwr r-1fmj7o5 r-1yh73n font-size-15px font-weight-400 r-ad9z0x r-tu5rn7 r-ou255f r-1cy8qmm text-align-center text-overflow-wrap">
+                                                                        {{hotkey.combo[0].split(' ')[1]}}
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-focusable="true" tabindex="0" class="sharebook-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

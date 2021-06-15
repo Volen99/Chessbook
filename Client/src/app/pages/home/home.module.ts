@@ -16,6 +16,13 @@ import {TimelineService} from "../../shared/timeline/timeline.service";
 import {TimelineQueryGeneratorService} from "../../shared/timeline/query/timeline-query-generator.service";
 import {TimelineApi} from "../../shared/timeline/backend/timeline.api";
 
+import { LottieModule } from 'ngx-lottie';
+
+export function playerFactory() {
+  return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
+}
+
+
 @NgModule({
   declarations: [
     HomePageComponent,
@@ -33,6 +40,7 @@ import {TimelineApi} from "../../shared/timeline/backend/timeline.api";
     NbCardModule,
     NbListModule,
     NbIconModule,
+    LottieModule.forRoot({ player: playerFactory })
   ],
   providers: [
     NewsService,

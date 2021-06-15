@@ -298,7 +298,6 @@ export class EmojiPickerDropdownComponent implements OnInit, AfterViewInit {
   }
 
   onToggle = (e) => {
-    debugger
     if (!this.loading && (!e.key || e.key === 'Enter')) {
       if (this.active) {
         this.onHideDropdown();

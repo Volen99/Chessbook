@@ -2,7 +2,6 @@ import {CommonModule, DatePipe} from '@angular/common';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
 
-import {SharedGlobalIconModule} from "../shared-icons/shared-global-icon.module";
 import {BootstrapToggleDirective} from "./angular/directives/bootstrap-toggle.directive";
 import {PostComponent} from "./components/post/post.component";
 import {ProfilePicture49x49Component} from "./components/profile-picture-49x49/profile-picture49x49.component";
@@ -68,7 +67,6 @@ import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.m
 import {NbContextMenuModule} from "../../sharebook-nebular/theme/components/context-menu/context-menu.module";
 import {UserHistoryService} from "./users/user-history.service";
 import {UserNotificationService} from "./users/user-notification.service";
-import {ActorAvatarInfoComponent} from "./account/actor-avatar-info.component";
 import {NbUserModule} from "../../sharebook-nebular/theme/components/user/user.module";
 import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";
 import {ComponentsModule} from "../../components/components.module";
@@ -105,7 +103,6 @@ import { AnimatedNumberComponent } from './components/animated-number/animated-n
     //
     // PrimeSharedModule,
 
-    SharedGlobalIconModule,
     NbIconModule,
     NbContextMenuModule,
     NbUserModule,
@@ -119,7 +116,6 @@ import { AnimatedNumberComponent } from './components/animated-number/animated-n
 
   declarations: [
     // VideoAvatarChannelComponent,
-    ActorAvatarInfoComponent,
     //
     FromNowPipe,
     NumberFormatterPipe,
@@ -178,7 +174,7 @@ import { AnimatedNumberComponent } from './components/animated-number/animated-n
     //
     NgbDropdownModule,
     // NgbModalModule,
-    // NgbPopoverModule,
+    NgbPopoverModule,
     NgbNavModule,
     NgbTooltipModule,
     // NgbCollapseModule,
@@ -188,7 +184,6 @@ import { AnimatedNumberComponent } from './components/animated-number/animated-n
     // PrimeSharedModule,
     //
     // VideoAvatarChannelComponent,
-    ActorAvatarInfoComponent,
     //
     FromNowPipe,
     BytesPipe,

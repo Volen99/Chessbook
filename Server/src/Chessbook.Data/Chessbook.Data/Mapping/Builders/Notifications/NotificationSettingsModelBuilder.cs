@@ -24,7 +24,7 @@ namespace Chessbook.Data.Mapping.Builders.Notifications
                 .WithColumn(nameof(UserNotificationSettingModel.NewUserRegistration)).AsInt32()
                 .WithColumn(nameof(UserNotificationSettingModel.NewVideoFromSubscription)).AsInt32()
                 .WithColumn(nameof(UserNotificationSettingModel.VideoAutoBlacklistAsModerator)).AsInt32()
-                .WithColumn(nameof(UserNotificationSettingModel.CustomerId)).AsInt32().ForeignKey<Customer>().OnDelete(Rule.None);
+                .WithColumn(nameof(UserNotificationSettingModel.CustomerId)).AsInt32().ForeignKey<Customer>().OnDelete(Rule.Cascade);
         }
     }
 }

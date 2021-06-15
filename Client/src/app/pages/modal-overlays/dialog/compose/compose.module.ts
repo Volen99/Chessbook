@@ -15,7 +15,6 @@ import {UploadApi} from "./upload/backend/upload.api";
 import {UploadClientRequiredParametersValidatorService} from "./upload/validators/upload-client-required-parameters-validator.service";
 import {NbCardModule} from "../../../../sharebook-nebular/theme/components/card/card.module";
 import {NbButtonModule} from "../../../../sharebook-nebular/theme/components/button/button.module";
-import {SharedGlobalIconModule} from "../../../../shared/shared-icons/shared-global-icon.module";
 import {SharedModule} from "../../../../shared/shared.module";
 import {NbIconModule} from "../../../../sharebook-nebular/theme/components/icon/icon.module";
 import {NbPopoverModule} from "../../../../sharebook-nebular/theme/components/popover/popover.module";
@@ -49,7 +48,6 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     CommonModule,
 
     ComposeRoutingModule,
-    SharedGlobalIconModule,
     SharedModule,
     NbCardModule,
     NbButtonModule,

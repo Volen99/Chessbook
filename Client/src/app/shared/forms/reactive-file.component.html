@@ -1,6 +1,6 @@
 <div class="root">
   <div class="button-file" [ngClass]="{ 'with-icon': !!icon }">
-    <app-global-icon *ngIf="icon" [iconName]="icon"></app-global-icon>
+    <fa-icon *ngIf="icon" [icon]="icon"></fa-icon>
 
     <span>{{ inputLabel }}</span>
 

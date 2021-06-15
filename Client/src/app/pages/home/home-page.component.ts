@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NewsService} from "./news.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UsersService} from "../../core/backend/common/services/users.service";
@@ -11,20 +11,63 @@ import {Post} from "../../shared/shared-main/post/post.model";
 import {immutableAssign, scrollToTop} from "../../helpers/utils";
 import {GetHomeTimelineParameters} from "../../shared/models/timeline/get-home-timeline-parameters";
 import {AbstractPostList} from "../../shared/post-miniature/abstract-post-list/abstract-post-list";
+import {AnimationOptions, LottieComponent} from "ngx-lottie";
+import {AnimationItem} from "lottie-web";
+import {animate, style, transition, trigger} from "@angular/animations";
+
+const voidState = style({
+  transform: 'translateX({{ direction }}110%)',
+  height: 0,
+  marginLeft: '0',
+  marginRight: '0',
+  marginTop: '0',
+  marginBottom: '0',
+  width: '88%'
+});
+
+const defaultOptions = { params: { direction: '' } };
 
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.scss']
+  styleUrls: ['./home-page.component.scss'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [voidState, animate(5000)], defaultOptions),
+      transition(':leave', [animate(5000, voidState)], defaultOptions),
+    ]),
+  ],
 })
 export class HomePageComponent extends AbstractPostList implements OnInit {
-
   private loaded = false;
   private currentPage = 1;
   private maxPage = 20;
   private lastWasEmpty = false;
   private isLoading = false;
+
+  lottieOptions: AnimationOptions = {
+    path: '/assets/animations/fish.json',
+    autoplay: true,
+    loop: true
+  };
+
+  isFishSwimming = false;
+
+  public anim: any;
+  fadeIn = { value: '', params: { direction: '' } };
+
+  animationCreated(animationItem: AnimationItem): void {
+    console.log(animationItem);
+    this.anim = animationItem;
+  }
+
+  styles: Partial<CSSStyleDeclaration> = {
+    maxWidth: '9%',
+    height: '46px',
+    marginTop: '-19px',
+    /*margin: '0 auto',*/
+  };
 
   constructor(protected router: Router,
               protected route: ActivatedRoute,
@@ -39,8 +82,15 @@ export class HomePageComponent extends AbstractPostList implements OnInit {
 
 
   ngOnInit(): void {
-    super.ngOnInit();
+    setTimeout(() => {
+      this.isFishSwimming = true;
+      setTimeout(() => {
+        this.isFishSwimming = false;
+      }, 5000);
+    }, 3000);
 
+
+    super.ngOnInit();
     // this.timelineService.getHomeTimelineAsync(new GetHomeTimelineParameters())
     //   .subscribe((posts: any[]) => {
     //     super.posts = posts;
@@ -54,7 +104,6 @@ export class HomePageComponent extends AbstractPostList implements OnInit {
   }
 
   getPostsObservable(page: number): Observable<{ data: Post[] }> {
-    debugger
     const newPagination = immutableAssign(this.pagination, {currentPage: page});
 
     return this.postsService.getHomeTimelinePosts(new GetHomeTimelineParameters(newPagination, this.sort, true));

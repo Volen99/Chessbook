@@ -14,8 +14,9 @@ namespace Chessbook.Data.Mapping.Builders.Notifications
         {
             table
                 .WithColumn(nameof(UserNotification.Type)).AsInt32()
-                .WithColumn(nameof(UserNotification.UserId)).AsInt32().ForeignKey<Customer>().OnDelete(Rule.None)
-                .WithColumn(nameof(UserNotification.PostId)).AsInt32().ForeignKey<Models.Post.Post>().OnDelete(Rule.None);
+                .WithColumn(nameof(UserNotification.UserId)).AsInt32().ForeignKey<Customer>().OnDelete(Rule.Cascade)
+                .WithColumn(nameof(UserNotification.PostId)).AsInt32().Nullable().ForeignKey<Models.Post.Post>().OnDelete(Rule.Cascade)
+                .WithColumn(nameof(UserNotification.RelationshipId)).AsInt32().Nullable().ForeignKey<Relationship>().OnDelete(Rule.Cascade);
         }
     }
 }

@@ -5,9 +5,10 @@ import {User} from "../../../shared/shared-main/user/user.model";
 import {AuthService} from "../../../core/auth/auth.service";
 import {Notifier} from "../../../core/notification/notifier.service";
 import {UsersService} from "../../../core/backend/common/services/users.service";
-import { uploadErrorHandler } from '../../../helpers/utils';
+import {genericUploadErrorHandler, uploadErrorHandler} from '../../../helpers/utils';
 import {UserStore} from "../../../core/stores/user.store";
 import {IUser} from "../../../core/interfaces/common/users";
+import {NbToastrService} from "../../../sharebook-nebular/theme/components/toastr/toastr.service";
 
 @Component({
   selector: 'my-account-settings',
@@ -24,7 +25,7 @@ export class MyAccountSettingsComponent implements OnInit, AfterViewChecked {
     private userService: UsersService,
     private authService: AuthService,
     private userStore: UserStore,
-    private notifier: Notifier
+    private toastrService: NbToastrService
   ) {
   }
 
@@ -48,7 +49,7 @@ export class MyAccountSettingsComponent implements OnInit, AfterViewChecked {
     this.userService.changeAvatar(formData)
       .subscribe(
         data => {
-          this.notifier.success(`Avatar changed.`);
+          this.toastrService.success(`Avatar changed.`);
 
           // this.user.updateAccountAvatar(data.url); TODO: THIS IS THE RIGHT WAAAAAAAAAAAAAAAY!!
 
@@ -58,21 +59,52 @@ export class MyAccountSettingsComponent implements OnInit, AfterViewChecked {
         (err: HttpErrorResponse) => uploadErrorHandler({
           err,
           name: `avatar`,
-          notifier: this.notifier
+          notifier: this.toastrService
         })
       );
   }
+
 
   onAvatarDelete() {
     this.userService.deleteAvatar()
       .subscribe(
         data => {
-          this.notifier.success(`Avatar deleted.`);
+          this.toastrService.success(`Avatar deleted.`, 'Success');
 
           this.user.updateAccountAvatar();
         },
 
-        (err: HttpErrorResponse) => this.notifier.error(err.message)
+        (err: HttpErrorResponse) => this.toastrService.danger(err.message)
+      );
+  }
+
+  onBannerChange(formData: FormData) {
+    this.userService.changeBanner(formData)
+      .subscribe(
+        data => {
+          this.toastrService.success(`Banner changed.`, 'Success');
+
+          this.user.profileBannerURL = data.url;
+        },
+
+        (err: HttpErrorResponse) => genericUploadErrorHandler({
+          err,
+          name: `banner`,
+          notifier: this.toastrService
+        })
+      );
+  }
+
+  onBannerDelete() {
+    this.userService.deleteBanner()
+      .subscribe(
+        data => {
+          this.toastrService.success(`Banner deleted.`, 'Success');
+
+          this.user.profileBackgroundImageUrlHttps = '';
+        },
+
+        err => this.toastrService.danger(err.message, 'Error')
       );
   }
 }

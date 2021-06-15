@@ -11,12 +11,13 @@ import {IUser} from "../../../../core/interfaces/common/users";
 import {UserVideoRateType} from "../../models/rate/user-video-rate.type";
 import {UploadComponent} from "../../../../pages/modal-overlays/dialog/compose/upload/upload.component";
 import {LikesComponent} from "../likes/likes.component";
-import {faHeart as faHeartSolid} from "@fortawesome/pro-solid-svg-icons";
+import {faHeart as faHeartSolid, faLock} from "@fortawesome/pro-solid-svg-icons";
 import {
   faComment,
   faShare,
   faHeart,
 } from '@fortawesome/pro-light-svg-icons';
+
 
 @Component({
   selector: 'app-post-thread',
@@ -73,6 +74,7 @@ export class PostThreadComponent implements OnInit {
   faComment = faComment;
   faShare = faShare;
   faHeart = faHeart;
+  faLock = faLock;
 
   style = {height: 0};
 

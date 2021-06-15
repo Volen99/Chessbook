@@ -12,6 +12,10 @@ import {Notifier} from "../../../core/notification/notifier.service";
 import {ABUSE_REASON_VALIDATOR} from "../../forms/form-validators/abuse-validators";
 import {abusePredefinedReasonsMap} from "../../../core/utils/abuse/abuse-predefined-reasons";
 
+import {
+  faTimes,
+} from '@fortawesome/pro-light-svg-icons';
+
 @Component({
   selector: 'app-video-report',
   templateUrl: './video-report.component.html',
@@ -36,6 +40,8 @@ export class VideoReportComponent extends FormReactive implements OnInit {
     private sanitizer: DomSanitizer) {
     super();
   }
+
+  faTimes = faTimes;
 
   get currentHost() {
     return window.location.host;

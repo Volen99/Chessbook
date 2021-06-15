@@ -2,8 +2,8 @@
   <button
     class="action-button" [ngClass]="{ small: buttonSize === 'small', grey: theme === 'grey', orange: theme === 'orange', 'button-styled': buttonStyled }"
     ngbDropdownToggle role="button" aria-label="Open actions" i18n-aria-label>
-    <app-global-icon *ngIf="!label && buttonDirection === 'horizontal'" class="more-icon" iconName="more-horizontal"></app-global-icon>
-    <app-global-icon *ngIf="!label && buttonDirection === 'vertical'" class="more-icon" iconName="more-vertical"></app-global-icon>
+    <fa-icon *ngIf="!label && buttonDirection === 'horizontal'" class="more-icon" [icon]="this.faEllipsisH"></fa-icon>
+    <fa-icon *ngIf="!label && buttonDirection === 'vertical'" class="more-icon" [icon]="this.faEllipsisH"></fa-icon>
 
     <span *ngIf="label" class="dropdown-toggle">{{ label }}</span>
   </button>
@@ -15,7 +15,7 @@
         <ng-container *ngIf="action.isDisplayed === undefined || action.isDisplayed(entry) === true">
 
           <ng-template #templateActionLabel let-action>
-            <app-global-icon *ngIf="action.iconName" [iconName]="action.iconName" [ngClass]="'icon-' + action.iconName" aria-hidden="true"></app-global-icon>
+            <fa-icon *ngIf="action.iconName" [icon]="action.iconName" [ngClass]="'icon-' + action.iconName" aria-hidden="true"></fa-icon>
 
             <div class="d-flex flex-column">
               <span i18n>{{ action.label }}</span>

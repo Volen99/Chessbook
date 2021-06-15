@@ -28,6 +28,10 @@ import {IUser} from "../../core/interfaces/common/users";
 
 const logger = debug('peertube:moderation:AbuseListTableComponent');
 
+import {
+  faCommentSmile,
+} from '@fortawesome/pro-light-svg-icons';
+
 @Component({
   selector: 'my-abuse-list-table',
   templateUrl: './abuse-list-table.component.html',
@@ -81,8 +85,12 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
   }
 
   ngAfterViewInit() {
-    if (this.search) this.setTableFilter(this.search, false);
+    if (this.search) {
+      this.setTableFilter(this.search, false);
+    }
   }
+
+  faCommentSmile = faCommentSmile;
 
   isAdminView() {
     return this.viewType === 'admin';

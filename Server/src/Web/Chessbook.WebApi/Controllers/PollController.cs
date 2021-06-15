@@ -9,6 +9,7 @@ using Chessbook.Web.Api.Controllers;
 using Chessbook.Web.Api.Identity;
 using Chessbook.Web.Models.Inputs.Polls;
 using Chessbook.Web.Models.Outputs.Polls;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
 using Nop.Services.Stores;
@@ -41,8 +42,9 @@ namespace Chessbook.Web.Api.Controllers
             _workContext = workContext;
         }
 
-        [Route("vote/{id?}")]
+        [Authorize]
         [HttpPost]
+        [Route("vote/{id?}")]
         public async Task<IActionResult> Vote(int id)
         {
             var test = User.GetUserId();

@@ -1,5 +1,5 @@
 <h1>
-  <app-global-icon iconName="peertube-x" aria-hidden="true"></app-global-icon>
+  <fa-icon [icon]="this.faTimes" aria-hidden="true"></fa-icon>
   <ng-container i18n>Muted servers</ng-container>
 </h1>
 
@@ -13,7 +13,7 @@
     <div class="caption">
       <div class="left-buttons">
         <a class="block-button" (click)="addServersToBlock()" (key.enter)="addServersToBlock()">
-          <app-global-icon iconName="add" aria-hidden="true"></app-global-icon>
+          <fa-icon [icon]="this.faPlusCircle" aria-hidden="true"></fa-icon>
           <ng-container i18n>Mute domain</ng-container>
         </a>
       </div>

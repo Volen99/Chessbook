@@ -26,7 +26,7 @@ import { NbOverlayRef, NbPortalDirective } from '../cdk/overlay/mapping';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../../environments/environment";
 import {IPoll} from "../../../../shared/posts/models/poll/poll";
-import {faPoll} from '@fortawesome/pro-light-svg-icons';
+import {faPollPeople} from '@fortawesome/pro-solid-svg-icons';
 /**
  * search-field-component is used under the hood by nb-search component
  * can't be used itself
@@ -201,7 +201,7 @@ export type NbSearchType = 'modal-zoomin' | 'rotate-layout' | 'modal-move' |
   styleUrls: ['styles/search.component.scss'],
   template: `
     <button #searchButton class="start-search" (click)="emitActivate()" nbButton ghost>
-      <fa-icon [icon]="this.faPoll" [styles]="{'font-size': '1.35rem'}"></fa-icon>
+      <fa-icon [icon]="this.faPollPeople" [styles]="{'font-size': '1.35rem'}"></fa-icon>
     </button>
     <nb-search-field
       *nbPortal
@@ -222,7 +222,7 @@ export class NbSearchComponent implements OnInit, OnDestroy {
   private overlayRef: NbOverlayRef;
   showSearchField = false;
 
-  faPoll = faPoll;
+  faPollPeople = faPollPeople;
 
   /**
    * Tags a search with some ID, can be later used in the search service

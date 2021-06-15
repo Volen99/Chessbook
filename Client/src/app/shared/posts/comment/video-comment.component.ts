@@ -13,6 +13,12 @@ import {MarkdownService} from "../../../core/renderer/markdown.service";
 import {UserRight} from "../../models/users/user-right.enum";
 import {User} from "../../shared-main/user/user.model";
 
+import {
+  faFlag,
+  faTrashAlt,
+  faPen,
+} from '@fortawesome/pro-light-svg-icons';
+
 @Component({
   selector: 'app-video-comment',
   templateUrl: './video-comment.component.html',
@@ -63,6 +69,10 @@ export class VideoCommentComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.init();
   }
+
+  faFlag = faFlag;
+  faTrashAlt = faTrashAlt;
+  faPen = faPen;
 
   onCommentReplyCreated(createdComment: PostComment) {
     if (!this.commentTree) {
@@ -177,7 +187,7 @@ export class VideoCommentComponent implements OnInit, OnChanges {
     if (this.isReportableByUser()) {
       this.prependModerationActions.push({
         label: `Report this comment`,
-        iconName: 'flag',
+        iconName: this.faFlag,
         handler: () => this.showReportModal()
       });
     }
@@ -185,7 +195,7 @@ export class VideoCommentComponent implements OnInit, OnChanges {
     if (this.isRemovableByUser()) {
       this.prependModerationActions.push({
         label: `Remove`,
-        iconName: 'delete',
+        iconName: this.faTrashAlt,
         handler: () => this.onWantToDelete()
       });
     }
@@ -193,7 +203,7 @@ export class VideoCommentComponent implements OnInit, OnChanges {
     if (this.isRedraftableByUser()) {
       this.prependModerationActions.push({
         label: `Remove & re-draft`,
-        iconName: 'edit',
+        iconName: this.faPen,
         handler: () => this.onWantToRedraft()
       });
     }

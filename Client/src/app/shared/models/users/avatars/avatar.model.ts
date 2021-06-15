@@ -1,9 +1,9 @@
 export interface Avatar {
-  path: string
+  path: string;
 
-  url?: string
+  url?: string;
 
-  createdAt: Date | string
-  updatedAt: Date | string
+  createdAt: Date | string;
+  updatedAt: Date | string;
 }
 

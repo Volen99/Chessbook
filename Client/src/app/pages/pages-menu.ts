@@ -1,6 +1,6 @@
 import {Injectable, OnInit} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import { faHouse, faHashtag, faBell, faEnvelope, faUser, faTv } from '@fortawesome/pro-light-svg-icons';
+import { faHouse, faHashtag, faBell, faEnvelope, faUser, faTv, faCircle, faChartLine, faAlicorn } from '@fortawesome/pro-light-svg-icons';
 
 
 import {NbMenuItem} from '../sharebook-nebular/theme/components/menu/menu.service';
@@ -294,6 +294,16 @@ export class PagesMenu {
         title: 'Streamers',
         icon: faTv,
         link: '/streamers',
+      },
+      {
+        title: 'More',
+        expanded: false,
+        icon: faCircle,
+        children: [
+          {icon: faChartLine, title: `Chess Rankings`, link: '/ratings'},
+          {icon: faAlicorn, title: `Keyboard shortcuts`, link: ''},
+        ],
+
       }
     ];
 

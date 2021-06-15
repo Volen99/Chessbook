@@ -6,6 +6,11 @@ import {BatchDomainsModalComponent} from "./batch-domains-modal.component";
 import {RestPagination} from "../../core/rest/rest-pagination";
 import {ServerBlock} from "../models/moderation/server-block.model";
 
+import {
+  faTimes,
+  faPlusCircle,
+} from '@fortawesome/pro-light-svg-icons';
+
 @Directive()
 // tslint:disable-next-line: directive-class-suffix
 export class GenericServerBlocklistComponent extends RestTable implements OnInit {
@@ -24,11 +29,14 @@ export class GenericServerBlocklistComponent extends RestTable implements OnInit
   }
 
   // @ts-ignore: "Abstract methods can only appear within an abstract class"
-  public abstract getIdentifier(): string
+  public abstract getIdentifier(): string;
 
   ngOnInit() {
     this.initialize();
   }
+
+  faTimes = faTimes;
+  faPlusCircle = faPlusCircle;
 
   unblockServer(serverBlock: ServerBlock) {
     const operation = (host: string) => this.mode === BlocklistComponentType.Account

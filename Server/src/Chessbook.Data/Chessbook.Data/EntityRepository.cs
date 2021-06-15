@@ -134,7 +134,7 @@ namespace Nop.Data
         /// A task that represents the asynchronous operation
         /// The task result contains the entity entry
         /// </returns>
-        public virtual async Task<TEntity> GetByIdAsync(int? id, Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true)
+        public virtual async Task<TEntity> GetByIdAsync(int? id, Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = false)
         {
             if (!id.HasValue || id == 0)
             {
@@ -167,7 +167,7 @@ namespace Nop.Data
         /// A task that represents the asynchronous operation
         /// The task result contains the entity entries
         /// </returns>
-        public virtual async Task<IList<TEntity>> GetByIdsAsync(IList<int> ids, Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true)
+        public virtual async Task<IList<TEntity>> GetByIdsAsync(IList<int> ids, Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = false)
         {
             if (!ids?.Any() ?? true)
                 return new List<TEntity>();
@@ -211,7 +211,7 @@ namespace Nop.Data
         /// The task result contains the entity entries
         /// </returns>
         public virtual async Task<IList<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
-            Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true)
+            Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = false)
         {
             async Task<IList<TEntity>> getAllAsync()
             {
@@ -232,7 +232,7 @@ namespace Nop.Data
         /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>Entity entries</returns>
         public virtual IList<TEntity> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
-            Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true)
+            Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = false)
         {
             IList<TEntity> getAll()
             {
@@ -257,7 +257,7 @@ namespace Nop.Data
         /// </returns>
         public virtual async Task<IList<TEntity>> GetAllAsync(
             Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null,
-            Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = true)
+            Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = false)
         {
             async Task<IList<TEntity>> getAllAsync()
             {
@@ -282,7 +282,7 @@ namespace Nop.Data
         /// </returns>
         public virtual async Task<IList<TEntity>> GetAllAsync(
             Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null,
-            Func<IStaticCacheManager, Task<CacheKey>> getCacheKey = null, bool includeDeleted = true)
+            Func<IStaticCacheManager, Task<CacheKey>> getCacheKey = null, bool includeDeleted = false)
         {
             async Task<IList<TEntity>> getAllAsync()
             {
@@ -308,7 +308,7 @@ namespace Nop.Data
         /// The task result contains the paged list of entity entries
         /// </returns>
         public virtual async Task<IPagedList<TEntity>> GetAllPagedAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
-            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = true)
+            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = false)
         {
             var query = AddDeletedFilter(Table, includeDeleted);
 
@@ -330,7 +330,7 @@ namespace Nop.Data
         /// The task result contains the paged list of entity entries
         /// </returns>
         public virtual async Task<IPagedList<TEntity>> GetAllPagedAsync(Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null,
-            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = true)
+            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false, bool includeDeleted = false)
         {
             var query = AddDeletedFilter(Table, includeDeleted);
 

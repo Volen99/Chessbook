@@ -225,7 +225,7 @@
                 query = query.OrderByDescending(c => c.CreatedOn);
 
                 return query;
-            }, pageIndex, pageSize, getOnlyTotalCount);
+            }, pageIndex, pageSize, getOnlyTotalCount, false);
 
             return customers;
         }
@@ -339,7 +339,7 @@
 
             var query = from c in _customerRepository.Table
                         orderby c.Id
-                        where c.Email == email
+                        where c.Email == email && !c.Deleted
                         select c;
 
             var customer = await query.FirstOrDefaultAsyncExt();
@@ -402,37 +402,6 @@
             return customer;
         }
 
-        //public async Task<UserDTO> Edit(UserDTO dto)
-        //{
-        //    var user = dto.MapTo<TUser>();
-        //    await userRepository.Edit(user, Session);
-        //    return user.MapTo<UserDTO>();
-        //}
-
-        //public async Task<byte[]> GetUserPhoto(int userId)
-        //{
-        //    var photoContent = await userPhotoRepository.Get(userId, Session);
-        //    return photoContent?.Image;
-        //}
-
-        //public async Task<UserDTO> GetById(int id, bool includeDeleted = false)
-        //{
-        //    var user = await userRepository.Get(id, Session, includeDeleted);
-        //    return user.MapTo<UserDTO>();
-        //}
-
-        //public async Task<User> GetByIdClean(int id, bool includeDeleted = false)
-        //{
-        //    var user = await userRepository.Get(id, Session, includeDeleted);
-        //    return user;
-        //}
-
-        //public async Task<UserDTO> GetByLogin(string login, bool includeDeleted = false)
-        //{
-        //    var user = await userRepository.GetByLogin(login, Session, includeDeleted);
-        //    return user.MapTo<UserDTO>();
-        //}
-
         public async Task<(IEnumerable<TUser>, int)> GetFilteredListWithTotalCount(UsersGridFilter filter,
             ContextSession session, bool includeDeleted = false)
         {
@@ -468,7 +437,7 @@
 
             var query = from c in _customerRepository.Table
                         orderby c.Id
-                        where c.ScreenName == username
+                        where c.ScreenName == username && !c.Deleted
                         select c;
 
             var customer = await query.FirstOrDefaultAsyncExt();

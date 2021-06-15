@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import {IPoll} from "../../shared/posts/models/poll/poll";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
@@ -12,32 +21,26 @@ import {SurveyService} from "../../shared/services/survey.service";
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.scss']
 })
-export class SurveyComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class SurveyComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() public poll: IPoll;
-  @Input() public intl: any;
-  @Input() public disabled: boolean;
   @Input() public refresh: () => any;
   @Input() public onVote: () => any;
 
   private _timer: any;
 
-  constructor(private http: HttpClient, private surveyService: SurveyService, private dateService: NbDateService<Date>) {
+  constructor(private http: HttpClient, private surveyService: SurveyService,
+              private dateService: NbDateService<Date>, protected cd: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
-    this.timeRemaining = this.expired ? 'Closed :(' : this.poll.expires_at;
+    this.timeRemaining = this.expired ? 'Closed' : this.poll.expires_at;
     this.showResults = this.poll.alreadyVoted || this.expired;
-    this.disabled = false; // this.disabled || Object.entries(this.selected).every(item => !item);
-
 
     if (this.poll.votersCount !== null && this.poll.votersCount !== undefined) {
       this.votesCount = this.poll.votersCount;
     } else {
       this.votesCount = this.poll.totalVotes;
     }
-
-    this._setupTimer();
-
   }
 
   alreadyVotedWarning = false;
@@ -53,21 +56,11 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   }
 
   ngAfterViewInit(): void {
-    // this._setupTimer();
   }
 
   // componentWillReceiveProps (deprecated), getDerivedStateFromProps, componentWillUpdate, componentDidUpdate
   // can all be replaced by ngOnChanges in Angular.
   ngOnChanges(changes: SimpleChanges): any {
-    this._setupTimer();
-
-    const expires_at = this.poll.expires_at;
-    const expired = this.poll.expired || expires_at !== null && (new Date(expires_at)).getTime() < Date.now();
-    /// return (expired === changes.expired) ? null : {expired};
-  }
-
-  ngOnDestroy(): void {
-    clearTimeout(this._timer);
   }
 
   // state
@@ -87,13 +80,13 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges, OnDest
 
 
   handleVote = () => {
-    if (this.disabled) {
-      return;
-    }
-
     if (this.poll.alreadyVoted) {
       this.alreadyVotedWarning = true;
 
+      return;
+    }
+
+    if (!this.selected) {
       return;
     }
 
@@ -103,6 +96,8 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges, OnDest
 
         this.poll.startDateUtc = new Date(data.startDateUtc);
         this.showResults = true;
+
+        this.cd.detectChanges(); // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
       });
   }
 
@@ -111,25 +106,11 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   }
 
   handleRefresh = () => {
-    if (this.disabled) {
-      return;
-    }
-
     this.refresh();
   };
 
   timeRemaining: any;
   showResults: boolean;
-
-  private _setupTimer() {
-    clearTimeout(this._timer);
-    if (!this.expired) {
-      const delay = (new Date(this.poll.expires_at)).getTime() - Date.now();
-      this._timer = setTimeout(() => {
-        this.expired = true;
-      }, delay);
-    }
-  }
 
   handleOptionChange = (value) => {  // { target: { value } }
     this._toggleOption(value);

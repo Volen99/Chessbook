@@ -75,6 +75,11 @@ const routes: Routes = [
         canActivateChild: [ MetaGuard ],
       },
       {
+        path: 'ratings',
+        loadChildren: () => import('./pages/more/chess-rankings/chess-rankings.module').then(m => m.ChessRankingsModule),
+        canActivateChild: [ MetaGuard ],
+      },
+      {
         path: ':screenName',
         canActivate: [AuthGuard],
         loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule),

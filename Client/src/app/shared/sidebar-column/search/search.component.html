@@ -6,25 +6,28 @@
         class="align-items-stretch border-style-solid input-form-border-width input-form-box-sizing display-flex flex-expand flex-direction-column input-form-margin input-form-min-height min-width-0px input-form-padding svg-position-relative image-z-index">
         <form action="#" aria-label="Search Chessbook" role="search"
               class="align-items-stretch border-style-solid input-form-border-width input-form-box-sizing display-flex flex-expand flex-direction-column input-form-margin input-form-min-height min-width-0px input-form-padding svg-position-relative image-z-index">
-          <div class="sharebook-container flex-shrink">
-            <div
-              class="sharebook-container search-background-color element-border-color-rgba border-radius-9999px border-style-solid border-width-1px flex-direction-column flex-grow-expand flex-shrink justify-content-center">
-              <div class="sharebook-container flex-direction-row">
-                <div class="sharebook-container display-flex justify-content-center">
-                  <fa-icon [icon]="this.faSearch" [styles]="this.svgStyles"></fa-icon>
-                </div>
-                <div dir="auto"
-                     class="css-901oao lights-out-text-color display-flex flex-grow-expand font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
-                  <input nbInput shape="round" style="border-width: 0px;" aria-activedescendant="typeaheadFocus-0.5888012866344514" aria-autocomplete="list"
-                         aria-label="Search query" aria-owns="typeaheadDropdown-3" autocapitalize="sentences"
-                         autocomplete="off" placeholder="Search Chessbook" role="combobox"
-                         spellcheck="false" type="text" dir="auto" data-focusable="true"
-                         class="r-30o5oe element-background-color-rgba input-form-border-radius-0px input-form-border-width input-form-box-sizing outline-style-none padding-10px r-641cr4 search-resize search-placeholder-text-align width-100-per"
-                         data-testid="SearchBox_Search_Input"></div>
-                <div class="sharebook-container display-flex justify-content-center"></div>
-              </div>
-            </div>
-          </div>
+<!--          <div class="sharebook-container flex-shrink">-->
+<!--            <div class="sharebook-container search-background-color element-border-color-rgba border-radius-9999px border-style-solid border-width-1px flex-direction-column flex-grow-expand flex-shrink justify-content-center">-->
+<!--              <div class="sharebook-container flex-direction-row">-->
+<!--                <div class="sharebook-container display-flex justify-content-center">-->
+<!--                  <fa-icon [icon]="this.faSearch" [styles]="this.svgStyles"></fa-icon>-->
+<!--                </div>-->
+<!--                <div dir="auto" class="css-901oao display-flex flex-grow-expand font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">-->
+<!--                  <input id="searchBox_search_input" nbInput shape="round" style="border-width: 0px;"-->
+<!--                         aria-label="Search query" aria-owns="typeaheadDropdown-3" autocapitalize="sentences"-->
+<!--                         autocomplete="off" placeholder="Search Chessbook" role="combobox"-->
+<!--                         spellcheck="false" type="text" dir="auto" data-focusable="true"-->
+<!--                         class="r-30o5oe element-background-color-rgba input-form-border-radius-0px input-form-border-width input-form-box-sizing outline-style-none padding-10px r-641cr4 search-resize search-placeholder-text-align width-100-per">-->
+<!--                </div>-->
+<!--                <div class="sharebook-container display-flex justify-content-center"></div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+          <nb-form-field>
+            <fa-icon nbPrefix [icon]="this.faSearch"></fa-icon>
+            <input id="searchBox_search_input" nbInput shape="round" data-focusable="true" placeholder="Search Chessbook" fullWidth>
+          </nb-form-field>
           <div class="sharebook-container flex-expand svg-position-relative"></div>
         </form>
       </div>

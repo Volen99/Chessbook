@@ -1,7 +1,7 @@
 <h1 class="sr-only" i18n>Notifications</h1>
 <div class="header">
   <a routerLink="/my-account/settings" fragment="notifications" i18n>
-    <app-global-icon iconName="cog" aria-hidden="true"></app-global-icon>
+    <fa-icon [icon]="this.faCog" aria-hidden="true"></fa-icon>
     Notification preferences
   </a>
 
@@ -15,13 +15,13 @@
 
   <button class="btn ml-auto" [disabled]="!hasUnreadNotifications()" (click)="markAllAsRead()">
     <ng-container *ngIf="hasUnreadNotifications()">
-      <app-global-icon iconName="tick" aria-hidden="true"></app-global-icon>
+      <fa-icon [icon]="this.faCheck" aria-hidden="true"></fa-icon>
 
       <span i18n>Mark all as read</span>
     </ng-container>
 
     <ng-container *ngIf="!hasUnreadNotifications()">
-      <app-global-icon iconName="circle-tick" aria-hidden="true"></app-global-icon>
+      <fa-icon [icon]="this.faCheckCircle" aria-hidden="true"></fa-icon>
 
       <span i18n>All read</span>
     </ng-container>

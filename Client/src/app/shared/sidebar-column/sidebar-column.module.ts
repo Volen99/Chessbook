@@ -12,6 +12,7 @@ import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/bu
 import {NbInputModule} from "../../sharebook-nebular/theme/components/input/input.module";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {SharedModule} from "../shared.module";
+import {NbFormFieldModule} from "../../sharebook-nebular/theme/components/form-field/form-field.module";
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {SharedModule} from "../shared.module";
     NbInputModule,
     FontAwesomeModule,
     SharedModule,
+    NbFormFieldModule,
   ],
   exports: [
     SidebarColumnComponent,

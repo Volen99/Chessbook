@@ -1,4 +1,4 @@
-import {TweetIdentifier} from '../../Models/TweetIdentifier';
+import {TweetIdentifier} from '../../models/TweetIdentifier';
 import {CustomRequestParameters, ICustomRequestParameters} from "../../models/query/custom-request-parameters";
 import {ITweetIdentifier} from "../models/tweet-identifier";
 

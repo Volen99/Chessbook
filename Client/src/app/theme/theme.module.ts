@@ -40,6 +40,8 @@ import {TinyMCEComponent} from "./components/tiny-mce/tiny-mce.component";
 import {AuthModule} from "../auth/auth.module";
 import {NbThemeModule} from "../sharebook-nebular/theme/theme.module";
 import {MatRippleModule} from "@angular/material/core";
+import {MATERIAL_DARK_THEME} from "./styles/material/theme.material-dark";
+import {MATERIAL_LIGHT_THEME} from "./styles/material/theme.material-light";
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -90,7 +92,7 @@ export class ThemeModule {
           {
             name: 'default',
           },
-          [ DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME, DARK_THEME ],
+          [ DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME, DARK_THEME, MATERIAL_LIGHT_THEME, MATERIAL_DARK_THEME ],
         ).providers,
         InitUserService,
       ],

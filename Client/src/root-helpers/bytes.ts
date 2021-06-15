@@ -1,20 +1,8 @@
 const dictionary: Array<{ max: number; type: string }> = [
-  {
-    max: 1024,
-    type: 'B'
-  },
-  {
-    max: 1048576,
-    type: 'KB'
-  },
-  {
-    max: 1073741824,
-    type: 'MB'
-  },
-  {
-    max: 1.0995116e12,
-    type: 'GB'
-  }
+  {max: 1024, type: 'B'},
+  {max: 1048576, type: 'KB'},
+  {max: 1073741824, type: 'MB'},
+  {max: 1.0995116e12, type: 'GB'}
 ];
 
 function getBytes(value: number, precision?: number | undefined): string | number {

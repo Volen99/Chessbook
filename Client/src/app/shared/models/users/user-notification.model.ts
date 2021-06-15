@@ -38,7 +38,7 @@ export interface VideoInfo {
 export interface ActorInfo {
   id: number;
   displayName: string;
-  name: string;
+  screenName: string;
   host: string;
   avatar?: {
     path: string

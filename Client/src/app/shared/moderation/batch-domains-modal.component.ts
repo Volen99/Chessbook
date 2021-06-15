@@ -5,6 +5,10 @@ import {FormReactive} from "../forms/form-reactive";
 import {FormValidatorService} from "../forms/form-validator.service";
 import {DOMAINS_VALIDATOR, getNotEmptyHosts} from "../forms/form-validators/batch-domains-validators";
 
+import {
+  faTimes,
+} from '@fortawesome/pro-light-svg-icons';
+
 @Component({
   selector: 'app-batch-domains-modal',
   templateUrl: './batch-domains-modal.component.html',
@@ -29,6 +33,8 @@ export class BatchDomainsModalComponent extends FormReactive implements OnInit {
       domains: DOMAINS_VALIDATOR
     });
   }
+
+  faTimes = faTimes;
 
   openModal() {
     this.openedModal = this.modalService.open(this.modal, {centered: true});

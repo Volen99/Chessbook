@@ -7,6 +7,10 @@ import {FormValidatorService} from "../forms/form-validator.service";
 import {USER_BAN_REASON_VALIDATOR} from "../forms/form-validators/user-validators";
 import {Notifier} from 'app/core/notification/notifier.service';
 
+import {
+  faTimes,
+} from '@fortawesome/pro-light-svg-icons';
+
 @Component({
   selector: 'app-user-ban-modal',
   templateUrl: './user-ban-modal.component.html',
@@ -31,6 +35,8 @@ export class UserBanModalComponent extends FormReactive implements OnInit {
       reason: USER_BAN_REASON_VALIDATOR
     });
   }
+
+  faTimes = faTimes;
 
   openModal(user: IUser | IUser[]) {
     this.usersToBan = user;

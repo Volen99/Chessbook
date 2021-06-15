@@ -11,6 +11,10 @@ import {abusePredefinedReasonsMap} from "../../../core/utils/abuse/abuse-predefi
 import {AbuseService} from "../abuse.service";
 import {Notifier} from "../../../core/notification/notifier.service";
 
+import {
+  faTimes,
+} from '@fortawesome/pro-light-svg-icons';
+
 @Component({
   selector: 'app-comment-report',
   templateUrl: './report.component.html',
@@ -58,6 +62,8 @@ export class CommentReportComponent extends FormReactive implements OnInit {
 
     this.predefinedReasons = this.abuseService.getPrefefinedReasons('comment');
   }
+
+  faTimes = faTimes;
 
   show() {
     this.openedModal = this.modalService.open(this.modal, {centered: true, keyboard: false, size: 'lg'});

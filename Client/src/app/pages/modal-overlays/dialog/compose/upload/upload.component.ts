@@ -7,7 +7,7 @@ import {UploadService} from "./upload.service";
 import {PostsService} from "../../../../../shared/posts/posts.service";
 import {PublishTweetParameters} from "../../../../../shared/posts/parameters/publish-tweet-parameters";
 import {NbDialogRef} from "../../../../../sharebook-nebular/theme/components/dialog/dialog-ref";
-import {ShowcaseDialogComponent} from "../../../../../pages/modal-overlays/dialog/showcase-dialog/showcase-dialog.component";
+import {ShowcaseDialogComponent} from "../../showcase-dialog/showcase-dialog.component";
 import {WhoCanReplyComponent} from "../../../popovers/components/who-can-reply/who-can-reply.component";
 import {PostPrivacy} from "../../../../../shared/models/enums/post-privacy";
 import {PostDetails} from "../../../../../shared/shared-main/post/post-details.model";
@@ -21,6 +21,7 @@ import {
   faPoll,
   faTimes,
   faCode,
+  faSmileWink,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {countableText} from "../../../../../features/compose/util/counter";
@@ -122,6 +123,7 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
   faPoll = faPoll;
   faTimes = faTimes;
   faCode = faCode;
+  faSmileWink = faSmileWink;
 
   faImagePolaroid = faImagePolaroid;
 
@@ -178,6 +180,7 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
 
 
   dismiss() {
+    debugger
     this.ref.close();
   }
 

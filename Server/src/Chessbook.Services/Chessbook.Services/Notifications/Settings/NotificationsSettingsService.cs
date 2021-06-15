@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Chessbook.Core.Domain.Notifications;
 using Chessbook.Data;
 using Chessbook.Services.Data;
+using Chessbook.Services.Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chessbook.Services.Notifications.Settings
@@ -12,11 +13,13 @@ namespace Chessbook.Services.Notifications.Settings
     {
         private readonly IRepository<UserNotificationSettingModel> userNotificationRepository;
         private readonly IRelationshipService relationshipService;
+        private readonly IUserService userService;
 
-        public NotificationsSettingsService(IRepository<UserNotificationSettingModel> userNotificationRepository, IRelationshipService relationshipService)
+        public NotificationsSettingsService(IRepository<UserNotificationSettingModel> userNotificationRepository, IRelationshipService relationshipService, IUserService userService)
         {
             this.userNotificationRepository = userNotificationRepository;
             this.relationshipService = relationshipService;
+            this.userService = userService;
         }
 
         public async Task CreateAsync(UserNotificationSettingModel settings)
@@ -27,8 +30,14 @@ namespace Chessbook.Services.Notifications.Settings
         public async Task<UserNotificationSettingModel> GetByUserId(int userId)
         {
             var userNotificationSetting = await this.userNotificationRepository.Table
+                .Include(u => u.Customer)
                 .Where(p => p.CustomerId == userId)
                 .FirstOrDefaultAsyncExt();
+
+            if (userNotificationSetting.Customer == null)
+            {
+                userNotificationSetting.Customer = await this.userService.GetCustomerByIdAsync(userNotificationSetting.CustomerId);
+            }
 
             return userNotificationSetting;
         }
