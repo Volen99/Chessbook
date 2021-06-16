@@ -4,7 +4,7 @@ export class UserIdentifier implements IUserIdentifier {
   constructor(userIdOrScreenName?: number | string) {
     if (typeof userIdOrScreenName === 'number') {
       this.id = userIdOrScreenName;
-      this.idStr = userIdOrScreenName.toString(/*CultureInfo.InvariantCulture*/);
+      this.idStr = userIdOrScreenName.toLocaleString();
     } else if (typeof userIdOrScreenName === 'string') {
       this.screenName = userIdOrScreenName;
     }

@@ -1,12 +1,13 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {SmartTableData} from "../../../core/interfaces/common/smart-table";
+import {DomSanitizer} from "@angular/platform-browser";
 import {LocalDataSource} from "ng2-smart-table";
-import {ChessRankingsService} from "./chess-rankings.service";
-
 import {
   faTrophy
 } from '@fortawesome/pro-light-svg-icons';
-import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+
+import {SmartTableData} from "../../../core/interfaces/common/smart-table";
+
+
 
 
 @Component({
@@ -98,7 +99,6 @@ export class ChessRankingsComponent implements OnInit {
   faTrophy = faTrophy;
 
   onDeleteConfirm(event): void {
-    debugger
     if (window.confirm('Are you sure you want to delete?')) {
       event.confirm.resolve();
     } else {

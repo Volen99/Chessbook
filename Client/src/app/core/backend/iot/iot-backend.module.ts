@@ -3,11 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CommonBackendModule } from '../common/common-backend.module';
 
-import { DevicesApi } from './api/devices.api';
-import { DeviceParametersApi } from './api/device-parameters.api';
-import { EnergyAggregatedApi } from './api/energy-aggregated.api';
 import { PhoneApi } from './api/phone.api';
-import { TrafficAggregatedApi } from './api/traffic-aggregated.api';
 
 import { PhoneData } from '../../interfaces/iot/phone';
 
@@ -15,11 +11,7 @@ import { PhoneData } from '../../interfaces/iot/phone';
 import { PhoneService } from './services/phone.service';
 
 const API = [
-  DevicesApi,
-  DeviceParametersApi,
-  EnergyAggregatedApi,
   PhoneApi,
-  TrafficAggregatedApi,
 ];
 
 const SERVICES = [

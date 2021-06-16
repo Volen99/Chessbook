@@ -1,4 +1,4 @@
-﻿import {Inject, Injectable} from "@angular/core";
+﻿import {Injectable} from "@angular/core";
 import {HttpParams} from "@angular/common/http";
 
 import {UploadApi} from "../backend/upload.api";
@@ -12,15 +12,13 @@ import {IChunkedUploader} from "../../../../../../shared/models/upload/chunked-u
 import {IMedia} from "../../../../../../shared/models/upload/media/media";
 import {UploadQueryGeneratorService} from "../query/upload-query-generator.service";
 import {Media} from "./core/media";
-import {Observable} from "rxjs";
-import {AppInjector} from "../../../../../../app-injector";
 
 @Injectable()
 export class ChunkedUploaderService implements IChunkedUploader {
-  private /*readonly*/ _media: IMedia;
+  private _media: IMedia;
 
   private _expectedBinaryLength?: number;
-  private /*readonly*/ _result: ChunkUploadResult;
+  private _result: ChunkUploadResult;
 
   constructor(private uploadQueryGeneratorService: UploadQueryGeneratorService, private uploadApi: UploadApi) {     // media comes through ctor?! 😲
     this._media = new Media();

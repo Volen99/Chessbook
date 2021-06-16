@@ -1,8 +1,7 @@
 import {filter} from 'rxjs/operators';
 import {Component, OnInit} from '@angular/core';
-import {FormReactive} from "../../../../shared/forms/form-reactive";
-import {FormValidatorService} from "../../../../shared/forms/form-validator.service";
-import {AuthService} from "../../../../core/auth/auth.service";
+import {FormReactive} from "../../../../shared/shared-forms/form-reactive";
+import {FormValidatorService} from "../../../../shared/shared-forms/form-validator.service";
 import {Notifier} from "../../../../core/notification/notifier.service";
 import {IUser} from "../../../../core/interfaces/common/users";
 import {UsersService} from "../../../../core/backend/common/services/users.service";
@@ -10,7 +9,8 @@ import {
   USER_CONFIRM_PASSWORD_VALIDATOR,
   USER_EXISTING_PASSWORD_VALIDATOR,
   USER_PASSWORD_VALIDATOR
-} from "../../../../shared/forms/form-validators/user-validators";
+} from "../../../../shared/shared-forms/form-validators/user-validators";
+import {UserStore} from "../../../../core/stores/user.store";
 
 @Component({
   selector: 'my-account-change-password',
@@ -24,7 +24,7 @@ export class MyAccountChangePasswordComponent extends FormReactive implements On
   constructor(
     protected formValidatorService: FormValidatorService,
     private notifier: Notifier,
-    private authService: AuthService,
+    private userStore: UserStore,
     private userService: UsersService
   ) {
     super();
@@ -37,7 +37,7 @@ export class MyAccountChangePasswordComponent extends FormReactive implements On
       'new-confirmed-password': USER_CONFIRM_PASSWORD_VALIDATOR
     });
 
-    this.user = this.authService.getUser();
+    this.user = this.userStore.getUser();
 
     const confirmPasswordControl = this.form.get('new-confirmed-password');
 

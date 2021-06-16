@@ -38,8 +38,9 @@ import {NbAuthModule} from "../sharebook-nebular/auth/auth.module";
 import {NbTokenLocalStorage} from "../sharebook-nebular/auth/services/token/token-storage";
 import {NB_AUTH_TOKEN_INTERCEPTOR_FILTER} from "../sharebook-nebular/auth/auth.options";
 import {NbAuthJWTInterceptor} from "../sharebook-nebular/auth/services/interceptors/jwt-interceptor";
+import {ModeratorGuard} from "./moderator.guard";
 
-const GUARDS = [AuthGuard, AdminGuard];
+const GUARDS = [AuthGuard, AdminGuard, ModeratorGuard];
 const PIPES = [AuthPipe];
 const COMPONENTS = [
   NgxLoginComponent,

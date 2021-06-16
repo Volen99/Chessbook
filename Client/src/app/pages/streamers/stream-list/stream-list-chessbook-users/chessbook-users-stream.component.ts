@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
+import {HttpParams} from "@angular/common/http";
+
 import {faFire, faUserCheck, faUserPlus} from '@fortawesome/pro-light-svg-icons';
 import {faUsers as faUsersSolid} from '@fortawesome/pro-solid-svg-icons';
-import {faUsers} from '@fortawesome/pro-solid-svg-icons';
+
 import {DialogUsernamePromptComponent} from "./dialog-username-prompt-component/dialog-username-prompt.component";
 import {StreamersService} from "../../streamers.service";
 import {NbDialogService} from "../../../../sharebook-nebular/theme/components/dialog/dialog.service";
 import {DialogUsernameEditPromptComponent} from "./dialog-username-prompt-edit-component/dialog-username-edit-prompt.component";
 import {IStreams} from "../../models/streams-model";
-import {HttpParams} from "@angular/common/http";
 import {RestService} from "../../../../core/rest/rest.service";
 import {UserStore} from "../../../../core/stores/user.store";
 import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";

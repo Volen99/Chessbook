@@ -105,7 +105,7 @@ import { NB_DOCUMENT } from '../../theme.options';
  *
  * @stacked-example(Single column, timepicker/timepicker-single-column.component)
  *
- * Timepicker support forms and reactive forms API so you can provide value using `formControl` and `ngModel` directives
+ * Timepicker support shared-forms and reactive shared-forms API so you can provide value using `formControl` and `ngModel` directives
  * @stacked-example(Form control, timepicker/timepicker-form-control.component)
  *
  * <input [nbTimepicker]="timepicker" twelveHoursFormat>

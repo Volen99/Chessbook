@@ -2,7 +2,6 @@ import {Inject, LOCALE_ID, Pipe, PipeTransform} from '@angular/core';
 import {formatNumber} from '@angular/common';
 
 // Thanks: https://github.com/danrevah/ngx-pipes/blob/master/src/ng-pipes/pipes/math/bytes.ts
-
 @Pipe({name: 'myNumberFormatter'})
 export class NumberFormatterPipe implements PipeTransform {
 

@@ -97,6 +97,7 @@
                 //    query = query.Where(c => vendorId == c.VendorId);
 
                 query = query.Where(c => !c.Deleted);
+                query = query.Where(c => c.ScreenName != null); // by mi
 
                 if (customerRoleIds != null && customerRoleIds.Length > 0)
                 {
@@ -639,7 +640,7 @@
         /// </returns>
         public virtual async Task<bool> IsForumModeratorAsync(Customer customer, bool onlyActiveCustomerRoles = true)
         {
-            return await IsInCustomerRoleAsync(customer, NopCustomerDefaults.ForumModeratorsRoleName, onlyActiveCustomerRoles);
+            return await IsInCustomerRoleAsync(customer, NopCustomerDefaults.ModeratorsRoleName, onlyActiveCustomerRoles);
         }
 
         /// <summary>
@@ -681,7 +682,7 @@
         /// </returns>
         public virtual async Task<bool> IsVendorAsync(Customer customer, bool onlyActiveCustomerRoles = true)
         {
-            return await IsInCustomerRoleAsync(customer, NopCustomerDefaults.VendorsRoleName, onlyActiveCustomerRoles);
+            return false; // await IsInCustomerRoleAsync(customer, NopCustomerDefaults.VendorsRoleName, onlyActiveCustomerRoles);
         }
 
         /// <summary>

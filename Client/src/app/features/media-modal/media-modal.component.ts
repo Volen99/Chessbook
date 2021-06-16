@@ -1,14 +1,15 @@
 import {
-  AfterContentInit,
   AfterViewInit,
   Component, EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
-  OnInit, Output, Renderer2,
+  OnInit, Output,
   SimpleChanges, ViewChild
 } from '@angular/core';
-import {IMediaEntity} from "../../shared/post-object/Entities/interfaces/IMediaEntity";
+
+import {SwiperComponent} from 'ngx-swiper-wrapper';
+import {SwiperOptions} from 'swiper';
 
 import {
   faComment,
@@ -16,19 +17,13 @@ import {
   faHeart,
 } from '@fortawesome/pro-light-svg-icons';
 
-
 import {
   faChevronLeft,
   faChevronRight,
   faTimes,
 } from '@fortawesome/pro-solid-svg-icons';
 import {getAverageFromBlurhash} from "../../shared/core-utils/miscs/blurhash";
-
-
-import {SwiperComponent, SwiperDirective} from 'ngx-swiper-wrapper';
-import {SwiperOptions} from 'swiper';
-import {PaginationOptions} from 'swiper/types/components/pagination';
-import {ScrollbarOptions} from 'swiper/types/components/scrollbar';
+import {IMediaEntity} from "../../shared/post-object/Entities/interfaces/IMediaEntity";
 
 @Component({
   selector: 'app-media-modal',
@@ -46,6 +41,20 @@ export class MediaModalComponent implements OnInit, OnChanges, AfterViewInit, On
   @Output() backgroundColorChange = new EventEmitter<any>();
 
   constructor() {
+  }
+
+  // componentDidUpdate
+  // https://stackoverflow.com/questions/44811723/ngonchanges-tracking-previous-value-and-new-value ♥
+  ngOnChanges(changes: SimpleChanges): void {
+    let {index} = changes;
+    if (index) {
+      if (index.previousValue !== this.indexState) {
+        this._sendBackgroundColor();
+      }
+    }
+  }
+
+  ngOnInit(): void {
   }
 
   ngAfterViewInit(): void {
@@ -69,25 +78,7 @@ export class MediaModalComponent implements OnInit, OnChanges, AfterViewInit, On
       }
     }
 
-
-
-
     this._sendBackgroundColor();
-  }
-
-  ngOnInit(): void {
-  }
-
-  // componentDidUpdate
-  // https://stackoverflow.com/questions/44811723/ngonchanges-tracking-previous-value-and-new-value ♥
-  ngOnChanges(changes: SimpleChanges): void {
-    let {index} = changes;
-    if (index) {
-      if (index.previousValue !== this.indexState) {
-        this._sendBackgroundColor();
-      }
-    }
-
   }
 
   ngOnDestroy(): void {
@@ -145,11 +136,11 @@ export class MediaModalComponent implements OnInit, OnChanges, AfterViewInit, On
 
   handleSwipe = (index) => {
     this.indexState = index % this.media.length;
-  };
+  }
 
   handleTransitionEnd = () => {
     this.zoomButtonHidden = false;
-  };
+  }
 
   handleNextClick = () => {
     this.indexState = (this.getIndex() + 1) % this.media.length;
@@ -158,7 +149,7 @@ export class MediaModalComponent implements OnInit, OnChanges, AfterViewInit, On
     if (this.media.length > 1) {
       this._sendBackgroundColor();
     }
-  };
+  }
 
   handlePrevClick = () => {
     this.indexState = (this.media.length + this.getIndex() - 1) % this.media.length;
@@ -167,7 +158,7 @@ export class MediaModalComponent implements OnInit, OnChanges, AfterViewInit, On
     if (this.media.length > 1) {
       this._sendBackgroundColor();
     }
-  };
+  }
 
   handleChangeIndex = (e) => {
     const index = Number(e.currentTarget.getAttribute('data-index'));
@@ -178,7 +169,7 @@ export class MediaModalComponent implements OnInit, OnChanges, AfterViewInit, On
     if (this.media.length > 1) {
       this._sendBackgroundColor();
     }
-  };
+  }
 
   getIndex() {
     return this.indexState != null ? this.indexState : this.index;
@@ -197,18 +188,18 @@ export class MediaModalComponent implements OnInit, OnChanges, AfterViewInit, On
         e.stopPropagation();
         break;
     }
-  };
+  }
 
   toggleNavigation = () => {
     this.navigationHidden = !this.navigationHidden;
-  };
+  }
 
   handleStatusClick = e => {
     if (e.button === 0 && !(e.ctrlKey || e.metaKey)) {
       e.preventDefault();
       // this.context.router.history.push(`/statuses/${this.props.statusId}`);
     }
-  };
+  }
 
   _sendBackgroundColor() {
     const index = this.getIndex();

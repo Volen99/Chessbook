@@ -1,9 +1,7 @@
+import {AfterViewChecked, Component, OnInit} from '@angular/core';
 import {ViewportScroller} from '@angular/common';
 import {HttpErrorResponse} from '@angular/common/http';
-import {AfterViewChecked, Component, OnInit} from '@angular/core';
-import {User} from "../../../shared/shared-main/user/user.model";
-import {AuthService} from "../../../core/auth/auth.service";
-import {Notifier} from "../../../core/notification/notifier.service";
+
 import {UsersService} from "../../../core/backend/common/services/users.service";
 import {genericUploadErrorHandler, uploadErrorHandler} from '../../../helpers/utils';
 import {UserStore} from "../../../core/stores/user.store";
@@ -23,14 +21,15 @@ export class MyAccountSettingsComponent implements OnInit, AfterViewChecked {
   constructor(
     private viewportScroller: ViewportScroller,
     private userService: UsersService,
-    private authService: AuthService,
     private userStore: UserStore,
     private toastrService: NbToastrService
   ) {
   }
 
   get userInformationLoaded() {
-    return this.authService.userInformationLoaded;
+    // return this.authService.userInformationLoaded;
+
+    return this.userStore.getUser();
   }
 
   ngOnInit() {
@@ -71,7 +70,7 @@ export class MyAccountSettingsComponent implements OnInit, AfterViewChecked {
         data => {
           this.toastrService.success(`Avatar deleted.`, 'Success');
 
-          this.user.updateAccountAvatar();
+          // this.user.updateAccountAvatar();
         },
 
         (err: HttpErrorResponse) => this.toastrService.danger(err.message)

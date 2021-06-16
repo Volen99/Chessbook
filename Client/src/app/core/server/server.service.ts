@@ -3,7 +3,7 @@ import {first, map, share, shareReplay, switchMap, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Inject, Injectable, LOCALE_ID} from '@angular/core';
 import {environment} from '../../../environments/environment';
-import {ServerConfig} from "../../shared/models/server/server-config.model";
+import {HTMLServerConfig, ServerConfig} from "../../shared/models/server/server-config.model";
 
 @Injectable()
 export class ServerService {
@@ -17,6 +17,7 @@ export class ServerService {
 
   private localeObservable: Observable<any>;
   private configObservable: Observable<ServerConfig>;
+  private htmlConfig: HTMLServerConfig;
 
   private configReset = false;
 
@@ -217,6 +218,10 @@ export class ServerService {
     }
 
     return this.configObservable;
+  }
+
+  getHTMLConfig () {
+    return this.htmlConfig
   }
 
   getTmpConfig() {

@@ -1,11 +1,6 @@
 import {AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {IPoll} from "../../shared/posts/models/poll/poll";
 
-// const messages = defineMessages({
-//   closed: { id: 'poll.closed', defaultMessage: 'Closed' },
-//   voted: { id: 'poll.voted', defaultMessage: 'You voted for this answer', description: 'Tooltip of the "voted" checkmark in polls' },
-// });
-
 @Component({
   selector: 'app-poll',
   templateUrl: './poll.component.html',

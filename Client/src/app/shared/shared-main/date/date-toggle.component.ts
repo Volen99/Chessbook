@@ -1,5 +1,6 @@
 import {DatePipe} from '@angular/common';
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
+
 import {FromNowPipe} from "../angular/pipes/from-now.pipe";
 
 @Component({

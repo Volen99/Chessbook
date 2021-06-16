@@ -1,5 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {MatRippleModule} from "@angular/material/core";
 
 import {
   MeasureConverterPipe,
@@ -15,11 +16,12 @@ import {
   TwoColumnsLayoutComponent,
 } from './layouts';
 import { InitUserService } from './services/init-user.service';
-
 import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
+import {MATERIAL_DARK_THEME} from "./styles/material/theme.material-dark";
+import {MATERIAL_LIGHT_THEME} from "./styles/material/theme.material-light";
 import {NbLayoutModule} from "../sharebook-nebular/theme/components/layout/layout.module";
 import {NbMenuModule} from "../sharebook-nebular/theme/components/menu/menu.module";
 import {NbUserModule} from "../sharebook-nebular/theme/components/user/user.module";
@@ -39,9 +41,8 @@ import {SearchInputComponent} from "./components/search-input/search-input.compo
 import {TinyMCEComponent} from "./components/tiny-mce/tiny-mce.component";
 import {AuthModule} from "../auth/auth.module";
 import {NbThemeModule} from "../sharebook-nebular/theme/theme.module";
-import {MatRippleModule} from "@angular/material/core";
-import {MATERIAL_DARK_THEME} from "./styles/material/theme.material-dark";
-import {MATERIAL_LIGHT_THEME} from "./styles/material/theme.material-light";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -79,7 +80,7 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, MatRippleModule, AuthModule, ...NB_MODULES],
+  imports: [CommonModule, MatRippleModule, AuthModule, ...NB_MODULES, FontAwesomeModule],
   exports: [CommonModule, MatRippleModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })

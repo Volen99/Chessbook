@@ -1,6 +1,7 @@
-import {SortMeta} from 'primeng/api';
-import {HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {HttpParams} from '@angular/common/http';
+import {SortMeta} from 'primeng/api';
+
 import {ComponentPaginationLight} from './component-pagination.model';
 import {RestPagination} from './rest-pagination';
 import {ICursorQueryParameters} from "../../shared/models/query/cursor-query-parameters";

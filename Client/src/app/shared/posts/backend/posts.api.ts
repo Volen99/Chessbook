@@ -3,17 +3,7 @@ import {HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 import {HttpService} from "../../../core/backend/common/api/http.service";
-import {IPublishRetweetParameters} from "../parameters/publish-retweet-parameters";
-import {IDestroyRetweetParameters} from "../parameters/destroy-retweet-parameters";
-import {IGetRetweetsParameters} from "../parameters/get-retweets-parameters";
-import {IGetRetweeterIdsParameters} from "../parameters/get-retweeter-ids-parameters";
-import {IDestroyTweetParameters} from "../parameters/destroy-tweet-parameters";
-import {IFavoriteTweetParameters} from "../parameters/favorite-tweet-parameters";
-import {IUnfavoriteTweetParameters} from "../parameters/unfavorite-tweet-parameters";
-import {IGetUserFavoriteTweetsParameters} from "../parameters/get-favorite-tweets-Parameters";
-import {IGetOEmbedTweetParameters} from "../parameters/get-OEmbed-tweet-parameters";
 import {UserVideoRate} from "../models/rate/user-video-rate.model";
-import {PostDetails} from "../../shared-main/post/post-details.model";
 
 @Injectable()
 export class PostsApi {

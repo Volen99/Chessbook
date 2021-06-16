@@ -10,7 +10,7 @@
   },
   "files": [
     "test.ts",
-    "polyfills.ts"
+    "src/polyfills.ts" // was without src but in peertube it is with src
   ],
   "include": [
     "**/*.spec.ts",

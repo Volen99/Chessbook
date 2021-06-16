@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
+
 import {NbDialogRef} from "../../../../sharebook-nebular/theme/components/dialog/dialog-ref";
 import {ShowcaseDialogComponent} from "../../../../pages/modal-overlays/dialog/showcase-dialog/showcase-dialog.component";
-import {Router} from "@angular/router";
 import {PostsService} from "../../posts.service";
 import {IUser} from "../../../../core/interfaces/common/users";
 import {UserStore} from "../../../../core/stores/user.store";

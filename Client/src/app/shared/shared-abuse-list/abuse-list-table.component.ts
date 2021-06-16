@@ -1,45 +1,50 @@
-import * as debug from 'debug';
+import {DomSanitizer} from '@angular/platform-browser';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import truncate from 'lodash-es/truncate';
 import {SortMeta} from 'primeng/api';
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
-import {ActivatedRoute, Router} from '@angular/router';
+import * as debug from 'debug';
+
+import {
+  faCommentSmile,
+  faEllipsisH,
+  faChevronRight,
+  faChevronDown,
+} from '@fortawesome/pro-light-svg-icons';
+
+
+
 import {AbuseMessageModalComponent} from './abuse-message-modal.component';
 import {ModerationCommentModalComponent} from './moderation-comment-modal.component';
 import {ProcessedAbuse} from './processed-abuse.model';
 import {RestTable} from "../../core/rest/rest-table";
 import {RestPagination} from "../../core/rest/rest-pagination";
 import {DropdownAction} from "../shared-main/buttons/action-dropdown.component";
-import {Notifier} from "../../core/notification/notifier.service";
-import {AbuseService} from "../moderation/abuse.service";
+import {AbuseService} from "../shared-moderation/abuse.service";
 import {VideoCommentService} from "../shared-post-comment/video-comment.service";
 import {MarkdownService} from "../../core/renderer/markdown.service";
 import {ConfirmService} from "../../core/confirm/confirm.service";
-import {VideoBlockService} from "../moderation/video-block.service";
+import {VideoBlockService} from "../shared-moderation/video-block.service";
 import {PostsService} from "../posts/posts.service";
-import {BlocklistService} from "../moderation/blocklist.service";
+import {BlocklistService} from "../shared-moderation/blocklist.service";
 import {AdminAbuse} from "../models/moderation/abuse/abuse.model";
 import {AbuseState} from "../models/moderation/abuse/abuse-state.model";
 import {buildVideoLink, buildVideoOrPlaylistEmbed} from "../../../assets/utils";
 import {environment} from "../../../environments/environment";
 import {Post} from "../shared-main/post/post.model";
 import {User} from "../shared-main/user/user.model";
-import {IUser} from "../../core/interfaces/common/users";
+import {AdvancedInputFilter} from "../shared-forms/advanced-input-filter.component";
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
 
-const logger = debug('peertube:moderation:AbuseListTableComponent');
-
-import {
-  faCommentSmile,
-} from '@fortawesome/pro-light-svg-icons';
+const logger = debug('peertube:shared-moderation:AbuseListTableComponent');
 
 @Component({
   selector: 'my-abuse-list-table',
   templateUrl: './abuse-list-table.component.html',
-  styleUrls: ['../moderation/moderation.scss', './abuse-list-table.component.scss']
+  styleUrls: ['../shared-moderation/moderation.scss', './abuse-list-table.component.scss']
 })
-export class AbuseListTableComponent extends RestTable implements OnInit, AfterViewInit {
+export class AbuseListTableComponent extends RestTable implements OnInit {
   @Input() viewType: 'admin' | 'user';
-  @Input() baseRoute: string;
 
   @ViewChild('abuseMessagesModal', {static: true}) abuseMessagesModal: AbuseMessageModalComponent;
   @ViewChild('moderationCommentModal', {static: true}) moderationCommentModal: ModerationCommentModalComponent;
@@ -51,10 +56,33 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
 
   abuseActions: DropdownAction<ProcessedAbuse>[][] = [];
 
+  inputFilters: AdvancedInputFilter[] = [
+    {
+      queryParams: {'search': 'state:pending'},
+      label: `Unsolved reports`
+    },
+    {
+      queryParams: {'search': 'state:accepted'},
+      label: `Accepted reports`
+    },
+    {
+      queryParams: {'search': 'state:rejected'},
+      label: `Refused reports`
+    },
+    {
+      queryParams: {'search': 'videoIs:blacklisted'},
+      label: `Reports with blocked videos`
+    },
+    {
+      queryParams: {'search': 'videoIs:deleted'},
+      label: `Reports with deleted videos`
+    }
+  ];
+
   constructor(
     protected route: ActivatedRoute,
     protected router: Router,
-    private notifier: Notifier,
+    private notifier: NbToastrService,
     private abuseService: AbuseService,
     private blocklistService: BlocklistService,
     private commentService: VideoCommentService,
@@ -62,8 +90,7 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
     private videoBlocklistService: VideoBlockService,
     private confirmService: ConfirmService,
     private markdownRenderer: MarkdownService,
-    private sanitizer: DomSanitizer
-  ) {
+    private sanitizer: DomSanitizer) {
     super();
   }
 
@@ -81,16 +108,12 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
     ];
 
     this.initialize();
-    this.listenToSearchChange();
-  }
-
-  ngAfterViewInit() {
-    if (this.search) {
-      this.setTableFilter(this.search, false);
-    }
   }
 
   faCommentSmile = faCommentSmile;
+  faEllipsisH = faEllipsisH;
+  faChevronRight = faChevronRight;
+  faChevronDown = faChevronDown;
 
   isAdminView() {
     return this.viewType === 'admin';
@@ -105,7 +128,7 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
   }
 
   onModerationCommentUpdated() {
-    this.loadData();
+    this.reloadData();
   }
 
   isAbuseAccepted(abuse: AdminAbuse) {
@@ -114,6 +137,11 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
 
   isAbuseRejected(abuse: AdminAbuse) {
     return abuse.state.id === AbuseState.REJECTED;
+  }
+
+  // by mi kk
+  isAbusePending(abuse: AdminAbuse) {
+    return abuse.state.id === AbuseState.PENDING;
   }
 
   getVideoUrl(abuse: AdminAbuse) {
@@ -125,7 +153,7 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
   }
 
   getAccountUrl(abuse: ProcessedAbuse) {
-    return '/accounts/' + abuse.flaggedAccount.screenName; // or displayname idk
+    return '/a/' + abuse.flaggedAccount.screenName;
   }
 
   getVideoEmbed(abuse: AdminAbuse) {
@@ -136,12 +164,9 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
         warningTitle: false,
         startTime: abuse.video.startAt,
         stopTime: abuse.video.endAt
-      })
+      }),
+      abuse.video.name
     );
-  }
-
-  switchToDefaultAvatar($event: Event) {
-    ($event.target as HTMLImageElement).src = User.GET_DEFAULT_AVATAR_URL();
   }
 
   async removeAbuse(abuse: AdminAbuse) {
@@ -151,19 +176,19 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
     this.abuseService.removeAbuse(abuse).subscribe(
       () => {
         this.notifier.success(`Abuse deleted.`);
-        this.loadData();
+        this.reloadData();
       },
 
-      err => this.notifier.error(err.message)
+      err => this.notifier.danger(err.message, 'Error')
     );
   }
 
   updateAbuseState(abuse: AdminAbuse, state: AbuseState) {
     this.abuseService.updateAbuse(abuse, {state})
       .subscribe(
-        () => this.loadData(),
+        () => this.reloadData(),
 
-        err => this.notifier.error(err.message)
+        err => this.notifier.danger(err.message, 'Error')
       );
   }
 
@@ -187,10 +212,10 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
       return true;
     }
 
-    // return UserData.IS_LOCAL(abuse.reporterAccount.host);
+    return false;   // Actor.IS_LOCAL(abuse.reporterAccount.host);
   }
 
-  protected loadData() {
+  protected reloadData() {
     logger('Loading data.');
 
     const options = {
@@ -236,6 +261,7 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
             }
           }
 
+          debugger
           if (abuse.reporterAccount) {
             abuse.reporterAccount = new User(abuse.reporterAccount);
           }
@@ -250,7 +276,7 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
         }
       },
 
-      err => this.notifier.error(err.message)
+      err => this.notifier.danger(err.message, 'Error')
     );
   }
 
@@ -295,7 +321,9 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
   }
 
   private buildFlaggedAccountActions(): DropdownAction<ProcessedAbuse>[] {
-    if (!this.isAdminView()) return [];
+    if (!this.isAdminView()) {
+      return [];
+    }
 
     return [
       {
@@ -309,12 +337,6 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
         isDisplayed: abuse => abuse.flaggedAccount && !abuse.comment && !abuse.video,
         handler: abuse => this.muteAccountHelper(abuse.flaggedAccount)
       },
-
-      // {
-      //   label: `Mute server account`,
-      //   isDisplayed: abuse => abuse.flaggedAccount && !abuse.reply-comment && !abuse.video,
-      //   handler: abuse => this.muteServerHelper(abuse.flaggedAccount.host)
-      // }
     ];
   }
 
@@ -333,12 +355,6 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
         isDisplayed: abuse => !!abuse.reporterAccount,
         handler: abuse => this.muteAccountHelper(abuse.reporterAccount)
       },
-
-      // {
-      //   label: `Mute server`,
-      //   isDisplayed: abuse => abuse.reporterAccount && !abuse.reporterAccount.userId,
-      //   handler: abuse => this.muteServerHelper(abuse.reporterAccount.host)
-      // }
     ];
   }
 
@@ -347,7 +363,7 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
 
     return [
       {
-        label: `Actions for the video`,
+        label: $localize`Actions for the video`,
         isHeader: true,
         isDisplayed: abuse => abuse.video && !abuse.video.deleted
       },
@@ -363,7 +379,7 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
                 this.updateAbuseState(abuse, AbuseState.ACCEPTED);
               },
 
-              err => this.notifier.error(err.message)
+              err => this.notifier.danger(err.message, 'Error')
             );
         }
       },
@@ -379,7 +395,7 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
                 this.updateAbuseState(abuse, AbuseState.ACCEPTED);
               },
 
-              err => this.notifier.error(err.message)
+              err => this.notifier.danger(err.message, 'Error')
             );
         }
       },
@@ -391,7 +407,9 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
             `Do you really want to delete this video?`,
             `Delete`
           );
-          if (res === false) return;
+          if (res === false) {
+            return;
+          }
 
           this.postService.removePost(abuse.video.id)
             .subscribe(
@@ -401,7 +419,7 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
                 this.updateAbuseState(abuse, AbuseState.ACCEPTED);
               },
 
-              err => this.notifier.error(err.message)
+              err => this.notifier.danger(err.message, 'Error')
             );
         }
       }
@@ -436,33 +454,22 @@ export class AbuseListTableComponent extends RestTable implements OnInit, AfterV
                 this.updateAbuseState(abuse, AbuseState.ACCEPTED);
               },
 
-              err => this.notifier.error(err.message)
+              err => this.notifier.danger(err.message, 'Error')
             );
         }
       }
     ];
   }
 
-  private muteAccountHelper(account: IUser) {
-    // this.blocklistService.blockAccountByInstance(account)
-    //   .subscribe(
-    //     () => {
-    //       this.notifier.success(`Account ${account.nameWithHost} muted by the instance.`);
-    //       account.mutedByInstance = true;
-    //     },
-    //
-    //     err => this.notifier.error(err.message)
-    //   );
-  }
-
-  private muteServerHelper(host: string) {
-    this.blocklistService.blockServerByInstance(host)
+  private muteAccountHelper(account: User) {
+    this.blocklistService.blockAccountByInstance(account)
       .subscribe(
         () => {
-          this.notifier.success(`Server ${host} muted by the instance.`);
+          this.notifier.success(`Account ${account.screenName} muted by the instance.`, 'Success');
+          // account.mutedByInstance = true;
         },
 
-        err => this.notifier.error(err.message)
+        err => this.notifier.danger(err.message, 'Error')
       );
   }
 

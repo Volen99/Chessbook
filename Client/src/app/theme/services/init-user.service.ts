@@ -1,11 +1,13 @@
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
-import {Injectable} from '@angular/core';
+import {Subject} from "rxjs/Subject";
+
 import {IUser, UserData} from "../../core/interfaces/common/users";
 import {NbThemeService} from "../../sharebook-nebular/theme/services/theme.service";
 import {NbJSThemesRegistry} from "../../sharebook-nebular/theme/services/js-themes-registry.service";
 import {UserStore} from "../../core/stores/user.store";
-import {Subject} from "rxjs/Subject";
+import {User} from "../../shared/shared-main/user/user.model";
 
 @Injectable()
 export class InitUserService {
@@ -23,6 +25,7 @@ export class InitUserService {
     return this.usersService.getCurrentUser()
       .pipe(tap((user: IUser) => {
         if (user) {
+          user = new User(user);
           this.userStore.setUser(user);
 
           this.isReady = true;
@@ -35,8 +38,6 @@ export class InitUserService {
             }
           }
         }
-
-
       }));
   }
 }

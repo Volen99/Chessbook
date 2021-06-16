@@ -1,9 +1,7 @@
 import {Injectable} from "@angular/core";
-import {HttpService} from "../../../../core/backend/common/api/http.service";
 import {HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {ResultList} from "../../../models";
-import {Post} from "../../post/post.model";
+
+import {HttpService} from "../../../../core/backend/common/api/http.service";
 
 @Injectable()
 export class RelationshipsApi {

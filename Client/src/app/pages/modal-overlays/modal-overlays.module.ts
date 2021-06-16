@@ -12,12 +12,6 @@ import { DialogNamePromptComponent } from './dialog/dialog-name-prompt/dialog-na
 import { WindowComponent } from './window/window.component';
 import { WindowFormComponent } from './window/window-form/window-form.component';
 import { ToastrComponent } from './toastr/toastr.component';
-import { PopoversComponent } from './popovers/popovers.component';
-import {
-  NgxPopoverCardComponent, NgxPopoverFormComponent,
-  NgxPopoverTabsComponent,
-} from './popovers/popover-examples.component';
-import { TooltipComponent } from './tooltip/tooltip.component';
 import {ThemeModule} from "../../theme/theme.module";
 import {NbDialogModule} from "../../sharebook-nebular/theme/components/dialog/dialog.module";
 import {NbWindowModule} from "../../sharebook-nebular/theme/components/window/window.module";
@@ -44,20 +38,12 @@ const COMPONENTS = [
   DialogNamePromptComponent,
   WindowComponent,
   WindowFormComponent,
-  PopoversComponent,
-  NgxPopoverCardComponent,
-  NgxPopoverFormComponent,
-  NgxPopoverTabsComponent,
-  TooltipComponent,
 ];
 
 const ENTRY_COMPONENTS = [
   ShowcaseDialogComponent,
   DialogNamePromptComponent,
   WindowFormComponent,
-  NgxPopoverCardComponent,
-  NgxPopoverFormComponent,
-  NgxPopoverTabsComponent,
 ];
 
 const MODULES = [

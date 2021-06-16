@@ -20,10 +20,10 @@ export class SidebarColumnComponent implements OnInit {
 
   getMenuItems() {
     return [
-      { title: 'About', link: '/sharebook.com', queryParams: { profile: true } },
-      { title: 'Status', link: '/sharebook.com' },
-      { title: 'Sharebook for Business', link: '/sharebook.com' },
-      { title: 'Developers', link: '/sharebook.com' },
+      { title: 'About', link: '/about' },
+      { title: 'Status', link: '/chessbook.com', queryParams: { profile: true }  },
+      { title: 'Chessbook for Business', link: '/chessbook.com' },
+      { title: 'Developers', link: '/chessbook.com' },
     ];
   }
 

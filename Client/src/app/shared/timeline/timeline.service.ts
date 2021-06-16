@@ -1,4 +1,5 @@
 import {Injectable} from "@angular/core";
+import {Observable} from "rxjs";
 
 import {IGetHomeTimelineParameters} from "../models/timeline/get-home-timeline-parameters";
 import {IGetUserTimelineParameters} from "../models/timeline/get-user-timeline-parameters";
@@ -7,7 +8,6 @@ import {IGetRetweetsOfMeTimelineParameters} from "../models/timeline/get-retweet
 import {RestService} from "../../core/rest/rest.service";
 import {TimelineQueryGeneratorService} from "./query/timeline-query-generator.service";
 import {TimelineApi} from "./backend/timeline.api";
-import {Observable} from "rxjs";
 import {IPost} from "../posts/models/tweet";
 
 @Injectable()

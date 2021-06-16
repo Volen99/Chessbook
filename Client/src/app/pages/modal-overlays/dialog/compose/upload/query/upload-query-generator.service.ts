@@ -1,10 +1,10 @@
+import {Injectable} from "@angular/core";
 import {HttpParams} from "@angular/common/http";
 
 import {IChunkUploadInitParameters} from "../../../../../../shared/models/upload/chunk-upload-init-parameters";
 import {IChunkUploadAppendParameters} from "../../../../../../shared/models/upload/chunk-upload-append-parameters";
 import {ICustomRequestParameters} from "../../../../../../shared/models/query/custom-request-parameters";
 import {RestService} from "../../../../../../core/rest/rest.service";
-import {Injectable} from "@angular/core";
 
 @Injectable()
 export class UploadQueryGeneratorService {

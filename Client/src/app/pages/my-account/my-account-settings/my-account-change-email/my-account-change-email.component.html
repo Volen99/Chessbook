@@ -34,28 +34,3 @@
     </div>
         <input nbButton status="primary" type="submit" i18n-value value="Change email" [disabled]="!form.valid" >
 </form>
-
-
-<!--<nb-card>-->
-<!--  <nb-card-header>EMAIL</nb-card-header>-->
-<!--  <nb-card-body><div class="form-group">-->
-<!--    <div i18n class="text-hint caption">-->
-<!--      Your current email is <span class="email">{{ user?.email }}</span>-->
-<!--    </div>-->
-<!--    <label for="inputEmail">Email</label>-->
-<!--    <input nbInput id="inputEmail" formControlName="email"-->
-<!--           [status]="(email?.errors?.required || email?.hasError('pattern')) && email.touched ? 'danger' : 'primary'"-->
-<!--           class="form-control"-->
-<!--           placeholder="Email">-->
-<!--    <ngx-validation-message label="Email"-->
-<!--                            [showPattern]="email?.hasError('pattern') && email.touched"-->
-<!--                            [showRequired]="email?.errors?.required && email.touched" min=1 max=120></ngx-validation-message>-->
-<!--  </div>-->
-
-<!--  </nb-card-body>-->
-<!--  <nb-card-footer>-->
-<!--    <button nbButton status="primary" [disabled]="!userForm.valid" (click)="save()" hero>Change email</button>-->
-<!--  </nb-card-footer>-->
-<!--</nb-card>-->
-
-

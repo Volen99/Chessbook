@@ -1,19 +1,13 @@
-﻿import {inject, Inject, Injectable, InjectionToken, Injector} from "@angular/core";
+﻿import {Injectable} from "@angular/core";
 
 import {IUploadParameters} from "../../../../../../shared/models/upload/upload-binary-parameters";
 import {IAddMediaMetadataParameters} from "../../../../../../shared/models/upload/add-media-metadata-parameters";
-import {IChunkedUploader} from "../../../../../../shared/models/upload/chunked-uploader";
 import {ChunkUploadInitParameters} from "../../../../../../shared/models/upload/chunk-upload-init-parameters";
 import {ChunkUploadAppendParameters} from "../../../../../../shared/models/upload/chunk-upload-append-parameters";
 import {MediaCategory} from "../../../../../../shared/models/enums/media-category";
-import {Resources} from "../../../../../../helpers/resourse";
-import {TimeSpan} from "../shared/timespan";
-import {ChunkUploadResult, IChunkUploadResult} from "./core/chunk-uploader-result";
-import {IMedia} from "../../../../../../shared/models/upload/media/media";
-import {IUploadedMediaInfo} from "../../../../../../shared/models/upload/media/uploaded-media-info";
+import {IChunkUploadResult} from "./core/chunk-uploader-result";
 import {ChunkedUploaderService} from "./chunked-uploader.service";
 import {AppInjector} from "../../../../../../app-injector";
-import {Media} from "./core/media";
 
 export interface IUploadQueryExecutorService {
   // Upload a binary
@@ -122,49 +116,6 @@ export class UploadQueryExecutorService {
 
     return uploader;
   }
-
-  // public addMediaMetadataAsync(metadata: IAddMediaMetadataParameters): Promise<ITwitterResult> {
-  //   let jsonConvert: JsonConvert = new JsonConvert();
-  //   let json = jsonConvert.serializeObject(metadata);
-  //
-  //   request.query.url = "https://upload.twitter.com/1.1/media/metadata/create.json";
-  //   request.query.httpMethod = HttpMethod.POST;
-  //   request.query.httpContent = json;  // new StringContent(json);
-  //
-  //   return this._twitterAccessor.executeRequestAsync(request);
-  //
-  //   // // let json = JsonConvert.SerializeObject(metadata);
-  //   //
-  //   // request.query.url = "Your server URL";     // "https://upload.twitter.com/1.1/media/metadata/create.json";
-  //   // request.query.httpMethod = HttpMethod.POST;
-  //   // // request.query.httpContent = new StringContent(json);
-  //   //
-  //   // return this._twitterAccessor.executeRequestAsync(request);
-  // }
-
-  // public async getMediaStatusAsync(media: IMedia, autoWait: boolean, request: ITwitterRequest): Promise<ITwitterResult<IUploadedMediaInfo>> {
-  //   if (!media.hasBeenUploaded) {
-  //     throw new Error(Resources.Exception_Upload_Status_NotUploaded);
-  //   }
-  //
-  //   if (media.uploadedMediaInfo.processingInfo == null) {
-  //     throw new Error(Resources.Exception_Upload_Status_No_ProcessingInfo);
-  //   }
-  //
-  //   if (autoWait) {
-  //     let timeBeforeOperationPermitted = TimeSpan.fromSeconds(media.uploadedMediaInfo.processingInfo.checkAfterInSeconds);
-  //
-  //     // let waitTimeRemaining = media.uploadedMediaInfo.createdDate.add(timeBeforeOperationPermitted).subtract(DateTime.now);
-  //     // if (waitTimeRemaining.TotalMilliseconds > 0) {
-  //     //   await this.sleep(waitTimeRemaining.TotalMilliseconds as number);
-  //     // }
-  //   }
-  //
-  //   request.query.url = `https://upload.twitter.com/1.1/media/upload.json?command=STATUS&media_id=${media.id}`;
-  //   request.query.httpMethod = HttpMethod.GET;
-  //
-  //   return await this._twitterAccessor.executeRequestAsync<IUploadedMediaInfo>(request);
-  // }
 
   private sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

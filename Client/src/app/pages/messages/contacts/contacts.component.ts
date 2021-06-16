@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
+
 import {Contact, PhoneData, RecentUser} from "../../../core/interfaces/iot/phone";
 
 @Component({

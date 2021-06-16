@@ -63,33 +63,33 @@ export class OptionComponent implements OnInit {
 
   handleOptionRemove = () => {
     this.options.splice(this.index, 1);
-  };
+  }
 
 
   handleToggleMultiple = e => {
     this.onToggleMultiple();
     e.preventDefault();
     e.stopPropagation();
-  };
+  }
 
   handleCheckboxKeypress = e => {
     if (e.key === 'Enter' || e.key === ' ') {
       this.handleToggleMultiple(e);
     }
-  };
+  }
 
   onSuggestionsClearRequested = () => {
     this.onClearSuggestions();
-  };
+  }
 
   onSuggestionsFetchRequested = (token) => {
     this.onFetchSuggestions(token);
-  };
+  }
 
   // @ts-ignore
   onSuggestionSelected = (tokenStart, token, value) => {
     this.onSuggestionSelected(tokenStart, token, value, ['poll', 'options', this.index]);
-  };
+  }
 
 }
 
@@ -122,15 +122,15 @@ export class SurveyComponent implements OnInit {
 
   handleAddOption = () => {
     this.onAddOption('');
-  };
+  }
 
   handleSelectDuration = e => {
     this.onChangeSettings(e.target.value, this.initialPoll.isMultiple);
-  };
+  }
 
   handleToggleMultiple = () => {
     // this.onChangeSettings(this.expiresIn, !this.isMultiple);
-  };
+  }
 
   handlePublish() {
     this.surveyService.publish(this.initialPoll)

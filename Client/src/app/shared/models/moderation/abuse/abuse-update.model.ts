@@ -1,7 +1,7 @@
-import { AbuseState } from './abuse-state.model'
+import { AbuseState } from './abuse-state.model';
 
 export interface AbuseUpdate {
-  moderationComment?: string
+  moderationComment?: string;
 
-  state?: AbuseState
+  state?: AbuseState;
 }

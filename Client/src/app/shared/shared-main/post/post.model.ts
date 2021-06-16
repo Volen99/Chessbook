@@ -1,6 +1,4 @@
 import {IPost} from "../../posts/models/tweet";
-import {IOEmbedTweet} from "../../posts/models/properties/OEmbed-tweet";
-import {ITweetDTO} from "../../posts/models/DTO/tweet-dto";
 import {IUser} from "../../../core/interfaces/common/users";
 import {ITweetEntities} from "../../post-object/Entities/interfaces/ITweetEntities";
 import {ICoordinates} from "../../posts/models/properties/ICoordinates";

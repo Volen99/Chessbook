@@ -1,9 +1,9 @@
 import {IUser} from "../../../core/interfaces/common/users";
 
 export interface ServerBlock {
-  byAccount: IUser
+  byAccount: IUser;
   blockedServer: {
     host: string
-  }
-  createdAt: Date | string
+  };
+  createdAt: Date | string;
 }

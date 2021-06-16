@@ -15,7 +15,7 @@
         /// <summary>
         /// Gets a system name of 'forum moderators' customer role
         /// </summary>
-        public static string ForumModeratorsRoleName => "ForumModerators";
+        public static string ModeratorsRoleName => "Moderators";
 
         /// <summary>
         /// Gets a system name of 'registered' customer role
@@ -27,10 +27,10 @@
         /// </summary>
         public static string GuestsRoleName => "Guests";
 
-        /// <summary>
-        /// Gets a system name of 'vendors' customer role
-        /// </summary>
-        public static string VendorsRoleName => "Vendors";
+        ///// <summary>
+        ///// Gets a system name of 'vendors' customer role
+        ///// </summary>
+        //public static string VendorsRoleName => "Vendors";
 
         #endregion
 

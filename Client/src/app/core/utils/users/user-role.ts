@@ -2,7 +2,7 @@ import {UserRight} from "../../../shared/models/users/user-right.enum";
 import {UserRole} from "../../../shared/models/users/user-role";
 
 export const USER_ROLE_LABELS: { [id in UserRole]: string } = {
-  [UserRole.USER]: 'User',
+  [UserRole.REGISTERED]: 'Registered',
   [UserRole.MODERATOR]: 'Moderator',
   [UserRole.ADMINISTRATOR]: 'Administrator'
 };
@@ -27,11 +27,17 @@ const userRoleRights: { [id in UserRole]: UserRight[] } = {
     UserRight.SEE_ALL_COMMENTS
   ],
 
-  [UserRole.USER]: []
+  [UserRole.REGISTERED]: []
 };
 
-export function hasUserRight(userRole: UserRole, userRight: UserRight) {
-  const userRights = userRoleRights[userRole];
+export function hasUserRight(userRoles: UserRole[], userRight: UserRight) {
+  for (const role of userRoles) {
+    const userRights = userRoleRights[role];
 
-  return userRights.includes(UserRight.ALL) || userRights.includes(userRight);
+    if (userRights.includes(UserRight.ALL) || userRights.includes(userRight)) {
+      return true;
+    }
+  }
+
+  return false;
 }

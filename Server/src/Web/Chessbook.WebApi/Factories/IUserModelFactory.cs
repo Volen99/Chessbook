@@ -1,12 +1,24 @@
 ﻿using System.Threading.Tasks;
 using Chessbook.Data.Models;
+using Chessbook.Web.Api.Areas.Admin.Models.Users;
 using Chessbook.Web.Models;
+using Nop.Core;
 using Nop.Web.Areas.Admin.Models.Customers;
 
 namespace Chessbook.Web.Api.Factories
 {
     public interface IUserModelFactory
     {
+        /// <summary>
+        /// Prepare paged customer list model
+        /// </summary>
+        /// <param name="searchModel">Customer search model</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the customer list model
+        /// </returns>
+        Task<CustomerListModel> PrepareCustomerListModelAsync(CustomerSearchModel searchModel);
+
         /// <summary>
         /// Prepare customer model
         /// </summary>

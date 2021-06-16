@@ -4,12 +4,12 @@
             <input nbInput type="text" fullWidth placeholder="The question..." (change)="this.handleQuestionChange($event)">
             <ul>
                 <ng-container *ngFor="let title of this.initialPoll.options; let i = index">
-                    <app-poll-form-option [options]="this.initialPoll.options" [title]="title" key="i" [index]="i" [onRemove]="this.onRemoveOption" [isPollMultiple]="this.initialPoll.multiple" [onToggleMultiple]="this.handleToggleMultiple" [autoFocus]="i === this.autoFocusIndex"></app-poll-form-option> <!--...other-->
+                    <app-poll-form-option [options]="this.initialPoll.options" [title]="title" [index]="i" [onRemove]="this.onRemoveOption" [isPollMultiple]="this.initialPoll.multiple" [onToggleMultiple]="this.handleToggleMultiple" [autoFocus]="i === this.autoFocusIndex"></app-poll-form-option> <!--...other-->
                 </ng-container>
             </ul>
 
             <nb-card-footer>
-                    <button ghost nbButton status="primary" (click)="this.handleAddOption()"> <!--[disabled]="this.initialPoll.options.length >= 4"-->
+                    <button ghost nbButton status="primary" (click)="this.handleAddOption()" [disabled]="this.initialPoll.options.length >= 4">
                         <nb-icon icon="plus-outline"></nb-icon>
                     </button>
 
@@ -25,9 +25,6 @@
 
             </nb-card-footer>
         </div>
-
-
-
     </nb-card-body>
 </nb-card>
 

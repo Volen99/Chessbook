@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentRef, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {getScrollbarWidth} from "../../core/utils/scrollbar";
 import {fromJS} from "immutable";
 import {MediaGalleryComponent} from "../../components/media-gallery/media-gallery.component";

@@ -1,0 +1,208 @@
+.poll {
+  margin-top: 16px;
+  font-size: 14px;
+
+  li {
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  &__chart {
+    border-radius: 4px;
+    display: block;
+    background: darken(#9bcbed, 5%);
+    height: 5px;
+    min-width: 1%;
+
+    &.leading {
+      background: #9bcbed;
+    }
+  }
+
+  progress {
+    border: 0;
+    display: block;
+    width: 100%;
+    height: 5px;
+    appearance: none;
+    background: transparent;
+
+    &::-webkit-progress-bar {
+      background: transparent;
+    }
+
+    // Those rules need to be entirely separate or they won't work, hence the
+    // duplication
+    &::-moz-progress-bar {
+      border-radius: 4px;
+      background: darken(#9bcbed, 5%);
+    }
+
+    &::-ms-fill {
+      border-radius: 4px;
+      background: darken(#9bcbed, 5%);
+    }
+
+    &::-webkit-progress-value {
+      border-radius: 4px;
+      background: darken(#9bcbed, 5%);
+    }
+  }
+
+  &__option {
+    position: relative;
+    display: flex;
+    padding: 6px 0;
+    line-height: 18px;
+    cursor: default;
+    overflow: hidden;
+
+    &__text {
+      display: inline-block;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      max-width: calc(100% - 45px - 25px);
+    }
+
+    input[type=radio],
+    input[type=checkbox] {
+      display: none;
+    }
+
+    .autossugest-input {
+      flex: 1 1 auto;
+    }
+
+    input[type=text] {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      font-size: 14px;
+      color: #000000;
+      outline: 0;
+      font-family: inherit;
+      background: #ffffff;
+      border: 1px solid darken(#ffffff, 14%);
+      border-radius: 4px;
+      padding: 6px 10px;
+
+      &:focus {
+        border-color: #2b90d9;
+      }
+    }
+
+    &.selectable {
+      cursor: pointer;
+    }
+
+    &.editable {
+      display: flex;
+      align-items: center;
+      overflow: visible;
+    }
+  }
+
+  &__input {
+    display: inline-block;
+    position: relative;
+    border: 1px solid #9baec8;
+    box-sizing: border-box;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    margin-right: 10px;
+    top: -1px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-top: auto;
+    margin-bottom: auto;
+    flex: 0 0 18px;
+
+    &.checkbox {
+      border-radius: 4px;
+    }
+
+    &.active {
+      border-color: #79bd9a;
+      background: #79bd9a;
+    }
+
+    &:active,
+    &:focus,
+    &:hover {
+      border-color: lighten(#79bd9a, 15%);
+      border-width: 4px;
+    }
+
+    &::-moz-focus-inner {
+      outline: 0 !important;
+      border: 0;
+    }
+
+    &:focus,
+    &:active {
+      outline: 0 !important;
+    }
+  }
+
+  &__number {
+    display: inline-block;
+    width: 45px;
+    font-weight: 700;
+    flex: 0 0 45px;
+  }
+
+  &__voted {
+    padding: 0 5px;
+    display: inline-block;
+
+    &__mark {
+      font-size: 18px;
+    }
+  }
+
+  &__footer {
+    padding-top: 6px;
+    padding-bottom: 5px;
+    color: #444b5d;
+  }
+
+  &__link {
+    display: inline;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    color: #444b5d;
+    text-decoration: underline;
+    font-size: inherit;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &:active,
+    &:focus {
+      background-color: rgba(#444b5d, .1);
+    }
+  }
+
+  .button {
+    height: 36px;
+    padding: 0 16px;
+    margin-right: 10px;
+    font-size: 14px;
+  }
+}
+
+.muted .poll {
+  color: #444b5d;
+
+  &__chart {
+    background: rgba(darken(#9bcbed, 14%), 0.2);
+
+    &.leading {
+      background: rgba(#2b5fd9, 0.2);
+    }
+  }
+}

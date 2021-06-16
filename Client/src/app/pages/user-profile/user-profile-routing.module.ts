@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { UserProfileComponent } from './user-profile.component';
 import { FollowersComponent } from './followers/followers.component';
 

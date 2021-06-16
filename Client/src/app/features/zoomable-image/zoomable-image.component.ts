@@ -1,6 +1,5 @@
 import {
   AfterContentInit,
-  AfterViewInit,
   Component,
   ElementRef,
   Input, OnChanges, OnDestroy,
@@ -102,7 +101,7 @@ const normalizeWheel = event => {
   templateUrl: './zoomable-image.component.html',
   styleUrls: ['./zoomable-image.component.scss']
 })
-export class ZoomableImageComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit, AfterContentInit {
+export class ZoomableImageComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit {
   // HAHAHAHAHAHHAHHHHHHHHHHHAHHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHHAHAAAAAAAAAAAAAAAA https://stackoverflow.com/questions/56359504/how-should-i-use-the-new-static-option-for-viewchild-in-angular-8
   @ViewChild('containerRef', {static: true}) containerRef: ElementRef<HTMLDivElement>;
   @ViewChild('imageRef', {static: true}) imageRef: ElementRef<HTMLImageElement>;
@@ -116,8 +115,6 @@ export class ZoomableImageComponent implements OnInit, OnChanges, OnDestroy, Aft
 
   constructor(private renderer: Renderer2) {
   }
-
-
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.zoomMatrix && this.scale) {
@@ -137,6 +134,10 @@ export class ZoomableImageComponent implements OnInit, OnChanges, OnDestroy, Aft
       this.container.scrollLeft = 0;
       this.container.scrollTop = 0;
     }
+  }
+
+  ngOnInit(): void {
+
   }
 
   ngAfterContentInit(): void {
@@ -173,24 +174,13 @@ export class ZoomableImageComponent implements OnInit, OnChanges, OnDestroy, Aft
     this.zoomButtonTitle = this.zoomState === 'compress' ? 'compress' : 'expand';
   }
 
-  overflow: string;
-  zoomButtonShouldHide: string;
-  zoomButtonTitle: any;
-
-  ngOnInit(): void {
-
-  }
-
-
-  // componentDidMount
-  ngAfterViewInit() {
-
-  }
-
   ngOnDestroy(): void {
     this.removeEventListeners();
   }
 
+  overflow: string;
+  zoomButtonShouldHide: string;
+  zoomButtonTitle: any;
 
   scale: number = MIN_SCALE;
   zoomMatrix: {

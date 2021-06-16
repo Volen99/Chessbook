@@ -13,13 +13,13 @@ import {
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PostComment} from "../../shared-post-comment/post-comment";
-import {FormReactive} from "../../forms/form-reactive";
+import {FormReactive} from "../../shared-forms/form-reactive";
 import {User} from "../../shared-main/user/user.model";
 import {Post} from "../../shared-main/post/post.model";
-import {FormValidatorService} from "../../forms/form-validator.service";
+import {FormValidatorService} from "../../shared-forms/form-validator.service";
 import {Notifier} from "../../../core/notification/notifier.service";
 import {VideoCommentService} from "../../shared-post-comment/video-comment.service";
-import {VIDEO_COMMENT_TEXT_VALIDATOR} from "../../forms/form-validators/video-comment-validators";
+import {VIDEO_COMMENT_TEXT_VALIDATOR} from "../../shared-forms/form-validators/video-comment-validators";
 import {IPostCommentCreate} from "../../shared-post-comment/models/post-comment-model";
 
 import {
@@ -163,7 +163,7 @@ export class VideoCommentAddComponent extends FormReactive implements OnChanges,
 
   getAvatarUrl() {
     if (this.user) {
-      return this.user.picture;
+      return this.user.profileImageUrlHttps;
     }
 
     return User.GET_DEFAULT_AVATAR_URL();

@@ -34,6 +34,11 @@ namespace Chessbook.Services.Notifications.Settings
                 .Where(p => p.CustomerId == userId)
                 .FirstOrDefaultAsyncExt();
 
+            if (userNotificationSetting == null)
+            {
+                return null;
+            }
+
             if (userNotificationSetting.Customer == null)
             {
                 userNotificationSetting.Customer = await this.userService.GetCustomerByIdAsync(userNotificationSetting.CustomerId);

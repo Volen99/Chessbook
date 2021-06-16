@@ -1,18 +1,15 @@
 ﻿using Chessbook.Services.Data.Services.Entities;
 using Chessbook.Web.Api.Areas.Admin.Web.Models;
-using Chessbook.Web.Api.Controllers;
-using Chessbook.Web.Models.Outputs.Polls;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Chessbook.Web.Api.Areas.Admin
+namespace Chessbook.Web.Api.Areas.Admin.Controllers
 {
     [Route("survey")]
-    public class SurveyController : BaseApiController
+    public class SurveyController : BaseAdminController
     {
         private IPollService pollService;
 

@@ -1,11 +1,11 @@
 import {Component, ViewChild} from '@angular/core';
-import {UserNotificationsComponent} from "../../notifications/user-notifications/user-notifications.component";
-
 import {
   faCog,
   faCheck,
   faCheckCircle,
 } from '@fortawesome/pro-light-svg-icons';
+
+import {UserNotificationsComponent} from "../../notifications/user-notifications/user-notifications.component";
 
 type NotificationSortType = 'createdAt' | 'read';
 

@@ -4,15 +4,14 @@ import {
   Component,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   SimpleChanges
 } from '@angular/core';
-import {IPoll} from "../../shared/posts/models/poll/poll";
 import {HttpClient} from "@angular/common/http";
+
+import {IPoll} from "../../shared/posts/models/poll/poll";
 import {environment} from "../../../environments/environment";
 import {IPollOption} from "../../shared/posts/models/poll/poll-option";
-import {NbDateService} from 'app/sharebook-nebular/theme/components/calendar-kit/services/date.service';
 import {Month} from "../../pages/my-account/my-account-settings/my-account-profile/my-account-profile.component";
 import {SurveyService} from "../../shared/services/survey.service";
 
@@ -28,8 +27,8 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges {
 
   private _timer: any;
 
-  constructor(private http: HttpClient, private surveyService: SurveyService,
-              private dateService: NbDateService<Date>, protected cd: ChangeDetectorRef) {
+  // private dateService: NbDateService<Date> -> just to remind to that there is such service kk..
+  constructor(private http: HttpClient, private surveyService: SurveyService, protected cd: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {

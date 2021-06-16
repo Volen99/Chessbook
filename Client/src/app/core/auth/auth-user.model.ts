@@ -29,6 +29,7 @@ export class AuthUser extends User implements IUser {
       return null;
     }
 
+    // @ts-ignore
     return new AuthUser(userInfo, tokens);
   }
 
@@ -66,14 +67,14 @@ export class AuthUser extends User implements IUser {
   // }
 
   canManage(user: IUser) {
-    const myRole = this.role;
+    const myRoles = this.roles;
 
-    if (myRole === UserRole.ADMINISTRATOR) {
+    if (myRoles.includes(UserRole.ADMINISTRATOR)) {
       return true;
     }
 
     // I'm a moderator: I can only manage users
-    return user.role === UserRole.USER;
+    // return user.role === UserRole.USER;
   }
 
   save() {
@@ -81,7 +82,7 @@ export class AuthUser extends User implements IUser {
       id: this.id,
       username: this.screenName,
       email: this.email,
-      role: this.role,
+      role: this.roles,
     });
 
     this.tokens.save();

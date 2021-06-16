@@ -5,10 +5,12 @@ import {AbuseDetailsComponent} from './abuse-details.component';
 import {AbuseListTableComponent} from './abuse-list-table.component';
 import {AbuseMessageModalComponent} from './abuse-message-modal.component';
 import {ModerationCommentModalComponent} from './moderation-comment-modal.component';
-import {SharedModerationModule} from "../moderation/shared-moderation.module";
+import {SharedModerationModule} from "../shared-moderation/shared-moderation.module";
 import {SharedVideoCommentModule} from "../shared-post-comment/shared-video-comment.module";
-import {SharedFormModule} from "../forms/shared-form.module";
+import {SharedFormModule} from "../shared-forms/shared-form.module";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {SharedActorImageModule} from "../shared-actor-image/shared-actor-image.module";
+import {NbInputModule} from "../../sharebook-nebular/theme/components/input/input.module";
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     SharedFormModule,
     SharedModerationModule,
     SharedVideoCommentModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    SharedActorImageModule,
+    NbInputModule
   ],
 
   declarations: [

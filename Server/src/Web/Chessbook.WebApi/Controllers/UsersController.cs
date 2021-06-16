@@ -34,6 +34,9 @@
     using Chessbook.Core.Domain.Notifications;
     using Chessbook.Services.Notifications.Settings;
     using Nop.Services.Customers;
+    using Chessbook.Services.Abuses;
+    using Chessbook.Web.Api.Extensions;
+    using Chessbook.Web.Api.Models.Abuses;
 
     [Route("users")]
     public class UsersController : BaseApiController
@@ -52,12 +55,14 @@
         private readonly IUserNotificationSettingModelFactory userNotificationSettingModelFactory;
         private readonly IUserNotificationModelFactory userNotificationModelFactory;
         private readonly ICustomerRegistrationService customerRegistrationService;
+        private readonly IAbuseService abuseService;
+        private readonly IAbuseModelFactory abuseModelFactory;
 
         public UsersController(IUserService userService, JwtManager jwtManager, IAuthenticationService authService, IPostsService postsService,
             IPictureService pictureService, IGenericAttributeService genericAttributeService, IRelationshipService relationshipService, IUserModelFactory userModelFactory,
             ICustomerActivityService customerActivityService, IUserNotificationService notificationsService, INotificationsSettingsService notificationsSettingsService,
             IUserNotificationSettingModelFactory userNotificationSettingModelFactory, IUserNotificationModelFactory userNotificationModelFactory,
-            ICustomerRegistrationService customerRegistrationService)
+            ICustomerRegistrationService customerRegistrationService, IAbuseService abuseService, IAbuseModelFactory abuseModelFactory)
         {
             this.userService = userService;
             this.jwtManager = jwtManager;
@@ -73,6 +78,8 @@
             this.userNotificationSettingModelFactory = userNotificationSettingModelFactory;
             this.userNotificationModelFactory = userNotificationModelFactory;
             this.customerRegistrationService = customerRegistrationService;
+            this.abuseService = abuseService;
+            this.abuseModelFactory = abuseModelFactory;
         }
 
         //[HttpGet]
@@ -95,7 +102,7 @@
                 PageSize = pageSize,
             };
 
-            var users = await this.userService.GetAllCustomersAsync(null , null, 0, 0, new int[] { 3, }, null, null, null, null, 0, 0, null, null, null, null, pageNumber, pageSize);
+            var users = await this.userService.GetAllCustomersAsync(null, null, 0, 0, new int[] { 3, }, null, null, null, null, 0, 0, null, null, null, null, pageNumber, pageSize);
 
             var model = new List<CustomerModel>();
             foreach (var user in users)
@@ -103,7 +110,11 @@
                 model.Add(await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), user));
             }
 
-            return this.Ok(model);
+            return this.Ok(new
+            {
+                data = model,
+                total = users.TotalCount,
+            });
         }
 
         [HttpGet]
@@ -319,7 +330,8 @@
             var currentUserId = User.GetUserId();
             var customer = await userService.GetCustomerByIdAsync(currentUserId);
 
-            if (!await userService.IsRegisteredAsync(customer)) {
+            if (!await userService.IsRegisteredAsync(customer))
+            {
                 return Challenge();
             }
 
@@ -544,7 +556,14 @@
 
             if (notifications.Count > 0)
             {
-                var models = notifications.Select(notification => this.userNotificationModelFactory.PrepareUserNotificationModelAsync(notification).Result).ToList();
+                var models = await notifications.SelectAwait(async notification =>
+                {
+                    var notificationModel = await this.userNotificationModelFactory.PrepareUserNotificationModelAsync(notification);
+
+                    return notificationModel;
+                })
+                    .ToListAsync();
+
                 return this.Ok(new
                 {
                     data = models,
@@ -595,6 +614,34 @@
             return this.NoContent();
         }
 
+        [HttpGet]
+        [Route("me/abuses")]
+        [Authorize]
+        public async Task<IActionResult> ListMyAbuses([FromQuery] QueryGetInputModel input)
+        {
+            var abuses = await this.abuseService.ListMyAbuses(input.Start, input.Count, input.Sort, input.Id, input.Search, input.AbuseState);
+
+            if (abuses.TotalCount > 0)
+            {
+                var models = new List<AbuseModel>();
+                foreach (var abuse in abuses)
+                {
+                   models.Add(await this.abuseModelFactory.PrepareAbuseModel(abuse));
+                }
+
+                return this.Ok(new
+                {
+                    data = models,
+                    total = abuses.TotalCount,
+                });
+            }
+
+             return this.Ok(new
+             {
+                 total = abuses.TotalCount,
+                 data = abuses,
+             });
+        }
 
         private async Task<bool> SecondAdminAccountExistsAsync(Customer customer)
         {
@@ -604,7 +651,7 @@
         }
     }
 
-   
+
 
     public class GetProfileInputQueryModel
     {

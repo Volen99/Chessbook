@@ -23,18 +23,15 @@
 </ng-template>
 
 <span
-  role="button"
-  class="help-tooltip-button"
-  container="body"
-  [title]="title"
-  tabindex=0
-  popoverClass="help-popover"
-  [attr.aria-pressed]="isPopoverOpened"
-  [ngbPopover]="tooltipTemplate"
-  [placement]="tooltipPlacement"
-  [autoClose]="autoClose"
-  (onHidden)="onPopoverHidden()"
-  (onShown)="onPopoverShown()"
+        role="button"
+        class="help-tooltip-button"
+        container="body"
+        [title]="title"
+        tabindex=0
+        nbPopoverClass="help-popover"
+        [attr.aria-pressed]="isPopoverOpened"
+        [nbPopover]="tooltipTemplate"
+        [nbPopoverPlacement]="'right'"
 >
   <fa-icon [icon]="iconName"></fa-icon>
 </span>

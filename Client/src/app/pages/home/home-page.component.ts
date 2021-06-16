@@ -1,19 +1,18 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NewsService} from "./news.service";
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
+import {animate, style, transition, trigger} from "@angular/animations";
+import {Observable} from "rxjs";
+import {AnimationOptions} from "ngx-lottie";
+import {AnimationItem} from "lottie-web";
+
 import {UsersService} from "../../core/backend/common/services/users.service";
 import {ScreenService} from "../../core/wrappers/screen.service";
 import {LocalStorageService} from "../../core/wrappers/storage.service";
 import {PostsService} from "../../shared/posts/posts.service";
-import {TimelineService} from "../../shared/timeline/timeline.service";
-import {Observable} from "rxjs";
 import {Post} from "../../shared/shared-main/post/post.model";
 import {immutableAssign, scrollToTop} from "../../helpers/utils";
 import {GetHomeTimelineParameters} from "../../shared/models/timeline/get-home-timeline-parameters";
 import {AbstractPostList} from "../../shared/post-miniature/abstract-post-list/abstract-post-list";
-import {AnimationOptions, LottieComponent} from "ngx-lottie";
-import {AnimationItem} from "lottie-web";
-import {animate, style, transition, trigger} from "@angular/animations";
 
 const voidState = style({
   transform: 'translateX({{ direction }}110%)',
@@ -74,9 +73,7 @@ export class HomePageComponent extends AbstractPostList implements OnInit {
               protected usersService: UsersService,
               protected screenService: ScreenService,
               protected storageService: LocalStorageService,
-              private postsService: PostsService,
-              private timelineService: TimelineService,
-              private newsService: NewsService) {
+              private postsService: PostsService) {
     super();
   }
 
@@ -87,14 +84,9 @@ export class HomePageComponent extends AbstractPostList implements OnInit {
       setTimeout(() => {
         this.isFishSwimming = false;
       }, 5000);
-    }, 3000);
-
+    }, 4000);
 
     super.ngOnInit();
-    // this.timelineService.getHomeTimelineAsync(new GetHomeTimelineParameters())
-    //   .subscribe((posts: any[]) => {
-    //     super.posts = posts;
-    //   });
   }
 
   titlePage: string;
@@ -138,20 +130,6 @@ export class HomePageComponent extends AbstractPostList implements OnInit {
     pageToLoadNext: 1,
   };
   pageSize = 10;
-
-  loadNext(cardData) {
-    if (cardData.loading) { return; }
-
-    cardData.loading = true;
-    cardData.placeholders = new Array(this.pageSize);
-    this.newsService.load(cardData.pageToLoadNext, this.pageSize)
-      .subscribe(nextNews => {
-        cardData.placeholders = [];
-        cardData.news.push(...nextNews);
-        cardData.loading = false;
-        cardData.pageToLoadNext++;
-      });
-  }
 
   removeVideoFromArray(post: Post) {
     super.removeVideoFromArray(post);

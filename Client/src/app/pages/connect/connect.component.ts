@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {IUser} from "../../core/interfaces/common/users";
 import {Router} from "@angular/router";
 import {Subject} from "rxjs/Subject";
-import {ComponentPaginationLight} from "../../core/rest/component-pagination.model";
-import {UsersService} from "../../core/backend/common/services/users.service";
+
 import {
   faCog,
 } from '@fortawesome/pro-light-svg-icons';
+
+import {IUser} from "../../core/interfaces/common/users";
+import {ComponentPaginationLight} from "../../core/rest/component-pagination.model";
+import {UsersService} from "../../core/backend/common/services/users.service";
 
 @Component({
   selector: 'app-connect',

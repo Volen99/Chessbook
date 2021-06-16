@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {NbDialogRef} from "../../../../../sharebook-nebular/theme/components/dialog/dialog-ref";
 
 @Component({

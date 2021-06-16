@@ -1,4 +1,4 @@
-import {Observable} from "rxjs";
+import {Injectable} from "@angular/core";
 
 import {UploadRequesterService} from "./chunked-upload/upload-requester.service";
 import {IUploadParameters, UploadBinaryParameters} from "../../../../../shared/models/upload/upload-binary-parameters";
@@ -18,18 +18,12 @@ import {
   IUploadMessageVideoParameters,
   UploadMessageVideoParameters
 } from "../../../../../shared/models/upload/upload-message-video-parameters";
-import {
-  AddMediaMetadataParameters,
-  IAddMediaMetadataParameters
-} from "../../../../../shared/models/upload/add-media-metadata-parameters";
 import {IMedia} from "../../../../../shared/models/upload/media/media";
-import {IUploadedMediaInfo} from "../../../../../shared/models/upload/media/uploaded-media-info";
-import {IMediaMetadata} from "../../../../../shared/models/upload/media/media-metadata";
-import {IUploadClientParametersValidator} from "./validators/upload-client-parameters-validator";
-import {Injectable} from "@angular/core";
+
 
 @Injectable()
 export class UploadService {
+
   constructor(private uploadRequesterService: UploadRequesterService) {
   }
 

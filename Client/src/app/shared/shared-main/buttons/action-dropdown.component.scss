@@ -6,22 +6,22 @@
 }
 
 .action-button {
-  @include peertube-button;
-
-  &.button-styled {
-
-    &.grey {
-      @include grey-button;
-    }
-
-    &.orange {
-      @include orange-button;
-    }
-
-    &:hover, &:active, &:focus {
-      background-color: $grey-background-color;
-    }
-  }
+  //@include peertube-button;
+  //
+  //&.button-styled {
+  //
+  //  &.grey {
+  //    @include grey-button;
+  //  }
+  //
+  //  &.orange {
+  //    @include orange-button;
+  //  }
+  //
+  //  &:hover, &:active, &:focus {
+  //    background-color: $grey-background-color;
+  //  }
+  //}
 
   display: inline-block;
   padding: 0 10px;

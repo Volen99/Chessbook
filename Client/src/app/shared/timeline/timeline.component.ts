@@ -1,4 +1,13 @@
 import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+
+import {
+  faSmileWink,
+  faHandHoldingHeart,
+  faImagePolaroid,
+  faPoll,
+} from '@fortawesome/pro-light-svg-icons';
+
 import {TimelineService} from "./timeline.service";
 import {GetHomeTimelineParameters} from "../models/timeline/get-home-timeline-parameters";
 import {PostsService} from "../posts/posts.service";
@@ -8,15 +17,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UsersService} from 'app/core/backend/common/services/users.service';
 import {ScreenService} from 'app/core/wrappers/screen.service';
 import {LocalStorageService} from 'app/core/wrappers/storage.service';
-import {Observable} from 'rxjs';
 import {immutableAssign, scrollToTop} from "../../helpers/utils";
-
-import {
-  faSmileWink,
-  faHandHoldingHeart,
-  faImagePolaroid,
-  faPoll,
-} from '@fortawesome/pro-light-svg-icons';
 
 @Component({
   selector: 'app-timeline',
@@ -43,17 +44,12 @@ export class TimelineComponent extends AbstractPostList implements OnInit {
 
   ngOnInit(): void {
     super.ngOnInit();
-
-    // this.timelineService.getHomeTimelineAsync(new GetHomeTimelineParameters())
-    //   .subscribe((posts: any[]) => {
-    //     super.posts = posts;
-    //   });
   }
 
   faSmileWink = faSmileWink;
   faHandHoldingHeart = faHandHoldingHeart;
   faImagePolaroid = faImagePolaroid;
-  faPoll = faPoll
+  faPoll = faPoll;
 
   titlePage: string;
 

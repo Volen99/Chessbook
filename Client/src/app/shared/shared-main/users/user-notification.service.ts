@@ -1,19 +1,17 @@
-import {catchError, map, tap} from 'rxjs/operators';
-import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {environment} from '../../../../environments/environment';
-import {IUserNotification, UserNotification} from './user-notification.model';
-import {AuthService} from "../../../core/auth/auth.service";
+import {HttpParams} from '@angular/common/http';
+import {catchError, map, tap} from 'rxjs/operators';
+import {SortMeta} from "primeng/api";
+
+import {UserNotification} from './user-notification.model';
 import {RestExtractor} from "../../../core/rest/rest-extractor";
 import {RestService} from "../../../core/rest/rest.service";
 import {ComponentPaginationLight} from "../../../core/rest/component-pagination.model";
 import {ResultList} from "../../models";
 import {UserNotificationSetting} from "../../models/users/user-notification-setting.model";
-import {UserData} from "../../../core/interfaces/common/users";
 import {UserStore} from "../../../core/stores/user.store";
 import {PeerTubeSocket} from "../../../core/notification/sharebook-socket.service";
 import {HttpService} from "../../../core/backend/common/api/http.service";
-import {SortMeta} from "primeng/api";
 
 @Injectable()
 export class UserNotificationService {
@@ -22,7 +20,7 @@ export class UserNotificationService {
 
   constructor(
     private authHttp: HttpService,
-    private auth: AuthService,
+    private userStore: UserStore,
     private restExtractor: RestExtractor,
     private restService: RestService,
     private peertubeSocket: PeerTubeSocket
@@ -99,6 +97,6 @@ export class UserNotificationService {
   }
 
   private formatNotification(notification: UserNotification) {
-    return new UserNotification(notification, this.auth.getUser());
+    return new UserNotification(notification, this.userStore.getUser());
   }
 }

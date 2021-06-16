@@ -1,54 +1,11 @@
-import {CommonModule, DatePipe} from '@angular/common';
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {RouterModule} from "@angular/router";
-
-import {BootstrapToggleDirective} from "./angular/directives/bootstrap-toggle.directive";
-import {PostComponent} from "./components/post/post.component";
-import {ProfilePicture49x49Component} from "./components/profile-picture-49x49/profile-picture49x49.component";
-import {StaticHeaderComponent} from "./components/static-header/static-header.component";
-import {FromNowPipe} from "./angular/pipes/from-now.pipe";
-import {DateToggleComponent} from "./date";
-import {InfiniteScrollerDirective} from "./angular/directives/infinite-scroller.directive";
-import {SharebookTemplateDirective} from "./angular/directives/sharebook-template.directive";
-import {BytesPipe} from "./angular/pipes/bytes.pipe";
-import {ActionDropdownComponent} from "./buttons/action-dropdown.component";
 import {OverlayModule} from '@angular/cdk/overlay';
-// import { SharedModule as PrimeSharedModule } from 'primeng/api';
-// import { ClipboardModule } from '@angular/cdk/clipboard';
-// import { HttpClientModule } from '@angular/common/http';
-// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { RouterModule } from '@angular/router';
-// import {
-//   BytesPipe,
-//   DurationFormatterPipe,
-//   FromNowPipe,
-//   InfiniteScrollerDirective
-//   NumberFormatterPipe,
-//   SharebookTemplateDirective
-// } from './angular';
-// import { ActionDropdownComponent, ButtonComponent, DeleteButtonComponent, EditButtonComponent } from './buttons';
-// import { DateToggleComponent } from './date';
-// import { FeedComponent } from './feeds';
-// import { LoaderComponent, SmallLoaderComponent } from './loaders';
-// import { HelpComponent, ListOverflowComponent, TopMenuDropdownComponent } from './misc';
-// import { UserHistoryService, UserNotificationsComponent, UserNotificationService, UserQuotaComponent } from './users';
-// import { RedundancyService, VideoImportService, VideoOwnershipService, VideoService } from './video';
-// import { VideoCaptionService } from './video-caption';
-// import { VideoChannelService } from './video-channel';
-// import { StaticHeaderComponent } from './components/static-header/static-header.component';
-// import { PostComponent } from './components/post/post.component';
-// import { VideoAvatarChannelComponent } from '@app/shared/shared-main/account/video-avatar-channel.component';
-// import { ActorAvatarInfoComponent } from '@app/shared/shared-main/account/actor-avatar-info.component';
-// import { AUTH_INTERCEPTOR_PROVIDER } from '@app/shared/shared-main/auth/auth-interceptor.service';
-// import { AccountService } from '@app/shared/shared-main/account/account.service';
-// import { ProfilePicture49x49Component } from '@app/shared/shared-main/components/profile-picture-49x49/profile-picture49x49.component';
-// import { EnumToArrayPipe } from './angular/enum-to-array.pipe';
-// import { FormDirective } from '@app/shared/shared-main/angular/form.directive';
-// import { NextBtnDirective } from '@app/shared/shared-main/angular/next-btn.directive';
-// import { CheckboxDirective } from './angular/checkbox.directive';
-// import { DisableDirective } from './angular/disable.directive';
-// import { GroupByPipe } from './angular/pipes/group-by.pipe';
-// import { BootstrapToggleDirective } from './angular/directives/bootstrap-toggle.directive';
+import {ClipboardModule} from "@angular/cdk/clipboard";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {PickerModule} from "@ctrl/ngx-emoji-mart";
+import {EmojiModule} from "@ctrl/ngx-emoji-mart/ngx-emoji";
 import {
   NgbCollapseModule,
   NgbDropdownModule,
@@ -56,9 +13,17 @@ import {
   NgbNavModule,
   NgbPopoverModule,
   NgbTooltipModule,
-  NgbButtonsModule
 } from '@ng-bootstrap/ng-bootstrap';
-import {ClipboardModule} from "@angular/cdk/clipboard";
+
+import {BootstrapToggleDirective} from "./angular/directives/bootstrap-toggle.directive";
+import {PostComponent} from "./components/post/post.component";
+import {ProfilePicture49x49Component} from "./components/profile-picture-49x49/profile-picture49x49.component";
+import {FromNowPipe} from "./angular/pipes/from-now.pipe";
+import {DateToggleComponent} from "./date";
+import {InfiniteScrollerDirective} from "./angular/directives/infinite-scroller.directive";
+import {SharebookTemplateDirective} from "./angular/directives/sharebook-template.directive";
+import {BytesPipe} from "./angular/pipes/bytes.pipe";
+import {ActionDropdownComponent} from "./buttons/action-dropdown.component";
 import {FeedComponent} from "./feeds/feed.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
@@ -71,7 +36,6 @@ import {NbUserModule} from "../../sharebook-nebular/theme/components/user/user.m
 import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";
 import {ComponentsModule} from "../../components/components.module";
 import {NumberFormatterPipe} from "./angular/pipes/number-formatter.pipe";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {SocialContextComponent} from "./components/post/social-context/social-context.component";
 import {EnumToArrayPipe} from "./angular/pipes/enum-to-array.pipe";
 import {CharacterCounterComponent} from "./components/compose/character-counter/character-counter.component";
@@ -80,9 +44,13 @@ import {
   ModifierPickerComponent,
   ModifierPickerMenuComponent
 } from './components/compose/emoji-picker-dropdown/emoji-picker-dropdown.component';
-import {PickerModule} from "@ctrl/ngx-emoji-mart";
-import {EmojiModule} from "@ctrl/ngx-emoji-mart/ngx-emoji";
+
 import { AnimatedNumberComponent } from './components/animated-number/animated-number.component';
+import {NbPopoverModule} from "../../sharebook-nebular/theme/components/popover/popover.module";
+import { PopoverMoreComponent } from './components/post/popover-more-component/popover-more.component';
+import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/button.module";
+import {TopMenuDropdownComponent} from "./misc/top-menu-dropdown.component";
+import {ListOverflowComponent} from "./misc/list-overflow.component";
 
 @NgModule({
   imports: [
@@ -112,6 +80,8 @@ import { AnimatedNumberComponent } from './components/animated-number/animated-n
     OverlayModule,
     PickerModule,
     EmojiModule,
+    NbPopoverModule,
+    NbButtonModule,
   ],
 
   declarations: [
@@ -139,11 +109,10 @@ import { AnimatedNumberComponent } from './components/animated-number/animated-n
     // SmallLoaderComponent,
     //
     HelpComponent,
-    // ListOverflowComponent,
-    // TopMenuDropdownComponent,
+    ListOverflowComponent,
+    TopMenuDropdownComponent,
     //
     // UserQuotaComponent,
-    StaticHeaderComponent,
     BootstrapToggleDirective,
     PostComponent,
     ProfilePicture49x49Component,
@@ -162,6 +131,7 @@ import { AnimatedNumberComponent } from './components/animated-number/animated-n
     EmojiPickerDropdownComponent,
     EmojiPickerMenuComponent,
     AnimatedNumberComponent,
+    PopoverMoreComponent,
 
   ],
 
@@ -206,11 +176,10 @@ import { AnimatedNumberComponent } from './components/animated-number/animated-n
     // SmallLoaderComponent,
     //
     HelpComponent,
-    // ListOverflowComponent,
-    // TopMenuDropdownComponent,
+    ListOverflowComponent,
+    TopMenuDropdownComponent,
     //
     // UserQuotaComponent,
-    StaticHeaderComponent,
     BootstrapToggleDirective,
     PostComponent,
     ProfilePicture49x49Component,

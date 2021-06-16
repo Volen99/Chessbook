@@ -488,12 +488,12 @@ namespace Nop.Services.Installation
                 IsSystemRole = true,
                 SystemName = NopCustomerDefaults.AdministratorsRoleName
             };
-            var crForumModerators = new CustomerRole
+            var crModerators = new CustomerRole
             {
-                Name = "Forum Moderators",
+                Name = "Moderators",
                 Active = true,
                 IsSystemRole = true,
-                SystemName = NopCustomerDefaults.ForumModeratorsRoleName
+                SystemName = NopCustomerDefaults.ModeratorsRoleName
             };
             var crRegistered = new CustomerRole
             {
@@ -509,20 +509,12 @@ namespace Nop.Services.Installation
                 IsSystemRole = true,
                 SystemName = NopCustomerDefaults.GuestsRoleName
             };
-            var crVendors = new CustomerRole
-            {
-                Name = "Vendors",
-                Active = true,
-                IsSystemRole = true,
-                SystemName = NopCustomerDefaults.VendorsRoleName
-            };
             var customerRoles = new List<CustomerRole>
             {
                 crAdministrators,
-                crForumModerators,
+                crModerators,
                 crRegistered,
                 crGuests,
-                crVendors
             };
 
             await InsertInstallationDataAsync(customerRoles);
@@ -554,7 +546,7 @@ namespace Nop.Services.Installation
 
             await InsertInstallationDataAsync(
                 new CustomerCustomerRoleMapping { CustomerId = adminUser.Id, CustomerRoleId = crAdministrators.Id },
-                new CustomerCustomerRoleMapping { CustomerId = adminUser.Id, CustomerRoleId = crForumModerators.Id },
+                new CustomerCustomerRoleMapping { CustomerId = adminUser.Id, CustomerRoleId = crModerators.Id },
                 new CustomerCustomerRoleMapping { CustomerId = adminUser.Id, CustomerRoleId = crRegistered.Id });
 
             // set default customer name

@@ -1,14 +1,11 @@
-import { of as observableOf,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { IUser, UserData } from '../../interfaces/common/users';
+import { of as observableOf,  Observable } from 'rxjs';
 import { LocalDataSource } from 'ng2-smart-table';
 import { DataSource } from 'ng2-smart-table/lib/lib/data-source/data-source';
+
+import { IUser, UserData } from '../../interfaces/common/users';
 import { UserCreate } from 'app/shared/models/users/user-create.model';
 import { UserUpdate } from 'app/shared/models/users/user-update.model';
-import {UserRole} from "../../../shared/models/users/user-role";
-import { RestPagination } from 'app/core/rest/rest-pagination';
-import { ResultList } from 'app/shared/models';
-import { SortMeta } from 'primeng/api';
 
 @Injectable()
 export class UsersService extends UserData {
@@ -27,29 +24,7 @@ export class UsersService extends UserData {
     getAnonymousUser() {
         throw new Error('Method not implemented.');
     }
-    // getUsers(parameters: {
-    //     pagination: RestPagination; sort: SortMeta;
-    //     //     firstName: 'John',
-    //     //     lastName: 'Snow',
-    //     //     login: '@snow',
-    //     //     email: 'snow@gmail.com',
-    //     //     age: 0,
-    //     //     picture: '',
-    //     //     address: {
-    //     //       street: 'Wall St.',
-    //     //       city: 'New York',
-    //     //       zipCode: '10005',
-    //     //     },
-    //     //     screenName: 'love is the way',
-    //     //     protected: false,
-    //     //     settings: {
-    //     //       themeName: 'cosmic',
-    //     //     },
-    //     //   }];
-    //     search?: string;
-    // }): Observable<ResultList<IUser>> {
-    //     throw new Error('Method not implemented.');
-    // }
+
   addUser(userCreate: UserCreate) {
       throw new Error('Method not implemented.');
   }

@@ -150,7 +150,7 @@ describe('Component: NbCheckbox', () => {
   });
 });
 
-/** Test component with reactive forms */
+/** Test component with reactive shared-forms */
 @Component({
   template: `<nb-checkbox [formControl]="formControl"></nb-checkbox>`,
 })

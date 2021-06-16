@@ -1,6 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {StreamersService} from "./streamers.service";
-import {IStreams, IStreamsData} from "./models/streams-model";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-streamers',
@@ -12,7 +10,6 @@ export class StreamersComponent implements OnInit {
   constructor() {
 
   }
-
 
   ngOnInit(): void {
 

@@ -1,16 +1,11 @@
-import {Inject, Injectable} from "@angular/core";
+import {Injectable} from "@angular/core";
+
 import {UploadQueryExecutorService} from "./upload-query-executor.service";
 import {
-  IUploadClientRequiredParametersValidator,
   UploadClientRequiredParametersValidatorService
 } from "../validators/upload-client-required-parameters-validator.service";
-import {IUploadMediaStatusQueryExecutor} from "./upload-media-status-query-executor";
 import {IUploadParameters} from "../../../../../../shared/models/upload/upload-binary-parameters";
-import {IAddMediaMetadataParameters} from "../../../../../../shared/models/upload/add-media-metadata-parameters";
-import {IMedia} from "../../../../../../shared/models/upload/media/media";
-import {IUploadedMediaInfo} from "../../../../../../shared/models/upload/media/uploaded-media-info";
 import {IChunkUploadResult} from "./core/chunk-uploader-result";
-import {IUploadRequester} from "../../../../../../shared/models/upload/upload-requester";
 
 
 @Injectable()

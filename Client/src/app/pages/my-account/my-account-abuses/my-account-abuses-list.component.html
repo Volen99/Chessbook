@@ -1,6 +1,11 @@
-<h1>
-  <fa-icon [icon]="this.faFlag" aria-hidden="true"></fa-icon>
-  <ng-container i18n>Reports</ng-container>
-</h1>
-
-<my-abuse-list-table viewType="user" baseRoute="/my-account/abuses"></my-abuse-list-table>
+<nb-card>
+  <nb-card-header>
+    <h3>
+      <fa-icon [icon]="this.faFlag" style="margin-right: 0.5rem;" aria-hidden="true"></fa-icon>
+      <ng-container i18n>Reports</ng-container>
+    </h3>
+  </nb-card-header>
+  <nb-card-body>
+    <my-abuse-list-table viewType="user" baseRoute="/my-account/abuses"></my-abuse-list-table>
+  </nb-card-body>
+</nb-card>

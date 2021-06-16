@@ -27,8 +27,8 @@ export class RoleProvider extends NbRoleProvider {
     return this.authService.getToken()
       .pipe(
         map((token: NbAuthOAuth2JWTToken) => {
-          const payload = token.getAccessTokenPayload();
-          return !!(token.isValid() && payload && payload['role']) ? this.getLowerCaseRoles(payload['role']) : 'guest';
+          const payload = token.getAccessTokenPayload();                                                   // u put 's'
+          return !!(token.isValid() && payload && payload['role']) ? this.getLowerCaseRoles(payload['role']) : 'guests';
         }),
       );
   }

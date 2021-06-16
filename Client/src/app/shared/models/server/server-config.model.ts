@@ -1,35 +1,35 @@
-import {ClientScript} from '../plugins/plugin-package-json.model';
+import {ClientScript} from '../plugins';
 
 export interface ServerConfigPlugin {
-  name: string
-  version: string
-  description: string
-  clientScripts: { [name: string]: ClientScript }
+  name: string;
+  version: string;
+  description: string;
+  clientScripts: { [name: string]: ClientScript };
 }
 
 export interface ServerConfigTheme extends ServerConfigPlugin {
-  css: string[]
+  css: string[];
 }
 
 export interface RegisteredExternalAuthConfig {
-  npmName: string
-  name: string
-  version: string
-  authName: string
-  authDisplayName: string
+  npmName: string;
+  name: string;
+  version: string;
+  authName: string;
+  authDisplayName: string;
 }
 
 export interface RegisteredIdAndPassAuthConfig {
-  npmName: string
-  name: string
-  version: string
-  authName: string
-  weight: number
+  npmName: string;
+  name: string;
+  version: string;
+  authName: string;
+  weight: number;
 }
 
 export interface ServerConfig {
-  serverVersion: string
-  serverCommit?: string
+  serverVersion: string;
+  serverCommit?: string;
 
   instance: {
     name: string
@@ -41,7 +41,7 @@ export interface ServerConfig {
       javascript: string
       css: string
     }
-  }
+  };
 
   search: {
     remoteUri: {
@@ -55,7 +55,7 @@ export interface ServerConfig {
       disableLocalSearch: boolean
       isDefaultSearch: boolean
     }
-  }
+  };
 
   plugin: {
     registered: ServerConfigPlugin[]
@@ -63,26 +63,26 @@ export interface ServerConfig {
     registeredExternalAuths: RegisteredExternalAuthConfig[]
 
     registeredIdAndPassAuths: RegisteredIdAndPassAuthConfig[]
-  }
+  };
 
   theme: {
     registered: ServerConfigTheme[]
     default: string
-  }
+  };
 
   email: {
     enabled: boolean
-  }
+  };
 
   contactForm: {
     enabled: boolean
-  }
+  };
 
   signup: {
     allowed: boolean
     allowedForCurrentIP: boolean
     requiresEmailVerification: boolean
-  }
+  };
 
   transcoding: {
     hls: {
@@ -97,7 +97,7 @@ export interface ServerConfig {
 
     profile: string
     availableProfiles: string[]
-  }
+  };
 
   live: {
     enabled: boolean
@@ -119,7 +119,7 @@ export interface ServerConfig {
     rtmp: {
       port: number
     }
-  }
+  };
 
   import: {
     videos: {
@@ -130,7 +130,7 @@ export interface ServerConfig {
         enabled: boolean
       }
     }
-  }
+  };
 
   autoBlacklist: {
     videos: {
@@ -138,7 +138,7 @@ export interface ServerConfig {
         enabled: boolean
       }
     }
-  }
+  };
 
   avatar: {
     file: {
@@ -147,7 +147,7 @@ export interface ServerConfig {
       }
       extensions: string[]
     }
-  }
+  };
 
   banner: {
     file: {
@@ -156,7 +156,7 @@ export interface ServerConfig {
       }
       extensions: string[]
     }
-  }
+  };
 
   video: {
     image: {
@@ -168,7 +168,7 @@ export interface ServerConfig {
     file: {
       extensions: string[]
     }
-  }
+  };
 
   videoCaption: {
     file: {
@@ -177,12 +177,12 @@ export interface ServerConfig {
       }
       extensions: string[]
     }
-  }
+  };
 
   user: {
     videoQuota: number
     videoQuotaDaily: number
-  }
+  };
 
   trending: {
     videos: {
@@ -192,11 +192,11 @@ export interface ServerConfig {
         default: string
       }
     }
-  }
+  };
 
   tracker: {
     enabled: boolean
-  }
+  };
 
   followings: {
     instance: {
@@ -204,14 +204,14 @@ export interface ServerConfig {
         indexUrl: string
       }
     }
-  }
+  };
 
   broadcastMessage: {
     enabled: boolean
     message: string
     level: any
     dismissable: boolean
-  }
+  };
 }
 
 export type HTMLServerConfig = Omit<ServerConfig, 'signup'>;

@@ -6,7 +6,6 @@ import {
   Input,
   OnChanges, OnDestroy,
   OnInit,
-  Renderer2,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
@@ -29,19 +28,8 @@ export class ImageLoaderComponent implements OnInit, AfterViewInit, AfterContent
 
   private _canvasContext;
 
-  constructor(private renderer: Renderer2) {
+  constructor() {
 
-  }
-
-  ngAfterContentInit(): void {
-    this.loadImage(this.src);
-  }
-
-  ngOnInit(): void {
-  }
-
-  ngAfterViewInit() {
-    this.canvas = this.can.nativeElement;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -51,7 +39,17 @@ export class ImageLoaderComponent implements OnInit, AfterViewInit, AfterContent
         this.loadImage({alt, onClick, width, height, src, previewSrc, zoomButtonHidden});
       }
     }
+  }
 
+  ngOnInit(): void {
+  }
+
+  ngAfterContentInit(): void {
+    this.loadImage(this.src);
+  }
+
+  ngAfterViewInit() {
+    this.canvas = this.can.nativeElement;
   }
 
   ngOnDestroy(): void {
@@ -66,14 +64,14 @@ export class ImageLoaderComponent implements OnInit, AfterViewInit, AfterContent
     return this._canvasContext;
   }
 
-    loading: boolean = true;
-    error: boolean = false;
-    widthState: number | null;
+  loading: boolean = true;
+  error: boolean = false;
+  widthState: number | null;
 
   removers = [];
   canvas = null;
 
-  loadImage (props) {
+  loadImage(props) {
     this.removeEventListeners();
 
     this.loading = true;
@@ -117,8 +115,8 @@ export class ImageLoaderComponent implements OnInit, AfterViewInit, AfterContent
     this.removers.push(removeEventListeners);
   })
 
-  clearPreviewCanvas () {
-    const { width, height } = this.canvas;
+  clearPreviewCanvas() {
+    const {width, height} = this.canvas;
     this.canvasContext.clearRect(0, 0, width, height);
   }
 
@@ -143,12 +141,12 @@ export class ImageLoaderComponent implements OnInit, AfterViewInit, AfterContent
     this.removers.push(removeEventListeners);
   })
 
-  removeEventListeners () {
+  removeEventListeners() {
     this.removers.forEach(listeners => listeners());
     this.removers = [];
   }
 
-  hasSize () {
+  hasSize() {
     return typeof this.width === 'number' && typeof this.height === 'number';
   }
 
@@ -158,9 +156,5 @@ export class ImageLoaderComponent implements OnInit, AfterViewInit, AfterContent
       this.width = c.offsetWidth;
     }
   }
-
-
-
-
 
 }

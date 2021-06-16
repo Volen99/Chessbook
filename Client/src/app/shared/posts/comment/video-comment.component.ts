@@ -2,13 +2,12 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} fr
 
 import {Post} from "../../shared-main/post/post.model";
 import {PostComment} from "../../shared-post-comment/post-comment";
-import {CommentReportComponent} from "../../moderation/report-modals/comment-report.component";
+import {CommentReportComponent} from "../../shared-moderation/report-modals/comment-report.component";
 import {PostCommentThreadTree} from "../../shared-post-comment/video-comment-thread-tree.model";
 import {DropdownAction} from "../../shared-main/buttons/action-dropdown.component";
 import {IUser} from "../../../core/interfaces/common/users";
 import {Notifier} from "../../../core/notification/notifier.service";
 import {UsersService} from "../../../core/backend/common/services/users.service";
-import {AuthService} from "../../../core/auth/auth.service";
 import {MarkdownService} from "../../../core/renderer/markdown.service";
 import {UserRight} from "../../models/users/user-right.enum";
 import {User} from "../../shared-main/user/user.model";
@@ -18,6 +17,7 @@ import {
   faTrashAlt,
   faPen,
 } from '@fortawesome/pro-light-svg-icons';
+import {UserStore} from "../../../core/stores/user.store";
 
 @Component({
   selector: 'app-video-comment',
@@ -53,13 +53,13 @@ export class VideoCommentComponent implements OnInit, OnChanges {
 
   constructor(
     private markdownService: MarkdownService,
-    private authService: AuthService,
+    private userStore: UserStore,
     private usersService: UsersService,
     private notifier: Notifier) {
   }
 
   get user() {
-    return this.authService.getUser();
+    return this.userStore.getUser();
   }
 
   ngOnInit() {
@@ -107,7 +107,7 @@ export class VideoCommentComponent implements OnInit, OnChanges {
   }
 
   isUserLoggedIn() {
-    return this.authService.isLoggedIn();
+    return !!this.userStore.getUser();
   }
 
   onResetReply() {
@@ -155,9 +155,9 @@ export class VideoCommentComponent implements OnInit, OnChanges {
 
   private getUserIfNeeded(account: User) {
     if (!account.id) return;
-    if (!this.authService.isLoggedIn()) return;
+    if (!!this.userStore.getUser() === false) return;
 
-    const user = this.authService.getUser();
+    const user = this.userStore.getUser();
     if (user.hasRight(UserRight.MANAGE_USERS)) {
       this.usersService.getUserWithCache(account.id)
         .subscribe(

@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Meta, Title} from '@angular/platform-browser';
+
 import {ServerService} from "../server/server.service";
 import {HTMLServerConfig} from "../../shared/models/server/server-config.model";
 
 export interface MetaSettings {
-  title?: string
+  title?: string;
 }
 
 @Injectable()

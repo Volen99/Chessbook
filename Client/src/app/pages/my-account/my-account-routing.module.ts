@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+
 import {MyAccountAbusesListComponent} from './my-account-abuses/my-account-abuses-list.component';
 import {MyAccountBlocklistComponent} from './my-account-blocklist/my-account-blocklist.component';
-import {MyAccountServerBlocklistComponent} from './my-account-blocklist/my-account-server-blocklist.component';
 import {MyAccountNotificationsComponent} from './my-account-notifications/my-account-notifications.component';
 import {MyAccountSettingsComponent} from './my-account-settings/my-account-settings.component';
 import {MyAccountComponent} from './my-account.component';
@@ -12,8 +12,7 @@ const myAccountRoutes: Routes = [
   {
     path: '',
     component: MyAccountComponent,
-    // canActivateChild: [ MetaGuard, LoginGuard ],
-    /*canActivate: [AuthGuard],*/
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
@@ -83,15 +82,6 @@ const myAccountRoutes: Routes = [
         data: {
           meta: {
             title: `Muted accounts`
-          }
-        }
-      },
-      {
-        path: 'blocklist/servers',
-        component: MyAccountServerBlocklistComponent,
-        data: {
-          meta: {
-            title: `Muted servers`
           }
         }
       },

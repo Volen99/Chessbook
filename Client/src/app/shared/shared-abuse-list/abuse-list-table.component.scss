@@ -1,17 +1,25 @@
+@import '_mixins';
+@import '_variables';
+
+/*@import "~sass/application";*/
+
+@import '../../theme/styles/themes';
+
 .comment-flagged-account,
 .account-flagged-handle {
   font-size: 11px;
-  color: var(--greyForegroundColor);
+  color: #585858;
 }
 
 .abuse-states .glyphicon-comment {
-  margin-left: 0.5rem;
+  @include margin-left(0.5rem);
 }
 
 .abuse-messages {
-  my-global-icon {
+  fa-icon {
+    @include margin-left(3px);
+
     width: 22px;
-    margin-left: 3px;
     position: relative;
     top: -2px;
   }

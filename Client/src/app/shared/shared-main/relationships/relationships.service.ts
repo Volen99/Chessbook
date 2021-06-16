@@ -1,5 +1,6 @@
 import {Injectable, OnInit} from "@angular/core";
 import {HttpParams} from "@angular/common/http";
+
 import {IGetRelationshipBetweenParameters} from "./models/get-relationship-between-parameters.model";
 import {RestService} from "../../../core/rest/rest.service";
 import {RelationshipsApi} from "./backend/relationships.api";

@@ -1,5 +1,4 @@
-﻿
-export interface IUploadProcessingInfo {
+﻿export interface IUploadProcessingInfo {
   state: string;
   // processingState: ProcessingState;
   checkAfterInSeconds: number;

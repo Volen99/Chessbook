@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FileItem} from "../file-item.class";
 import {
   faTimes,
 } from '@fortawesome/pro-light-svg-icons';
+
+import {FileItem} from "../file-item.class";
 
 @Component({
   selector: 'app-media-group',

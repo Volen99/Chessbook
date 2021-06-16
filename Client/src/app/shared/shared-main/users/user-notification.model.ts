@@ -1,9 +1,7 @@
 import {ActorInfo, UserNotificationType, VideoInfo} from "../../models/users/user-notification.model";
 import {UserRight} from "../../models/users/user-right.enum";
-import {AuthUser} from "../../../core/auth/auth-user.model";
 import {AbuseState} from "../../models/moderation/abuse/abuse-state.model";
 import {IUser, UserData} from "../../../core/interfaces/common/users";
-import {User} from "../user/user.model";
 
 export type FollowState = 'pending' | 'accepted'; // does not belong here kk
 
@@ -200,7 +198,7 @@ export class UserNotification implements IUserNotification {
           break;
 
         case UserNotificationType.NEW_ABUSE_FOR_MODERATORS:
-          this.abuseUrl = '/admin/moderation/abuses/list';
+          this.abuseUrl = '/admin/shared-moderation/abuses/list';
           this.abuseQueryParams.search = '#' + this.abuse.id;
 
           if (this.abuse.video) this.videoUrl = this.buildVideoUrl(this.abuse.video);
@@ -215,13 +213,13 @@ export class UserNotification implements IUserNotification {
 
         case UserNotificationType.ABUSE_NEW_MESSAGE:
           this.abuseUrl = user.hasRight(UserRight.MANAGE_ABUSES)
-            ? '/admin/moderation/abuses/list'
+            ? '/admin/shared-moderation/abuses/list'
             : '/my-account/abuses';
           this.abuseQueryParams.search = '#' + this.abuse.id;
           break;
 
         case UserNotificationType.VIDEO_AUTO_BLACKLIST_FOR_MODERATORS:
-          this.videoAutoBlacklistUrl = '/admin/moderation/video-auto-blacklist/list';
+          this.videoAutoBlacklistUrl = '/admin/shared-moderation/video-auto-blacklist/list';
           // Backward compatibility where we did not assign videoBlacklist to this type of notification before
           if (!this.videoBlacklist) this.videoBlacklist = {id: null, video: this.post};
 

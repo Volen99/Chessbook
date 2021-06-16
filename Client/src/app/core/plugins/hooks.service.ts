@@ -1,6 +1,7 @@
+import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { mergeMap, switchMap } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+
 import { ClientActionHookName, ClientFilterHookName, PluginClientScope } from '../../shared/models';
 import {PluginService} from "./plugin.service";
 

@@ -1,19 +1,19 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
-import {FormReactive} from "../forms/form-reactive";
+import {FormReactive} from "../shared-forms/form-reactive";
 import {AbuseMessage} from "../models/moderation/abuse/abuse-message.model";
 import {UserAbuse} from "../models/moderation/abuse/abuse.model";
 import {HtmlRendererService} from "../../core/renderer/html-renderer.service";
-import {ABUSE_MESSAGE_VALIDATOR} from "../forms/form-validators/abuse-validators";
-import {AbuseService} from "../moderation/abuse.service";
+import {ABUSE_MESSAGE_VALIDATOR} from "../shared-forms/form-validators/abuse-validators";
+import {AbuseService} from "../shared-moderation/abuse.service";
 import {Notifier} from "../../core/notification/notifier.service";
-import {AuthService} from "../../core/auth/auth.service";
-import {FormValidatorService} from "../forms/form-validator.service";
+import {FormValidatorService} from "../shared-forms/form-validator.service";
 
 import {
   faTimes,
 } from '@fortawesome/pro-light-svg-icons';
+import {UserStore} from "../../core/stores/user.store";
 
 @Component({
   selector: 'my-abuse-message-modal',
@@ -39,7 +39,7 @@ export class AbuseMessageModalComponent extends FormReactive implements OnInit {
     protected formValidatorService: FormValidatorService,
     private modalService: NgbModal,
     private htmlRenderer: HtmlRendererService,
-    private auth: AuthService,
+    private userStore: UserStore,
     private notifier: Notifier,
     private abuseService: AbuseService
   ) {
@@ -102,7 +102,7 @@ export class AbuseMessageModalComponent extends FormReactive implements OnInit {
   }
 
   isMessageByMe(abuseMessage: AbuseMessage) {
-    return this.auth.getUser()/*.account*/.id === abuseMessage.account.id;
+    return this.userStore.getUser().id === abuseMessage.account.id;
   }
 
   getPlaceholderMessage() {

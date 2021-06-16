@@ -7,13 +7,12 @@ import {
   OnChanges,
   OnDestroy,
   OnInit, QueryList,
-  Renderer2, SimpleChanges,
-  ViewChild, ViewChildren
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
 import {multiply} from "color-blend";
+
 import {MediaModalComponent} from "../media-modal/media-modal.component";
-import {delay, takeUntil} from "rxjs/operators";
-import {Subject} from "rxjs/Subject";
 
 @Component({
   selector: 'app-modal-root',
@@ -21,7 +20,6 @@ import {Subject} from "rxjs/Subject";
   styleUrls: ['./modal-root.component.scss']
 })
 export class ModalRootComponent implements OnInit, AfterContentInit, AfterViewInit, OnChanges, OnDestroy {
-  // @ViewChildren(MediaModalComponent) mediaModal: QueryList<MediaModalComponent>;
   @ContentChildren(MediaModalComponent) children: QueryList<MediaModalComponent>;
 
   @ViewChild('nodeRef') nodeRef: ElementRef<HTMLDivElement>;
@@ -30,7 +28,18 @@ export class ModalRootComponent implements OnInit, AfterContentInit, AfterViewIn
   @Input() onClose: () => any;
   @Input() backgroundColor: any;
 
-  constructor(private renderer: Renderer2) {
+  constructor() {
+
+  }
+
+  // componentDidUpdate
+  ngOnChanges(changes: SimpleChanges): void {
+    let {backgroundColor} = changes;
+    if (backgroundColor) {
+      if (this.backgroundColor) {
+        this.backgroundColorState = multiply({ ...this.backgroundColor, a: 1 }, { r: 0, g: 0, b: 0, a: 0.7 });
+      }
+    }
 
   }
 
@@ -69,19 +78,6 @@ export class ModalRootComponent implements OnInit, AfterContentInit, AfterViewIn
     window.addEventListener('keydown', this.handleKeyDown, false);
 
     this.node = this.nodeRef.nativeElement;
-
-
-  }
-
-  // componentDidUpdate
-  ngOnChanges(changes: SimpleChanges): void {
-    let {backgroundColor} = changes;
-    if (backgroundColor) {
-      if (this.backgroundColor) {
-        this.backgroundColorState = multiply({ ...this.backgroundColor, a: 1 }, { r: 0, g: 0, b: 0, a: 0.7 });
-      }
-    }
-
   }
 
   // componentWillUnmount
@@ -131,12 +127,5 @@ export class ModalRootComponent implements OnInit, AfterContentInit, AfterViewIn
   getSiblings = () => {
     return Array(...this.node.parentElement.childNodes).filter(node => node !== this.node);
   }
-
-
-
-
-
-
-
 
 }

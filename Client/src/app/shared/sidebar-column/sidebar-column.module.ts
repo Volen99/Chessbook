@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 import { SidebarColumnComponent } from './sidebar-column.component';
 import { TrendsComponent } from './trends/trends.component';
@@ -10,7 +11,6 @@ import {NbActionsModule} from "../../sharebook-nebular/theme/components/actions/
 import {NbContextMenuModule} from "../../sharebook-nebular/theme/components/context-menu/context-menu.module";
 import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/button.module";
 import {NbInputModule} from "../../sharebook-nebular/theme/components/input/input.module";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {SharedModule} from "../shared.module";
 import {NbFormFieldModule} from "../../sharebook-nebular/theme/components/form-field/form-field.module";
 

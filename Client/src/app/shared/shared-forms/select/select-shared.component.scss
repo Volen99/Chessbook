@@ -1,0 +1,52 @@
+@import '_variables';
+@import '_mixins';
+
+$form-base-input-width: auto;
+
+ng-select {
+  width: $form-base-input-width;
+
+  @media screen and (max-width: $form-base-input-width) {
+    width: 100%;
+  }
+}
+
+ng-select ::ng-deep {
+  .ng-value-container {
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  // make sure the image is vertically adjusted
+  .ng-value-label img {
+    position: relative;
+    top: -1px;
+  }
+
+  img {
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.root {
+  display: flex;
+  align-items: center;
+
+  > app-select-options {
+    flex-grow: 1;
+  }
+}
+
+app-select-options + input {
+  @include peertube-input-text($form-base-input-width);
+
+  @include margin-left(5px);
+  display: block;
+}
+
+.input-suffix {
+  @include margin-left(5px);
+}

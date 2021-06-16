@@ -1,20 +1,23 @@
 import {Injectable} from '@angular/core';
+import {HttpParams} from "@angular/common/http";
 import {from, Observable} from 'rxjs';
+import {catchError, concatMap, map, shareReplay, toArray} from 'rxjs/operators';
+import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+
 import {UsersApi} from '../api/users.api';
 import {UserData, IUser} from '../../../interfaces/common/users';
-import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
-import {catchError, concatMap, map, shareReplay, toArray} from 'rxjs/operators';
-import {HttpClient, HttpParams} from "@angular/common/http";
 import {RestExtractor} from "../../../rest/rest-extractor";
 import {RestService} from "../../../rest/rest.service";
 import {LocalStorageService, SessionStorageService} from "../../../wrappers/storage.service";
 import {UserUpdate} from "../../../../shared/models/users/user-update.model";
 import {UserCreate} from "../../../../shared/models/users/user-create.model";
+import {UserUpdateMe} from "../../../../shared/models/users/user-update-me.model";
 import {RestPagination} from "../../../rest/rest-pagination";
 import {SortMeta} from "primeng/api";
 import {ResultList} from "../../../../shared/models";
-import {UserUpdateMe} from "../../../../shared/models/users/user-update-me.model";
-import {Avatar} from "primeng/avatar";
+import {User} from "../../../../shared/shared-main/user/user.model";
+import {getBytes} from "../../../../../root-helpers/bytes";
+import {UserRole} from "../../../../shared/models/users/user-role";
 
 @Injectable()
 export class UsersService extends UserData {
@@ -129,6 +132,10 @@ export class UsersService extends UserData {
       );
   }
 
+  // You generally want to use shareReplay when you have side-effects or taxing computations that you do not wish to be
+  // executed amongst multiple subscribers. It may also be valuable in situations where you know you will have late
+  // subscribers to a stream that need access to previously emitted values. This ability to replay values on
+  // subscription is what differentiates share and shareReplay.
   getUserWithCache(userId: number) {
     if (!this.userCache[userId]) {
       this.userCache[userId] = this.getUser(userId).pipe(shareReplay());
@@ -139,7 +146,7 @@ export class UsersService extends UserData {
 
   getUser(userId: number, withStats: boolean = false) {
     const params = new HttpParams().append('withStats', withStats + '');
-    return this.api.getUser(userId, params)
+    return this.api.getUser(userId, params, withStats)
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 
@@ -149,10 +156,40 @@ export class UsersService extends UserData {
   getUsers(pageNumber: number, pageSize: number) {
     let params = new HttpParams();
 
-    params = this.restService.addParameterToQuery(params,'pageNumber', pageNumber);
-    params = this.restService.addParameterToQuery(params,'pageSize', pageSize);
+    params = this.restService.addParameterToQuery(params, 'pageNumber', pageNumber);
+    params = this.restService.addParameterToQuery(params, 'pageSize', pageSize);
 
     return this.api.getUsers('who_to_follow', params);
+  }
+
+  getUsersForAdmin(parameters: {
+    pagination: RestPagination
+    sort: SortMeta
+    search?: string
+  }): Observable<ResultList<User>> {
+    const {pagination, sort, search} = parameters;
+
+    let params = new HttpParams();
+    params = this.restService.addRestGetParams(params, pagination, sort);
+
+    if (search) {
+      const filters = this.restService.parseQueryStringFilter(search, {
+        blocked: {
+          prefix: 'banned:',
+          isBoolean: true
+        }
+      });
+
+      params = this.restService.addObjectParams(params, filters);
+    }
+
+    // @ts-ignore
+    return this.api.getUsersForAdmin('list', {params}) // <ResultList<User>>
+      .pipe(
+        map(res => this.restExtractor.convertResultListDateToHuman(res)),
+        map(res => this.restExtractor.applyToResultListData(res, this.formatUser.bind(this))),
+        catchError(err => this.restExtractor.handleError(err))
+      );
   }
 
   changeEmail(password: string, newEmail: string) {
@@ -163,10 +200,10 @@ export class UsersService extends UserData {
     };
 
     return this.api.changeEmail(url, body);
-      // .pipe(
-      //   map(this.restExtractor.extractDataBool),
-      //   catchError(err => this.restExtractor.handleError(err))
-      // );
+    // .pipe(
+    //   map(this.restExtractor.extractDataBool),
+    //   catchError(err => this.restExtractor.handleError(err))
+    // );
   }
 
   changePassword(currentPassword: string, newPassword: string) {
@@ -217,7 +254,7 @@ export class UsersService extends UserData {
       );
   }
 
-  deleteBanner () {
+  deleteBanner() {
     const url = 'me/banner';
 
     return this.api.deleteBanner(url)
@@ -243,6 +280,37 @@ export class UsersService extends UserData {
 
   getYourBirthday(userId: number) {
     return this.api.getYourBirthday('birthday', userId);
+  }
+
+  private formatUser(user: IUser) {
+    // let videoQuota;
+    // if (user.videoQuota === -1) {
+    //   videoQuota = '∞';
+    // } else {
+    //   videoQuota = getBytes(user.videoQuota, 0);
+    // }
+    //
+    // const videoQuotaUsed = getBytes(user.videoQuotaUsed, 0);
+    //
+    // let videoQuotaDaily: string;
+    // let videoQuotaUsedDaily: string;
+    // if (user.videoQuotaDaily === -1) {
+    //   videoQuotaDaily = '∞';
+    //   videoQuotaUsedDaily = getBytes(0, 0) + '';
+    // } else {
+    //   videoQuotaDaily = getBytes(user.videoQuotaDaily, 0) + '';
+    //   videoQuotaUsedDaily = getBytes(user.videoQuotaUsedDaily || 0, 0) + '';
+    // }
+
+    const roleLabels: { [id in UserRole]: string } = {
+      [UserRole.REGISTERED]: `Registered`,
+      [UserRole.ADMINISTRATOR]: `Administrator`,
+      [UserRole.MODERATOR]: `Moderator`
+    };
+
+    return Object.assign(user, {
+      roleLabel: roleLabels[user.roles[0]], // TODO: fix role[0]
+    });
   }
 
 }

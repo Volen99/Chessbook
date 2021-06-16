@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+
 import {OptionComponent, SurveyComponent} from './survey/survey.component';
 import {AdminComponent} from './admin.component';
 import {AdminRoutingModule} from "./admin-routing-module";
@@ -10,26 +11,78 @@ import {NbInputModule} from "../sharebook-nebular/theme/components/input/input.m
 import {NbButtonModule} from "../sharebook-nebular/theme/components/button/button.module";
 import {SurveyService} from "../shared/services/survey.service";
 import {SharedModule} from "../shared/shared.module";
-
+import {SharedMainModule} from "../shared/shared-main/shared-main.module";
+import {
+  UserListComponent,
+  UsersComponent,
+} from "./users";
+import {SharedFormModule} from "../shared/shared-forms/shared-form.module";
+import {SharedModerationModule} from "../shared/shared-moderation/shared-moderation.module";
+import {SharedVideoCommentModule} from "../shared/shared-post-comment/shared-video-comment.module";
+import {SharedCustomMarkupModule} from "../shared/shared-custom-markup";
+import {SelectButtonModule} from "primeng/selectbutton";
+import {TableModule} from "primeng/table";
+import {SharedActorImageEditModule} from "../shared/shared-actor-image-edit/shared-actor-image-edit.module";
+import {SharedActorImageModule} from "../shared/shared-actor-image/shared-actor-image.module";
+import {SharedAbuseListModule} from "../shared/shared-abuse-list/shared-abuse-list.module";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {
+  AbuseListComponent,
+  InstanceAccountBlocklistComponent,
+  ModerationComponent,
+  VideoBlockListComponent
+} from "./moderation";
+import {VideoCommentListComponent} from "./moderation/video-comment-list";
+import {UserPasswordComponent, UserUpdateComponent} from "./users/user-edit";
 
 @NgModule({
-    declarations: [SurveyComponent, AdminComponent, OptionComponent],
-    imports: [
-        CommonModule,
-        SharedModule,
-        AdminRoutingModule,
-        NbCardModule,
-        NbIconModule,
-        NbSelectModule,
-        NbInputModule,
-        NbButtonModule,
-    ],
+  declarations: [
+    SurveyComponent,
+    AdminComponent,
+    OptionComponent,
 
-    exports: [
-        SurveyComponent
-    ],
 
-    providers: [SurveyService]
+
+    UsersComponent,
+    UserUpdateComponent,
+    UserPasswordComponent,
+    UserListComponent,
+
+    ModerationComponent,
+    VideoBlockListComponent,
+    AbuseListComponent,
+    VideoCommentListComponent,
+
+    InstanceAccountBlocklistComponent,
+  ],
+  imports: [
+    AdminRoutingModule,
+
+    SharedMainModule,
+    SharedFormModule,
+    SharedModerationModule,
+    SharedAbuseListModule,
+    SharedVideoCommentModule,
+    SharedActorImageModule,
+    SharedActorImageEditModule,
+    SharedCustomMarkupModule,
+
+    TableModule,
+    SelectButtonModule,
+    FontAwesomeModule,
+    NbIconModule,
+    NbCardModule,
+    NbSelectModule,
+    NbButtonModule,
+    NbInputModule,
+  ],
+
+  exports: [
+    AdminComponent,
+    SurveyComponent
+  ],
+
+  providers: [SurveyService]
 })
 export class AdminModule {
 }

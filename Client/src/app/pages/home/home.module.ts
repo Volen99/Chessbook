@@ -7,9 +7,6 @@ import {TimelineModule} from "../../shared/timeline/timeline.module";
 import {SidebarColumnModule} from "../../shared/sidebar-column/sidebar-column.module";
 import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";
 import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.module";
-import {NewsService} from "./news.service";
-import {NewsPostPlaceholderComponent} from "./news-post-placeholder/news-post-placeholder.component";
-import {NewsPostComponent} from "./news-post/news-post.component";
 import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.module";
 import {TimelineCardsHeaderComponent} from "./timeline-cards-header/timeline-cards-header.component";
 import {TimelineService} from "../../shared/timeline/timeline.service";
@@ -27,8 +24,6 @@ export function playerFactory() {
   declarations: [
     HomePageComponent,
 
-    NewsPostPlaceholderComponent,
-    NewsPostComponent,
     TimelineCardsHeaderComponent,
   ],
   imports: [
@@ -43,8 +38,6 @@ export function playerFactory() {
     LottieModule.forRoot({ player: playerFactory })
   ],
   providers: [
-    NewsService,
-
     TimelineService,
     TimelineQueryGeneratorService,
     TimelineApi,

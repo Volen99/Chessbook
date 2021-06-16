@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
-import {delay, map} from "rxjs/operators";
 import {HttpClient, HttpParams} from "@angular/common/http";
+import {Observable} from "rxjs";
+
 import {RestService} from "../../core/rest/rest.service";
 
 export class NewsPost {

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
+import {MatRippleModule} from "@angular/material/core";
+
 import { MessagesRoutingModule } from './messages-routing.module';
 import { MessagesComponent } from './messages.component';
 import { DetailHeaderMessageSelectedComponent } from './detail-header-message-selected/detail-header-message-selected.component';
@@ -13,7 +14,6 @@ import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.m
 import {NbUserModule} from "../../sharebook-nebular/theme/components/user/user.module";
 import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.module";
 import {AuthModule} from "../../auth/auth.module";
-import {MatRippleModule} from "@angular/material/core";
 import {NbSpinnerModule} from "../../sharebook-nebular/theme/components/spinner/spinner.module";
 import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/button.module";
 

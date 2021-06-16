@@ -28,9 +28,9 @@
            fullWidth
            fieldSize="large"
            [status]="fullName.dirty ? (fullName.invalid  ? 'danger' : 'success') : 'basic'"
-           [required]="getConfigValue('forms.validation.fullName.required')"
-           [minlength]="getConfigValue('forms.validation.fullName.minLength')"
-           [maxlength]="getConfigValue('forms.validation.fullName.maxLength')"
+           [required]="getConfigValue('shared-forms.validation.fullName.required')"
+           [minlength]="getConfigValue('shared-forms.validation.fullName.minLength')"
+           [maxlength]="getConfigValue('shared-forms.validation.fullName.maxLength')"
            [attr.aria-invalid]="fullName.invalid && fullName.touched ? true : null">
     <ng-container *ngIf="fullName.invalid && fullName.touched">
       <p class="caption status-danger" *ngIf="fullName.errors?.required">
@@ -38,8 +38,8 @@
       </p>
       <p class="caption status-danger" *ngIf="fullName.errors?.minlength || fullName.errors?.maxlength">
         Full name should contains
-        from {{getConfigValue('forms.validation.fullName.minLength')}}
-        to {{getConfigValue('forms.validation.fullName.maxLength')}}
+        from {{getConfigValue('shared-forms.validation.fullName.minLength')}}
+        to {{getConfigValue('shared-forms.validation.fullName.maxLength')}}
         characters
       </p>
     </ng-container>
@@ -57,7 +57,7 @@
            fullWidth
            fieldSize="large"
            [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : 'basic'"
-           [required]="getConfigValue('forms.validation.email.required')"
+           [required]="getConfigValue('shared-forms.validation.email.required')"
            [attr.aria-invalid]="email.invalid && email.touched ? true : null">
     <ng-container *ngIf="email.invalid && email.touched">
       <p class="caption status-danger" *ngIf="email.errors?.required">
@@ -81,9 +81,9 @@
            fullWidth
            fieldSize="large"
            [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : 'basic'"
-           [required]="getConfigValue('forms.validation.password.required')"
-           [minlength]="getConfigValue('forms.validation.password.minLength')"
-           [maxlength]="getConfigValue('forms.validation.password.maxLength')"
+           [required]="getConfigValue('shared-forms.validation.password.required')"
+           [minlength]="getConfigValue('shared-forms.validation.password.minLength')"
+           [maxlength]="getConfigValue('shared-forms.validation.password.maxLength')"
            [attr.aria-invalid]="password.invalid && password.touched ? true : null">
     <ng-container *ngIf="password.invalid && password.touched">
       <p class="caption status-danger" *ngIf="password.errors?.required">
@@ -91,8 +91,8 @@
       </p>
       <p class="caption status-danger" *ngIf="password.errors?.minlength || password.errors?.maxlength">
         Password should contain
-        from {{ getConfigValue('forms.validation.password.minLength') }}
-        to {{ getConfigValue('forms.validation.password.maxLength') }}
+        from {{ getConfigValue('shared-forms.validation.password.minLength') }}
+        to {{ getConfigValue('shared-forms.validation.password.maxLength') }}
         characters
       </p>
     </ng-container>
@@ -110,7 +110,7 @@
            fullWidth
            fieldSize="large"
            [status]="rePass.dirty ? (rePass.invalid || password.value != rePass.value  ? 'danger' : 'success') : 'basic'"
-           [required]="getConfigValue('forms.validation.password.required')"
+           [required]="getConfigValue('shared-forms.validation.password.required')"
            [attr.aria-invalid]="rePass.invalid && rePass.touched ? true : null">
     <ng-container *ngIf="rePass.invalid && rePass.touched">
       <p class="caption status-danger" *ngIf="rePass.errors?.required">
@@ -122,8 +122,8 @@
     </ng-container>
   </div>
 
-  <div class="form-control-group accept-group" *ngIf="getConfigValue('forms.register.terms')">
-    <nb-checkbox name="terms" [(ngModel)]="user.terms" [required]="getConfigValue('forms.register.terms')">
+  <div class="form-control-group accept-group" *ngIf="getConfigValue('shared-forms.register.terms')">
+    <nb-checkbox name="terms" [(ngModel)]="user.terms" [required]="getConfigValue('shared-forms.register.terms')">
       Agree to <a href="#" target="_blank"><strong>Terms & Conditions</strong></a>
     </nb-checkbox>
   </div>

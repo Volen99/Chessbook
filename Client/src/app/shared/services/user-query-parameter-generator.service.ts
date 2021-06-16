@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
-import {IUserIdentifier} from "../models/users/user-identifier";
 import {HttpParams} from "@angular/common/http";
+
+import {IUserIdentifier} from "../models/users/user-identifier";
 import {RestService} from "../../core/rest/rest.service";
 
 @Injectable()
@@ -62,7 +63,7 @@ export class UserQueryParameterGeneratorService {
 
     usersList.forEach(user => {
       if (user.id > 0) {
-        userIds.push(user.id.toString(/*CultureInfo.InvariantCulture*/));
+        userIds.push(user.id.toLocaleString());
       } else if (user.idStr) {
         userIds.push(user.idStr);
       } else if (user.screenName != null) {
@@ -88,7 +89,7 @@ export class UserQueryParameterGeneratorService {
         return null;
       }
 
-      return `${parameterName}=${userIdAsNumberOrString.toString(/*CultureInfo.InvariantCulture*/)}`;
+      return `${parameterName}=${userIdAsNumberOrString.toLocaleString()}`;
     } else {
       if (userIdAsNumberOrString == null) {
         return null;

@@ -29,7 +29,7 @@ function saveUserInfoIntoLocalStorage(info: {
   id: number
   username: string
   email: string
-  role: UserRole
+  role: UserRole[]
 }) {
   chessbookLocalStorage.setItem(UserLocalStorageKeys.ID, info.id.toString());
   chessbookLocalStorage.setItem(UserLocalStorageKeys.USERNAME, info.username);

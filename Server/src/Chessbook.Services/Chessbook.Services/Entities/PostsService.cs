@@ -142,16 +142,16 @@
                 posts = posts.Take(count.Value).ToList();
             }
 
-            var notDeletedUsers = await this.userService.GetCustomersByIdsAsync(posts.Select(v => v.UserId).ToArray());
+            //var notDeletedUsers = await this.userService.GetCustomersByIdsAsync(posts.Select(v => v.UserId).ToArray());
 
-            foreach (var notDeletedUser in notDeletedUsers)
-            {
-                var currentPost = posts.FirstOrDefault(p => p.UserId != notDeletedUser.Id);
-                if (currentPost != null)
-                {
-                    posts.Remove(currentPost);
-                }
-            }
+            //foreach (var notDeletedUser in notDeletedUsers)
+            //{
+            //    var currentPost = posts.FirstOrDefault(p => p.UserId != notDeletedUser.Id);
+            //    if (currentPost != null)
+            //    {
+            //        posts.Remove(currentPost);
+            //    }
+            //}
 
             return posts;
 

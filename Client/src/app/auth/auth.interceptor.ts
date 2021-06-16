@@ -10,13 +10,13 @@ import {
 } from '@angular/common/http';
 import {Observable, of, throwError as observableThrowError} from 'rxjs';
 import {catchError, switchMap} from 'rxjs/operators';
-import {AuthService} from "../core/auth/auth.service";
 import {HttpStatusCode} from "../shared/core-utils/miscs";
+import {NbAuthService} from "../sharebook-nebular/auth/services/auth.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  private authService: AuthService;
+  private authService: NbAuthService;
 
   // https://github.com/angular/angular/issues/18224#issuecomment-316957213
   constructor(private injector: Injector, private router: Router) {
@@ -24,7 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.authService === undefined) {
-      this.authService = this.injector.get(AuthService);
+      this.authService = this.injector.get(NbAuthService);
     }
 
     const authReq = this.cloneRequestWithAuth(req);
@@ -48,7 +48,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private handleTokenExpired(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.authService.refreshAccessToken()
+    return this.authService.refreshToken('email')
       .pipe(
         switchMap(() => {
           const authReq = this.cloneRequestWithAuth(req);
@@ -59,9 +59,12 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private cloneRequestWithAuth(req: HttpRequest<any>) {
+    // it goes here billion of times pffff
     const authHeaderValue = this.authService.getRequestHeaderValue();
 
-    if (authHeaderValue === null) return req;
+    if (authHeaderValue === null) {
+      return req;
+    }
 
     // Clone the request to add the new header
     return req.clone({headers: req.headers.set('Authorization', authHeaderValue)});

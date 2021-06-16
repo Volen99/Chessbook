@@ -1,0 +1,7 @@
+@import '../../../../../../../peertube/PeerTube/client/src/sass/include/variables';
+@import '../../../../../../../peertube/PeerTube/client/src/sass/include/mixins';
+
+.unblock-button {
+  @include peertube-button;
+  @include grey-button;
+}

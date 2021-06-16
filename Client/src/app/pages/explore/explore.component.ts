@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ExploreService, NewsPost, Pagination} from "./explore.service";
 import {Subject} from "rxjs/Subject";
 import {faKiwiBird} from '@fortawesome/pro-light-svg-icons';
+
+import {ExploreService, NewsPost, Pagination} from "./explore.service";
 
 @Component({
   selector: 'app-explore',

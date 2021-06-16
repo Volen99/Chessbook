@@ -131,6 +131,7 @@ namespace Nop.Web.Infrastructure
             services.AddScoped<IRelationshipModelFactory, RelationshipModelFactory>();
             services.AddScoped<IUserNotificationModelFactory, UserNotificationModelFactory>();
             services.AddScoped<IUserNotificationSettingModelFactory, UserNotificationSettingModelFactory>();
+            services.AddScoped<IAbuseModelFactory, AbuseModelFactory>();
         }
 
         /// <summary>

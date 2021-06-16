@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+
 import {NbDialogService} from "../sharebook-nebular/theme/components/dialog/dialog.service";
-import {ShowcaseDialogComponent} from "../pages/modal-overlays/dialog/showcase-dialog/showcase-dialog.component";
 import {UploadComponent} from "../pages/modal-overlays/dialog/compose/upload/upload.component";
 
 @Component({

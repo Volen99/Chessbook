@@ -3,7 +3,7 @@ function randomInt(low: number, high: number) {
     return Math.floor(Math.random() * (high - low) + low);
 }
 
-// Thanks https://stackoverflow.com/a/16187766
+// Thanks https://stackoverflow.com/a/16187766 ♥
 function compareSemVer(a: string, b: string) {
     const regExStrip0 = /(\.0+)+$/;
     const segmentsA = a.replace(regExStrip0, '').split('.');

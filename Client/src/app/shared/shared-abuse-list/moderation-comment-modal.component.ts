@@ -1,16 +1,17 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
-import {FormReactive} from "../forms/form-reactive";
+
+import {FormReactive} from "../shared-forms/form-reactive";
 import {AdminAbuse} from "../models/moderation/abuse/abuse.model";
-import {FormValidatorService} from "../forms/form-validator.service";
-import {Notifier} from "../../core/notification/notifier.service";
-import {AbuseService} from "../moderation/abuse.service";
-import {ABUSE_MODERATION_COMMENT_VALIDATOR} from "../forms/form-validators/abuse-validators";
+import {FormValidatorService} from "../shared-forms/form-validator.service";
+import {AbuseService} from "../shared-moderation/abuse.service";
+import {ABUSE_MODERATION_COMMENT_VALIDATOR} from "../shared-forms/form-validators/abuse-validators";
 
 import {
   faTimes,
 } from '@fortawesome/pro-light-svg-icons';
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
 
 @Component({
   selector: 'my-moderation-comment-modal',
@@ -27,7 +28,7 @@ export class ModerationCommentModalComponent extends FormReactive implements OnI
   constructor(
     protected formValidatorService: FormValidatorService,
     private modalService: NgbModal,
-    private notifier: Notifier,
+    private notifier: NbToastrService,
     private abuseService: AbuseService
   ) {
     super();
@@ -62,13 +63,13 @@ export class ModerationCommentModalComponent extends FormReactive implements OnI
     this.abuseService.updateAbuse(this.abuseToComment, {moderationComment})
       .subscribe(
         () => {
-          this.notifier.success(`Comment updated.`);
+          this.notifier.success(`Comment updated.`, 'Success');
 
           this.commentUpdated.emit(moderationComment);
           this.hide();
         },
 
-        err => this.notifier.error(err.message)
+        err => this.notifier.danger(err.message, 'Error')
       );
   }
 

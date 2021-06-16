@@ -1,13 +1,12 @@
 import {Injectable} from "@angular/core";
+import {HttpParams} from "@angular/common/http";
 
 import {RestService} from "../../../core/rest/rest.service";
 import {UserQueryParameterGeneratorService} from "../../services/user-query-parameter-generator.service";
 import {IGetHomeTimelineParameters} from "../../models/timeline/get-home-timeline-parameters";
-import {Resources} from "../../../helpers/resourse";
 import {IGetUserTimelineParameters} from "../../models/timeline/get-user-timeline-parameters";
 import {IGetMentionsTimelineParameters} from "../../models/timeline/get-mentions-timeline-parameters";
 import {IGetRetweetsOfMeTimelineParameters} from "../../models/timeline/get-retweets-of-me-timeline-parameters";
-import {HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class TimelineQueryGeneratorService {

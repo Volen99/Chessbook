@@ -1,14 +1,15 @@
 import {Directive, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {fromEvent, Observable, Subscription} from "rxjs";
+import {Subject} from "rxjs/Subject";
+import {debounceTime, tap} from "rxjs/operators";
+
 import {ComponentPaginationLight} from "../../../core/rest/component-pagination.model";
 import {PostSortField} from "../../posts/models/post-sort-field.type";
 import {Post} from "../../shared-main/post/post.model";
-import {Subject} from "rxjs/Subject";
 import {IUser} from "../../../core/interfaces/common/users";
-import {ActivatedRoute, Router} from "@angular/router";
-import {fromEvent, Observable, Subscription} from "rxjs";
 import {LocalStorageService} from "../../../core/wrappers/storage.service";
 import {ScreenService} from "../../../core/wrappers/screen.service";
-import {debounceTime, switchMap, tap} from "rxjs/operators";
 import {isLastMonth, isLastWeek, isThisMonth, isToday, isYesterday} from "../../core-utils/miscs";
 import {UsersService} from "../../../core/backend/common/services/users.service";
 

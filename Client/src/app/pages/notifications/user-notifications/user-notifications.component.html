@@ -196,14 +196,14 @@
       </ng-container>
 
       <ng-container *ngSwitchCase="18"> <!-- UserNotificationType.NEW_PEERTUBE_VERSION -->
-        <my-global-icon iconName="cog" aria-hidden="true"></my-global-icon>
+        <fa-icon [icon]="this.faCog" aria-hidden="true"></fa-icon>
 
         <div class="message" i18n>
         </div>
       </ng-container>
 
       <ng-container *ngSwitchDefault>
-        <my-global-icon iconName="alert" aria-hidden="true"></my-global-icon>
+        <fa-icon [icon]="this.faSensorAlert" aria-hidden="true"></fa-icon>
 
         <div class="message" i18n>
           The notification points to content now unavailable

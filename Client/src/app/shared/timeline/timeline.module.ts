@@ -1,4 +1,5 @@
 import {NgModule} from '@angular/core';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 import {TimelineComponent} from './timeline.component';
 import {SharedMainModule} from "../shared-main/shared-main.module";
@@ -8,7 +9,6 @@ import {TimelineApi} from "./backend/timeline.api";
 import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";
 import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.module";
 import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.module";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [

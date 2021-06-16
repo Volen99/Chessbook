@@ -1,5 +1,4 @@
 import {IUploadParameters, UploadBinaryParameters} from "./upload-binary-parameters";
-import {MediaType} from "../enums/media-type";
 import {MediaCategory} from "../enums/media-category";
 
 // For more description visit : https://dev.twitter.com/rest/media/uploading-media

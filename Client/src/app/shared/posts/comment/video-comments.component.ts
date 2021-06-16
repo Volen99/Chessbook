@@ -20,10 +20,10 @@ import {VideoCommentService} from "../../shared-post-comment/video-comment.servi
 import {HooksService} from "../../../core/plugins";
 import {User} from "../../shared-main/user/user.model";
 import {ComponentPagination, hasMoreItems} from "../../../core/rest/component-pagination.model";
-import {AuthService} from "../../../core/auth/auth.service";
 import {Notifier} from "../../../core/notification/notifier.service";
 import {ConfirmService} from "../../../core/confirm/confirm.service";
 import {Syndication} from "../../shared-main/feeds/syndication.model";
+import {UserStore} from "../../../core/stores/user.store";
 
 @Component({
   selector: 'app-video-comments',
@@ -58,7 +58,7 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
   private sub: Subscription;
 
   constructor(
-    private authService: AuthService,
+    private userStore: UserStore,
     private notifier: Notifier,
     private confirmService: ConfirmService,
     private videoCommentService: VideoCommentService,
@@ -238,7 +238,7 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   isUserLoggedIn() {
-    return this.authService.isLoggedIn();
+    return !!this.userStore.getUser();
   }
 
   onNearOfBottom() {

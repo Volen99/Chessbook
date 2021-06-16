@@ -1,6 +1,6 @@
-import {IUploadedMediaInfo} from "../../../../../../../shared/models/upload/media/uploaded-media-info";
 import {IUploadInitModel} from "./upload-init-model";
 import {IMedia} from "../../../../../../../shared/models/upload/media/media";
+import {IUploadedMediaInfo} from "../../../../../../../shared/models/upload/media/uploaded-media-info";
 
 export interface IChunkUploadResult {
   init: IUploadInitModel;

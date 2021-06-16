@@ -5,6 +5,8 @@
     text-decoration: none !important;
     outline: none !important;
   }
+
+  text-decoration: none !important; // by mi
 }
 
 @mixin disable-outline {
@@ -118,8 +120,8 @@
 @mixin peertube-textarea ($width, $height) {
   @include peertube-input-text($width);
 
-  color: pvar(--textareaForegroundColor);
-  background-color: pvar(--textareaBackgroundColor);
+  //color: pvar(--textareaForegroundColor);
+  //background-color: pvar(--textareaBackgroundColor);
   height: $height;
   padding: 5px 15px;
   font-size: 15px;
@@ -596,6 +598,14 @@
   margin-bottom: 10px;
 }
 
+@mixin actor-avatar-size ($size) {
+  display: inline-block;
+  width: $size;
+  height: $size;
+  min-width: $size;
+  min-height: $size;
+}
+
 @mixin actor-owner {
   @include disable-default-a-behaviour;
 
@@ -831,17 +841,9 @@
     --chip-padding: .2rem .3rem;
   }
 
-  .avatar {
-    margin-left: -.4rem;
-    margin-right: .2rem;
-    height: $avatar-height;
-    width: $avatar-height;
-
-    border-radius: 50%;
-    display: inline-block;
-    line-height: 1.25;
-    position: relative;
-    vertical-align: middle;
+  my-actor-avatar {
+    @include margin-left(-.4rem);
+    @include margin-right(.2rem);
   }
 
   &.two-lines {
@@ -849,17 +851,16 @@
 
     height: $avatar-height;
 
-    .avatar {
-      height: $avatar-height;
-      width: $avatar-height;
+    my-actor-avatar {
+      @include actor-avatar-size($avatar-height);
     }
 
     div {
+      margin: 0 .1rem;
+
       display: flex;
       flex-direction: column;
       height: $avatar-height;
-      margin-left: .1rem;
-      margin-right: .1rem;
       justify-content: center;
     }
   }
@@ -915,15 +916,17 @@
     padding-bottom: 15px;
     margin-bottom: $sub-menu-margin-bottom;
 
-    > my-global-icon {
-      margin-right: 10px;
-      vertical-align: bottom;
+    > span > fa-icon,
+    > fa-icon {
+      @include margin-right(10px);
       width: 24px;
       height: 24px;
+      vertical-align: top;
     }
 
     .badge {
-      margin-left: 7px;
+      @include margin-left(7px);
+      vertical-align: top;
     }
   }
 }
@@ -978,5 +981,62 @@
     @media screen and (max-width: $mobile-view) {
       @content;
     }
+  }
+}
+
+
+@mixin margin ($block-start, $inline-end, $block-end, $inline-start) {
+  @include margin-left($inline-start);
+  @include margin-right($inline-end);
+
+  margin-top: $block-start;
+  margin-bottom: $block-end;
+}
+
+@mixin padding ($block-start, $inline-end, $block-end, $inline-start) {
+  @include padding-left($inline-start);
+  @include padding-right($inline-end);
+
+  padding-top: $block-start;
+  padding-bottom: $block-end;
+}
+
+@mixin margin-left ($value) {
+  @supports (margin-inline-start: $value) {
+    margin-inline-start: $value;
+  }
+
+  @supports not (margin-inline-start: $value) {
+    margin-left: $value;
+  }
+}
+
+@mixin margin-right ($value) {
+  @supports (margin-inline-end: $value) {
+    margin-inline-end: $value;
+  }
+
+  @supports not (margin-inline-end: $value) {
+    margin-right: $value;
+  }
+}
+
+@mixin padding-left ($value) {
+  @supports (padding-inline-start: $value) {
+    padding-inline-start: $value;
+  }
+
+  @supports not (padding-inline-start: $value) {
+    padding-left: $value;
+  }
+}
+
+@mixin padding-right ($value) {
+  @supports (padding-inline-end: $value) {
+    padding-inline-end: $value;
+  }
+
+  @supports not (padding-inline-end: $value) {
+    padding-right: $value;
   }
 }

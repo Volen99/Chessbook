@@ -23,8 +23,8 @@ export class NbLogoutComponent implements OnInit {
   constructor(protected service: NbAuthService,
               @Inject(NB_AUTH_OPTIONS) protected options = {},
               protected router: Router) {
-    this.redirectDelay = this.getConfigValue('forms.logout.redirectDelay');
-    this.strategy = this.getConfigValue('forms.logout.strategy');
+    this.redirectDelay = this.getConfigValue('shared-forms.logout.redirectDelay');
+    this.strategy = this.getConfigValue('shared-forms.logout.strategy');
   }
 
   ngOnInit(): void {

@@ -1,7 +1,9 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {NgbPopover} from '@ng-bootstrap/ng-bootstrap';
+
 import {faPen, faCamera, faFileImport, faTrashAlt} from '@fortawesome/pro-light-svg-icons';
+
 import {ServerService} from "../../core/server/server.service";
 import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {getBytes} from "../../../root-helpers/bytes";

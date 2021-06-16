@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+
 import { UserProfileRoutingModule } from './user-profile-routing.module';
 import { UserProfileComponent } from './user-profile.component';
 import { SidebarColumnModule } from '../../shared/sidebar-column/sidebar-column.module';
@@ -12,7 +14,6 @@ import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.m
 import {NbActionsModule} from "../../sharebook-nebular/theme/components/actions/actions.module";
 import {ComponentsModule} from "../../components/components.module";
 import {UserProfileService} from "./user-profile.service";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {SharedModule} from "../../shared/shared.module";
 import {SharedActorImageModule} from "../../shared/shared-actor-image/shared-actor-image.module";
 

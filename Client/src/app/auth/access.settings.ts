@@ -1,18 +1,18 @@
 export const authSettings = {
   guest: {
   },
-  user: {
-    parent: 'guest',
-    view: ['devices', 'current-user'],
-    edit: ['devices', 'current-user'],
-  },
   registered: {
     parent: 'guest',
     view: ['devices', 'current-user'],
     edit: ['devices', 'current-user'],
   },
+  moderator: {
+    parent: 'registered',
+    view: ['devices', 'current-user'],
+    edit: ['devices', 'current-user'],
+  },
   admin: {
-    parent: 'user',
+    parent: 'moderator',
     view: ['devices', 'current-user', 'users'],
     edit: ['devices', 'current-user', 'users'],
   },

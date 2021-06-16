@@ -1,6 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './home-page.component';
 import { NgModule } from '@angular/core';
+
+import { HomePageComponent } from './home-page.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,7 @@ const routes: Routes = [
         title: `Home`
       }
     },
+    // duh? What the fuck have I done here?
     loadChildren: () => import('../../shared/timeline/timeline.module').then(m => m.TimelineModule),
   }
 ];

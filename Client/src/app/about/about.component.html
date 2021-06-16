@@ -1,0 +1,19 @@
+<nb-card>
+    <div class="row">
+        <nb-card-header>
+            <div class="sub-menu" [ngClass]="{ 'sub-menu-fixed': !isBroadcastMessageDisplayed }">
+                <div class="links">
+                    <a routerLink="peertube" routerLinkActive="active" class="title-page title-page-about">Chessbook</a>
+                </div>
+            </div>
+
+        </nb-card-header>
+        <nb-card-body>
+            <div class="margin-content" [ngClass]="{ 'offset-content': !isBroadcastMessageDisplayed }">
+                <router-outlet></router-outlet>
+            </div>
+        </nb-card-body>
+    </div>
+</nb-card>
+
+

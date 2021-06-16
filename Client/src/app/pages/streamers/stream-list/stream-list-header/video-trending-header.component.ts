@@ -1,11 +1,11 @@
 import {Component, HostBinding, Inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {IconDefinition} from "@fortawesome/fontawesome-common-types";
+
 import {VideoListHeaderComponent} from "../../../../shared/post-miniature/video-list-header.component";
 import {RedirectService} from "../../../../core/routing/redirect.service";
 import {ServerService} from "../../../../core/server/server.service";
-import {AuthService} from "../../../../core/auth/auth.service";
-import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 
 import {
   faChartLine,
@@ -40,7 +40,6 @@ export class VideoTrendingHeaderComponent extends VideoListHeaderComponent imple
   constructor(@Inject('data') public data: any,
               private route: ActivatedRoute,
               private router: Router,
-              private auth: AuthService,
               private serverService: ServerService,
               private redirectService: RedirectService,
   ) {

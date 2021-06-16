@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {NbThemeService} from "../../../../sharebook-nebular/theme/services/theme.service";
-import {map, takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
+import {map, takeUntil} from "rxjs/operators";
+
+import {NbThemeService} from "../../../../sharebook-nebular/theme/services/theme.service";
 import {UserStore} from "../../../../core/stores/user.store";
 import {SettingsData} from "../../../../core/interfaces/common/settings";
 

@@ -396,7 +396,6 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // I mean, it works...
   onItemClick(item: NbMenuItem | any) {
-    debugger
     if (!this.tag) {
 
       if (item.icon.iconName === 'alicorn') {

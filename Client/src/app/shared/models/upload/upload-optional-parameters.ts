@@ -1,5 +1,4 @@
 ﻿import {CustomRequestParameters, ICustomRequestParameters} from "../query/custom-request-parameters";
-import {SharebookConsts} from "../../../helpers/sharebook-consts";
 import {MediaCategory} from "../enums/media-category";
 import {MediaType} from "../enums/media-type";
 import {SharebookLimits} from "../../../helpers/sharebook-limits";

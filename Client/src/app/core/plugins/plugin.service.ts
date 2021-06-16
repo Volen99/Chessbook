@@ -1,8 +1,7 @@
 import { Observable, of, ReplaySubject } from 'rxjs';
-import { catchError, first, map, shareReplay } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { catchError, first, map, shareReplay } from 'rxjs/operators';
 import { Inject, Injectable, LOCALE_ID, NgZone } from '@angular/core';
-// import { AuthService } from '@app/core/auth';
 // import { Notifier } from '@app/core/notification';
 // import { MarkdownService } from '@app/core/renderer';
 // import { RestExtractor } from '@app/core/rest';
@@ -64,7 +63,6 @@ export class PluginService implements ClientHook {
   };
 
   constructor(
-    // private authService: AuthService,
     // private notifier: Notifier,
     // private markdownRenderer: MarkdownService,
     // private server: ServerService,

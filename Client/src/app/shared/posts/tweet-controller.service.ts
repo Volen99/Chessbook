@@ -1,20 +1,8 @@
-﻿import {Inject, Injectable} from "@angular/core";
-import {SharebookConsts} from "../../helpers/sharebook-consts";
+﻿import {Injectable} from "@angular/core";
 import {IPublishTweetParameters, PublishTweetParameters} from "./parameters/publish-tweet-parameters";
 import {IPublishRetweetParameters} from "./parameters/publish-retweet-parameters";
-import {IDestroyRetweetParameters} from "./parameters/destroy-retweet-parameters";
-import {IGetRetweetsParameters} from "./parameters/get-retweets-parameters";
-import {GetRetweeterIdsParameters, IGetRetweeterIdsParameters} from "./parameters/get-retweeter-ids-parameters";
 import {IDestroyTweetParameters} from "./parameters/destroy-tweet-parameters";
-import {
-  GetUserFavoriteTweetsParameters,
-  IGetUserFavoriteTweetsParameters
-} from "./parameters/get-favorite-tweets-Parameters";
-import {IFavoriteTweetParameters} from "./parameters/favorite-tweet-parameters";
-import {IUnfavoriteTweetParameters} from "./parameters/unfavorite-tweet-parameters";
-import {IGetOEmbedTweetParameters} from "./parameters/get-OEmbed-tweet-parameters";
-import {IGetTweetParameters} from "./parameters/get-tweet-parameters";
-import {IGetTweetsParameters} from "./parameters/get-tweets-parameters";
+
 import {TweetQueryExecutorService} from "./tweet-query-executor.service.";
 import {ITweetDTO} from "./models/DTO/tweet-dto";
 

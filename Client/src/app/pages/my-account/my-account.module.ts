@@ -1,10 +1,11 @@
+import {NgModule} from '@angular/core';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {TableModule} from 'primeng/table';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {NgModule} from '@angular/core';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+
 import {MyAccountAbusesListComponent} from './my-account-abuses/my-account-abuses-list.component';
 import {MyAccountBlocklistComponent} from './my-account-blocklist/my-account-blocklist.component';
-import {MyAccountServerBlocklistComponent} from './my-account-blocklist/my-account-server-blocklist.component';
 import {MyAccountNotificationsComponent} from './my-account-notifications/my-account-notifications.component';
 import {MyAccountRoutingModule} from './my-account-routing.module';
 import {MyAccountChangePasswordComponent} from './my-account-settings/my-account-change-password/my-account-change-password.component';
@@ -14,9 +15,9 @@ import {MyAccountComponent} from './my-account.component';
 import {NbTabsetModule} from "../../sharebook-nebular/theme/components/tabset/tabset.module";
 import {NbRouteTabsetModule} from "../../sharebook-nebular/theme/components/route-tabset/route-tabset.module";
 import {SharedMainModule} from "../../shared/shared-main/shared-main.module";
-import {SharedModerationModule} from "../../shared/moderation/shared-moderation.module";
+import {SharedModerationModule} from "../../shared/shared-moderation/shared-moderation.module";
 import {SharedAbuseListModule} from "../../shared/shared-abuse-list/shared-abuse-list.module";
-import {SharedFormModule} from "../../shared/forms/shared-form.module";
+import {SharedFormModule} from "../../shared/shared-forms/shared-form.module";
 import {MyAccountChangeEmailComponent} from "./my-account-settings/my-account-change-email/my-account-change-email.component";
 import {MyAccountDangerZoneComponent} from "./my-account-settings/my-account-danger-zone/my-account-danger-zone.component";
 import {MyAccountNotificationPreferencesComponent} from "./my-account-settings/my-account-notification-preferences/my-account-notification-preferences.component";
@@ -29,11 +30,10 @@ import { MyAccountThemeComponent } from './my-account-settings/my-account-theme/
 import {NbSelectModule} from "../../sharebook-nebular/theme/components/select/select.module";
 import {AuthModule} from "../../auth/auth.module";
 import {DialogUsernamePromptComponent} from "./my-account-settings/my-account-danger-zone/dialog-username-prompt/dialog-username-prompt.component";
-import { MyAccountPersonalDetailsComponent } from './my-account-settings/my-account-personal-details/my-account-personal-details.component';
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {NbRadioModule} from "../../sharebook-nebular/theme/components/radio/radio.module";
 import {NotificationsModule} from "../notifications/notifications.module";
 import {SharedActorImageEditModule} from "../../shared/shared-actor-image-edit/shared-actor-image-edit.module";
+import {SharedActorImageModule} from "../../shared/shared-actor-image/shared-actor-image.module";
 
 @NgModule({
   imports: [
@@ -62,6 +62,7 @@ import {SharedActorImageEditModule} from "../../shared/shared-actor-image-edit/s
     NbRadioModule,
     NotificationsModule,
     SharedActorImageEditModule,
+    SharedActorImageModule,
   ],
 
   declarations: [
@@ -70,17 +71,14 @@ import {SharedActorImageEditModule} from "../../shared/shared-actor-image-edit/s
     MyAccountChangePasswordComponent,
     MyAccountProfileComponent,
     MyAccountChangeEmailComponent,
-    // MyAccountApplicationsComponent,
 
     MyAccountDangerZoneComponent,
     MyAccountBlocklistComponent,
     MyAccountAbusesListComponent,
-    MyAccountServerBlocklistComponent,
     MyAccountNotificationsComponent,
     MyAccountNotificationPreferencesComponent,
     MyAccountThemeComponent,
     DialogUsernamePromptComponent,
-    MyAccountPersonalDetailsComponent,
   ],
 
   exports: [

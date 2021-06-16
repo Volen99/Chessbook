@@ -1,7 +1,7 @@
 import {DatePipe} from '@angular/common';
-import {environment} from '../../environments/environment';
 import {HttpErrorResponse} from "@angular/common/http";
-import {Notifier} from "../core/notification/notifier.service";
+
+import {environment} from '../../environments/environment';
 import {HttpStatusCode} from "../shared/core-utils/miscs";
 import {NbToastrService} from "../sharebook-nebular/theme/components/toastr/toastr.service";
 

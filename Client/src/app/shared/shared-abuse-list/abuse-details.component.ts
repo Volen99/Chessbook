@@ -7,7 +7,7 @@ import {User} from "../shared-main/user/user.model";
 @Component({
   selector: 'my-abuse-details',
   templateUrl: './abuse-details.component.html',
-  styleUrls: ['../moderation/moderation.scss', './abuse-details.component.scss']
+  styleUrls: ['../shared-moderation/moderation.scss', './abuse-details.component.scss']
 })
 export class AbuseDetailsComponent {
   @Input() abuse: ProcessedAbuse;
@@ -47,6 +47,6 @@ export class AbuseDetailsComponent {
   }
 
   switchToDefaultAvatar($event: Event) {
-    ($event.target as HTMLImageElement).src = User.GET_DEFAULT_AVATAR_URL();
+    ($event.target as HTMLImageElement).src = this.abuse.flaggedAccount.profileImageUrlHttps;  // User.GET_DEFAULT_AVATAR_URL();
   }
 }

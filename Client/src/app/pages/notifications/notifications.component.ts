@@ -1,5 +1,6 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {faCog} from '@fortawesome/pro-light-svg-icons';
+
 import {UserNotificationsComponent} from "./user-notifications/user-notifications.component";
 
 type NotificationSortType = 'createdAt' | 'read';
@@ -11,6 +12,8 @@ type NotificationSortType = 'createdAt' | 'read';
 })
 export class NotificationsComponent implements OnInit, AfterViewInit {
   @ViewChild('userNotification', {static: true}) userNotification: UserNotificationsComponent;
+
+  _notificationSortType: NotificationSortType = 'createdAt';
 
   ngOnInit(): void {
 
@@ -24,8 +27,6 @@ export class NotificationsComponent implements OnInit, AfterViewInit {
     }, 500);
 
   }
-
-  _notificationSortType: NotificationSortType = 'createdAt';
 
   get notificationSortType() {
     return !this.hasUnreadNotifications()
@@ -61,8 +62,5 @@ export class NotificationsComponent implements OnInit, AfterViewInit {
       route: ['/notifications/mentions'],
     },
   ];
-
-
-
 
 }

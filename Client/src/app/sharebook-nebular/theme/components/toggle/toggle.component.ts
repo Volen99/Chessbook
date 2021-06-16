@@ -67,7 +67,7 @@ import { convertToBoolProperty, NbBooleanInput } from '../helpers';
  * <nb-toggle [(checked)]="checked"></nb-toggle>
  * ```
  *
- * Or it could be set via reactive forms or ngModel bindings:
+ * Or it could be set via reactive shared-forms or ngModel bindings:
  *
  * @stacked-example(Toggle form binding, toggle/toggle-form.component)
  *

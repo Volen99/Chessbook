@@ -1,1 +1,1 @@
-export type AbuseFilter = 'video' | 'comment' | 'account'
+export type AbuseFilter = 'video' | 'comment' | 'account';

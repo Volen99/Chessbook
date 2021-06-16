@@ -12,6 +12,11 @@ using Nop.Services.Helpers;
 using Nop.Web.Areas.Admin.Models.Customers;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.Generic;
+using Chessbook.Web.Api.Areas.Admin.Models.Users;
+using Nop.Web.Framework.Models.Extensions;
+using Nop.Web.Areas.Admin.Infrastructure.Mapper.Extensions;
 
 namespace Chessbook.Web.Api.Factories
 {
@@ -42,6 +47,49 @@ namespace Chessbook.Web.Api.Factories
             this.userNotificationSettingModelFactory = userNotificationSettingModelFactory;
         }
 
+         /// <summary>
+        /// Prepare paged customer list model
+        /// </summary>
+        /// <param name="searchModel">Customer search model</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the customer list model
+        /// </returns>
+        public virtual async Task<CustomerListModel> PrepareCustomerListModelAsync(CustomerSearchModel searchModel)
+        {
+            if (searchModel == null)
+            {
+                throw new ArgumentNullException(nameof(searchModel));
+            }
+
+            // get parameters to filter customers
+            int.TryParse(searchModel.SearchDayOfBirth, out var dayOfBirth);
+            int.TryParse(searchModel.SearchMonthOfBirth, out var monthOfBirth);
+
+            // get customers
+            var customers = await this.userService.GetAllCustomersAsync(customerRoleIds: searchModel.SelectedCustomerRoleIds.ToArray(),
+                email: searchModel.SearchEmail,
+                username: searchModel.SearchUsername,
+                firstName: searchModel.SearchFirstName,
+                dayOfBirth: dayOfBirth,
+                monthOfBirth: monthOfBirth,
+                ipAddress: searchModel.SearchIpAddress,
+                pageIndex: searchModel.Page - 1, pageSize: searchModel.PageSize);
+
+            // prepare list model
+            var model = await new CustomerListModel().PrepareToGridAsync(searchModel, customers, () =>
+            {
+                return customers.SelectAwait(async customer =>
+                {
+                    var customerModel = await this.PrepareCustomerModelAsync(new CustomerModel(), customer);
+                   
+                    return customerModel;
+                });
+            });
+
+            return model;
+        }
+
         public async Task<CustomerModel> PrepareCustomerModelAsync(CustomerModel model, Customer customer, bool excludeProperties = false)
         {
             if (customer != null)
@@ -65,6 +113,7 @@ namespace Chessbook.Web.Api.Factories
                     model.CreatedOn = await dateTimeHelper.ConvertToUserTimeAsync(customer.CreatedOn, DateTimeKind.Utc, model.Id);
                     model.LastActivityDate = await this.dateTimeHelper.ConvertToUserTimeAsync(customer.LastActivityDateUtc, DateTimeKind.Utc, model.Id);
                     model.LastIpAddress = customer.LastIpAddress;
+                    model.LastLoginDate = customer.LastLoginDateUtc;
                 }
             }
             else
@@ -79,6 +128,12 @@ namespace Chessbook.Web.Api.Factories
                         // model.SelectedCustomerRoleIds.Add(registeredRole.Id);
                     }
                 }
+            }
+
+            // set default values for the new model
+            if (customer == null)
+            {
+                model.Active = true;
             }
 
             var userCurrent = await this.userService.GetCustomerByIdAsync(model.Id);
@@ -101,7 +156,26 @@ namespace Chessbook.Web.Api.Factories
 
             // notification settings
             var userNotificationSettings = await this.notificationsSettingsService.GetByUserId(model.Id);
-            model.NotificationSettings = await this.userNotificationSettingModelFactory.PrepareUserNotificationSettingModelAsync(userNotificationSettings);
+
+            if (userNotificationSettings != null)
+            {
+                model.NotificationSettings = await this.userNotificationSettingModelFactory.PrepareUserNotificationSettingModelAsync(userNotificationSettings);
+            }
+
+            // user roles
+            var roleNames = (await this.userService.GetCustomerRolesAsync(customer)).Select(role => role.Name);
+
+            var roles = new List<int>();
+            foreach (var name in roleNames)
+            {
+
+                // 0,1,2 are kept sync with the client enum
+                if (name.ToLower() == "administrators") roles.Add(0);
+                else if (name.ToLower() == "moderators") roles.Add(1);
+                else if (name.ToLower() == "registered") roles.Add(2);
+            }
+
+            model.Roles = roles;
 
             return model;
 
@@ -124,5 +198,6 @@ namespace Chessbook.Web.Api.Factories
 
             return ChessbookConstants.SiteHttps + avatarUrl;
         }
+
     }
 }

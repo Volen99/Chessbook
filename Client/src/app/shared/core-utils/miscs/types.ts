@@ -4,7 +4,7 @@ export type FunctionPropertyNames<T> = {
     [K in keyof T]: T[K] extends Function ? K : never
 }[keyof T];
 
-export type FunctionProperties<T> = Pick<T, FunctionPropertyNames<T>>
+export type FunctionProperties<T> = Pick<T, FunctionPropertyNames<T>>;
 
 export type PickWith<T, KT extends keyof T, V> = {
     [P in KT]: T[P] extends V ? V : never
@@ -23,7 +23,7 @@ export type DeepPartial<T> = {
             : DeepPartial<T[P]>
 };
 
-type Primitive = string | Function | number | boolean | Symbol | undefined | null
+type Primitive = string | Function | number | boolean | Symbol | undefined | null;
 export type DeepOmitHelper<T, K extends keyof T> = {
     [P in K]: // extra level of indirection needed to trigger homomorhic behavior
     T[P] extends infer TP // distribute over unions

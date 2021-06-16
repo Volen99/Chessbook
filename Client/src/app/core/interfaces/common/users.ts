@@ -16,7 +16,7 @@ import {UserRight} from "../../../shared/models/users/user-right.enum";
 import {Avatar} from "primeng/avatar";
 
 export interface IUser extends IUserIdentifier {
-  displayName?: string;
+  displayName: string;
 
   status: IPost;
 
@@ -26,7 +26,6 @@ export interface IUser extends IUserIdentifier {
 
   // role: string;
   age: number;
-  picture: string;
   settings: Settings;
 
   location: string;
@@ -53,11 +52,7 @@ export interface IUser extends IUserIdentifier {
 
   notifications?: boolean;
 
-  profileImageUrlHttp: string;
-
   profileImageUrlHttps: string;
-
-  profileImageUrl: string;
 
   followRequestSent?: boolean;
 
@@ -103,18 +98,9 @@ export interface IUser extends IUserIdentifier {
 
   followedBy: boolean;
 
-
-  // id: number;
-  // firstName: string;
-  // lastName: string;
-  // email: string;
-  // name?: string;
-  // login: string;
-  // address: Address;
-
+  lastLoginDate: Date | null;
 
   // TODO: Make a separate interface?!
-
 
   pendingEmail: string | null;
 
@@ -122,8 +108,8 @@ export interface IUser extends IUserIdentifier {
 
   adminFlags?: UserAdminFlag;
 
-  role: UserRole;
-  roleLabel: string;
+  roles: UserRole[];
+  roleLabel: string[];
 
   blocked: boolean;
   blockedReason?: string;
@@ -132,15 +118,6 @@ export interface IUser extends IUserIdentifier {
   suspendedReason?: string;
 
   hasRight(right: UserRight);
-
-  // updateAccountAvatar(newAccountAvatar?: Avatar);
-  updateAccountAvatar(newAccountAvatarUrl?: string);
-}
-
-export interface Address {
-  street: string;
-  city: string;
-  zipCode: string;
 }
 
 export abstract class UserData {

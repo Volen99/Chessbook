@@ -1,14 +1,15 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Subject} from 'rxjs';
+import {faExclamationTriangle, faCog, faSensorAlert} from '@fortawesome/pro-light-svg-icons';
+import {
+  faUser as faUserSolid,
+} from '@fortawesome/pro-solid-svg-icons';
+
 import {UserNotification} from "../../../shared/shared-main/users/user-notification.model";
 import {ComponentPagination, hasMoreItems} from "../../../core/rest/component-pagination.model";
 import {UserNotificationService} from "../../../shared/shared-main/users/user-notification.service";
 import {NbToastrService} from "../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {AbuseState} from "../../../shared/models/moderation/abuse/abuse-state.model";
-import {faExclamationTriangle} from '@fortawesome/pro-light-svg-icons';
-import {
-  faUser as faUserSolid,
-} from '@fortawesome/pro-solid-svg-icons';
 
 @Component({
   selector: 'app-user-notifications',
@@ -49,6 +50,8 @@ export class UserNotificationsComponent implements OnInit {
 
   faExclamationTriangle = faExclamationTriangle;
   faUserSolid = faUserSolid;
+  faCog = faCog;
+  faSensorAlert = faSensorAlert;
 
   loadNotifications(reset?: boolean) {
     const options = {

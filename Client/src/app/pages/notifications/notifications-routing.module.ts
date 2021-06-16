@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { NotificationsComponent } from './notifications.component';
 import { MentionsComponent } from './mentions/mentions.component';
 

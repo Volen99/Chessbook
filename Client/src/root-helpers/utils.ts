@@ -58,7 +58,7 @@ function importModule(path: string) {
 function wait(ms: number) {
   return new Promise(res => {
     // @ts-ignore
-    setTimeout(() => res(), ms);                              // null by mi: res(null)
+    setTimeout(() => res(), ms);
   });
 }
 export {

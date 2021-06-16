@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
+
 import {LinkifierService} from './linkifier.service';
 import {SANITIZE_OPTIONS} from "../utils/html";
+import {getCustomMarkupSanitizeOptions, getSanitizeOptions} from "../../shared/core-utils/renderer/html";
 
 @Injectable()
 export class HtmlRendererService {
@@ -10,17 +12,17 @@ export class HtmlRendererService {
 
   }
 
-  async convertToBr(text: string) {
+  async convertToBr (text: string) {
     await this.loadSanitizeHtml();
 
     const html = text.replace(/\r?\n/g, '<br />');
 
     return this.sanitizeHtml(html, {
-      allowedTags: ['br']
+      allowedTags: [ 'br' ]
     });
   }
 
-  async toSafeHtml(text: string) {
+  async toSafeHtml(text: string, additionalAllowedTags: string[] = []) {
     const [html] = await Promise.all([
       // Convert possible markdown to html
       this.linkifier.linkify(text),
@@ -28,7 +30,11 @@ export class HtmlRendererService {
       this.loadSanitizeHtml()
     ]);
 
-    return this.sanitizeHtml(html, SANITIZE_OPTIONS);
+    const options = additionalAllowedTags.length !== 0
+      ? getCustomMarkupSanitizeOptions(additionalAllowedTags)
+      : getSanitizeOptions();
+
+    return this.sanitizeHtml(html, options);
   }
 
   private async loadSanitizeHtml () {

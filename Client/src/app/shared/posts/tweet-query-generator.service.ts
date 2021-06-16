@@ -1,4 +1,5 @@
 ﻿import {Injectable} from "@angular/core";
+import {HttpParams} from "@angular/common/http";
 
 import {IPublishTweetParameters} from "./parameters/publish-tweet-parameters";
 import {IDestroyTweetParameters} from "./parameters/destroy-tweet-parameters";
@@ -12,7 +13,6 @@ import {IUnfavoriteTweetParameters} from "./parameters/unfavorite-tweet-paramete
 import {IGetOEmbedTweetParameters} from "./parameters/get-OEmbed-tweet-parameters";
 import {ITweetIdentifier} from "./models/tweet-identifier";
 import {IGetTweetParameters} from "./parameters/get-tweet-parameters";
-import {HttpParams} from "@angular/common/http";
 import {RestService} from "../../core/rest/rest.service";
 import {IGetTweetsParameters} from "./parameters/get-tweets-parameters";
 import {UserQueryParameterGeneratorService} from "../services/user-query-parameter-generator.service";
@@ -235,11 +235,6 @@ export class TweetQueryGeneratorService {
 
     return params;
   }
-
-
-
-
-
 
   public getOEmbedTweetQuery(parameters: IGetOEmbedTweetParameters): HttpParams {
     let params = new HttpParams(); // StringBuilder(Resources.Tweet_GenerateOEmbed);

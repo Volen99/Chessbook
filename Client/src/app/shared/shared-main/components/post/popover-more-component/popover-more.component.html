@@ -1,0 +1,11 @@
+<div *ngFor="let item of this.items; let i = index;" role="menuitem" tabindex="0" class="dropdown-menu__item sharebook-container sharebook-cursor-pointer flex-direction-row outline-style-none r-ymttw5 r-1yzf0co transition-duration transition-property width-100-per"
+     [attr.data-index]="i" (click)="this.handleClick($event)">
+    <div class="sharebook-container justify-content-center">
+       <fa-icon [icon]="item.icon" [styles]="this.svgStyles"></fa-icon>
+    </div>
+    <div class="sharebook-container flex-grow-expand flex-shrink">
+        <div dir="auto" class="css-901oao font-size-15px font-weight-400 r-rjixqe min-width-0px text-overflow-wrap">
+            <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">{{item.title}}</span>
+        </div>
+    </div>
+</div>

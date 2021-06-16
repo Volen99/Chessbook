@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { NgxValidationMessageComponent } from './validation-message/validation-message.component';
 import {
   NgxFilterByNumberComponent,

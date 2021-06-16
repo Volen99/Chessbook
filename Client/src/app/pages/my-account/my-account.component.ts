@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+
 import {ScreenService} from "../../core/wrappers/screen.service";
 import {AuthUser} from "../../core/auth/auth-user.model";
 
@@ -59,17 +60,13 @@ export class MyAccountComponent implements OnInit {
       title: 'Settings',
       route: '/my-account/settings',
     },
-    {
-      title: 'Notifications',
-      route: [ '/my-account/notifications' ],
-    },
+    // {
+    //   title: 'Notifications',
+    //   route: [ '/my-account/notifications' ],
+    // },
     {
       title: 'Moderation',
-      route: '#',
-      dropdown: this.getMenuItems(),
-      // icon: 'flash-outline',
-      // responsive: true,
-      // disabled: true,
+      route: 'abuses',
     },
   ];
 

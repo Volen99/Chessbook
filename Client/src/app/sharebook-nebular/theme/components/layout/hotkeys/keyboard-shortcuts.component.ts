@@ -26,13 +26,11 @@ export class KeyboardShortcutsComponent implements OnInit, OnDestroy {
   public actionsHotkeys: Hotkey[];
 
   public ngOnInit(): void {
-    debugger
     this.subscription = this.hotkeysService.cheatSheetToggle.subscribe((isOpen) => {
       if (isOpen !== false) {
         this.hotkeys = this.hotkeysService.hotkeys.filter(hotkey => hotkey.description);
       }
 
-      debugger
       // TODO: remove magic number 💫
       this.navigationalHotkeys = this.hotkeys.filter((u, i) => i < 17);
       this.actionsHotkeys = this.hotkeys.filter((u, i) => i >= 17);

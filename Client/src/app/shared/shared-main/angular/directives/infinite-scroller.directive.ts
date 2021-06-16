@@ -1,6 +1,6 @@
+import {AfterViewChecked, Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {fromEvent, Observable, Subscription} from 'rxjs';
 import {distinctUntilChanged, filter, map, share, startWith, throttleTime} from 'rxjs/operators';
-import {AfterViewChecked, Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 
 @Directive({
   selector: '[appInfiniteScroller]'

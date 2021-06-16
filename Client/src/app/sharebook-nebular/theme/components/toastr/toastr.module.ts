@@ -1,9 +1,3 @@
-/**
- * @license
- * Copyright Akveo. All Rights Reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
- */
-
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { NbOverlayModule } from '../cdk/overlay/overlay.module';
@@ -14,7 +8,6 @@ import { NbToastrContainerRegistry, NbToastrService } from './toastr.service';
 import { NbToastComponent } from './toast.component';
 import { NbToastrContainerComponent } from './toastr-container.component';
 import { NB_TOASTR_CONFIG, NbToastrConfig } from './toastr-config';
-
 
 @NgModule({
   imports: [NbSharedModule, NbOverlayModule, NbIconModule],

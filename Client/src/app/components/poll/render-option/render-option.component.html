@@ -1,4 +1,4 @@
-<li> <!--key={option.get('title')}-->
+<li>
     <label class="poll__option" [ngClass]="{selectable: !this.showResults}">
         <input name="vote-options" [type]="this.poll.multiple ? 'checkbox' : 'radio'"
                [value]="this.optionIndex" [checked]="this.active" (change)="this.handleOptionChange"
@@ -14,7 +14,7 @@
 
         <span *ngIf="this.showResults" class='poll__number'>this.math.round(this.percent)%</span>
 
-        <span>{{this.option.label}}</span> <!--dangerouslySetInnerHTML="{__html: titleEmojified}"--> <!--class="poll__option__text translate"-->
+        <span>{{this.option.label}}</span>
 
         <span *ngIf="!!this.voted" class="poll__voted">
                  <nb-icon id="check" icon="checkmark-circle-2" class="poll__voted__mark"></nb-icon>

@@ -1,0 +1,392 @@
+<div class="row">
+    <div class="col-md-12 col-xl-12">
+
+        <div class="about-instance-title">
+            <h1 i18n class="title">About {{ instanceName }}</h1>
+
+            <a nbButton routerLink="/about/contact" i18n *ngIf="isContactFormEnabled" class="contact-admin">Contact
+                administrator</a>
+        </div>
+
+        <div class="instance-badges" *ngIf="categories.length !== 0 || languages.length !== 0">
+            <span *ngFor="let category of categories" class="badge badge-primary category">{{ category }}</span>
+
+            <span *ngFor="let language of languages" class="badge badge-secondary language">{{ language }}</span>
+        </div>
+
+        <div class="short-description">
+            <div class="block short-description">{{ shortDescription }}</div>
+
+            <div i18n *ngIf="isNSFW" class="block dedicated-to-nsfw">This instance is dedicated to sensitive/NSFW
+                content.
+            </div>
+        </div>
+
+        <div class="anchor" id="administrators-and-sustainability"></div>
+        <a
+                *ngIf="html.administrator || html.maintenanceLifetime || html.businessModel"
+                class="anchor-link"
+                routerLink="/about/chessbook"
+                fragment="administrators-and-sustainability"
+                #anchorLink>
+            <h2 i18n class="middle-title">
+                ADMINISTRATORS & SUSTAINABILITY
+            </h2>
+        </a>
+
+        <div class="block administrator" *ngIf="html.administrator">
+            <div class="anchor" id="administrators"></div>
+            <a
+                    class="anchor-link"
+                    routerLink="/about/chessbook"
+                    fragment="administrators"
+                    #anchorLink>
+                <h2 i18n class="section-title">Who we are</h2>
+            </a>
+
+            <div [innerHTML]="html.administrator"></div>
+        </div>
+
+        <div class="block creation-reason" *ngIf="html.creationReason">
+            <div class="anchor" id="creation-reason"></div>
+            <a
+                    class="anchor-link"
+                    routerLink="/about/chessbook"
+                    fragment="creation-reason"
+                    #anchorLink
+                    (click)="onClickCopyLink(anchorLink)">
+                <h2 i18n class="section-title">Why we created this instance</h2>
+            </a>
+
+            <div [innerHTML]="html.creationReason"></div>
+        </div>
+
+        <div class="block maintenance-lifetime" *ngIf="html.maintenanceLifetime">
+            <div class="anchor" id="maintenance-lifetime"></div>
+            <a
+                    class="anchor-link"
+                    routerLink="/about/chessbook"
+                    fragment="maintenance-lifetime"
+                    #anchorLink
+                    (click)="onClickCopyLink(anchorLink)">
+                <h2 i18n class="section-title">How long we plan to maintain this instance</h2>
+            </a>
+
+            <div [innerHTML]="html.maintenanceLifetime"></div>
+        </div>
+
+        <div class="block business-model" *ngIf="html.businessModel">
+            <div class="anchor" id="business-model"></div>
+            <a
+                    class="anchor-link"
+                    routerLink="/about/chessbook"
+                    fragment="business-model"
+                    #anchorLink
+                    (click)="onClickCopyLink(anchorLink)">
+                <h2 i18n class="section-title">How we will pay for keeping our website running</h2>
+            </a>
+
+            <div [innerHTML]="html.businessModel"></div>
+        </div>
+
+        <div class="anchor" id="information"></div>
+        <a
+                *ngIf="descriptionContent"
+                class="anchor-link"
+                routerLink="/about/chessbook"
+                fragment="information"
+                #anchorLink
+                (click)="onClickCopyLink(anchorLink)">
+            <h2 i18n class="middle-title">
+                INFORMATION
+            </h2>
+        </a>
+
+        <div class="block description">
+            <div class="anchor" id="description"></div>
+            <a
+                    class="anchor-link"
+                    routerLink="/about/chessbook"
+                    fragment="description"
+                    #anchorLink
+                    (click)="onClickCopyLink(anchorLink)">
+                <h2 i18n class="section-title">Description</h2>
+            </a>
+
+            <!--<my-custom-markup-container [content]="descriptionContent"></my-custom-markup-container>-->
+            <div>
+                <p>I created Chessbook to provide a free social media for chess users.</p>
+                <ul>
+                    <li>
+                        <p>We federate selectively - I regularly review other instances and federate with any which have
+                            content I believe will appeal to our audience. Other instances are welcome to follow, but we
+                            won't automatically follow back. If you would like us to federate with you, please use the
+                            Contact Administrator button at the top of the page and we'll be in touch.</p>
+                    </li>
+                    <li>
+                        <p>We currently impose a quota of 20GB for new users. However, we especially welcome content
+                            creators, and are happy to provide an increased quota for your vlogs or other personal
+                            channels. Simply use the Contact Administrator link at the top of this page and tell us a
+                            little about your channel and we'll look at increasing/removing your limit.</p>
+                    </li>
+                </ul>
+                <p>
+                    <strong>Support</strong>
+                    <br>
+                    You can help support Chessbook using any of the methods below. Any help is much appreciated ♥</p>
+                <p>Patreon
+                    <br>
+                    <a href="https://patreon.com/peertubeuk" target="_blank" rel="noopener noreferrer">https://patreon.com/peertubeuk</a>
+                </p>
+                <p>Ko-Fi<br>
+                    <a href="https://ko-fi.com/peertubeuk" target="_blank" rel="noopener noreferrer">https://ko-fi.com/peertubeuk</a>
+                </p>
+                <p>Streamlabs<br>
+                    <a href="https://streamlabs.com/volencho/tip" target="_blank" rel="noopener noreferrer">https://streamlabs.com/volencho/tip</a>
+                </p>
+                <p>Bitcoin (BTC): <a href="https://www.blockchain.com/btc/address/14wkjjpNP7rtuwpfsBxSjVjz6B8tQQc5cg"
+                                     target="_blank" rel="noopener noreferrer">14wkjjpNP7rtuwpfsBxSjVjz6B8tQQc5cg</a>
+                </p>
+                <p>Bitcoin Cash (BCH): <a
+                        href="https://www.blockchain.com/bch/address/1Ldb3fU7XbUKhZ7JpdKeHFonvujFx2xLxL" target="_blank"
+                        rel="noopener noreferrer">1Ldb3fU7XbUKhZ7JpdKeHFonvujFx2xLxL</a></p>
+                <p>Dogecoin (DOGE): <a href="https://dogechain.info/address/DQE1y1sappTb1d31tDgCJVQ8gvgUK7P9CJ"
+                                       target="_blank" rel="noopener noreferrer">DQE1y1sappTb1d31tDgCJVQ8gvgUK7P9CJ</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="anchor" id="moderation"></div>
+        <a
+                *ngIf="html.moderationInformation || html.codeOfConduct || html.terms"
+                class="anchor-link"
+                routerLink="/about/chessbook"
+                fragment="moderation"
+                #anchorLink
+                (click)="onClickCopyLink(anchorLink)">
+            <h2 i18n class="middle-title">
+                MODERATION
+            </h2>
+        </a>
+
+        <div class="block moderation-information" *ngIf="html.moderationInformation">
+            <div class="anchor" id="moderation-information"></div>
+            <a
+                    class="anchor-link"
+                    routerLink="/about/chessbook"
+                    fragment="moderation-information"
+                    #anchorLink
+                    (click)="onClickCopyLink(anchorLink)">
+                <h2 i18n class="section-title">Website rules</h2>
+            </a>
+
+            <div [innerHTML]="html.moderationInformation"></div>
+            <ol class="rules-list">
+                <li>
+                    <div class="rules-list__text">No racism, sexism, homophobia, transphobia, xenophobia, or casteism</div>
+                </li>
+                <li>
+                    <div class="rules-list__text">No spam or advertising</div>
+                </li>
+                <li>
+                    <div class="rules-list__text">No incitement of violence or promotion of violent ideologies</div>
+                </li>
+                <li>
+                    <div class="rules-list__text">No harassment, dogpiling or doxxing of other users</div>
+                </li>
+                <li>
+                    <div class="rules-list__text">No illegal content</div>
+                </li>
+                <li>
+                    <div class="rules-list__text">Do not accuse someone of cheating publicly before it has been proven</div>
+                </li>
+                <li>
+                    <div class="rules-list__text">Political content is generally fine, but personal attacks on specific individuals is not cool and should be avoided</div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="block code-of-conduct" *ngIf="html.codeOfConduct">
+            <div class="anchor" id="code-of-conduct"></div>
+            <a
+                    class="anchor-link"
+                    routerLink="/about/chessbook"
+                    fragment="code-of-conduct"
+                    #anchorLink
+                    (click)="onClickCopyLink(anchorLink)">
+                <h2 i18n class="section-title">Code of conduct</h2>
+            </a>
+
+            <!--<div [innerHTML]="html.codeOfConduct"></div>-->
+            <div>
+                <ul>
+                <li><strong>Be friendly and patient.</strong></li>
+                <li><strong>Be welcoming.</strong> We strive to be a community that welcomes and supports people of all backgrounds and identities. This includes, but is not limited to members of any race, ethnicity, culture, national origin, colour, immigration status, social and economic class, educational level, sex, sexual orientation, gender identity and expression, age, size, family status, political belief, religion, and mental and physical ability.</li>
+                <li><strong>Be considerate.</strong> Your content will be viewed by other people. Any decision you take will affect your audience, and you should take them into account when making editorial decisions. Remember that we're a world-wide community, so you might not be communicating in someone else's primary language.</li>
+                <li><strong>Be respectful.</strong> Not all of us will agree all the time, but disagreement is no excuse for poor behavior and poor manners. We might all experience some frustration now and then, but we cannot allow that frustration to turn into a personal attack. It’s important to remember that a community where people feel uncomfortable or threatened is not a productive one. Members of the Chessbook community should be respectful when dealing with other members as well as with people outside the Chessbook community.</li>
+                <li><strong>Be careful in the words that you choose.</strong> Be kind to others. Do not insult or put down other participants. Harassment and other exclusionary behavior aren't acceptable. This includes, but is not limited to:
+                    <ul>
+                        <li>Violent threats or language directed against another person.</li>
+                        <li>Discriminatory jokes and language.</li>
+                        <li>Posting (or threatening to post) other people's personally identifying information ("doxing").</li>
+                        <li>Personal insults, especially those using racist or sexist terms.</li>
+                        <li>Accusing someone of cheating publicly without being proven.</li>
+                        <li>Advocating for, or encouraging, any of the above behavior.</li>
+                        <li>Repeated harassment of others. In general, if someone asks you to stop, then stop.</li>
+                    </ul>
+                </li>
+                <li><strong>When we disagree, try to understand why.</strong> Disagreements, both social and technical, happen all the time and Chessbook is no exception. It is important that we resolve disagreements and differing views constructively. Remember that we're different. Some like starting with 1.e4 some with 1.d4 etc.. Different people have different perspectives on issues. Being unable to understand why someone holds a viewpoint doesn’t mean that they’re wrong. Don’t forget that it is human to blunder and blaming each other doesn't get us anywhere. Instead, focus on helping to resolve issues and learning from mistakes.</li>
+            </ul>
+                <ol>
+                    <li>
+                        The following types of content will be removed from the public
+                        timeline:
+                        <ol type="a">
+                            <li>
+                                Excessive advertising
+                            </li>
+                            <li>
+                                Uncurated news bots posting from third-party news sources
+                            </li>
+                            <li>
+                                Nudity, pornography and sexually explicit content,
+                                including artistic depictions
+                            </li>
+                            <li>
+                                Fake news, anti-vaccination spam or any of the QAnon bullshit
+                            </li>
+                        </ol>
+                    </li>
+                    <li>
+                        The following types of content will be removed from the public
+                        timeline, and may result in account suspension and revocation of access
+                        to the service:
+                        <ol type="a">
+                            <li>
+                                Racism or advocation of racism
+                            </li>
+                            <li>
+                                Sexism or advocation of sexism
+                            </li>
+                            <li>
+                                Casteism or advocation of casteism
+                            </li>
+                            <li>
+                                Discrimination against gender and sexual minorities, or
+                                advocation thereof
+                            </li>
+                            <li>
+                                Xenophobic and/or violent nationalism
+                            </li>
+                        </ol>
+                    </li>
+                    <li>
+                        The following types of content are explicitly disallowed and will
+                        result in revocation of access to the service:
+                        <ol type="a">
+                            <li>
+                                Sexual depictions of children
+                            </li>
+                            <li>
+                                Content illegal in Germany and/or France, such as holocaust
+                                denial or Nazi symbolism
+                            </li>
+                            <li>
+                                Conduct promoting the ideology of National Socialism
+                            </li>
+                        </ol>
+                    </li>
+                    <li>
+                        Any conduct intended to stalk or harass other users, or to impede other
+                        users from utilizing the service, or to degrade the performance of the
+                        service, or to harass other users, or to incite other users to perform
+                        any of the aforementioned actions, is also disallowed, and subject to
+                        punishment up to and including revocation of access to the service.
+                        This includes, but is not limited to, the following behaviors:
+                        <ol type="a">
+                            <li>
+                                Continuing to engage in conversation with a user that has
+                                specifically has requested for said engagement with that user
+                                to cease and desist may be considered harassment, regardless of
+                                platform-specific privacy tools employed.
+                            </li>
+                            <li>
+                                Aggregating, posting, and/or disseminating a person's
+                                demographic, personal, or private data without express
+                                permission (informally called doxing or dropping dox) may be
+                                considered harassment.
+                            </li>
+                            <li>
+                                Inciting users to engage another user in continued interaction
+                                or discussion after a user has requested for said engagement
+                                with that user to cease and desist (informally called brigading
+                                or dogpiling) may be considered harassment.
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="block terms">
+            <div class="anchor" id="terms"></div>
+            <a
+                    class="anchor-link"
+                    routerLink="/about/chessbook"
+                    fragment="terms"
+                    #anchorLink
+                    (click)="onClickCopyLink(anchorLink)">
+                <h2 i18n class="section-title">Terms</h2>
+            </a>
+
+            <div [innerHTML]="html.terms"></div>
+        </div>
+
+        <div class="anchor" id="other-information"></div>
+        <a
+                *ngIf="html.hardwareInformation"
+                class="anchor-link"
+                routerLink="/about/chessbook"
+                fragment="other-information"
+                #anchorLink
+                (click)="onClickCopyLink(anchorLink)">
+            <h2 i18n class="middle-title">
+                OTHER INFORMATION
+            </h2>
+        </a>
+
+        <div class="block hardware-information" *ngIf="html.hardwareInformation">
+            <div class="anchor" id="hardware-information"></div>
+            <a
+                    class="anchor-link"
+                    routerLink="/about/chessbook"
+                    fragment="hardware-information"
+                    #anchorLink
+                    (click)="onClickCopyLink(anchorLink)">
+                <h2 i18n class="section-title">Hardware information</h2>
+            </a>
+
+            <div [innerHTML]="html.hardwareInformation"></div>
+        </div>
+    </div>
+
+    <!--  <div class="col-md-12 col-xl-6">-->
+    <!--    <h2 class="sr-only" i18n>FEATURES</h2>-->
+    <!--    &lt;!&ndash;<my-instance-features-table></my-instance-features-table>&ndash;&gt;-->
+    <!--  </div>-->
+
+    <div class="col">
+        <div class="anchor" id="statistics"></div>
+        <a
+                class="anchor-link"
+                routerLink="/about/chessbook"
+                fragment="statistics"
+                #anchorLink
+                (click)="onClickCopyLink(anchorLink)">
+            <h2 i18n class="middle-title">STATISTICS</h2>
+        </a>
+        <!--<my-instance-statistics></my-instance-statistics>-->
+    </div>
+</div>
+
+<!--<my-contact-admin-modal #contactAdminModal></my-contact-admin-modal>-->

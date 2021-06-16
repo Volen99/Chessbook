@@ -81,7 +81,7 @@ namespace Chessbook.Web.Api.Factories
             {
                 var productName = post.User.DisplayName + "'s post";
 
-                var pictures = await this.pictureService.GetPicturesByProductIdAsync(post.Id);
+                var pictures = await this.pictureService.GetPicturesByProductIdAsync(post.Id); // check if this guy is null?
                 var defaultPicture = pictures.FirstOrDefault();
 
                 string fullSizeImageUrl, imageUrl, thumbImageUrl;

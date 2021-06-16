@@ -197,7 +197,7 @@ namespace Nop.Services.Security
                     }
                 ),
                 (
-                    NopCustomerDefaults.ForumModeratorsRoleName,
+                    NopCustomerDefaults.ModeratorsRoleName,
                     new[]
                     {
                         DisplayPrices,
@@ -226,16 +226,16 @@ namespace Nop.Services.Security
                         PublicStoreAllowNavigation
                     }
                 ),
-                (
-                    NopCustomerDefaults.VendorsRoleName,
-                    new[]
-                    {
-                        AccessAdminPanel,
-                        ManageProducts,
-                        ManageProductReviews,
-                        ManageOrders
-                    }
-                )
+                //(
+                //    NopCustomerDefaults.VendorsRoleName,
+                //    new[]
+                //    {
+                //        AccessAdminPanel,
+                //        ManageProducts,
+                //        ManageProductReviews,
+                //        ManageOrders
+                //    }
+                //)
             };
         }
     }

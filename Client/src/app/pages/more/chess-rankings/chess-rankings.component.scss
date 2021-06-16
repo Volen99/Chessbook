@@ -1,10 +1,5 @@
 @import '../../../theme/styles/themes';
 
-
-//$flag-icon-css-path: '~flag-icon-css/flags';
-//$include: gb, fr;
-//@import '~flag-icon-css/sass/flag-icon';
-
 $flag-icon-css-path: '~flag-icon-css/flags' !default;
 @import "~flag-icon-css/sass/flag-icon";
 

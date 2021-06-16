@@ -1,10 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-
 import {Observable, Subject} from 'rxjs';
 import { takeUntil} from 'rxjs/operators';
-
 
 import {NbToastrService} from "../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {EMAIL_PATTERN, NUMBERS_PATTERN} from "../../../auth/components";
@@ -116,7 +114,7 @@ export class UserComponent implements OnInit, OnDestroy {
       .subscribe((user) => {
         this.userForm.setValue({
           id: user.id ? user.id : '',
-          role: user.role ? user.role : '',
+          role: user.roles ? user.roles : '',
           name: user.displayName ? user.displayName : '',
           age: user.age ? user.age : '',
           email: user.email,

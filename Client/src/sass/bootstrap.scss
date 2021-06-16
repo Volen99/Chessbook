@@ -126,7 +126,7 @@ $icon-font-path: '~@neos21/bootstrap3-glyphicons/assets/fonts/';
       font-weight: $font-semibold;
     }
 
-    my-global-icon {
+    fa-icon {
       @include icon(22px);
 
       position: relative;

@@ -8,9 +8,10 @@ import {
   QueryList,
   TemplateRef
 } from '@angular/core';
+import {IconDefinition} from "@fortawesome/fontawesome-common-types";
+
 import {SharebookTemplateDirective} from "../angular/directives/sharebook-template.directive";
 import {ENHANCED_RULES, TEXT_RULES} from "../../../core/utils/markdown";
-import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 
 @Component({
   selector: 'app-help',
@@ -21,7 +22,7 @@ import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 export class HelpComponent implements OnInit, OnChanges, AfterContentInit {
   @Input() helpType: 'custom' | 'markdownText' | 'markdownEnhanced' = 'custom';
   @Input() tooltipPlacement = 'right auto';
-  @Input() iconName: IconDefinition;
+  @Input() iconName: string = 'help';
   @Input() title = $localize`Get help`;
   @Input() autoClose = 'outside';
 
@@ -41,23 +42,17 @@ export class HelpComponent implements OnInit, OnChanges, AfterContentInit {
   ngAfterContentInit() {
     {
       const t = this.templates.find(t => t.name === 'preHtml');
-      if (t) {
-        this.preHtmlTemplate = t.template;
-      }
+      if (t) this.preHtmlTemplate = t.template;
     }
 
     {
       const t = this.templates.find(t => t.name === 'customHtml');
-      if (t) {
-        this.customHtmlTemplate = t.template;
-      }
+      if (t) this.customHtmlTemplate = t.template;
     }
 
     {
       const t = this.templates.find(t => t.name === 'postHtml');
-      if (t) {
-        this.postHtmlTemplate = t.template;
-      }
+      if (t) this.postHtmlTemplate = t.template;
     }
   }
 
@@ -87,17 +82,17 @@ export class HelpComponent implements OnInit, OnChanges, AfterContentInit {
 
   private formatMarkdownSupport(rules: string[]) {
     // tslint:disable:max-line-length
-    return `<a href="https://en.wikipedia.org/wiki/Markdown#Example" target="_blank" rel="noopener noreferrer">Markdown</a> compatible that supports:` +
+    return $localize`<a href="https://en.wikipedia.org/wiki/Markdown#Example" target="_blank" rel="noopener noreferrer">Markdown</a> compatible that supports:` +
       this.createMarkdownList(rules);
   }
 
   private createMarkdownList(rules: string[]) {
     const rulesToText = {
-      'emphasis': `Emphasis`,
-      'link': `Links`,
-      'newline': `New lines`,
-      'list': `Lists`,
-      'image': `Images`
+      'emphasis': $localize`Emphasis`,
+      'link': $localize`Links`,
+      'newline': $localize`New lines`,
+      'list': $localize`Lists`,
+      'image': $localize`Images`
     };
 
     const bullets = rules.map(r => rulesToText[r])

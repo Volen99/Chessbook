@@ -6,7 +6,7 @@ import {
 @Component({
   selector: 'my-account-abuses-list',
   templateUrl: './my-account-abuses-list.component.html',
-  styleUrls: [ ]
+  styleUrls: [ './my-account-abuses-list.component.scss' ]
 })
 export class MyAccountAbusesListComponent {
   faFlag = faFlag;

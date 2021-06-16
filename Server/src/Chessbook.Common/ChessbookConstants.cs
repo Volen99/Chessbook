@@ -27,5 +27,22 @@
         /// Gets a default image file name
         /// </summary>
         public static string DefaultImageFileName => "default-image.png";
+
+        public static class CONSTRAINTS_FIELDS
+        {
+            public static class ABUSES
+            {
+                public static class REASON
+                {
+                    public static int Min = 2;
+                    public static int Max = 3000;
+                }
+                public static class MODERATION_COMMENT
+                {
+                    public static int Min = 2;
+                    public static int Max = 3000;
+                }
+            }
+        }
     }
 }

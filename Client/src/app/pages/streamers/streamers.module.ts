@@ -1,5 +1,6 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 import {SidebarColumnModule} from "../../shared/sidebar-column/sidebar-column.module";
 import {SharedMainModule} from "../../shared/shared-main/shared-main.module";
@@ -20,7 +21,6 @@ import {NbTooltipModule} from "../../sharebook-nebular/theme/components/tooltip/
 import {DialogUsernamePromptComponent} from "./stream-list/stream-list-chessbook-users/dialog-username-prompt-component/dialog-username-prompt.component";
 import {NbInputModule} from "../../sharebook-nebular/theme/components/input/input.module";
 import {DialogUsernameEditPromptComponent} from "./stream-list/stream-list-chessbook-users/dialog-username-prompt-edit-component/dialog-username-edit-prompt.component";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.module";
 import { ChessbookUsersStreamComponent } from './stream-list/stream-list-chessbook-users/chessbook-users-stream.component';
 import {NbDialogModule} from "../../sharebook-nebular/theme/components/dialog/dialog.module";

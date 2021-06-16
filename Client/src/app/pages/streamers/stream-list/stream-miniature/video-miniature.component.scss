@@ -66,7 +66,7 @@ $more-button-width: 40px;
     opacity: 0;
   }
 
-  ::ng-deep .playlist-dropdown.show + my-action-dropdown .dropdown-root {
+  ::ng-deep .playlist-dropdown.show + app-action-dropdown .dropdown-root {
     opacity: 1;
   }
 

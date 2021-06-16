@@ -7,6 +7,7 @@ import { DataSource } from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {IUser} from "../../../interfaces/common/users";
 import {UserUpdateMe} from "../../../../shared/models/users/user-update-me.model";
 import {Avatar} from "../../../../shared/models/users/avatars/avatar.model";
+import {ResultList} from "../../../../shared/models";
 
 @Injectable()
 export class UsersApi {
@@ -87,8 +88,13 @@ export class UsersApi {
     return this.api.put(`${this.apiController}/${id}`, body);
   }
 
-  getUser(id: number, params: HttpParams) {
-    return this.api.get<IUser>(`${this.apiController}/${id}`, params);
+  getUser(id: number, params: HttpParams, withStats: boolean = false) {
+    let url = `${this.apiController}/${id}`;
+    if (withStats) {
+      url = `admin/${this.apiController}/${id}`;
+    }
+
+    return this.api.get<IUser>(url, params);
   }
 
   changeEmail(url: string, body) {
@@ -125,6 +131,10 @@ export class UsersApi {
 
   getUsers(url: string, params: HttpParams) {
     return this.api.get(`${this.apiController}/${url}`, params);
+  }
+
+  getUsersForAdmin(url: string, params: HttpParams) {
+    return this.api.get<ResultList<IUser>>(`admin/${this.apiController}/${url}`, params);
   }
 
   getYourBirthday(url: string, id: number) {

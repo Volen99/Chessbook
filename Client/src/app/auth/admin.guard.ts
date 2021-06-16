@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 import { ROLES } from './roles';
 import {NbRoleProvider} from "../sharebook-nebular/security/services/role.provider";
 

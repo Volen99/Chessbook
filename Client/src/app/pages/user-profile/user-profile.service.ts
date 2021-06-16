@@ -1,8 +1,9 @@
-import {Observable, ReplaySubject} from "rxjs";
-import {RestExtractor} from "../../core/rest/rest-extractor";
-import { catchError, map, tap } from 'rxjs/operators';
-import {User} from "../../shared/shared-main/user/user.model";
 import {Injectable} from "@angular/core";
+import {Observable, ReplaySubject} from "rxjs";
+import { catchError, map, tap } from 'rxjs/operators';
+
+import {RestExtractor} from "../../core/rest/rest-extractor";
+import {User} from "../../shared/shared-main/user/user.model";
 import {UsersApi} from "../../core/backend/common/api/users.api";
 import {RestService} from "../../core/rest/rest.service";
 

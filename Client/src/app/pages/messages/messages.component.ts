@@ -1,9 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from "@angular/router";
-import {DetailHeaderNoMessageSelectedComponent} from "./detail-header-no-message-selected/detail-header-no-message-selected.component";
-import {DetailHeaderMessageSelectedComponent} from "./detail-header-message-selected/detail-header-message-selected.component";
-import {filter} from "rxjs/operators";
+import {NavigationEnd, Router} from "@angular/router";
 import {Subscription} from "rxjs";
+import {filter} from "rxjs/operators";
 
 enum MessageMode {
   EDIT = 'Edit',

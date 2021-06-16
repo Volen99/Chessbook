@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {forkJoin, Observable, Subscription} from 'rxjs';
-import {catchError, distinctUntilChanged, map, switchMap, tap} from 'rxjs/operators';
 import {ActivatedRoute} from "@angular/router";
+import {forkJoin, Subscription} from 'rxjs';
+import {catchError} from 'rxjs/operators';
+
 import {HttpStatusCode} from "../../core-utils/miscs";
 import {PostDetails} from "../../shared-main/post/post-details.model";
 import {PostsService} from "../posts.service";

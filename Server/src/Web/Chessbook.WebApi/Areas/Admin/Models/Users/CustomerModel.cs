@@ -113,7 +113,11 @@ namespace Nop.Web.Areas.Admin.Models.Customers
 
         public string LastVisitedPage { get; set; }
 
+        public DateTime? LastLoginDate { get; set; }
+
         public NotificationSettingsModel NotificationSettings { get; set; }
+
+        public List<int> Roles { get; set; }
 
         //public override string ToString()
         //{

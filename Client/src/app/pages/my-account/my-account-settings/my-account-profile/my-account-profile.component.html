@@ -78,12 +78,6 @@
                                 <nb-select [selected]="this.yearSelected" (selectedChange)="this.changeYear($event)" class="r-30o5oe element-background-color-rgba input-form-border-radius-0px input-form-border-width r-1fmj7o5 sharebook-cursor-pointer font-family r-1inkyih r-rjixqe r-crgep1 r-1wzrnnt outline-style-none r-t60dpp r-xd6kpl r-1pn2ns4 r-ttdzmv" >
                                     <nb-option *ngFor="let year of this.years" value="{{year}}"> {{ year }}</nb-option>
                                 </nb-select>
-<!--                                <svg viewBox="0 0 24 24"-->
-<!--                                     class="third-wheel-color r-4qtqp9 r-yyyyoo r-50lct3 r-fdch1b r-dnmrzs r-633pao position-absolute r-1pgswnq r-1plcrui r-1v2oles r-lrvibr">-->
-<!--                                    <g>-->
-<!--                                        <path d="M20.207 8.147c-.39-.39-1.023-.39-1.414 0L12 14.94 5.207 8.147c-.39-.39-1.023-.39-1.414 0-.39.39-.39 1.023 0 1.414l7.5 7.5c.195.196.45.294.707.294s.512-.098.707-.293l7.5-7.5c.39-.39.39-1.022 0-1.413z"></path>-->
-<!--                                    </g>-->
-<!--                                </svg>-->
                             </div>
                         </div>
                     </div>
@@ -93,7 +87,6 @@
     </nb-card-body>
     <nb-card-footer>
         <button nbButton status="primary" [disabled]="!userForm.valid" (click)="save()" hero>Save</button>
-<!--        <button nbButton status="info" (click)="back()" hero>Back</button>-->
     </nb-card-footer>
 </nb-card>
 

@@ -20,7 +20,7 @@
     background-color: rgba(0, 0, 0, 0.05);
   }
 
-  my-global-icon {
+  fa-icon {
     @include apply-svg-color(#333);
 
     width: 24px;

@@ -168,9 +168,9 @@ export const NB_DATE_SERVICE_OPTIONS = new InjectionToken('Date service options'
  *
  * @stacked-example(Range showcase, datepicker/rangepicker-showcase.component)
  *
- * Datepicker is the form control so it can be bound with angular forms through ngModel and form controls.
+ * Datepicker is the form control so it can be bound with angular shared-forms through ngModel and form controls.
  *
- * @stacked-example(Forms, datepicker/datepicker-forms.component)
+ * @stacked-example(Forms, datepicker/datepicker-shared-forms.component)
  *
  * `NbDatepickerDirective` may be validated using `min` and `max` dates passed to the datepicker.
  * And `filter` predicate that receives date object and has to return a boolean value.

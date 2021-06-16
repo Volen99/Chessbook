@@ -17,4 +17,4 @@ export type AbusePredefinedReasonsString =
   'rights' |
   'serverRules' |
   'thumbnails' |
-  'captions'
+  'captions';

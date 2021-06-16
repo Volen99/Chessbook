@@ -1,7 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+
 import {UploadComponent} from "./upload/upload.component";
-import {ComposeRoutingModule} from "./compose-routing.module";
 import {FileDropDirective} from "./upload/file-drop.directive";
 import {FileSelectDirective} from "./upload/file-select.directive";
 import {MediaGroupComponent} from './upload/media-group/media-group.component';
@@ -27,7 +28,6 @@ import {
 import {NbInputModule} from "../../../../sharebook-nebular/theme/components/input/input.module";
 import {NbSelectModule} from "../../../../sharebook-nebular/theme/components/select/select.module";
 import { ReplyCommentComponent } from './upload/reply-comment/reply-comment.component';
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -47,7 +47,6 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
   imports: [
     CommonModule,
 
-    ComposeRoutingModule,
     SharedModule,
     NbCardModule,
     NbButtonModule,

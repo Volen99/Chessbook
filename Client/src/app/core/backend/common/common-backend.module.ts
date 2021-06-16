@@ -1,11 +1,10 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { UserData } from '../../interfaces/common/users';
 import { UsersService } from './services/users.service';
 import { UsersApi } from './api/users.api';
 import { HttpService } from './api/http.service';
-import { CountryData } from '../../interfaces/common/countries';
-import { CountriesService } from './services/countries.service';
 import { CountriesApi } from './api/countries.api';
 import { SettingsApi } from './api/settings.api';
 import { SettingsData } from '../../interfaces/common/settings';
@@ -16,7 +15,6 @@ const API = [UsersApi, CountriesApi, SettingsApi, HttpService];
 
 const SERVICES = [
   { provide: UserData, useClass: UsersService },
-  { provide: CountryData, useClass: CountriesService },
   { provide: SettingsData, useClass: SettingsService },
 ];
 

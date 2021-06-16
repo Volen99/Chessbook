@@ -1,11 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable, Subscription} from 'rxjs';
-import {catchError, distinctUntilChanged, map, switchMap, takeUntil, tap} from 'rxjs/operators';
-import {Subject} from "rxjs/Subject";
 import {Location} from '@angular/common';
+import {Observable, Subscription} from 'rxjs';
+import {Subject} from "rxjs/Subject";
+import {catchError, distinctUntilChanged, map, switchMap, takeUntil, tap} from 'rxjs/operators';
 
-import {IUser, UserData} from "../../core/interfaces/common/users";
+import {faLongArrowLeft, faBirthdayCake, faCalendarAlt, faEllipsisH} from '@fortawesome/pro-light-svg-icons';
+
+import {IUser} from "../../core/interfaces/common/users";
 import {UserStore} from "../../core/stores/user.store";
 import {NbTokenService} from "../../sharebook-nebular/auth/services/token/token.service";
 import {UserProfileService} from "./user-profile.service";
@@ -19,14 +21,11 @@ import {ScreenService} from 'app/core/wrappers/screen.service';
 import {LocalStorageService} from 'app/core/wrappers/storage.service';
 import {Post} from 'app/shared/shared-main/post/post.model';
 import {immutableAssign} from "../../helpers/utils";
-import {GetHomeTimelineParameters} from "../../shared/models/timeline/get-home-timeline-parameters";
 import {GetUserTimelineParameters} from "../../shared/models/timeline/get-user-timeline-parameters";
 import {UsersService} from "../../core/backend/common/services/users.service";
-import {faLongArrowLeft, faBirthdayCake, faCalendarAlt, faEllipsisH} from '@fortawesome/pro-light-svg-icons';
 import {RelationshipsService} from "../../shared/shared-main/relationships/relationships.service";
 import {
   GetRelationshipBetweenParameters,
-  IGetRelationshipBetweenParameters
 } from "../../shared/shared-main/relationships/models/get-relationship-between-parameters.model";
 import {IRelationshipDetails} from "../../shared/shared-main/relationships/models/relationship-details.model";
 import {Month} from "../my-account/my-account-settings/my-account-profile/my-account-profile.component";
@@ -167,7 +166,7 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
   private async onAccount(user: User) {
 
     // @ts-ignore
-    this.profileCurrent = user.userDTO;
+    this.profileCurrent = user; // TODO: new it
     this.profileCurrent.createdOn = new Date(this.profileCurrent.createdOn);
 
     this.reloadVideos();

@@ -16,8 +16,21 @@
     <nb-action class="control-item">
       <nb-search type="rotate-layout" [poll]="this.poll" (click)="this.handleSurveyClick()"></nb-search>
     </nb-action>
-    <nb-action class="control-item" icon="email-outline"></nb-action>
-    <nb-action class="control-item" icon="bell-outline"></nb-action>
+    <nb-action class="control-item">
+      <a href="https://www.chess.com/" target="_blank" title="chess.com">
+        <img src="assets/images/chess.com-35x35.png" alt="chess.com logo" style="width: 32px; height: 32px;">
+      </a>
+    </nb-action>
+    <nb-action class="control-item">
+      <a href="https://chess24.com/" target="_blank" title="chess24">
+        <img src="assets/images/chess24-32x32.png" alt="chess24 logo" style="width: 32px; height: 32px;">
+      </a>
+    </nb-action>
+    <nb-action class="control-item">
+      <a href="https://lichess.org/" target="_blank" title="lichess">
+        <img src="assets/images/lichess.svg" alt="lichess logo" style="width: 32px; height: 32px;">
+      </a>
+    </nb-action>
     <nb-action class="user-action" *nbIsGranted="['view', 'current-user']">
       <nb-user [nbContextMenu]="userMenu"
                [onlyPicture]="userPictureOnly"

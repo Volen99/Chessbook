@@ -20,27 +20,9 @@
       padding: 0rem 0rem;
     }
   }
-
-  //.icon-hover {
-  //  &:hover {
-  //    background-color: nb-theme(button-outline-primary-hover-background-color);
-  //    border-color: nb-theme(button-outline-primary-hover-border-color);
-  //    color: nb-theme(button-outline-primary-hover-text-color);
-  //  }
-  //}
 }
 
-
-
-//.share-action-hover {
-//  &:hover {
-//    background-color: nb-theme(button-outline-primary-hover-background-color);
-//    border-color: nb-theme(button-outline-primary-hover-border-color);
-//    color: nb-theme(button-outline-primary-hover-text-color);
-//  }
-//}
-
-@import "./src/sass/application";
+@import "./src/sass/application.scss";
 
 /*15.11.2020, Sunday*/
 
@@ -67,19 +49,6 @@ fa-icon {
   }
 }
 
-//.cfp-hotkeys-container.fade {
-//  visibility: hidden;
-//}
-//
-//.cfp-hotkeys-container.fade.in {
-//  visibility: visible;
-//}
-//
-//.r-aqfbo4 {
-//  backface-visibility: hidden;
-//}
-
-
 .r-12vffkv {
   pointer-events: none !important;
 }
@@ -93,7 +62,7 @@ fa-icon {
 }
 
 .r-1xcajam {
-  position: fixed; /*!important; !*important by mi*!*/
+  position: fixed;
 }
 
 .align-self-flex-end {
@@ -890,17 +859,10 @@ fa-icon {
 .r-1p4wkip {
   background-color: rgba(26, 26, 26, 0.77);
 }
-
-
 // end
-
-
-
-
 
 .character-counter__wrapper {
   align-self: center;
   margin-right: 12px;
   margin-top: 12px;
 }
-

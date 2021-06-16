@@ -1,5 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
+import {from, Observable} from "rxjs";
+import {catchError, concatMap, map, toArray} from "rxjs/operators";
 
 import {environment} from '../../../environments/environment';
 import {PostCommentThreadTree} from './video-comment-thread-tree.model';
@@ -9,10 +11,8 @@ import {RestService} from "../../core/rest/rest.service";
 import {IPostCommentCreate, IPostCommentThreadTree} from "./models/post-comment-model";
 import {objectLineFeedToHtml} from "../../helpers/utils";
 import {RestPagination} from "../../core/rest/rest-pagination";
-import {from, Observable} from "rxjs";
 import {ResultList} from "../models";
 import {ComponentPaginationLight} from "../../core/rest/component-pagination.model";
-import {catchError, concatMap, map, toArray} from "rxjs/operators";
 import {FeedFormat} from "../models/enums/feed-format";
 
 @Injectable()

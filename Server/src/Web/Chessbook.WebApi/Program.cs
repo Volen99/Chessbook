@@ -1,18 +1,12 @@
 ﻿namespace Chessbook.Web.Api
 {
-    using System;
-    using System.IO;
-    using Serilog;
-    using Microsoft.AspNetCore;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Options;
-    using Nop.Services.Configuration;
     using Autofac.Extensions.DependencyInjection;
-    using System.Threading.Tasks;
+
+    using Nop.Services.Configuration;
 
     public class Program
     {

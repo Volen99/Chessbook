@@ -1,0 +1,101 @@
+@import '_variables';
+@import '_mixins';
+
+@import '../theme/styles/themes';
+
+@include nb-install-component() {
+  nb-card-header {
+    padding: 0;
+  }
+
+  nb-card-body {
+    padding: 0;
+  }
+}
+
+.sub-menu {
+  background-color: pvar(--submenuBackgroundColor);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 pvar(--horizontalMarginContent);
+  height: $sub-menu-height;
+  margin-bottom: $sub-menu-margin-bottom;
+  overflow-x: auto;
+
+  &.sub-menu-fixed {
+    position: fixed;
+    z-index: #{z('sub-menu') - 1};
+    max-width: pvar(--mainColWidth);
+  }
+}
+
+.links {
+    a {
+      text-decoration: none;
+    }
+}
+
+.title-page {
+  @include disable-default-a-behaviour;
+  @include margin-right(55px);
+
+  opacity: 0.6;
+  color: pvar(--mainForegroundColor);
+  font-size: 16px;
+  display: inline-block;
+  font-weight: $font-semibold;
+  border-bottom: 2px solid transparent;
+
+  &.title-page-single {
+    margin-top: 30px;
+    margin-bottom: 25px;
+  }
+
+  &.active {
+    border-bottom-color: pvar(--mainColor);
+  }
+
+  &.title-page-single {
+    font-size: 125%;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: pvar(--mainForegroundColor);
+  }
+
+  &.active,
+  &:hover,
+  &:active,
+  &:focus,
+  &.title-page-single {
+    opacity: 1;
+    outline: 0 hidden !important;
+  }
+
+  @media screen and (max-width: $mobile-view) {
+    @include margin-left(15px);
+  }
+}
+
+.title-page-about,
+.title-page-settings {
+  white-space: nowrap;
+  font-size: 115%;
+}
+
+.margin-content {
+  margin: 0 15px;
+  flex-grow: 1;
+}
+
+// Use an appropriate offset top when sub-menu fixed
+.margin-content.offset-content {
+  padding-top: $sub-menu-height + $sub-menu-margin-bottom;
+}
+
+.row {
+  margin: 0 !important;
+}

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { SettingsApi } from '../api/settings.api';
 import { SettingsData, Settings } from '../../../interfaces/common/settings';
 

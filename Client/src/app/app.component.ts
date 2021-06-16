@@ -1,22 +1,20 @@
 import {Component, OnDestroy, OnInit, Optional} from '@angular/core';
-import {InitUserService} from './theme/services/init-user.service';
+import {Router} from "@angular/router";
+import {ViewportScroller} from "@angular/common";
 import {Subject} from 'rxjs';
 import {takeUntil, takeWhile} from 'rxjs/operators';
-import {
-  Router,
-} from "@angular/router";
+import {Hotkey, HotkeysService} from "angular2-hotkeys";
+
+import {InitUserService} from './theme/services/init-user.service';
 import {NbMenuItem} from "./sharebook-nebular/theme/components/menu/menu.service";
 import {NbTokenService} from "./sharebook-nebular/auth/services/token/token.service";
 import {PagesMenu} from "./pages/pages-menu";
-import {ViewportScroller} from "@angular/common";
 import {IUser} from "./core/interfaces/common/users";
 import {NbIconLibraries} from "./sharebook-nebular/theme/components/icon/icon-libraries";
-import {Hotkey, HotkeysService} from "angular2-hotkeys";
 import { NbDialogService } from './sharebook-nebular/theme/components/dialog/dialog.service';
 import {UploadComponent} from "./pages/modal-overlays/dialog/compose/upload/upload.component";
 import {NbDialogRef} from "./sharebook-nebular/theme/components/dialog/dialog-ref";
-import {ShowcaseDialogComponent} from "./pages/modal-overlays/dialog/showcase-dialog/showcase-dialog.component";
-
+import {User} from "./shared/shared-main/user/user.model";
 
 @Component({
   selector: 'app-root',
@@ -35,9 +33,6 @@ export class AppComponent implements OnInit, OnDestroy {
               private hotkeysService: HotkeysService,
               private dialogService: NbDialogService,
               @Optional() protected ref: NbDialogRef<UploadComponent>) {
-
-    // this.iconLibraries.registerFontPack('font-awesome', { iconClassPrefix: 'fa' });
-    // this.iconLibraries.setDefaultPack('font-awesome'); // <---- set as default
 
     this.iconLibraries.registerFontPack('solid', {packClass: 'fas', iconClassPrefix: 'fa'});
     this.iconLibraries.registerFontPack('regular', {packClass: 'far', iconClassPrefix: 'fa'});
@@ -78,10 +73,14 @@ export class AppComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe((data) => {
-        this.user = data;
+        this.user = this.onUserFetched(data);
         this.initMenu();
 
       });
+  }
+
+  private onUserFetched (userJson: IUser) {
+    return new User(userJson);
   }
 
   initMenu() {
@@ -96,33 +95,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
-    // // Homepage redirection
-    // navigationEndEvent.pipe(
-    //   map(() => window.location.pathname),
-    //   filter(pathname => !pathname || pathname === '/' || is18nPath(pathname))
-    // ).subscribe(() => this.redirectService.redirectToHomepage(true));
-    //
-    // // Plugin hooks
-    // navigationEndEvent.subscribe(e => {
-    //   this.hooks.runAction('action:router.navigation-end', 'common', {path: e.url});
-    // });
-
-    // // Automatically hide/display the menu
-    // eventsObs.pipe(
-    //   filter((e: Event): e is GuardsCheckStart => e instanceof GuardsCheckStart),
-    //   filter(() => this.screenService.isInSmallView() || this.screenService.isInTouchScreen())
-    // ).subscribe(() => this.menu.setMenuDisplay(false)); // User clicked on a link in the menu, change the page
-    //
-    // // Handle lazy loaded module
-    // eventsObs.pipe(
-    //   filter((e: Event): e is RouteConfigLoadStart => e instanceof RouteConfigLoadStart)
-    // ).subscribe(() => this.loadingBar.useRef().start());
-    //
-    // eventsObs.pipe(
-    //   filter((e: Event): e is RouteConfigLoadEnd => e instanceof RouteConfigLoadEnd)
-    // ).subscribe(() => this.loadingBar.useRef().complete());
-
 
   private initHotkeys () {
     this.hotkeysService.add([
@@ -209,7 +181,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
       // Actions start 😎
       new Hotkey('n', (event: KeyboardEvent): boolean => {
-        debugger
         if (this.ref === null) {
           this.dialogService.open(UploadComponent, {
             closeOnEsc: true,

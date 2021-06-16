@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {Subscription} from "rxjs";
+
 import {IStreams, IStreamsData} from "../models/streams-model";
 import {StreamersService} from "../streamers.service";
-import {Subscription} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
 
 declare let Twitch: any;
 @Component({

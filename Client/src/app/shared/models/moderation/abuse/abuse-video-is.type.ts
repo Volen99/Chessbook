@@ -1,1 +1,1 @@
-export type AbuseVideoIs = 'deleted' | 'blacklisted'
+export type AbuseVideoIs = 'deleted' | 'blacklisted';

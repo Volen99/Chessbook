@@ -35,10 +35,10 @@ export class NbRegisterComponent {
               protected cd: ChangeDetectorRef,
               protected router: Router) {
 
-    this.redirectDelay = this.getConfigValue('forms.register.redirectDelay');
-    this.showMessages = this.getConfigValue('forms.register.showMessages');
-    this.strategy = this.getConfigValue('forms.register.strategy');
-    this.socialLinks = this.getConfigValue('forms.login.socialLinks');
+    this.redirectDelay = this.getConfigValue('shared-forms.register.redirectDelay');
+    this.showMessages = this.getConfigValue('shared-forms.register.showMessages');
+    this.strategy = this.getConfigValue('shared-forms.register.strategy');
+    this.socialLinks = this.getConfigValue('shared-forms.login.socialLinks');
   }
 
   register(): void {

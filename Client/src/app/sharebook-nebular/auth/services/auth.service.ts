@@ -222,4 +222,23 @@ export class NbAuthService {
 
     return observableOf(result);
   }
+
+  // by mi
+
+  getRequestHeaderValue () {
+    let accessToken: NbAuthToken;
+
+    this.getToken()
+      .pipe(map((token: NbAuthToken) => {
+        if (token.isValid()) {
+          accessToken = token;
+        }
+      }));
+
+    if (!accessToken) {
+      return null;
+    }
+
+    return `Bearer ${accessToken.getValue()}`;
+  }
 }

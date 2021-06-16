@@ -4,6 +4,8 @@ import {ExtraOptions, RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from "./auth/auth.guard";
 import {NotFoundComponent} from "./pages/page-not-found/not-found.component";
 import {MetaGuard} from "./core/routing/meta-guard.service";
+import {AdminGuard} from "./auth/admin.guard";
+import {ModeratorGuard} from "./auth/moderator.guard";
 
 const routes: Routes = [
   {
@@ -45,6 +47,11 @@ const routes: Routes = [
         canActivateChild: [ MetaGuard ],
       },
       {
+        path: 'about',
+        loadChildren: () => import('./about/about.module').then(m => m.AboutModule),
+        canActivateChild: [ MetaGuard ],
+      },
+      {
         path: 'auth',
         loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
         canActivateChild: [ MetaGuard ],
@@ -56,6 +63,7 @@ const routes: Routes = [
       },
       {
         path: 'admin',
+        canActivate: [ModeratorGuard],
         loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
         canActivateChild: [ MetaGuard ],
       },

@@ -1,8 +1,3 @@
-/**
- * @license
- * Copyright Akveo. All Rights Reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
- */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NB_AUTH_OPTIONS, NbAuthSocialLink } from '../../auth.options';
@@ -34,11 +29,11 @@ export class NbLoginComponent {
               protected cd: ChangeDetectorRef,
               protected router: Router) {
 
-    this.redirectDelay = this.getConfigValue('forms.login.redirectDelay');
-    this.showMessages = this.getConfigValue('forms.login.showMessages');
-    this.strategy = this.getConfigValue('forms.login.strategy');
-    this.socialLinks = this.getConfigValue('forms.login.socialLinks');
-    this.rememberMe = this.getConfigValue('forms.login.rememberMe');
+    this.redirectDelay = this.getConfigValue('shared-forms.login.redirectDelay');
+    this.showMessages = this.getConfigValue('shared-forms.login.showMessages');
+    this.strategy = this.getConfigValue('shared-forms.login.strategy');
+    this.socialLinks = this.getConfigValue('shared-forms.login.socialLinks');
+    this.rememberMe = this.getConfigValue('shared-forms.login.rememberMe');
   }
 
   login(): void {

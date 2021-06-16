@@ -1,4 +1,5 @@
-﻿using Chessbook.Core.Domain.Notifications;
+﻿using Chessbook.Core.Domain.Abuse;
+using Chessbook.Core.Domain.Notifications;
 using Chessbook.Data.Models;
 using Chessbook.Data.Models.Comments;
 using Chessbook.Data.Models.Contact;
@@ -125,6 +126,8 @@ namespace Nop.Data.Migrations
             _migrationManager.BuildTable<TwitchLoginName>(Create);
             _migrationManager.BuildTable<PostReshare>(Create);
             _migrationManager.BuildTable<Settings>(Create);
+
+            _migrationManager.BuildTable<Abuse>(Create);
 
             _migrationManager.BuildTable<UserNotification>(Create);
             _migrationManager.BuildTable<UserNotificationSettingModel>(Create);

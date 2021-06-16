@@ -1,22 +1,24 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {PostDetails} from "../../../shared-main/post/post-details.model";
-import {Observable, Subject} from "rxjs";
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
-import {UserStore} from "../../../../core/stores/user.store";
-import {PostsService} from "../../posts.service";
-import {NbDialogService} from "../../../../sharebook-nebular/theme/components/dialog/dialog.service";
-import {MarkdownService} from "../../../../core/renderer/markdown.service";
+import {Observable, Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
-import {IUser} from "../../../../core/interfaces/common/users";
-import {UserVideoRateType} from "../../models/rate/user-video-rate.type";
-import {UploadComponent} from "../../../../pages/modal-overlays/dialog/compose/upload/upload.component";
-import {LikesComponent} from "../likes/likes.component";
+
 import {faHeart as faHeartSolid, faLock} from "@fortawesome/pro-solid-svg-icons";
 import {
   faComment,
   faShare,
   faHeart,
 } from '@fortawesome/pro-light-svg-icons';
+
+import {PostDetails} from "../../../shared-main/post/post-details.model";
+import {UserStore} from "../../../../core/stores/user.store";
+import {PostsService} from "../../posts.service";
+import {NbDialogService} from "../../../../sharebook-nebular/theme/components/dialog/dialog.service";
+import {MarkdownService} from "../../../../core/renderer/markdown.service";
+import {IUser} from "../../../../core/interfaces/common/users";
+import {UserVideoRateType} from "../../models/rate/user-video-rate.type";
+import {UploadComponent} from "../../../../pages/modal-overlays/dialog/compose/upload/upload.component";
+import {LikesComponent} from "../likes/likes.component";
 
 
 @Component({

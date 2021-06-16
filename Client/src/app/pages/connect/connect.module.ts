@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
-
 import {CommonModule} from "@angular/common";
+
 import { SidebarColumnModule } from '../../shared/sidebar-column/sidebar-column.module';
 import { ConnectRoutingModule } from './connect-routing.module';
 import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";

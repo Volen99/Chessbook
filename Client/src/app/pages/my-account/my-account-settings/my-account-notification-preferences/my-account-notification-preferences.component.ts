@@ -1,6 +1,8 @@
-import {debounce} from 'lodash-es';
-import {Subject} from 'rxjs';
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Subject} from 'rxjs';
+import {takeUntil} from "rxjs/operators";
+import {debounce} from 'lodash-es';
+
 import {User} from "../../../../shared/shared-main/user/user.model";
 import {
   UserNotificationSetting,
@@ -10,7 +12,6 @@ import {UserRight} from "../../../../shared/models/users/user-right.enum";
 import {ServerService} from "../../../../core/server/server.service";
 import {Notifier} from "../../../../core/notification/notifier.service";
 import {UserNotificationService} from "../../../../shared/shared-main/users/user-notification.service";
-import {takeUntil} from "rxjs/operators";
 import {IUser} from "../../../../core/interfaces/common/users";
 import {UserStore} from "../../../../core/stores/user.store";
 import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";

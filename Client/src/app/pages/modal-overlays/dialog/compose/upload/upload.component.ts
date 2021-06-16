@@ -1,16 +1,6 @@
 // I am back!! 💙 06.11.2020, Friday
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
-
-import { length } from 'stringz';
-import {FileUploader} from "./file-uploader.class";
-import {UploadService} from "./upload.service";
-import {PostsService} from "../../../../../shared/posts/posts.service";
-import {PublishTweetParameters} from "../../../../../shared/posts/parameters/publish-tweet-parameters";
-import {NbDialogRef} from "../../../../../sharebook-nebular/theme/components/dialog/dialog-ref";
-import {ShowcaseDialogComponent} from "../../showcase-dialog/showcase-dialog.component";
-import {WhoCanReplyComponent} from "../../../popovers/components/who-can-reply/who-can-reply.component";
-import {PostPrivacy} from "../../../../../shared/models/enums/post-privacy";
-import {PostDetails} from "../../../../../shared/shared-main/post/post-details.model";
+import {length} from 'stringz';
 import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 import {
   faGlobeAfrica,
@@ -24,9 +14,19 @@ import {
   faSmileWink,
 } from '@fortawesome/pro-light-svg-icons';
 
+import {FileUploader} from "./file-uploader.class";
+import {UploadService} from "./upload.service";
+import {PostsService} from "../../../../../shared/posts/posts.service";
+import {PublishTweetParameters} from "../../../../../shared/posts/parameters/publish-tweet-parameters";
+import {NbDialogRef} from "../../../../../sharebook-nebular/theme/components/dialog/dialog-ref";
+import {ShowcaseDialogComponent} from "../../showcase-dialog/showcase-dialog.component";
+import {WhoCanReplyComponent} from "../../../popovers/components/who-can-reply/who-can-reply.component";
+import {PostPrivacy} from "../../../../../shared/models/enums/post-privacy";
+import {PostDetails} from "../../../../../shared/shared-main/post/post-details.model";
 import {countableText} from "../../../../../features/compose/util/counter";
 import {UserStore} from "../../../../../core/stores/user.store";
 import {IUser} from "../../../../../core/interfaces/common/users";
+import {NbToastrService} from "../../../../../sharebook-nebular/theme/components/toastr/toastr.service";
 
 @Component({
   selector: 'app-upload',
@@ -34,40 +34,21 @@ import {IUser} from "../../../../../core/interfaces/common/users";
   styleUrls: ['./upload.component.scss'],
 })
 export class UploadComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() title: string;
-
-  @Input() replyPost: PostDetails;
-
-  initialPoll: any = {
-    options: ['', ''],
-    expires_in: 24 * 3600,
-    multiple: false,
-  };
-
-  private readonly defaultTweetBtnClassName = 'r-urgr8i';
-  private readonly hoveredTweetBtnClassName = 'r-1q3imqu';
-
-  privacy: PostPrivacy = PostPrivacy.EVERYONE;
-  privacyClient: string = 'Everyone can reply';
-
-  private globes: IconDefinition[] = [faGlobeEurope, faGlobeAsia, faGlobeAmericas, faGlobeAfrica];
-
-
-
-  @Input() text: string = '';
   @Output() textChange = new EventEmitter<string>();
 
-  isPoll: boolean = false;
+  @Input() title: string;
+  @Input() text: string = '';
+  @Input() replyPost: PostDetails;
 
-  textPlaceholder: string;
+  private globes: IconDefinition[] = [faGlobeEurope, faGlobeAsia, faGlobeAmericas, faGlobeAfrica];
 
   constructor(private uploadService: UploadService,
               private postsService: PostsService,
               protected ref: NbDialogRef<ShowcaseDialogComponent>,
-  private userstore: UserStore) {
+              private userStore: UserStore,
+              private notifier: NbToastrService) {
     this.hasBaseDropZoneOver = false;
     this.hasAnotherDropZoneOver = false;
-
 
     this.uploader = new FileUploader({
       url: '',
@@ -87,11 +68,16 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  user: IUser;
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.initialPoll.options.length > 2) {
+      this.isPoll = true;
+    }
+  }
+
   ngOnInit(): void {
     this.response = '';
 
-    this.user = this.userstore.getUser();
+    this.user = this.userStore.getUser();
 
     this.textPlaceholder = this.isPoll ? 'Ask a question...' : this.replyPost ? 'Post your reply' : `What's happening?`;
 
@@ -101,19 +87,23 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
     });
 
     this.getGlobe();
-
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (this.initialPoll.options.length > 2) {
-      this.isPoll = true;
-    }
   }
 
   ngOnDestroy(): void {
   }
 
-  public rurgr8iOrR1q3imqu = this.defaultTweetBtnClassName;
+  initialPoll: any = {
+    options: ['', ''],
+    expires_in: 24 * 3600,
+    multiple: false,
+  };
+
+  user: IUser;
+  isPoll: boolean = false;
+  textPlaceholder: string;
+  privacy: PostPrivacy = PostPrivacy.EVERYONE;
+  privacyClient: string = 'Everyone can reply';
+
   public whoCanReplyComponent = WhoCanReplyComponent;
 
   anyMedia: boolean;
@@ -133,7 +123,6 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
   hasBaseDropZoneOver: boolean;
   hasAnotherDropZoneOver: boolean;
   response: string;
-
 
   // omg :D
   svgStyles = {
@@ -180,18 +169,7 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
 
 
   dismiss() {
-    debugger
     this.ref.close();
-  }
-
-
-
-
-  public async tweetBtnMouseEnter(event: MouseEvent) {
-    this.changeTweetBtnBackgroundColorClassName();
-  }
-
-  public async tweetBtnMouseLeave(event: MouseEvent) {
   }
 
   updateValue(value) {
@@ -199,12 +177,6 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
 
     this.getFulltextForCharacterCounting();
     // this.textChange.emit(value.innerText);
-  }
-
-  public isCloseIconHovered = false;
-
-  handleCloseIconHover(event: MouseEvent) {
-    this.isCloseIconHovered = !this.isCloseIconHovered;
   }
 
   public async shareButtonHandler() {
@@ -251,6 +223,8 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
       await this.postsService.publishTweetAsync(publishPostParameters);
     }
 
+    this.notifier.success('Your post has been uploaded.', 'Success');
+
 
     this.text = '';
     this.uploader.queue = [];
@@ -268,13 +242,5 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
 
   getGlobe() {
     this.globeCurrent = this.globes[this.globes.length * Math.random() | 0];
-  }
-
-  private changeTweetBtnBackgroundColorClassName(): void {
-    if (this.rurgr8iOrR1q3imqu === this.defaultTweetBtnClassName) {
-      this.rurgr8iOrR1q3imqu = this.hoveredTweetBtnClassName;
-    } else {
-      this.rurgr8iOrR1q3imqu = this.defaultTweetBtnClassName;
-    }
   }
 }

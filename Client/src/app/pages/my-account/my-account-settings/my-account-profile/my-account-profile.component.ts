@@ -1,13 +1,13 @@
 import {Observable, Subject} from 'rxjs';
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {FormReactive} from "../../../../shared/forms/form-reactive";
+import {FormReactive} from "../../../../shared/shared-forms/form-reactive";
 import {User} from "../../../../shared/shared-main/user/user.model";
-import {FormValidatorService} from "../../../../shared/forms/form-validator.service";
+import {FormValidatorService} from "../../../../shared/shared-forms/form-validator.service";
 import {Notifier} from "../../../../core/notification/notifier.service";
 import {
   USER_DESCRIPTION_VALIDATOR,
   USER_DISPLAY_NAME_REQUIRED_VALIDATOR
-} from "../../../../shared/forms/form-validators/user-validators";
+} from "../../../../shared/shared-forms/form-validators/user-validators";
 import {UsersService} from "../../../../core/backend/common/services/users.service";
 import {takeUntil, tap} from "rxjs/operators";
 import {IUser, UserData} from "../../../../core/interfaces/common/users";
@@ -45,11 +45,9 @@ export enum Month {
 })
 export class MyAccountProfileComponent implements OnInit, OnDestroy {
 
-
   userForm: FormGroup;
 
   protected readonly unsubscribe$ = new Subject<void>();
-
 
   get email() {
     return this.userForm.get('email');
@@ -78,8 +76,6 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
               private toasterService: NbToastrService,
               private fb: FormBuilder) {
   }
-
-
 
   ngOnInit(): void {
     let date = new Date();

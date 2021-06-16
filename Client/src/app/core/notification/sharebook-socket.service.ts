@@ -1,19 +1,12 @@
-import {Subject} from 'rxjs';
 import {Injectable, NgZone} from '@angular/core';
-import {environment} from '../../../environments/environment';
-import {io, Socket} from 'socket.io-client';
-import {AuthService} from "../auth/auth.service";
-import {IUserNotification, UserNotification} from "../../shared/shared-main/users/user-notification.model";
+import {Subject} from 'rxjs';
+
+import {UserNotification} from "../../shared/shared-main/users/user-notification.model";
 import {HubConnection, HubConnectionBuilder, LogLevel} from "@microsoft/signalr";
 import {InitUserService} from "../../theme/services/init-user.service";
-import {UserData} from "../interfaces/common/users";
-import {UsersService} from "../backend/common/services/users.service";
 import {NbAuthService} from "../../sharebook-nebular/auth/services/auth.service";
-import {map, switchMap} from "rxjs/operators";
-import {NbAuthToken} from "../../sharebook-nebular/auth/services/token/token";
 import {NbTokenLocalStorage} from "../../sharebook-nebular/auth/services/token/token-storage";
 import {IPost} from "../../shared/posts/models/tweet";
-import {AppInjector} from "../../app-injector";
 
 export type NotificationEvent = 'new' | 'read' | 'read-all';
 
@@ -64,13 +57,6 @@ export class PeerTubeSocket {
         .build();
     });
 
-    // this._hubConnection = new HubConnectionBuilder()
-    //   .withUrl(this.SignalrHubUrl + '/notificationhub', {
-    //     accessTokenFactory: () => this.auth.get().getValue()
-    //   })
-    //   .configureLogging(LogLevel.Information)
-    //   .withAutomaticReconnect()
-    //   .build();
   }
 
   dispatchNotificationEvent(type: NotificationEvent, notification?: UserNotification) {

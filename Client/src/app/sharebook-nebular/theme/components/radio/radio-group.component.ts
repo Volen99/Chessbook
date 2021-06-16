@@ -41,7 +41,7 @@ import { NbRadioComponent } from './radio.component';
  * </nb-radio-group>
  * ```
  *
- * Also, you can use `value` and `valueChange` for binding without forms.
+ * Also, you can use `value` and `valueChange` for binding without shared-forms.
  *
  * ```html
  * <nb-radio-group [(value)]="selectedOption">

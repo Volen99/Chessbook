@@ -1,4 +1,3 @@
-import {switchMap} from 'rxjs/operators';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -10,6 +9,7 @@ import {
   OnInit,
   Output
 } from '@angular/core';
+
 import {IStreamsData} from "../../models/streams-model";
 import {User} from "../../../../shared/shared-main/user/user.model";
 
@@ -34,9 +34,13 @@ export type VideoLinkType = 'internal' | 'lazy-load' | 'external';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VideoMiniatureComponent implements OnInit {
+  @Output() videoBlocked = new EventEmitter();
+  @Output() videoUnblocked = new EventEmitter();
+  @Output() videoRemoved = new EventEmitter();
+  @Output() videoAccountMuted = new EventEmitter();
+
   @Input() user: User;
   @Input() video: IStreamsData;
-
   @Input() displayOptions: MiniatureDisplayOptions = {
     date: true,
     views: true,
@@ -48,32 +52,8 @@ export class VideoMiniatureComponent implements OnInit {
     blacklistInfo: false
   };
   @Input() displayVideoActions = true;
-
   @Input() displayAsRow = false;
-
   @Input() videoLinkType: VideoLinkType = 'internal';
-
-  @Output() videoBlocked = new EventEmitter();
-  @Output() videoUnblocked = new EventEmitter();
-  @Output() videoRemoved = new EventEmitter();
-  @Output() videoAccountMuted = new EventEmitter();
-
-
-  showActions = false;
-
-  addToWatchLaterText: string;
-  addedToWatchLaterText: string;
-  inWatchLaterPlaylist: boolean;
-  channelLinkTitle = '';
-
-  watchLaterPlaylist: {
-    id: number
-    playlistElementId?: number
-  };
-
-  videoRouterLink: any[] = [];
-  videoHref: string;
-  videoTarget: string;
 
   private ownerDisplayType: 'account' | 'videoChannel';
 
@@ -93,6 +73,14 @@ export class VideoMiniatureComponent implements OnInit {
     //   this.loadActions();
     // }
   }
+
+  showActions = false;
+
+  channelLinkTitle = '';
+
+  videoRouterLink: any[] = [];
+  videoHref: string;
+  videoTarget: string;
 
   buildVideoLink() {
     if (this.videoLinkType === 'internal' || !this.video.user_login) {
@@ -118,8 +106,9 @@ export class VideoMiniatureComponent implements OnInit {
   // }
 
   loadActions() {
-    if (this.displayVideoActions) this.showActions = true;
-
+    if (this.displayVideoActions) {
+      this.showActions = true;
+    }
   }
 
   onVideoBlocked() {

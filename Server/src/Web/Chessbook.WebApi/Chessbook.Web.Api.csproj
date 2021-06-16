@@ -19,7 +19,6 @@
     <ProjectReference Include="..\..\Chessbook.Services\Chessbook.Services.Data\Chessbook.Services.Data.csproj" />
     <ProjectReference Include="..\..\Chessbook.Services\Chessbook.Services.Mapping\Chessbook.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\Chessbook.Services\Chessbook.Services\Chessbook.Services.csproj" />
-    <ProjectReference Include="..\Chessbook.Web.Infrastructure\Chessbook.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\Chessbook.Web.Models\Chessbook.Web.Models.csproj" />
     <ProjectReference Include="..\Nop.Web.Framework\Nop.Web.Framework.csproj" />
   </ItemGroup>
@@ -54,5 +53,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Files\" />
+    <Folder Include="wwwroot\images\thumbs\" />
   </ItemGroup>
 </Project>

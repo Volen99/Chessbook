@@ -25,7 +25,6 @@
   }
 }
 
-
 .survey-options-options {
   margin-bottom: 1rem;
 }
@@ -35,7 +34,6 @@
   min-height: 2.7rem;
   padding-top: .7rem;
 }
-
 
 .survey-options-input {
   clip: rect(0 0 0 0);
@@ -52,156 +50,11 @@
 .survey-options-input+.survey-options-label {
   position: relative;
 }
-//.survey-options-label {
-//  box-sizing: border-box;
-//  color: var(--borderColor);
-//  cursor: pointer;
-//  line-height: 1.42;
-//  padding-left: 2.5rem;
-//  word-break: break-word;
-//}
-//.survey-options-label {
-//  box-sizing: border-box;
-//  color: var(--borderColor);
-//  cursor: pointer;
-//  line-height: 1.42;
-//  padding-left: 2.5rem;
-//  word-break: break-word;
-//}
-//.survey-options-input+.survey-options-label:before {
-//  border: .1rem solid var(--borderColor);
-//  height: 1.6rem;
-//  left: 0;
-//  width: 1.6rem;
-//}
-//.survey-options-input+.survey-options-label:after, .survey-options-input+.survey-options-label:before {
-//  border-radius: 50%;
-//  content: "";
-//  position: absolute;
-//  top: 50%;
-//  transform: translateY(-50%);
-//}
-//.survey-options-input+.survey-options-label:before {
-//  border: .1rem solid var(--borderColor);
-//  height: 1.6rem;
-//  left: 0;
-//  width: 1.6rem;
-//}
-//.survey-options-input+.survey-options-label:after, .survey-options-input+.survey-options-label:before {
-//  border-radius: 50%;
-//  content: "";
-//  position: absolute;
-//  top: 50%;
-//  transform: translateY(-50%);
-//}
-//.survey-options-input+.survey-options-label:after {
-//  background-color: var(--borderColor);
-//  display: none;
-//  height: 1rem;
-//  left: .3rem;
-//  width: 1rem;
-//}
-//.survey-options-input+.survey-options-label:after, .survey-options-input+.survey-options-label:before {
-//  border-radius: 50%;
-//  content: "";
-//  position: absolute;
-//  top: 50%;
-//  transform: translateY(-50%);
-//}
-//.survey-options-input+.survey-options-label:after {
-//  background-color: var(--borderColor);
-//  display: none;
-//  height: 1rem;
-//  left: .3rem;
-//  width: 1rem;
-//}
-//.survey-options-input+.survey-options-label:after, .survey-options-input+.survey-options-label:before {
-//  border-radius: 50%;
-//  content: "";
-//  position: absolute;
-//  top: 50%;
-//  transform: translateY(-50%);
-//}
-//
-//
-//.survey-options-input+.survey-options-label:before {
-//  border: .1rem solid var(--borderColor);
-//  height: 1.6rem;
-//  left: 0;
-//  width: 1.6rem;
-//}
-//.survey-options-input+.survey-options-label:after, .survey-options-input+.survey-options-label:before {
-//  border-radius: 50%;
-//  content: "";
-//  position: absolute;
-//  top: 50%;
-//  transform: translateY(-50%);
-//}
-//.survey-options-input+.survey-options-label:before {
-//  border: .1rem solid var(--borderColor);
-//  height: 1.6rem;
-//  left: 0;
-//  width: 1.6rem;
-//}
-//.survey-options-input+.survey-options-label:after, .survey-options-input+.survey-options-label:before {
-//  border-radius: 50%;
-//  content: "";
-//  position: absolute;
-//  top: 50%;
-//  transform: translateY(-50%);
-//}
-//*, :after, :before {
-//  box-sizing: inherit;
-//}
-//// after
-//
-//.survey-options-input:checked+.survey-options-label:after {
-//  display: inline-block;
-//}
-//.survey-options-input:checked+.survey-options-label:after {
-//  display: inline-block;
-//}
-//.survey-options-input+.survey-options-label:after {
-//  background-color: var(--borderColor);
-//  display: none;
-//  height: 1rem;
-//  left: .3rem;
-//  width: 1rem;
-//}
-//.survey-options-input+.survey-options-label:after, .survey-options-input+.survey-options-label:before {
-//  border-radius: 50%;
-//  content: "";
-//  position: absolute;
-//  top: 50%;
-//  transform: translateY(-50%);
-//}
-//.survey-options-input+.survey-options-label:after {
-//  background-color: var(--borderColor);
-//  display: none;
-//  height: 1rem;
-//  left: .3rem;
-//  width: 1rem;
-//}
-//.survey-options-input+.survey-options-label:after, .survey-options-input+.survey-options-label:before {
-//  border-radius: 50%;
-//  content: "";
-//  position: absolute;
-//  top: 50%;
-//  transform: translateY(-50%);
-//}
-//*, :after, :before {
-//  box-sizing: inherit;
-//}
-
 
 .survey-options-warning {
   color: #b33430;
   font-size: 0.9rem;
 }
-
-
-
-
 
 .survey-view-footer {
   align-items: center;
@@ -234,24 +87,17 @@
   }
 }
 
-
-
-
-
 // result survey
 
 .survey-results-label-title {
   margin-bottom: .3rem;
 }
 
-
-
 .survey-results-subtitle {
   color: var(--subtitleColor);
   font-size: 1.3rem;
   white-space: nowrap;
 }
-
 
 nb-progress-bar {
   border-radius: .4rem;

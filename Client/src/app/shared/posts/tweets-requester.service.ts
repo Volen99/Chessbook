@@ -1,17 +1,8 @@
 ﻿import {Injectable} from "@angular/core";
 
-import {IGetTweetParameters} from "./parameters/get-tweet-parameters";
-import {IGetTweetsParameters} from "./parameters/get-tweets-parameters";
 import {IPublishTweetParameters} from "./parameters/publish-tweet-parameters";
 import {IDestroyTweetParameters} from "./parameters/destroy-tweet-parameters";
-import {IGetRetweetsParameters} from "./parameters/get-retweets-parameters";
 import {IPublishRetweetParameters} from "./parameters/publish-retweet-parameters";
-import {IDestroyRetweetParameters} from "./parameters/destroy-retweet-parameters";
-import {IGetRetweeterIdsParameters} from "./parameters/get-retweeter-ids-parameters";
-import {IGetUserFavoriteTweetsParameters} from "./parameters/get-favorite-tweets-Parameters";
-import {IFavoriteTweetParameters} from "./parameters/favorite-tweet-parameters";
-import {IUnfavoriteTweetParameters} from "./parameters/unfavorite-tweet-parameters";
-import {IGetOEmbedTweetParameters} from "./parameters/get-OEmbed-tweet-parameters";
 import {ITweetDTO} from "./models/DTO/tweet-dto";
 import {ITweetsClientRequiredParametersValidator} from "./validators/tweets-client-required-parameters-validator";
 import {TweetControllerService} from "./tweet-controller.service";
