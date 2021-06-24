@@ -1,0 +1,625 @@
+<div class="row" style="background-image: url('./assets/images/chess-stuff-background.png')">
+    <div class="col-md-6 col-xxxl-4">
+        <nb-card size="medium">
+            <nb-card-header>
+                World Champions
+            </nb-card-header>
+            <nb-card-body>
+                <app-world-champions></app-world-champions>
+            </nb-card-body>
+        </nb-card>
+    </div>
+
+    <div class="col-md-6 col-xxxl-4">
+        <nb-card size="medium" class="headings-card">
+            <nb-card-header>
+                Internet chess servers
+            </nb-card-header>
+            <nb-card-body>
+                <div class="header">
+                    <div>
+                        <a href="https://www.chess.com/" target="_blank">
+                            <img class="chess-server-pic" src="assets/images/chess.com-banner.png" alt="chess.com">
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        <fa-icon [icon]="this.faUsers" style="margin-right: 6px"></fa-icon>
+                        50M+
+                    </div>
+                </div>
+                <div class="header">
+                    <div>
+                        <a href="https://lichess.org/" target="_blank">
+                            <img class="chess-server-pic" src="assets/images/lichess-banner.png" alt="lichess">
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        <fa-icon [icon]="this.faUsers" style="margin-right: 6px"></fa-icon>
+                        11M+
+                    </div>
+                </div>
+                <div class="header">
+                    <div>
+                        <a href="https://new.arena.myfide.net/" target="_blank">
+                            <svg class="copied-with-shame-svg" fill="none" height="25" viewBox="0 0 338 25" width="300"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0)">
+                                    <path d="M30.5059 24.0233V22.6401H33.3296V3.22725H30.5059V1.84399H46.0725V4.62232H47.4843V7.38882H46.0725V6.00557H44.6606V4.62232H43.2488V3.23907H36.1774V11.5622H43.2488V8.7839H44.6606V15.712H43.2488V12.9455H36.1774V22.6519H39.0132V24.0351H30.5059V24.0233Z"
+                                          fill="white"></path>
+                                    <path d="M49.5234 24.0233V22.6401H52.3471V3.22725H49.5234V1.84399H58.0187V3.22725H55.1829V22.6401H58.0187V24.0233H49.5234Z"
+                                          fill="white"></path>
+                                    <path d="M60.9023 24.0233V22.6401H63.726V3.22725H60.9023V1.84399H75.0571V3.22725H66.5618V22.6401H75.0571V24.0233H60.9023ZM75.0571 22.6519V21.2686H76.4689V19.8854H77.8808V17.107H79.2926V8.7839H77.8808V6.01739H76.4689V4.63414H75.0571V3.25089H77.8928V4.63414H79.3047V6.01739H80.7166V8.7839H82.1284V17.107H80.7166V19.8854H79.3047V21.2686H77.8928V22.6519H75.0571Z"
+                                          fill="white"></path>
+                                    <path _ngcontent-lpm-c30=""
+                                          d="M84.2539 24.0233V22.6401H87.0776V3.22725H84.2539V1.84399H99.8205V4.62232H101.244V7.38882H99.8325V6.00557H98.4207V4.62232H97.0088V3.23907H89.9375V11.5622H97.0088V8.7839H98.4207V15.712H97.0088V12.9455H89.9375V22.6519H98.4328V21.2686H99.8446V19.8854H101.244V18.5021H102.656V21.2804H101.244V24.0469H84.2539V24.0233Z"
+                                          fill="white"></path>
+                                    <path _ngcontent-lpm-c30=""
+                                          d="M116.231 24.0235V22.4274H114.602V20.8314H112.973V19.2353H111.344V6.50229H112.973V4.90623H114.602V3.31017H116.231V1.71411H125.993V3.31017H127.622V4.90623H129.251V6.50229H130.88V19.2589H129.251V20.855H127.622V22.4511H125.993V24.0471H116.231V24.0235ZM124.364 20.8432V19.2471H125.993V17.6511H127.622V8.09835H125.993V6.50229H124.364V4.90623H117.86V6.50229H116.231V8.09835H114.602V17.6511H116.231V19.2471H117.86V20.8432H124.364Z"
+                                          fill="white"></path>
+                                    <path _ngcontent-lpm-c30=""
+                                          d="M135.49 24.0235V1.71411H140.365V4.90623H141.994V8.09835H143.623V11.2786H145.253V14.4708H146.882V17.6511H148.511V1.71411H151.757V24.0235H146.882V20.8432H145.253V17.6511H143.623V14.4708H141.994V11.2786H140.365V8.09835H138.736V24.0235H135.49Z"
+                                          fill="white"></path>
+                                    <path _ngcontent-lpm-c30=""
+                                          d="M156.523 24.0235V1.71411H159.769V20.8432H171.161V24.0235H156.523Z"
+                                          fill="white"></path>
+                                    <path _ngcontent-lpm-c30="" d="M175.191 24.0235V1.71411H178.438V24.0235H175.191Z"
+                                          fill="white"></path>
+                                    <path _ngcontent-lpm-c30=""
+                                          d="M183.189 24.0235V1.71411H188.065V4.90623H189.694V8.09835H191.323V11.2786H192.952V14.4708H194.581V17.6511H196.21V1.71411H199.456V24.0235H194.581V20.8432H192.952V17.6511H191.323V14.4708H189.694V11.2786H188.065V8.09835H186.436V24.0235H183.189Z"
+                                          fill="white"></path>
+                                    <path _ngcontent-lpm-c30=""
+                                          d="M204.225 24.0235V1.71411H220.479V4.90623H207.471V10.4865H218.862V13.6786H207.471V20.8432H220.479V24.0235H204.225Z"
+                                          fill="white"></path>
+                                    <path _ngcontent-lpm-c30=""
+                                          d="M233.861 24.0235V19.2471H235.49V14.4589H237.119V9.69441H238.748V4.90623H240.378V1.71411H245.265V4.90623H246.894V9.69441H248.523V14.4826H250.152V19.2708H251.781V24.0471H248.523V19.2708H237.132V24.0471H233.861V24.0235ZM246.87 16.0668V14.4708H245.241V9.69441H243.612V6.50229H241.982V9.69441H240.353V14.4826H238.724V16.0786H246.87V16.0668Z"
+                                          fill="white"></path>
+                                    <path _ngcontent-lpm-c30=""
+                                          d="M256.16 24.0235V1.71411H270.798V3.31017H272.427V4.90623H274.056V12.0708H272.427V13.6668H270.798V15.2629H272.427V16.8589H274.056V24.0235H270.798V18.4432H269.168V16.8471H267.539V15.2511H259.394V24.0116H256.16V24.0235ZM269.181 12.0826V10.4865H270.81V6.50229H269.181V4.90623H259.418V12.0708H269.181V12.0826Z"
+                                          fill="white"></path>
+                                    <path _ngcontent-lpm-c30=""
+                                          d="M278.762 24.0235V1.71411H295.016V4.90623H282.008V10.4865H293.399V13.6786H282.008V20.8432H295.016V24.0235H278.762Z"
+                                          fill="white"></path>
+                                    <path d="M299.434 24.0235V1.71411H304.309V4.90623H305.938V8.09835H307.567V11.2786H309.196V14.4708H310.825V17.6511H312.454V1.71411H315.7V24.0235H310.825V20.8432H309.196V17.6511H307.567V14.4708H305.938V11.2786H304.309V8.09835H302.68V24.0235H299.434Z"
+                                          fill="white"></path>
+                                    <path d="M320.105 24.0235V19.2471H321.735V14.4589H323.364V9.69441H324.993V4.90623H326.622V1.71411H331.509V4.90623H333.138V9.69441H334.767V14.4826H336.396V19.2708H338.025V24.0471H334.767V19.2708H323.376V24.0471H320.105V24.0235ZM333.114 16.0668V14.4708H331.485V9.69441H329.856V6.50229H328.227V9.69441H326.598V14.4826H324.969V16.0786H333.114V16.0668Z"
+                                          fill="white"></path>
+                                    <path d="M20.5989 6.89261V5.1665H18.8854V3.44039H15.4463V5.1665H13.7327V6.89261H12.0192V5.1665H13.7327V1.72611H12.0192V0H10.3057V1.72611H8.59214V5.1665H10.3057V6.89261H8.59214V5.1665H6.87861V3.44039H3.43948V5.1665H1.72595V6.89261H-0.0117188V15.4995H1.70181V17.2256H3.41534V18.9517H5.12887V20.6778H3.41534V22.4039H1.70181V24.1301H20.5869V22.4039H18.8733V20.6778H17.1598V18.9517H18.8733V17.2256H20.5869V15.4995H22.3004V6.89261H20.5989ZM12.0071 20.666H10.2936V10.333H12.0071V20.666ZM6.85447 17.2138H5.14094V13.7734H3.42741V10.333H5.14094V13.7734H6.85447V17.2138H8.568V20.6542H6.85447V17.2138ZM15.4463 17.2138V20.6542H13.7327V17.2138H15.4463V13.7734H17.1598V10.333H18.8733V13.7734H17.1598V17.2138H15.4463Z"
+                                          fill="white"></path>
+                                </g>
+                                <defs>
+                                    <clipPath _ngcontent-lpm-c30="" id="clip0">
+                                        <rect fill="white" height="25" width="338"></rect>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        <fa-icon [icon]="this.faUsers" style="margin-right: 6px"></fa-icon>
+                        442K+
+                    </div>
+                </div>
+                <div class="header">
+                    <div>
+                        <a href="https://chess24.com/" target="_blank">
+                            <img class="chess-server-pic" src="assets/images/chess24-banner.png" alt="chess24">
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        <fa-icon [icon]="this.faUsers" style="margin-right: 6px"></fa-icon>
+                        100K+
+                    </div>
+                </div>
+                <div class="header">
+                    <div>
+                        <a href="https://play.chessbase.com/" target="_blank">
+                            <img class="chess-server-pic" src="assets/images/playchess-banner.png" alt="playchess">
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        <fa-icon [icon]="this.faUsers" style="margin-right: 6px"></fa-icon>
+                        336K+
+                    </div>
+                </div>
+                <div class="header">
+                    <div>
+                        <a href="https://www.chessclub.com/" target="_blank">
+                            <img class="chess-server-pic" src="assets/images/icc.gif" alt="internet chess club">
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        <fa-icon [icon]="this.faUsers" style="margin-right: 6px"></fa-icon>
+                        50K +
+                    </div>
+                </div>
+                <div class="header">
+                    <div>
+                        <a href="https://gameknot.com/" target="_blank">
+                            <img class="chess-server-pic" src="assets/images/gameknot-banner.png" alt="gameknot">
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        <fa-icon [icon]="this.faUsers" style="margin-right: 6px"></fa-icon>
+                        1.9M+
+                    </div>
+                </div>
+                <div class="header">
+                    <div class="tempo-header">
+                        <a href="https://chesstempo.com/" target="_blank">
+                            <h3 class="tempo-title"
+                                style="background: transparent url('assets/images/chess-tempo.png') no-repeat;">
+                                <span>C</span>hess <span>T</span>empo</h3>
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        <fa-icon [icon]="this.faUsers" style="margin-right: 6px"></fa-icon>
+                        1M+
+                    </div>
+                </div>
+                <div class="header">
+                    <div>
+                        <a href="https://kasparovchess.com/" target="_blank" style="text-decoration: none">
+                            <svg class="copied-with-shame-svg" width="37px" height="75px" viewBox="0 0 37 75">
+                                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <g id="1440_-HOMEPAGE-next" transform="translate(-77.000000, -8118.000000)"
+                                       fill="#FFFFFF">
+                                        <g id="footer" transform="translate(77.000000, 8118.000000)">
+                                            <g id="Logo-2">
+                                                <g id="Logo">
+                                                    <g>
+                                                        <polygon id="Fill-1"
+                                                                 points="13 47.7370666 17.0886076 51.6937566 17.0886076 68.2764542 17.1518987 68.2764542 24.0759494 75 31 68.2764542 26.8721519 64.2816601 26.8721519 47.7370666 19.9367089 41"></polygon>
+                                                        <polygon id="Fill-2" points="13 33 20 26 27 33 20 40"></polygon>
+                                                        <polygon id="Fill-3"
+                                                                 points="7.43862661 0 0 7.85478548 0 68 9.28927039 58.3623029 9.39742489 44.7610561 5.1193133 40.3212321 9.30128755 35.9823982 9.28927039 11.7086175 14 6.81994866"></polygon>
+                                                        <g id="Trademark" transform="translate(33.000000, 67.000000)">
+                                                            <path d="M3.362375,3.13725 C3.287375,3.33725 3.174875,3.51225 3.037375,3.64975 C2.899875,3.79975 2.737375,3.91225 2.537375,3.99975 C2.349875,4.08725 2.138625,4.12475 1.912375,4.12475 C1.687375,4.12475 1.474875,4.08725 1.274875,3.99975 C1.074875,3.91225 0.912375,3.79975 0.774875,3.64975 C0.637375,3.49975 0.524875,3.32475 0.449875,3.13725 C0.374875,2.93725 0.324875,2.72475 0.324875,2.49975 C0.324875,2.276 0.362375,2.0635 0.449875,1.86225 C0.524875,1.66225 0.637375,1.4885 0.774875,1.34975 C0.912375,1.19975 1.087375,1.08725 1.274875,0.99975 C1.474875,0.9135 1.674875,0.87475 1.912375,0.87475 C2.138625,0.87475 2.349875,0.9135 2.537375,0.99975 C2.724875,1.08725 2.899875,1.19975 3.037375,1.34975 C3.174875,1.49975 3.287375,1.66225 3.362375,1.86225 C3.438625,2.0635 3.487375,2.276 3.487375,2.49975 C3.474875,2.72475 3.438625,2.93725 3.362375,3.13725 M3.624875,1.76225 C3.524875,1.5385 3.399875,1.3385 3.224875,1.176 C3.049875,1.01225 2.849875,0.87475 2.624875,0.77475 C2.399875,0.67475 2.162375,0.62475 1.899875,0.62475 C1.637375,0.62475 1.399875,0.67475 1.162375,0.77475 C0.938625,0.87475 0.737375,1.01225 0.562375,1.176 C0.387375,1.3385 0.263625,1.5385 0.162375,1.76225 C0.074875,1.99975 0.024875,2.23725 0.024875,2.49975 C0.024875,2.76225 0.074875,3.001 0.174875,3.23725 C0.274875,3.46225 0.412375,3.66225 0.576125,3.8385 C0.737375,4.01225 0.949875,4.13725 1.174875,4.23725 C1.399875,4.32475 1.649875,4.37475 1.899875,4.37475 C2.162375,4.37475 2.399875,4.32475 2.624875,4.22475 C2.849875,4.12475 3.049875,3.9885 3.224875,3.82475 C3.399875,3.64975 3.524875,3.46225 3.624875,3.22475 C3.724875,3.001 3.774875,2.74975 3.774875,2.49975 C3.774875,2.23725 3.724875,1.99975 3.624875,1.76225"
+                                                                  id="Fill-4"></path>
+                                                            <path d="M2.088,2.3755 L1.8505,2.3755 L1.463,2.3755 L1.463,1.63675 L2.06175,1.63675 C2.12425,1.63675 2.188,1.63675 2.2505,1.6505 C2.313,1.663 2.37425,1.67425 2.413,1.7005 C2.463,1.72425 2.5005,1.763 2.53675,1.813 C2.5755,1.863 2.58675,1.9255 2.58675,2.013 C2.58675,2.113 2.563,2.19925 2.513,2.24925 C2.463,2.29925 2.4005,2.338 2.32425,2.36175 C2.263,2.36175 2.17425,2.3755 2.088,2.3755 M2.6755,2.438 C2.738,2.388 2.7755,2.338 2.813,2.26175 C2.84925,2.188 2.86175,2.09925 2.86175,1.99925 C2.86175,1.8255 2.813,1.68675 2.69925,1.6005 C2.58675,1.5005 2.4005,1.4505 2.12425,1.4505 L1.213,1.4505 L1.213,3.538 L1.4755,3.538 L1.4755,2.57425 L1.9505,2.57425 L2.54925,3.538 L2.86175,3.538 L2.22425,2.57425 C2.313,2.57425 2.4005,2.56175 2.48675,2.538 C2.54925,2.52425 2.613,2.488 2.6755,2.438"
+                                                                  id="Fill-6"></path>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                            <span class="ksp-chess-txt">Kasparovchess</span>
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        <fa-icon [icon]="this.faUsers" style="margin-right: 6px"></fa-icon>
+                        12K+ <sup>BETA</sup>
+                    </div>
+                </div>
+                <div class="header">
+                    <div>
+                        <a href="https://chess.org/" target="_blank">
+                            <img alt="chess.org" src="assets/images/chess.org.svg" class="chess-server-pic"
+                                 style="margin-left: -20px">
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        <fa-icon [icon]="this.faUsers" style="margin-right: 6px"></fa-icon>
+                        1K+
+                    </div>
+                </div>
+                <div class="header">
+                    <div>
+                        <a href="https://www.schemingmind.com/" style="text-decoration: none" target="_blank">
+                            <h3 style="color: #5F9EA0">SchemingMind.com</h3>
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        <fa-icon [icon]="this.faUsers" style="margin-right: 6px"></fa-icon>
+                        19K+
+                    </div>
+                </div>
+                <div class="header">
+                    <div>
+                        <a href="https://www.freechess.org/" target="_blank">
+                            <img alt="free internet chess server" src="assets/images/FICS-Banner.jpg"
+                                 class="chess-server-pic">
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        <fa-icon [icon]="this.faUsers" style="margin-right: 6px"></fa-icon>
+                        650K+
+                    </div>
+                </div>
+                <div class="header">
+                    <div title="Nostalgic">
+                        <a href="https://www.flyordie.com/chess/" target="_blank">
+                            <img class="chess-server-pic" src="assets/images/flyOrDie.png" alt="fly or die">
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        <fa-icon [icon]="this.faUsers" style="margin-right: 6px"></fa-icon>
+                        30K+
+                    </div>
+                </div>
+                <div class="header">
+                    <div>
+                        <a href="http://chesscube.org/" target="_blank">
+                            <img class="chess-server-pic" src="assets/images/chesscube.png" alt="chess cube">
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        Defunct
+                        <fa-icon [icon]="this.faFrown" style="margin-left: 6px"></fa-icon>
+                    </div>
+                </div>
+                <div class="header">
+                    <div>
+                        <a href="https://en.wikipedia.org/wiki/Chess_Live" target="_blank">
+                            <img class="chess-server-pic" src="assets/images/chesslive.png" alt="chess live">
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        Defunct
+                        <fa-icon [icon]="this.faFrown" style="margin-left: 6px"></fa-icon>
+                    </div>
+                </div>
+                <div class="header">
+                    <div>
+                        <a href="https://en.wikipedia.org/wiki/World_Chess_Network" target="_blank">
+                            <img alt="world chess network" src="assets/images/WCN.jpg" class="chess-server-pic">
+                        </a>
+                    </div>
+
+                    <div class="detail">
+                        Defunct
+                        <fa-icon [icon]="this.faFrown" style="margin-left: 6px"></fa-icon>
+                    </div>
+                </div>
+                <!--                <div class="header">-->
+                <!--                    <div>-->
+                <!--                        <h6>H6. Heading</h6>-->
+                <!--                    </div>-->
+
+                <!--                    <div class="detail">-->
+                <!--                        800 1.125rem (18px)-->
+                <!--                    </div>-->
+                <!--                </div>-->
+            </nb-card-body>
+        </nb-card>
+    </div>
+
+    <div class="col-md-6 col-xxxl-4">
+        <nb-card [size]="breakpoint.width >= breakpoints.xxxl ? 'medium' : 'large'">
+            <nb-card-header>
+                Origin of chess
+            </nb-card-header>
+            <nb-card-body>
+                <!--<div class="picture" [style.background-image]="'url(assets/images/kitten-dark.png)'"></div>-->
+                <p>
+                    Precursors to chess originated in India. There, its early form in the 7th century CE was known as
+                    <a href="https://en.wikipedia.org/wiki/Chaturanga" target="_blank">chaturaṅga</a>, which translates
+                    to "four divisions (of the military)":
+                    <a href="https://en.wikipedia.org/wiki/Infantry" target="_blank">infantry</a>,
+                    <a href="https://en.wikipedia.org/wiki/Cavalry" target="_blank">cavalry</a>,
+                    <a href="https://en.wikipedia.org/wiki/War_elephant" target="_blank">elephantry</a>, and
+                    <a href="https://en.wikipedia.org/wiki/Chariot" target="_blank">chariotry</a>.
+                    These forms are represented by the pieces that would evolve into the modern
+                    <a href="https://en.wikipedia.org/wiki/Pawn_(chess)" target="_blank">pawn</a>,
+                    <a href="https://en.wikipedia.org/wiki/Knight_(chess)" target="_blank">knight</a>,
+                    <a href="https://en.wikipedia.org/wiki/Bishop_(chess)" target="_blank">bishop</a>, and
+                    <a href="https://en.wikipedia.org/wiki/Rook_(chess)" target="_blank">rook</a>, respectively.
+                </p>
+                <p>Chess was introduced to <a href="https://en.wikipedia.org/wiki/History_of_Iran"
+                                              title="History of Iran" target="_blank">Persia</a> from India
+                    and became a part of the princely or courtly education of Persian nobility.<sup
+                            id="cite_ref-Meri_5-0" class="reference"><a href="https://en.wikipedia.org/wiki/History_of_chess_note-Meri-5" target="_blank">[5]</a></sup> Around
+                    600 CE in <a href="https://en.wikipedia.org/wiki/Sasanian_Empire" title="" target="_blank">Sassanid Persia</a>, the
+                    name for the game became
+                    <i>chatrang</i>, which subsequently evolved to <i><a href="https://en.wikipedia.org/wiki/Shatranj"
+                                                                         title="Shatranj">shatranj</a></i> after the <a
+                            href="https://en.wikipedia.org/wiki/Muslim_conquest_of_Persia" title="" target="_blank">conquest of
+                        Persia</a> by the <a
+                            href="https://en.wikipedia.org/wiki/Rashidun_Caliphate" title="" target="_blank">Rashidun Caliphate</a>, due
+                    to the lack of native
+                    <i>ch</i> and <i>ng</i> sounds in the <a href="https://en.wikipedia.org/wiki/Arabic" title="Arabic" target="_blank">Arabic
+                        language</a>.<sup
+                            id="cite_ref-Shenk,_David_2006_6-0" class="reference"><a
+                            href="https://en.wikipedia.org/wiki/History_of_chess#cite_note-Shenk,_David_2006-6" target="_blank">[6]</a></sup> The rules were developed further during
+                    this time; players started calling "Shāh!" (<a href="https://en.wikipedia.org/wiki/Persian_language"
+                                                                   title="Muslim conquest of Persia" target="_blank">Persian</a> for
+                    "King!") when attacking the opponent's king, and "Shāh Māt!" (Persian for "the king is helpless" –
+                    see <a href="https://en.wikipedia.org/wiki/Checkmate" title="Checkmate" target="_blank">checkmate</a> target="_blank") when the king
+                    was attacked and could
+                    not escape from attack. These exclamations persisted in chess as it traveled to other lands.
+                </p>
+                <p>The game was taken up by the <a href="https://en.wikipedia.org/wiki/Muslim_world"
+                                                   title="Muslim world" target="_blank">Muslim world</a> after
+                    the early <a href="https://en.wikipedia.org/wiki/Arab_Muslims" title="Arab Muslims">Arab Muslims</a>
+                    conquered the Sassanid
+                    Empire, with the pieces largely keeping their Persian names. The <a
+                            href="https://en.wikipedia.org/wiki/Moors"
+                            title="Moors" target="_blank">Moors</a> of <a
+                            href="https://en.wikipedia.org/wiki/North_Africa" title="North Africa" target="_blank">North Africa</a>
+                    rendered the Persian term
+                    "<i>shatranj</i>" as <i>shaṭerej</i>, which gave rise to the <a
+                            href="https://en.wikipedia.org/wiki/Spanish_language"
+                            title="Spanish language" target="_blank">Spanish</a>
+                    <i>acedrex</i>, <i>axedrez</i> and <i>ajedrez</i>; in <a
+                            href="https://en.wikipedia.org/wiki/Portuguese_language"
+                            title="Portuguese language" target="_blank">Portuguese</a>
+                    it became <i lang="pt" title="Portuguese-language text">xadrez</i>, and in <a
+                            href="https://en.wikipedia.org/wiki/Greek_language" title="Italian language" target="_blank">Greek</a> <i
+                            lang="grc-Latn"
+                            title="Ancient Greek (to 1453)-language romanization"> zatrikion</i>,
+                    but in the rest of <a href="https://en.wikipedia.org/wiki/Europe" title="Europe" target="_blank">Europe</a> it was
+                    replaced by versions of
+                    the Persian <i lang="fa" title="Persian-language text">shāh</i> ("king"). Thus, the game came to be
+                    called <i lang="la" title="Latin-language text">ludus scacchorum</i> or <i lang="la"
+                                                                                               title="Latin-language text">scacc(h)i</i>
+                    in <a href="https://en.wikipedia.org/wiki/Latin" title="Latin" target="_blank">Latin</a>, <i lang="it"
+                                                                                                 title="Italian-language text">scacchi</i>
+                    in <a
+                            href="https://en.wikipedia.org/wiki/Italian_language" title="" target="_blank">Italian</a>, <i lang="ca"
+                                                                                                           title="Catalan-language text">escacs</i>
+                    in <a href="https://en.wikipedia.org/wiki/Catalan_language" title="Catalan language" target="_blank">Catalan</a>, <i
+                            lang="fr"
+                            title="French-language text">échecs</i>
+                    in <a href="https://en.wikipedia.org/wiki/French_language" title="French language" target="_blank">French</a> (<a
+                            href="https://en.wikipedia.org/wiki/Old_French"
+                            title="Old French" target="_blank">Old
+                        French</a> <i lang="fro" title="Old French (842-ca. 1400)-language text">eschecs</i>); <i
+                            lang="nl" title="Dutch-language text">schaken</i> in <a
+                            href="https://en.wikipedia.org/wiki/Dutch_language"
+                            title="Dutch language" target="_blank">Dutch</a>, <i
+                            lang="de" title="German-language text">Schach</i> in <a
+                            href="https://en.wikipedia.org/wiki/German_language"
+                            title="German language" target="_blank">German</a>,
+                    <i lang="pl" title="Polish-language text">szachy</i> in <a
+                            href="https://en.wikipedia.org/wiki/Polish_language"
+                            title="Polish language" target="_blank">Polish</a>, <i
+                            lang="lv" title="Latvian-language text">šahs</i> in <a
+                            href="https://en.wikipedia.org/wiki/Latvian_language"
+                            title="Latvian language" target="_blank">Latvian</a>,
+                    <i lang="da" title="Danish-language text">skak</i> in <a
+                            href="https://en.wikipedia.org/wiki/Danish_language"
+                            title="Danish language" target="_blank">Danish</a>, <i
+                            lang="no" title="Norwegian-language text">sjakk</i> in <a
+                            href="https://en.wikipedia.org/wiki/Norwegian_language"
+                            title="Libro de los juegos" target="_blank">Norwegian</a>,
+                    <i lang="sv" title="Swedish-language text">schack</i> in <a
+                            href="https://en.wikipedia.org/wiki/Swedish_language"
+                            title="Rashidun Caliphate" target="_blank">Swedish</a>,
+                    <i lang="fi" title="Finnish-language text">šakki</i> in <a
+                            href="https://en.wikipedia.org/wiki/Finnish_language"
+                            title="Finnish language" target="_blank">Finnish</a>, <i
+                            lang="zls" title="South Slavic languages collective text">šah</i> in <a
+                            href="https://en.wikipedia.org/wiki/South_Slavic_languages" title="South Slavic languages" target="_blank">South
+                        Slavic
+                        languages</a>, <i lang="hu" title="Hungarian-language text">sakk</i> in <a
+                            href="https://en.wikipedia.org/wiki/Hungarian_language"
+                            title="Hungarian language" target="_blank">Hungarian</a> and <i lang="ro"
+                                                                            title="Romanian-language text">şah</i>
+                    in <a href="https://en.wikipedia.org/wiki/Romanian_language" title="Romanian language" target="_blank">Romanian</a>;
+                    there are two theories
+                    about why this change happened:
+                </p>
+                <ol>
+                    <li>From the exclamation "check" or "checkmate" as it was pronounced in various languages.</li>
+                    <li>From the first chessmen known of in Western Europe (except <a
+                            href="https://en.wikipedia.org/wiki/Iberian_Peninsula"
+                            title="Iberian Peninsula" target="_blank">Iberia</a>
+                        and Greece) being ornamental chess kings brought in as curios by Muslim traders.
+                    </li>
+                </ol>
+                <p>The <a href="https://en.wikipedia.org/wiki/Mongols" title="Mongols" target="_blank">Mongols</a> call the game <i>shatar</i>,
+                    and in <a
+                            href="https://en.wikipedia.org/wiki/Ethiopia" title="Ethiopia" target="_blank">Ethiopia</a> it is called <i>senterej</i>,
+                    both evidently
+                    derived from <i>shatranj</i>.
+                </p>
+                <p>Chess spread directly from the <a href="https://en.wikipedia.org/wiki/Middle_East"
+                                                     title="Middle East" target="_blank">Middle East</a> to Russia, where chess became
+                    known as шахматы (<i>shakhmaty</i>, literally "checkmates", a <a
+                            href="https://en.wikipedia.org/wiki/Plurale_tantum" title="Norwegian language" target="_blank">plurale
+                        tantum</a>).
+                </p>
+                <p>The game reached Western Europe and Russia by at least three routes, the earliest being in the 9th
+                    century. By the year 1000 it had spread throughout Europe.<sup id="cite_ref-tacspx_7-0"
+                                                                                   class="reference"><a
+                            href="https://en.wikipedia.org/wiki/History_of_chess#cite_note-tacspx-7" target="_blank">[7]</a></sup> Introduced into the <a
+                            href="https://en.wikipedia.org/wiki/Iberian_Peninsula" title="Iberian Peninsula" target="_blank">Iberian
+                        Peninsula</a> by the <a href="https://en.wikipedia.org/wiki/Moors" title="Moors" target="_blank">Moors</a> in
+                    the 10th century, it was described in a famous 13th-century manuscript covering <i>shatranj</i>, <a
+                            href="https://en.wikipedia.org/wiki/Backgammon" title="Backgammon" target="_blank">backgammon</a> and <a
+                            href="https://en.wikipedia.org/wiki/Dice" title="Dice" target="_blank">dice</a> named the <i><a
+                            href="https://en.wikipedia.org/wiki/Libro_de_los_juegos" title="" target="_blank">Libro de los
+                        juegos</a></i>.
+                </p>
+                <p>Chess spread throughout the world and many variants of the game soon began taking shape.<sup
+                        id="cite_ref-Britannica02_8-0" class="reference"><a
+                        href="https://en.wikipedia.org/wiki/History_of_chess#cite_note-Britannica02-8" target="_blank">[8]</a></sup> <a href="https://en.wikipedia.org/wiki/Buddhist"
+                                                                          class="mw-redirect"
+                                                                          title="Buddhist" target="_blank">Buddhist</a> pilgrims, <a
+                        href="https://en.wikipedia.org/wiki/Silk_Road" title="Silk Road" target="_blank">Silk Road</a> traders and
+                    others carried it to the <a href="https://en.wikipedia.org/wiki/Far_East" title="Far East" target="_blank">Far
+                        East</a> where it was transformed and assimilated into a game often played on the intersection
+                    of the lines of the board rather than within the squares.<sup id="cite_ref-Britannica02_8-1"
+                                                                                  class="reference"><a
+                            href="https://en.wikipedia.org/wiki/History_of_chess#cite_note-Britannica02-8" target="_blank">[8]</a></sup><sup id="cite_ref-9" class="reference"><a
+                            href="https://en.wikipedia.org/wiki/History_of_chess#cite_note-9" target="_blank">[9]</a></sup> <i>Chaturanga</i> reached <a href="https://en.wikipedia.org/wiki/Europe" title="" target="_blank">Europe</a>
+                    through Persia, the <a href="https://en.wikipedia.org/wiki/Byzantine_empire" class="mw-redirect" title="Byzantine empire">Byzantine
+                        empire</a> and the expanding <a href="https://en.wikipedia.org/wiki/Caliphate" title="Caliphate" target="_blank">Arabian empire</a>.<sup
+                            id="cite_ref-ChessEurope_10-0" class="reference"><a
+                            href="https://en.wikipedia.org/wiki/History_of_chess#cite_note-ChessEurope-10">[10]</a></sup> <a href="https://en.wikipedia.org/wiki/Muslims" title="Muslims" target="_blank">Muslims</a>
+                    carried chess to <a href="https://en.wikipedia.org/wiki/North_Africa" title="North Africa" target="_blank">North Africa</a>, <a
+                            href="https://en.wikipedia.org/wiki/Sicily" title="Sicily">Sicily</a>, and <a href="https://en.wikipedia.org/wiki/Iberian_Peninsula"
+                                                                                  title="Iberian Peninsula" target="_blank">Iberia</a>
+                    by the 10th century.<sup id="cite_ref-Britannica02_8-2" class="reference"><a
+                            href="https://en.wikipedia.org/wiki/History_of_chess#cite_note-Britannica02-8" target="_blank">[8]</a></sup>
+                </p>
+                <p>The game was developed extensively in Europe. By the late 15th century, it had survived a series of
+                    prohibitions and <a href="https://en.wikipedia.org/wiki/Christian_Church" class="mw-redirect" title="Christian Church" target="_blank">Christian
+                        Church</a> sanctions to almost take the shape of the modern game.<sup id="cite_ref-Riddler_11-0"
+                                                                                              class="reference" target="_blank"><a
+                            href="https://en.wikipedia.org/wiki/History_of_chess#cite_note-Riddler-11" target="_blank">[11]</a></sup> <a
+                            href="https://en.wikipedia.org/wiki/Modern_history" class="mw-redirect"
+                            title="Modern history" target="_blank">Modern history</a> saw reliable reference works,<sup
+                            id="cite_ref-Britannica02a_12-0" class="reference"><a href="https://en.wikipedia.org/wiki/History_of_chess#cite_note-Britannica02a-12"target="_blank">[12]</a></sup>
+                    competitive chess tournaments,<sup id="cite_ref-Britannica02b_13-0" class="reference"><a
+                            href="https://en.wikipedia.org/wiki/History_of_chess#cite_note-Britannica02b-13" target="_blank">[13]</a></sup> and exciting new variants. These factors
+                    added to the game's popularity,<sup id="cite_ref-Britannica02b_13-1" class="reference"><a
+                            href="https://en.wikipedia.org/wiki/History_of_chess#cite_note-Britannica02b-13" target="_blank">[13]</a></sup> further bolstered by reliable timing
+                    mechanisms (first introduced in 1861), effective rules,<sup id="cite_ref-Britannica02b_13-2" class="reference">
+                        <a href="https://en.wikipedia.org/wiki/History_of_chess#cite_note-Britannica02b-13" target="_blank">[13]</a></sup> and charismatic players. [wiki]
+                </p>
+            </nb-card-body>
+        </nb-card>
+    </div>
+
+    <div class="col-md-6 col-xxxl-4">
+        <nb-card size="large">
+            <nb-card-header>
+                Font Colors
+            </nb-card-header>
+            <nb-card-body>
+                <div class="colors">
+                    <div class="item text-heading">
+                        <div class="color bg-heading"></div>
+                        <div>
+                            <h5 class="text-heading">Heading Text</h5>
+                            Far far away, behind the your awesomeness.
+                        </div>
+                    </div>
+                    <div class="item text-basic">
+                        <div class="color bg-body"></div>
+                        <div>
+                            <h5 class="text-basic">Body Text</h5>
+                            Far far away, behind the your awesomeness.
+                        </div>
+                    </div>
+                    <div class="item text-hint">
+                        <div class="color bg-hint"></div>
+                        <div>
+                            <h5 class="text-hint">Hint Text</h5>
+                            Far far away, behind the your awesomeness.
+                        </div>
+                    </div>
+                    <div class="item text-link">
+                        <div class="color bg-link"></div>
+                        <div>
+                            <h5 class="text-link">Link Text</h5>
+                            Far far away, behind the your awesomeness.
+                        </div>
+                    </div>
+                    <div class="item text-primary">
+                        <div class="color bg-status-primary"></div>
+                        <div>
+                            <h5 class="text-primary">Primary Text</h5>
+                            Far far away, behind the your awesomeness.
+                        </div>
+                    </div>
+                    <div class="item text-success">
+                        <div class="color bg-status-success"></div>
+                        <div>
+                            <h5 class="text-success">Success Text</h5>
+                            Far far away, behind the your awesomeness.
+                        </div>
+                    </div>
+                    <div class="item text-info">
+                        <div class="color bg-status-info"></div>
+                        <div>
+                            <h5 class="text-info">Info Text</h5>
+                            Far far away, behind the your awesomeness.
+                        </div>
+                    </div>
+                    <div class="item text-warning">
+                        <div class="color bg-status-warning"></div>
+                        <div>
+                            <h5 class="text-warning">Warning Text</h5>
+                            Far far away, behind the your awesomeness.
+                        </div>
+                    </div>
+                    <div class="item text-danger">
+                        <div class="color bg-status-danger"></div>
+                        <div>
+                            <h5 class="text-danger">Danger Text</h5>
+                            Far far away, behind the your awesomeness.
+                        </div>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+
+    <div class="col-md-6 col-xxxl-4">
+        <nb-card size="large">
+            <nb-card-header>
+                Alerts
+            </nb-card-header>
+            <nb-card-body>
+                <nb-alert>
+                    <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+                </nb-alert>
+                <nb-alert status="primary">
+                    <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                </nb-alert>
+                <nb-alert status="success">
+                    <strong>Well done!</strong> You successfully read this important alert message.
+                </nb-alert>
+                <nb-alert status="info">
+                    <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+                </nb-alert>
+                <nb-alert status="warning">
+                    <strong>Warning!</strong> Better check yourself, you're not looking too good.
+                </nb-alert>
+                <nb-alert status="danger">
+                    <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                </nb-alert>
+            </nb-card-body>
+        </nb-card>
+    </div>
+
+    <div class="col-md-6 col-xxxl-4">
+        <nb-card size="large">
+            <nb-card-header>
+                Lists
+            </nb-card-header>
+            <nb-card-body>
+                <h4>Ordered List</h4>
+                <ol class="mb-5">
+                    <li>Far far away, behind the word mountains</li>
+                    <li>Far from the countries Vokalia and Consonantia</li>
+                    <li>There live the blind texts.</li>
+                    <li>Right at the coast of the Semantics.</li>
+                    <li>A small river named Duden flows</li>
+                </ol>
+
+                <h4>Unordered List</h4>
+                <ul class="mb-5">
+                    <li>Far far away, behind the word mountains</li>
+                    <li>Far from the countries Vokalia and Consonantia</li>
+                    <li>There live the blind texts.</li>
+                    <li>Right at the coast of the Semantics.</li>
+                    <li>A small river named Duden flows</li>
+                </ul>
+            </nb-card-body>
+        </nb-card>
+    </div>
+
+    <div class="col-md-6 col-xxxl-4" style="height: 638px">
+
+    </div>
+</div>

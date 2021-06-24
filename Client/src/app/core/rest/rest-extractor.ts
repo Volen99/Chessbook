@@ -39,6 +39,7 @@ export class RestExtractor {
   }
 
   handleError(err: any) {
+    debugger
     let errorMessage;
 
     if (err.error instanceof Error) {

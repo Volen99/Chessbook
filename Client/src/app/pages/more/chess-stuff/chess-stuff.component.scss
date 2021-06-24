@@ -1,0 +1,222 @@
+// 27.06.2021, Sunday, 17:59 | I can't say goodbye
+
+@import '../../../theme/styles/themes';
+
+@include nb-install-component() {
+  a {
+    text-decoration: none;
+    background: none;
+  }
+
+  sup.reference {
+    unicode-bidi: -moz-isolate;
+    unicode-bidi: -webkit-isolate;
+    unicode-bidi: isolate;
+    white-space: nowrap;
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  .chess-server-pic {
+    width: 300px;
+    height: 66px;
+  }
+
+  .picture {
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    border-top-left-radius: nb-theme(card-border-radius);
+    border-top-right-radius: nb-theme(card-border-radius);
+    flex: 1;
+  }
+
+  .copied-with-shame-svg {
+    path {
+      fill: nb-theme(text-basic-color) !important;
+    }
+
+    polygon {
+      fill: nb-theme(text-basic-color) !important;
+    }
+  }
+
+  .ksp-chess-txt {
+    font-size: 1.875rem;
+    color: nb-theme(text-basic-color) !important;
+  }
+
+  .tempo-header {
+    float: left;
+
+    a {
+      text-decoration: none;
+
+      h3 {
+        line-height: 65px;
+        padding-left: 70px;
+        margin: 0;
+
+        span {
+          color: #61A3F8;
+        }
+      }
+    }
+  }
+
+  .tempo-title {
+    font-weight: 700;
+    color: nb-theme(text-basic-color);
+  }
+
+  fa-icon {
+    margin-right: 6px;
+    margin-left: 6px;
+  }
+
+  .row {
+    max-width: 1135px; // fix x-overflow
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #1c2b3e;
+  }
+
+  .font-row {
+    &:first-child {
+      margin-bottom: 2rem;
+    }
+
+    .header {
+      align-items: baseline;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .headings-card {
+    h1 {
+      margin: 0;
+    }
+
+    .header {
+      padding-bottom: 0.675rem;
+      margin-bottom: 0.675rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid nb-theme(divider-color);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    div:first-child {
+      flex: 2;
+      -ms-flex: 2 1 auto;
+      line-height: 1;
+      align-items: flex-end;
+
+      h1, h2, h3, h4, h5, h6 {
+        margin-bottom: 0;
+      }
+    }
+
+    .variants {
+      flex: 1;
+      -ms-flex: 1 1 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+
+      span {
+        padding-right: 1rem;
+        padding-left: 1rem;
+      }
+    }
+
+    .detail {
+      display: flex;
+      flex: 1;
+
+      // color: nb-theme(color-primary-default);
+      sup {
+        font-size: 10px;
+        color: rgb(116, 70, 255);
+        font-weight: 500;
+        line-height: 10px;
+        margin-left: 6px;
+      }
+    }
+  }
+
+  .colors {
+    display: flex;
+    flex-direction: column;
+
+    .item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .color {
+      width: 86px;
+      height: 60px;
+      border-top-right-radius: 1rem;
+      border-bottom-left-radius: 1rem;
+      @include nb-ltr(margin-right, 1rem);
+      @include nb-rtl(margin-left, 1rem);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  .text-link {
+    color: nb-theme(link-text-color);
+  }
+
+  .bg-link {
+    background: nb-theme(link-text-color);
+  }
+
+  .bg-heading {
+    background: nb-theme(text-basic-color);
+  }
+
+  .bg-body {
+    background: nb-theme(text-basic-color);
+  }
+
+  .bg-hint {
+    background: nb-theme(text-hint-color);
+  }
+
+  .bg-link {
+    background: nb-theme(link-text-color);
+  }
+
+  @each $status in nb-get-statuses() {
+    .bg-status-#{$status} {
+      background: nb-theme(text-#{$status}-color);
+    }
+  }
+}

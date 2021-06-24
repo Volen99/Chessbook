@@ -200,7 +200,7 @@ export type NbSearchType = 'modal-zoomin' | 'rotate-layout' | 'modal-move' |
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['styles/search.component.scss'],
   template: `
-    <button #searchButton class="start-search" (click)="emitActivate()" nbButton ghost>
+    <button #searchButton class="start-search" (click)="emitActivate()">
       <fa-icon [icon]="this.faPollPeople" [styles]="{'font-size': '1.35rem'}"></fa-icon>
     </button>
     <nb-search-field

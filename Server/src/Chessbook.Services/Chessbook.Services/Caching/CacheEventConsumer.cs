@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
+
 using Chessbook.Data.Models;
-using Nop.Core;
 using Nop.Core.Caching;
 using Nop.Core.Events;
 using Nop.Core.Infrastructure;
 using Nop.Services.Events;
 
-namespace Nop.Services.Caching
+namespace Chessbook.Services.Caching
 {
     /// <summary>
     /// Represents the base entity cache event consumer

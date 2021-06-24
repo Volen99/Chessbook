@@ -136,7 +136,7 @@ export class NbSidebarFooterComponent {
       <ng-content select="nb-sidebar-header"></ng-content>
       <div class="scrollable" (click)="onClick($event)">
         <ng-content></ng-content>
-          <app-share-button></app-share-button>
+          <!--<app-share-button></app-share-button>-->
       </div>
         <ng-content select="nb-sidebar-footer"></ng-content>
 <!--        <nb-actions size="small" class="account-menu">-->

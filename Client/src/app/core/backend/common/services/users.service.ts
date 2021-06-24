@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpParams} from "@angular/common/http";
-import {from, Observable} from 'rxjs';
-import {catchError, concatMap, map, shareReplay, toArray} from 'rxjs/operators';
+import {from, Observable, of} from 'rxjs';
+import {catchError, concatMap, first, map, shareReplay, toArray} from 'rxjs/operators';
 import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 
 import {UsersApi} from '../api/users.api';
@@ -18,15 +18,28 @@ import {ResultList} from "../../../../shared/models";
 import {User} from "../../../../shared/shared-main/user/user.model";
 import {getBytes} from "../../../../../root-helpers/bytes";
 import {UserRole} from "../../../../shared/models/users/user-role";
+import {UserStore} from "../../../stores/user.store";
+import {InitUserService} from "../../../../theme/services/init-user.service";
 
 @Injectable()
 export class UsersService extends UserData {
+  static extractUsers (result: ResultList<User>) {
+    const users: User[] = [];
+
+    for (const userJSON of result.data) {
+      users.push(new User(userJSON));
+    }
+
+    return { data: users, total: result.total };
+  }
+
   private userCache: { [id: number]: Observable<IUser> } = {};
 
   constructor(private restExtractor: RestExtractor,
               private restService: RestService,
               private localStorageService: LocalStorageService,
               private sessionStorageService: SessionStorageService,
+              private userStore: UserStore,
               private api: UsersApi) {
     super();
   }
@@ -192,6 +205,10 @@ export class UsersService extends UserData {
       );
   }
 
+  getUserFollowers() {
+
+  }
+
   changeEmail(password: string, newEmail: string) {
     const url = /*UsersService.BASE_USERS_URL +*/ 'me/edit-email';
     const body: UserUpdateMe = {
@@ -281,6 +298,20 @@ export class UsersService extends UserData {
   getYourBirthday(userId: number) {
     return this.api.getYourBirthday('birthday', userId);
   }
+
+  // getAnonymousOrLoggedUser() {
+  //   if (!!this.userStore.getUser()) {
+  //     // return of(this.getAnonymousUser())
+  //   }
+  //
+  //   return of(this.userStore.getUser());
+  //
+  //   // return this.initUserService.settingsLoaded$
+  //   //   .pipe(
+  //   //     first(),
+  //   //     map(() => this.userStore.getUser())
+  //   //   );
+  // }
 
   private formatUser(user: IUser) {
     // let videoQuota;

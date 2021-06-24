@@ -65,8 +65,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   user: IUser;
 
-  public isAdmin = false;
-
   initUser() {
     this.initUserService.initCurrentUser()
       .pipe(

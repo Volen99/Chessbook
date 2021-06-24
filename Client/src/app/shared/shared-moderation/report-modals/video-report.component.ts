@@ -15,6 +15,8 @@ import {abusePredefinedReasonsMap} from "../../../core/utils/abuse/abuse-predefi
 import {
   faTimes,
 } from '@fortawesome/pro-light-svg-icons';
+import {NbToastrService} from "../../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {NbDialogRef} from "../../../sharebook-nebular/theme/components/dialog/dialog-ref";
 
 @Component({
   selector: 'app-video-report',
@@ -36,8 +38,9 @@ export class VideoReportComponent extends FormReactive implements OnInit {
     protected formValidatorService: FormValidatorService,
     private modalService: NgbModal,
     private abuseService: AbuseService,
-    private notifier: Notifier,
-    private sanitizer: DomSanitizer) {
+    private notifier: NbToastrService,
+    private sanitizer: DomSanitizer,
+    protected ref: NbDialogRef<VideoReportComponent>) {
     super();
   }
 
@@ -85,7 +88,7 @@ export class VideoReportComponent extends FormReactive implements OnInit {
 
     this.predefinedReasons = this.abuseService.getPrefefinedReasons('video');
 
-    // this.embedHtml = this.getVideoEmbed();
+    // this.embedHtml = this.getVideoEmbed()
   }
 
   show() {
@@ -93,8 +96,9 @@ export class VideoReportComponent extends FormReactive implements OnInit {
   }
 
   hide() {
-    this.openedModal.close();
-    this.openedModal = null;
+    this.ref.close();
+    // this.openedModal.close();
+    // this.openedModal = null;
   }
 
   report() {
@@ -112,11 +116,11 @@ export class VideoReportComponent extends FormReactive implements OnInit {
       }
     }).subscribe(
       () => {
-        this.notifier.success(`Video reported.`);
+        this.notifier.success(`Post reported.`, 'Success');
         this.hide();
       },
 
-      err => this.notifier.error(err.message)
+      err => this.notifier.danger(err.message, 'Error')
     );
   }
 

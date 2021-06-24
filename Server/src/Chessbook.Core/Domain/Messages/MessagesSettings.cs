@@ -1,6 +1,6 @@
 ﻿using Nop.Core.Configuration;
 
-namespace Nop.Core.Domain.Messages
+namespace Chessbook.Core.Domain.Messages
 {
     /// <summary>
     /// Messages settings

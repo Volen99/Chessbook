@@ -4,6 +4,10 @@ import {IVideoInformationEntity} from "./interfaces/ExtendedEntities/IVideoInfor
 
 // Object storing information related with a Media on Twitter
 export class MediaEntity implements IMediaEntity {
+  fullSizeImageUrl: string;
+  imageUrl: string;
+  thumbImageUrl: string;
+  blurhash: string;
   // [JsonProperty("id")]
   public id: number; // long?
 

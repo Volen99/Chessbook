@@ -22,7 +22,7 @@
                 </ng-container>
             </div>
             <div class="survey-view-footer">
-                <p class="paragraph-2 text-hint">Created on {{this.getNormalizedDate(this.poll.startDateUtc)}} | {this.poll.totalVotes, plural, =1 {1 Vote} other {{{ this.poll.totalVotes}} Votes }} | {this.poll.views, plural, =1 {1 View} other {{{ this.poll.views}} Views }}</p>
+                <p class="paragraph-2 text-hint">Created on {{this.poll.startDateUtc | date}} | {this.poll.totalVotes, plural, =1 {1 Vote} other {{{ this.poll.totalVotes}} Votes }} | {this.poll.views, plural, =1 {1 View} other {{{ this.poll.views}} Views }}</p>
                 <button class="survey-view-results-button" (click)="this.handleShowResults()">{{!this.showResults ? 'View Results' : 'Back to Vote'}}</button>
             </div>
         </div>

@@ -19,7 +19,20 @@ import {convertToBoolProperty, NbBooleanInput} from '../helpers';
 import {NB_WINDOW} from '../../theme.options';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {NbLayoutDirectionService} from '../../services/direction.service';
-import {faHouse, faHashtag, faBell, faEnvelope, faUser, faTv, faEllipsisH, faChevronLeft, faChevronRight, faChevronDown, faChartLine} from '@fortawesome/pro-light-svg-icons';
+import {
+  faHouse,
+  faHashtag,
+  faBell,
+  faEnvelope,
+  faUser,
+  faTv,
+  faEllipsisH,
+  faChevronLeft,
+  faChevronRight,
+  faChevronDown,
+  faChartLine,
+  faChessClock,
+} from '@fortawesome/pro-light-svg-icons';
 import {
   faHouse as faHouseSolid,
   faHashtag as faHashtagSolid,
@@ -28,6 +41,7 @@ import {
   faUser as faUserSolid,
   faTv as faTvSolid,
   faChartLine as faChartLineSolid,
+  faChessClock as faChessClockSolid,
 } from '@fortawesome/pro-solid-svg-icons';
 import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 import {IUser} from "../../../../core/interfaces/common/users";
@@ -379,6 +393,7 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     user: faUser,
     tv: faTv,
     'chart-line': faChartLine,
+    'chess-clock': faChessClock,
   };
 
   solidIconsObj = {
@@ -389,6 +404,7 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     user: faUserSolid,
     tv: faTvSolid,
     'chart-line': faChartLineSolid,
+    'chess-clock': faChessClockSolid,
   };
 
   lastIconClicked: IconDefinition;
@@ -400,7 +416,7 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if (item.icon.iconName === 'alicorn') {
         this.hotkeysService.cheatSheetToggle.next(!this.helpVisible);
-          return;
+        return;
       }
 
       if (this.lastIconClicked) {
@@ -412,13 +428,13 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!last) {
           // @ts-ignore
           for (const item of this.items) {
-              if (item.children) {
-                                                            // @ts-ignore
-                let hasFound = item.children.filter(mi => mi.icon.iconName === this.lastIconClicked.iconName)[0];
-                if (hasFound) {
-                  last = hasFound;
-                }
+            if (item.children) {
+              // @ts-ignore
+              let hasFound = item.children.filter(mi => mi.icon.iconName === this.lastIconClicked.iconName)[0];
+              if (hasFound) {
+                last = hasFound;
               }
+            }
           }
         }
 

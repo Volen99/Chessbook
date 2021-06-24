@@ -255,7 +255,7 @@ export class UserNotification implements IUserNotification {
           break;
 
         case UserNotificationType.NEW_INSTANCE_FOLLOWER:
-          this.instanceFollowUrl = '/admin/follows/followers-list';
+          this.instanceFollowUrl = '/admin/follows/following-list';
           break;
 
         case UserNotificationType.AUTO_INSTANCE_FOLLOWING:

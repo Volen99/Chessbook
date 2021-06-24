@@ -7,11 +7,12 @@ import {ServerConfig} from "../models/server/server-config.model";
 import {ServerService} from "../../core/server/server.service";
 import {UserRight} from "../models/users/user-right.enum";
 import {ConfirmService} from "../../core/confirm/confirm.service";
-import { Notifier } from 'app/core/notification/notifier.service';
+import {Notifier} from 'app/core/notification/notifier.service';
 import {DropdownAction} from "../shared-main/buttons/action-dropdown.component";
 import {User} from "../shared-main/user/user.model";
 import {BulkRemoveCommentsOfBody} from "../models/bulk/bulk-remove-comments-of-body.model";
 import {UserStore} from "../../core/stores/user.store";
+import {UsersService} from "../../core/backend/common/services/users.service";
 
 @Component({
   selector: 'app-user-moderation-dropdown',
@@ -20,11 +21,12 @@ import {UserStore} from "../../core/stores/user.store";
 export class UserModerationDropdownComponent implements OnInit, OnChanges {
   @ViewChild('userBanModal') userBanModal: UserBanModalComponent;
 
-  @Input() user: IUser;
-  @Input() account: User;
-  @Input() prependActions: DropdownAction<{ user: IUser, account: User }>[];
+  @Input() user: User;
+  @Input() account: IUser;
+  @Input() prependActions: DropdownAction<{ user: User, account: IUser }>[];
 
   @Input() buttonSize: 'normal' | 'small' = 'normal';
+  @Input() buttonStyled = true;
   @Input() placement = 'right-top right-bottom auto';
   @Input() label: string;
   @Input() container: 'body' | undefined = undefined;
@@ -32,35 +34,31 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
   @Output() userChanged = new EventEmitter();
   @Output() userDeleted = new EventEmitter();
 
-  userActions: DropdownAction<{ user: IUser, account: User }>[][] = [];
+  userActions: DropdownAction<{ user: User, account: IUser }>[][] = [];
 
-  private serverConfig: ServerConfig;
+  requiresEmailVerification = false;
 
   constructor(
-    private userStore: UserStore,
+    private authService: UserStore,
     private notifier: Notifier,
     private confirmService: ConfirmService,
     private serverService: ServerService,
-    private usersService: UserData,
+    private userService: UsersService,
     private blocklistService: BlocklistService,
-    private bulkService: BulkService) {
+    private bulkService: BulkService
+  ) {
   }
 
-  get requiresEmailVerification() {
-    return false; // this.serverConfig.signup.requiresEmailVerification;
-  }
-
-  ngOnInit(): void {
-    // this.serverConfig = this.serverService.getTmpConfig();
-    // this.serverService.getConfig()
-    //   .subscribe(config => this.serverConfig = config);
+  ngOnInit() {
+    this.serverService.getConfig()
+      .subscribe(config => this.requiresEmailVerification = config.signup.requiresEmailVerification);
   }
 
   ngOnChanges() {
     this.buildActions();
   }
 
-  openBanUserModal(user: IUser) {
+  openBanUserModal(user: User) {
     if (user.screenName === 'root') {
       this.notifier.error(`You cannot ban root.`);
       return;
@@ -73,14 +71,14 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
     this.userChanged.emit();
   }
 
-  async unbanUser(user: IUser) {
-    const res = await this.confirmService.confirm(`Do you really want to unban ${user.screenName}?`, `Unban`);
+  async unbanUser(user: User) {
+    const res = await this.confirmService.confirm(`Do you really want to unban ${user.displayName}?`, `Unban`);
     if (res === false) return;
 
-    this.usersService.unbanUsers(user)
+    this.userService.unbanUsers(user)
       .subscribe(
         () => {
-          this.notifier.success(`User ${user.screenName} unbanned.`);
+          this.notifier.success(`User ${user.displayName} unbanned.`);
           this.userChanged.emit();
         },
 
@@ -88,19 +86,21 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
       );
   }
 
-  async removeUser(user: IUser) {
-    if (user.screenName === 'root') {
+  async removeUser(user: User) {
+    if (user.displayName === 'root') {
       this.notifier.error(`You cannot delete root.`);
       return;
     }
 
     const message = `If you remove this user, you will not be able to create another with the same username!`;
     const res = await this.confirmService.confirm(message, `Delete`);
-    if (res === false) return;
+    if (res === false) {
+      return;
+    }
 
-    this.usersService.removeUser(user).subscribe(
+    this.userService.removeUser(user).subscribe(
       () => {
-        this.notifier.success(`User ${user.screenName} deleted.`);
+        this.notifier.success(`User ${user.displayName} deleted.`);
         this.userDeleted.emit();
       },
 
@@ -108,10 +108,10 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
     );
   }
 
-  setEmailAsVerified(user: IUser) {
-    this.usersService.updateUser(user.id, {emailVerified: true}).subscribe(
+  setEmailAsVerified(user: User) {
+    this.userService.updateUser(user.id, {emailVerified: true}).subscribe(
       () => {
-        this.notifier.success(`User ${user.screenName} email set as verified`);
+        this.notifier.success(`User ${user.displayName} email set as verified`);
         this.userChanged.emit();
       },
 
@@ -119,7 +119,7 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
     );
   }
 
-  blockAccountByUser(account: User) {
+  blockAccountByUser(account: IUser) {
     this.blocklistService.blockAccountByUser(account)
       .subscribe(
         () => {
@@ -133,7 +133,7 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
       );
   }
 
-  unblockAccountByUser(account: User) {
+  unblockAccountByUser(account: IUser) {
     this.blocklistService.unblockAccountByUser(account)
       .subscribe(
         () => {
@@ -147,96 +147,10 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
       );
   }
 
-  // blockServerByUser(host: string) {
-  //   this.blocklistService.blockServerByUser(host)
-  //     .subscribe(
-  //       () => {
-  //         this.notifier.success(`Instance ${host} muted.`);
-  //
-  //         this.account.mutedServerByUser = true;
-  //         this.userChanged.emit();
-  //       },
-  //
-  //       err => this.notifier.error(err.message)
-  //     );
-  // }
-  //
-  // unblockServerByUser(host: string) {
-  //   this.blocklistService.unblockServerByUser(host)
-  //     .subscribe(
-  //       () => {
-  //         this.notifier.success(`Instance ${host} unmuted.`);
-  //
-  //         this.account.mutedServerByUser = false;
-  //         this.userChanged.emit();
-  //       },
-  //
-  //       err => this.notifier.error(err.message)
-  //     );
-  // }
-  //
-  // blockAccountByInstance(account: Account) {
-  //   this.blocklistService.blockAccountByInstance(account)
-  //     .subscribe(
-  //       () => {
-  //         this.notifier.success(`Account ${account.nameWithHost} muted by the instance.`);
-  //
-  //         this.account.mutedByInstance = true;
-  //         this.userChanged.emit();
-  //       },
-  //
-  //       err => this.notifier.error(err.message)
-  //     );
-  // }
-  //
-  // unblockAccountByInstance(account: Account) {
-  //   this.blocklistService.unblockAccountByInstance(account)
-  //     .subscribe(
-  //       () => {
-  //         this.notifier.success(`Account ${account.nameWithHost} unmuted by the instance.`);
-  //
-  //         this.account.mutedByInstance = false;
-  //         this.userChanged.emit();
-  //       },
-  //
-  //       err => this.notifier.error(err.message)
-  //     );
-  // }
-  //
-  // blockServerByInstance(host: string) {
-  //   this.blocklistService.blockServerByInstance(host)
-  //     .subscribe(
-  //       () => {
-  //         this.notifier.success(`Instance ${host} muted by the instance.`);
-  //
-  //         this.account.mutedServerByInstance = true;
-  //         this.userChanged.emit();
-  //       },
-  //
-  //       err => this.notifier.error(err.message)
-  //     );
-  // }
-  //
-  // unblockServerByInstance(host: string) {
-  //   this.blocklistService.unblockServerByInstance(host)
-  //     .subscribe(
-  //       () => {
-  //         this.notifier.success(`Instance ${host} unmuted by the instance.`);
-  //
-  //         this.account.mutedServerByInstance = false;
-  //         this.userChanged.emit();
-  //       },
-  //
-  //       err => this.notifier.error(err.message)
-  //     );
-  // }
-
   async bulkRemoveCommentsOf(body: BulkRemoveCommentsOfBody) {
-    const message = `Are you sure you want to remove all the comments of this account? :O`;
+    const message = `Are you sure you want to remove all the comments of this account?`;
     const res = await this.confirmService.confirm(message, `Delete account comments`);
-    if (res === false) {
-      return;
-    }
+    if (res === false) return;
 
     this.bulkService.removeCommentsOf(body)
       .subscribe(
@@ -248,7 +162,7 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
       );
   }
 
-  getRouterUserEditLink(user: IUser) {
+  getRouterUserEditLink(user: User) {
     return ['/admin', 'users', 'update', user.id];
   }
 
@@ -261,14 +175,12 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
       ];
     }
 
-    if (!!this.userStore.getUser()) {
-      const authUser = this.userStore.getUser();
+    if (!!this.authService.getUser()) {
+      const authUser = this.authService.getUser();
 
-      if (this.user && authUser.id === this.user.id) {
-        return;
-      }
-                                                              // TODO: fix && authUser.canManage(this.user)
-      if (this.user && authUser.hasRight(UserRight.MANAGE_USERS)) {
+      if (this.user && authUser.id === this.user.id) return;
+
+      if (this.user && authUser.hasRight(UserRight.MANAGE_USERS) && authUser.canManage(this.user)) {
         this.userActions.push([
           {
             label: `Edit user`,
@@ -316,76 +228,12 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
             isDisplayed: ({account}) => account.mutedByUser === true,
             handler: ({account}) => this.unblockAccountByUser(account)
           },
-          // {
-          //   label: `Mute the instance`,
-          //   description: `Hide any content from that instance for you.`,
-          //   isDisplayed: ({account}) => !account.userId && account.mutedServerByInstance === false,
-          //   handler: ({account}) => this.blockServerByUser(account.host)
-          // },
-          // {
-          //   label: `Unmute the instance`,
-          //   description: `Show back content from that instance for you.`,
-          //   isDisplayed: ({account}) => !account.userId && account.mutedServerByInstance === true,
-          //   handler: ({account}) => this.unblockServerByUser(account.host)
-          // },
           {
             label: `Remove comments from your videos`,
             description: `Remove comments made by this account on your videos.`,
             handler: ({account}) => this.bulkRemoveCommentsOf({accountName: account.screenName, scope: 'my-videos'})
           }
         ]);
-
-        let instanceActions: DropdownAction<{ user: IUser, account: Account }>[] = [];
-
-        // // Instance actions on account blocklists
-        // if (authUser.hasRight(UserRight.MANAGE_ACCOUNTS_BLOCKLIST)) {
-        //   instanceActions = instanceActions.concat([
-        //     {
-        //       label: `Mute this account by your instance`,
-        //       description: `Hide any content from that user from you, your instance and its users.`,
-        //       isDisplayed: ({account}) => account.mutedByInstance === false,
-        //       handler: ({account}) => this.blockAccountByInstance(account)
-        //     },
-        //     {
-        //       label: `Unmute this account by your instance`,
-        //       description: `Show this user's content to the users of this instance again.`,
-        //       isDisplayed: ({account}) => account.mutedByInstance === true,
-        //       handler: ({account}) => this.unblockAccountByInstance(account)
-        //     }
-        //   ]);
-        // }
-        //
-        // // Instance actions on server blocklists
-        // if (authUser.hasRight(UserRight.MANAGE_SERVERS_BLOCKLIST)) {
-        //   instanceActions = instanceActions.concat([
-        //     {
-        //       label: `Mute the instance by your instance`,
-        //       description: `Hide any content from that instance from you, your instance and its users.`,
-        //       isDisplayed: ({account}) => !account.userId && account.mutedServerByInstance === false,
-        //       handler: ({account}) => this.blockServerByInstance(account.host)
-        //     },
-        //     {
-        //       label: `Unmute the instance by your instance`,
-        //       description: `Show back content from that instance for you, your instance and its users.`,
-        //       isDisplayed: ({account}) => !account.userId && account.mutedServerByInstance === true,
-        //       handler: ({account}) => this.unblockServerByInstance(account.host)
-        //     }
-        //   ]);
-        // }
-        //
-        // if (authUser.hasRight(UserRight.REMOVE_ANY_VIDEO_COMMENT)) {
-        //   instanceActions = instanceActions.concat([
-        //     {
-        //       label: `Remove comments from your instance`,
-        //       description: `Remove comments made by this account from your instance.`,
-        //       handler: ({account}) => this.bulkRemoveCommentsOf({accountName: account.nameWithHost, scope: 'instance'})
-        //     }
-        //   ]);
-        // }
-        //
-        // if (instanceActions.length !== 0) {
-        //   this.userActions.push(instanceActions);
-        // }
       }
     }
   }

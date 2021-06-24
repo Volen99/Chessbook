@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
-import {Observable, Subscription} from 'rxjs';
+import {forkJoin, Observable, Subscription} from 'rxjs';
 import {Subject} from "rxjs/Subject";
-import {catchError, distinctUntilChanged, map, switchMap, takeUntil, tap} from 'rxjs/operators';
+import {catchError, distinctUntilChanged, first, map, switchMap, takeUntil, tap} from 'rxjs/operators';
 
 import {faLongArrowLeft, faBirthdayCake, faCalendarAlt, faEllipsisH} from '@fortawesome/pro-light-svg-icons';
 
@@ -29,32 +29,42 @@ import {
 } from "../../shared/shared-main/relationships/models/get-relationship-between-parameters.model";
 import {IRelationshipDetails} from "../../shared/shared-main/relationships/models/relationship-details.model";
 import {Month} from "../my-account/my-account-settings/my-account-profile/my-account-profile.component";
-
+import {DropdownAction} from "../../shared/shared-main/buttons/action-dropdown.component";
+import {RedirectService} from "../../core/routing/redirect.service";
+import {UserRight} from "../../shared/models/users/user-right.enum";
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {InitUserService} from "../../theme/services/init-user.service";
+import {NbDialogService} from "../../sharebook-nebular/theme/components/dialog/dialog.service";
+import {AccountReportComponent} from "../../shared/shared-moderation/report-modals/account-report.component";
+import {MediaContainerComponent} from "../../features/media-container/media-container.component";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss']
 })
-export class UserProfileComponent extends AbstractPostList implements OnInit, OnDestroy {
+export class UserProfileComponent implements OnInit, OnDestroy {
   protected readonly unsubscribe$ = new Subject<void>();
 
   private routeSub: Subscription;
 
-  constructor(protected router: Router,
-              protected route: ActivatedRoute,
-              protected usersService: UsersService,
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private usersService: UsersService,
+              private location: Location,
+              private notifier: NbToastrService,
               private userProfileService: UserProfileService,
-              protected screenService: ScreenService,
-              protected storageService: LocalStorageService,
-              private tokenService: NbTokenService,
               private userStore: UserStore,
-              private notifier: Notifier,
               private restExtractor: RestExtractor,
               private postService: PostsService,
-              protected location: Location,
-              private relationshipsService: RelationshipsService) {
-    super();
+              private relationshipsService: RelationshipsService,
+              private redirectService: RedirectService,
+              private initUserService: InitUserService,
+              private dialogService: NbDialogService,
+              private titleService: Title) {
   }
+
+  private accountSub: Subscription;
 
   ngOnInit() {
     this.routeSub = this.route.params
@@ -62,7 +72,7 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
         map(params => params['screenName']),
         distinctUntilChanged(),
         switchMap(screenName => this.userProfileService.getProfile(screenName)),
-          tap(profile => this.onAccount(profile)),
+        tap(profile => this.onAccount(profile)),
         /*switchMap(user => this.postService.getProfilePosts({ user })),*/
         catchError(err => this.restExtractor.redirectTo404IfNotFound(err, 'other', [
           HttpStatusCode.BAD_REQUEST_400,
@@ -70,162 +80,22 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
         ]))
       )
       .subscribe((data) => {
-          super.ngOnInit();
+          // videoChannels => this.videoChannels = videoChannels.data,
+          //
+          // err => this.notifier.error(err.message)
         }
-        // videoChannels => this.videoChannels = videoChannels.data,
-        //
-        // err => this.notifier.error(err.message)
-
       );
-
-
-    // this.initUser(); // not needed?
   }
 
   ngOnDestroy() {
+    if (this.accountSub) {
+      this.accountSub.unsubscribe();
+    }
+
     if (this.routeSub) {
       this.routeSub.unsubscribe();
     }
   }
-
-  birthday: {};
-
-  relationshipDetails: IRelationshipDetails;
-
-  faLongArrowLeft = faLongArrowLeft;
-  faBirthdayCake = faBirthdayCake;
-  faCalendarAlt = faCalendarAlt;
-
-  faEllipsisH = faEllipsisH;
-
-  titlePage: string;
-
-  getPostsObservable(page: number): Observable<{ data: Post[] }> {
-    const newPagination = immutableAssign(this.pagination, {currentPage: page});
-
-    let parameters = new GetUserTimelineParameters(newPagination, this.sort, true, this.profileCurrent.id);
-    return this.postService.getUserTimelineQuery(parameters);
-
-  }
-
-  generateSyndicationList(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  public loggedInUser: IUser;
-  public profileCurrent: IUser;
-
-  initUser() {
-    return this.usersService.getCurrentUser()
-      .pipe(tap(user => {
-        this.loggedInUser = user;
-      }))
-      .subscribe();
-  }
-
-  // snapshot only gets the initial value of the parameter map with this technique.
-  // Use the observable paramMap approach if there's a possibility that the router
-  // could re-use the component. This tutorial sample app uses with the observable paramMap.
-  loadUserData() {
-    const username = this.route.snapshot.params['username'];
-    if (username) {
-      const currentUserId = this.userStore.getUser().id;
-      this.loadUser(username);
-    }
-  }
-
-  loadUser(username: number /*string*/) {
-    const loadUser = this.usersService.get(username);
-    loadUser
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((users) => {
-        this.loggedInUser = users;
-        // this is a place for value changes handling
-        // this.userForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {   });
-      });
-  }
-
-  calcMinHeight(postsCount?: number): number {
-    if (!postsCount) {
-      return 670;
-    }
-
-    return postsCount * 670;
-  }
-
-  setTransform(i: number): number {
-    return i * 388.7; // 😁
-  }
-
-  month: string;
-  day: number;
-  year: number;
-
-  monthEnum = Month;
-
-  private async onAccount(user: User) {
-
-    // @ts-ignore
-    this.profileCurrent = user; // TODO: new it
-    this.profileCurrent.createdOn = new Date(this.profileCurrent.createdOn);
-
-    this.reloadVideos();
-
-    const currentUserId = this.userStore.getUser().id;
-    if (currentUserId === this.profileCurrent.id) {
-      this.usersService.getYourBirthday(currentUserId)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((birthday) => {
-          this.month = Month[birthday.dateOfBirthMonth];
-          this.day = birthday.dateOfBirthDay?.toString();
-          this.year = birthday.dateOfBirthYear?.toString();
-        });
-    }
-
-    let relationshipBetweenParameters = new GetRelationshipBetweenParameters(this.userStore.getUser().id ,this.profileCurrent.id);
-    this.relationshipsService.show(relationshipBetweenParameters)
-      .subscribe((data: IRelationshipDetails) => {
-        this.relationshipDetails = data;
-      });
-
-
-    // this.accountFollowerTitle = $localize`${account.followersCount} direct account followers`;
-    //
-    // this.prependModerationActions = undefined;
-    //
-    // this.accountDescriptionHTML = await this.markdown.textMarkdownToHTML(account.description);
-    //
-    // // After the markdown renderer to avoid layout changes
-    // this.account = account;
-    //
-    // this.updateModerationActions();
-    // this.loadUserIfNeeded(account);
-    // this.loadAccountVideosCount();
-  }
-
-  isManageable () {
-    if (!this.isUserLoggedIn()) {
-      return false;
-    }
-
-    return this.profileCurrent?.id === this.userStore.getUser().id;
-  }
-
-  svgStyles = {
-    'display': 'inline-block',
-    'fill': 'currentcolor',
-    'flex-shrink': '0',
-    'width': '1.5em',
-    'height': '1.5em',
-    'max-width': '100% ',
-    'position': 'relative',
-    'vertical-align': 'text-bottom',
-    '-moz-user-select': 'none',
-    '-ms-user-select': 'none',
-    '-webkit-user-select': 'none',
-    'user-select': 'none',
-  };
-
 
   tabs: any[] = [
     {
@@ -253,6 +123,72 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
     // },
   ];
 
+  prependModerationActions: DropdownAction<any>[];
+
+  birthday: {};
+
+  relationshipDetails: IRelationshipDetails;
+
+  faLongArrowLeft = faLongArrowLeft;
+  faBirthdayCake = faBirthdayCake;
+  faCalendarAlt = faCalendarAlt;
+
+  titlePage: string;
+
+  month: string;
+  day: number;
+  year: number;
+
+  svgStyles = {
+    display: 'inline-block',
+    fill: 'currentcolor',
+    'flex-shrink': '0',
+    width: '1.5em',
+    height: '1.5em',
+    'max-width': '100% ',
+    position: 'relative',
+    'vertical-align': 'text-bottom',
+    '-moz-user-select': 'none',
+    '-ms-user-select': 'none',
+    '-webkit-user-select': 'none',
+    'user-select': 'none',
+  };
+
+  monthEnum = Month;
+
+  loggedInUser: IUser;
+  profileCurrent: IUser;
+
+  // snapshot only gets the initial value of the parameter map with this technique.
+  // Use the observable paramMap approach if there's a possibility that the router
+  // could re-use the component. This tutorial sample app uses with the observable paramMap.
+  loadUserData() {
+    const username = this.route.snapshot.params['username'];
+    if (username) {
+      const currentUserId = this.userStore.getUser().id;
+      this.loadUser(username);
+    }
+  }
+
+  loadUser(username: number /*string*/) {
+    const loadUser = this.usersService.get(username);
+    loadUser
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((users) => {
+        this.loggedInUser = users;
+        // this is a place for value changes handling
+        // this.userForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {   });
+      });
+  }
+
+  onUserChanged() {
+    this.loadUserIfNeeded(this.profileCurrent);
+  }
+
+  onUserDeleted() {
+    this.redirectService.redirectToHomepage();
+  }
+
   back() {
     this.location.back();
     return false;
@@ -260,6 +196,113 @@ export class UserProfileComponent extends AbstractPostList implements OnInit, On
 
   isUserLoggedIn() {
     return !!this.userStore.getUser();
+  }
+
+  private loadUserIfNeeded(account: IUser) {
+    if (!account.id || !this.isUserLoggedIn()) {
+      return;
+    }
+
+    const user = this.userStore.getUser();
+    if (user.hasRight(UserRight.MANAGE_USERS)) {
+      this.usersService.getUser(account.id).subscribe(
+        // accountUser => this.accountUser = accountUser,
+
+        err => this.notifier.danger(err.message, 'Error')
+      );
+    }
+  }
+
+  private async onAccount(user: User) {
+    let title = `${user.displayName} / Chessbook`;
+
+    this.titleService.setTitle(title);
+
+    // @ts-ignore
+    this.profileCurrent = user; // TODO: new it
+    this.profileCurrent.createdOn = new Date(this.profileCurrent.createdOn);
+
+    const currentUserId = this.userStore.getUser().id;
+    if (currentUserId === this.profileCurrent.id) {
+      this.usersService.getYourBirthday(currentUserId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((birthday) => {
+          this.month = Month[birthday.dateOfBirthMonth];
+          this.day = birthday.dateOfBirthDay?.toString();
+          this.year = birthday.dateOfBirthYear?.toString();
+        });
+    }
+
+    let relationshipBetweenParameters = new GetRelationshipBetweenParameters(this.userStore.getUser().id, this.profileCurrent.id);
+    this.relationshipsService.show(relationshipBetweenParameters)
+      .subscribe((data: IRelationshipDetails) => {
+        this.relationshipDetails = data;
+      });
+
+
+    // this.accountFollowerTitle = $localize`${account.followersCount} direct account following`;
+    //
+    this.prependModerationActions = undefined;
+    //
+    // this.accountDescriptionHTML = await this.markdown.textMarkdownToHTML(account.description);
+    //
+    // // After the markdown renderer to avoid layout changes
+    // this.account = account;
+    //
+    this.updateModerationActions();
+    // this.loadUserIfNeeded(account);
+    // this.loadAccountVideosCount();
+  }
+
+  isManageable() {
+    if (!this.isUserLoggedIn()) {
+      return false;
+    }
+
+    return this.profileCurrent?.id === this.userStore.getUser().id;
+  }
+
+  handleOpenMedia(media, index) {
+    this.dialogService.open(MediaContainerComponent, {
+      context: {
+        media,
+        index,
+      },
+
+    });
+  }
+
+  private updateModerationActions() {
+    if (!!this.userStore.getUser()) {
+      return;
+    }
+
+    this.initUserService.settingsLoaded$.subscribe(
+      () => {
+        if (this.isManageable()) {
+          return;
+        }
+
+        // It's not our account, we can report it
+        this.prependModerationActions = [
+          {
+            label: `Report this account`,
+            handler: () => this.showReportModal()
+          }
+        ];
+      }
+    );
+  }
+
+  private showReportModal() {
+    this.dialogService.open(AccountReportComponent, {
+      context: {
+        // @ts-ignore
+        account: this.profileCurrent,
+      },
+      closeOnEsc: false,
+      closeOnBackdropClick: false,
+    });
   }
 
 }

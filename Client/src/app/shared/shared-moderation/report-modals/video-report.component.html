@@ -1,100 +1,107 @@
-<ng-template #modal>
-  <div class="modal-header">
-    <h4 i18n class="modal-title">Report video "{{ video.name }}"</h4>
-    <fa-icon [icon]="this.faTimes" aria-label="Close" role="button" (click)="hide()"></fa-icon>
-  </div>
-
-  <div class="modal-body">
-    <form novalidate [formGroup]="form" (ngSubmit)="report()">
-
-    <div class="row">
-      <div class="col-5 form-group">
-
-          <label i18n for="reportPredefinedReasons">What is the issue?</label>
-
-          <div class="ml-2 mt-2 d-flex flex-column">
-            <ng-container formGroupName="predefinedReasons">
-
-              <div class="form-group" *ngFor="let reason of predefinedReasons">
-                <my-peertube-checkbox [inputName]="reason.id" [formControlName]="reason.id" [labelText]="reason.label">
-                  <ng-template *ngIf="reason.help" appSbTemplate="help">
-                    <div [innerHTML]="reason.help"></div>
-                  </ng-template>
-
-                  <ng-container *ngIf="reason.description" ngProjectAs="description">
-                    <div [innerHTML]="reason.description"></div>
-                  </ng-container>
-                </my-peertube-checkbox>
-              </div>
-
-            </ng-container>
-          </div>
-
-      </div>
-
-      <div class="col-7">
-        <div class="row justify-content-center">
-          <div class="col-12 col-lg-9 mb-2">
-            <div class="screenratio">
-              <div [innerHTML]="embedHtml"></div>
-            </div>
-          </div>
+<!--<ng-template #modal>-->
+<nb-card style="max-height: 570px;">
+    <nb-card-header>
+        <div class="modal-header">
+            <h4 i18n class="modal-title">Report video "{{ video.id }}"</h4>
+            <fa-icon class="icon-hover" [icon]="this.faTimes" aria-label="Close" role="button" (click)="hide()"></fa-icon>
         </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="modal-body">
+            <form novalidate [formGroup]="form" (ngSubmit)="report()">
 
-        <div class="mb-1 start-at" formGroupName="timestamp">
-          <my-peertube-checkbox
-            formControlName="hasStart"
-            i18n-labelText labelText="Start at"
-          ></my-peertube-checkbox>
+                <div class="row">
+                    <div class="col-5 form-group">
 
-          <my-timestamp-input
-            [timestamp]="timestamp.startAt"
-            [maxTimestamp]="video.duration"
-            formControlName="startAt"
-            inputName="startAt"
-          >
-          </my-timestamp-input>
-        </div>
+                        <label i18n for="reportPredefinedReasons">What is the issue?</label>
 
-        <div class="mb-3 stop-at"  formGroupName="timestamp" *ngIf="timestamp.hasStart">
-          <my-peertube-checkbox
-            formControlName="hasEnd"
-            i18n-labelText labelText="Stop at"
-          ></my-peertube-checkbox>
+                        <div class="ml-2 mt-2 d-flex flex-column">
+                            <ng-container formGroupName="predefinedReasons">
+                                <div class="form-group" *ngFor="let reason of predefinedReasons">
+                                    <nb-checkbox [formControlName]="reason.id">
+                                        {{reason.label}}
+                                        <ng-template *ngIf="reason.help" appSbTemplate="help">
+                                            <div [innerHTML]="reason.help"></div>
+                                        </ng-template>
 
-          <my-timestamp-input
-            [timestamp]="timestamp.endAt"
-            [maxTimestamp]="video.duration"
-            formControlName="endAt"
-            inputName="endAt"
-          >
-          </my-timestamp-input>
-        </div>
+                                        <ng-container *ngIf="reason.description" ngProjectAs="description">
+                                            <div [innerHTML]="reason.description"></div>
+                                        </ng-container>
+                                    </nb-checkbox>
+                                </div>
+                            </ng-container>
+                        </div>
 
-        <div i18n class="information">
-          Your report will be sent to moderators of {{ currentHost }}<ng-container *ngIf="isRemote()"> and will be forwarded to the video origin ({{ originHost }}) too</ng-container>.
-        </div>
+                    </div>
 
-        <div class="form-group">
+                    <div class="col-7">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-lg-9 mb-2">
+                                <div class="screenratio">
+                                    <div [innerHTML]="embedHtml"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-1 start-at" formGroupName="timestamp">
+                            <app-peertube-checkbox
+                                    formControlName="hasStart"
+                                    i18n-labelText labelText="Start at"
+                            ></app-peertube-checkbox>
+
+                            <app-timestamp-input
+                                    [timestamp]="timestamp.startAt"
+                                    [maxTimestamp]="400"
+                                    formControlName="startAt"
+                                    inputName="startAt"
+                            >
+                            </app-timestamp-input>
+                        </div>
+
+                        <div class="mb-3 stop-at" formGroupName="timestamp" *ngIf="timestamp.hasStart">
+                            <app-peertube-checkbox
+                                    formControlName="hasEnd"
+                                    i18n-labelText labelText="Stop at"
+                            ></app-peertube-checkbox>
+
+                            <!--video.duration-->
+                            <app-timestamp-input
+                                    [timestamp]="timestamp.endAt"
+                                    [maxTimestamp]="400"
+                                    formControlName="endAt"
+                                    inputName="endAt"
+                            >
+                            </app-timestamp-input>
+                        </div>
+
+                        <div i18n class="information">
+                            Your report will be sent to moderators of {{ currentHost }}.
+                        </div>
+
+                        <div class="form-group">
           <textarea
-            i18n-placeholder placeholder="Please describe the issue..." formControlName="reason" ngbAutofocus
-            [ngClass]="{ 'input-error': formErrors['reason'] }" class="form-control"
+                  nbInput
+                  i18n-placeholder placeholder="Please describe the issue..." formControlName="reason" ngbAutofocus
+                  [ngClass]="{ 'input-error': formErrors['reason'] }" class="form-control"
           ></textarea>
-          <div *ngIf="formErrors.reason" class="form-error">
-            {{ formErrors.reason }}
-          </div>
+                            <div *ngIf="formErrors.reason" class="form-error">
+                                {{ formErrors.reason }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group inputs">
+                    <input
+                            type="button" nbButton role="button" i18n-value value="Cancel" class="action-button action-button-cancel"
+                            style="margin-right: 1rem;"
+                            (click)="hide()" (key.enter)="hide()"
+                    >
+                    <input type="submit" nbButton status="primary" i18n-value value="Submit" class="action-button-submit" [disabled]="!form.valid">
+                </div>
+
+            </form>
         </div>
-      </div>
-    </div>
-
-    <div class="form-group inputs">
-      <input
-        type="button" role="button" i18n-value value="Cancel" class="action-button action-button-cancel"
-        (click)="hide()" (key.enter)="hide()"
-      >
-      <input type="submit" i18n-value value="Submit" class="action-button-submit" [disabled]="!form.valid">
-    </div>
-
-    </form>
-  </div>
-</ng-template>
+    </nb-card-body>
+</nb-card>
+<!--</ng-template>-->

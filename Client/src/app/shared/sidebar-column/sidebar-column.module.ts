@@ -13,6 +13,9 @@ import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/bu
 import {NbInputModule} from "../../sharebook-nebular/theme/components/input/input.module";
 import {SharedModule} from "../shared.module";
 import {NbFormFieldModule} from "../../sharebook-nebular/theme/components/form-field/form-field.module";
+import {NbSidebarModule} from "../../sharebook-nebular/theme/components/sidebar/sidebar.module";
+import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";
+import {UserFollowModule} from "../user-follow/user-follow.module";
 
 @NgModule({
   declarations: [
@@ -31,6 +34,9 @@ import {NbFormFieldModule} from "../../sharebook-nebular/theme/components/form-f
     FontAwesomeModule,
     SharedModule,
     NbFormFieldModule,
+    NbSidebarModule,
+    NbCardModule,
+    UserFollowModule,
   ],
   exports: [
     SidebarColumnComponent,

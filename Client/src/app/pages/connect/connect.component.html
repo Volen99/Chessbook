@@ -1,193 +1,198 @@
-<div class="infinite-cards row" appInfiniteScroller (nearOfBottom)="this.onNearOfBottom()" [autoInit]="true" [dataObservable]="this.onDataSubject.asObservable()"  style="margin: 0px">
-    <div class="col-md-12 col-lg-7 col-xxxl-6 r-yfoy6g r-18bvks7 main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1 main-left-right-vertical-border-color"
-         style="padding-left: 0px">
-        <nb-card style="width: 102.6%">
-            <div class="sharebook-container backface-visibility-hidden flex-grow-expand">
-                <div class="sharebook-container align-items-stretch element-background-color-rgba flex-direction-row flex-grow-expand justify-content-space-between r-2llsf width-100-per">
-                    <div class="sharebook-container background-color-lights-out main-left-right-vertical-border-color main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1"
-                         data-testid="primaryColumn">
-                        <div class="sharebook-container">
-                            <div class="sharebook-container backface-visibility-hidden background-color-lights-out border-bottom-color border-bottom-style-solid border-bottom-width-1px position-sticky top-0px header-z-index">
-                                <div class="sharebook-container z-index-plus-2">
-                                    <div class="sharebook-container height-53px z-index-plus-2">
-                                        <div class="sharebook-container">
-                                            <div class="sharebook-container background-color-lights-out height-53px left-right-padding-15px">
-                                                <div class="sharebook-container align-items-center flex-direction-row height-53px justify-content-center margin-left-right-auto header-max-width-1000px width-100-per">
-                                                    <!--<app-search></app-search>-->
-                                                    <div class="sharebook-container align-items-flex-end align-self-stretch justify-content-center margin-left-20px min-height-30px edge-element-min-width">
-                                                        <a href="/settings/explore" aria-label="Settings" role="button"
-                                                           data-focusable="true"
-                                                           class="sharebook-link sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px cursor-pointer border-height-0px r-5pqaiu element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
-                                                           style="margin-right: calc(0px + (-1 * (41px - 1.5em)) / 2);">
-                                                            <div dir="auto"
-                                                                 class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center inside-element-container-line-height max-width-100-per min-width-0px text-align-center text-overflow-wrap">
-                                                                <fa-icon [icon]="this.faCog"></fa-icon>
-                                                                <span class="css-901oao sharebook-text-inherit sharebook-text text-font-family min-width-0px text-overflow-wrap"></span>
-                                                            </div>
-                                                        </a></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sharebook-container bottom-0px flex-direction-row justify-content-center left-0px r-12vffkv position-absolute right-0px z-index-minus-1">
-                                    <div role="status" class="sharebook-container">
-                                        <div aria-label="New Tweets are available. Push period to go to the beginning of your timeline and view them"
-                                             role="button" aria-hidden="true"
-                                             class="sharebook-cursor-pointer sharebook-container sharebook-background-color-blue border-radius-9999px r-1uusn97 justify-content-center opacity-0 outline-style-none left-right-padding-15px r-d3hbe1 transition-duration transition-property r-nx0j10">
-                                            <div class="sharebook-container flex-direction-row padding-bottom-top-5px">
-                                                <svg viewBox="0 0 24 24"
-                                                     class="r-1kihuf0 share-button-text-color svg-display-inline-block svg-fill-currentcolor miniature-element-height miniature-element-margin-right max-width-100-per svg-position-relative svg-vertical-align users-select-none r-19wmn03">
-                                                    <g>
-                                                        <path d="M18.707 10.293l-6-6c-.39-.39-1.023-.39-1.414 0l-6 6c-.39.39-.39 1.023 0 1.414.195.195.45.293.707.293s.512-.098.707-.293L11 7.414V20c0 .553.447 1 1 1s1-.447 1-1V7.414l4.293 4.293c.195.195.45.293.707.293s.512-.098.707-.293c.39-.39.39-1.023 0-1.414z"></path>
-                                                    </g>
-                                                </svg>
-                                                <div class="sharebook-container">
-                                                    <div class="sharebook-container flex-direction-row svg-flex-shrink-0"></div>
-                                                </div>
-                                                <div dir="auto"
-                                                     class="css-901oao sharebook-text share-button-text-color font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
-                                                    <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">See new Tweets</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sharebook-container margin-left-right-auto main-primary-column-max-width-600px width-100-per">
-                                <div class="sharebook-container">
-                                    <div class="sharebook-container">
-                                        <section aria-labelledby="accessible-list-10" role="region"
-                                                 class="sharebook-container"><h1
-                                                aria-level="1" dir="auto" role="heading"
-                                                class="sharebook-link css-901oao border-width-0px r-1xk2f4g height-1px overflow-hidden r-wwvuq4 position-absolute width-1px"
-                                                id="accessible-list-10">Explore</h1>
-                                            <div aria-label="Timeline: Explore" class="sharebook-container">
-                                                <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.users.length) + 'px'}">
-                                                    <div *ngFor="let user of this.users; let i = index" style="position: absolute; width: 100%; transform: translateY({{this.setTransform(i)}}px); transition: opacity 0.3s ease-out 0s;">
-                                                        <div class="sharebook-container border-bottom-color border-bottom-width-1px display-block outline-style-none">
-                                                            <div role="button" tabindex="0"
-                                                                 class="sharebook-cursor-pointer sharebook-container outline-style-none r-ymttw5 r-1f1sjgu transition-duration transition-property"
-                                                                 data-testid="UserCell">
-                                                                <!--<div class="sharebook-container r-15zivkp">
-                                                                    <div class="sharebook-container flex-direction-row">
-                                                                        <div class="sharebook-container align-items-flex-end r-1hwvwag container-left-side-flex-expand justify-content-center r-1b7u577">
-&lt;!&ndash;                                                                            <svg viewBox="0 0 24 24"&ndash;&gt;
-&lt;!&ndash;                                                                                 class="r-9ilb82 r-4qtqp9 r-yyyyoo r-10ptun7 r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-1janqcz">&ndash;&gt;
-&lt;!&ndash;                                                                                <g>&ndash;&gt;
-&lt;!&ndash;                                                                                    <path d="M12.225 12.165c-1.356 0-2.872-.15-3.84-1.256-.814-.93-1.077-2.368-.805-4.392.38-2.826 2.116-4.513 4.646-4.513s4.267 1.687 4.646 4.513c.272 2.024.008 3.46-.806 4.392-.97 1.106-2.485 1.255-3.84 1.255zm5.849 9.85H6.376c-.663 0-1.25-.28-1.65-.786-.422-.534-.576-1.27-.41-1.968.834-3.53 4.086-5.997 7.908-5.997s7.074 2.466 7.91 5.997c.164.698.01 1.434-.412 1.967-.4.505-.985.785-1.648.785z"></path>&ndash;&gt;
-&lt;!&ndash;                                                                                </g>&ndash;&gt;
-&lt;!&ndash;                                                                            </svg>&ndash;&gt;
-                                                                        </div>
-                                                                        <div class="sharebook-container open-space-container-flex-expand flex-grow-expand">
-                                                                            <div class="sharebook-container flex-direction-row">
-                                                                                <div class="sharebook-container align-items-flex-start flex-shrink justify-content-center">
-                                                                                    <div dir="auto"
-                                                                                         class="css-901oao css-cens5h r-9ilb82 r-1qd0xha r-n6v787 r-b88u0q r-1cwl3u0 r-bcqeeo r-qvutc0"
-                                                                                         style="-webkit-line-clamp: 2;">
-                                                                                       <span dir="ltr" class="sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">
-                                                                                           <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Gaming Gems and 2 others follow</span>
-                                                                                      </span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
-                                                                <div class="sharebook-container flex-direction-row">
-                                                                    <div class="sharebook-container r-1hwvwag container-left-side-flex-expand justify-content-flex-start r-1b7u577">
-                                                                        <div class="sharebook-container flex-shrink max-width-100-per">
-                                                                            <div class="sharebook-container r-16l9doz overflow-hidden width-100-per">
-                                                                                <div role="presentation" aria-hidden="true"
-                                                                                     class="sharebook-container input-form-border-radius-0px container-left-side-avatar-height outline-style-none overflow-hidden r-phn5h3">
-                                                                                    <div class="sharebook-container display-block overflow-hidden" style="">
-                                                                                        <div class="display-block width-100-per" style="padding-bottom: 100%;"></div>
-                                                                                        <div class="bottom-0px height-100-per left-0px position-absolute top-0px width-100-per">
-                                                                                            <div aria-label=""
-                                                                                                 class="sharebook-container border-radius-9999px bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">
-                                                                                                <div class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
-                                                                                                     [style.background-image]="'url(' + user.profileImageUrlHttps  +')'"></div>
-                                                                                                <img alt="" draggable="true"
-                                                                                                     [src]="user.profileImageUrlHttps"
-                                                                                                     class="sharebook-image"></div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="sharebook-container image-avatar-border-color border-radius-9999px border-width-1px bottom-0px image-avatar-box-shadow left-0px outline-style-none position-absolute right-0px top-0px"></div>
-                                                                                </div>
-                                                                            </div></div>
-                                                                    </div>
-                                                                    <div class="sharebook-container open-space-container-flex-expand flex-grow-expand">
-                                                                        <div class="sharebook-container align-items-center flex-direction-row justify-content-space-between">
-                                                                            <div class="sharebook-container flex-shrink max-width-100-per">
-                                                                                <a href="/1985Core" role="link"
-                                                                                   class="sharebook-cursor-pointer sharebook-container sharebook-cursor-pointer flex-shrink max-width-100-per outline-style-none">
-                                                                                    <div class="sharebook-container flex-shrink max-width-100-per outline-style-none">
-                                                                                        <div class="sharebook-container align-items-center flex-direction-row max-width-100-per">
-                                                                                            <div dir="auto"
-                                                                                                 class="lights-out-text-color sharebook-text font-family r-a023e6 font-weight-700 r-rjixqe min-width-0px overflow-hidden r-3s2u2q text-overflow-wrap">
-                                                                                                <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">
-                                                                                                    <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">{{user.displayName}}</span>
-                                                                                                </span>
-                                                                                            </div>
-                                                                                            <div dir="auto"
-                                                                                                 class="css-901oao flex-direction-row svg-flex-shrink-0 font-family r-a023e6 font-weight-400 r-rjixqe min-width-0px text-overflow-wrap"></div>
-                                                                                        </div>
-                                                                                        <div class="sharebook-container flex-direction-row flex-shrink">
-                                                                                            <div dir="ltr"
-                                                                                                 class="css-901oao sharebook-text third-wheel-color r-9ilb82 flex-direction-row font-family r-a023e6 font-weight-400 r-rjixqe min-width-0px text-overflow-wrap">
-                                                                                                <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">{{user.screenName}}</span>
-                                                                                            </div>
-                                                                                            <div *ngIf="user.followedBy" dir="auto"
-                                                                                                 class="css-901oao sharebook-text align-items-center r-z32n2g r-z2wwpe third-wheel-color display-flex r-1q142lx font-family r-n6v787 font-weight-400 r-1cwl3u0 r-13hce6t min-width-0px r-s1qlax text-overflow-wrap">
-                                                                                                <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Follows you</span>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </a></div>
-                                                                            <app-follow-button [account]="user" [users]="this.users"></app-follow-button>
-                                                                        </div>
-                                                                        <div dir="auto"
-                                                                             class="css-901oao font-family r-a023e6 font-weight-400 r-rjixqe min-width-0px r-1h8ys4a r-1jeg54m text-overflow-wrap">
-                                                                            <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">{{user.description}}</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div style="position: absolute; width: 100%; transform: translateY(1417.6px); transition: opacity 0.3s ease-out 0s;">
-                                                        <div class="sharebook-container border-bottom-color border-bottom-width-1px display-block outline-style-none">
-                                                            <a
-                                                                    href="/i/timeline" role="link" data-focusable="true"
-                                                                    class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer outline-style-none left-right-padding-15px padding-bottom-top-15px transition-duration transition-property">
-                                                                <div dir="auto"
-                                                                     class="css-901oao r-13gxpu9 font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
-                                                                    <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Show more</span>
-                                                                </div>
-                                                            </a></div>
-                                                    </div>
-                                                    <div style="position: absolute; width: 100%; transform: translateY(1468px); transition: opacity 0.3s ease-out 0s;">
-                                                        <div class="sharebook-container r-1bxhq7s">
-                                                            <div class="sharebook-container r-1omma8c"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nb-card>
-    </div>
-    <div class="col-md-12 col-lg-5 col-xxxl-6">
-        <nb-card>
-            <app-sidebar-column></app-sidebar-column>
-        </nb-card>
-    </div>
-</div>
+<app-list-users [users]="this.users">
+    <app-sidebar-column></app-sidebar-column>
+</app-list-users>
+
+
+<!--<div class="infinite-cards row" appInfiniteScroller (nearOfBottom)="this.onNearOfBottom()" [autoInit]="true" [dataObservable]="this.onDataSubject.asObservable()"  style="margin: 0px">-->
+<!--    <div class="col-md-12 col-lg-7 col-xxxl-6 r-yfoy6g r-18bvks7 main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1 main-left-right-vertical-border-color"-->
+<!--         style="padding-left: 0px">-->
+<!--        <nb-card style="width: 102.6%">-->
+<!--            <div class="sharebook-container backface-visibility-hidden flex-grow-expand">-->
+<!--                <div class="sharebook-container align-items-stretch element-background-color-rgba flex-direction-row flex-grow-expand justify-content-space-between r-2llsf width-100-per">-->
+<!--                    <div class="sharebook-container background-color-lights-out main-left-right-vertical-border-color main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1"-->
+<!--                         data-testid="primaryColumn">-->
+<!--                        <div class="sharebook-container">-->
+<!--                            <div class="sharebook-container backface-visibility-hidden background-color-lights-out border-bottom-color border-bottom-style-solid border-bottom-width-1px position-sticky top-0px header-z-index">-->
+<!--                                <div class="sharebook-container z-index-plus-2">-->
+<!--                                    <div class="sharebook-container height-53px z-index-plus-2">-->
+<!--                                        <div class="sharebook-container">-->
+<!--                                            <div class="sharebook-container background-color-lights-out height-53px left-right-padding-15px">-->
+<!--                                                <div class="sharebook-container align-items-center flex-direction-row height-53px justify-content-center margin-left-right-auto header-max-width-1000px width-100-per">-->
+<!--                                                    &lt;!&ndash;<app-search></app-search>&ndash;&gt;-->
+<!--                                                    <div class="sharebook-container align-items-flex-end align-self-stretch justify-content-center margin-left-20px min-height-30px edge-element-min-width">-->
+<!--                                                        <a href="/settings/explore" aria-label="Settings" role="button"-->
+<!--                                                           data-focusable="true"-->
+<!--                                                           class="sharebook-link sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px cursor-pointer border-height-0px r-5pqaiu element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"-->
+<!--                                                           style="margin-right: calc(0px + (-1 * (41px - 1.5em)) / 2);">-->
+<!--                                                            <div dir="auto"-->
+<!--                                                                 class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center inside-element-container-line-height max-width-100-per min-width-0px text-align-center text-overflow-wrap">-->
+<!--                                                                <fa-icon [icon]="this.faCog"></fa-icon>-->
+<!--                                                                <span class="css-901oao sharebook-text-inherit sharebook-text text-font-family min-width-0px text-overflow-wrap"></span>-->
+<!--                                                            </div>-->
+<!--                                                        </a></div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="sharebook-container bottom-0px flex-direction-row justify-content-center left-0px r-12vffkv position-absolute right-0px z-index-minus-1">-->
+<!--                                    <div role="status" class="sharebook-container">-->
+<!--                                        <div aria-label="New Tweets are available. Push period to go to the beginning of your timeline and view them"-->
+<!--                                             role="button" aria-hidden="true"-->
+<!--                                             class="sharebook-cursor-pointer sharebook-container sharebook-background-color-blue border-radius-9999px r-1uusn97 justify-content-center opacity-0 outline-style-none left-right-padding-15px r-d3hbe1 transition-duration transition-property r-nx0j10">-->
+<!--                                            <div class="sharebook-container flex-direction-row padding-bottom-top-5px">-->
+<!--                                                <svg viewBox="0 0 24 24"-->
+<!--                                                     class="r-1kihuf0 share-button-text-color svg-display-inline-block svg-fill-currentcolor miniature-element-height miniature-element-margin-right max-width-100-per svg-position-relative svg-vertical-align users-select-none r-19wmn03">-->
+<!--                                                    <g>-->
+<!--                                                        <path d="M18.707 10.293l-6-6c-.39-.39-1.023-.39-1.414 0l-6 6c-.39.39-.39 1.023 0 1.414.195.195.45.293.707.293s.512-.098.707-.293L11 7.414V20c0 .553.447 1 1 1s1-.447 1-1V7.414l4.293 4.293c.195.195.45.293.707.293s.512-.098.707-.293c.39-.39.39-1.023 0-1.414z"></path>-->
+<!--                                                    </g>-->
+<!--                                                </svg>-->
+<!--                                                <div class="sharebook-container">-->
+<!--                                                    <div class="sharebook-container flex-direction-row svg-flex-shrink-0"></div>-->
+<!--                                                </div>-->
+<!--                                                <div dir="auto"-->
+<!--                                                     class="css-901oao sharebook-text share-button-text-color font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">-->
+<!--                                                    <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">See new Tweets</span>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="sharebook-container margin-left-right-auto main-primary-column-max-width-600px width-100-per">-->
+<!--                                <div class="sharebook-container">-->
+<!--                                    <div class="sharebook-container">-->
+<!--                                        <section aria-labelledby="accessible-list-10" role="region"-->
+<!--                                                 class="sharebook-container"><h1-->
+<!--                                                aria-level="1" dir="auto" role="heading"-->
+<!--                                                class="sharebook-link css-901oao border-width-0px r-1xk2f4g height-1px overflow-hidden r-wwvuq4 position-absolute width-1px"-->
+<!--                                                id="accessible-list-10">Explore</h1>-->
+<!--                                            <div aria-label="Timeline: Explore" class="sharebook-container">-->
+<!--                                                <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.users.length) + 'px'}">-->
+<!--                                                    <div *ngFor="let user of this.users; let i = index" style="position: absolute; width: 100%; transform: translateY({{this.setTransform(i)}}px); transition: opacity 0.3s ease-out 0s;">-->
+<!--                                                        <div class="sharebook-container border-bottom-color border-bottom-width-1px display-block outline-style-none">-->
+<!--                                                            <div role="button" tabindex="0"-->
+<!--                                                                 class="sharebook-cursor-pointer sharebook-container outline-style-none r-ymttw5 r-1f1sjgu transition-duration transition-property"-->
+<!--                                                                 data-testid="UserCell">-->
+<!--                                                                &lt;!&ndash;<div class="sharebook-container r-15zivkp">-->
+<!--                                                                    <div class="sharebook-container flex-direction-row">-->
+<!--                                                                        <div class="sharebook-container align-items-flex-end r-1hwvwag container-left-side-flex-expand justify-content-center r-1b7u577">-->
+<!--&lt;!&ndash;                                                                            <svg viewBox="0 0 24 24"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                                                 class="r-9ilb82 r-4qtqp9 r-yyyyoo r-10ptun7 r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-1janqcz">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                                                <g>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                                                    <path d="M12.225 12.165c-1.356 0-2.872-.15-3.84-1.256-.814-.93-1.077-2.368-.805-4.392.38-2.826 2.116-4.513 4.646-4.513s4.267 1.687 4.646 4.513c.272 2.024.008 3.46-.806 4.392-.97 1.106-2.485 1.255-3.84 1.255zm5.849 9.85H6.376c-.663 0-1.25-.28-1.65-.786-.422-.534-.576-1.27-.41-1.968.834-3.53 4.086-5.997 7.908-5.997s7.074 2.466 7.91 5.997c.164.698.01 1.434-.412 1.967-.4.505-.985.785-1.648.785z"></path>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                                                </g>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                                            </svg>&ndash;&gt;-->
+<!--                                                                        </div>-->
+<!--                                                                        <div class="sharebook-container open-space-container-flex-expand flex-grow-expand">-->
+<!--                                                                            <div class="sharebook-container flex-direction-row">-->
+<!--                                                                                <div class="sharebook-container align-items-flex-start flex-shrink justify-content-center">-->
+<!--                                                                                    <div dir="auto"-->
+<!--                                                                                         class="css-901oao css-cens5h r-9ilb82 r-1qd0xha r-n6v787 r-b88u0q r-1cwl3u0 r-bcqeeo r-qvutc0"-->
+<!--                                                                                         style="-webkit-line-clamp: 2;">-->
+<!--                                                                                       <span dir="ltr" class="sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">-->
+<!--                                                                                           <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Gaming Gems and 2 others follow</span>-->
+<!--                                                                                      </span>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </div>-->
+<!--                                                                            </div>-->
+<!--                                                                        </div>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>&ndash;&gt;-->
+<!--                                                                <div class="sharebook-container flex-direction-row">-->
+<!--                                                                    <div class="sharebook-container r-1hwvwag container-left-side-flex-expand justify-content-flex-start r-1b7u577">-->
+<!--                                                                        <div class="sharebook-container flex-shrink max-width-100-per">-->
+<!--                                                                            <div class="sharebook-container r-16l9doz overflow-hidden width-100-per">-->
+<!--                                                                                <div role="presentation" aria-hidden="true"-->
+<!--                                                                                     class="sharebook-container input-form-border-radius-0px container-left-side-avatar-height outline-style-none overflow-hidden r-phn5h3">-->
+<!--                                                                                    <div class="sharebook-container display-block overflow-hidden" style="">-->
+<!--                                                                                        <div class="display-block width-100-per" style="padding-bottom: 100%;"></div>-->
+<!--                                                                                        <div class="bottom-0px height-100-per left-0px position-absolute top-0px width-100-per">-->
+<!--                                                                                            <div aria-label=""-->
+<!--                                                                                                 class="sharebook-container border-radius-9999px bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">-->
+<!--                                                                                                <div class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"-->
+<!--                                                                                                     [style.background-image]="'url(' + user.profileImageUrlHttps  +')'"></div>-->
+<!--                                                                                                <img alt="" draggable="true"-->
+<!--                                                                                                     [src]="user.profileImageUrlHttps"-->
+<!--                                                                                                     class="sharebook-image"></div>-->
+<!--                                                                                        </div>-->
+<!--                                                                                    </div>-->
+<!--                                                                                    <div class="sharebook-container image-avatar-border-color border-radius-9999px border-width-1px bottom-0px image-avatar-box-shadow left-0px outline-style-none position-absolute right-0px top-0px"></div>-->
+<!--                                                                                </div>-->
+<!--                                                                            </div></div>-->
+<!--                                                                    </div>-->
+<!--                                                                    <div class="sharebook-container open-space-container-flex-expand flex-grow-expand">-->
+<!--                                                                        <div class="sharebook-container align-items-center flex-direction-row justify-content-space-between">-->
+<!--                                                                            <div class="sharebook-container flex-shrink max-width-100-per">-->
+<!--                                                                                <a [routerLink]="'/' + user.screenName.substring(1)" role="link"-->
+<!--                                                                                   class="sharebook-cursor-pointer sharebook-container sharebook-cursor-pointer flex-shrink max-width-100-per outline-style-none">-->
+<!--                                                                                    <div class="sharebook-container flex-shrink max-width-100-per outline-style-none">-->
+<!--                                                                                        <div class="sharebook-container align-items-center flex-direction-row max-width-100-per">-->
+<!--                                                                                            <div dir="auto"-->
+<!--                                                                                                 class="lights-out-text-color sharebook-text font-family r-a023e6 font-weight-700 r-rjixqe min-width-0px overflow-hidden r-3s2u2q text-overflow-wrap">-->
+<!--                                                                                                <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">-->
+<!--                                                                                                    <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">{{user.displayName}}</span>-->
+<!--                                                                                                </span>-->
+<!--                                                                                            </div>-->
+<!--                                                                                            <div dir="auto"-->
+<!--                                                                                                 class="css-901oao flex-direction-row svg-flex-shrink-0 font-family r-a023e6 font-weight-400 r-rjixqe min-width-0px text-overflow-wrap"></div>-->
+<!--                                                                                        </div>-->
+<!--                                                                                        <div class="sharebook-container flex-direction-row flex-shrink">-->
+<!--                                                                                            <div dir="ltr"-->
+<!--                                                                                                 class="css-901oao sharebook-text third-wheel-color r-9ilb82 flex-direction-row font-family r-a023e6 font-weight-400 r-rjixqe min-width-0px text-overflow-wrap">-->
+<!--                                                                                                <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">{{user.screenName}}</span>-->
+<!--                                                                                            </div>-->
+<!--                                                                                            <div *ngIf="user.followedBy" dir="auto"-->
+<!--                                                                                                 class="css-901oao sharebook-text align-items-center r-z32n2g r-z2wwpe third-wheel-color display-flex r-1q142lx font-family r-n6v787 font-weight-400 r-1cwl3u0 r-13hce6t min-width-0px r-s1qlax text-overflow-wrap">-->
+<!--                                                                                                <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Follows you</span>-->
+<!--                                                                                            </div>-->
+<!--                                                                                        </div>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </a></div>-->
+<!--                                                                            <app-follow-button [account]="user" [users]="[user]"></app-follow-button>-->
+<!--                                                                        </div>-->
+<!--                                                                        <div dir="auto"-->
+<!--                                                                             class="css-901oao font-family r-a023e6 font-weight-400 r-rjixqe min-width-0px r-1h8ys4a r-1jeg54m text-overflow-wrap">-->
+<!--                                                                            <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">{{user.description}}</span>-->
+<!--                                                                        </div>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                    <div style="position: absolute; width: 100%; transform: translateY(1417.6px); transition: opacity 0.3s ease-out 0s;">-->
+<!--                                                        <div class="sharebook-container border-bottom-color border-bottom-width-1px display-block outline-style-none">-->
+<!--                                                            <a-->
+<!--                                                                    href="/i/timeline" role="link" data-focusable="true"-->
+<!--                                                                    class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer outline-style-none left-right-padding-15px padding-bottom-top-15px transition-duration transition-property">-->
+<!--                                                                <div dir="auto"-->
+<!--                                                                     class="css-901oao r-13gxpu9 font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">-->
+<!--                                                                    <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Show more</span>-->
+<!--                                                                </div>-->
+<!--                                                            </a></div>-->
+<!--                                                    </div>-->
+<!--                                                    <div style="position: absolute; width: 100%; transform: translateY(1468px); transition: opacity 0.3s ease-out 0s;">-->
+<!--                                                        <div class="sharebook-container r-1bxhq7s">-->
+<!--                                                            <div class="sharebook-container r-1omma8c"></div>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </section>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </nb-card>-->
+<!--    </div>-->
+<!--    <div class="col-md-12 col-lg-5 col-xxxl-6">-->
+<!--        <nb-card>-->
+<!--            <app-sidebar-column></app-sidebar-column>-->
+<!--        </nb-card>-->
+<!--    </div>-->
+<!--</div>-->
 
 

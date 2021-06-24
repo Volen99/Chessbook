@@ -1,8 +1,8 @@
 ﻿using Chessbook.Data.Models;
 using FluentMigrator.Builders.Create.Table;
 using Nop.Data.Mapping.Builders;
-using Nop.Data.Extensions;
 using System.Data;
+using Nop.Data.Extensions;
 
 namespace Chessbook.Data.Mapping.Builders.Post
 {

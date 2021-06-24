@@ -4,6 +4,9 @@ import {DialogService} from "primeng/dynamicdialog";
 import {AccountReportComponent} from "../../../../shared-moderation/report-modals/account-report.component";
 import {NbDialogService} from "../../../../../sharebook-nebular/theme/components/dialog/dialog.service";
 import {AppInjector} from "../../../../../app-injector";
+import {VideoReportComponent} from "../../../../shared-moderation/report-modals/video-report.component";
+import {IPost} from "../../../../posts/models/tweet";
+import {Post} from "../../../post/post.model";
 
 
 @Component({
@@ -13,7 +16,7 @@ import {AppInjector} from "../../../../../app-injector";
 })
 export class PopoverMoreComponent implements OnInit {
   @Input() items: any;
-  @Input() theUserWhoUploadedThePost: User;
+  @Input() post: Post;
 
 
   constructor() {
@@ -38,7 +41,7 @@ export class PopoverMoreComponent implements OnInit {
 
   handleClick = e => {
     // debugger
-    // const i = Number(e.currentTarget.getAttribute('data-index'));
+     const i = Number(e.currentTarget.getAttribute('data-index'));
     // const { action, to } = this.items[i];
     //
     // // this.props.onClose();
@@ -51,14 +54,18 @@ export class PopoverMoreComponent implements OnInit {
     //   this.context.router.history.push(to);
     // }*/
 
-    let dialogService = AppInjector.get(NbDialogService);
-    dialogService.open(AccountReportComponent, {
-      // @ts-ignore
-      context: {
-        account: this.theUserWhoUploadedThePost,
-      },
-      closeOnEsc: true,
-    });
+    if (i === 4) {
+      let dialogService = AppInjector.get(NbDialogService);
+      dialogService.open(VideoReportComponent, {
+        // @ts-ignore
+        context: {
+          video: this.post,
+        },
+        closeOnBackdropClick: false,
+        closeOnEsc: true,
+      });
+    }
+
   }
 
 }

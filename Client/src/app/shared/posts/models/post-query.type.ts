@@ -1,1 +1,1 @@
-export type PostFilter = 'local' | 'all-local' | 'all'
+export type PostFilter = 'local' | 'all-local' | 'all';

@@ -1,3 +1,5 @@
+//@use '_variables' as *;
+//@use '_mixins' as *;
 @import '../../styles/core/mixins';
 
 :host ::ng-deep {
@@ -28,6 +30,11 @@
   .menu-group span {
     display: flex;
   }
+
+  //app-notification {
+  //  @include margin-left(auto);
+  //  @include margin-right(15px);
+  //}
 }
 
 

@@ -10,7 +10,7 @@
 
         public string Sort { get; set; }
 
-        [BindProperty(Name = "skip_count")]
+        // [BindProperty(Name = "skip_count")]
         public bool SkipCount { get; set; }
     }
 }

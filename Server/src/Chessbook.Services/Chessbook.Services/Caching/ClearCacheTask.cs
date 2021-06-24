@@ -1,7 +1,7 @@
 ﻿using Nop.Core.Caching;
 using Nop.Services.Tasks;
 
-namespace Nop.Services.Caching
+namespace Chessbook.Services.Caching
 {
     /// <summary>
     /// Clear cache scheduled task implementation

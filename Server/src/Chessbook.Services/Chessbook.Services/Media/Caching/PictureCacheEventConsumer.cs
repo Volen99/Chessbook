@@ -1,6 +1,6 @@
 ﻿using Chessbook.Data.Models.Media;
 using Nop.Core.Domain.Media;
-using Nop.Services.Caching;
+using Chessbook.Services.Caching;
 using System.Threading.Tasks;
 
 namespace Nop.Services.Media.Caching

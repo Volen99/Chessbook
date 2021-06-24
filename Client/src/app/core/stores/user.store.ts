@@ -45,4 +45,8 @@ export class UserStore {
       this.changeUserState(this.user);
     }
   }
+
+  isLoggedIn() {
+    return !!this.user;
+  }
 }

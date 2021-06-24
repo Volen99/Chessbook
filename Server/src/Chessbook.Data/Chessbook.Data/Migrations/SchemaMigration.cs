@@ -1,5 +1,9 @@
-﻿using Chessbook.Core.Domain.Abuse;
+﻿using FluentMigrator;
+
+using Chessbook.Core.Domain.Abuse;
 using Chessbook.Core.Domain.Notifications;
+using Chessbook.Core.Domain.Post;
+using Chessbook.Core.Domain.Relationships;
 using Chessbook.Data.Models;
 using Chessbook.Data.Models.Comments;
 using Chessbook.Data.Models.Contact;
@@ -8,7 +12,6 @@ using Chessbook.Data.Models.Phone;
 using Chessbook.Data.Models.Polls;
 using Chessbook.Data.Models.Post;
 using Chessbook.Data.Models.Post.Entities;
-using FluentMigrator;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Configuration;
@@ -111,6 +114,7 @@ namespace Nop.Data.Migrations
 
 
             _migrationManager.BuildTable<Relationship>(Create);
+            _migrationManager.BuildTable<UserFollow>(Create);
             _migrationManager.BuildTable<MediaEntity>(Create);
             _migrationManager.BuildTable<MediaEntitySize>(Create);
             _migrationManager.BuildTable<HashtagEntity>(Create);
@@ -124,10 +128,12 @@ namespace Nop.Data.Migrations
             _migrationManager.BuildTable<PhoneCall>(Create);
             _migrationManager.BuildTable<ContactPhoto>(Create);
             _migrationManager.BuildTable<TwitchLoginName>(Create);
+            _migrationManager.BuildTable<PostComment>(Create);
             _migrationManager.BuildTable<PostReshare>(Create);
             _migrationManager.BuildTable<Settings>(Create);
 
             _migrationManager.BuildTable<Abuse>(Create);
+            _migrationManager.BuildTable<PostCommentAbuseModel>(Create);
 
             _migrationManager.BuildTable<UserNotification>(Create);
             _migrationManager.BuildTable<UserNotificationSettingModel>(Create);

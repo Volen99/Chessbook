@@ -50,8 +50,6 @@ export class MyAccountSettingsComponent implements OnInit, AfterViewChecked {
         data => {
           this.toastrService.success(`Avatar changed.`);
 
-          // this.user.updateAccountAvatar(data.url); TODO: THIS IS THE RIGHT WAAAAAAAAAAAAAAAY!!
-
           this.user.profileImageUrlHttps = data.url;
         },
 
@@ -69,8 +67,6 @@ export class MyAccountSettingsComponent implements OnInit, AfterViewChecked {
       .subscribe(
         data => {
           this.toastrService.success(`Avatar deleted.`, 'Success');
-
-          // this.user.updateAccountAvatar();
         },
 
         (err: HttpErrorResponse) => this.toastrService.danger(err.message)

@@ -1,8 +1,8 @@
 import {Directive, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {fromEvent, Observable, Subscription} from "rxjs";
+import {fromEvent, Observable, of, ReplaySubject, Subscription} from "rxjs";
 import {Subject} from "rxjs/Subject";
-import {debounceTime, tap} from "rxjs/operators";
+import {debounceTime, first, map, switchMap, tap} from "rxjs/operators";
 
 import {ComponentPaginationLight} from "../../../core/rest/component-pagination.model";
 import {PostSortField} from "../../posts/models/post-sort-field.type";
@@ -12,6 +12,11 @@ import {LocalStorageService} from "../../../core/wrappers/storage.service";
 import {ScreenService} from "../../../core/wrappers/screen.service";
 import {isLastMonth, isLastWeek, isThisMonth, isToday, isYesterday} from "../../core-utils/miscs";
 import {UsersService} from "../../../core/backend/common/services/users.service";
+import {NbToastrService} from "../../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {UserRight} from "../../models/users/user-right.enum";
+import {UserStore} from "../../../core/stores/user.store";
+import {InitUserService} from "../../../theme/services/init-user.service";
+import {PostFilter} from "../../posts/models/post-query.type";
 
 enum GroupDate {
   UNKNOWN = 0,
@@ -35,11 +40,17 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
 
   private lastQueryLength: number;
 
+  protected onUserLoadedSubject = new ReplaySubject<void>(1);
+
+  protected abstract notifier: NbToastrService;
   protected abstract route: ActivatedRoute;
   protected abstract screenService: ScreenService;
   protected abstract storageService: LocalStorageService;
   protected abstract usersService: UsersService;
   protected abstract router: Router;
+  protected abstract userStore: UserStore;
+  protected abstract initCurrentUser: InitUserService;
+
   abstract titlePage: string;
 
   pagination: ComponentPaginationLight = {
@@ -95,22 +106,30 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
 
     this.calcPageSizes();
 
-    const loadUserObservable = this.loadUserAndSettings();
+    const loadUserObservable = this.initCurrentUser.initCurrentUser(); // this.loadUserAndSettings();
+    loadUserObservable.subscribe(() => {
+      this.onUserLoadedSubject.next();
 
-    if (this.loadOnInit === true) {
-      loadUserObservable.subscribe(() => this.loadMoreVideos());
-    }
+      if (this.loadOnInit === true) {
+        this.loadMoreVideos();
+      }
+    });
 
-    // this.userService.listenAnonymousUpdate()
+    // if (this.loadOnInit === true) {
+    //   loadUserObservable.subscribe(() => this.loadMoreVideos());
+    // }
+
+    // this.usersService.listenAnonymousUpdate()
     //   .pipe(switchMap(() => this.loadUserAndSettings()))
     //   .subscribe(() => {
-    //     if (this.hasDoneFirstQuery) {
-    //       this.reloadVideos();
-    //     }
+    //     if (this.hasDoneFirstQuery) this.reloadVideos();
     //   });
   }
 
   ngOnDestroy(): void {
+    if (this.resizeSubscription) {
+      this.resizeSubscription.unsubscribe();
+    }
   }
 
   disableForReuse() {
@@ -125,8 +144,13 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
     return video.id;
   }
 
+  loading = false;
   onNearOfBottom() {
     if (this.disabled) {
+      return;
+    }
+
+    if (this.loading) {
       return;
     }
 
@@ -135,10 +159,13 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
       return;
     }
 
+    debugger
+    console.log('near of bottom');
     this.pagination.currentPage += 1;
 
     this.setScrollRouteParams();
 
+    this.loading = true;
     this.loadMoreVideos();
   }
 
@@ -160,6 +187,7 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
 
         this.onMoreVideos();
 
+        this.loading = false;
         this.onDataSubject.next(data);
       },
 
@@ -167,6 +195,7 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
         const message = `Cannot load more posts. 😞 Try again later.`;
 
         console.error(message, {error});
+        this.notifier.danger(message, 'Error');
       }
     );
   }
@@ -246,28 +275,32 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
   protected loadRouteParams(routeParams: { [key: string]: any }) {
     this.sort = routeParams['sort'] as PostSortField || this.defaultSort;
     this.categoryOneOf = routeParams['categoryOneOf'];
-    this.angularState = routeParams['a-state'];
+    // this.angularState = routeParams['a-state'];
   }
 
-  // protected buildLocalFilter(existing: VideoFilter, base: VideoFilter) {
-  //   if (base === 'local') {
-  //     return existing === 'local' ? 'all-local' as 'all-local' : 'local' as 'local';
-  //   }
-  //
-  //   return existing === 'all' ? null : 'all';
-  // }
+  protected buildLocalFilter(existing: PostFilter, base: PostFilter) {
+    if (base === 'local') {
+      return existing === 'local'
+        ? 'all-local' as 'all-local'
+        : 'local' as 'local';
+    }
 
-  // protected enableAllFilterIfPossible() {
-  //   if (!this.authService.isLoggedIn()) {
-  //     return;
-  //   }
-  //
-  //   this.authService.userInformationLoaded
-  //     .subscribe(() => {
-  //       const users = this.authService.getUser();
-  //       this.displayModerationBlock = users.hasRight(UserRight.SEE_ALL_VIDEOS);
-  //     });
-  // }
+    return existing === 'all'
+      ? null
+      : 'all';
+  }
+
+  protected enableAllFilterIfPossible() {
+    if (!!this.userStore.getUser()) {
+      return;
+    }
+
+    this.initCurrentUser.settingsLoaded$
+      .subscribe(() => {
+        const user = this.userStore.getUser();
+        this.displayModerationBlock = user.hasRight(UserRight.SEE_ALL_VIDEOS);
+      });
+  }
 
 
   private calcPageSizes() {
@@ -277,33 +310,37 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
   }
 
   private setScrollRouteParams() {
-    // Already set
-    if (this.angularState) return;
-
-    this.angularState = 42;
-
-    const queryParams = {
-      'a-state': this.angularState,
-      categoryOneOf: this.categoryOneOf
-    };
-
-    let path = this.router.url;
-    if (!path || path === '/') {
-      // path = this.serverConfig.instance.defaultClientRoute;
-    }
-
-    this.router.navigate([path], {queryParams, replaceUrl: true, queryParamsHandling: 'merge'});
+    // // Already set
+    // if (this.angularState) return;
+    //
+    // this.angularState = 42;
+    //
+    // const queryParams = {
+    //   'a-state': this.angularState,
+    //   categoryOneOf: this.categoryOneOf
+    // };
+    //
+    // let path = this.router.url;
+    // if (!path || path === '/') {
+    //   // path = this.serverConfig.instance.defaultClientRoute;
+    // }
+    //
+    // this.router.navigate([path], {queryParams, replaceUrl: true, queryParamsHandling: 'merge'});
   }
 
   private loadUserAndSettings() {
-    return this.usersService.getCurrentUser()
+    return this.getAnonymousOrLoggedUser()
       .pipe(tap(user => {
         this.userMiniature = user;
-
-        if (!this.useUserVideoPreferences) {
-          return;
-        }
       }));
+  }
+
+  private getAnonymousOrLoggedUser() {
+    return this.initCurrentUser.settingsLoaded$
+      .pipe(
+        first(),
+        map(() => this.userStore.getUser())
+      );
   }
 
 }

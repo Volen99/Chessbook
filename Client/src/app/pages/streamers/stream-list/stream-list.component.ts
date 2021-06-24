@@ -37,20 +37,6 @@ export class StreamListComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  faFireSolid = faFireSolid;
-  faUsers = faUsers;
-  faUsersSolid = faUsersSolid;
-  faUserPlus = faUserPlus;
-  faUserCheck = faUserCheck;
-
-
-  getLiveStreams() {
-    this.streamersService.getLiveStreams(null)
-      .subscribe((data: IStreams) => {
-        this.streams = data;
-      });
-  }
-
   streams: IStreams;
 
   isChessbookStreamers = false;
@@ -58,6 +44,20 @@ export class StreamListComponent implements OnInit, OnDestroy {
   names: string[] = [];
 
   loading = false;
+
+  faFireSolid = faFireSolid;
+  faUsers = faUsers;
+  faUsersSolid = faUsersSolid;
+  faUserPlus = faUserPlus;
+  faUserCheck = faUserCheck;
+
+  getLiveStreams() {
+    this.streamersService.getLiveStreams(null)
+        .subscribe((data: IStreams) => {
+          this.streams = data;
+        });
+  }
+
   loadMoreStreams() {
     if (!this.streams) {
       return;

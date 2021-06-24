@@ -96,14 +96,14 @@
                             </nb-card>
                             <!--end fixed heading-->
                             <div class="sharebook-container">
-                                <!--IT IS IN TWITTER, BUT WAS NOT HERE AND IT WOKRKED!!!-->
                                 <div class="sharebook-container flex-grow-expand">
                                     <div class="sharebook-container margin-left-right-auto main-primary-column-max-width-600px width-100-per">
-                                        <div class="sharebook-container"><a
-                                                routerLink="/{{this.profileCurrent?.displayName}}/header_photo"
+                                        <div class="sharebook-container">
+                                            <a
                                                 role="link"
                                                 aria-hidden="true" tabindex="-1"
-                                                class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer outline-style-none transition-duration transition-property">
+                                                class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer outline-style-none transition-duration transition-property"
+                                            (click)="this.handleOpenMedia(this.profileCurrent?.profileBannerURL, 0)">
                                             <div class="sharebook-container display-block overflow-hidden" style="">
                                                 <div class="display-block width-100-per"
                                                      style="padding-bottom: 33.3333%;"></div>
@@ -151,7 +151,13 @@
                                                              data-testid="userActions">
                                                             <div dir="auto"
                                                                  class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
-                                                                <fa-icon [icon]="this.faEllipsisH"></fa-icon>
+                                                                <!--<fa-icon [icon]="this.faEllipsisH"></fa-icon>-->
+
+                                                                <app-user-moderation-dropdown
+                                                                        [prependActions]="prependModerationActions"
+                                                                        buttonSize="small" [account]="this.profileCurrent" [user]="this.profileCurrent" placement="right-top"
+                                                                        (userChanged)="onUserChanged()" (userDeleted)="onUserDeleted()"
+                                                                ></app-user-moderation-dropdown>
 
                                                                 <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
                                                             </div>
@@ -233,11 +239,11 @@
                                                                 dir="auto" role="link"
                                                                 data-focusable="true"
                                                                 class="link sharebook-link sharebook-cursor-pointer css-901oao lights-out-text-color cursor-pointer font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"
-                                                                title="3">
+                                                                [title]="this.profileCurrent?.followingCount">
                                                             <span style="margin-right: 2px"
                                                                   class="css-901oao sharebook-text-inherit lights-out-text-color font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                 <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
-                                                                     {this.profileCurrent?.friendsCount, plural, =1 {1} other {{{ this.profileCurrent?.friendsCount | myNumberFormatter }}}}
+                                                                     {this.profileCurrent?.followingCount, plural, =1 {1} other {{{ this.profileCurrent?.followingCount | myNumberFormatter }}}}
                                                                 </span>
                                                             </span>
                                                             <span class="css-901oao sharebook-text-inherit third-wheel-color font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
@@ -251,11 +257,11 @@
                                                            role="link"
                                                            data-focusable="true"
                                                            class="link sharebook-link sharebook-cursor-pointer css-901oao lights-out-text-color cursor-pointer font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"
-                                                           title="1">
+                                                           [title]="this.profileCurrent?.followersCount">
                                                             <span style="margin-right: 3px"
                                                                   class="css-901oao sharebook-text-inherit lights-out-text-color font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                 <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
-                                                                    {this.profileCurrent?.followersCount, plural, =1 {1} other {{{ this.profileCurrent?.followersCount| myNumberFormatter }}}}
+                                                                    {this.profileCurrent?.followersCount, plural, =1 {1} other {{{ this.profileCurrent?.followersCount | myNumberFormatter }}}}
                                                                 </span>
                                                             </span>
                                                             <span style="margin-right: 3px"
@@ -293,48 +299,49 @@
                                                 </div>
                                             </div>
                                         </nav>
+                                        <app-profile-posts *ngIf="this.profileCurrent" [profileCurrent]="this.profileCurrent"></app-profile-posts>
 
-                                        <div class="sharebook-container">
-                                            <app-empty-state *ngIf="this.profileCurrent?.suspended"
-                                                             [title]="'Account suspended'">
-                                                Chessbook suspends accounts which violate the <a class="link"
-                                                                                                 href="https://en.wikipedia.org/wiki/Love">Chessbook
-                                                Rules</a>
-                                            </app-empty-state>
+<!--                                        <div class="sharebook-container">-->
+<!--                                            <app-empty-state *ngIf="this.profileCurrent?.suspended"-->
+<!--                                                             [title]="'Account suspended'">-->
+<!--                                                Chessbook suspends accounts which violate the <a class="link"-->
+<!--                                                                                                 href="https://en.wikipedia.org/wiki/Love">Chessbook-->
+<!--                                                Rules</a>-->
+<!--                                            </app-empty-state>-->
 
-                                            <app-empty-state *ngIf="this.profileCurrent?.protected"
-                                                             [title]="'These Posts are protected'">
-                                                Only approved followers can see {{this.profileCurrent?.screenName}}'s
-                                                Posts. To request access, click Follow. <a class="link"
-                                                                                           href="https://en.wikipedia.org/wiki/Love">Learn
-                                                more</a>
-                                            </app-empty-state>
+<!--                                            <app-empty-state *ngIf="this.profileCurrent?.protected"-->
+<!--                                                             [title]="'These Posts are protected'">-->
+<!--                                                Only approved following can see {{this.profileCurrent?.screenName}}'s-->
+<!--                                                Posts. To request access, click Follow. <a class="link"-->
+<!--                                                                                           href="https://en.wikipedia.org/wiki/Love">Learn-->
+<!--                                                more</a>-->
+<!--                                            </app-empty-state>-->
 
-                                            <section *ngIf="!this.profileCurrent?.suspended"
-                                                     aria-labelledby="accessible-list-2" role="region"
-                                                     class="sharebook-container">
-                                                <h1 aria-level="1" dir="auto"
-                                                    role="heading"
-                                                    class="sharebook-link css-901oao border-width-0px r-1xk2f4g height-1px overflow-hidden r-wwvuq4 position-absolute width-1px"
-                                                    id="accessible-list-2">
-                                                    WorldFeedTest’s Posts</h1>
-                                                <div [attr.aria-label]="'Timeline: ' + this.profileCurrent?.displayName + '’s Posts'"
-                                                     class="sharebook-container">
-                                                    <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.posts.length) + 'px'}">
-                                                        <ng-container *ngIf="this.posts?.length > 0;">
-                                                            <app-post *ngFor="let post of this.posts; let i = index"
-                                                                      [hasText]="!!post?.status"
-                                                                      [hasMedia]="!!post?.entities.medias"
-                                                                      [transform]="this?.setTransform(i)"
-                                                                      [isPoll]="!!post?.entities.poll"
-                                                                      [isReshare]="!!post?.resharedStatus"
-                                                                      [post]="post">
-                                                            </app-post>
-                                                        </ng-container>
-                                                    </div>
-                                                </div>
-                                            </section>
-                                        </div>
+<!--                                            <section *ngIf="!this.profileCurrent?.suspended"-->
+<!--                                                     aria-labelledby="accessible-list-2" role="region"-->
+<!--                                                     class="sharebook-container">-->
+<!--                                                <h1 aria-level="1" dir="auto"-->
+<!--                                                    role="heading"-->
+<!--                                                    class="sharebook-link css-901oao border-width-0px r-1xk2f4g height-1px overflow-hidden r-wwvuq4 position-absolute width-1px"-->
+<!--                                                    id="accessible-list-2">-->
+<!--                                                    WorldFeedTest’s Posts</h1>-->
+<!--                                                <div [attr.aria-label]="'Timeline: ' + this.profileCurrent?.displayName + '’s Posts'"-->
+<!--                                                     class="sharebook-container">-->
+<!--                                                    <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.posts.length) + 'px'}">-->
+<!--                                                        <ng-container *ngIf="this.posts?.length > 0;">-->
+<!--                                                            <app-post *ngFor="let post of this.posts; let i = index"-->
+<!--                                                                      [hasText]="!!post?.status"-->
+<!--                                                                      [hasMedia]="!!post?.entities.medias"-->
+<!--                                                                      [transform]="this?.setTransform(i)"-->
+<!--                                                                      [isPoll]="!!post?.entities.poll"-->
+<!--                                                                      [isReshare]="!!post?.resharedStatus"-->
+<!--                                                                      [post]="post">-->
+<!--                                                            </app-post>-->
+<!--                                                        </ng-container>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </section>-->
+<!--                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -345,8 +352,10 @@
         </nb-card>
     </div>
     <div class="col-md-12 col-lg-5 col-xxxl-6">
-        <nb-card>
+        <nb-card style="position: fixed"> <!--// TODO: codeeeeee smeeeeeeeeeeeeeeellll!!!-->
             <app-sidebar-column></app-sidebar-column>
         </nb-card>
     </div>
 </div>
+
+<router-outlet></router-outlet>

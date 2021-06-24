@@ -13,7 +13,6 @@ import {UserStore} from "../../../../core/stores/user.store";
   styleUrls: ['./likes.component.scss']
 })
 export class LikesComponent implements OnInit {
-  @Input() user: IUser;
   @Input() title: string;
   @Input() postId: number;
 
@@ -29,19 +28,12 @@ export class LikesComponent implements OnInit {
 
   users: IUser[];
 
-  // users: { name: string, title: string }[] = [
-  //   { name: 'Carla Espinosa', title: 'Nurse' },
-  //   { name: 'Bob Kelso', title: 'Doctor of Medicine' },
-  //   { name: 'Janitor', title: 'Janitor' },
-  //   { name: 'Perry Cox', title: 'Doctor of Medicine' },
-  //   { name: 'Ben Sullivan', title: 'Carpenter and photographer' },
-  // ];
-
   dismiss() {
     this.ref.close();
   }
 
   userClickHandler(screenName: string) {
+    this.ref.close();
     this.router.navigate([`/${screenName.substring(1)}`]);
   }
 

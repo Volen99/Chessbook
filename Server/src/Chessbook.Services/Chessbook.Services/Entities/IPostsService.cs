@@ -28,7 +28,8 @@
 
         Task<T> GetResharedOriginal<T>(int resharedPostId);
 
-        Task<IList<Post>> GetHomeTimeline(int userId, int? count = null, int skip = 0);
+        Task<IList<Post>> GetHomeTimeline(bool ascSort = false,
+            int pageIndex = 0, int pageSize = int.MaxValue);
 
         Task<IPagedList<Post>> GetUserProfileTimeline(int userId, bool ascSort = false,
             int pageIndex = 0, int pageSize = int.MaxValue);

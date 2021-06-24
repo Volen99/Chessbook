@@ -1,5 +1,5 @@
 ﻿using Chessbook.Data.Models.Post;
-using Nop.Services.Caching;
+using Chessbook.Services.Caching;
 using Nop.Services.Catalog;
 using System.Threading.Tasks;
 

@@ -14,6 +14,8 @@ import {SortMeta} from "primeng/api";
 import {ResultList} from "../../../shared/models";
 import {UserRight} from "../../../shared/models/users/user-right.enum";
 import {Avatar} from "primeng/avatar";
+import {User} from "../../../shared/shared-main/user/user.model";
+import {UserNotificationSetting} from "../../../shared/models/users/user-notification-setting.model";
 
 export interface IUser extends IUserIdentifier {
   displayName: string;
@@ -24,7 +26,6 @@ export interface IUser extends IUserIdentifier {
 
   createdOn: Date;
 
-  // role: string;
   age: number;
   settings: Settings;
 
@@ -40,7 +41,7 @@ export interface IUser extends IUserIdentifier {
 
   followersCount: number;
 
-  friendsCount: number;
+  followingCount: number;
 
   following?: boolean;
 
@@ -63,14 +64,6 @@ export interface IUser extends IUserIdentifier {
   favoritesCount?: number;
 
   listedCount?: number;
-
-  profileSidebarFillColor: string;
-
-  profileSidebarBorderColor: string;
-
-  profileBackgroundTile: boolean;
-
-  profileBackgroundColor: string;
 
   profileBackgroundImageUrl: string;
 
@@ -117,7 +110,13 @@ export interface IUser extends IUserIdentifier {
   suspended: boolean;
   suspendedReason?: string;
 
+  mutedByUser: boolean;
+
   hasRight(right: UserRight);
+
+  canManage(user: IUser);
+
+  notificationSettings?: UserNotificationSetting;
 }
 
 export abstract class UserData {

@@ -1,5 +1,5 @@
 ﻿using Nop.Core.Domain.Security;
-using Nop.Services.Caching;
+using Chessbook.Services.Caching;
 
 namespace Nop.Services.Security.Caching
 {

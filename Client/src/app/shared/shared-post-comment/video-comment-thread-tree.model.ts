@@ -1,6 +1,8 @@
-import {PostComment} from "./post-comment";
+import {PostComment} from "./post-comment-model";
+import {IPostCommentThreadTree} from "../models/posts/comment/post-comment.model";
 
-export class PostCommentThreadTree {
+export class PostCommentThreadTree implements IPostCommentThreadTree {
   comment: PostComment;
+  hasDisplayedChildren: boolean;
   children: PostCommentThreadTree[];
 }

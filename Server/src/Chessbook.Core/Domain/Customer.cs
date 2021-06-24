@@ -2,7 +2,6 @@
 {
     using global::System;
     using global::System.Collections.Generic;
-    using global::System.ComponentModel.DataAnnotations;
 
     using Chessbook.Core.Domain.Common;
 
@@ -35,13 +34,13 @@
 
         public string Description { get; set; }
 
-        public string Url { get; set; }                // A URL provided by the user in association with their profile: "https://developer.twitter.com"
+        public string Url { get; set; }                         // A URL provided by the user in association with their profile: "https://developer.twitter.com"
 
         public bool Protected { get; set; }                     // When true, indicates that this user has chosen to protect their Tweets
 
-        public int FollowersCount { get; set; }                // The number of followers this account currently has
+        public int FollowersCount { get; set; }                 // The number of followers this account currently has
 
-        public int FriendsCount { get; set; }                   // The number of users this account is following (AKA their "followings")
+        public int FollowingCount { get; set; }                 // The number of users this account is following (AKA their "followings")
 
         public int ListedCount { get; set; }                    // The number of public lists that this user is a member of
 
@@ -67,8 +66,6 @@
 
         public bool IsTranslationEnabled { get; set; }
 
-        public string ProfileBackgroundColor { get; set; }
-
         public string ProfileBackgroundImageUrl { get; set; }
 
         public string ProfileBackgroundImageUrlHttps { get; set; }
@@ -76,14 +73,6 @@
         public bool ProfileBackgroundTile { get; set; }
 
         public string ProfileBannerUrl { get; set; }
-
-        public string ProfileLinkColor { get; set; }
-
-        public string ProfileSidebarBorderColor { get; set; }
-
-        public string ProfileSidebarFillColor { get; set; }
-
-        public string ProfileTextColor { get; set; }
 
         public bool ProfileUseBackgroundImage { get; set; }
 

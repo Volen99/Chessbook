@@ -2,66 +2,33 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { UserProfileComponent } from './user-profile.component';
-import { FollowersComponent } from './followers/followers.component';
+import {FollowingComponent} from "./following/following.component";
 
 const accountsRoutes: Routes = [
   {
     path: '',
-    component: UserProfileComponent,
     children: [
       {
-        path: 'followers',
-        component: FollowersComponent,
+        path : '',
+        pathMatch:'full',
+        component: UserProfileComponent,
+        data: {
+          meta: {
+            title: `Home`
+          }
+        },
       },
+      {
+        path: 'following',
+        component: FollowingComponent,
+      },
+      {
+        path: 'followers',
+        component: FollowingComponent,
+      }
     ]
   },
-  // {
-  //   path: 'sharebook',
-  //   redirectTo: '/videos/local'
-  // },
-  // {
-  //   path: ':accountId',
-  //   component: UserProfileComponent,
-  //   canActivateChild: [ MetaGuard ],
-  //   children: [
-  //     {
-  //       path: '',
-  //       redirectTo: 'video-channels',
-  //       pathMatch: 'full'
-  //     },
-  //     {
-  //       path: 'videos',
-  //       component: UserProfileVideosComponent,
-  //       data: {
-  //         meta: {
-  //           title: $localize`Account videos`
-  //         },
-  //         reuse: {
-  //           enabled: true,
-  //           key: 'users-profile-videos-list'
-  //         }
-  //       }
-  //     },
-  //     {
-  //       path: 'video-channels',
-  //       component: UserProfileVideoChannelsComponent,
-  //       data: {
-  //         meta: {
-  //           title: $localize`Account video channels`
-  //         }
-  //       }
-  //     },
-  //     {
-  //       path: 'about',
-  //       component: UserProfileAboutComponent,
-  //       data: {
-  //         meta: {
-  //           title: $localize`About account`
-  //         }
-  //       }
-  //     }
-  //   ]
-  // }
+
 ];
 
 @NgModule({

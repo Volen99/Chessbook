@@ -3,11 +3,20 @@ import {asyncScheduler, merge, Observable, of, ReplaySubject, Subject} from 'rxj
 import {bufferTime, catchError, filter, map, observeOn, share, switchMap, tap} from 'rxjs/operators';
 import {enterZone, leaveZone} from "../../helpers/zone";
 import {uniq} from 'lodash-es';
+import * as debug from 'debug';
 import {HttpParams} from "@angular/common/http";
 import {RestService} from "../../core/rest/rest.service";
 import {HttpService} from "../../core/backend/common/api/http.service";
 import {RestExtractor} from "../../core/rest/rest-extractor";
+import {ComponentPaginationLight} from "../../core/rest/component-pagination.model";
+import {ResultList} from "../models";
+import {Post} from "../shared-main/post/post.model";
+import {PostSortField} from "../posts/models/post-sort-field.type";
+import {IUser} from "../../core/interfaces/common/users";
+import {UsersService} from "../../core/backend/common/services/users.service";
+import {User} from "../shared-main/user/user.model";
 
+const logger = debug('chessbook:subscriptions:UserFollowService');
 
 type SubscriptionExistResult = { [uri: string]: boolean };
 type SubscriptionExistResultObservable = { [uri: string]: Observable<boolean> };
@@ -25,8 +34,7 @@ export class UserFollowService {
   private myAccountSubscriptionCacheSubject = new Subject<SubscriptionExistResult>();
 
   constructor(private ngZone: NgZone, private restService: RestService,
-              private http: HttpService,
-              private restExtractor: RestExtractor,) {
+              private http: HttpService, private restExtractor: RestExtractor) {
     this.existsObservable = merge(
       this.existsSubject.pipe(
         // We leave Angular zone so Protractor does not get stuck
@@ -41,6 +49,34 @@ export class UserFollowService {
       this.myAccountSubscriptionCacheSubject
     );
   }
+
+  getUserSubscriptionVideos(parameters: {
+    videoPagination: ComponentPaginationLight,
+    sort: PostSortField,
+    skipCount?: boolean
+  }): Observable<ResultList<Post>> {
+    const {videoPagination, sort, skipCount} = parameters;
+    const pagination = this.restService.componentPaginationToRestPagination(videoPagination);
+
+    let params = new HttpParams();
+    params = this.restService.addRestGetParams(params, pagination, sort);
+
+    if (skipCount) {
+      params = params.set('skipCount', skipCount + '');
+    }
+
+    return this.http
+      .get<ResultList<Post>>('posts/home_timeline', {params})
+      .pipe(
+        // @ts-ignore
+        // switchMap(res => this.postService.extractVideos(res)),
+        // catchError(err => this.restExtractor.handleError(err))
+      );
+  }
+
+  /**
+   * Subscription part
+   */
 
   addSubscription(nameWithHost: string) {
     const url = this.apiController + '/follow';
@@ -73,6 +109,10 @@ export class UserFollowService {
       );
   }
 
+  /**
+   * SubscriptionExist part
+   */
+
   listenToMyAccountSubscriptionCacheSubject() {
     return this.myAccountSubscriptionCacheSubject.asObservable();
   }
@@ -93,17 +133,17 @@ export class UserFollowService {
   }
 
   doesSubscriptionExist(nameWithHost: string) {
-    console.log('Running subscription check for %d.', nameWithHost);
+    logger('Running subscription check for %d.', nameWithHost);
 
     if (nameWithHost in this.myAccountSubscriptionCache) {
-      console.log('Found cache for %d.', nameWithHost);
+      logger('Found cache for %d.', nameWithHost);
 
       return of(this.myAccountSubscriptionCache[nameWithHost]);
     }
 
     this.existsSubject.next(nameWithHost);
 
-    console.log('Fetching from network for %d.', nameWithHost);
+    logger('Fetching from network for %d.', nameWithHost);
     return this.existsObservable.pipe(
       filter(existsResult => existsResult[nameWithHost] !== undefined),
       map(existsResult => existsResult[nameWithHost]),
@@ -111,13 +151,37 @@ export class UserFollowService {
     );
   }
 
+  listSubscriptions(parameters: {
+                      pagination: ComponentPaginationLight
+                    },
+                    screenName: string,
+                    following: boolean): Observable<ResultList<User>> {
+    const {pagination} = parameters;
+    const url = `users/following/${screenName}`;
+
+    const restPagination = this.restService.componentPaginationToRestPagination(pagination);
+
+    let params = new HttpParams();
+    params = params.append('following', following.toString());
+    params = this.restService.addRestGetParams(params, restPagination);
+    // if (search) {
+    //   params = params.append('search', search);
+    // }
+
+    return this.http.get<ResultList<IUser>>(url, {params})
+      .pipe(
+        map(res => UsersService.extractUsers(res)),
+        catchError(err => this.restExtractor.handleError(err))
+      );
+  }
+
   private doSubscriptionsExist(screenNames: string[]): Observable<SubscriptionExistResult> {
     const url = this.apiController + '/exist';
     let params = new HttpParams();
 
-    params = this.restService.addObjectParams(params, { screenNames });
+    params = this.restService.addObjectParams(params, {screenNames});
 
-    return this.http.get<SubscriptionExistResult>(url, { params })
+    return this.http.get<SubscriptionExistResult>(url, {params})
       .pipe(
         tap(res => {
           this.myAccountSubscriptionCache = {

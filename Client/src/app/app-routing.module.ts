@@ -4,7 +4,6 @@ import {ExtraOptions, RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from "./auth/auth.guard";
 import {NotFoundComponent} from "./pages/page-not-found/not-found.component";
 import {MetaGuard} from "./core/routing/meta-guard.service";
-import {AdminGuard} from "./auth/admin.guard";
 import {ModeratorGuard} from "./auth/moderator.guard";
 
 const routes: Routes = [
@@ -32,12 +31,6 @@ const routes: Routes = [
         path: 'messages',
         canActivate: [AuthGuard],
         loadChildren: () => import('./pages/messages/messages.module').then(m => m.MessagesModule),
-        canActivateChild: [ MetaGuard ],
-      },
-      {
-        path: 'ui-features',
-        canActivate: [AuthGuard],
-        loadChildren: () => import('./pages/ui-features/ui-features.module').then(m => m.UiFeaturesModule),
         canActivateChild: [ MetaGuard ],
       },
       {
@@ -88,8 +81,12 @@ const routes: Routes = [
         canActivateChild: [ MetaGuard ],
       },
       {
+        path: 'misc',
+        loadChildren: () => import('./pages/more/chess-stuff/chess-stuff.module').then(m => m.ChessStuffModule),
+        canActivateChild: [ MetaGuard ],
+      },
+      {
         path: ':screenName',
-        canActivate: [AuthGuard],
         loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule),
         canActivateChild: [ MetaGuard ],
       },

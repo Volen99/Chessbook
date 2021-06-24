@@ -1,19 +1,24 @@
-import {Injectable} from "@angular/core";
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {from, Observable} from "rxjs";
-import {catchError, concatMap, map, toArray} from "rxjs/operators";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {SortMeta} from 'primeng/api';
+import {from, Observable} from 'rxjs';
+import {catchError, concatMap, map, toArray} from 'rxjs/operators';
 
 import {environment} from '../../../environments/environment';
-import {PostCommentThreadTree} from './video-comment-thread-tree.model';
-import {PostComment, PostCommentAdmin} from './post-comment';
 import {RestExtractor} from "../../core/rest/rest-extractor";
 import {RestService} from "../../core/rest/rest.service";
-import {IPostCommentCreate, IPostCommentThreadTree} from "./models/post-comment-model";
 import {objectLineFeedToHtml} from "../../helpers/utils";
 import {RestPagination} from "../../core/rest/rest-pagination";
-import {ResultList} from "../models";
+import {ResultList, ThreadsResultList} from "../models";
 import {ComponentPaginationLight} from "../../core/rest/component-pagination.model";
-import {FeedFormat} from "../models/enums/feed-format";
+import {
+  IPostComment,
+  IPostCommentThreadTree,
+  IPostCommentAdmin,
+  IPostCommentCreate
+} from "../models/posts/comment/post-comment.model";
+import {PostComment} from "./post-comment-model";
+import {PostCommentThreadTree} from "./video-comment-thread-tree.model";
 
 @Injectable()
 export class VideoCommentService {
@@ -21,16 +26,17 @@ export class VideoCommentService {
 
   private static BASE_VIDEO_URL = environment.apiUrl + '/api/v1/videos/';
 
-  constructor(private authHttp: HttpClient,
-              private restExtractor: RestExtractor,
-              private restService: RestService) {
+  constructor(
+    private authHttp: HttpClient,
+    private restExtractor: RestExtractor,
+    private restService: RestService) {
   }
 
   addCommentThread(videoId: number | string, comment: IPostCommentCreate) {
-    const url = VideoCommentService.BASE_VIDEO_URL + videoId + '/reply-comment-threads';
+    const url = VideoCommentService.BASE_VIDEO_URL + videoId + '/comment-threads';
     const normalizedComment = objectLineFeedToHtml(comment, 'text');
 
-    return this.authHttp.post<{ comment: PostComment }>(url, normalizedComment)
+    return this.authHttp.post<{ comment: IPostComment }>(url, normalizedComment)
       .pipe(
         map(data => this.extractVideoComment(data.comment)),
         catchError(err => this.restExtractor.handleError(err))
@@ -41,7 +47,7 @@ export class VideoCommentService {
     const url = VideoCommentService.BASE_VIDEO_URL + videoId + '/comments/' + inReplyToCommentId;
     const normalizedComment = objectLineFeedToHtml(comment, 'text');
 
-    return this.authHttp.post<{ comment: PostComment }>(url, normalizedComment)
+    return this.authHttp.post<{ comment: IPostComment }>(url, normalizedComment)
       .pipe(
         map(data => this.extractVideoComment(data.comment)),
         catchError(err => this.restExtractor.handleError(err))
@@ -50,9 +56,9 @@ export class VideoCommentService {
 
   getAdminVideoComments(options: {
     pagination: RestPagination,
-    sort: any, // SortMeta,
+    sort: SortMeta,
     search?: string
-  }): Observable<ResultList<PostCommentAdmin>> {
+  }): Observable<ResultList<IPostCommentAdmin>> {
     const {pagination, sort, search} = options;
     const url = VideoCommentService.BASE_VIDEO_URL + 'comments';
 
@@ -63,7 +69,7 @@ export class VideoCommentService {
       params = this.buildParamsFromSearch(search, params);
     }
 
-    return this.authHttp.get<ResultList<PostCommentAdmin>>(url, {params})
+    return this.authHttp.get<ResultList<IPostCommentAdmin>>(url, {params})
       .pipe(
         catchError(res => this.restExtractor.handleError(res))
       );
@@ -73,7 +79,7 @@ export class VideoCommentService {
     videoId: number | string,
     componentPagination: ComponentPaginationLight,
     sort: string
-  }): Observable<ResultList<PostComment>> {
+  }): Observable<ThreadsResultList<PostComment>> {
     const {videoId, componentPagination, sort} = parameters;
 
     const pagination = this.restService.componentPaginationToRestPagination(componentPagination);
@@ -81,8 +87,8 @@ export class VideoCommentService {
     let params = new HttpParams();
     params = this.restService.addRestGetParams(params, pagination, sort);
 
-    const url = VideoCommentService.BASE_VIDEO_URL + videoId + '/reply-comment-threads';
-    return this.authHttp.get<ResultList<PostComment>>(url, {params})
+    const url = VideoCommentService.BASE_VIDEO_URL + videoId + '/comment-threads';
+    return this.authHttp.get<ThreadsResultList<IPostComment>>(url, {params})
       .pipe(
         map(result => this.extractVideoComments(result)),
         catchError(err => this.restExtractor.handleError(err))
@@ -96,14 +102,12 @@ export class VideoCommentService {
     const {videoId, threadId} = parameters;
     const url = `${VideoCommentService.BASE_VIDEO_URL + videoId}/comment-threads/${threadId}`;
 
-    // return this.authHttp
-    //   .get<IPostCommentThreadTree>(url)
-    //   .pipe(
-    //     map(tree => this.extractVideoCommentTree(tree)),
-    //     catchError(err => this.restExtractor.handleError(err))
-    //   );
-
-    return null;
+    return this.authHttp
+      .get<IPostCommentThreadTree>(url)
+      .pipe(
+        map(tree => this.extractVideoCommentTree(tree)),
+        catchError(err => this.restExtractor.handleError(err))
+      );
   }
 
   deleteVideoComment(videoId: number | string, commentId: number) {
@@ -125,39 +129,14 @@ export class VideoCommentService {
       );
   }
 
-  getVideoCommentsFeeds(videoUUID?: string) {
-    const feeds = [
-      {
-        format: FeedFormat.RSS,
-        label: 'rss 2.0',
-        url: VideoCommentService.BASE_FEEDS_URL + FeedFormat.RSS.toLowerCase()
-      },
-      {
-        format: FeedFormat.ATOM,
-        label: 'atom 1.0',
-        url: VideoCommentService.BASE_FEEDS_URL + FeedFormat.ATOM.toLowerCase()
-      },
-      {
-        format: FeedFormat.JSON,
-        label: 'json 1.0',
-        url: VideoCommentService.BASE_FEEDS_URL + FeedFormat.JSON.toLowerCase()
-      }
-    ];
+  // getVideoCommentsFeeds(video: Pick<Post, 'uuid'>) {
+  // }
 
-    if (videoUUID !== undefined) {
-      for (const feed of feeds) {
-        feed.url += '?videoId=' + videoUUID;
-      }
-    }
-
-    return feeds;
-  }
-
-  private extractVideoComment(videoComment: PostComment) {
+  private extractVideoComment(videoComment: IPostComment) {
     return new PostComment(videoComment);
   }
 
-  private extractVideoComments(result: ResultList<PostComment>) {
+  private extractVideoComments(result: ThreadsResultList<IPostComment>) {
     const videoCommentsJson = result.data;
     const totalComments = result.total;
     const comments: PostComment[] = [];
@@ -166,31 +145,29 @@ export class VideoCommentService {
       comments.push(new PostComment(videoCommentJson));
     }
 
-    return {data: comments, total: totalComments};
+    return {data: comments, total: totalComments, totalNotDeletedComments: result.totalNotDeletedComments};
   }
 
-  private extractVideoCommentTree(tree: IPostCommentThreadTree) {
-    if (!tree) {
-      return tree as IPostCommentThreadTree;
-    }
+  private extractVideoCommentTree(serverTree: IPostCommentThreadTree): PostCommentThreadTree {
+    if (!serverTree) return null;
 
-    tree.comment = new PostComment(tree.comment);
-    tree.children.forEach(c => this.extractVideoCommentTree(c));
+    const tree = {
+      comment: new PostComment(serverTree.comment),
+      children: serverTree.children.map(c => this.extractVideoCommentTree(c))
+    };
 
-    return tree as IPostCommentThreadTree;
+    const hasDisplayedChildren = tree.children.length === 0
+      ? !tree.comment.isDeleted
+      : tree.children.some(c => c.hasDisplayedChildren);
+
+    return Object.assign(tree, {hasDisplayedChildren});
   }
 
   private buildParamsFromSearch(search: string, params: HttpParams) {
     const filters = this.restService.parseQueryStringFilter(search, {
       isLocal: {
         prefix: 'local:',
-        isBoolean: true,
-        handler: v => {
-          if (v === 'true') return v;
-          if (v === 'false') return v;
-
-          return undefined;
-        }
+        isBoolean: true
       },
 
       searchAccount: {prefix: 'account:'},

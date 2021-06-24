@@ -91,14 +91,14 @@
                             <div class="sharebook-container">
                                 <div class="sharebook-container">
                                     <div class="sharebook-container r-1s2bzr4">
-                                        <div *ngIf="this.hasText" lang="en" dir="auto"
+                                        <div *ngIf="!!this.post?.status" lang="en" dir="auto"
                                              class="css-901oao lights-out-text-color font-family very-strong-title font-weight-400 r-vrz42v min-width-0px r-bnwqim text-overflow-wrap">
-                                            <span class="css-901oao sharebook-text-inherit r-poiln3 min-width-0px text-overflow-wrap">{{this.post.status}}</span>
+                                            <span class="css-901oao sharebook-text-inherit r-poiln3 min-width-0px text-overflow-wrap" [innerHTML]="this.statusHTMLText"></span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="sharebook-container">
-                                    <div *ngIf="this.hasMedia" class="sharebook-container">
+                                    <div *ngIf="!!this.post?.entities.medias" class="sharebook-container">
                                         <div class="sharebook-container">
                                             <div class="sharebook-container main-left-right-vertical-border-color border-radius-16px border-style-solid border-width-1px r-1s2bzr4 outline-style-none overflow-hidden transition-duration transition-property">
                                                 <div class="sharebook-container">
@@ -246,8 +246,7 @@
                                         </div>
                                         <div *ngIf="this.post.favoriteCount || this.post.dislikeCount" class="sharebook-container">
                                             <div class="sharebook-container" (click)="open()">
-                                                <a
-                                                    routerLink="#" dir="auto"
+                                                <a dir="auto"
                                                     role="link"
                                                     class="css-4rbku5 css-18t94o4 css-901oao r-1fmj7o5 r-1loqt21 font-family r-a023e6 font-weight-400 r-rjixqe r-bcqeeo text-overflow-wrap">
                                                 <div class="sharebook-container r-xoduu5 overflow-hidden"><span

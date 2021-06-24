@@ -11,7 +11,7 @@
         <input #name nbInput placeholder="Username">
     </nb-card-body>
     <nb-card-footer>
+        <button style="margin-right: 1rem;" class="cancel" nbButton status="danger" (click)="cancel()">Cancel</button>
         <button nbButton status="success" (click)="submit(name.value)">Submit</button>
-        <button class="cancel" nbButton status="danger" (click)="cancel()">Cancel</button>
     </nb-card-footer>
 </nb-card>

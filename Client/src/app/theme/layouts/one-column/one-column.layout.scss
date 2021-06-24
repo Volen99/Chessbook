@@ -6,4 +6,18 @@
   .menu-sidebar ::ng-deep .scrollable {
     padding-top: nb-theme(layout-padding-top);
   }
+
+
+  // by mi
+  @include media-breakpoint-down(md) {
+    app-share-button {
+      display: none;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    app-share-button {
+      display: none;
+    }
+  }
 }

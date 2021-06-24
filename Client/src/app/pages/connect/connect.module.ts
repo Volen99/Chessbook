@@ -10,6 +10,7 @@ import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.m
 import {NbUserModule} from "../../sharebook-nebular/theme/components/user/user.module";
 import {SharedModule} from "../../shared/shared.module";
 import {SharedMainModule} from "../../shared/shared-main/shared-main.module";
+import {UserFollowModule} from "../../shared/user-follow/user-follow.module";
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {SharedMainModule} from "../../shared/shared-main/shared-main.module";
     NbUserModule,
     SharedModule,
     SharedMainModule,
+    UserFollowModule,
   ]
 })
 export class ConnectModule {

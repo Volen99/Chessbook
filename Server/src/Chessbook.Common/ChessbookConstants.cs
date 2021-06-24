@@ -37,12 +37,30 @@
                     public static int Min = 2;
                     public static int Max = 3000;
                 }
+
                 public static class MODERATION_COMMENT
                 {
                     public static int Min = 2;
                     public static int Max = 3000;
                 }
             }
+
+            public static class POSTS
+            {
+                public static class URL
+                {
+                    public static int Min = 3;
+                    public static int Max = 2000;
+                }
+            }
+        }
+
+        public static class USER_FOLLOW_SCORE
+        {
+            public static int PENALTY = -10;
+            public static int BONUS = 10;
+            public static int BASE = 1000;
+            public static int MAX = 10000;
         }
     }
 }

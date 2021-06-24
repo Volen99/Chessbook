@@ -1,7 +1,7 @@
 ﻿﻿using System.Threading.Tasks;
 using Chessbook.Data.Models;
 using Nop.Core.Domain.Customers;
-using Nop.Services.Caching;
+using Chessbook.Services.Caching;
 using Nop.Services.Events;
 
 namespace Nop.Services.Customers.Caching

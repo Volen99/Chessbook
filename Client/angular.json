@@ -214,7 +214,7 @@
       }
     }
   },
-  "defaultProject": "chessbook",
+  "defaultProject": "Chessbook",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

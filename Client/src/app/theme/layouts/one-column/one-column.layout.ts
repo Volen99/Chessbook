@@ -11,6 +11,7 @@ import { Component } from '@angular/core';
 
           <nb-sidebar class="menu-sidebar" tag="menu-sidebar" responsive start>
               <ng-content select="nb-menu"></ng-content>
+              <app-share-button></app-share-button>
           </nb-sidebar>
 
           <nb-layout-column>

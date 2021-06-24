@@ -11,6 +11,11 @@ import {IUserMentionEntity} from "../../post-object/Entities/interfaces/IUserMen
 import {IPoll} from "../../posts/models/poll/poll";
 
 export class Post /*implements IPost*/ {
+  static buildWatchUrl (post: Partial<Pick<Post, 'id'>>) {
+    return '/w/' + (post.id);
+  }
+
+
   private _postFromServer: Post;
 
   // #region Public Attributes

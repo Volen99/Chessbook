@@ -15,6 +15,7 @@ import {
   faCode,
   faFlag,
   faTrashAlt,
+  faThumbtack,
 } from '@fortawesome/pro-light-svg-icons';
 import {
   faHeart as faHeartSolid,
@@ -36,6 +37,8 @@ import {PeerTubeSocket} from "../../../../core/notification/sharebook-socket.ser
 import {PopoverMoreComponent} from "./popover-more-component/popover-more.component";
 import {AccountReportComponent} from "../../../shared-moderation/report-modals/account-report.component";
 import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {VideoReportComponent} from "../../../shared-moderation/report-modals/video-report.component";
+import {IPost} from "../../../posts/models/tweet";
 
 export interface ISocialContextProps {
   screenName: string;
@@ -49,12 +52,8 @@ export interface ISocialContextProps {
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnInit {
-  @Input() public transform: number = 0;
-  @Input() public hasText = false;
-  @Input() public hasMedia = false;
-  @Input() public isPoll: boolean;
-  @Input() public isReshare: boolean;
-  @Input() post: PostDetails = null;
+  @Input() transform: number = 0;
+  @Input() post: Post = null;  // PostDetails = null;
   @Input() removeVideoFromArray: (post: Post) => any;
   @Input()
   set picture(value: string) {
@@ -76,9 +75,7 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.oldPost = this.post;
-
-    if (this.isReshare) {
+    if (this.post.reshared) {
       this.socialContextProps = {
         screenName: this.post.user.screenName,
         displayName: this.post.user.displayName,
@@ -136,11 +133,14 @@ export class PostComponent implements OnInit {
   tooltipDislike = '';
 
   getMenuItems() {
-     // if (this.post?.user?.id === userCurrent.id) {
-     //   return [
-     //     {icon: this.faTrashAlt, title: `Delete`, link: '#'}
-     //   ];
-     // }
+    let userCurrent = this.userStore.getUser();
+
+     if (this.post?.user?.id === userCurrent.id) {
+       return [
+         {icon: this.faTrashAlt, title: `Delete`, link: '#'},
+         {icon: faThumbtack, title: `Pin to your profile`, link: '#'}
+       ];
+     }
 
      const screenName = this.post?.user?.screenName;
      const userLink = this.post?.user ? `/${screenName.substring(1)}` : '';
@@ -149,17 +149,8 @@ export class PostComponent implements OnInit {
        {icon: this.faVolumeSlash, title: `Mute ${screenName}`, link: '#'},
        {icon: this.faUserTimes, title: `Block ${screenName}`, link: '#'},
        {icon: this.faCode, title: `Embed Post`, link: '#'},
-       {icon: this.faFlag, title: `Report Post`, link: '#', action: this.report},
+       {icon: this.faFlag, title: `Report Post`, link: '#'},
      ];
-  }
-
-  private report() {
-    this.dialogService.open(AccountReportComponent, {
-      context: {
-        // @ts-ignore
-        account: this.post.user,
-      }
-    });
   }
 
   getSaveStyle(value: string) {
@@ -193,7 +184,7 @@ export class PostComponent implements OnInit {
     }
   }
 
-  handleReplyButton(post: PostDetails) {
+  handleReplyButton(post: Post) {
     this.dialogService.open(UploadComponent, { // ShowcaseDialogComponent
       context: {
         title: 'This is a title passed to the dialog component',
@@ -202,7 +193,7 @@ export class PostComponent implements OnInit {
     });
   }
 
-  async handleReshareButton(post: PostDetails) {
+  async handleReshareButton(post: Post) {
     // just for test
     if (this.post.reshared) {
       this.deletePost(this.oldPost.id, true);

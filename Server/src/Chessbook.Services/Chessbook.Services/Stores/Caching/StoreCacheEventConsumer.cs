@@ -1,6 +1,6 @@
 ﻿using Nop.Core.Caching;
 using Nop.Core.Domain.Stores;
-using Nop.Services.Caching;
+using Chessbook.Services.Caching;
 using Nop.Services.Localization;
 using System.Threading.Tasks;
 

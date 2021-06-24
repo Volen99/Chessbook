@@ -13,7 +13,7 @@ const routes: Routes = [
       }
     },
     // duh? What the fuck have I done here?
-    loadChildren: () => import('../../shared/timeline/timeline.module').then(m => m.TimelineModule),
+    // loadChildren: () => import('../../shared/timeline/timeline.module').then(m => m.TimelineModule),
   }
 ];
 

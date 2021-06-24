@@ -261,7 +261,6 @@ export class AbuseListTableComponent extends RestTable implements OnInit {
             }
           }
 
-          debugger
           if (abuse.reporterAccount) {
             abuse.reporterAccount = new User(abuse.reporterAccount);
           }

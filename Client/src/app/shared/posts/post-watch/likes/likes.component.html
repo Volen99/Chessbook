@@ -38,10 +38,10 @@
                 </div>
             </nb-card-header>
         <nb-list>
-            <nb-list-item *ngFor="let user of this.users" class="contact">
+            <nb-list-item matRipple *ngFor="let user of this.users" class="contact">
                 <nb-user style="cursor: pointer" [picture]="user.profileImageUrlHttps" [name]="user.displayName" [title]="user.screenName" (click)="this.userClickHandler(user.screenName)">
                 </nb-user>
-                <app-follow-button *ngIf="!this.isManageable(user)" [account]="user" [users]="this.users"></app-follow-button>
+                <app-follow-button *ngIf="!this.isManageable(user)" [account]="user" [users]="[user]"></app-follow-button>
             </nb-list-item>
         </nb-list>
     </nb-card>

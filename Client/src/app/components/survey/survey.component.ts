@@ -20,7 +20,7 @@ import {SurveyService} from "../../shared/services/survey.service";
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.scss']
 })
-export class SurveyComponent implements OnInit, AfterViewInit, OnChanges {
+export class SurveyComponent implements OnInit, OnChanges {
   @Input() public poll: IPoll;
   @Input() public refresh: () => any;
   @Input() public onVote: () => any;
@@ -50,13 +50,6 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges {
     return Math.round(this.percent);
   }
 
-  getNormalizedDate(date: Date) {
-    return Month[(date.getUTCMonth() + 1)] + ' ' + date.getUTCDate() + ', ' + date.getUTCFullYear();
-  }
-
-  ngAfterViewInit(): void {
-  }
-
   // componentWillReceiveProps (deprecated), getDerivedStateFromProps, componentWillUpdate, componentDidUpdate
   // can all be replaced by ngOnChanges in Angular.
   ngOnChanges(changes: SimpleChanges): any {
@@ -74,9 +67,7 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges {
   active: boolean;
   voted: boolean;
 
-
   votesCount: any = null;
-
 
   handleVote = () => {
     if (this.poll.alreadyVoted) {
@@ -98,7 +89,7 @@ export class SurveyComponent implements OnInit, AfterViewInit, OnChanges {
 
         this.cd.detectChanges(); // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
       });
-  }
+  };
 
   get apiUrl(): string {
     return environment.apiUrl;

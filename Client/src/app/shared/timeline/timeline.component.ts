@@ -18,6 +18,9 @@ import {UsersService} from 'app/core/backend/common/services/users.service';
 import {ScreenService} from 'app/core/wrappers/screen.service';
 import {LocalStorageService} from 'app/core/wrappers/storage.service';
 import {immutableAssign, scrollToTop} from "../../helpers/utils";
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {InitUserService} from "../../theme/services/init-user.service";
+import {UserStore} from "../../core/stores/user.store";
 
 @Component({
   selector: 'app-timeline',
@@ -31,13 +34,17 @@ export class TimelineComponent extends AbstractPostList implements OnInit {
   private lastWasEmpty = false;
   private isLoading = false;
 
+  protected initCurrentUser: InitUserService;
+  protected userStore: UserStore;
+
   constructor(protected router: Router,
               protected route: ActivatedRoute,
               protected usersService: UsersService,
               protected screenService: ScreenService,
               protected storageService: LocalStorageService,
               private postsService: PostsService,
-              private timelineService: TimelineService) {
+              private timelineService: TimelineService,
+              protected notifier: NbToastrService) {
     super();
   }
 
@@ -75,9 +82,23 @@ export class TimelineComponent extends AbstractPostList implements OnInit {
     return postsCount * 670;
   }
 
-  setTransform(i: number): number {
-    return i * 388.7; // 😁
+  setTransform(i: number, post: Post): number {
+    debugger
+    if (post.hasMedia) {
+      if (!!post?.status) {
+        return i * 400.7;
+      }
+
+      return i * 388.7; // 😁
+    }
+
+    // check for poll
+
+    return i * 100;
+
   }
+
+
 
   // onNearOfBottom() {
   //   if (this.currentPage >= this.maxPage) return;

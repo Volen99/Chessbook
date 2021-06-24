@@ -2,19 +2,18 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { mapValues, pickBy } from 'lodash-es';
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 
-import {PostComment} from "../../shared-post-comment/post-comment";
 import {FormReactive} from "../../shared-forms/form-reactive";
 import {FormValidatorService} from "../../shared-forms/form-validator.service";
 import {ABUSE_REASON_VALIDATOR} from "../../shared-forms/form-validators/abuse-validators";
 import {AbusePredefinedReasonsString} from "../../models/moderation/abuse/abuse-reason.model";
 import {abusePredefinedReasonsMap} from "../../../core/utils/abuse/abuse-predefined-reasons";
 import {AbuseService} from "../abuse.service";
-import {Notifier} from "../../../core/notification/notifier.service";
 
 import {
   faTimes,
 } from '@fortawesome/pro-light-svg-icons';
 import {NbToastrService} from "../../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {PostComment} from "../../shared-post-comment/post-comment-model";
 
 @Component({
   selector: 'app-comment-report',
@@ -36,8 +35,7 @@ export class CommentReportComponent extends FormReactive implements OnInit {
     protected formValidatorService: FormValidatorService,
     private modalService: NgbModal,
     private abuseService: AbuseService,
-    private notifier: NbToastrService
-  ) {
+    private notifier: NbToastrService) {
     super();
   }
 

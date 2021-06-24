@@ -68,7 +68,7 @@
                 skip = query.Start;
             }
 
-            var posts = await this.postService.GetHomeTimeline(User.GetUserId(), query.Count, skip);
+            var posts = await this.postService.GetHomeTimeline(true, query.Start, query.Count);
             var models = new List<PostModel>();
             for (int i = 0; i < posts.Count; i++)
             {

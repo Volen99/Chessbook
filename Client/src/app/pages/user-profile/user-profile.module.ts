@@ -4,7 +4,7 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { UserProfileRoutingModule } from './user-profile-routing.module';
 import { UserProfileComponent } from './user-profile.component';
 import { SidebarColumnModule } from '../../shared/sidebar-column/sidebar-column.module';
-import { FollowersComponent } from './followers/followers.component';
+import { FollowingComponent } from './following/following.component';
 import {SharedMainModule} from "../../shared/shared-main/shared-main.module";
 import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";
 import {NbTabsetModule} from "../../sharebook-nebular/theme/components/tabset/tabset.module";
@@ -16,33 +16,41 @@ import {ComponentsModule} from "../../components/components.module";
 import {UserProfileService} from "./user-profile.service";
 import {SharedModule} from "../../shared/shared.module";
 import {SharedActorImageModule} from "../../shared/shared-actor-image/shared-actor-image.module";
+import {SharedModerationModule} from "../../shared/shared-moderation/shared-moderation.module";
+import { ProfilePostsComponent } from './profile-posts/profile-posts.component';
+import {UserFollowModule} from "../../shared/user-follow/user-follow.module";
+import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.module";
 
 @NgModule({
-  imports: [
-    UserProfileRoutingModule,
+    imports: [
+        UserProfileRoutingModule,
 
-    SharedMainModule,
-    // SharedFormModule,
-    // SharedUserSubscriptionModule,
-    // SharedModerationModule,
-    // SharedVideoMiniatureModule,
-    SidebarColumnModule,
-    NbCardModule,
-    NbTabsetModule,
-    NbRouteTabsetModule,
-    NbButtonModule,
-    NbIconModule,
-    NbActionsModule,
-    ComponentsModule,
-    FontAwesomeModule,
-    SharedModule,
-    SharedActorImageModule
-  ],
+        SharedMainModule,
+        // SharedFormModule,
+        // SharedUserSubscriptionModule,
+        // SharedModerationModule,
+        // SharedVideoMiniatureModule,
+        SidebarColumnModule,
+        NbCardModule,
+        NbTabsetModule,
+        NbRouteTabsetModule,
+        NbButtonModule,
+        NbIconModule,
+        NbActionsModule,
+        ComponentsModule,
+        FontAwesomeModule,
+        SharedModule,
+        SharedActorImageModule,
+        SharedModerationModule,
+        UserFollowModule,
+        NbListModule
+    ],
 
   declarations: [
     UserProfileComponent,
     /*UserProfileAboutComponent,*/
-    FollowersComponent
+    FollowingComponent,
+    ProfilePostsComponent,
   ],
 
   exports: [

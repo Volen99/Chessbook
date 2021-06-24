@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {Observable} from "rxjs";
@@ -13,6 +13,13 @@ import {Post} from "../../shared/shared-main/post/post.model";
 import {immutableAssign, scrollToTop} from "../../helpers/utils";
 import {GetHomeTimelineParameters} from "../../shared/models/timeline/get-home-timeline-parameters";
 import {AbstractPostList} from "../../shared/post-miniature/abstract-post-list/abstract-post-list";
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {UserStore} from 'app/core/stores/user.store';
+import {InitUserService} from 'app/theme/services/init-user.service';
+import {PostFilter} from "../../shared/posts/models/post-query.type";
+import {PostSortField} from "../../shared/posts/models/post-sort-field.type";
+import {environment} from "../../../environments/environment";
+import {UserFollowService} from "../../shared/user-follow/user-follow.service";
 
 const voidState = style({
   transform: 'translateX({{ direction }}110%)',
@@ -24,7 +31,7 @@ const voidState = style({
   width: '88%'
 });
 
-const defaultOptions = { params: { direction: '' } };
+const defaultOptions = {params: {direction: ''}};
 
 
 @Component({
@@ -38,12 +45,55 @@ const defaultOptions = { params: { direction: '' } };
     ]),
   ],
 })
-export class HomePageComponent extends AbstractPostList implements OnInit {
+export class HomePageComponent extends AbstractPostList implements OnInit, OnDestroy {
   private loaded = false;
   private currentPage = 1;
   private maxPage = 20;
   private lastWasEmpty = false;
   private isLoading = false;
+
+
+  public anim: any;
+  fadeIn = {value: '', params: {direction: ''}};
+
+  animationCreated(animationItem: AnimationItem): void {
+    console.log(animationItem);
+    this.anim = animationItem;
+  }
+
+  constructor(protected router: Router,
+              protected route: ActivatedRoute,
+              protected usersService: UsersService,
+              protected screenService: ScreenService,
+              protected storageService: LocalStorageService,
+              private postsService: PostsService,
+              protected notifier: NbToastrService,
+              protected userStore: UserStore,
+              private userFollowService: UserFollowService,
+              protected initCurrentUser: InitUserService
+) {
+    super();
+  }
+
+  ngOnInit(): void {
+    super.ngOnInit();
+
+    setTimeout(() => {
+      this.isFishSwimming = true;
+      setTimeout(() => {
+        this.isFishSwimming = false;
+      }, 5000);
+    }, 4000);
+
+    // const user = this.userStore.getUser();
+    let feedUrl = environment.apiUrl;
+
+    this.enableAllFilterIfPossible();
+  }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
+  }
 
   lottieOptions: AnimationOptions = {
     path: '/assets/animations/fish.json',
@@ -51,15 +101,11 @@ export class HomePageComponent extends AbstractPostList implements OnInit {
     loop: true
   };
 
-  isFishSwimming = false;
+  titlePage: string;
+  sort = '-publishedAt' as PostSortField;
+  filter: PostFilter = 'local';
 
-  public anim: any;
-  fadeIn = { value: '', params: { direction: '' } };
-
-  animationCreated(animationItem: AnimationItem): void {
-    console.log(animationItem);
-    this.anim = animationItem;
-  }
+  isFishSwimming = false; // 🐟
 
   styles: Partial<CSSStyleDeclaration> = {
     maxWidth: '9%',
@@ -68,37 +114,23 @@ export class HomePageComponent extends AbstractPostList implements OnInit {
     /*margin: '0 auto',*/
   };
 
-  constructor(protected router: Router,
-              protected route: ActivatedRoute,
-              protected usersService: UsersService,
-              protected screenService: ScreenService,
-              protected storageService: LocalStorageService,
-              private postsService: PostsService) {
-    super();
-  }
-
-
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.isFishSwimming = true;
-      setTimeout(() => {
-        this.isFishSwimming = false;
-      }, 5000);
-    }, 4000);
-
-    super.ngOnInit();
-  }
-
-  titlePage: string;
-
   generateSyndicationList(): void {
     throw new Error('Method not implemented.');
   }
 
   getPostsObservable(page: number): Observable<{ data: Post[] }> {
-    const newPagination = immutableAssign(this.pagination, {currentPage: page});
+    // const newPagination = immutableAssign(this.pagination, {currentPage: page});
+    //
+    // return this.postsService.getHomeTimelinePosts(new GetHomeTimelineParameters(newPagination, this.sort, true));
 
-    return this.postsService.getHomeTimelinePosts(new GetHomeTimelineParameters(newPagination, this.sort, true));
+    const newPagination = immutableAssign(this.pagination, { currentPage: page });
+    const params = {
+      videoPagination: newPagination,
+      sort: this.sort,
+      skipCount: true
+    };
+
+    return this.userFollowService.getUserSubscriptionVideos(params);
   }
 
   handleHeaderClick() {
@@ -133,6 +165,12 @@ export class HomePageComponent extends AbstractPostList implements OnInit {
 
   removeVideoFromArray(post: Post) {
     super.removeVideoFromArray(post);
+  }
+
+  toggleModerationDisplay() {
+    this.filter = this.buildLocalFilter(this.filter, 'local');
+
+    this.reloadVideos();
   }
 
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+
 using Chessbook.Core;
 using Chessbook.Core.Domain.Notifications;
 using Chessbook.Data;
@@ -20,7 +21,7 @@ using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Logging;
 using Nop.Core.Domain.Media;
-using Nop.Core.Domain.Messages;
+using Chessbook.Core.Domain.Messages;
 using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Stores;
 using Nop.Core.Domain.Tasks;

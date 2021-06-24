@@ -51,6 +51,8 @@ import { PopoverMoreComponent } from './components/post/popover-more-component/p
 import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/button.module";
 import {TopMenuDropdownComponent} from "./misc/top-menu-dropdown.component";
 import {ListOverflowComponent} from "./misc/list-overflow.component";
+import {SmallLoaderComponent} from "./loaders/small-loader.component";
+import {LoaderComponent} from "./loaders/loader.component";
 
 @NgModule({
   imports: [
@@ -105,8 +107,8 @@ import {ListOverflowComponent} from "./misc/list-overflow.component";
     //
     FeedComponent,
     //
-    // LoaderComponent,
-    // SmallLoaderComponent,
+    LoaderComponent,
+    SmallLoaderComponent,
     //
     HelpComponent,
     ListOverflowComponent,
@@ -172,8 +174,8 @@ import {ListOverflowComponent} from "./misc/list-overflow.component";
     //
     FeedComponent,
     //
-    // LoaderComponent,
-    // SmallLoaderComponent,
+    LoaderComponent,
+    SmallLoaderComponent,
     //
     HelpComponent,
     ListOverflowComponent,

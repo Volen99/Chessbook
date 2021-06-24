@@ -1,5 +1,5 @@
 <!--19.11.2020, Thursday, 18:44 | Nightcore - The Lonely - (Lyrics)-->
-<div appInfiniteScroller (nearOfBottom)="onNearOfBottom()" [autoInit]="true" [dataObservable]="onDataSubject.asObservable()"
+<div nbInfiniteList [listenWindowScroll]="true" [threshold]="500" (bottomThreshold)="this.onNearOfBottom()"
      class="sharebook-container r-yfoy6g r-18bvks7 main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1"
      data-testid="primaryColumn" style="width: 600px">  <!--style by mi-->
   <div class="sharebook-container">
@@ -286,12 +286,7 @@
               <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.posts?.length) + 'px'}">
                 <ng-container *ngIf="this.posts?.length > 0;">
                   <app-post *ngFor="let post of this.posts; index as i"
-                            [hasText]="!!post?.status"
-                            [hasMedia]="post?.entities.medias.length >= 1"
-                            [transform]="this?.setTransform(i)"
-                            [mediaUrl]="post?.entities.medias?.shift().mediaURL"
-                            [isPoll]="!!this?.post.entities.poll"
-                            [isReshare]="!!post?.resharedStatus"
+                            [transform]="this?.setTransform(i, post)"
                             [post]="post">
                   </app-post>
                 </ng-container>

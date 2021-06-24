@@ -29,7 +29,7 @@ const TOTAL_PAGES = 7;
 
 @Injectable()
 export class ExploreService {
-  private readonly ACCESS_KEY = '0dd1f814ba3080dece7068a37b792fcc';
+  private readonly ACCESS_KEY = 'da15f48b7a3df86235e7cb85e0379467';
 
   constructor(private http: HttpClient, private restService: RestService) {
 

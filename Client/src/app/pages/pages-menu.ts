@@ -10,7 +10,8 @@ import {
   faTv,
   faCircle,
   faChartLine,
-  faAlicorn
+  faAlicorn,
+  faChessClock,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {NbMenuItem} from '../sharebook-nebular/theme/components/menu/menu.service';
@@ -78,6 +79,7 @@ export class PagesMenu {
         icon: faCircle,
         children: [
           {icon: faChartLine, title: `Chess Rankings`, link: '/ratings'},
+          {icon: faChessClock, title: `Chess stuff`, link: '/misc'},
           {icon: faAlicorn, title: `Keyboard shortcuts`, link: ''},
         ],
 

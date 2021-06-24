@@ -24,7 +24,7 @@
   <div class="actor-info">
     <div class="actor-info-display-name">{{ actor.displayName }}</div>
     <div *ngIf="displayUsername" class="actor-info-username">{{ actor.screenName }}</div>
-    <div i18n class="actor-info-followers">{this.actor?.friendsCount, plural, =1 {1 follower} other {{{ this.actor?.friendsCount | myNumberFormatter }} followers}}</div>
+    <div i18n class="actor-info-followers">{this.actor?.followingCount, plural, =1 {1 follower} other {{{ this.actor?.followingCount | myNumberFormatter }} followers}}</div>
   </div>
 </div>
 

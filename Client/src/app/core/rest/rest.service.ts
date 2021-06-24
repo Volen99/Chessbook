@@ -67,7 +67,7 @@ export class RestService {
   }
 
   componentPaginationToRestPagination(componentPagination: ComponentPaginationLight): RestPagination {
-    const start: number = (componentPagination.currentPage - 1) * componentPagination.itemsPerPage;
+    const start: number = (componentPagination.currentPage - 1); // * componentPagination.itemsPerPage; because your server works with pageindex
     const count: number = componentPagination.itemsPerPage;
 
     return {start, count};

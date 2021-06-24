@@ -42,6 +42,7 @@ import {TinyMCEComponent} from "./components/tiny-mce/tiny-mce.component";
 import {AuthModule} from "../auth/auth.module";
 import {NbThemeModule} from "../sharebook-nebular/theme/theme.module";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {SharedModule} from "../shared/shared.module";
 
 
 const NB_MODULES = [
@@ -80,7 +81,7 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, MatRippleModule, AuthModule, ...NB_MODULES, FontAwesomeModule],
+  imports: [CommonModule, MatRippleModule, AuthModule, ...NB_MODULES, FontAwesomeModule, SharedModule],
   exports: [CommonModule, MatRippleModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })

@@ -13,7 +13,7 @@ export type PluginPackageJson = {
   name: string
   version: string
   description: string
-  engine: { sharebook: string }
+  engine: { chessbook: string }
 
   homepage: string
   author: string

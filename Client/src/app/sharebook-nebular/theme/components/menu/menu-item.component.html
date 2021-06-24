@@ -15,9 +15,9 @@
    (mouseenter)="onHoverItem(menuItem)"
    (click)="onItemClick(menuItem);">
 
-    <my-notification *ngIf="menuItem.title === 'Notifications'">
+    <app-notification *ngIf="menuItem.title === 'Notifications'">
 
-    </my-notification>
+    </app-notification>
 
     <!--<nb-icon class="menu-icon" [config]="menuItem.icon" *ngIf="menuItem.icon"></nb-icon>-->
     <fa-icon *ngIf="menuItem.icon" class="menu-icon" [icon]="menuItem.icon"></fa-icon>
@@ -88,6 +88,6 @@
 </ul>
 
 <ng-template #badgeTemplate>
-    <nb-badge [text]="badge.text" [dotMode]="badge.dotMode" [status]="badge.status">
+    <nb-badge [text]="badge.text" [dotMode]="badge.dotMode" [status]="badge.status" [position]="badge.position">
     </nb-badge>
 </ng-template>

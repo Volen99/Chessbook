@@ -16,6 +16,8 @@ import {NbUserModule} from "../../../sharebook-nebular/theme/components/user/use
 import {SharedModule} from "../../shared.module";
 import {NbButtonModule} from "../../../sharebook-nebular/theme/components/button/button.module";
 import {NbActionsModule} from "../../../sharebook-nebular/theme/components/actions/actions.module";
+import {UserFollowModule} from "../../user-follow/user-follow.module";
+import {MatRippleModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [PostWatchComponent, PostThreadComponent, LikesComponent],
@@ -34,6 +36,8 @@ import {NbActionsModule} from "../../../sharebook-nebular/theme/components/actio
     FontAwesomeModule,
     NbButtonModule,
     NbActionsModule,
+    UserFollowModule,
+    MatRippleModule,
   ],
 
   providers: [

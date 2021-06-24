@@ -14,6 +14,7 @@ import {TimelineQueryGeneratorService} from "../../shared/timeline/query/timelin
 import {TimelineApi} from "../../shared/timeline/backend/timeline.api";
 
 import { LottieModule } from 'ngx-lottie';
+import {NbSidebarModule} from "../../sharebook-nebular/theme/components/sidebar/sidebar.module";
 
 export function playerFactory() {
   return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
@@ -35,7 +36,8 @@ export function playerFactory() {
     NbCardModule,
     NbListModule,
     NbIconModule,
-    LottieModule.forRoot({ player: playerFactory })
+    LottieModule.forRoot({player: playerFactory}),
+    NbSidebarModule
   ],
   providers: [
     TimelineService,

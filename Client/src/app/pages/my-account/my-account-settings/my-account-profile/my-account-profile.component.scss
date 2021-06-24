@@ -1,5 +1,10 @@
+@import '_variables';
+@import '_mixins';
+
+
 @import '../../../../sharebook-nebular/theme/styles/core/mixins';
 @import '../../../../theme/styles/themes';
+
 
 @include nb-install-component() {
   button[nbButton] {
@@ -107,8 +112,6 @@
   padding-top: 12px;
 }
 
-@import '_variables';
-@import '_mixins';
 
 .form-group:first-child {
   margin-bottom: 15px;

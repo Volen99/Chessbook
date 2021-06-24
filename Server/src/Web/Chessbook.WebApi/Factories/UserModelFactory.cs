@@ -108,6 +108,7 @@ namespace Chessbook.Web.Api.Factories
                     model.Active = customer.Active;
                     model.FollowedBy = customer.FollowedBy;
                     model.FollowersCount = customer.FollowersCount;
+                    model.FollowingCount = customer.FollowingCount;
                     model.County = await this.genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.CountyAttribute);
                     // model.CountryId = await this.genericAttributeService.GetAttributeAsync<int>(customer, NopCustomerDefaults.CountryIdAttribute);
                     model.CreatedOn = await dateTimeHelper.ConvertToUserTimeAsync(customer.CreatedOn, DateTimeKind.Utc, model.Id);

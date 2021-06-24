@@ -9,9 +9,9 @@ import {Notifier} from "../../../../core/notification/notifier.service";
 import {PeerTubeSocket} from "../../../../core/notification/sharebook-socket.service";
 
 @Component({
-  selector: 'my-notification',
+  selector: 'app-notification',
   templateUrl: './notification.component.html',
-  styleUrls: ['./notification.component.scss']
+  styleUrls: ['./notification.component.scss'],
 })
 export class NotificationComponent implements OnInit, OnDestroy {
   @ViewChild('popover', {static: true}) popover: NgbPopover;

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Nop.Core.Domain.Configuration;
-using Nop.Services.Caching;
+using Chessbook.Services.Caching;
 
 namespace Nop.Services.Configuration.Caching
 {

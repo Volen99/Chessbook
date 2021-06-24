@@ -1,5 +1,5 @@
 ﻿using Nop.Core.Domain.Customers;
-using Nop.Services.Caching;
+using Chessbook.Services.Caching;
 
 namespace Nop.Services.Customers.Caching
 {

@@ -27,6 +27,7 @@ import {countableText} from "../../../../../features/compose/util/counter";
 import {UserStore} from "../../../../../core/stores/user.store";
 import {IUser} from "../../../../../core/interfaces/common/users";
 import {NbToastrService} from "../../../../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {Post} from "../../../../../shared/shared-main/post/post.model";
 
 @Component({
   selector: 'app-upload',
@@ -38,7 +39,7 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() title: string;
   @Input() text: string = '';
-  @Input() replyPost: PostDetails;
+  @Input() replyPost: Post;
 
   private globes: IconDefinition[] = [faGlobeEurope, faGlobeAsia, faGlobeAmericas, faGlobeAfrica];
 

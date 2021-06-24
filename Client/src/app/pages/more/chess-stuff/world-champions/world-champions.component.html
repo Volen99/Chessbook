@@ -1,0 +1,21 @@
+<nb-tabset fullWidth>
+    <nb-tab tabTitle="Men" [nbSpinner]="!this.champions">
+        <nb-list>
+            <nb-list-item class="contact" matRipple *ngFor="let c of this.champions">
+                <nb-user [picture]="c.picture | ngxAuthToken | async" [name]="c.name" [title]="c.year"
+                         size="large"></nb-user>
+                <span class="flag-icon flag-icon-{{c.alpha2Code}}" [title]="c.title"></span>
+            </nb-list-item>
+        </nb-list>
+    </nb-tab>
+
+    <nb-tab tabTitle="Women">
+        <nb-list>
+            <nb-list-item class="contact" matRipple *ngFor="let c of this.femaleChampions">
+                <nb-user [picture]="c.picture | ngxAuthToken | async" [name]="c.name" [title]="c.year"
+                         size="large"></nb-user>
+                <span class="flag-icon flag-icon-{{c.alpha2Code}}" [title]="c.title"></span>
+            </nb-list-item>
+        </nb-list>
+    </nb-tab>
+</nb-tabset>

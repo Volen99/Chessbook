@@ -11,6 +11,7 @@ import {ResultList} from "../models";
 import {ServerBlock} from "../models/moderation/server-block.model";
 import {IAccountBlock} from "../models/moderation/account-block.model";
 import { User } from '../shared-main/user/user.model';
+import {IUser} from "../../core/interfaces/common/users";
 
 export enum BlocklistComponentType { Account, Instance }
 
@@ -43,14 +44,14 @@ export class BlocklistService {
       );
   }
 
-  blockAccountByUser(user: User /*account: Pick<User, 'nameWithHost'>*/) {
+  blockAccountByUser(user: IUser /*account: Pick<User, 'nameWithHost'>*/) {
     const body = {accountName: user.displayName};
 
     return this.authHttp.post(BlocklistService.BASE_USER_BLOCKLIST_URL + '/accounts', body)
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 
-  unblockAccountByUser(user: User /*account: Pick<User, 'nameWithHost'>*/) {
+  unblockAccountByUser(user: IUser /*account: Pick<User, 'nameWithHost'>*/) {
     const path = BlocklistService.BASE_USER_BLOCKLIST_URL + '/accounts/' + user.displayName;
 
     return this.authHttp.delete(path)

@@ -12,7 +12,7 @@
                                     <div class="sharebook-container open-space-container-flex-expand flex-grow-expand component-padding-top"></div>
                                 </div>
                             </div>
-                            <app-social-context *ngIf="this.isReshare"
+                            <app-social-context *ngIf="!!this.post?.resharedStatus"
                                                 [socialContextProps]="this.socialContextProps"></app-social-context>
                             <div class="sharebook-container flex-direction-row" data-testid="tweet">
                                 <app-profile-picture49x49
@@ -64,7 +64,7 @@
                                                          role="button" data-focusable="true" tabindex="0"
                                                          class="sharebook-cursor-pointer sharebook-container justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none"
                                                          data-testid="caret"
-                                                         [nbPopover]="this.popoverMoreComponent" [nbPopoverContext]="{items: this.meatballsMenu, theUserWhoUploadedThePost: this.post?.user}"> <!--[nbContextMenu]="this.meatballsMenu"-->
+                                                         [nbPopover]="this.popoverMoreComponent" [nbPopoverContext]="{items: this.meatballsMenu, post: this.post}"> <!--[nbContextMenu]="this.meatballsMenu"-->
                                                         <div dir="ltr"
                                                              class="css-901oao align-items-center third-wheel-color display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
                                                             <div class="sharebook-container display-inline-flex">
@@ -91,7 +91,7 @@
                                             </div>
                                         </div>
                                         <div class="sharebook-container">
-                                            <div *ngIf="this.hasText" lang="en" dir="auto" class="css-901oao lights-out-text-color font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px svg-position-relative text-overflow-wrap">
+                                            <div *ngIf="!!this.post?.status" lang="en" dir="auto" class="css-901oao lights-out-text-color font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px svg-position-relative text-overflow-wrap">
                                                 <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap" [innerHTML]="this.statusHTMLText">
                                                 </span>
 <!--                                                <span class="css-901oao sharebook-text-inherit svg-display-inline-block meatballs-menu-height emoji-margin-left emoji-margin-right svg-position-relative r-h9hxbl">-->
@@ -107,7 +107,7 @@
                                             </div>
                                         </div>
                                         <div class="sharebook-container">
-                                            <div *ngIf="post.hasMedia" class="sharebook-container">
+                                            <div *ngIf="this.post?.entities?.medias?.length >= 1" class="sharebook-container">
                                                 <div class="sharebook-container">
                                                     <div class="sharebook-container r-18bvks7 border-radius-16px border-style-solid border-width-1px margin-top-10px outline-style-none overflow-hidden transition-duration transition-property">
                                                         <div class="sharebook-container">
@@ -225,7 +225,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div *ngIf="this.isPoll">
+                                            <div *ngIf="!!this.post?.entities?.poll">
                                                 <app-poll [poll]="this.post.entities.poll"></app-poll>
                                             </div>
                                         </div>

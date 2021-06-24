@@ -11,12 +11,14 @@ import {VideoListHeaderComponent} from "./post-miniature/video-list-header.compo
 import {NbTooltipModule} from "../sharebook-nebular/theme/components/tooltip/tooltip.module";
 import {RelationshipsService} from "./shared-main/relationships/relationships.service";
 import {RelationshipsApi} from "./shared-main/relationships/backend/relationships.api";
-import {FollowButtonComponent} from "./user-follow/follow-button.component";
-import {UserFollowService} from "./user-follow/user-follow.service";
 import {SurveyService} from "./services/survey.service";
+import { ListUsersComponent } from './list-users/list-users.component';
+import {NbCardModule} from "../sharebook-nebular/theme/components/card/card.module";
+import {UserFollowModule} from "./user-follow/user-follow.module";
+import {SharedMainModule} from "./shared-main/shared-main.module";
 
 @NgModule({
-  declarations: [ShareButtonComponent, VideoListHeaderComponent, FollowButtonComponent],
+  declarations: [ShareButtonComponent, VideoListHeaderComponent, ListUsersComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -24,16 +26,18 @@ import {SurveyService} from "./services/survey.service";
     NbButtonModule,
     NbTooltipModule,
     FontAwesomeModule,
+    NbCardModule,
+    UserFollowModule,
+    SharedMainModule,
   ],
   exports: [
     ShareButtonComponent,
-    FollowButtonComponent,
+    ListUsersComponent,
   ],
   providers: [
     UserQueryParameterGeneratorService,
     RelationshipsService,
     RelationshipsApi,
-    UserFollowService,
     SurveyService,
   ]
 })

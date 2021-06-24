@@ -1,0 +1,37 @@
+<div class="sharebook-container" nbInfiniteList [listenWindowScroll]="true" [threshold]="500" (bottomThreshold)="this.onNearOfBottom()">
+    <app-empty-state *ngIf="this.profileCurrent?.suspended"
+                     [title]="'Account suspended'">
+        Chessbook suspends accounts which violate the <a class="link"
+                                                         href="https://en.wikipedia.org/wiki/Love">Chessbook
+        Rules</a>
+    </app-empty-state>
+
+    <app-empty-state *ngIf="this.profileCurrent?.protected"
+                     [title]="'These Posts are protected'">
+        Only approved followers can see {{this.profileCurrent?.screenName}}'s
+        Posts. To request access, click Follow. <a class="link"
+                                                   href="https://en.wikipedia.org/wiki/Love">Learn
+        more</a>
+    </app-empty-state>
+
+    <section *ngIf="!this.profileCurrent?.suspended"
+             aria-labelledby="accessible-list-2" role="region"
+             class="sharebook-container">
+        <h1 aria-level="1" dir="auto"
+            role="heading"
+            class="sharebook-link css-901oao border-width-0px r-1xk2f4g height-1px overflow-hidden r-wwvuq4 position-absolute width-1px"
+            id="accessible-list-2">
+            WorldFeedTest’s Posts</h1>
+        <div [attr.aria-label]="'Timeline: ' + this.profileCurrent?.displayName + '’s Posts'"
+             class="sharebook-container">
+            <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.posts.length) + 'px'}">
+                <ng-container *ngIf="this.posts?.length > 0;">
+                    <app-post *ngFor="let post of this.posts; let i = index"
+                              [transform]="this?.setTransform(i)"
+                              [post]="post">
+                    </app-post>
+                </ng-container>
+            </div>
+        </div>
+    </section>
+</div>

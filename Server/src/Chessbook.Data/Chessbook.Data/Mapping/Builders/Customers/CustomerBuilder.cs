@@ -23,8 +23,10 @@ namespace Nop.Data.Mapping.Builders.Customers
             table
                 .WithColumn(nameof(Customer.ScreenName)).AsString(1000).Nullable()
                 .WithColumn(nameof(Customer.Email)).AsString(1000).Nullable()
-                // .WithColumn(nameof(Customer.EmailToRevalidate)).AsString(1000).Nullable()
-                .WithColumn(nameof(Customer.SystemName)).AsString(400).Nullable();
+                .WithColumn(nameof(Customer.SystemName)).AsString(400).Nullable()
+                .WithColumn(nameof(Customer.FollowersCount)).AsInt32()
+                .WithColumn(nameof(Customer.FollowingCount)).AsInt32();
+             // .WithColumn(nameof(Customer.EmailToRevalidate)).AsString(1000).Nullable();
         }
 
         #endregion

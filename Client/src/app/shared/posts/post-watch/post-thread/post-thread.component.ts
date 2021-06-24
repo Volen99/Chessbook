@@ -19,6 +19,7 @@ import {IUser} from "../../../../core/interfaces/common/users";
 import {UserVideoRateType} from "../../models/rate/user-video-rate.type";
 import {UploadComponent} from "../../../../pages/modal-overlays/dialog/compose/upload/upload.component";
 import {LikesComponent} from "../likes/likes.component";
+import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";
 
 
 @Component({
@@ -27,12 +28,8 @@ import {LikesComponent} from "../likes/likes.component";
   styleUrls: ['./post-thread.component.scss']
 })
 export class PostThreadComponent implements OnInit {
-
   @Input() public transform: number = 0;
-  @Input() public hasText = false;
-  @Input() public hasMedia = false;
   @Input() public mediaUrl: string;
-  @Input() public isPoll: boolean;
   @Input() post: PostDetails = null;
 
   private destroy$: Subject<void> = new Subject<void>();
@@ -42,12 +39,11 @@ export class PostThreadComponent implements OnInit {
               private postService: PostsService,
               private dialogService: NbDialogService,
               private markdownService: MarkdownService,
+              private notifier: NbToastrService,
               ) {
     this.tooltipLike = `Like`;
     this.tooltipDislike = `Dislike`;
   }
-
-
 
   ngOnInit(): void {
     // by mi
@@ -64,7 +60,7 @@ export class PostThreadComponent implements OnInit {
 
     this.svgLikeStyles.color = this.userRating === 'like' ? 'blue' : 'inherit';
 
-    // this.init();
+    this.setStatusTextHTML();
 
     this.buildVideoLink();
   }
@@ -86,6 +82,7 @@ export class PostThreadComponent implements OnInit {
     'color': 'inherit',    // blue is such a beautiful color 💙
   };
 
+  statusHTMLText = '';
   meatballsMenu = this.getMenuItems();
 
   imageBackgroundStyle: SafeStyle;
@@ -177,12 +174,13 @@ export class PostThreadComponent implements OnInit {
   }
 
   open() {
-    this.dialogService.open(LikesComponent, { // ShowcaseDialogComponent
+    this.dialogService.open(LikesComponent, {
       context: {
         postId: this.post.id,
-        title: 'Liked by',
-        user: this.post.user,
+        title: 'Liked by'
       },
+      closeOnEsc: true,
+      closeOnBackdropClick: true,
     });
   }
 
@@ -202,7 +200,7 @@ export class PostThreadComponent implements OnInit {
           }
         },
 
-        // err => this.notifier.error(err.message)
+        err => this.notifier.danger(err.message)
       );
   }
 
@@ -246,14 +244,15 @@ export class PostThreadComponent implements OnInit {
     // this.setVideoLikesBarTooltipText();
   }
 
-  private async init() {
+  private async setStatusTextHTML () {
+    if (!this.post.status) {
+      return;
+    }
+
     // Before HTML rendering restore line feed for markdown list compatibility
-    const postText = this.post.status.replace(/<br.?\/?>/g, '\r\n');
-    const html = await this.markdownService.textMarkdownToHTML(postText, true, true);
-    // this.sanitizedCommentHTML = await this.markdownService.processVideoTimestamps(html);
-    this.sanitizedCommentHTML = html;
-
-
+    const commentText = this.post.status.replace(/<br.?\/?>/g, '\r\n');
+    const html = await this.markdownService.textMarkdownToHTML(commentText, true, true);
+    this.statusHTMLText = this.markdownService.processVideoTimestamps(html);
   }
 
   private updateLikeStuff(rating: UserVideoRateType) {

@@ -1,5 +1,16 @@
 @import "../../../sass/application";
 
+//@include nb-install-component() {
+//  .right-sidebar ::ng-deep .scrollable {
+//    // padding-top: nb-theme(layout-padding-top);
+//    padding: 0;
+//  }
+//
+//}
+
+
+
+
 @include media-breakpoint-down(sm) {
   .control-item {
     display: none;

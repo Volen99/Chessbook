@@ -10,6 +10,8 @@ import {Notifier} from 'app/core/notification/notifier.service';
 import {
   faTimes,
 } from '@fortawesome/pro-light-svg-icons';
+import {UsersService} from "../../core/backend/common/services/users.service";
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
 
 @Component({
   selector: 'app-user-ban-modal',
@@ -23,10 +25,12 @@ export class UserBanModalComponent extends FormReactive implements OnInit {
   private usersToBan: IUser | IUser[];
   private openedModal: NgbModalRef;
 
-  constructor(protected formValidatorService: FormValidatorService,
-              private modalService: NgbModal,
-              private notifier: Notifier,
-              private usersService: UserData) {
+  constructor(
+    protected formValidatorService: FormValidatorService,
+    private modalService: NgbModal,
+    private notifier: NbToastrService,
+    private userService: UsersService
+  ) {
     super();
   }
 
@@ -35,8 +39,6 @@ export class UserBanModalComponent extends FormReactive implements OnInit {
       reason: USER_BAN_REASON_VALIDATOR
     });
   }
-
-  faTimes = faTimes;
 
   openModal(user: IUser | IUser[]) {
     this.usersToBan = user;
@@ -51,20 +53,20 @@ export class UserBanModalComponent extends FormReactive implements OnInit {
   async banUser() {
     const reason = this.form.value['reason'] || undefined;
 
-    this.usersService.banUsers(this.usersToBan, reason)
+    this.userService.banUsers(this.usersToBan, reason)
       .subscribe(
         () => {
           const message = Array.isArray(this.usersToBan)
             ? `${this.usersToBan.length} users banned.`
             : `User ${this.usersToBan.screenName} banned.`;
 
-          this.notifier.success(message);
+          this.notifier.success(message, 'Success');
 
           this.userBanned.emit(this.usersToBan);
           this.hide();
         },
 
-        err => this.notifier.error(err.message)
+        err => this.notifier.danger(err.message, 'Error')
       );
   }
 

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Chessbook.Core.Domain.Notifications;
+
 using Chessbook.Data.Models;
 using Chessbook.Web.Api.Models.UserNotification;
-using Chessbook.Web.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Nop.Web.Framework.Models;
 
 namespace Nop.Web.Areas.Admin.Models.Customers
@@ -46,7 +43,7 @@ namespace Nop.Web.Areas.Admin.Models.Customers
 
         public int FollowersCount { get; set; }
 
-        public int FriendsCount { get; set; }
+        public int FollowingCount { get; set; }
 
         public bool? Following { get; set; }
 
@@ -71,19 +68,7 @@ namespace Nop.Web.Areas.Admin.Models.Customers
 
         public int ListedCount { get; set; }
 
-        public string ProfileSidebarFillColor { get; set; }
-
-        public string ProfileSidebarBorderColor { get; set; }
-
-        public bool ProfileBackgroundTile { get; set; }
-
-        public string ProfileBackgroundColor { get; set; }
-
         public string ProfileBannerURL { get; set; }
-
-        public string ProfileTextColor { get; set; }
-
-        public string ProfileLinkColor { get; set; }
 
         public bool ProfileUseBackgroundImage { get; set; }
 
@@ -94,12 +79,6 @@ namespace Nop.Web.Areas.Admin.Models.Customers
         public int? UtcOffset { get; set; }
 
         public string TimeZone { get; set; }
-
-        //[JsonProperty("withheld_in_countries")]
-        //public IEnumerable<string> WithheldInCountries { get; set; }
-
-        //[JsonProperty("withheld_scope")]
-        //public string WithheldScope { get; set; }
 
         public bool FollowedBy { get; set; }
 
@@ -119,9 +98,9 @@ namespace Nop.Web.Areas.Admin.Models.Customers
 
         public List<int> Roles { get; set; }
 
-        //public override string ToString()
-        //{
-        //    return base.ScreenName;
-        //}
+        public override string ToString()
+        {
+            return this.ScreenName;
+        }
     }
 }

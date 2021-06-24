@@ -18,8 +18,8 @@ import {
   faTrashAlt,
   faCommentSmile,
 } from '@fortawesome/pro-light-svg-icons';
+import {PostCommentAdmin} from "../../../shared/shared-post-comment/post-comment-model";
 
-import {PostCommentAdmin} from "../../../shared/shared-post-comment/post-comment";
 
 @Component({
   selector: 'app-video-comment-list',
@@ -186,7 +186,7 @@ export class VideoCommentListComponent extends RestTable implements OnInit {
     this.bulkService.removeCommentsOf(options)
       .subscribe(
         () => {
-          this.notifier.success(`Comments of ${options.accountName} will be deleted in a few minutes`);
+          this.notifier.success(`Comments of ${options.accountName} will be deleted in a few minutes`, 'Success');
         },
 
         err => this.notifier.danger(err.message, 'Error')

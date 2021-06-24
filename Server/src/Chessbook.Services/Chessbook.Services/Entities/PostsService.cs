@@ -127,20 +127,35 @@
             return await this.postsRepository.GetByIdAsync(productId, cache => default);
         }
 
-        public virtual async Task<IList<Post>> GetHomeTimeline(int userId, int? count = null, int skip = 0)
+        public virtual async Task<IList<Post>> GetHomeTimeline(bool ascSort = false,
+            int pageIndex = 0, int pageSize = int.MaxValue)
         {
-            var posts = await this.postsRepository.GetAllAsync(query =>
-            {
-                return from p in query
-                       where !p.Deleted
-                       select p;
-            }, cache => cache.PrepareKeyForDefaultCache(NopCatalogDefaults.ProductsHomepageCacheKey));
 
-            posts = posts.Skip(skip).ToList();
-            if (count.HasValue)
+            var posts = await this.postsRepository.GetAllPagedAsync(query =>
             {
-                posts = posts.Take(count.Value).ToList();
-            }
+                query = ascSort
+                    ? query.OrderBy(fp => fp.CreatedAt).ThenBy(fp => fp.Id)
+                    : query.OrderByDescending(fp => fp.CreatedAt).ThenBy(fp => fp.Id);
+
+                return query;
+
+            }, pageIndex, pageSize);
+
+
+
+
+            //var posts = await this.postsRepository.GetAllAsync(query =>
+            //{
+            //    return from p in query
+            //           where !p.Deleted
+            //           select p;
+            //}, cache => cache.PrepareKeyForDefaultCache(NopCatalogDefaults.ProductsHomepageCacheKey));
+
+            //posts = posts.Skip(skip).ToList();
+            //if (count.HasValue)
+            //{
+            //    posts = posts.Take(count.Value).ToList();
+            //}
 
             //var notDeletedUsers = await this.userService.GetCustomersByIdsAsync(posts.Select(v => v.UserId).ToArray());
 

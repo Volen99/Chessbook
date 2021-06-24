@@ -1,40 +1,56 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
+import { concat, forkJoin, merge } from 'rxjs';
+
 import {UserStore} from "../../core/stores/user.store";
 import {UserFollowService} from "./user-follow.service";
-import { concat, forkJoin, merge } from 'rxjs';
-import {Notifier} from "../../core/notification/notifier.service";
-import {User} from "../shared-main/user/user.model";
-import {Router} from "@angular/router";
-import {faFrown} from '@fortawesome/pro-solid-svg-icons';
 import {IUser} from "../../core/interfaces/common/users";
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
 
 
 @Component({
   selector: 'app-follow-button',
   templateUrl: './follow-button.component.html',
-  styleUrls: ['./follow-button.component.scss']
+  styleUrls: ['./follow-button.component.scss'],
+  providers: [UserFollowService]
 })
 export class FollowButtonComponent implements OnInit, OnChanges {
+  /**
+   * SubscribeButtonComponent can be used with a single User passed as [user],
+   * or with an account and a full list of that account's users. The latter is intended
+   * to allow mass un/subscription from an account's page, while keeping the channel-centric
+   * subscription model.
+   */
   @Input() account: IUser;
   @Input() users: IUser[];
 
   constructor(private userStore: UserStore,
               private userFollowService: UserFollowService,
-              private notifier: Notifier,
-              private router: Router,) {
+              private notifier: NbToastrService,
+              private router: Router) {
   }
 
-  ngOnInit(): void {
-    this.loadSubscribedStatus();
+  get isAllChannelsSubscribed() {
+    return this.subscribeStatus(true).length === this.users.length; // > 0;
+  }
+
+  get isAtLeastOneChannelSubscribed () {
+    return this.subscribeStatus(true).length > 0;
+  }
+
+  get isBigButton () {
+    return this.isUserLoggedIn() && this.users.length > 1 && this.isAtLeastOneChannelSubscribed;
   }
 
   ngOnChanges() {
     this.ngOnInit();
   }
 
-  subscribed = new Map<string, boolean>();
+  ngOnInit(): void {
+    this.loadSubscribedStatus();
+  }
 
-  faFrown = faFrown;
+  subscribed = new Map<string, boolean>();
 
   rightAfterFollow = false;
 
@@ -51,11 +67,6 @@ export class FollowButtonComponent implements OnInit, OnChanges {
     if (this.isUserLoggedIn()) {
       this.localUnsubscribe();
     }
-  }
-
-
-  get isAllChannelsSubscribed() {
-    return this.subscribeStatus(true).length > 0; // this.videoChannels.length;
   }
 
   subscribeStatus(subscribed: boolean) {
@@ -76,11 +87,6 @@ export class FollowButtonComponent implements OnInit, OnChanges {
   localSubscribe() {
     const subscribedStatus = this.subscribeStatus(false);
 
-    // let observableBatch: any;
-    // if (subscribedStatus.includes(this.account.screenName)) {
-    //   observableBatch = this.userFollowService.addSubscription(this.account.screenName);
-    // }
-
     const observableBatch = this.users
       .map(videoChannel => videoChannel.screenName)
       .filter(handle => subscribedStatus.includes(handle))
@@ -91,16 +97,16 @@ export class FollowButtonComponent implements OnInit, OnChanges {
         () => {
           this.account.followersCount += 1;
 
-          this.notifier.success(
-            this.account
-              ? `Subscribed to all current channels of ${this.account.displayName}. You will be notified of all their new videos.`
-              : `Subscribed to {this.videoChannels[0].displayName}. You will be notified of all their new videos.`,
-
-            `Subscribed`
-          );
+          // this.notifier.success(
+          //   this.account
+          //     ? `Subscribed to all current channels of ${this.account.displayName}. You will be notified of all their new videos.`
+          //     : `Subscribed to {this.videoChannels[0].displayName}. You will be notified of all their new videos.`,
+          //
+          //   `Subscribed`
+          // );
         },
 
-        err => this.notifier.error(err.message)
+        err => this.notifier.danger(err.message, 'Error')
       );
   }
 
@@ -117,16 +123,16 @@ export class FollowButtonComponent implements OnInit, OnChanges {
         complete: () => {
           this.account.followersCount -= 1;
 
-          this.notifier.success(
-            this.account
-              ? `Unsubscribed from all channels of {this.account.nameWithHost}`
-              : `Unsubscribed from {this.videoChannels[0].nameWithHost}`,
-
-            `Unsubscribed`
-          );
+          // this.notifier.success(
+          //   this.account
+          //     ? `Unsubscribed from all channels of {this.account.nameWithHost}`
+          //     : `Unsubscribed from {this.videoChannels[0].nameWithHost}`,
+          //
+          //   `Unsubscribed`
+          // );
         },
 
-        error: err => this.notifier.error(err.message)
+        error: err => this.notifier.danger(err.message, 'Error')
       });
   }
 
@@ -149,20 +155,10 @@ export class FollowButtonComponent implements OnInit, OnChanges {
       ).subscribe(
         res => this.subscribed.set(handle, res),
 
-        err => this.notifier.error(err.message)
+        err => this.notifier.danger(err.message, 'Error')
       );
     }
 
-    // const handle = this.account.screenName;    // this.getChannelHandler(videoChannel);
-    // this.subscribed.set(handle, false);
-    //
-    // merge(this.userFollowService.listenToSubscriptionCacheChange(handle),
-    //       this.userFollowService.doesSubscriptionExist(handle)
-    // ).subscribe(
-    //   res => this.subscribed.set(handle, res),
-    //
-    //   err => this.notifier.error(err.message)
-    // );
   }
 
   isFollowingButtonHovered = false;

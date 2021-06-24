@@ -34,7 +34,7 @@ export class User implements IUser {
     this.url = hash.url;
     this.statusesCount = hash.statusesCount;
     this.followersCount = hash.followersCount;
-    this.friendsCount = hash.friendsCount;
+    this.followingCount = hash.followingCount;
     this.following = hash.following;
     this.verified = hash.verified;
     this.entities = hash.entities;
@@ -44,10 +44,6 @@ export class User implements IUser {
     this.defaultProfileImage = hash.defaultProfileImage;
     this.favoritesCount = hash.favoritesCount;
     this.listedCount = hash.listedCount;
-    this.profileSidebarFillColor = hash.profileSidebarFillColor;
-    this.profileSidebarBorderColor = hash.profileSidebarBorderColor;
-    this.profileBackgroundTile = hash.profileBackgroundTile;
-    this.profileBackgroundColor = hash.profileBackgroundColor;
     this.profileBackgroundImageUrl = hash.profileBackgroundImageUrl;
     this.profileBackgroundImageUrlHttps = hash.profileBackgroundImageUrlHttps;
     this.profileBannerURL = hash.profileBannerURL;
@@ -84,6 +80,8 @@ export class User implements IUser {
     this.followedBy = hash.followedBy;
 
     this.mutedByUser = false;
+
+    this.notificationSettings = hash.notificationSettings;
   }
 
   id: number;
@@ -99,7 +97,7 @@ export class User implements IUser {
   url: string;
   statusesCount: number;
   followersCount: number;
-  friendsCount: number;
+  followingCount: number;
   following?: boolean;
   protected: boolean;
   verified: boolean;
@@ -155,23 +153,20 @@ export class User implements IUser {
     return hasUserRight(this.roles, right);
   }
 
+  canManage(user: IUser) {
+    const myRoles = this.roles;
+
+    if (myRoles.includes(UserRole.ADMINISTRATOR)) {
+      return true;
+    }
+
+    // I'm a moderator: I can only manage users
+    return this.roles.includes(UserRole.REGISTERED);
+
+    // return user.role === UserRole.USER;
+  }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // // added 22.03.2021, Monday, 20:09 PM | songs i listen to at 3am on a school night when it's raining.

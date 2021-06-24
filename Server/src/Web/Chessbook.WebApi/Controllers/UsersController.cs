@@ -37,6 +37,7 @@
     using Chessbook.Services.Abuses;
     using Chessbook.Web.Api.Extensions;
     using Chessbook.Web.Api.Models.Abuses;
+    using Chessbook.Services.Relationships;
 
     [Route("users")]
     public class UsersController : BaseApiController
@@ -57,12 +58,14 @@
         private readonly ICustomerRegistrationService customerRegistrationService;
         private readonly IAbuseService abuseService;
         private readonly IAbuseModelFactory abuseModelFactory;
+        private readonly IFollowService followService;
 
         public UsersController(IUserService userService, JwtManager jwtManager, IAuthenticationService authService, IPostsService postsService,
             IPictureService pictureService, IGenericAttributeService genericAttributeService, IRelationshipService relationshipService, IUserModelFactory userModelFactory,
             ICustomerActivityService customerActivityService, IUserNotificationService notificationsService, INotificationsSettingsService notificationsSettingsService,
             IUserNotificationSettingModelFactory userNotificationSettingModelFactory, IUserNotificationModelFactory userNotificationModelFactory,
-            ICustomerRegistrationService customerRegistrationService, IAbuseService abuseService, IAbuseModelFactory abuseModelFactory)
+            ICustomerRegistrationService customerRegistrationService, IAbuseService abuseService, IAbuseModelFactory abuseModelFactory,
+            IFollowService followService)
         {
             this.userService = userService;
             this.jwtManager = jwtManager;
@@ -80,6 +83,7 @@
             this.customerRegistrationService = customerRegistrationService;
             this.abuseService = abuseService;
             this.abuseModelFactory = abuseModelFactory;
+            this.followService = followService;
         }
 
         //[HttpGet]
@@ -643,6 +647,37 @@
              });
         }
 
+        [HttpGet]
+        [Route("following/{screenName:length(3,32)}")]
+        public async Task<IActionResult> ListUserFollowing(string screenName, [FromQuery] QueryListFollowingOrFollowersInput input)
+        {
+            if (!screenName.StartsWith('@'))
+            {
+                screenName = "@" + screenName;
+            }
+
+            var user = await this.userService.GetCustomerByUsernameAsync(screenName);
+
+            if (user == null)
+            {
+                return this.BadRequest("Bro, why do you try to break (or hack 😲) my website? :( No such user found!");
+            }
+
+            var users = await this.followService.ListUserFollowing(user.Id, input.Start, input.Count, input.Following);
+
+            var models = new List<CustomerModel>();
+            foreach (var userCurrent in users)
+            {
+                models.Add(await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), userCurrent));
+            }
+
+            return this.Ok(new
+            {
+                total = users.Count,
+                data = models,
+            });
+        }
+
         private async Task<bool> SecondAdminAccountExistsAsync(Customer customer)
         {
             var customers = await this.userService.GetAllCustomersAsync(customerRoleIds: new[] { (await this.userService.GetCustomerRoleBySystemNameAsync(NopCustomerDefaults.AdministratorsRoleName)).Id });
@@ -650,8 +685,6 @@
             return customers.Any(c => c.Active && c.Id != customer.Id);
         }
     }
-
-
 
     public class GetProfileInputQueryModel
     {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Subject} from "rxjs/Subject";
+
 import {faKiwiBird} from '@fortawesome/pro-light-svg-icons';
 
 import {ExploreService, NewsPost, Pagination} from "./explore.service";
@@ -26,6 +27,10 @@ export class ExploreComponent implements OnInit {
         this.pagination = posts.pagination;
 
         this.topNew = this.newsPost.filter(n => n.title.includes('Magnus Carlsen'))[0];
+        if (!this.topNew) {
+          this.topNew = this.newsPost[3];
+        }
+
         this.newsPost = this.newsPost.filter(n => n.title !== this.topNew.title);
 
         this.loading = false;

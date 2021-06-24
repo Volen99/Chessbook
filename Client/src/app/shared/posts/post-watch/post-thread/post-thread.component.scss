@@ -1,5 +1,9 @@
 a {
   text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .r-1qhn6m8 {

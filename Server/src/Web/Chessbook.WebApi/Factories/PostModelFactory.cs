@@ -177,11 +177,12 @@ namespace Chessbook.Web.Api.Factories
             var postUser = await this.userService.GetCustomerByIdAsync(post.UserId);
             model.User = await this.userModelFactory.PrepareCustomerModelAsync(model.User, postUser);
 
-            // pictures
-            var allPictureModels = await PrepareProductDetailsPictureModelAsync(model, isAssociatedProduct);
-            model.Entities.Medias = allPictureModels;
-
-
+            if (model.HasMedia) 
+            {
+                // pictures
+                var allPictureModels = await PrepareProductDetailsPictureModelAsync(model, isAssociatedProduct);
+                model.Entities.Medias = allPictureModels;
+            }
 
             return model;
         }

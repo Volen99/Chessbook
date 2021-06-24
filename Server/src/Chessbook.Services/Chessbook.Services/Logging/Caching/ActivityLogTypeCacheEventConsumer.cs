@@ -1,5 +1,5 @@
 ﻿using Nop.Core.Domain.Logging;
-using Nop.Services.Caching;
+using Chessbook.Services.Caching;
 using System.Threading.Tasks;
 
 namespace Nop.Services.Logging.Caching
