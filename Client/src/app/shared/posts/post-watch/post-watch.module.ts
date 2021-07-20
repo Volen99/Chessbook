@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {MatRippleModule} from "@angular/material/core";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 import {PostWatchRoutingModule} from "./post-watch-routing.module";
@@ -17,10 +18,24 @@ import {SharedModule} from "../../shared.module";
 import {NbButtonModule} from "../../../sharebook-nebular/theme/components/button/button.module";
 import {NbActionsModule} from "../../../sharebook-nebular/theme/components/actions/actions.module";
 import {UserFollowModule} from "../../user-follow/user-follow.module";
-import {MatRippleModule} from "@angular/material/core";
+import {VideoCommentsComponent} from "./shared/comment/video-comments.component";
+import {VideoCommentComponent} from "./shared/comment/video-comment.component";
+import {VideoCommentAddComponent} from "./shared/comment/video-comment-add.component";
+import {VideoCommentService} from "../../shared-post-comment/video-comment.service";
+import {SharedActorImageModule} from "../../shared-actor-image/shared-actor-image.module";
+import {NbInputModule} from "../../../sharebook-nebular/theme/components/input/input.module";
+import {SharedFormModule} from "../../shared-forms/shared-form.module";
 
 @NgModule({
-  declarations: [PostWatchComponent, PostThreadComponent, LikesComponent],
+  declarations: [
+    PostWatchComponent,
+    PostThreadComponent,
+    LikesComponent,
+
+    VideoCommentsComponent,
+    VideoCommentAddComponent,
+    VideoCommentComponent,
+  ],
 
   imports: [
     CommonModule,
@@ -38,9 +53,13 @@ import {MatRippleModule} from "@angular/material/core";
     NbActionsModule,
     UserFollowModule,
     MatRippleModule,
+    SharedActorImageModule,
+    NbInputModule,
+    SharedFormModule,
   ],
 
   providers: [
+    VideoCommentService,
   ],
 
 })

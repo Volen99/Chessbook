@@ -89,6 +89,7 @@
             {
                 if (createdFromUtc.HasValue)
                     query = query.Where(c => createdFromUtc.Value <= c.CreatedOn);
+
                 if (createdToUtc.HasValue)
                     query = query.Where(c => createdToUtc.Value >= c.CreatedOn);
                 //if (affiliateId > 0)

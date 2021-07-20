@@ -113,9 +113,10 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
 
     this.videoCommentService.getVideoThreadComments(params).subscribe(
       res => {
+        debugger
         this.threadComments[commentId] = res;
         this.threadLoading[commentId] = false;
-        this.hooks.runAction('action:video-watch.video-thread-replies.loaded', 'video-watch', {data: res});
+        // this.hooks.runAction('action:video-watch.video-thread-replies.loaded', 'video-watch', {data: res});
 
         if (highlightThread) {
           this.highlightedThread = new PostComment(res.comment);
@@ -125,7 +126,7 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
         }
       },
 
-      err => this.notifier.danger(err.message, 'Error')
+      err => this.notifier.danger(err.message, 'Error in this.videoCommentService.getVideoThreadComments(params).subscribe')
     );
   }
 

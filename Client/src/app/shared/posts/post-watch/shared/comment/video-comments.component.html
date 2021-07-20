@@ -29,7 +29,7 @@
 
     <div
       class="comment-threads"
-      myInfiniteScroller
+      appInfiniteScroller
       [autoInit]="true"
       (nearOfBottom)="onNearOfBottom()"
       [dataObservable]="onDataSubject.asObservable()"
@@ -77,10 +77,10 @@
 
             <ng-template #hasAuthorComments>
               <ng-container *ngIf="comment.totalReplies !== comment.totalRepliesFromVideoAuthor; else onlyAuthorComments" i18n>
-                View {comment.totalReplies, plural, =1 {1 reply} other {{{ comment.totalReplies }} replies}} from {{ video?.account?.displayName || 'the author' }} and others
+                View {comment.totalReplies, plural, =1 {1 reply} other {{{ comment.totalReplies }} replies}} from {{ video?.user?.displayName || 'the author' }} and others
               </ng-container>
               <ng-template i18n #onlyAuthorComments>
-                View {comment.totalReplies, plural, =1 {1 reply} other {{{ comment.totalReplies }} replies}} from {{ video?.account?.displayName || 'the author' }}
+                View {comment.totalReplies, plural, =1 {1 reply} other {{{ comment.totalReplies }} replies}} from {{ video?.user?.displayName || 'the author' }}
               </ng-template>
             </ng-template>
 

@@ -36,6 +36,7 @@ using Chessbook.Services.Notifications;
 using Chessbook.Services.Notifications.Settings;
 using Chessbook.Services.Abuses;
 using Chessbook.Services.Relationships;
+using Chessbook.Services.Entities;
 
 namespace Nop.Web.Framework.Infrastructure
 {
@@ -223,6 +224,7 @@ namespace Nop.Web.Framework.Infrastructure
             services.AddScoped<INotificationsSettingsService, NotificationsSettingsService>();
             services.AddScoped<IAbuseService, AbuseService>();
             services.AddScoped<IFollowService, FollowService>();
+            services.AddScoped<IPostCommentService, PostCommentService>();
 
 
             //register all settings

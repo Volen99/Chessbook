@@ -1,12 +1,19 @@
 ﻿using Chessbook.Common;
+using Chessbook.Core;
+using Chessbook.Core.Domain.Post;
+using Chessbook.Data.Models.Media;
 using Chessbook.Data.Models.Post;
 using Chessbook.Services.Data.Services;
 using Chessbook.Services.Data.Services.Media;
+using Chessbook.Services.Entities;
 using Chessbook.Services.Localization;
 using Chessbook.Web.Api.Areas.Admin.Models.Post;
+using Chessbook.Web.Api.Models.Posts;
 using Nop.Core;
 using Nop.Core.Caching;
 using Nop.Core.Domain.Media;
+using Nop.Services.Common;
+using Nop.Web.Areas.Admin.Models.Customers;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Media;
 using SkiaSharp;
@@ -30,6 +37,8 @@ namespace Chessbook.Web.Api.Factories
         private readonly ILocaleStringResourceService localeStringResourceService;
         private readonly IUserModelFactory userModelFactory;
         private readonly IUserService userService;
+        private readonly IGenericAttributeService genericAttributeService;
+        private readonly IPostCommentService postCommentService;
 
         #endregion
 
@@ -37,7 +46,7 @@ namespace Chessbook.Web.Api.Factories
 
         public PostModelFactory(MediaSettings mediaSettings, IStaticCacheManager staticCacheManager, IWebHelper webHelper, IWorkContext workContext,
             IStoreContext storeContext, IPictureService pictureService, ILocaleStringResourceService localeStringResourceService, IUserModelFactory userModelFactory,
-            IUserService userService)
+            IUserService userService, IGenericAttributeService genericAttributeService, IPostCommentService postCommentService)
         {
             this.mediaSettings = mediaSettings;
             this.staticCacheManager = staticCacheManager;
@@ -48,6 +57,8 @@ namespace Chessbook.Web.Api.Factories
             this.localeStringResourceService = localeStringResourceService;
             this.userModelFactory = userModelFactory;
             this.userService = userService;
+            this.genericAttributeService = genericAttributeService;
+            this.postCommentService = postCommentService;
         }
 
         #endregion
@@ -177,7 +188,7 @@ namespace Chessbook.Web.Api.Factories
             var postUser = await this.userService.GetCustomerByIdAsync(post.UserId);
             model.User = await this.userModelFactory.PrepareCustomerModelAsync(model.User, postUser);
 
-            if (model.HasMedia) 
+            if (model.HasMedia)
             {
                 // pictures
                 var allPictureModels = await PrepareProductDetailsPictureModelAsync(model, isAssociatedProduct);
@@ -185,6 +196,108 @@ namespace Chessbook.Web.Api.Factories
             }
 
             return model;
+        }
+
+        /// <summary>
+        /// Prepare post comment model
+        /// </summary>
+        /// <param name="postComment">Post comment entity</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the post comment model
+        /// </returns>
+        public virtual async Task<PostCommentModel> PreparePostCommentModelAsync(PostComment postComment)
+        {
+            if (postComment == null)
+            {
+                throw new ArgumentNullException(nameof(postComment));
+            }
+
+            var customer = await this.userService.GetCustomerByIdAsync(postComment.UserId);
+
+            var model = new PostCommentModel
+            {
+                Id = postComment.Id,
+                Url = postComment.Url,
+                Text = postComment.Text,
+
+                ThreadId = this.GetThreadId(postComment),
+                InReplyToCommentId = postComment.InReplyToCommentId,
+                PostId = postComment.PostId,
+
+                CreatedAt = postComment.CreatedAt,
+                UpdatedAt = postComment.UpdatedAt,
+                DeletedAt = postComment.DeletedAt,
+
+                IsDeleted = this.IsDeleted(postComment.DeletedAt),
+
+                TotalRepliesFromPostAuthor = 0,
+                TotalReplies = await this.postCommentService.GetTotalReplies(postComment.Id),
+
+                Account = await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), customer),
+            };
+
+            // avatar
+            model.Account.ProfileImageUrlHttps = ChessbookConstants.SiteHttps + await this.pictureService.GetPictureUrlAsync(
+                await this.genericAttributeService.GetAttributeAsync<int>(customer, NopCustomerDefaults.AvatarPictureIdAttribute),
+                48, true, defaultPictureType: PictureType.Avatar);
+
+
+            return model;
+        }
+
+        private int GetThreadId(PostComment postComment)
+        {
+            if (postComment.OriginCommentId.HasValue)
+            {
+                return postComment.OriginCommentId.Value;
+            }
+
+            return postComment.Id;
+        }
+
+        private bool IsDeleted(DateTime? deletedAt)
+        {
+            return deletedAt != null;
+        }
+
+        // This is genius. I wish I was that smart. 7/19/2021, Monday | Didn't Know Better - By: Ivan B (Feat. Breana Marin) (Lyrics)
+        public async Task<PostCommentThreadModel> PreparePostCommentTree(IList<PostComment> inputList)
+        {
+            // Comments are sorted by id ASC
+            var comments = new Queue<PostComment>(inputList);
+
+            var comment = comments.Dequeue();
+            var thread = new PostCommentThreadModel
+            {
+                Comment = await this.PreparePostCommentModelAsync(comment),
+                Children = new List<PostCommentThreadModel>(),
+            };
+
+            var idx = new Dictionary<int, PostCommentThreadModel>();
+
+            while (comments.Count != 0)
+            {
+                var childComment = comments.Dequeue();
+
+                var childCommentThread = new PostCommentThreadModel
+                {
+                    Comment = await this.PreparePostCommentModelAsync(comment),
+                    Children = new List<PostCommentThreadModel>(),
+                };
+
+                var parentCommentThread = idx[childComment.InReplyToCommentId.Value];    // TODO: might bug
+                // Maybe the parent comment was blocked by the admin/user
+                if (parentCommentThread == null)
+                {
+                    continue;
+                }
+
+                parentCommentThread.Children.Add(childCommentThread);
+                idx[childComment.Id] = childCommentThread;
+            }
+
+            return thread;
         }
     }
 }

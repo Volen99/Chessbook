@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {SortMeta} from 'primeng/api';
+import {HttpParams} from '@angular/common/http';
 import {from, Observable} from 'rxjs';
 import {catchError, concatMap, map, toArray} from 'rxjs/operators';
+import {SortMeta} from 'primeng/api';
 
 import {environment} from '../../../environments/environment';
 import {RestExtractor} from "../../core/rest/rest-extractor";
@@ -19,15 +19,16 @@ import {
 } from "../models/posts/comment/post-comment.model";
 import {PostComment} from "./post-comment-model";
 import {PostCommentThreadTree} from "./video-comment-thread-tree.model";
+import {HttpService} from "../../core/backend/common/api/http.service";
 
 @Injectable()
 export class VideoCommentService {
   static BASE_FEEDS_URL = environment.apiUrl + '/feeds/video-comments.';
 
-  private static BASE_VIDEO_URL = environment.apiUrl + '/api/v1/videos/';
+  private static BASE_VIDEO_URL = 'posts/';
 
   constructor(
-    private authHttp: HttpClient,
+    private authHttp: HttpService,
     private restExtractor: RestExtractor,
     private restService: RestService) {
   }
@@ -132,8 +133,8 @@ export class VideoCommentService {
   // getVideoCommentsFeeds(video: Pick<Post, 'uuid'>) {
   // }
 
-  private extractVideoComment(videoComment: IPostComment) {
-    return new PostComment(videoComment);
+  private extractVideoComment(postComment: IPostComment) {
+    return new PostComment(postComment);
   }
 
   private extractVideoComments(result: ThreadsResultList<IPostComment>) {

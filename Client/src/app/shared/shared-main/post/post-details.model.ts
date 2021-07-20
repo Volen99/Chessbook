@@ -5,7 +5,7 @@ export class PostDetails extends Post {
   support: string;
   tags: string[];
   account: Account;
-  commentsEnabled: boolean;
+  commentsEnabled: boolean = true;
 
   waitTranscoding: boolean;
   state: any;  // VideoConstant<VideoState>;

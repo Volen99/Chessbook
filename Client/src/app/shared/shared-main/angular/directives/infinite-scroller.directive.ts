@@ -36,15 +36,11 @@ export class InfiniteScrollerDirective implements OnInit, OnDestroy, AfterViewCh
   }
 
   ngOnInit() {
-    if (this.autoInit === true) {
-      return this.initialize();
-    }
+    if (this.autoInit === true) return this.initialize();
   }
 
   ngOnDestroy() {
-    if (this.scrollDownSub) {
-      this.scrollDownSub.unsubscribe();
-    }
+    if (this.scrollDownSub) this.scrollDownSub.unsubscribe();
   }
 
   initialize() {
@@ -69,7 +65,7 @@ export class InfiniteScrollerDirective implements OnInit, OnDestroy, AfterViewCh
     this.scrollDownSub = scrollObservable
       .pipe(
         filter(({current}) => this.isScrollingDown(current)),
-        filter(({current, maximumScroll}) => (current / maximumScroll) > this.decimalLimit) // who writes such stuff? This is genius
+        filter(({current, maximumScroll}) => (current / maximumScroll) > this.decimalLimit)
       )
       .subscribe(() => this.nearOfBottom.emit());
 

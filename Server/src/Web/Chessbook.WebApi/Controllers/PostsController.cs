@@ -25,6 +25,9 @@
     using Nop.Web.Areas.Admin.Models.Customers;
     using Chessbook.Data.Models.Post;
     using Chessbook.Web.Api.Lib;
+    using Chessbook.Services.Entities;
+    using Chessbook.Web.Api.Models.Posts;
+    using Chessbook.Core.Domain.Post;
 
     [Route("posts")]
     public class PostsController : BaseApiController
@@ -39,13 +42,15 @@
         private readonly IMediaService mediaService;
         private readonly IPictureService pictureService;
         private readonly IUserModelFactory userModelFactory;
-        private readonly IPostModelFactory _productModelFactory;
+        private readonly IPostModelFactory postModelFactory;
         private readonly ICustomerActivityService customerActivityService;
         private readonly ILocaleStringResourceService localeStringResourceService;
+        private readonly IPostCommentService postCommentService;
 
         public PostsController(IPostsService postService, IPollService pollService, IUserService userService, IMediaService mediaService,
             IPictureService pictureService, IUserModelFactory userModelFactory, IPostModelFactory productModelFactory,
-            ICustomerActivityService customerActivityService, ILocaleStringResourceService localeStringResourceService)
+            ICustomerActivityService customerActivityService, ILocaleStringResourceService localeStringResourceService,
+            IPostCommentService postCommentService)
         {
             this.postService = postService;
             this.userService = userService;
@@ -53,9 +58,10 @@
             this.pollService = pollService;
             this.pictureService = pictureService;
             this.userModelFactory = userModelFactory;
-            this._productModelFactory = productModelFactory;
+            this.postModelFactory = productModelFactory;
             this.customerActivityService = customerActivityService;
             this.localeStringResourceService = localeStringResourceService;
+            this.postCommentService = postCommentService;
         }
 
         [HttpGet]
@@ -74,7 +80,7 @@
             {
                 var postCurrent = posts[i];
 
-                var model = (await _productModelFactory.PreparePostModelAsync(postCurrent));
+                var model = (await postModelFactory.PreparePostModelAsync(postCurrent));
 
                 models.Add(model);
 
@@ -138,7 +144,7 @@
             {
                 var postCurrent = posts[i];
 
-                var model = (await _productModelFactory.PreparePostModelAsync(postCurrent));
+                var model = (await postModelFactory.PreparePostModelAsync(postCurrent));
                 models.Add(model);
 
                 //if (postDTO.Reshared)
@@ -224,7 +230,7 @@
         {
             var post = await this.postService.GetPostByIdAsync(id);
 
-            var model = await this._productModelFactory.PreparePostModelAsync(post);
+            var model = await this.postModelFactory.PreparePostModelAsync(post);
 
             return this.Ok(model);
         }
@@ -254,7 +260,7 @@
             var product = await this.postService.GetPostByIdAsync(id);
             if (product == null)
             {
-                return this.BadRequest("List");
+                return this.NotFound("List");
             }
 
 
@@ -283,25 +289,102 @@
             return this.Ok();
         }
 
-        [HttpGet]
-        [Route("post/{postId:int}/photo")]
-        public async Task<IActionResult> GetPostPhoto(int postId)
+        [HttpPost]
+        [Route("{postId:int}/comment-threads")]
+        public async Task<IActionResult> CommentCreate(int postId, CreatePostCommentBody input)
         {
-            var post = await this.postService.GetPostByIdAsync(postId);
+            var comment = await this.postCommentService.Create(User.GetUserId(), postId, input.Text);
 
-            if (post == null)
+            if (comment == null)
             {
-                return this.BadRequest("No such post");
+                return this.BadRequest();
             }
 
-            var model = await this._productModelFactory.PreparePostModelAsync(post);
+            var model = await this.postModelFactory.PreparePostCommentModelAsync(comment);
 
-            if (!model.HasMedia)
+            return this.Ok(model);
+        }
+
+        [HttpPost]
+        [Route("{postId:int}/comments/{threadId:int}")]
+        public async Task<IActionResult> CommentThreadCreate(int postId, int threadId, CreatePostCommentBody input)
+        {
+            var postComment = await this.postCommentService.GetById(threadId);
+
+            if (postComment == null)
             {
-                return this.BadRequest("This post does not have media, Mr. Hacker :|");
+                return this.NotFound("Post comment thread not found");
             }
 
-            return this.Ok(model.Entities.Medias);
+            if (postComment.PostId != postId)
+            {
+                return this.BadRequest("Post comment is not associated to this video.");
+            }
+
+            if (postComment.InReplyToCommentId != null)
+            {
+                return this.BadRequest("Post comment is not a thread.");
+            }
+
+           var res = this.postCommentService.Create(User.GetUserId(), postId, input.Text, postComment);
+
+
+            var comment = await this.postCommentService.Create(User.GetUserId(), postId, input.Text);
+
+            if (comment == null)
+            {
+                return this.BadRequest();
+            }
+
+            var model = await this.postModelFactory.PreparePostCommentModelAsync(comment);
+
+            return this.Ok(model);
+        }
+
+        [HttpGet]
+        [Route("{postId:int}/comment-threads")]
+        public async Task<IActionResult> GetPostCommentThreads(int postId, [FromQuery] QueryGetInputModel query)
+        {
+            var models = new List<PostCommentModel>();
+
+            var comments = await this.postCommentService.GetPostCommentThreads(
+                   postId: postId,
+                   userId: User.GetUserId(),
+                   pageIndex: query.Start,
+                   pageSize: query.Count);
+
+            foreach (var pc in comments)
+            {
+                var commentModel = await this.postModelFactory.PreparePostCommentModelAsync(pc);
+                models.Add(commentModel);
+            }
+
+
+            return this.Ok(new
+            {
+                total = comments.TotalCount,
+                data = models,
+            });
+        }
+
+        [HttpGet]
+        [Route("{postId:int}/comment-threads/{threadId:int}")]
+        public async Task<IActionResult> GetPostThreadComments(int postId, int threadId)
+        {
+            var comments = await this.postCommentService.GetPostThreadComments(
+                   postId: postId,
+                   threadId: threadId,
+                   userId: User.GetUserId());
+
+            if (comments.Count == 0)
+            {
+                return this.NotFound("No comments were found");
+            }
+
+            var model = await this.postModelFactory.PreparePostCommentTree(comments);
+
+
+            return this.Ok(model);
         }
     }
 }

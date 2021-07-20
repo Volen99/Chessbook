@@ -2,7 +2,7 @@ import {AfterViewInit, Directive, ElementRef, HostBinding, HostListener} from '@
 
 // Thanks: https://github.com/evseevdev/ngx-textarea-autosize ♥
 @Directive({
-  selector: 'textarea[appMyAutoResize]'
+  selector: 'textarea[appAutoResize]'
 })
 export class TextareaAutoResizeDirective implements AfterViewInit {
   @HostBinding('attr.rows') rows = '1';

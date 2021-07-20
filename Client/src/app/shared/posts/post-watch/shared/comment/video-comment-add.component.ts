@@ -59,8 +59,7 @@ export class VideoCommentAddComponent extends FormReactive implements OnChanges,
     private videoCommentService: VideoCommentService,
     private modalService: NgbModal,
     private router: Router,
-    @Inject(LOCALE_ID) private localeId: string
-  ) {
+    @Inject(LOCALE_ID) private localeId: string) {
     super();
   }
 
@@ -205,7 +204,7 @@ export class VideoCommentAddComponent extends FormReactive implements OnChanges,
     if (this.parentComment) {
       const mentions = this.parentComments
         .filter(c => c.account && c.account.id !== this.user.id) // Don't add mention of ourselves (😎)
-        .map(c => '@' + c.by);
+        .map(c => c.by); // '@' +
 
       const mentionsSet = new Set(mentions);
       const mentionsText = Array.from(mentionsSet).join(' ') + ' ';

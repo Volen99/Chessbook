@@ -11,6 +11,7 @@ import {MarkdownService} from "../../../core/renderer/markdown.service";
 import {UserVideoRateType} from "../models/rate/user-video-rate.type";
 import {UserStore} from "../../../core/stores/user.store";
 import {Notifier} from "../../../core/notification/notifier.service";
+import {scrollToTop} from "../../../helpers/utils";
 
 @Component({
   selector: 'app-post-watch',
@@ -25,6 +26,14 @@ export class PostWatchComponent implements OnInit {
               private restExtractor: RestExtractor, private markdownService: MarkdownService,
               private userStore: UserStore, private notifier: Notifier) {
   }
+
+  get user() {
+    return this.userStore.getUser();
+  }
+
+  // get anonymousUser () {
+  //   return this.userService.getAnonymousUser();
+  // }
 
   ngOnInit(): void {
     this.paramsSub = this.route.params.subscribe(routeParams => {
@@ -110,10 +119,20 @@ export class PostWatchComponent implements OnInit {
       });
   }
 
+  handleTimestampClicked(timestamp: number) {
+    // if (!this.player || this.video.isLive) {
+    //   return;
+    // }
+    //
+    // this.player.currentTime(timestamp);
+    scrollToTop();
+  }
+
 
   private async onVideoFetched(post: PostDetails) {
     // @ts-ignore
     this.post = post.postFromServer;
+    this.post.commentsEnabled = true;
 
     // Re init attributes
     // this.descriptionLoading = false;

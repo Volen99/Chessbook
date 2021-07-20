@@ -1,4 +1,4 @@
-<div class="infinite-cards row" style="margin: 0px">
+<div class="infinite-cards row" style="margin: 0px" *ngIf="this.post">
     <div class="col-md-12 col-lg-7 col-xxxl-6 sharebook-container main-left-right-vertical-border-color main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto r-11wrixw r-61z16t main-primary-column-max-width-600px r-13qz1uu z-index-1"
          style="padding-left: 0px" data-testid="primaryColumn">
         <nb-card style="width: 102.6%">
@@ -74,18 +74,26 @@
                                 id="accessible-list-0">Conversation</h1>
                             <div aria-label="Timeline: Conversation" class="sharebook-container">
                                 <div style="position: relative; min-height: 1215px;">
-                                    <app-post-thread *ngIf="this.post"
+                                    <app-post-thread
                                                      [transform]="this?.setTransform(0)"
                                                      [post]="post">
                                     </app-post-thread>
-                                    <div style="position: absolute; width: 100%; transform: translateY(842.4px); transition: opacity 0.3s ease-out 0s;">
+                                    <div style="position: absolute; width: 100%; transform: translateY(852.4px); transition: opacity 0.3s ease-out 0s;">
                                         <div class="sharebook-container display-block outline-style-none"></div>
+                                        <my-video-comments
+                                                class="border-top"
+                                                [video]="this.post"
+                                                [user]="this.user"
+                                                (timestampClicked)="handleTimestampClicked($event)"
+                                        ></my-video-comments>
                                     </div>
-                                    <div style="position: absolute; width: 100%; transform: translateY(1016px); transition: opacity 0.3s ease-out 0s;">
-                                        <div class="sharebook-container r-c66ptq">
-                                            <div class="sharebook-container r-o52ifk"></div>
-                                        </div>
-                                    </div>
+<!--                                    <div style="position: absolute; width: 100%; transform: translateY(1016px); transition: opacity 0.3s ease-out 0s;">-->
+<!--                                        <div class="sharebook-container r-c66ptq">-->
+<!--                                            <div class="sharebook-container r-o52ifk">-->
+
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                 </div>
                             </div>
                         </section>

@@ -1,5 +1,6 @@
-@use '_variables' as *;
-@use '_mixins' as *;
+@import '_variables';
+@import '_mixins';
+// @use
 
 #highlighted-comment {
   margin-bottom: 25px;
@@ -24,7 +25,7 @@
     @include margin-right(0);
   }
 
-  my-feed {
+  app-feed {
     @include margin-left(5px);
 
     display: inline-block;
@@ -35,7 +36,7 @@
     top: -3px;
   }
 
-  &:hover my-feed {
+  &:hover app-feed {
     opacity: 1;
   }
 }
