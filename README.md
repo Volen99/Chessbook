@@ -27,7 +27,7 @@ Social media for chess players
 <br />
 
 <p align="center">
-  ![chessbook](https://user-images.githubusercontent.com/41373491/128185784-33d47df7-20f1-4cd9-beae-284d65b37e49.PNG)
+    <img src="https://user-images.githubusercontent.com/41373491/128185784-33d47df7-20f1-4cd9-beae-284d65b37e49.PNG" alt="screenshot" />
 </p>
 
 ## License
