@@ -1,17 +1,17 @@
 <h1 align="center">
-  <a href="https://sharebook.com">
-    <span>Sharebook</span>
+  <a href="https://chessbook.com">
+    <span>Chessbook</span>
   </a>
 </h1>
 
 <p align=center>
-  <strong><a href="https://sharebook.com">Website</a></strong>
+  <strong><a href="https://chessbook.com">Website</a></strong>
   | <strong><a href="#contact">Chat with me</a></strong>
-  | <strong><a href="https://framasoft.org/en/#soutenir">Donate</a></strong>
+  | <strong><a href="https://streamlabs.com/volencho/tip">Donate</a></strong>
 </p>
 
 <p align="center">
-The future is near. Try the new social media that has blown in fame the past 3 months
+Social media for chess players
 </p>
 
 <p align="center">
@@ -20,44 +20,14 @@ The future is near. Try the new social media that has blown in fame the past 3 m
 
 <p align="center">
   <a href="https://framasoft.org">
-    <img width="150px" src="https://lutim.cpy.re/FeRgHH8r.png" alt="Framasoft logo"/>
-  </a>
-</p>
-
-<p align="center">
-  <strong>Client</strong>
-
-  <br />
-
-  <a href="https://automate.browserstack.com/public-build/VHUxYy9zYnZqWnkxTTcyNEpPRVdzY2VzN1VhY3hBQUIrYTk2NGFtMnMvTT0tLWxuMk1vVnBzeDJ4cFpFY1JEK2xjSUE9PQ==--cf445693d1fc03efd86a3a5030d079a0de3ece7a">
-    <img src="https://automate.browserstack.com/badge.svg?badge_key=VHUxYy9zYnZqWnkxTTcyNEpPRVdzY2VzN1VhY3hBQUIrYTk2NGFtMnMvTT0tLWxuMk1vVnBzeDJ4cFpFY1JEK2xjSUE9PQ==--cf445693d1fc03efd86a3a5030d079a0de3ece7a"/>
-  </a>
-
-  <a href="https://weblate.framasoft.org/projects/peertube/angular/">
-    <img src="https://weblate.framasoft.org/widgets/peertube/-/angular/svg-badge.svg"/>
-  </a>
-</p>
-
-<p align="center">
-  <strong>Server</strong>
-
-  <br />
-
-  <a href="https://github.com/Chocobozzz/PeerTube/actions?query=workflow%3A%22Test+Suite%22+branch%3Adevelop">
-    <img alt="test suite status" src="https://github.com/Chocobozzz/PeerTube/workflows/Test%20Suite/badge.svg" />
-  </a>
-
-  <a href="http://standardjs.com/">
-    <img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg" alt="JavaScript Style Guide" />
+    <img width="150px" src="https://games.lol/wp-content/uploads/2020/12/Chess-free-full-version-150x150.jpg.webp" alt="Framasoft logo"/>
   </a>
 </p>
 
 <br />
 
 <p align="center">
-  <a href="https://framatube.org/videos/watch/217eefeb-883d-45be-b7fc-a788ad8507d3">
-    <img src="http://lutim.cpy.re/9CLXh0Ys.png" alt="screenshot" />
-  </a>
+    <img src="https://user-images.githubusercontent.com/41373491/128185784-33d47df7-20f1-4cd9-beae-284d65b37e49.PNG" alt="screenshot" />
 </p>
 
 ## License
