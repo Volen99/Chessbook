@@ -5,9 +5,9 @@
 </h1>
 
 <p align=center>
-  <strong><a href="https://sharebook.com">Website</a></strong>
+  <strong><a href="https://chessbook.com">Website</a></strong>
   | <strong><a href="#contact">Chat with me</a></strong>
-  | <strong><a href="https://framasoft.org/en/#soutenir">Donate</a></strong>
+  | <strong><a href="https://streamlabs.com/volencho/tip">Donate</a></strong>
 </p>
 
 <p align="center">
@@ -20,7 +20,7 @@ The future is near. Try the new social media that has blown in fame the past 3 m
 
 <p align="center">
   <a href="https://framasoft.org">
-    <img width="150px" src="https://lutim.cpy.re/FeRgHH8r.png" alt="Framasoft logo"/>
+    <img width="150px" src="https://games.lol/wp-content/uploads/2020/12/Chess-free-full-version-150x150.jpg.webp" alt="Framasoft logo"/>
   </a>
 </p>
 
