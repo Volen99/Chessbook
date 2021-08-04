@@ -1,19 +1,33 @@
-import { RegisterClientFormFieldOptions, RegisterClientHookOptions, RegisterClientVideoFieldOptions } from '../app/shared/models';
+import {
+  RegisterClientFormFieldOptions,
+  RegisterClientHookOptions,
+  RegisterClientSettingsScript,
+  RegisterClientVideoFieldOptions,
+  ServerConfig
+} from '@shared/models'
 
 export type RegisterClientOptions = {
   registerHook: (options: RegisterClientHookOptions) => void
 
   registerVideoField: (commonOptions: RegisterClientFormFieldOptions, videoFormOptions: RegisterClientVideoFieldOptions) => void
 
+  registerSettingsScript: (options: RegisterClientSettingsScript) => void
+
   peertubeHelpers: RegisterClientHelpers
-};
+}
 
 export type RegisterClientHelpers = {
   getBaseStaticRoute: () => string
 
+  getBaseRouterRoute: () => string
+
   isLoggedIn: () => boolean
 
-  getSettings: () => Promise<{ [name: string]: string }>
+  getAuthHeader: () => { 'Authorization': string } | undefined
+
+  getSettings: () => Promise<{ [ name: string ]: string }>
+
+  getServerConfig: () => Promise<ServerConfig>
 
   notifier: {
     info: (text: string, title?: string, timeout?: number) => void,
@@ -35,4 +49,4 @@ export type RegisterClientHelpers = {
   }
 
   translate: (toTranslate: string) => Promise<string>
-};
+}

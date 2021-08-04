@@ -18,7 +18,7 @@ export const clientFilterHookObject = {
   'filter:api.recently-added-videos.videos.list.params': true,
   'filter:api.recently-added-videos.videos.list.result': true,
 
-  // Filter params/result of the function that fetch videos of the users subscription page
+  // Filter params/result of the function that fetch videos of the user subscription page
   'filter:api.user-subscriptions-videos.videos.list.params': true,
   'filter:api.user-subscriptions-videos.videos.list.result': true,
 
@@ -34,12 +34,15 @@ export const clientFilterHookObject = {
   'filter:api.video-watch.video-thread-replies.list.params': true,
   'filter:api.video-watch.video-thread-replies.list.result': true,
 
-  // Filter params/result of the function that fetch videos according to the users search
+  // Filter params/result of the function that fetch videos according to the user search
   'filter:api.search.videos.list.params': true,
   'filter:api.search.videos.list.result': true,
-  // Filter params/result of the function that fetch video-channels according to the users search
+  // Filter params/result of the function that fetch video channels according to the user search
   'filter:api.search.video-channels.list.params': true,
   'filter:api.search.video-channels.list.result': true,
+  // Filter params/result of the function that fetch video playlists according to the user search
+  'filter:api.search.video-playlists.list.params': true,
+  'filter:api.search.video-playlists.list.result': true,
 
   // Filter form
   'filter:api.signup.registration.create.params': true,
@@ -51,6 +54,12 @@ export const clientFilterHookObject = {
   // Filter our SVG icons content
   'filter:internal.common.svg-icons.get-content.params': true,
   'filter:internal.common.svg-icons.get-content.result': true,
+
+  // Filter left menu links
+  'filter:left-menu.links.create.result': true,
+
+  // Filter videojs options built for PeerTube player
+  'filter:internal.player.videojs.options.result': true
 };
 
 export type ClientFilterHookName = keyof typeof clientFilterHookObject;
@@ -67,7 +76,7 @@ export const clientActionHookObject = {
   'action:video-watch.player.loaded': true,
   // Fired when the video watch page comments(threads) are loaded and load more comments on scroll
   'action:video-watch.video-threads.loaded': true,
-  // Fired when a users click on 'View x replies' and they're loaded
+  // Fired when a user click on 'View x replies' and they're loaded
   'action:video-watch.video-thread-replies.loaded': true,
 
   // Fired when the video edit page (upload, URL/torrent import, update) is being initialized
@@ -85,8 +94,31 @@ export const clientActionHookObject = {
   // Fired when the registration page is being initialized
   'action:signup.register.init': true,
 
+  // PeerTube >= 3.2
+  // Fired when the admin plugin settings page is being initialized
+  'action:admin-plugin-settings.init': true,
+
+  // Fired when the video upload page is being initalized
+  'action:video-upload.init': true,
+  // Fired when the video import by URL page is being initalized
+  'action:video-url-import.init': true,
+  // Fired when the video import by torrent/magnet URI page is being initalized
+  'action:video-torrent-import.init': true,
+  // Fired when the "Go Live" page is being initalized
+  'action:go-live.init': true,
+
+  // Fired when the user explicitely logged in/logged out
+  'action:auth-user.logged-in': true,
+  'action:auth-user.logged-out': true,
+  // Fired when the application loaded user information (using tokens from the local storage or after a successful login)
+  'action:auth-user.information-loaded': true,
+
+  // Fired when the modal to download a video/caption is shown
+  'action:modal.video-download.shown': true,
+
   // ####### Embed hooks #######
-  // In embed scope, peertube helpers are not available
+  // /!\ In embed scope, peertube helpers are not available
+  // ###########################
 
   // Fired when the embed loaded the player
   'action:embed.player.loaded': true
@@ -98,5 +130,5 @@ export const clientHookObject = Object.assign({}, clientFilterHookObject, client
 export type ClientHookName = keyof typeof clientHookObject;
 
 export interface ClientHook {
-  runHook <T> (hookName: ClientHookName, result?: T, params?: any): Promise<T>;
+  runHook<T>(hookName: ClientHookName, result?: T, params?: any): Promise<T>;
 }
