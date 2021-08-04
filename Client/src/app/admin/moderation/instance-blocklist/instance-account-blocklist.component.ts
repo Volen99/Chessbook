@@ -3,7 +3,7 @@ import {BlocklistComponentType} from "../../../shared/shared-moderation/blocklis
 import {GenericAccountBlocklistComponent} from "../../../shared/shared-moderation/account-blocklist.component";
 
 import {
-  faTimes,
+  faUserTimes,
 } from '@fortawesome/pro-light-svg-icons';
 
 
@@ -19,5 +19,5 @@ export class InstanceAccountBlocklistComponent extends GenericAccountBlocklistCo
     return 'InstanceAccountBlocklistComponent';
   }
 
-  faTimes = faTimes;
+  faUserTimes = faUserTimes;
 }

@@ -20,8 +20,11 @@ namespace Chessbook.Web.Api.Factories
                 Id = relationship.Id,
                 FollowedBy = relationship.FollowedBy,
                 Following = relationship.Following,
-                SourceId = relationship.SourceId,
-                TargetId = relationship.TargetId,
+                Blocking = relationship.Blocking,
+                BlockedBy = relationship.BlockedBy,
+                Requested = relationship.Requested,
+                Endorsed = relationship.Endorsed,
+                Note = relationship.Note,
             };
 
             return model;

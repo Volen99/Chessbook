@@ -30,7 +30,7 @@ textarea {
   display: flex;
   align-items: center;
 
-  my-timestamp-input {
+  app-timestamp-input {
     @include margin-left(10px);
   }
 }

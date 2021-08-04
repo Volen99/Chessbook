@@ -13,11 +13,11 @@ export class User implements IUser {
   private REGEX_PROFILE_IMAGE_SIZE: string = "_[^\\W_]+(?=(?:\\.[a-zA-Z0-9_]+$))";
 
   static GET_ACTOR_AVATAR_URL(actor: object) {
-    return UserData.GET_ACTOR_AVATAR_URL(actor) || this.GET_DEFAULT_AVATAR_URL();
+    return UserData.GET_ACTOR_AVATAR_URL(actor) || this.GET_DEFAULT_ANONYMOUS_AVATAR_URL();
   }
 
-  static GET_DEFAULT_AVATAR_URL() {
-    return `${window.location.origin}/client/assets/images/default-avatar-account.png`;
+  static GET_DEFAULT_ANONYMOUS_AVATAR_URL() {
+    return `assets/images/default_profile_200x200.png`;
   }
 
   constructor(hash: Partial<IUser>) {
@@ -57,6 +57,8 @@ export class User implements IUser {
     this.withheldInCountries = hash.withheldInCountries;
     this.withheldScope = hash.withheldScope;
 
+    this.theme = hash.theme; // or anonymous user
+
     this.suspended = hash.suspended;
     this.suspendedReason = hash.suspendedReason;
 
@@ -83,6 +85,8 @@ export class User implements IUser {
 
     this.notificationSettings = hash.notificationSettings;
   }
+
+  theme: string; // for anonymous user
 
   id: number;
   idStr: string;

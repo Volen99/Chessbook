@@ -326,6 +326,17 @@ noscript,
     }
   }
 
+  // default theme color
+  .dtc {
+    color: nb-theme(text-basic-color);
+  }
+
+  .user-display-name {
+    min-width: 0px;
+    overflow-wrap: break-word;
+    color: nb-theme(text-basic-color);
+  }
+
 }
 
 .element-border-color-rgba {
@@ -1248,3 +1259,9 @@ noscript,
   margin: 0 15px;
   flex-grow: 1;
 }
+
+
+
+
+
+

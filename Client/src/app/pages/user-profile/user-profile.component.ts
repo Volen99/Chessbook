@@ -233,8 +233,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         });
     }
 
-    let relationshipBetweenParameters = new GetRelationshipBetweenParameters(this.userStore.getUser().id, this.profileCurrent.id);
-    this.relationshipsService.show(relationshipBetweenParameters)
+    // let relationshipBetweenParameters = new GetRelationshipBetweenParameters(this.userStore.getUser().id, this.profileCurrent.id);
+    this.relationshipsService.fetchRelationships([this.profileCurrent.id])
       .subscribe((data: IRelationshipDetails) => {
         this.relationshipDetails = data;
       });
@@ -273,7 +273,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private updateModerationActions() {
-    if (!!this.userStore.getUser()) {
+    if (!this.userStore.isLoggedIn()) {
       return;
     }
 

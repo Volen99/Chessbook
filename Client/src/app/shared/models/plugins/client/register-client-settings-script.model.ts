@@ -1,4 +1,4 @@
-import { RegisterServerSettingOptions } from '../server'
+import {RegisterServerSettingOptions} from "../register-server-setting.model";
 
 export interface RegisterClientSettingsScript {
   isSettingHidden (options: {

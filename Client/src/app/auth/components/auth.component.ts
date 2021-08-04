@@ -8,8 +8,8 @@ import {NbAuthService} from "../../sharebook-nebular/auth/services/auth.service"
   selector: 'ngx-auth',
   styleUrls: ['./auth.component.scss'],
   template: `
-      <nb-layout>
-          <nb-layout-column>
+<!--      <nb-layout>-->
+<!--          <nb-layout-column>-->
               <nb-card>
                   <nb-card-header>
                       <nav class="navigation">
@@ -24,8 +24,8 @@ import {NbAuthService} from "../../sharebook-nebular/auth/services/auth.service"
                       </nb-auth-block>
                   </nb-card-body>
               </nb-card>
-          </nb-layout-column>
-      </nb-layout>
+<!--          </nb-layout-column>-->
+<!--      </nb-layout>-->
   `,
 })
 export class NgxAuthComponent implements OnDestroy {

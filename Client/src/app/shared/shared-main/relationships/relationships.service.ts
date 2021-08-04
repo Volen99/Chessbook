@@ -11,13 +11,8 @@ export class RelationshipsService {
   constructor(private restService: RestService, private relationshipsApi: RelationshipsApi) {
   }
 
-  show(parameters: IGetRelationshipBetweenParameters) {
-    let params = new HttpParams();
-
-    params = this.restService.addParameterToQuery(params, "source_id", parameters.SourceUser.idStr);
-    params = this.restService.addParameterToQuery(params, "target_id", parameters.TargetUser.idStr);
-
-    return this.relationshipsApi.show(params, 'show');
+  fetchRelationships(accountIds: number[]) {
+    return this.relationshipsApi.fetchRelationships(`relationships?${accountIds.map(id => `id[]=${id}`).join('&')}`);
   }
 
 }

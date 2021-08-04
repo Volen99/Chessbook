@@ -1,4 +1,4 @@
 export interface InstallOrUpdatePlugin {
-  npmName?: string
-  path?: string
+  npmName?: string;
+  path?: string;
 }

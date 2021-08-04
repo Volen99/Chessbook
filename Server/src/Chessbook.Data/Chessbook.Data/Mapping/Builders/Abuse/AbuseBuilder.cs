@@ -17,7 +17,7 @@ namespace Chessbook.Data.Mapping.Builders.Abuse
                 .WithColumn(nameof(Core.Domain.Abuse.Abuse.ModerationComment)).AsString(ChessbookConstants.CONSTRAINTS_FIELDS.ABUSES.MODERATION_COMMENT.Max).Nullable()
                 .WithColumn(nameof(Core.Domain.Abuse.Abuse.PredefinedReasons)).AsString().Nullable()
                 .WithColumn(nameof(Core.Domain.Abuse.Abuse.ReporterAccountId)).AsInt32().Nullable().ForeignKey<Customer>().OnDelete(Rule.SetNull)
-                .WithColumn(nameof(Core.Domain.Abuse.Abuse.FlaggedAccountId)).AsInt32().Nullable().ForeignKey<Customer>().OnDelete(Rule.None); /*.OnDelete(Rule.SetNull)*/ // ask Kenov
+                .WithColumn(nameof(Core.Domain.Abuse.Abuse.FlaggedAccountId)).AsInt32().Nullable().ForeignKey<Customer>().OnDelete(Rule.None);
         }
     }
 }

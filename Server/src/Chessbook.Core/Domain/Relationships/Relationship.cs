@@ -20,5 +20,9 @@
 
         public bool BlockedBy { get; set; } // Is this user blocking you?
 
+        public bool Endorsed { get; set; }
+
+        public string Note { get; set; }
+
     }
 }

@@ -66,9 +66,9 @@ export class ActorAvatarComponent {
   }
 
   get defaultAvatarUrl() {
-    if (this.channel) return User.GET_DEFAULT_AVATAR_URL();
+    if (this.channel) return User.GET_DEFAULT_ANONYMOUS_AVATAR_URL();
 
-    return User.GET_DEFAULT_AVATAR_URL();
+    return User.GET_DEFAULT_ANONYMOUS_AVATAR_URL();
   }
 
   get avatarUrl() {

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { Observable, of as observableOf } from 'rxjs';
+import {Observable, of as observableOf, ReplaySubject} from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
 import { NbAuthStrategy } from '../strategies/auth-strategy';
@@ -8,6 +8,8 @@ import { NB_AUTH_STRATEGIES } from '../auth.options';
 import { NbAuthResult } from './auth-result';
 import { NbTokenService } from './token/token.service';
 import { NbAuthToken } from './token/token';
+import {Subject} from "rxjs/Subject";
+import {AuthStatus} from "../../../core/auth/auth-status.model";
 
 /**
  * Common authentication service.
@@ -16,8 +18,18 @@ import { NbAuthToken } from './token/token';
 @Injectable()
 export class NbAuthService {
 
+  private loginChanged: Subject<AuthStatus>;
+  loginChangedSource: Observable<AuthStatus>;
+  userInformationLoaded = new ReplaySubject<boolean>(1);
+
   constructor(protected tokenService: NbTokenService,
               @Inject(NB_AUTH_STRATEGIES) protected strategies) {
+    this.loginChanged = new Subject<AuthStatus>();
+    this.loginChangedSource = this.loginChanged.asObservable();
+  }
+
+  private setStatus (status: AuthStatus) {
+    this.loginChanged.next(status);
   }
 
   /**
@@ -137,6 +149,7 @@ export class NbAuthService {
           if (result.isSuccess()) {
             this.tokenService.clear()
               .pipe(map(() => result));
+            this.setStatus(AuthStatus.LoggedOut);
           }
           return observableOf(result);
         }),

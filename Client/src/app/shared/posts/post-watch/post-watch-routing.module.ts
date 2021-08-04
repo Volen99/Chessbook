@@ -8,9 +8,6 @@ const routes: Routes = [
     path: '',
     component: PostWatchComponent,
   },
-  {
-    path: 'photo/:photoId',
-  }
 ];
 
 @NgModule({

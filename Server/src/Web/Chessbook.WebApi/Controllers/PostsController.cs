@@ -28,6 +28,8 @@
     using Chessbook.Services.Entities;
     using Chessbook.Web.Api.Models.Posts;
     using Chessbook.Core.Domain.Post;
+    using Microsoft.AspNetCore.Authorization;
+    using Chessbook.Data.Models;
 
     [Route("posts")]
     public class PostsController : BaseApiController
@@ -300,6 +302,11 @@
                 return this.BadRequest();
             }
 
+            if (comment.InReplyToCommentId != null)
+            {
+                return this.BadRequest("Post comment is not a thread.");
+            }
+
             var model = await this.postModelFactory.PreparePostCommentModelAsync(comment);
 
             return this.Ok(model);
@@ -320,16 +327,9 @@
             {
                 return this.BadRequest("Post comment is not associated to this video.");
             }
+            
 
-            if (postComment.InReplyToCommentId != null)
-            {
-                return this.BadRequest("Post comment is not a thread.");
-            }
-
-           var res = this.postCommentService.Create(User.GetUserId(), postId, input.Text, postComment);
-
-
-            var comment = await this.postCommentService.Create(User.GetUserId(), postId, input.Text);
+            var comment = await this.postCommentService.Create(User.GetUserId(), postId, input.Text, postComment);
 
             if (comment == null)
             {
@@ -359,11 +359,15 @@
                 models.Add(commentModel);
             }
 
+            // should return all the post comments, not the pagintation ones only.
+            var totalNotDeletedComments = await this.postCommentService.GetPostCommentsCount(postId);
+
 
             return this.Ok(new
             {
                 total = comments.TotalCount,
                 data = models,
+                totalNotDeletedComments = totalNotDeletedComments,
             });
         }
 
@@ -371,20 +375,80 @@
         [Route("{postId:int}/comment-threads/{threadId:int}")]
         public async Task<IActionResult> GetPostThreadComments(int postId, int threadId)
         {
-            var comments = await this.postCommentService.GetPostThreadComments(
+            var thread = await this.postCommentService.GetById(threadId);
+
+            var threadRepliesThatMightHaveDeletedParentComment = await this.postCommentService.GetPostThreadComments(
                    postId: postId,
                    threadId: threadId,
                    userId: User.GetUserId());
 
-            if (comments.Count == 0)
+            threadRepliesThatMightHaveDeletedParentComment.Insert(0, thread);
+
+            var threadReplies = new List<PostComment>();
+            threadReplies.Add(threadRepliesThatMightHaveDeletedParentComment.First());
+            if (threadRepliesThatMightHaveDeletedParentComment.Count == 0)
             {
                 return this.NotFound("No comments were found");
             }
 
-            var model = await this.postModelFactory.PreparePostCommentTree(comments);
+            // TODO: can be much better written
+            foreach (var threadReply in threadRepliesThatMightHaveDeletedParentComment)
+            {
+                if (!threadReply.OriginCommentId.HasValue)
+                {
+                    continue;
+                }
+
+                if (threadReply.InReplyToCommentId.HasValue)
+                {
+                    var parentComment = await this.postCommentService.GetById(threadReply.InReplyToCommentId.Value, true);
+                    if (!parentComment.Deleted)
+                    {
+                        threadReplies.Add(threadReply);
+                    }
+
+                }
+            }
+
+            var model = await this.postModelFactory.PreparePostCommentTree(threadReplies);
 
 
             return this.Ok(model);
+        }
+
+        [HttpDelete]
+        [Route("{postId:int}/comments/{commentId:int}")]
+        [Authorize]
+        public async Task<IActionResult> DeletePostComment(int commentId)
+        {
+            // try to get a comment with the specified id
+            var comment = await this.postCommentService.GetById(commentId);
+            if (comment == null)
+            {
+                return this.NotFound(nameof(comment));
+            }
+
+            await this.postCommentService.Delete(comment);
+
+            return this.Ok();
+
+        }
+
+        private async Task<List<int>> BuildBlockerAccountIds(int postId, Customer currentLoggedUser)
+        {
+            var blockerAccountIds = new List<int>() { User.GetUserId() };
+
+            if (currentLoggedUser != null)
+            {
+                blockerAccountIds.Add(currentLoggedUser.Id);
+            }
+
+            // if (isVideoOwned)
+
+            var postOwnerAccount = await this.postService.LoadAccountIdFromVideo(postId);
+            blockerAccountIds.Add(postOwnerAccount.Id);
+
+            return blockerAccountIds;
         }
     }
 }

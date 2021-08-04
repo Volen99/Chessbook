@@ -31,6 +31,8 @@ export interface IUser extends IUserIdentifier {
 
   location: string;
 
+  theme: string;
+
   geoEnabled?: boolean;
 
   url: string;

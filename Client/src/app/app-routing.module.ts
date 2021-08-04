@@ -23,7 +23,6 @@ const routes: Routes = [
       },
       {
         path: 'explore',
-        canActivate: [AuthGuard],
         loadChildren: () => import('./pages/explore/explore.module').then(m => m.ExploreModule),
         canActivateChild: [ MetaGuard ],
       },

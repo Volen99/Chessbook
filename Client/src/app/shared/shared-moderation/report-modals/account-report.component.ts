@@ -3,6 +3,10 @@ import {mapValues, pickBy} from 'lodash-es';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
 
+import {
+  faTimes,
+} from '@fortawesome/pro-light-svg-icons';
+
 import {AbuseService} from '../abuse.service';
 import {FormReactive} from "../../shared-forms/form-reactive";
 import {AbusePredefinedReasonsString} from "../../models/moderation/abuse/abuse-reason.model";
@@ -61,6 +65,8 @@ export class AccountReportComponent extends FormReactive implements OnInit {
 
     this.predefinedReasons = this.abuseService.getPrefefinedReasons('account');
   }
+
+  faTimes = faTimes;
 
   show() {
     this.openedModal = this.modalService.open(this.modal, {centered: true, keyboard: false, size: 'lg'});

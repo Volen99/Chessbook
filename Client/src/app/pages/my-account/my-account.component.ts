@@ -1,10 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 
+import {
+  faUserTimes,
+  faTimes,
+  faFlag,
+} from '@fortawesome/pro-light-svg-icons';
+
 import {ScreenService} from "../../core/wrappers/screen.service";
 import {AuthUser} from "../../core/auth/auth-user.model";
+import {TopMenuDropdownParam} from "../../shared/shared-main/misc/top-menu-dropdown.component";
 
 @Component({
-  selector: 'my-my-account',
+  selector: 'my-account',
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.scss']
 })
@@ -21,94 +28,40 @@ export class MyAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.menuEntries = this.getMenuItems();
+    this.buildMenu();
   }
 
-  menuEntries = this.getMenuItems();
+  menuEntries: TopMenuDropdownParam[] = [];
 
-  getMenuItems() {
-    // const moderationEntries: TopMenuDropdownParam = {
-    //   label: `Moderation`,
-    //   children: [
-    //     {
-    //       label: `Muted accounts`,
-    //       routerLink: '/my-account/blocklist/accounts',
-    //       iconName: 'user-x'
-    //     },
-    //     {
-    //       label: `Muted servers`,
-    //       routerLink: '/my-account/blocklist/servers',
-    //       iconName: 'peertube-x'
-    //     },
-    //     {
-    //       label: `Abuse reports`,
-    //       routerLink: '/my-account/abuses',
-    //       iconName: 'flag'
-    //     }
-    //   ]
-    // };
+  private buildMenu () {
+    const moderationEntries: TopMenuDropdownParam = {
+      label: `Moderation`,
+      children: [
+        {
+          label: `Muted accounts`,
+          routerLink: '/my-account/blocklist/accounts',
+          iconName: faUserTimes,
+        },
+        {
+          label: `Abuse reports`,
+          routerLink: '/my-account/abuses',
+          iconName: faFlag,
+        }
+      ]
+    };
 
-    return [
-      {title: `Muted accounts`, link: '/my-account/blocklist/accounts', icon: 'person-delete-outline'},
-      {title: `Muted servers`, link: '/my-account/notifications', icon: 'play-circle-outline'},
-      {title: `Abuse reports`, link: '/my-account/abuses', icon: 'flag-outline'},
+    this.menuEntries = [
+      {
+        label: `Settings`,
+        routerLink: '/my-account/settings'
+      },
+
+      {
+        label: `Notifications`,
+        routerLink: '/my-account/notifications'
+      },
+
+      moderationEntries
     ];
   }
-
-  tabs: any[] = [
-    {
-      title: 'Settings',
-      route: '/my-account/settings',
-    },
-    // {
-    //   title: 'Notifications',
-    //   route: [ '/my-account/notifications' ],
-    // },
-    {
-      title: 'Moderation',
-      route: 'abuses',
-    },
-  ];
-
-  // private buildMenu() {
-  //   const moderationEntries: TopMenuDropdownParam = {
-  //     label: `Moderation`,
-  //     children: [
-  //       {
-  //         label: `Muted accounts`,
-  //         routerLink: '/my-account/blocklist/accounts',
-  //         iconName: 'user-x'
-  //       },
-  //       {
-  //         label: `Muted servers`,
-  //         routerLink: '/my-account/blocklist/servers',
-  //         iconName: 'peertube-x'
-  //       },
-  //       {
-  //         label: `Abuse reports`,
-  //         routerLink: '/my-account/abuses',
-  //         iconName: 'flag'
-  //       }
-  //     ]
-  //   };
-  //
-  //   this.menuEntries = [
-  //     {
-  //       label: `Settings`,
-  //       routerLink: '/my-account/settings'
-  //     },
-  //
-  //     {
-  //       label: `Notifications`,
-  //       routerLink: '/my-account/notifications'
-  //     },
-  //
-  //     {
-  //       label: `Applications`,
-  //       routerLink: '/my-account/applications'
-  //     },
-  //
-  //     moderationEntries
-  //   ];
-  // }
 }

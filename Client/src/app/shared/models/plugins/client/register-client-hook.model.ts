@@ -1,7 +1,7 @@
-import { ClientHookName } from './client-hook.model'
+import { ClientHookName } from './client-hook.model';
 
 export interface RegisterClientHookOptions {
-  target: ClientHookName
-  handler: Function
-  priority?: number
+  target: ClientHookName;
+  handler: Function;
+  priority?: number;
 }

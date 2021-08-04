@@ -1,5 +1,6 @@
 ﻿using Chessbook.Data.Models;
 using Chessbook.IdentityManagementCore;
+using Chessbook.Services.Blocklist;
 using Chessbook.Services.Data.Services;
 using Chessbook.Web.Api;
 using Chessbook.Web.Api.Factories;
@@ -132,6 +133,8 @@ namespace Nop.Web.Infrastructure
             services.AddScoped<IUserNotificationModelFactory, UserNotificationModelFactory>();
             services.AddScoped<IUserNotificationSettingModelFactory, UserNotificationSettingModelFactory>();
             services.AddScoped<IAbuseModelFactory, AbuseModelFactory>();
+            services.AddScoped<IBlocklistService, BlocklistService>();
+            services.AddScoped<IUserBlocklistFactory, UserBlocklistFactory>();
         }
 
         /// <summary>

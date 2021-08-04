@@ -6,8 +6,9 @@
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { NB_DATE_SERVICE_OPTIONS, NbDateService } from '@nebular/theme';
 import { NbDateFnsOptions, NbDateFnsDateService } from './services/date-fns-date.service';
+import {NbDateService} from "../theme/components/calendar-kit/services/date.service";
+import {NB_DATE_SERVICE_OPTIONS} from "../theme/components/datepicker/datepicker.directive";
 
 const dateFnsServiceProvider = { provide: NbDateService, useClass: NbDateFnsDateService };
 

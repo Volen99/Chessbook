@@ -28,14 +28,14 @@ export class RedirectService {
     }
 
     // Load default route
-    this.serverService.getConfig()
-      .subscribe(config => {
-        const defaultRouteConfig = config.instance.defaultClientRoute;
-        const defaultTrendingConfig = config.trending.videos.algorithms.default;
-
-        if (defaultRouteConfig) this.defaultRoute = defaultRouteConfig;
-        if (defaultTrendingConfig) this.defaultTrendingAlgorithm = defaultTrendingConfig;
-      });
+    // this.serverService.getConfig()
+    //   .subscribe(config => {
+    //     const defaultRouteConfig = config.instance.defaultClientRoute;
+    //     const defaultTrendingConfig = config.trending.videos.algorithms.default;
+    //
+    //     if (defaultRouteConfig) this.defaultRoute = defaultRouteConfig;
+    //     if (defaultTrendingConfig) this.defaultTrendingAlgorithm = defaultTrendingConfig;
+    //   });
 
     // Track previous url
     this.currentUrl = this.router.url;

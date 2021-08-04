@@ -33,6 +33,8 @@
 
         public CustomerModel User { get; set; }                                    // public IUserDTO CreatedBy { get; set; }
 
+        public int CommentsCount { get; set; }
+
         ////[JsonProperty("current_user_retweet")]
         ////public ITweetIdentifier CurrentUserRetweetIdentifier { get; set; }
 

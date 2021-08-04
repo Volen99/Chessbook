@@ -83,7 +83,6 @@ export class TimelineComponent extends AbstractPostList implements OnInit {
   }
 
   setTransform(i: number, post: Post): number {
-    debugger
     if (post.hasMedia) {
       if (!!post?.status) {
         return i * 400.7;

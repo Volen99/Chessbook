@@ -1,8 +1,9 @@
 export const authSettings = {
   guest: {
+    view: ['devices', 'current-guest'],
   },
   registered: {
-    parent: 'guest',
+    /*parent: 'guest',*/
     view: ['devices', 'current-user'],
     edit: ['devices', 'current-user'],
   },

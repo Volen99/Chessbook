@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 
 import {
   faTimes,
+  faUserTimes,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {BlocklistComponentType} from "../../../shared/shared-moderation/blocklist.service";
@@ -20,5 +21,6 @@ export class MyAccountBlocklistComponent extends GenericAccountBlocklistComponen
   }
 
   faTimes = faTimes;
+  faUserTimes = faUserTimes;
 }
 

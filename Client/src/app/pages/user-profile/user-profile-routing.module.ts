@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import { UserProfileComponent } from './user-profile.component';
+import {UserProfileComponent} from './user-profile.component';
 import {FollowingComponent} from "./following/following.component";
 
 const accountsRoutes: Routes = [
@@ -9,8 +9,8 @@ const accountsRoutes: Routes = [
     path: '',
     children: [
       {
-        path : '',
-        pathMatch:'full',
+        path: '',
+        pathMatch: 'full',
         component: UserProfileComponent,
         data: {
           meta: {

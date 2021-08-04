@@ -40,6 +40,7 @@ export class UsersApi {
   }
 
   get(id: number): Observable<any> {
+    debugger
     return this.api.get(`${this.apiController}/${id}`)
       .pipe(map(data => {
         const picture = `${this.api.apiUrl}/${this.apiController}/${data.id}/photo`;

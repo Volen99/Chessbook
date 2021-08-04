@@ -9,13 +9,13 @@ export class PostComment {
   text: string;
   threadId: number;
   inReplyToCommentId: number;
-  videoId: number;
+  postId: number;
   createdAt: Date | string;
   updatedAt: Date | string;
   deletedAt: Date | string;
   isDeleted: boolean;
   account: IUser;
-  totalRepliesFromVideoAuthor: number;
+  totalRepliesFromPostAuthor: number;
   totalReplies: number;
   by: string;
 
@@ -27,13 +27,13 @@ export class PostComment {
     this.text = hash.text;
     this.threadId = hash.threadId;
     this.inReplyToCommentId = hash.inReplyToCommentId;
-    this.videoId = hash.videoId;
+    this.postId = hash.postId;
     this.createdAt = new Date(hash.createdAt.toString());
     this.updatedAt = new Date(hash.updatedAt.toString());
     this.deletedAt = hash.deletedAt ? new Date(hash.deletedAt.toString()) : null;
     this.isDeleted = hash.isDeleted;
     this.account = hash.account;
-    this.totalRepliesFromVideoAuthor = hash.totalRepliesFromVideoAuthor;
+    this.totalRepliesFromPostAuthor = hash.totalRepliesFromPostAuthor;
     this.totalReplies = hash.totalReplies;
 
     if (this.account) {

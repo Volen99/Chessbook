@@ -41,7 +41,7 @@
                                                                                 <div class="sharebook-container align-items-center display-inline-flex flex-direction-row max-width-100-per"><span
                                                                                         class="css-901oao sharebook-text-inherit sharebook-text lights-out-text-color font-family font-weight-800 inside-element-container-line-height min-width-0px white-space-nowrap text-overflow-wrap"><span
                                                                                         class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span
-                                                                                        class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.profileCurrent?.displayName}}</span></span></span>
+                                                                                        class="css-901oao dtc user-display-name inside-element-container-line-height">{{this.profileCurrent?.displayName}}</span></span></span>
                                                                                     <span *ngIf="this.profileCurrent?.protected"
                                                                                           class="css-901oao sharebook-text-inherit flex-direction-row svg-flex-shrink-0 font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><svg
                                                                                             viewBox="0 0 24 24"
@@ -163,7 +163,8 @@
                                                             </div>
                                                         </div>
                                                         <app-follow-button *ngIf="!this.isManageable() && this.profileCurrent"
-                                                                           [account]="this.profileCurrent" [users]="[this.profileCurrent]"></app-follow-button>
+                                                                           [account]="this.profileCurrent" [users]="[this.profileCurrent]"
+                                                                           [blocking]="this.relationshipDetails.blocking"></app-follow-button>
                                                         <a *ngIf="this.isManageable()" nbButton size="medium"
                                                            status="primary"
                                                            shape="round" outline
@@ -185,7 +186,7 @@
                                                                 <div dir="auto"
                                                                      class="css-901oao lights-out-text-color font-family heading-font-size font-weight-800 inside-element-container-line-height min-width-0px text-overflow-wrap">
                     <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span
-                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.profileCurrent?.displayName}}</span></span><span
+                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height user-display-name">{{this.profileCurrent?.displayName}}</span></span><span
                                                                         *ngIf="this.profileCurrent?.protected"
                                                                         class="css-901oao sharebook-text-inherit flex-direction-row svg-flex-shrink-0 font-family heading-font-size inside-element-container-line-height min-width-0px text-overflow-wrap"><svg
                                                                         viewBox="0 0 24 24"
@@ -242,7 +243,7 @@
                                                                 [title]="this.profileCurrent?.followingCount">
                                                             <span style="margin-right: 2px"
                                                                   class="css-901oao sharebook-text-inherit lights-out-text-color font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap">
-                                                                <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
+                                                                <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap dtc">
                                                                      {this.profileCurrent?.followingCount, plural, =1 {1} other {{{ this.profileCurrent?.followingCount | myNumberFormatter }}}}
                                                                 </span>
                                                             </span>
@@ -260,7 +261,7 @@
                                                            [title]="this.profileCurrent?.followersCount">
                                                             <span style="margin-right: 3px"
                                                                   class="css-901oao sharebook-text-inherit lights-out-text-color font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap">
-                                                                <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
+                                                                <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap dtc">
                                                                     {this.profileCurrent?.followersCount, plural, =1 {1} other {{{ this.profileCurrent?.followersCount | myNumberFormatter }}}}
                                                                 </span>
                                                             </span>
@@ -292,9 +293,9 @@
                                                 </div>
                                                 <div class="sharebook-container display-block flex-grow-expand flex-shrink height-100-per overflow-hidden">
                                                     <nb-card>
-                                                        <nb-card-body>
-                                                            <nb-route-tabset [tabs]="tabs" fullWidth></nb-route-tabset>
-                                                        </nb-card-body>
+<!--                                                        <nb-card-body>-->
+<!--                                                            <nb-route-tabset [tabs]="tabs" fullWidth></nb-route-tabset>-->
+<!--                                                        </nb-card-body>-->
                                                     </nb-card>
                                                 </div>
                                             </div>

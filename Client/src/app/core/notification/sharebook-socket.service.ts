@@ -7,6 +7,10 @@ import {InitUserService} from "../../theme/services/init-user.service";
 import {NbAuthService} from "../../sharebook-nebular/auth/services/auth.service";
 import {NbTokenLocalStorage} from "../../sharebook-nebular/auth/services/token/token-storage";
 import {IPost} from "../../shared/posts/models/tweet";
+import {takeUntil} from "rxjs/operators";
+import {IUser} from "../interfaces/common/users";
+import {User} from "../../shared/shared-main/user/user.model";
+import {UserStore} from "../stores/user.store";
 
 export type NotificationEvent = 'new' | 'read' | 'read-all';
 
@@ -17,25 +21,33 @@ export class PeerTubeSocket {
   private msgSignalrSource = new Subject();
   msgReceived$ = this.msgSignalrSource.asObservable();
 
+  private destroy$: Subject<void> = new Subject<void>();
+
   constructor(
     private authService: NbAuthService,
     private auth: NbTokenLocalStorage,
     private initUserService: InitUserService,
-    private ngZone: NgZone
+    private userStore: UserStore,
+    private ngZone: NgZone,
   ) {
-    if (this.initUserService.isReady) {
-      this.SignalrHubUrl = 'https://localhost:5001';
-      this.init();
-    } else {
-      this.initUserService.settingsLoaded$.subscribe(x => {
-        this.SignalrHubUrl = 'https://localhost:5001';
-        this.init();
+
+    this.userStore.onUserStateChange()
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe((user: IUser) => {
+        if (user) {
+          this.SignalrHubUrl = 'https://localhost:5001';
+          this.init();
+        }
+
       });
-    }
   }
 
-   stop() {
+  stop() {
     this._hubConnection.stop();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private init() {
@@ -92,7 +104,6 @@ export class PeerTubeSocket {
   private notificationSubject = new Subject<{ type: NotificationEvent, notification?: UserNotification }>();
 
 
-
   private async initNotificationSocket() {
     this._hubConnection.on("newNotification", (n: UserNotification) => {
       this.ngZone.run(() => this.dispatchNotificationEvent('new', n));
@@ -105,7 +116,7 @@ export class PeerTubeSocket {
       return;
     }
 
-    this._hubConnection.invoke('SendNotification', { post });
+    this._hubConnection.invoke('SendNotification', {post});
   }
 
 }

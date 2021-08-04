@@ -2,7 +2,7 @@ import {Directive, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {fromEvent, Observable, of, ReplaySubject, Subscription} from "rxjs";
 import {Subject} from "rxjs/Subject";
-import {debounceTime, first, map, switchMap, tap} from "rxjs/operators";
+import {debounceTime, first, map, switchMap, takeUntil, tap} from "rxjs/operators";
 
 import {ComponentPaginationLight} from "../../../core/rest/component-pagination.model";
 import {PostSortField} from "../../posts/models/post-sort-field.type";
@@ -130,6 +130,9 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
     if (this.resizeSubscription) {
       this.resizeSubscription.unsubscribe();
     }
+
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   disableForReuse() {
@@ -145,6 +148,7 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
   }
 
   loading = false;
+
   onNearOfBottom() {
     if (this.disabled) {
       return;
@@ -159,7 +163,6 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
       return;
     }
 
-    debugger
     console.log('near of bottom');
     this.pagination.currentPage += 1;
 
@@ -290,15 +293,23 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
       : 'all';
   }
 
+  private destroy$: Subject<void> = new Subject<void>();
+
   protected enableAllFilterIfPossible() {
     if (!!this.userStore.getUser()) {
       return;
     }
 
-    this.initCurrentUser.settingsLoaded$
-      .subscribe(() => {
-        const user = this.userStore.getUser();
-        this.displayModerationBlock = user.hasRight(UserRight.SEE_ALL_VIDEOS);
+    this.userStore.onUserStateChange()
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe((userRes: IUser) => {
+        if (userRes) {
+          const user = userRes;
+          this.displayModerationBlock = user.hasRight(UserRight.SEE_ALL_VIDEOS);
+        }
+
       });
   }
 

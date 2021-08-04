@@ -36,10 +36,14 @@ namespace Chessbook.Web.Api.Controllers
         }
 
         [HttpGet]
-        [Route("show")]
-        public async Task<IActionResult> GetRelationship([FromQuery] QueryGetRelationshipInput input)
+        public async Task<IActionResult> GetRelationship([FromQuery(Name = "id[]")] int[] ids)
         {
-            var relationship = await this.relationshipService.GetByUsersId(input.SourceId, input.TargetId);
+            var relationship = await this.relationshipService.GetByUsersId(User.GetUserId(), ids[0]);
+
+            if (relationship == null)
+            {
+                return this.NotFound();
+            }
 
             var model = this.relationshipModelFactory.PrepareRelationshipModel(relationship);
 

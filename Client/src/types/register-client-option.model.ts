@@ -1,10 +1,10 @@
+import {ServerConfig} from "../app/shared/models/server/server-config.model";
+import {RegisterClientSettingsScript} from "../app/shared/models/plugins/client/register-client-settings-script.model";
 import {
   RegisterClientFormFieldOptions,
   RegisterClientHookOptions,
-  RegisterClientSettingsScript,
-  RegisterClientVideoFieldOptions,
-  ServerConfig
-} from '@shared/models'
+  RegisterClientVideoFieldOptions
+} from "../app/shared/models";
 
 export type RegisterClientOptions = {
   registerHook: (options: RegisterClientHookOptions) => void
@@ -14,7 +14,7 @@ export type RegisterClientOptions = {
   registerSettingsScript: (options: RegisterClientSettingsScript) => void
 
   peertubeHelpers: RegisterClientHelpers
-}
+};
 
 export type RegisterClientHelpers = {
   getBaseStaticRoute: () => string
@@ -25,7 +25,7 @@ export type RegisterClientHelpers = {
 
   getAuthHeader: () => { 'Authorization': string } | undefined
 
-  getSettings: () => Promise<{ [ name: string ]: string }>
+  getSettings: () => Promise<{ [name: string]: string }>
 
   getServerConfig: () => Promise<ServerConfig>
 
@@ -49,4 +49,4 @@ export type RegisterClientHelpers = {
   }
 
   translate: (toTranslate: string) => Promise<string>
-}
+};

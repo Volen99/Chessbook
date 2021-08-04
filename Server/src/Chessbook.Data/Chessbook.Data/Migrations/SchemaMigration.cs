@@ -23,6 +23,7 @@ using Nop.Core.Domain.Media;
 using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Stores;
 using Nop.Core.Domain.Tasks;
+using Chessbook.Core.Domain.Customers;
 
 namespace Nop.Data.Migrations
 {
@@ -137,6 +138,8 @@ namespace Nop.Data.Migrations
 
             _migrationManager.BuildTable<UserNotification>(Create);
             _migrationManager.BuildTable<UserNotificationSettingModel>(Create);
+
+            _migrationManager.BuildTable<UserBlocklist>(Create);
 
         }
     }

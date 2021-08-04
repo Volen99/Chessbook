@@ -18,10 +18,7 @@ export class GenericAccountBlocklistComponent extends RestTable implements OnIni
   sort: SortMeta = {field: 'createdAt', order: -1};
   pagination: RestPagination = {count: this.rowsPerPage, start: 0};
 
-  constructor(
-    private notifier: NbToastrService,
-    private blocklistService: BlocklistService
-  ) {
+  constructor(private notifier: NbToastrService, private blocklistService: BlocklistService) {
     super();
   }
 
@@ -42,8 +39,8 @@ export class GenericAccountBlocklistComponent extends RestTable implements OnIni
       () => {
         this.notifier.success(
           this.mode === BlocklistComponentType.Account
-            ? `Account ${blockedAccount.screenName} unmuted.`
-            : `Account ${blockedAccount.screenName} unmuted by your instance.`
+            ? $localize`Account ${blockedAccount.screenName} unmuted.`
+            : $localize`Account ${blockedAccount.screenName} unmuted by your instance.`
         );
 
         this.reloadData();
@@ -66,6 +63,7 @@ export class GenericAccountBlocklistComponent extends RestTable implements OnIni
 
     return operation.subscribe(
       resultList => {
+        // @ts-ignore
         this.blockedAccounts = resultList.data;
         this.totalRecords = resultList.total;
       },

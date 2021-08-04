@@ -10,20 +10,19 @@ import {RestPagination} from "../../core/rest/rest-pagination";
 import {ResultList} from "../models";
 import {ServerBlock} from "../models/moderation/server-block.model";
 import {IAccountBlock} from "../models/moderation/account-block.model";
-import { User } from '../shared-main/user/user.model';
-import {IUser} from "../../core/interfaces/common/users";
+import {User} from '../shared-main/user/user.model';
+import {HttpService} from "../../core/backend/common/api/http.service";
 
 export enum BlocklistComponentType { Account, Instance }
 
 @Injectable()
 export class BlocklistService {
-  static BASE_USER_BLOCKLIST_URL = environment.apiUrl + '/api/v1/users/me/blocklist';
-  static BASE_SERVER_BLOCKLIST_URL = environment.apiUrl + '/api/v1/server/blocklist';
+  static BASE_USER_BLOCKLIST_URL = 'users/me/blocklist';
+  static BASE_SERVER_BLOCKLIST_URL = 'server/blocklist';
 
-  constructor(
-    private authHttp: HttpClient,
-    private restExtractor: RestExtractor,
-    private restService: RestService) {
+  constructor(private authHttp: HttpService,
+              private restExtractor: RestExtractor,
+              private restService: RestService) {
   }
 
   /*********************** User -> Account blocklist ***********************/
@@ -44,15 +43,15 @@ export class BlocklistService {
       );
   }
 
-  blockAccountByUser(user: IUser /*account: Pick<User, 'nameWithHost'>*/) {
-    const body = {accountName: user.displayName};
+  blockAccountByUser(account: Pick<User, 'screenName'>) {
+    const body = {screenName: account.screenName};
 
     return this.authHttp.post(BlocklistService.BASE_USER_BLOCKLIST_URL + '/accounts', body)
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 
-  unblockAccountByUser(user: IUser /*account: Pick<User, 'nameWithHost'>*/) {
-    const path = BlocklistService.BASE_USER_BLOCKLIST_URL + '/accounts/' + user.displayName;
+  unblockAccountByUser(account: Pick<User, 'screenName'>) {
+    const path = BlocklistService.BASE_USER_BLOCKLIST_URL + '/accounts/' + account.screenName;
 
     return this.authHttp.delete(path)
       .pipe(catchError(err => this.restExtractor.handleError(err)));
@@ -97,9 +96,7 @@ export class BlocklistService {
     let params = new HttpParams();
     params = this.restService.addRestGetParams(params, pagination, sort);
 
-    if (search) {
-      params = params.append('search', search);
-    }
+    if (search) params = params.append('search', search);
 
     return this.authHttp.get<ResultList<AccountBlock>>(BlocklistService.BASE_SERVER_BLOCKLIST_URL + '/accounts', {params})
       .pipe(
@@ -109,15 +106,15 @@ export class BlocklistService {
       );
   }
 
-  blockAccountByInstance(user: User /*account: Pick<User, 'nameWithHost'>*/) {
-    const body = {accountName: user.displayName};
+  blockAccountByInstance(account: Pick<User, 'screenName'>) {
+    const body = {accountName: account.screenName};
 
     return this.authHttp.post(BlocklistService.BASE_SERVER_BLOCKLIST_URL + '/accounts', body)
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 
-  unblockAccountByInstance(user: User /*account: Pick<User, 'nameWithHost'>*/) {
-    const path = BlocklistService.BASE_SERVER_BLOCKLIST_URL + '/accounts/' + user.displayName;
+  unblockAccountByInstance(account: Pick<User, 'screenName'>) {
+    const path = BlocklistService.BASE_SERVER_BLOCKLIST_URL + '/accounts/' + account.screenName;
 
     return this.authHttp.delete(path)
       .pipe(catchError(err => this.restExtractor.handleError(err)));

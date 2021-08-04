@@ -6,6 +6,7 @@ import {UserStore} from "../../core/stores/user.store";
 import {UserFollowService} from "./user-follow.service";
 import {IUser} from "../../core/interfaces/common/users";
 import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {BlocklistService} from "../shared-moderation/blocklist.service";
 
 
 @Component({
@@ -24,10 +25,13 @@ export class FollowButtonComponent implements OnInit, OnChanges {
   @Input() account: IUser;
   @Input() users: IUser[];
 
+  @Input() blocking: boolean;
+
   constructor(private userStore: UserStore,
               private userFollowService: UserFollowService,
               private notifier: NbToastrService,
-              private router: Router) {
+              private router: Router,
+              private blocklistService: BlocklistService) {
   }
 
   get isAllChannelsSubscribed() {
@@ -161,7 +165,23 @@ export class FollowButtonComponent implements OnInit, OnChanges {
 
   }
 
+  unblock(account: IUser) {
+    this.blocklistService.unblockAccountByUser(account)
+      .subscribe(
+        () => {
+          this.notifier.success(`Account ${account.screenName} unblocked.`, 'Success');
+
+          this.account.blocked = false;
+          this.blocking = false;
+          // this.userChanged.emit();
+        },
+
+        err => this.notifier.danger(err.message, 'Error')
+      );
+  }
+
   isFollowingButtonHovered = false;
+  isBlockedButtonHovered = false;
 
   followingButtonHoverHandle() {
     if (!this.rightAfterFollow) {
@@ -175,6 +195,14 @@ export class FollowButtonComponent implements OnInit, OnChanges {
     }
 
     this.isFollowingButtonHovered = false;
+  }
+
+  blockedButtonHoverHandle() {
+      this.isBlockedButtonHovered = true;
+  }
+
+  blockedButtonUnhoverHandle() {
+    this.isBlockedButtonHovered = false;
   }
 
 }

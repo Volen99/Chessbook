@@ -362,6 +362,7 @@ export class Post /*implements IPost*/ {
   }
 
   hasMedia: boolean;
+  commentsCount: number;
 
   // #endregion
 

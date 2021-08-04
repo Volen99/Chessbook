@@ -21,7 +21,7 @@ export class InitUserService {
 
   }
 
-  initCurrentUser(): Observable<IUser> {
+    initCurrentUser(): Observable<IUser> {
     return this.usersService.getCurrentUser()
       .pipe(tap((user: IUser) => {
         if (user) {

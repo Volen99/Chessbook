@@ -38,6 +38,9 @@
     using Chessbook.Web.Api.Extensions;
     using Chessbook.Web.Api.Models.Abuses;
     using Chessbook.Services.Relationships;
+    using Chessbook.Services.Blocklist;
+    using Chessbook.Web.Api.Models.Blocklist;
+    using Chessbook.Web.Models.Users;
 
     [Route("users")]
     public class UsersController : BaseApiController
@@ -59,13 +62,15 @@
         private readonly IAbuseService abuseService;
         private readonly IAbuseModelFactory abuseModelFactory;
         private readonly IFollowService followService;
+        private readonly IBlocklistService blocklistService;
+        private readonly IUserBlocklistFactory userBlocklistFactory;
 
         public UsersController(IUserService userService, JwtManager jwtManager, IAuthenticationService authService, IPostsService postsService,
             IPictureService pictureService, IGenericAttributeService genericAttributeService, IRelationshipService relationshipService, IUserModelFactory userModelFactory,
             ICustomerActivityService customerActivityService, IUserNotificationService notificationsService, INotificationsSettingsService notificationsSettingsService,
             IUserNotificationSettingModelFactory userNotificationSettingModelFactory, IUserNotificationModelFactory userNotificationModelFactory,
             ICustomerRegistrationService customerRegistrationService, IAbuseService abuseService, IAbuseModelFactory abuseModelFactory,
-            IFollowService followService)
+            IFollowService followService, IBlocklistService blocklistService, IUserBlocklistFactory userBlocklistFactory)
         {
             this.userService = userService;
             this.jwtManager = jwtManager;
@@ -75,7 +80,7 @@
             this.genericAttributeService = genericAttributeService;
             this.relationshipService = relationshipService;
             this.userModelFactory = userModelFactory;
-            _customerActivityService = customerActivityService;
+            this._customerActivityService = customerActivityService;
             this.notificationsService = notificationsService;
             this.notificationsSettingsService = notificationsSettingsService;
             this.userNotificationSettingModelFactory = userNotificationSettingModelFactory;
@@ -84,6 +89,8 @@
             this.abuseService = abuseService;
             this.abuseModelFactory = abuseModelFactory;
             this.followService = followService;
+            this.blocklistService = blocklistService;
+            this.userBlocklistFactory = userBlocklistFactory;
         }
 
         //[HttpGet]
@@ -144,7 +151,7 @@
 
         [HttpGet]
         [Route("{id:int}")]
-        [Authorize(Policy = "AdminOnly")]
+        /*[Authorize(Policy = "AdminOnly")]*/
         public async Task<IActionResult> Get(int id)
         {
             var user = await userService.GetCustomerByIdAsync(id);
@@ -676,6 +683,47 @@
                 total = users.Count,
                 data = models,
             });
+        }
+
+
+        [HttpGet]
+        [Route("me/blocklist/accounts")]
+        [Authorize]
+        public async Task<IActionResult> GetBlockListAccounts([FromQuery] QueryGetInputModel input) 
+        {
+            var blockedAccounts = await this.blocklistService.GetUserBlocklistAccounts(input.Start, input.Count, input.Sort, User.GetUserId(), input.Search);
+
+            var models = new List<UserBlocklistModel>();
+            foreach (var blockedAccount in blockedAccounts)
+            {
+                models.Add(await this.userBlocklistFactory.PrepareUserBlocklistModel(blockedAccount));
+            }
+
+            return this.Ok(new
+            {
+                total = blockedAccounts.Count,
+                data = models,
+            });
+        }
+
+        [HttpPost]
+        [Route("me/blocklist/accounts")]
+        [Authorize]
+        public async Task<IActionResult> PostBlockListAccounts([FromBody] ScreenNameBody body)
+        {
+            await this.blocklistService.Block(User.GetUserId(), body.ScreenName);
+
+            return this.NoContent();
+        }
+
+        [HttpDelete]
+        [Route("me/blocklist/accounts/{screenName:length(3,32)}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteBlockListAccounts(string screenName)
+        {
+            await this.blocklistService.UnBlock(User.GetUserId(), screenName);
+
+            return this.NoContent();
         }
 
         private async Task<bool> SecondAdminAccountExistsAsync(Customer customer)

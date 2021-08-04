@@ -117,5 +117,7 @@
         /// The task result contains the product picture
         /// </returns>
         Task<PostPicture> GetProductPictureByIdAsync(int productPictureId);
+
+        Task<Customer> LoadAccountIdFromVideo(int postId);
     }
 }

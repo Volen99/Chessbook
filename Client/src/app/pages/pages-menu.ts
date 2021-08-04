@@ -19,7 +19,7 @@ import {NbMenuItem} from '../sharebook-nebular/theme/components/menu/menu.servic
 @Injectable()
 export class PagesMenu {
 
-  getMenu(screenName: string): Observable<NbMenuItem[]> {
+  getMenu(screenName?: string): Observable<NbMenuItem[]> {
     const dashboardMenu: NbMenuItem[] = [
       // {
       //   title: 'E-commerce',

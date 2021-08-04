@@ -175,12 +175,12 @@ export class PostWatchComponent implements OnInit {
       );
   }
 
-  calcMinHeight(postsCount?: number): number {
-    if (!postsCount) {
-      return 670;
+  calcMinHeight(commentsCount?: number): number {
+    if (!commentsCount || commentsCount === 0) {
+      return 1215;
     }
 
-    return postsCount * 670;
+    return (commentsCount + 1) * 650;
   }
 
   setTransform(i: number): number {

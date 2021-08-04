@@ -14,6 +14,6 @@ namespace Chessbook.Web.Api.Factories
 
         Task<PostCommentModel> PreparePostCommentModelAsync(PostComment postComment);
 
-        Task<PostCommentThreadModel> PreparePostCommentTree(IList<PostComment> comments);
+        Task<PostCommentThreadModel> PreparePostCommentTree(IList<PostComment> replies);
     }
 }

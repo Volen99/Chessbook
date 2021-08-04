@@ -1,9 +1,11 @@
 ﻿using Chessbook.Common;
 using Chessbook.Core;
 using Chessbook.Core.Domain.Post;
+using Chessbook.Data.Models;
 using Chessbook.Data.Models.Media;
 using Chessbook.Data.Models.Post;
 using Chessbook.Services.Data.Services;
+using Chessbook.Services.Data.Services.Entities;
 using Chessbook.Services.Data.Services.Media;
 using Chessbook.Services.Entities;
 using Chessbook.Services.Localization;
@@ -39,6 +41,7 @@ namespace Chessbook.Web.Api.Factories
         private readonly IUserService userService;
         private readonly IGenericAttributeService genericAttributeService;
         private readonly IPostCommentService postCommentService;
+        private readonly IPostsService postService;
 
         #endregion
 
@@ -46,7 +49,7 @@ namespace Chessbook.Web.Api.Factories
 
         public PostModelFactory(MediaSettings mediaSettings, IStaticCacheManager staticCacheManager, IWebHelper webHelper, IWorkContext workContext,
             IStoreContext storeContext, IPictureService pictureService, ILocaleStringResourceService localeStringResourceService, IUserModelFactory userModelFactory,
-            IUserService userService, IGenericAttributeService genericAttributeService, IPostCommentService postCommentService)
+            IUserService userService, IGenericAttributeService genericAttributeService, IPostCommentService postCommentService, IPostsService postService)
         {
             this.mediaSettings = mediaSettings;
             this.staticCacheManager = staticCacheManager;
@@ -59,6 +62,7 @@ namespace Chessbook.Web.Api.Factories
             this.userService = userService;
             this.genericAttributeService = genericAttributeService;
             this.postCommentService = postCommentService;
+            this.postService = postService;
         }
 
         #endregion
@@ -195,6 +199,10 @@ namespace Chessbook.Web.Api.Factories
                 model.Entities.Medias = allPictureModels;
             }
 
+            // comments
+            var commentsCount = await this.postCommentService.GetPostCommentsCount(post.Id);
+            model.CommentsCount = commentsCount;
+
             return model;
         }
 
@@ -215,6 +223,8 @@ namespace Chessbook.Web.Api.Factories
 
             var customer = await this.userService.GetCustomerByIdAsync(postComment.UserId);
 
+            var currentUser = await this.workContext.GetCurrentCustomerAsync();
+
             var model = new PostCommentModel
             {
                 Id = postComment.Id,
@@ -231,8 +241,8 @@ namespace Chessbook.Web.Api.Factories
 
                 IsDeleted = this.IsDeleted(postComment.DeletedAt),
 
-                TotalRepliesFromPostAuthor = 0,
-                TotalReplies = await this.postCommentService.GetTotalReplies(postComment.Id),
+                TotalReplies = await this.postCommentService.GetTotalReplies(postComment.Id, await  this.BuildBlockerAccountIds(postComment.PostId, currentUser)),
+                TotalRepliesFromPostAuthor = await this.postCommentService.GetTotalRepliesFrompPostAuthor(postComment.Id),
 
                 Account = await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), customer),
             };
@@ -274,7 +284,10 @@ namespace Chessbook.Web.Api.Factories
                 Children = new List<PostCommentThreadModel>(),
             };
 
-            var idx = new Dictionary<int, PostCommentThreadModel>();
+            var idx = new Dictionary<int, PostCommentThreadModel>()
+            {
+                {comment.Id, thread } // :DDD
+            };
 
             while (comments.Count != 0)
             {
@@ -282,7 +295,7 @@ namespace Chessbook.Web.Api.Factories
 
                 var childCommentThread = new PostCommentThreadModel
                 {
-                    Comment = await this.PreparePostCommentModelAsync(comment),
+                    Comment = await this.PreparePostCommentModelAsync(childComment),
                     Children = new List<PostCommentThreadModel>(),
                 };
 
@@ -298,6 +311,23 @@ namespace Chessbook.Web.Api.Factories
             }
 
             return thread;
+        }
+
+        private async Task<List<int>> BuildBlockerAccountIds(int postId, Customer currentLoggedUser)
+        {
+            var blockerAccountIds = new List<int>(); // { User.GetUserId() };
+
+            if (currentLoggedUser != null)
+            {
+                blockerAccountIds.Add(currentLoggedUser.Id);
+            }
+
+            // if (isVideoOwned)
+
+            var postOwnerAccount = await this.postService.LoadAccountIdFromVideo(postId);
+            blockerAccountIds.Add(postOwnerAccount.Id);
+
+            return blockerAccountIds;
         }
     }
 }

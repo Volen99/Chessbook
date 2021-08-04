@@ -4,7 +4,6 @@
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
-    [Authorize]
     public abstract class BaseApiController : ControllerBase
     {
     }

@@ -1,19 +1,19 @@
-import { PluginClientScope } from './plugin-client-scope.type'
+import { PluginClientScope } from './client/plugin-client-scope.type';
 
 export type PluginTranslationPaths = {
   [ locale: string ]: string
-}
+};
 
 export type ClientScript = {
   script: string
   scopes: PluginClientScope[]
-}
+};
 
 export type PluginPackageJson = {
   name: string
   version: string
   description: string
-  engine: { chessbook: string }
+  engine: { peertube: string }
 
   homepage: string
   author: string
@@ -26,4 +26,4 @@ export type PluginPackageJson = {
   clientScripts: ClientScript[]
 
   translations: PluginTranslationPaths
-}
+};

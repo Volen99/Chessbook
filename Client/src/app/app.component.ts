@@ -15,6 +15,7 @@ import { NbDialogService } from './sharebook-nebular/theme/components/dialog/dia
 import {UploadComponent} from "./pages/modal-overlays/dialog/compose/upload/upload.component";
 import {NbDialogRef} from "./sharebook-nebular/theme/components/dialog/dialog-ref";
 import {User} from "./shared/shared-main/user/user.model";
+import {HooksService} from "./core/plugins";
 
 @Component({
   selector: 'app-root',
@@ -42,13 +43,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // this.iconLibraries.setDefaultPack('duotone');
 
-    this.initUser();
-
-    // this.initMenu(); // comment coz of user.screenName for :profile
+    this.initMenu();
 
     this.tokenService.tokenChange()
       .pipe(takeWhile(() => this.alive))
       .subscribe(() => {
+        this.initUser();
         this.initMenu();
       });
   }
@@ -56,11 +56,16 @@ export class AppComponent implements OnInit, OnDestroy {
   menu: NbMenuItem[];
   alive: boolean = true;
 
+  isUserLoggedIn () {
+   // return this.authService.isLoggedIn();
+  }
+
   ngOnInit(): void {
     document.getElementById('incompatible-browser').className += ' browser-ok';
 
+    // this.hooks.runAction('action:application.init', 'common');
+
     this.initHotkeys();
-    
   }
 
   user: IUser;

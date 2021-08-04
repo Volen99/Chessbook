@@ -7,6 +7,7 @@ import {UserNotificationService} from "../../../../shared/shared-main/users/user
 import {ScreenService} from "../../../../core/wrappers/screen.service";
 import {Notifier} from "../../../../core/notification/notifier.service";
 import {PeerTubeSocket} from "../../../../core/notification/sharebook-socket.service";
+import {UserStore} from "../../../../core/stores/user.store";
 
 @Component({
   selector: 'app-notification',
@@ -33,26 +34,29 @@ export class NotificationComponent implements OnInit, OnDestroy {
     private peertubeSocket: PeerTubeSocket,
     private notifier: Notifier,
     private router: Router,
+    private userStore: UserStore,
   ) {
   }
 
   ngOnInit() {
-    this.userNotificationService.countUnreadNotifications()
-      .subscribe(
-        result => {
-          this.unreadNotifications = Math.min(result, 99); // Limit number to 99
-          this.subscribeToNotifications();
-        },
+    if (this.userStore.isLoggedIn()) {
+      this.userNotificationService.countUnreadNotifications()
+        .subscribe(
+          result => {
+            this.unreadNotifications = Math.min(result, 99); // Limit number to 99
+            this.subscribeToNotifications();
+          },
 
-        err => this.notifier.error(err.message)
-      );
+          err => this.notifier.error(err.message)
+        );
 
-    this.routeSub = this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => this.closePopover());
+      this.routeSub = this.router.events
+        .pipe(filter(event => event instanceof NavigationEnd))
+        .subscribe(() => this.closePopover());
 
-    // this.peertubeSocket.msgReceived$
-    //   .subscribe(x => this.getOrders());
+      // this.peertubeSocket.msgReceived$
+      //   .subscribe(x => this.getOrders());
+    }
   }
 
   ngOnDestroy() {

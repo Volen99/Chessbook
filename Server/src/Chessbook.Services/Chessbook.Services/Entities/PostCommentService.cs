@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
+using Chessbook.Core.Domain.Customers;
 using Chessbook.Core.Domain.Post;
 using Chessbook.Data;
+using Chessbook.Data.Models;
+using Chessbook.Data.Models.Post;
+using Microsoft.EntityFrameworkCore;
 using Nop.Core;
 
 namespace Chessbook.Services.Entities
@@ -15,10 +18,17 @@ namespace Chessbook.Services.Entities
         private const string ACTOR_NAME_ALPHABET = @"[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\-_.:]";
 
         private readonly IRepository<PostComment> postCommentRepositoy;
+        private readonly IRepository<Post> postRepositoy;
+        private readonly IRepository<Customer> customerRepository;
+        private readonly IRepository<UserBlocklist> userBlocklistRepository;
 
-        public PostCommentService(IRepository<PostComment> postCommentRepositoy)
+        public PostCommentService(IRepository<PostComment> postCommentRepositoy, IRepository<Post> postRepositoy,
+            IRepository<Customer> customerRepository, IRepository<UserBlocklist> userBlocklistRepository)
         {
             this.postCommentRepositoy = postCommentRepositoy;
+            this.postRepositoy = postRepositoy;
+            this.customerRepository = customerRepository;
+            this.userBlocklistRepository = userBlocklistRepository;
         }
 
         public async Task<PostComment> Create(int userId, int postId, string text, PostComment inReplyToComment = null)
@@ -50,9 +60,9 @@ namespace Chessbook.Services.Entities
             return commentNew;
         }
 
-        public async Task<PostComment> GetById(int id)
+        public async Task<PostComment> GetById(int id, bool includeDeleted = false)
         {
-            var comment = await this.postCommentRepositoy.GetByIdAsync(id);
+            var comment = await this.postCommentRepositoy.GetByIdAsync(id, includeDeleted: includeDeleted);
 
             return comment;
         }
@@ -72,7 +82,7 @@ namespace Chessbook.Services.Entities
         /// </returns>
         public async Task<IPagedList<PostComment>> GetPostCommentThreads(int postId, int userId = 0,
             DateTime? fromUtc = null, DateTime? toUtc = null, string commentText = null,
-            bool ascSort = false, int pageIndex = 0, int pageSize = int.MaxValue)
+            bool ascSort = false, int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false)
         {
             return await this.postCommentRepositoy.GetAllPagedAsync(query =>
             {
@@ -96,7 +106,7 @@ namespace Chessbook.Services.Entities
                 query = query.OrderBy(comment => comment.CreatedAt);
 
                 return query;
-            }, pageIndex, pageSize);
+            }, pageIndex, pageSize, getOnlyTotalCount);
         }
 
         public async Task<IList<PostComment>> GetPostThreadComments(int postId, int threadId, int userId = 0)
@@ -104,26 +114,85 @@ namespace Chessbook.Services.Entities
             return await this.postCommentRepositoy.GetAllAsync(query =>
             {
                 if (postId > 0)
+                {
                     query = query.Where(comment => comment.PostId == postId);
+                }
 
                 if (threadId > 0)
+                {
                     query = query.Where(comment => comment.OriginCommentId == threadId);
+                }
 
                 query = query.Where(comment => comment.OriginCommentId != null);
 
-                query = query.OrderBy(comment => comment.CreatedAt);
+                query = query.Include(x => x.OriginPostComment);
+
+
+                query = query.Where(comment => comment.Deleted == false);
+
+                query = query.OrderBy(comment => comment.CreatedAt)
+                .ThenBy(c => c.UpdatedAt);
 
                 return query;
             });
         }
 
-        public async Task<int> GetTotalReplies(int? commentId)
+        public async Task<int> GetPostCommentsCount(int postId)
         {
-            var sqlQuery = "SELECT COUNT(replies.id) FROM PostComment AS Replies WHERE Replies.OriginCommentId = 2 AND DeletedAt IS NULL";
+            var res = await this.postCommentRepositoy.GetAllPagedAsync(query =>
+            {
+                query = query.Where(c => c.OriginCommentId == null);
 
-            var totalReplies = await this.postCommentRepositoy.Table.CountAsyncExt(pc => pc.OriginCommentId == commentId && pc.DeletedAt == null);
+                query = query.Where(comment => comment.PostId == postId);
+
+                return query;
+            }, getOnlyTotalCount: true);
+
+            return res.TotalCount;
+        }
+
+        public async Task<int> GetTotalReplies(int? commentId, List<int> blockerIds)
+        {
+            if (!commentId.HasValue)
+            {
+                return 0;
+            }
+
+            var blocklistQuery = (from blockList in this.userBlocklistRepository.Table
+                                  where blockerIds.Contains(blockList.UserId)
+                                  select blockList.Id);
+                    //.Union
+                    //(from users in this.customerRepository.Table
+                    // select users.Id);
+
+
+            var query = from replies in this.postCommentRepositoy.Table
+                        where replies.OriginCommentId == commentId
+                        && replies.DeletedAt.Equals(null)
+                        && blocklistQuery.Contains(replies.UserId) == false
+                        select replies.Id;
+
+            var totalReplies = await query.CountAsyncExt();
 
             return totalReplies;
+        }
+
+        public async Task<int> GetTotalRepliesFrompPostAuthor(int? originCommentId)
+        {
+            if (!originCommentId.HasValue)
+            {
+                return 0;
+            }
+
+            var query = from replies in this.postCommentRepositoy.Table
+                        join post in this.postRepositoy.Table on replies.PostId equals post.Id
+                        join customer in this.customerRepository.Table on post.UserId equals customer.Id
+                        where (replies.OriginCommentId.Value == originCommentId.Value && replies.UserId == customer.Id)
+                        select replies.Id;
+
+            var totalRepliesFrompPostAuthor = await query.CountAsyncExt();
+
+            return totalRepliesFrompPostAuthor;
         }
 
 
@@ -160,10 +229,10 @@ namespace Chessbook.Services.Entities
             return result.Distinct().ToArray();
         }
 
-
-        //private RegexpCapture(string str, Regex regex, int maxIterations = 100)
-        //{
-
-        //}
+        public async Task Delete(PostComment comment)
+        {
+            comment.DeletedAt = DateTime.UtcNow;
+            await this.postCommentRepositoy.DeleteAsync(comment);
+        }
     }
 }

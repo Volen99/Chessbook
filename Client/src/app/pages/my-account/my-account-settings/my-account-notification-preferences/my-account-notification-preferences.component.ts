@@ -134,7 +134,6 @@ export class MyAccountNotificationPreferencesComponent implements OnInit, OnDest
   }
 
   private loadNotificationSettings() {
-    debugger
     for (const key of Object.keys(this.user.notificationSettings)) {
       const value = this.user.notificationSettings[key];
       this.emailNotifications[key] = value & UserNotificationSettingValue.EMAIL;

@@ -13,6 +13,7 @@ import {User} from "../shared-main/user/user.model";
 import {BulkRemoveCommentsOfBody} from "../models/bulk/bulk-remove-comments-of-body.model";
 import {UserStore} from "../../core/stores/user.store";
 import {UsersService} from "../../core/backend/common/services/users.service";
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
 
 @Component({
   selector: 'app-user-moderation-dropdown',
@@ -40,7 +41,7 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
 
   constructor(
     private authService: UserStore,
-    private notifier: Notifier,
+    private notifier: NbToastrService,
     private confirmService: ConfirmService,
     private serverService: ServerService,
     private userService: UsersService,
@@ -50,8 +51,7 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.serverService.getConfig()
-      .subscribe(config => this.requiresEmailVerification = config.signup.requiresEmailVerification);
+    this.requiresEmailVerification = false;
   }
 
   ngOnChanges() {
@@ -60,7 +60,7 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
 
   openBanUserModal(user: User) {
     if (user.screenName === 'root') {
-      this.notifier.error(`You cannot ban root.`);
+      this.notifier.danger(`You cannot ban root.`, 'Error');
       return;
     }
 
@@ -78,17 +78,17 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
     this.userService.unbanUsers(user)
       .subscribe(
         () => {
-          this.notifier.success(`User ${user.displayName} unbanned.`);
+          this.notifier.success(`User ${user.displayName} unbanned.`, 'Success');
           this.userChanged.emit();
         },
 
-        err => this.notifier.error(err.message)
+        err => this.notifier.danger(err.message, 'Error')
       );
   }
 
   async removeUser(user: User) {
     if (user.displayName === 'root') {
-      this.notifier.error(`You cannot delete root.`);
+      this.notifier.danger(`You cannot delete root.`, 'Error');
       return;
     }
 
@@ -100,22 +100,22 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
 
     this.userService.removeUser(user).subscribe(
       () => {
-        this.notifier.success(`User ${user.displayName} deleted.`);
+        this.notifier.success(`User ${user.displayName} deleted.`, 'Success');
         this.userDeleted.emit();
       },
 
-      err => this.notifier.error(err.message)
+      err => this.notifier.danger(err.message, 'Error')
     );
   }
 
   setEmailAsVerified(user: User) {
     this.userService.updateUser(user.id, {emailVerified: true}).subscribe(
       () => {
-        this.notifier.success(`User ${user.displayName} email set as verified`);
+        this.notifier.success(`User ${user.displayName} email set as verified`, 'Success');
         this.userChanged.emit();
       },
 
-      err => this.notifier.error(err.message)
+      err => this.notifier.danger(err.message, 'Error')
     );
   }
 
@@ -123,13 +123,13 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
     this.blocklistService.blockAccountByUser(account)
       .subscribe(
         () => {
-          this.notifier.success(`Account ${account.screenName} muted.`);
+          this.notifier.success(`Account ${account.screenName} muted.`, 'Success');
 
           this.account.mutedByUser = true;
           this.userChanged.emit();
         },
 
-        err => this.notifier.error(err.message)
+        err => this.notifier.danger(err.message, 'Error')
       );
   }
 
@@ -137,13 +137,13 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
     this.blocklistService.unblockAccountByUser(account)
       .subscribe(
         () => {
-          this.notifier.success(`Account ${account.screenName} unmuted.`);
+          this.notifier.success(`Account ${account.screenName} unmuted.`, 'Success');
 
           this.account.mutedByUser = false;
           this.userChanged.emit();
         },
 
-        err => this.notifier.error(err.message)
+        err => this.notifier.danger(err.message, 'Error')
       );
   }
 
@@ -158,7 +158,7 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
           this.notifier.success(`Will remove comments of this account (may take several minutes).`);
         },
 
-        err => this.notifier.error(err.message)
+        err => this.notifier.danger(err.message, 'Error')
       );
   }
 
@@ -219,13 +219,13 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
           {
             label: `Mute this account`,
             description: `Hide any content from that user from you.`,
-            isDisplayed: ({account}) => account.mutedByUser === false,
+            isDisplayed: ({account}) => account.mutedByUser === false || account.blocked === false,
             handler: ({account}) => this.blockAccountByUser(account)
           },
           {
             label: `Unmute this account`,
             description: `Show back content from that user for you.`,
-            isDisplayed: ({account}) => account.mutedByUser === true,
+            isDisplayed: ({account}) => account.mutedByUser === true || account.blocked === true,
             handler: ({account}) => this.unblockAccountByUser(account)
           },
           {

@@ -1,8 +1,17 @@
-<div class="infinite-cards row" style="margin: 0px">
- <nb-route-tabset [tabs]="this.tabs" fullWidth></nb-route-tabset>
-<!--  <my-top-menu-dropdown [menuEntries]="menuEntries"></my-top-menu-dropdown>-->
+<!--<div class="infinite-cards row" style="margin: 0px">-->
+<!-- <nb-route-tabset [tabs]="this.tabs" fullWidth></nb-route-tabset>-->
+<!--&lt;!&ndash;  <my-top-menu-dropdown [menuEntries]="menuEntries"></my-top-menu-dropdown>&ndash;&gt;-->
 
-  <div class="margin-content pb-5" [ngClass]="{ 'offset-content': !isBroadcastMessageDisplayed }">
-    <!--<router-outlet></router-outlet>-->
-  </div>
+<!--  <div class="margin-content pb-5" [ngClass]="{ 'offset-content': !isBroadcastMessageDisplayed }">-->
+<!--    &lt;!&ndash;<router-outlet></router-outlet>&ndash;&gt;-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<div class="row">
+    <my-top-menu-dropdown [menuEntries]="menuEntries"></my-top-menu-dropdown>
+
+    <div class="margin-content pb-5" [ngClass]="{ 'offset-content': !isBroadcastMessageDisplayed }">
+        <router-outlet></router-outlet>
+    </div>
 </div>

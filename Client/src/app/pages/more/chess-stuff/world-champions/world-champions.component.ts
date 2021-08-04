@@ -32,4 +32,8 @@ export class WorldChampionsComponent implements OnDestroy {
 
   champions: any[];
   femaleChampions: any[];
+
+  avatarClick(name: string) {
+    window.open(`https://en.wikipedia.org/wiki/${name.replace(/ /g, '_')}`, '_blank');
+  }
 }

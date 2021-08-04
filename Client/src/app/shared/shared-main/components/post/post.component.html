@@ -33,8 +33,8 @@
                                                                 <div class="sharebook-container align-items-center flex-direction-row max-width-100-per">
                                                                     <div dir="auto"
                                                                          class="css-901oao sharebook-text lights-out-text-color font-family font-size-15px font-weight-700 inside-element-container-line-height min-width-0px white-space-nowrap text-overflow-wrap">
-                                                                    <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap"><span
-                                                                            class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">{{this.post.user.displayName}}</span></span>
+                                                                    <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">
+                                                                        <span class="user-display-name">{{this.post.user.displayName}}</span></span>
                                                                     </div>
                                                                     <div *ngIf="this.post.user?.protected" dir="auto"
                                                                          class="css-901oao lights-out-text-color flex-direction-row svg-flex-shrink-0 font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
@@ -244,7 +244,7 @@
                                                             <fa-icon [icon]="this.faComment"></fa-icon>
                                                         </div>
                                                         <div class="sharebook-container display-inline-flex overflow-hidden"><span
-                                                                class="css-901oao sharebook-text-inherit text-font-family third-wheel-text-font-size line-height-calc r-1j6idkz padding-left-right r-d3hbe1 r-1wgg2b2 r-axxi2z text-overflow-wrap"></span>
+                                                                class="css-901oao sharebook-text-inherit text-font-family third-wheel-text-font-size line-height-calc r-1j6idkz padding-left-right r-d3hbe1 r-1wgg2b2 r-axxi2z text-overflow-wrap">{{this.post.commentsCount}}</span>
                                                         </div>
                                                     </div>
                                                 </div>

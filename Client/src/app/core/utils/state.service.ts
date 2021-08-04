@@ -1,8 +1,8 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { of as observableOf,  Observable,  BehaviorSubject } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
+import {Injectable, OnDestroy} from '@angular/core';
+import {of as observableOf, Observable, BehaviorSubject} from 'rxjs';
+import {takeWhile} from 'rxjs/operators';
+import {NbLayoutDirection, NbLayoutDirectionService} from "../../sharebook-nebular/theme/services/direction.service";
 
-import { NbLayoutDirectionService, NbLayoutDirection } from '@nebular/theme';
 
 @Injectable()
 export class StateService implements OnDestroy {
@@ -58,7 +58,7 @@ export class StateService implements OnDestroy {
   }
 
   private updateSidebarIcons(direction: NbLayoutDirection) {
-    const [ startSidebar, endSidebar ] = this.sidebars;
+    const [startSidebar, endSidebar] = this.sidebars;
     const isLtr = direction === NbLayoutDirection.LTR;
     const startIconClass = isLtr ? 'nb-layout-sidebar-left' : 'nb-layout-sidebar-right';
     const endIconClass = isLtr ? 'nb-layout-sidebar-right' : 'nb-layout-sidebar-left';

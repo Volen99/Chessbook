@@ -22,7 +22,6 @@ function flushUserInfoFromLocalStorage() {
   chessbookLocalStorage.removeItem(UserLocalStorageKeys.USERNAME);
   chessbookLocalStorage.removeItem(UserLocalStorageKeys.EMAIL);
   chessbookLocalStorage.removeItem(UserLocalStorageKeys.ROLE);
-  chessbookLocalStorage.removeItem(UserLocalStorageKeys.NSFW_POLICY);
 }
 
 function saveUserInfoIntoLocalStorage(info: {

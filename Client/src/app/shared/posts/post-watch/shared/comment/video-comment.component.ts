@@ -18,6 +18,7 @@ import {UsersService} from "../../../../../core/backend/common/services/users.se
 import {UserRight} from "../../../../models/users/user-right.enum";
 import {User} from "../../../../shared-main/user/user.model";
 import {UserStore} from "../../../../../core/stores/user.store";
+import {NbDialogService} from "../../../../../sharebook-nebular/theme/components/dialog/dialog.service";
 
 @Component({
   selector: 'my-video-comment',
@@ -55,7 +56,8 @@ export class VideoCommentComponent implements OnInit, OnChanges {
     private markdownService: MarkdownService,
     private userStore: UserStore,
     private userService: UsersService,
-    private notifier: NbToastrService) {
+    private notifier: NbToastrService,
+    private dialogService: NbDialogService) {
   }
 
   get user() {
@@ -215,6 +217,12 @@ export class VideoCommentComponent implements OnInit, OnChanges {
   }
 
   private showReportModal() {
-    this.commentReportModal.show();
+    this.dialogService.open(CommentReportComponent, {
+      context: {
+        comment: this.comment,
+      },
+      closeOnEsc: false,
+    });
+    // this.commentReportModal.show();
   }
 }

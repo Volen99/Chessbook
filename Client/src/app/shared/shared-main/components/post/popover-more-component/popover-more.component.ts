@@ -61,8 +61,8 @@ export class PopoverMoreComponent implements OnInit {
         context: {
           video: this.post,
         },
-        closeOnBackdropClick: false,
-        closeOnEsc: true,
+        closeOnBackdropClick: true,
+        closeOnEsc: false,
       });
     }
 

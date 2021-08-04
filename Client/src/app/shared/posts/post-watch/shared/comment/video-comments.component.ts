@@ -53,7 +53,7 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
   commentReplyRedraftValue: string;
   commentThreadRedraftValue: string;
 
-  threadComments: { [ id: number ]: PostCommentThreadTree } = {};
+  threadComments: { [id: number]: PostCommentThreadTree } = {};
   threadLoading: { [id: number]: boolean } = {};
 
   syndicationItems: Syndication[] = [];
@@ -113,7 +113,6 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
 
     this.videoCommentService.getVideoThreadComments(params).subscribe(
       res => {
-        debugger
         this.threadComments[commentId] = res;
         this.threadLoading[commentId] = false;
         // this.hooks.runAction('action:video-watch.video-thread-replies.loaded', 'video-watch', {data: res});
@@ -124,7 +123,9 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
           // Scroll to the highlighted thread
           setTimeout(() => this.commentHighlightBlock.nativeElement.scrollIntoView(), 0);
         }
+
       },
+
 
       err => this.notifier.danger(err.message, 'Error in this.videoCommentService.getVideoThreadComments(params).subscribe')
     );
@@ -147,12 +148,13 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
 
     this.videoCommentService.getVideoCommentThreads(params).subscribe(
       res => {
+        debugger
         this.comments = this.comments.concat(res.data);
         this.componentPagination.totalItems = res.total;
         this.totalNotDeletedComments = res.totalNotDeletedComments;
 
         this.onDataSubject.next(res.data);
-        this.hooks.runAction('action:video-watch.video-threads.loaded', 'video-watch', {data: this.componentPagination});
+        // this.hooks.runAction('action:video-watch.video-threads.loaded', 'video-watch', {data: this.componentPagination});
       },
 
       err => this.notifier.danger(err.message, 'Error')
@@ -199,12 +201,13 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
       message += ` It is a remote comment, so the deletion will only be effective on your instance.`;
     }
 
-    const res = await this.confirmService.confirm(message, title);
-    if (res === false) {
-      return false;
-    }
+    debugger
+    // const res = await this.confirmService.confirm(message, title);
+    // if (res === false) {
+    //   return false;
+    // }
 
-    this.videoCommentService.deleteVideoComment(commentToDelete.videoId, commentToDelete.id)
+    this.videoCommentService.deleteVideoComment(commentToDelete.postId, commentToDelete.id)
       .subscribe(
         () => {
           if (this.highlightedThread?.id === commentToDelete.id) {
@@ -224,9 +227,10 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   async onWantedToRedraft(commentToRedraft: PostComment) {
-    const confirm = await this.onWantedToDelete(commentToRedraft, `Delete and re-draft`, `Do you really want to delete and re-draft this comment?`);
+    // const confirm = await this.onWantedToDelete(commentToRedraft, `Delete and re-draft`, `Do you really want to delete and re-draft this comment?`);
 
-    if (confirm) {
+    debugger
+    if (true) { // confirm
       this.inReplyToCommentId = commentToRedraft.inReplyToCommentId;
 
       // Restore line feed for editing

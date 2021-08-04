@@ -21,18 +21,17 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { from, zip, Subject } from 'rxjs';
 import createSpy = jasmine.createSpy;
 
-import {
-  NbSelectModule,
-  NbThemeModule,
-  NbOverlayContainerAdapter,
-  NB_DOCUMENT,
-  NbSelectComponent,
-  NbLayoutModule,
-  NbOptionComponent,
-  NbOptionGroupComponent,
-  NbTriggerStrategyBuilderService,
-} from '@nebular/theme';
-import { NbFocusKeyManagerFactoryService } from '@nebular/theme/components/cdk/a11y/focus-key-manager';
+
+import {NbOptionComponent} from "../option/option.component";
+import { NbSelectComponent } from './select.component';
+import {NbOptionGroupComponent} from "../option/option-group.component";
+import {NbOverlayContainerAdapter} from "../cdk/adapter/overlay-container-adapter";
+import {NbThemeModule} from "../../theme.module";
+import {NbLayoutModule} from "../layout/layout.module";
+import {NbSelectModule} from "./select.module";
+import {NB_DOCUMENT} from "../../theme.options";
+import {NbTriggerStrategyBuilderService} from "../cdk/overlay/overlay-trigger";
+import {NbFocusKeyManagerFactoryService} from "../cdk/a11y/focus-key-manager";
 
 const eventMock = { preventDefault() {} } as Event;
 

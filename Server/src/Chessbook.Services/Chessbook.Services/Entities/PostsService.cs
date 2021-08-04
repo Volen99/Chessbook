@@ -572,5 +572,14 @@
         {
             await this.postsRepository.UpdateAsync(forumPost);
         }
+
+        public async Task<Customer> LoadAccountIdFromVideo(int postId)
+        {
+            var post = await this.GetPostByIdAsync(postId);
+
+            var user = await this.userService.GetCustomerByIdAsync(post.UserId);
+
+            return user;
+        }
     }
 }

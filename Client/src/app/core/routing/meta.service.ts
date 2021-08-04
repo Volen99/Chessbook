@@ -18,8 +18,8 @@ export class MetaService {
     private server: ServerService
   ) {
     this.config = this.server.getTmpConfig();
-    this.server.getConfig()
-      .subscribe(config => this.config = config);
+    // this.server.getConfig()
+    //   .subscribe(config => this.config = config);
   }
 
   setTitle(subTitle?: string) {

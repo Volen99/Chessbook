@@ -5,6 +5,7 @@
 
     using Chessbook.Core.Domain.Common;
 
+    // TODO: change "Customer" to "User" kk
     public class Customer : DeletableEntity, ISoftDeletedEntity
     {
         private const string REGEX_PROFILE_IMAGE_SIZE = "_[^\\W_]+(?=(?:\\.[a-zA-Z0-9_]+$))";

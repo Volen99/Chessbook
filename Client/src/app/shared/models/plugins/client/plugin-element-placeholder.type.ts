@@ -1,1 +1,1 @@
-export type PluginElementPlaceholder = 'player-next'
+export type PluginElementPlaceholder = 'player-next';

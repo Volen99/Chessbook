@@ -25,6 +25,8 @@ import {VideoCommentService} from "../../shared-post-comment/video-comment.servi
 import {SharedActorImageModule} from "../../shared-actor-image/shared-actor-image.module";
 import {NbInputModule} from "../../../sharebook-nebular/theme/components/input/input.module";
 import {SharedFormModule} from "../../shared-forms/shared-form.module";
+import {SharedModerationModule} from "../../shared-moderation/shared-moderation.module";
+import {TimestampRouteTransformerDirective} from "./shared/timestamp-route-transformer.directive";
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import {SharedFormModule} from "../../shared-forms/shared-form.module";
     VideoCommentsComponent,
     VideoCommentAddComponent,
     VideoCommentComponent,
+
+    TimestampRouteTransformerDirective,
   ],
 
   imports: [
@@ -56,6 +60,11 @@ import {SharedFormModule} from "../../shared-forms/shared-form.module";
     SharedActorImageModule,
     NbInputModule,
     SharedFormModule,
+    SharedModerationModule,
+  ],
+
+  exports: [
+    TimestampRouteTransformerDirective
   ],
 
   providers: [

@@ -53,6 +53,11 @@ export class ChessbookUsersStreamComponent implements OnInit {
   }
 
   open3() {
+    if (!this.userStore.isLoggedIn()) {
+      this.toasterService.warning('You need to be logged in to enter your twitch username', 'You need to log in');
+      return;
+    }
+
     this.dialogService.open(DialogUsernamePromptComponent)
       .onClose.subscribe((name) => {
       if (name) {

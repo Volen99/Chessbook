@@ -83,7 +83,6 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
   }
 
   getPostsObservable(page: number) {
-    debugger
     const newPagination = immutableAssign(this.pagination, {currentPage: page});
 
     let parameters = new GetUserTimelineParameters(newPagination, this.sort, true, this.profileCurrent.id);

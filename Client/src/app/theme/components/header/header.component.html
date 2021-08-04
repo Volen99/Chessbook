@@ -31,11 +31,17 @@
         <img src="assets/images/lichess.svg" alt="lichess logo" style="width: 32px; height: 32px;">
       </a>
     </nb-action>
-    <nb-action class="user-action" *nbIsGranted="['view', 'current-user']">
+    <nb-action class="user-action" *ngIf="this.isLoggedIn">    <!--*nbIsGranted="['view', 'current-user']"-->
       <nb-user [nbContextMenu]="userMenu"
                [onlyPicture]="userPictureOnly"
                [name]="user?.displayName"
                [picture]="user?.profileImageUrlHttps | ngxAuthToken | async">
+      </nb-user>
+    </nb-action>
+    <nb-action class="user-action" *ngIf="!this.isLoggedIn">
+      <nb-user [nbContextMenu]="this.anonymousUserMenu"
+               [onlyPicture]="true"
+               [picture]="this.getAnonymousAvatarUrl()">
       </nb-user>
     </nb-action>
   </nb-actions>

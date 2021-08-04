@@ -7,7 +7,7 @@ import {HTMLServerConfig, ServerConfig} from "../../shared/models/server/server-
 
 @Injectable()
 export class ServerService {
-  private static BASE_CONFIG_URL = environment.apiUrl + '/api/v1/config/';
+  // private static BASE_CONFIG_URL = environment.apiUrl + '/api/v1/config/';
   private static BASE_VIDEO_URL = environment.apiUrl + '/api/v1/videos/';
   private static BASE_VIDEO_PLAYLIST_URL = environment.apiUrl + '/api/v1/video-playlists/';
   private static BASE_LOCALE_URL = environment.apiUrl + '/client/locales/';
@@ -52,7 +52,7 @@ export class ServerService {
     },
     serverVersion: 'Unknown',
     signup: {
-      allowed: false,
+      allowed: true,
       allowedForCurrentIP: false,
       requiresEmailVerification: false
     },
@@ -200,28 +200,28 @@ export class ServerService {
   getConfig() {
     if (this.configLoaded) return of(this.config);
 
-    if (!this.configObservable) {
-      this.configObservable = this.http.get<ServerConfig>(ServerService.BASE_CONFIG_URL)
-        .pipe(
-          tap(config => {
-            this.config = config;
-            this.configLoaded = true;
-          }),
-          tap(config => {
-            if (this.configReset) {
-              this.configReloaded.next(config);
-              this.configReset = false;
-            }
-          }),
-          share()
-        );
-    }
+    // if (!this.configObservable) {
+    //   this.configObservable = this.http.get<ServerConfig>(ServerService.BASE_CONFIG_URL)
+    //     .pipe(
+    //       tap(config => {
+    //         this.config = config;
+    //         this.configLoaded = true;
+    //       }),
+    //       tap(config => {
+    //         if (this.configReset) {
+    //           this.configReloaded.next(config);
+    //           this.configReset = false;
+    //         }
+    //       }),
+    //       share()
+    //     );
+    // }
 
     return this.configObservable;
   }
 
   getHTMLConfig () {
-    return this.htmlConfig
+    return this.htmlConfig;
   }
 
   getTmpConfig() {

@@ -6,12 +6,12 @@ export interface IPostComment {
   text: string;
   threadId: number;
   inReplyToCommentId: number;
-  videoId: number;
+  postId: number;
   createdAt: Date | string;
   updatedAt: Date | string;
   deletedAt: Date | string;
   isDeleted: boolean;
-  totalRepliesFromVideoAuthor: number;
+  totalRepliesFromPostAuthor: number;
   totalReplies: number;
   account: IUser;
 }

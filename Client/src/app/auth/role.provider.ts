@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 import { map } from 'rxjs/operators';
 import {NbRoleProvider} from "../sharebook-nebular/security/services/role.provider";
 import {NbAuthService} from "../sharebook-nebular/auth/services/auth.service";
@@ -24,6 +24,9 @@ export class RoleProvider extends NbRoleProvider {
   }
 
   getRole(): Observable<string | string[]> {
+    // if (this.authService.isAuthenticated()) {
+    //   return of('guests');
+    // }
     return this.authService.getToken()
       .pipe(
         map((token: NbAuthOAuth2JWTToken) => {

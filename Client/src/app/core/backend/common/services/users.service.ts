@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpParams} from "@angular/common/http";
 import {from, Observable, of} from 'rxjs';
-import {catchError, concatMap, first, map, shareReplay, toArray} from 'rxjs/operators';
+import {catchError, concatMap, filter, first, map, shareReplay, throttleTime, toArray} from 'rxjs/operators';
 import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 
 import {UsersApi} from '../api/users.api';
@@ -20,17 +20,18 @@ import {getBytes} from "../../../../../root-helpers/bytes";
 import {UserRole} from "../../../../shared/models/users/user-role";
 import {UserStore} from "../../../stores/user.store";
 import {InitUserService} from "../../../../theme/services/init-user.service";
+import {UserLocalStorageKeys} from "../../../../../root-helpers/users/user-local-storage-keys";
 
 @Injectable()
 export class UsersService extends UserData {
-  static extractUsers (result: ResultList<User>) {
+  static extractUsers(result: ResultList<User>) {
     const users: User[] = [];
 
     for (const userJSON of result.data) {
       users.push(new User(userJSON));
     }
 
-    return { data: users, total: result.total };
+    return {data: users, total: result.total};
   }
 
   private userCache: { [id: number]: Observable<IUser> } = {};
@@ -64,6 +65,7 @@ export class UsersService extends UserData {
   }
 
   get(id: number): Observable<IUser> {
+    debugger
     return this.api.get(id);
   }
 
@@ -164,6 +166,10 @@ export class UsersService extends UserData {
   }
 
   getAnonymousUser() {
+    return new User({
+      // local storage keys
+      theme: this.localStorageService.getItem(UserLocalStorageKeys.THEME) || 'default',
+    });
   }
 
   getUsers(pageNumber: number, pageSize: number) {
@@ -299,19 +305,48 @@ export class UsersService extends UserData {
     return this.api.getYourBirthday('birthday', userId);
   }
 
-  // getAnonymousOrLoggedUser() {
-  //   if (!!this.userStore.getUser()) {
-  //     // return of(this.getAnonymousUser())
-  //   }
-  //
-  //   return of(this.userStore.getUser());
-  //
-  //   // return this.initUserService.settingsLoaded$
-  //   //   .pipe(
-  //   //     first(),
-  //   //     map(() => this.userStore.getUser())
-  //   //   );
-  // }
+  getAnonymousOrLoggedUser() {
+    if (!this.userStore.isLoggedIn()) {
+      return of(this.getAnonymousUser());
+    }
+
+    return this.userStore.onUserStateChange()
+      .pipe(
+        first(),
+        map(() => this.userStore.getUser())
+      );
+  }
+
+
+  private oldThemeName: string;
+  private themes: string[] = [];
+
+  private themeFromLocalStorage: string;
+  getAnonymousUserTheme() {
+    if (this.themeFromLocalStorage) {
+      return this.themeFromLocalStorage;
+    }
+
+    const theme = this.getAnonymousUser().theme;
+
+    if (theme !== 'default') {
+      return theme;
+    }
+
+    const instanceTheme = 'default';
+    if (instanceTheme !== 'default') {
+      return instanceTheme;
+    }
+
+    // Default to dark theme if available and wanted by the user
+    if (
+      this.themes.find(t => t === 'cosmic') // && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
+      return 'cosmic';
+    }
+
+    return instanceTheme;
+  }
 
   private formatUser(user: IUser) {
     // let videoQuota;
@@ -342,6 +377,43 @@ export class UsersService extends UserData {
     return Object.assign(user, {
       roleLabel: roleLabels[user.roles[0]], // TODO: fix role[0]
     });
+  }
+
+  updateMyAnonymousProfile(profile: UserUpdateMe) {
+    const localStorageKeys: { [id in keyof UserUpdateMe]: string } = {
+      theme: UserLocalStorageKeys.THEME,
+    };
+
+    const obj = Object.keys(localStorageKeys)
+      .filter(key => key in profile)
+      .map(key => ([localStorageKeys[key], profile[key]]));
+
+    for (const [key, value] of obj) {
+      try {
+        if (value === undefined) {
+          this.localStorageService.removeItem(key);
+          continue;
+        }
+
+        const localStorageValue = typeof value === 'string'
+          ? value
+          : JSON.stringify(value);
+
+        this.localStorageService.setItem(key, localStorageValue);
+      } catch (err) {
+        console.error(`Cannot set ${key}->${value} in localStorage. Likely due to a value impossible to stringify.`, err);
+      }
+    }
+  }
+
+  listenAnonymousUpdate() {
+    return this.localStorageService.watch([
+      UserLocalStorageKeys.THEME,
+    ]).pipe(
+      throttleTime(200),
+      filter(() => this.userStore.isLoggedIn() !== true),
+      map(() => this.getAnonymousUser())
+    );
   }
 
 }

@@ -11,8 +11,8 @@ export class RelationshipsApi {
 
   }
 
-  show(params: HttpParams, url: string) {
-    return this.api.get(`${this.apiController}/${url}`, {params});
+  fetchRelationships(url: string) {
+    return this.api.get(`${url}`);
   }
 
 }

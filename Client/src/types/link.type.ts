@@ -1,1 +1,1 @@
-export type LinkType = 'internal' | 'lazy-load' | 'external'
+export type LinkType = 'internal' | 'lazy-load' | 'external';
