@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-The future is near. Try the new social media that has blown in fame the past 3 months
+Social media for chess players
 </p>
 
 <p align="center">
