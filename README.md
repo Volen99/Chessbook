@@ -27,9 +27,7 @@ Social media for chess players
 <br />
 
 <p align="center">
-  <a href="https://framatube.org/videos/watch/217eefeb-883d-45be-b7fc-a788ad8507d3">
-    <img src="http://lutim.cpy.re/9CLXh0Ys.png" alt="screenshot" />
-  </a>
+  ![chessbook](https://user-images.githubusercontent.com/41373491/128185784-33d47df7-20f1-4cd9-beae-284d65b37e49.PNG)
 </p>
 
 ## License
