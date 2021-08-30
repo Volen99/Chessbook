@@ -10,7 +10,7 @@ import {
 
 import * as MarkdownIt from 'markdown-it';
 import {HtmlRendererService} from "./html-renderer.service";
-import {buildVideoLink} from "../../../assets/utils";
+import {buildVideoLink, decorateVideoLink} from '../utils/common/url';
 
 type MarkdownParsers = {
   textMarkdownIt: MarkdownIt
@@ -81,14 +81,18 @@ export class MarkdownService {
     return this.render({name: 'unsafeMarkdownIt', markdown, withEmoji: true});
   }
 
-  customPageMarkdownToHTML (markdown: string, additionalAllowedTags: string[]) {
-    return this.render({ name: 'customPageMarkdownIt', markdown, withEmoji: true, additionalAllowedTags });
+  customPageMarkdownToHTML(markdown: string, additionalAllowedTags: string[]) {
+    return this.render({name: 'customPageMarkdownIt', markdown, withEmoji: true, additionalAllowedTags});
   }
 
-  processVideoTimestamps(html: string) {
+  processVideoTimestamps(screenName: string, postId: number, html: string) {
     return html.replace(/((\d{1,2}):)?(\d{1,2}):(\d{1,2})/g, function (str, _, h, m, s) {
       const t = (3600 * +(h || 0)) + (60 * +(m || 0)) + (+(s || 0));
-      const url = buildVideoLink({startTime: t});
+
+      const url = decorateVideoLink({
+        url: buildVideoLink(screenName, postId),
+        startTime: t
+      });
       return `<a class="video-timestamp" href="${url}">${str}</a>`;
     });
   }

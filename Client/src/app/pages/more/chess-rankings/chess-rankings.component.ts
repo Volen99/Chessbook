@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
-import {LocalDataSource} from "ng2-smart-table";
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+
 import {
   faTrophy
 } from '@fortawesome/pro-light-svg-icons';
 
+import {LocalDataSource} from "ng2-smart-table";
 import {SmartTableData} from "../../../core/interfaces/common/smart-table";
 
 

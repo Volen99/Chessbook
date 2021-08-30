@@ -59,6 +59,8 @@ export interface IPost extends ITweetIdentifier {
   // If the represented Tweet is a reply, it will contain the integer representation of the original author ID
   inReplyToUserId?: number;
 
+  user: IUser;
+
   // In_reply_to_user_id_str
   inReplyToUserIdStr: string;
 
@@ -167,6 +169,7 @@ export interface IPost extends ITweetIdentifier {
 
   blacklisted?: boolean;
   blacklistedReason?: string;
+  tags: string[];
 
   // #region Favorites
 

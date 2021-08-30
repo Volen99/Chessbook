@@ -1,21 +1,26 @@
-﻿using Chessbook.Core.Domain.Notifications;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
+
+using Chessbook.Core.Domain.Notifications;
+using Chessbook.Core.Domain.Posts;
 using Chessbook.Data.Models;
 using Chessbook.Data.Models.Post;
-using Chessbook.Services.Data;
 using Chessbook.Services.Data.Services;
 using Chessbook.Services.Notifications;
 using Chessbook.Services.Notifications.Settings;
 using Chessbook.Web.Api.Factories;
 using Chessbook.Web.Api.Models.UserNotification;
-using Chessbook.Web.Models.Inputs;
-using Microsoft.AspNetCore.SignalR;
+using Chessbook.Web.Api.Lib.Shared.Comment;
+using Chessbook.Web.Api.Lib.Shared.Common;
 using Nop.Core.Infrastructure;
 using Nop.Services.Logging;
 using Ordering.SignalrHub;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Chessbook.Web.Api.Lib.Shared.Follow;
+using Chessbook.Core.Domain.Relationships;
+using static Chessbook.Web.Api.Controllers.RelationshipsController;
+using Chessbook.Web.Api.Lib.Shared.Like;
 
 namespace Chessbook.Web.Api.Lib
 {
@@ -23,7 +28,14 @@ namespace Chessbook.Web.Api.Lib
     {
         private static Notifier instance;
 
-        // Ask Kenov about immediately 'newing' it
+        private readonly dynamic notificationModels = new
+        {
+            newComment = new List<Type>() { typeof(CommentMention) },
+            userFollow = new List<Type>() { typeof(FollowForUser) },
+            newPostLike = new List<Type>() { typeof(UserLike) },
+        };
+
+
         private INotificationsSettingsService userNotificationSettingsService = EngineContext.Current.Resolve<INotificationsSettingsService>();
         private IUserNotificationService userNotificationService = EngineContext.Current.Resolve<IUserNotificationService>();
         private IUserService userService = EngineContext.Current.Resolve<IUserService>();
@@ -45,9 +57,42 @@ namespace Chessbook.Web.Api.Lib
 
         }
 
-        public void NotifyOfNewUserFollow(Relationship relationship)
+        public void NotifyOfNewUserFollow(UserFollowFull userFollow)
         {
-            this.NotifyUserOfNewActorFollow(relationship);
+            var models = this.notificationModels.userFollow;
+
+            this.SendNotifications(models, userFollow);
+        }
+
+        public void NotifyOfNewPostLike(PostVote postVote)
+        {
+            var models = this.notificationModels.newPostLike;
+
+            this.SendNotifications(models, postVote);
+        }
+
+        public void NotifyOnNewComment(PostComment comment)
+        {
+            var models = this.notificationModels.newComment;
+
+            this.SendNotifications(models, comment);
+        }
+
+        private async Task SendNotifications<T>(List<Type> models, T payload)
+        {
+            foreach (var model in models)
+            {
+                try
+                {
+                    var instance = (AbstractNotification<T, Customer>)Activator.CreateInstance(model, payload);         // Hello darkness, my old friend...
+                    await this.Notify(instance);
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+            }
         }
 
         private async Task NotifySubscribersOfNewVideo(Post post)
@@ -141,6 +186,56 @@ namespace Chessbook.Web.Api.Lib
                 //    emails.Add(user.User.Email);
                 //}
             }
+        }
+
+        private async Task Notify<T>(AbstractNotification<T, Customer> @object)
+        {
+            await @object.Prepare();
+
+            var users = @object.GetTargetUsers();
+
+            if (users.Count == 0)
+            {
+                return;
+            }
+
+            if (await @object.IsDisabled())
+            {
+                return;
+            }
+
+            @object.Log();
+
+            var toEmails = new List<string>();
+
+            foreach (var user in users)
+            {
+                var setting = await @object.GetSetting(user);
+
+                if (this.IsWebNotificationEnabled(setting))
+                {
+                    var notification = await @object.CreateNotification(user);
+
+                    await this.sendNotificationHub(user.Id, notification);
+                }
+            }
+        }
+
+        private bool IsWebNotificationEnabled(UserNotificationSettingValue value)
+        {
+            return true; // value == UserNotificationSettingValue.WEB;
+        }
+
+        private async Task sendNotificationHub(int userId, UserNotification notification)
+        {
+            // log
+
+            var userNotificationModelFactory = EngineContext.Current.Resolve<IUserNotificationModelFactory>();
+            var notificationMessage = await userNotificationModelFactory.PrepareUserNotificationModelAsync(notification);
+
+            var notificationsHub = EngineContext.Current.Resolve<IHubContext<NotificationsHub>>();
+
+            await notificationsHub.Clients.All.SendAsync("newNotification", notificationMessage);
         }
 
         public static Notifier Instance

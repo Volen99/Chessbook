@@ -25,7 +25,7 @@ namespace Chessbook.Services.Relationships
             this.userService = userService;
         }
 
-        public async Task<Relationship> Follow(int userId, int targetUserId, FollowState state)
+        public async Task<UserFollow> Follow(int userId, int targetUserId, FollowState state)
         {
             var followNew = new UserFollow
             {
@@ -56,7 +56,7 @@ namespace Chessbook.Services.Relationships
             await this.userService.Update(sourceUser);
             await this.userService.Update(crushUser);
 
-            return yourRelationship;
+            return followNew;
         }
 
         public async Task<Relationship> UnFollow(int userId, int targetUserId)

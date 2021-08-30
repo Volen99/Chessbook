@@ -1,0 +1,26 @@
+.post-tags-list {
+  font-size: 0;
+}
+
+.post-tags-all-page li a {
+  float: left;
+  line-height: 30px;
+  // color: #444;
+}
+
+.post-tags-list a {
+  display: inline-block;
+  line-height: 24px;
+}
+
+.post-tags-all-page li {
+  display: inline-block;
+  position: relative;
+  margin: 0 10px;
+  overflow: hidden;
+  font-size: 17px !important;
+}
+
+a {
+  text-decoration: none;
+}

@@ -1,5 +1,5 @@
-﻿using Nop.Core.Caching;
-using Nop.Core.Domain.Catalog;
+﻿using Chessbook.Core.Domain.Posts;
+using Nop.Core.Caching;
 
 namespace Nop.Services.Catalog
 {
@@ -303,6 +303,24 @@ namespace Nop.Services.Catalog
         #endregion
 
         #region Product tags
+
+        /// <summary>
+        /// Gets a key for caching
+        /// </summary>
+        /// <remarks>
+        /// {0} : store ID
+        /// {1} : hash of list of customer roles IDs
+        /// {2} : show hidden records?
+        /// </remarks>
+        public static CacheKey ProductTagCountCacheKey => new CacheKey("Nop.producttag.count.{0}-{1}-{2}", NopEntityCacheDefaults<Tag>.Prefix);
+
+        /// <summary>
+        /// Gets a key for caching
+        /// </summary>
+        /// <remarks>
+        /// {0} : product ID
+        /// </remarks>
+        public static CacheKey ProductTagsByProductCacheKey => new CacheKey("Nop.producttag.byproduct.{0}", NopEntityCacheDefaults<Tag>.Prefix);
 
         #endregion
 

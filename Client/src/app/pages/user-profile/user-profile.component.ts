@@ -1,32 +1,21 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
-import {forkJoin, Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {Subject} from "rxjs/Subject";
-import {catchError, distinctUntilChanged, first, map, switchMap, takeUntil, tap} from 'rxjs/operators';
+import {catchError, distinctUntilChanged, map, switchMap, takeUntil, tap} from 'rxjs/operators';
 
-import {faLongArrowLeft, faBirthdayCake, faCalendarAlt, faEllipsisH} from '@fortawesome/pro-light-svg-icons';
+import {faBirthdayCake, faCalendarAlt, faGlobe, faLongArrowLeft} from '@fortawesome/pro-light-svg-icons';
 
 import {IUser} from "../../core/interfaces/common/users";
 import {UserStore} from "../../core/stores/user.store";
-import {NbTokenService} from "../../sharebook-nebular/auth/services/token/token.service";
 import {UserProfileService} from "./user-profile.service";
 import {User} from "../../shared/shared-main/user/user.model";
 import {HttpStatusCode} from "../../shared/core-utils/miscs";
 import {RestExtractor} from "../../core/rest/rest-extractor";
-import {Notifier} from "../../core/notification/notifier.service";
 import {PostsService} from "../../shared/posts/posts.service";
-import {AbstractPostList} from "../../shared/post-miniature/abstract-post-list/abstract-post-list";
-import {ScreenService} from 'app/core/wrappers/screen.service';
-import {LocalStorageService} from 'app/core/wrappers/storage.service';
-import {Post} from 'app/shared/shared-main/post/post.model';
-import {immutableAssign} from "../../helpers/utils";
-import {GetUserTimelineParameters} from "../../shared/models/timeline/get-user-timeline-parameters";
 import {UsersService} from "../../core/backend/common/services/users.service";
 import {RelationshipsService} from "../../shared/shared-main/relationships/relationships.service";
-import {
-  GetRelationshipBetweenParameters,
-} from "../../shared/shared-main/relationships/models/get-relationship-between-parameters.model";
 import {IRelationshipDetails} from "../../shared/shared-main/relationships/models/relationship-details.model";
 import {Month} from "../my-account/my-account-settings/my-account-profile/my-account-profile.component";
 import {DropdownAction} from "../../shared/shared-main/buttons/action-dropdown.component";
@@ -38,6 +27,7 @@ import {NbDialogService} from "../../sharebook-nebular/theme/components/dialog/d
 import {AccountReportComponent} from "../../shared/shared-moderation/report-modals/account-report.component";
 import {MediaContainerComponent} from "../../features/media-container/media-container.component";
 import {Title} from "@angular/platform-browser";
+import {MarkdownService} from 'app/core/renderer/markdown.service';
 
 @Component({
   templateUrl: './user-profile.component.html',
@@ -61,7 +51,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               private redirectService: RedirectService,
               private initUserService: InitUserService,
               private dialogService: NbDialogService,
-              private titleService: Title) {
+              private titleService: Title,
+              private markdown: MarkdownService) {
   }
 
   private accountSub: Subscription;
@@ -85,6 +76,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           // err => this.notifier.error(err.message)
         }
       );
+
+    this.tabs = this.getTabs();
   }
 
   ngOnDestroy() {
@@ -97,31 +90,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  tabs: any[] = [
-    {
-      title: 'Posts',
-      route: './tab1',
-    },
-    {
-      title: 'Posts & replies',
-      route: ['./tab2'],
-    },
-    {
-      title: 'Media',
-      route: './tab3'
-      // icon: 'flash-outline',
-      // responsive: true,
-      // disabled: true,
-    },
-    {
-      title: 'Likes',
-      route: './tab4'
-    },
-    // {
-    //   title: 'Dislikes',
-    //   route: './tab5'
-    // },
-  ];
+  accountDescriptionHTML = '';
+
+  tabs: any[];
+
+  faGlobe = faGlobe;
 
   prependModerationActions: DropdownAction<any>[];
 
@@ -218,9 +191,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     this.titleService.setTitle(title);
 
-    // @ts-ignore
-    this.profileCurrent = user; // TODO: new it
-    this.profileCurrent.createdOn = new Date(this.profileCurrent.createdOn);
+    this.prependModerationActions = undefined;
+
+    this.accountDescriptionHTML = await this.markdown.textMarkdownToHTML(user.description);
+
+    // After the markdown renderer to avoid layout changes
+    this.profileCurrent = user;
+    // this.profileCurrent.createdOn = new Date(this.profileCurrent.createdOn);
 
     const currentUserId = this.userStore.getUser().id;
     if (currentUserId === this.profileCurrent.id) {
@@ -233,7 +210,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         });
     }
 
-    // let relationshipBetweenParameters = new GetRelationshipBetweenParameters(this.userStore.getUser().id, this.profileCurrent.id);
     this.relationshipsService.fetchRelationships([this.profileCurrent.id])
       .subscribe((data: IRelationshipDetails) => {
         this.relationshipDetails = data;
@@ -272,6 +248,24 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     });
   }
 
+  hasSocialLink() {
+    return !!(this.profileCurrent.websiteLink || this.profileCurrent.twitterLink || this.profileCurrent.twitchLink
+      || this.profileCurrent.youtubeLink || this.profileCurrent.facebookLink);
+  }
+
+  shouldISpaceAround() {
+    let arr = [this.profileCurrent.websiteLink, this.profileCurrent.twitterLink, this.profileCurrent.twitchLink,
+      this.profileCurrent.youtubeLink, this.profileCurrent.facebookLink];
+
+    if (arr.filter(s => s).length === 2) {
+      return 'space-evenly';
+    } else if (arr.filter(s => s).length > 2) {
+      return 'space-around';
+    }
+
+    return '';
+  }
+
   private updateModerationActions() {
     if (!this.userStore.isLoggedIn()) {
       return;
@@ -303,6 +297,30 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       closeOnEsc: false,
       closeOnBackdropClick: false,
     });
+  }
+
+  private getTabs() {
+    return [
+      {
+        title: 'Posts',
+        route: './tab1',
+      },
+      {
+        title: 'Posts & replies',
+        route: ['./tab2'],
+      },
+      {
+        title: 'Media',
+        route: './tab3'
+        // icon: 'flash-outline',
+        // responsive: true,
+        // disabled: true,
+      },
+      {
+        title: 'Likes',
+        route: './tab4'
+      },
+    ];
   }
 
 }

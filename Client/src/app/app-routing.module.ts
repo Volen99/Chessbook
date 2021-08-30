@@ -5,6 +5,7 @@ import {AuthGuard} from "./auth/auth.guard";
 import {NotFoundComponent} from "./pages/page-not-found/not-found.component";
 import {MetaGuard} from "./core/routing/meta-guard.service";
 import {ModeratorGuard} from "./auth/moderator.guard";
+import {TrendsModule} from "./pages/trends/trends.module";
 
 const routes: Routes = [
   {
@@ -49,6 +50,11 @@ const routes: Routes = [
         canActivateChild: [ MetaGuard ],
       },
       {
+        path: 'search',
+        loadChildren: () => import('./pages/search/search.module').then(m => m.SearchModule),
+        canActivateChild: [ MetaGuard ]
+      },
+      {
         path: 'my-account',
         loadChildren: () => import('./pages/my-account/my-account.module').then(m => m.MyAccountModule),
         canActivateChild: [ MetaGuard ],
@@ -75,6 +81,11 @@ const routes: Routes = [
         canActivateChild: [ MetaGuard ],
       },
       {
+        path: 'events',
+        loadChildren: () => import('./pages/more/tournaments/tournaments.module').then(m => m.TournamentsModule),
+        canActivateChild: [ MetaGuard ],
+      },
+      {
         path: 'ratings',
         loadChildren: () => import('./pages/more/chess-rankings/chess-rankings.module').then(m => m.ChessRankingsModule),
         canActivateChild: [ MetaGuard ],
@@ -82,6 +93,11 @@ const routes: Routes = [
       {
         path: 'misc',
         loadChildren: () => import('./pages/more/chess-stuff/chess-stuff.module').then(m => m.ChessStuffModule),
+        canActivateChild: [ MetaGuard ],
+      },
+      {
+        path: 'trends',
+        loadChildren: () => import('./pages/trends/trends.module').then(m => m.TrendsModule),
         canActivateChild: [ MetaGuard ],
       },
       {

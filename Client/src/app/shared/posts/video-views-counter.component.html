@@ -1,0 +1,5 @@
+<span [title]="video.favoriteCount">
+  <ng-container>
+    {video.favoriteCount, plural, =1 {1 {{this.viewsOrLikes}}} other {{{ video.favoriteCount | myNumberFormatter }} {{this.viewsOrLikes}}s}}
+  </ng-container>
+</span>

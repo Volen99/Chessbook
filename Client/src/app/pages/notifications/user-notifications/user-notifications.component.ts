@@ -1,8 +1,16 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Subject} from 'rxjs';
-import {faExclamationTriangle, faCog, faSensorAlert} from '@fortawesome/pro-light-svg-icons';
+
+import {
+  faExclamationTriangle,
+  faCommentExclamation,
+  faCog,
+  faSensorAlert
+} from '@fortawesome/pro-light-svg-icons';
+
 import {
   faUser as faUserSolid,
+  faHeartCircle,
 } from '@fortawesome/pro-solid-svg-icons';
 
 import {UserNotification} from "../../../shared/shared-main/users/user-notification.model";
@@ -49,9 +57,13 @@ export class UserNotificationsComponent implements OnInit {
   }
 
   faExclamationTriangle = faExclamationTriangle;
-  faUserSolid = faUserSolid;
+  faCommentExclamation = faCommentExclamation;
   faCog = faCog;
   faSensorAlert = faSensorAlert;
+
+  faUserSolid = faUserSolid;
+  faHeartCircle = faHeartCircle;
+
 
   loadNotifications(reset?: boolean) {
     const options = {
@@ -100,7 +112,7 @@ export class UserNotificationsComponent implements OnInit {
           notification.read = true;
         },
 
-        err => this.toasterService.danger(err.message)
+        err => this.toasterService.danger(err.message, 'Error')
       );
   }
 

@@ -2,7 +2,7 @@ import {Component, ComponentFactoryResolver, Input, OnDestroy, OnInit} from '@an
 import {forkJoin, Subscription} from 'rxjs';
 import {first, tap} from 'rxjs/operators';
 
-import {AbstractPostList} from "../../../shared/post-miniature/abstract-post-list/abstract-post-list";
+import {AbstractPostList} from "../../../shared/post-miniature/abstract-post-list";
 import {immutableAssign} from "../../../helpers/utils";
 import {PostFilter} from "../../../shared/posts/models/post-query.type";
 import {ActivatedRoute, Router} from "@angular/router";

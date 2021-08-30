@@ -15,13 +15,14 @@ import {VideoBlockService} from "../../../shared/shared-moderation/video-block.s
 import {MarkdownService} from "../../../core/renderer/markdown.service";
 import {PostsService} from "../../../shared/posts/posts.service";
 import {Post} from "../../../shared/shared-main/post/post.model";
-import {buildVideoLink, buildVideoOrPlaylistEmbed} from "../../../../assets/utils";
 import {environment} from "../../../../environments/environment";
 
 import {
   faTimes,
   faMobileAndroid,
 } from '@fortawesome/pro-light-svg-icons';
+import {buildVideoOrPlaylistEmbed} from "../../../../assets/utils";
+import {buildVideoEmbedLink, buildVideoLink, decorateVideoLink} from "../../../core/utils/common/url";
 
 @Component({
   selector: 'app-video-block-list',
@@ -161,10 +162,11 @@ export class VideoBlockListComponent extends RestTable implements OnInit {
     );
   }
 
-  getVideoEmbed(entry: VideoBlacklist) {
+  getVideoEmbed (entry: VideoBlacklist) {
     return buildVideoOrPlaylistEmbed(
-      buildVideoLink({
-        baseUrl: `${environment.apiUrl}/videos/embed/${entry.video.idStr}`,
+      decorateVideoLink({
+        url: buildVideoEmbedLink(entry.video.user.screenName, entry.video.id, environment.apiUrl), // originServerUrl
+
         title: false,
         warningTitle: false
       }),

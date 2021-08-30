@@ -175,7 +175,7 @@ export class VideoCommentComponent implements OnInit, OnChanges {
     // Before HTML rendering restore line feed for markdown list compatibility
     const commentText = this.comment.text.replace(/<br.?\/?>/g, '\r\n');
     const html = await this.markdownService.textMarkdownToHTML(commentText, true, true);
-    this.sanitizedCommentHTML = this.markdownService.processVideoTimestamps(html);
+    this.sanitizedCommentHTML = this.markdownService.processVideoTimestamps(this.video.user.screenName, this.video.id, html);
     this.newParentComments = this.parentComments.concat([this.comment]);
 
     if (this.comment.account) {

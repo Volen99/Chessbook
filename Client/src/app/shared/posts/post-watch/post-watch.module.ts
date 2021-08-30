@@ -27,6 +27,9 @@ import {NbInputModule} from "../../../sharebook-nebular/theme/components/input/i
 import {SharedFormModule} from "../../shared-forms/shared-form.module";
 import {SharedModerationModule} from "../../shared-moderation/shared-moderation.module";
 import {TimestampRouteTransformerDirective} from "./shared/timestamp-route-transformer.directive";
+import { PostAttributesComponent } from './shared/metadata/post-attributes/post-attributes.component';
+import {NbTagModule} from "../../../sharebook-nebular/theme/components/tag/tag.module";
+import {SharedShareModal} from "../../shared-share-modal/shared-share-modal.module";
 
 @NgModule({
   declarations: [
@@ -39,6 +42,7 @@ import {TimestampRouteTransformerDirective} from "./shared/timestamp-route-trans
     VideoCommentComponent,
 
     TimestampRouteTransformerDirective,
+     PostAttributesComponent,
   ],
 
   imports: [
@@ -61,6 +65,8 @@ import {TimestampRouteTransformerDirective} from "./shared/timestamp-route-trans
     NbInputModule,
     SharedFormModule,
     SharedModerationModule,
+    NbTagModule,
+    SharedShareModal,
   ],
 
   exports: [

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Chessbook.Core.Domain.Posts;
 using Chessbook.Data.Models.Media;
 using Chessbook.Data.Models.Memory;
 using Chessbook.Data.Models.Post;

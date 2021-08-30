@@ -8,7 +8,6 @@
     using Chessbook.Data.Models.Comments;
     using Chessbook.Data.Models.Contact;
     using Chessbook.Data.Models.Phone;
-    using Chessbook.Data.Models.Post;
     using Chessbook.Data.Models.Post.Entities;
     using Chessbook.Data.Models.System;
     using System;
@@ -17,7 +16,7 @@
     using Chessbook.Data.Models.Polls;
     using Chessbook.Data.Models.Media;
     using Nop.Core.Domain.Common;
-    using Nop.Core.Domain.Catalog;
+    using Chessbook.Core.Domain.Posts;
 
     public class DataContext : DbContext
     {

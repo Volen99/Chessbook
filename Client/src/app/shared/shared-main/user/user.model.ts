@@ -7,6 +7,7 @@ import {UserRole} from "../../models/users/user-role";
 import {UserAdminFlag} from "app/shared/models/users/user-flag.model";
 import {UserNotificationSetting} from "../../models/users/user-notification-setting.model";
 import {hasUserRight} from "../../../core/utils/users/user-role";
+import {ResultList} from "../../models";
 
 // Sharebook User 😎
 export class User implements IUser {
@@ -20,6 +21,16 @@ export class User implements IUser {
     return `assets/images/default_profile_200x200.png`;
   }
 
+  static extractVideoChannels (result: ResultList<User>) {
+    const videoChannels: User[] = [];
+
+    for (const videoChannelJSON of result.data) {
+      videoChannels.push(new User(videoChannelJSON));
+    }
+
+    return { data: videoChannels, total: result.total };
+  }
+
   constructor(hash: Partial<IUser>) {
     this.id = hash.id;
     this.idStr = hash.idStr;
@@ -28,7 +39,7 @@ export class User implements IUser {
     this.email = hash.email;
     this.status = hash.status;
     this.description = hash.description;
-    this.createdOn = hash.createdOn;
+    if (hash.createdOn) this.createdOn = new Date(hash.createdOn.toString());
     this.location = hash.location;
     this.geoEnabled = hash.geoEnabled;
     this.url = hash.url;
@@ -84,6 +95,13 @@ export class User implements IUser {
     this.mutedByUser = false;
 
     this.notificationSettings = hash.notificationSettings;
+
+    this.websiteLink = hash.websiteLink;
+    this.twitterLink = hash.twitterLink;
+    this.twitchLink = hash.twitchLink;
+    this.youtubeLink = hash.youtubeLink;
+    this.facebookLink = hash.facebookLink;
+
   }
 
   theme: string; // for anonymous user
@@ -152,6 +170,16 @@ export class User implements IUser {
 
   notificationSettings?: UserNotificationSetting;
   followedBy: boolean;
+
+  websiteLink: string;
+
+  twitterLink: string;
+
+  twitchLink: string;
+
+  youtubeLink: string;
+
+  facebookLink: string;
 
   hasRight(right: UserRight) {
     return hasUserRight(this.roles, right);

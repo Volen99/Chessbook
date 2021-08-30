@@ -40,5 +40,15 @@ namespace Chessbook.Web.Models.Inputs
 
             return dateOfBirth;
         }
+
+        public string WebsiteLink { get; set; }
+
+        public string TwitterLink { get; set; }
+
+        public string TwitchLink { get; set; }
+
+        public string YoutubeLink { get; set; }
+
+        public string FacebookLink { get; set; }
     }
 }

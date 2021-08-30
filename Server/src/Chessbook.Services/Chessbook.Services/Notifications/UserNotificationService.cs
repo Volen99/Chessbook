@@ -40,6 +40,14 @@ namespace Chessbook.Services.Notifications
             {
                 notification.RelationshipId = entityId;
             }
+            else if (type == UserNotificationType.COMMENT_MENTION)
+            {
+                notification.CommentId = entityId;
+            }
+            else if (type == UserNotificationType.NEW_LIKE_ON_MY_POST)
+            {
+                notification.PostVoteId = entityId;
+            }
 
             await this.userNotificationRepository.InsertAsync(notification);
 

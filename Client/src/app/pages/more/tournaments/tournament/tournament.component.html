@@ -1,0 +1,28 @@
+<nb-card size="medium">
+    <div class="picture" [style.background-image]="'url(' + this.tournament.picture +')'"></div>
+
+    <div class="details">
+        <div class="h4" style="margin-bottom: 0px">{{this.tournament.name}}</div>
+        <div class="details-date subtitle-2"><span>{{this.tournament.date}}</span>
+            <span style="margin-left: 1.5rem" title="Number of players"><fa-icon [icon]="this.faUsers"></fa-icon> {{this.tournament.playerCount}}</span>
+        </div>
+        <div class="description">
+            {{this.tournament.description}}
+        </div>
+    </div>
+
+    <nb-card-footer>
+        <a [href]="this.tournament.site" target="_blank">
+            <fa-icon size="2x" [icon]="this.faGlobe"></fa-icon>
+        </a>
+        <a [href]="this.tournament.twitter" target="_blank">
+            <i class="link-icon ion-social-twitter"></i>
+        </a>
+        <a [href]="this.tournament.facebook" target="_blank">
+            <i class="link-icon ion-social-facebook"></i>
+        </a>
+        <a [href]="this.tournament.youtube" target="_blank">
+            <i class="link-icon ion-social-youtube"></i>
+        </a>
+    </nb-card-footer>
+</nb-card>

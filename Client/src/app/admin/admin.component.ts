@@ -96,6 +96,10 @@ export class AdminComponent implements OnInit {
     if (this.hasUsersRight()) {
       this.menuEntries.push({label: 'Survey', routerLink: '/admin/survey'});
     }
+
+    if (this.hasUsersRight()) {
+      this.menuEntries.push({label: 'Tournaments', routerLink: '/admin/tournaments'});
+    }
   }
 
   faUserCheck = faUserCheck;

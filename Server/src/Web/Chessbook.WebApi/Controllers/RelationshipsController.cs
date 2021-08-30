@@ -98,13 +98,20 @@ namespace Chessbook.Web.Api.Controllers
                 }
 
                 var state = targetUser.Protected ? FollowState.Pending : FollowState.Accepted;
-                var yourRelationship = await this.followService.Follow(currentUserId, targetUser.Id, state);
+                var userFollow = await this.followService.Follow(currentUserId, targetUser.Id, state);
 
-                var model = this.relationshipModelFactory.PrepareRelationshipModel(yourRelationship);
+                // var model = this.relationshipModelFactory.PrepareRelationshipModel(yourRelationship);
 
-                Notifier.Instance.NotifyOfNewUserFollow(yourRelationship);
+                var userFollowFull = new UserFollowFull
+                {
+                    UserFollow = userFollow,
+                    TargetUser = targetUser,
+                    UserFollower = await this.userService.GetCustomerByIdAsync(currentUserId),
+                };
 
-                return this.Ok(model);
+                Notifier.Instance.NotifyOfNewUserFollow(userFollowFull);
+
+                return this.Ok(userFollow); // model
             }
 
             return this.BadRequest();
@@ -128,6 +135,17 @@ namespace Chessbook.Web.Api.Controllers
             var model = this.relationshipModelFactory.PrepareRelationshipModel(yourRelationship);
 
             return this.Ok(model);
+        }
+
+
+        // Object.assign(actorFollow, { ActorFollowing: targetActor, ActorFollower: follower })
+        public class UserFollowFull
+        {
+            public UserFollow UserFollow { get; set; }
+
+            public Customer TargetUser { get; set; }
+
+            public Customer UserFollower { get; set; }
         }
     }
 }

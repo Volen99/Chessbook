@@ -1,6 +1,6 @@
 ﻿namespace Chessbook.Web.Api.Areas.Admin.Models.Post
 {
-    using Chessbook.Data.Models.Post;
+    using Chessbook.Core.Domain.Posts;
     using Chessbook.Data.Models.Post.Enums;
     using Chessbook.Services.Mapping;
 

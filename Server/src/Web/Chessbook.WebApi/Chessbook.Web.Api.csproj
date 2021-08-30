@@ -53,6 +53,5 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Files\" />
-    <Folder Include="wwwroot\images\thumbs\" />
   </ItemGroup>
 </Project>

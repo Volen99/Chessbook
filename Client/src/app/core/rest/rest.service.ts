@@ -51,6 +51,14 @@ export class RestService {
     return newParams;
   }
 
+  addArrayParams(params: HttpParams, name: string, values: (string | number)[]) {
+    for (const v of values) {
+      params = params.append(name, v);
+    }
+
+    return params;
+  }
+
   addObjectParams(params: HttpParams, object: { [name: string]: any }) {
     for (const name of Object.keys(object)) {
       const value = object[name];

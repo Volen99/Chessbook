@@ -27,9 +27,11 @@
     using Chessbook.Web.Api.Lib;
     using Chessbook.Services.Entities;
     using Chessbook.Web.Api.Models.Posts;
-    using Chessbook.Core.Domain.Post;
+    using Chessbook.Core.Domain.Posts;
     using Microsoft.AspNetCore.Authorization;
     using Chessbook.Data.Models;
+    using System;
+    using Nop.Web.Models.Catalog;
 
     [Route("posts")]
     public class PostsController : BaseApiController
@@ -48,11 +50,12 @@
         private readonly ICustomerActivityService customerActivityService;
         private readonly ILocaleStringResourceService localeStringResourceService;
         private readonly IPostCommentService postCommentService;
+        private readonly IPostTagService postTagService;
 
         public PostsController(IPostsService postService, IPollService pollService, IUserService userService, IMediaService mediaService,
             IPictureService pictureService, IUserModelFactory userModelFactory, IPostModelFactory productModelFactory,
             ICustomerActivityService customerActivityService, ILocaleStringResourceService localeStringResourceService,
-            IPostCommentService postCommentService)
+            IPostCommentService postCommentService, IPostTagService postTagService)
         {
             this.postService = postService;
             this.userService = userService;
@@ -64,6 +67,7 @@
             this.customerActivityService = customerActivityService;
             this.localeStringResourceService = localeStringResourceService;
             this.postCommentService = postCommentService;
+            this.postTagService = postTagService;
         }
 
         [HttpGet]
@@ -209,6 +213,10 @@
                 post = await this.postService.CreateAsync(query, User.GetUserId(), null, pollId);
             }
 
+            // tags
+            pollBody.PostTags = "gaming,movies,carlsen,tag with space";
+            await this.postTagService.UpdatePostTagsAsync(post, ParsePostTags(pollBody.PostTags));
+
             var postUser = await this.userService.GetCustomerByIdAsync(post.UserId);
             post.User = postUser;
 
@@ -231,6 +239,11 @@
         public async Task<IActionResult> GetPost(int id)
         {
             var post = await this.postService.GetPostByIdAsync(id);
+
+            if (post == null || post.Deleted)
+            {
+                return this.NotFound();
+            }
 
             var model = await this.postModelFactory.PreparePostModelAsync(post);
 
@@ -327,7 +340,7 @@
             {
                 return this.BadRequest("Post comment is not associated to this video.");
             }
-            
+
 
             var comment = await this.postCommentService.Create(User.GetUserId(), postId, input.Text, postComment);
 
@@ -335,6 +348,8 @@
             {
                 return this.BadRequest();
             }
+
+            Notifier.Instance.NotifyOnNewComment(comment);
 
             var model = await this.postModelFactory.PreparePostCommentModelAsync(comment);
 
@@ -432,6 +447,31 @@
 
             return this.Ok();
 
+        }
+
+        [HttpGet]
+        [Route("tags")]
+        public async Task<IActionResult> GetPostTags([FromQuery] int count = 2)
+        {
+            var model = await this.postModelFactory.PreparePopularProductTagsModelAsync(count);
+
+            return this.Ok(model);
+        }
+
+        protected virtual string[] ParsePostTags(string postTags)
+        {
+            var result = new List<string>();
+            if (string.IsNullOrWhiteSpace(postTags))
+            {
+                return result.ToArray();
+            }
+
+            var values = postTags.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var val in values)
+                if (!string.IsNullOrEmpty(val.Trim()))
+                    result.Add(val.Trim());
+
+            return result.ToArray();
         }
 
         private async Task<List<int>> BuildBlockerAccountIds(int postId, Customer currentLoggedUser)

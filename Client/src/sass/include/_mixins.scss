@@ -120,8 +120,8 @@
 @mixin peertube-textarea ($width, $height) {
   @include peertube-input-text($width);
 
-  //color: pvar(--textareaForegroundColor);
-  //background-color: pvar(--textareaBackgroundColor);
+  color: pvar(--textareaForegroundColor);
+  background-color: pvar(--textareaBackgroundColor);
   height: $height;
   padding: 5px 15px;
   font-size: 15px;
@@ -361,8 +361,18 @@
     width: 100%;
   }
 
-  &:after {
-    @include select-arrow-down;
+  &::after {
+    top: 50%;
+    right: calc(0% + 15px);
+    content: ' ';
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border: 5px solid rgba(0, 0, 0, 0);
+    border-top-color: #000;
+    margin-top: -2px;
+    z-index: 100;
   }
 
   select {
@@ -397,7 +407,7 @@
     option {
       font-weight: $font-semibold;
       color: pvar(--greyForegroundColor);
-      border: none;
+      border: 0;
     }
   }
 }

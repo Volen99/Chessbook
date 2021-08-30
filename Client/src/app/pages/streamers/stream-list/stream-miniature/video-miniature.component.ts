@@ -66,7 +66,7 @@ export class VideoMiniatureComponent implements OnInit {
 
     this.setUpBy();
 
-    this.channelLinkTitle = $localize`${this.video.user_login} (channel page)`;
+    this.channelLinkTitle = $localize`${this.video.user_login} (user profile)`;
 
     // // We rely on mouseenter to lazy load actions
     // if (this.screenService.isInTouchScreen()) {

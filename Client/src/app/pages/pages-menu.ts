@@ -12,6 +12,7 @@ import {
   faChartLine,
   faAlicorn,
   faChessClock,
+  faTrophy,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {NbMenuItem} from '../sharebook-nebular/theme/components/menu/menu.service';
@@ -65,7 +66,7 @@ export class PagesMenu {
       {
         title: 'Profile',
         icon: faUser,
-        link: `/${screenName}`,
+        link: `/${screenName?.substring(1)}`,
         children: undefined,
       },
       {
@@ -78,6 +79,7 @@ export class PagesMenu {
         expanded: false,
         icon: faCircle,
         children: [
+          {icon: faTrophy, title: `Chess Tournaments`, link: '/events'},
           {icon: faChartLine, title: `Chess Rankings`, link: '/ratings'},
           {icon: faChessClock, title: `Chess stuff`, link: '/misc'},
           {icon: faAlicorn, title: `Keyboard shortcuts`, link: ''},

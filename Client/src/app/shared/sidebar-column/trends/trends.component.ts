@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {TagsService} from "../../services/tags.service";
+import {IPostTag} from "../../shared-main/post/post-details.model";
+
+import {
+  faPawClaws,
+} from '@fortawesome/pro-solid-svg-icons';
+
 
 @Component({
   selector: 'app-trends',
@@ -7,9 +14,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TrendsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private tagsService: TagsService) { }
 
   ngOnInit(): void {
+    this.tagsService.getPostTags(2)
+      .subscribe((data) => {
+        this.tags = data.tags;
+      });
   }
+
+  tags: IPostTag[];
+
+  faPawClaws = faPawClaws;
 
 }

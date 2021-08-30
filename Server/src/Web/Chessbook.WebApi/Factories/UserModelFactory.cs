@@ -110,11 +110,17 @@ namespace Chessbook.Web.Api.Factories
                     model.FollowersCount = customer.FollowersCount;
                     model.FollowingCount = customer.FollowingCount;
                     model.County = await this.genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.CountyAttribute);
+                    model.Description = customer.Description;
                     // model.CountryId = await this.genericAttributeService.GetAttributeAsync<int>(customer, NopCustomerDefaults.CountryIdAttribute);
                     model.CreatedOn = await dateTimeHelper.ConvertToUserTimeAsync(customer.CreatedOn, DateTimeKind.Utc, model.Id);
                     model.LastActivityDate = await this.dateTimeHelper.ConvertToUserTimeAsync(customer.LastActivityDateUtc, DateTimeKind.Utc, model.Id);
                     model.LastIpAddress = customer.LastIpAddress;
                     model.LastLoginDate = customer.LastLoginDateUtc;
+                    model.WebsiteLink = customer.WebsiteLink;
+                    model.TwitterLink = customer.TwitterLink;
+                    model.TwitchLink = customer.TwitchLink;
+                    model.YoutubeLink = customer.YoutubeLink;
+                    model.FacebookLink = customer.FacebookLink;
                 }
             }
             else

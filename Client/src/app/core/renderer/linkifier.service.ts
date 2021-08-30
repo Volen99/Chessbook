@@ -55,7 +55,7 @@ export class LinkifierService {
             type: 'mentionWithDomain',
             isLink: true,
             toHref() {
-                return getAbsoluteAPIUrl() + '/services/redirect/accounts/' + this.toString().substr(1);
+                return this.toString().substr(1);  // getAbsoluteAPIUrl() + '/services/redirect/accounts/' + this.toString().substr(1);
             }
         });
 

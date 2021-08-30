@@ -99,6 +99,8 @@
         /// </returns>
         Task<Customer> GetCustomerByUsernameAsync(string username);
 
+        Task<List<Customer>> ListByUsernames(string[] usernames);
+
         /// <summary>
         /// Get customer by email
         /// </summary>

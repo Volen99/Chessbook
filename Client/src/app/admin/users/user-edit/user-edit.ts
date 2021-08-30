@@ -1,6 +1,5 @@
 import {Directive, OnInit} from '@angular/core';
 import {FormReactive} from "../../../shared/shared-forms/form-reactive";
-import {SelectOptionsItem} from "../../../shared/shared-forms/select/select-options.component";
 import {User} from "../../../shared/shared-main/user/user.model";
 import {HTMLServerConfig} from "../../../shared/models/server/server-config.model";
 import {ServerService} from "../../../core/server/server.service";

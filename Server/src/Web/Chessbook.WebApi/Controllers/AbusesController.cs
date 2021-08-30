@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 namespace Chessbook.Web.Api.Controllers
 {
     [Route("abuses")]
-    [ApiController]
     public class AbusesController : BaseApiController
     {
         private readonly IUserService userService;

@@ -12,8 +12,6 @@ import {
   faChevronDown,
 } from '@fortawesome/pro-light-svg-icons';
 
-
-
 import {AbuseMessageModalComponent} from './abuse-message-modal.component';
 import {ModerationCommentModalComponent} from './moderation-comment-modal.component';
 import {ProcessedAbuse} from './processed-abuse.model';
@@ -29,12 +27,13 @@ import {PostsService} from "../posts/posts.service";
 import {BlocklistService} from "../shared-moderation/blocklist.service";
 import {AdminAbuse} from "../models/moderation/abuse/abuse.model";
 import {AbuseState} from "../models/moderation/abuse/abuse-state.model";
-import {buildVideoLink, buildVideoOrPlaylistEmbed} from "../../../assets/utils";
 import {environment} from "../../../environments/environment";
 import {Post} from "../shared-main/post/post.model";
 import {User} from "../shared-main/user/user.model";
 import {AdvancedInputFilter} from "../shared-forms/advanced-input-filter.component";
 import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {buildVideoOrPlaylistEmbed} from "../../../assets/utils";
+import {buildVideoEmbedLink, buildVideoLink, decorateVideoLink} from "../../core/utils/common/url";
 
 const logger = debug('peertube:shared-moderation:AbuseListTableComponent');
 
@@ -156,10 +155,10 @@ export class AbuseListTableComponent extends RestTable implements OnInit {
     return '/a/' + abuse.flaggedAccount.screenName;
   }
 
-  getVideoEmbed(abuse: AdminAbuse) {
+  getVideoEmbed (abuse: AdminAbuse) {
     return buildVideoOrPlaylistEmbed(
-      buildVideoLink({
-        baseUrl: `${environment.apiUrl}/videos/embed/${abuse.video.uuid}`,
+      decorateVideoLink({
+        url: buildVideoEmbedLink(abuse.video.channel.screenName, abuse.video.id, environment.apiUrl), // originServerUrl
         title: false,
         warningTitle: false,
         startTime: abuse.video.startAt,

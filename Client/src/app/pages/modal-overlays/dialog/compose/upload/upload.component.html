@@ -260,17 +260,46 @@
                                                         </div>
                                                         <div class="sharebook-container display-inline-flex flex-direction-row post-padding-bottom">
                                                             <div class="sharebook-container">
-                                                                <div role="button"
-                                                                     data-focusable="true"
-                                                                     tabindex="0"
-                                                                     class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty border-height-0px min-height-30px r-aj3cln outline-style-none created-at-dot transition-duration transition-property users-select-none"
-                                                                     [nbPopover]="this.whoCanReplyComponent">
-                                                                    <div dir="auto"
-                                                                         class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
-                                                                        <fa-icon [icon]="this.globeCurrent" style="font-size: 18px; margin-right: 0.5em;" ></fa-icon>
-                                                                        <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
-                                                                            <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.privacyClient}}</span>
-                                                                        </span>
+<!--                                                                <div role="button"-->
+<!--                                                                     data-focusable="true"-->
+<!--                                                                     tabindex="0"-->
+<!--                                                                     class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty border-height-0px min-height-30px r-aj3cln outline-style-none created-at-dot transition-duration transition-property users-select-none"-->
+<!--                                                                     [nbPopover]="this.whoCanReplyComponent">-->
+<!--                                                                    <div dir="auto"-->
+<!--                                                                         class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">-->
+<!--                                                                        <fa-icon [icon]="this.globeCurrent" style="font-size: 18px; margin-right: 0.5em;" ></fa-icon>-->
+<!--                                                                        <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap">-->
+<!--                                                                            <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.privacyClient}}</span>-->
+<!--                                                                        </span>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+<!--                                                                <div class="form-group">-->
+<!--                                                                    <label i18n for="first-step-privacy">Privacy</label>-->
+<!--                                                                    <app-select-options-->
+<!--                                                                            labelForId="first-step-privacy" [items]="videoPrivacies" [(ngModel)]="firstStepPrivacyId"-->
+<!--                                                                    ></app-select-options>-->
+<!--                                                                </div>-->
+
+                                                                <nb-select [selected]="firstStepPrivacyId" (selectedChange)="changePrivacy($event)" size="small" status="primary">
+                                                                    <nb-option *ngFor="let videoPrivacy of videoPrivacies" [value]="videoPrivacy.id"> {{ videoPrivacy.label }}</nb-option>
+                                                                </nb-select>
+
+                                                                <div class="form-group" style="margin-top: 0.5rem;">
+                                                                    <label i18n class="label-tags">Tags</label>
+
+                                                                    <app-help>
+                                                                        <ng-template appSbTemplate="customHtml">
+                                                                            <ng-container i18n>
+                                                                                Tags could be used to suggest relevant recommendations. <br />
+                                                                                There is a maximum of 5 tags. <br />
+                                                                                Press <kbd>Enter</kbd> to add a new tag.
+                                                                            </ng-container>
+                                                                        </ng-template>
+                                                                    </app-help>
+
+                                                                    <app-select-tags labelForId="label-tags" formControlName="tags"></app-select-tags>
+                                                                    <div *ngIf="formErrors.tags" class="form-error">
+                                                                        {{ formErrors.tags }}
                                                                     </div>
                                                                 </div>
                                                             </div>

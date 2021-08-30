@@ -38,8 +38,9 @@
                     </div>
                     <div class="sharebook-container">
                         <nb-radio-group [(value)]="this.genderSelected">
-                            <nb-radio [value]="'Female'" title="female"> <fa-icon [icon]="this.faChessQueenAlt" size="2x"></fa-icon> </nb-radio>
-                            <nb-radio [value]="'Male'" title="male"> <fa-icon [icon]="this.faChessKingAlt" size="2x"></fa-icon> </nb-radio>
+                            <nb-radio [value]="'Female'" title="female"> <fa-icon [icon]="this.faChessQueenAlt" size="2x"></fa-icon> Female </nb-radio>
+                            <nb-radio [value]="'Male'" title="male"> <fa-icon [icon]="this.faChessKingAlt" size="2x"></fa-icon> Male </nb-radio>
+                            <nb-radio [value]="'Other'" title="other"> Other </nb-radio>
                         </nb-radio-group>
                     </div>
                 </div>
@@ -83,6 +84,69 @@
                     </div>
                 </div>
             </div>
+
+            <div class="form-group col-12 col-lg-8 col-xl-9">
+                <label for="inputDisplayName">Website</label>
+                <input nbInput fullWidth id="inputWebsiteLink" formControlName="websiteLink"
+                       [status]="(websiteLink?.errors?.required || websiteLink?.hasError('minlength') || websiteLink?.hasError('maxlength')) && websiteLink.touched ? 'danger' : 'primary'"
+                       class="form-control" placeholder="Website link">
+                <ngx-validation-message label="websiteLink"
+                                        [showMinLength]="websiteLink?.hasError('minlength')"
+                                        [showMaxLength]="websiteLink?.hasError('maxlength')"
+                                        [showRequired]="websiteLink?.errors?.required && websiteLink.touched"
+                                        minLength=16
+                                        maxLength=72>
+                </ngx-validation-message>
+
+                <label for="inputTwitterLink">Twitter</label>
+                <input nbInput fullWidth id="inputTwitterLink" formControlName="twitterLink"
+                       [status]="(twitterLink?.errors?.required || twitterLink?.hasError('minlength') || twitterLink?.hasError('maxlength')) && twitterLink.touched ? 'danger' : 'primary'"
+                       class="form-control" placeholder="Twitter link">
+                <ngx-validation-message label="twitterLink"
+                                        [showMinLength]="twitterLink?.hasError('minlength')"
+                                        [showMaxLength]="twitterLink?.hasError('maxlength')"
+                                        [showRequired]="twitterLink?.errors?.required && twitterLink.touched"
+                                        minLength=16
+                                        maxLength=72>
+                </ngx-validation-message>
+
+                <label for="inputTwitchLink">Twitch</label>
+                <input nbInput fullWidth id="inputTwitchLink" formControlName="twitchLink"
+                       [status]="(twitchLink?.errors?.required || twitchLink?.hasError('minlength') || twitchLink?.hasError('maxlength')) && twitchLink.touched ? 'danger' : 'primary'"
+                       class="form-control" placeholder="Twitch link">
+                <ngx-validation-message label="twitchLink"
+                                        [showMinLength]="twitchLink?.hasError('minlength')"
+                                        [showMaxLength]="twitchLink?.hasError('maxlength')"
+                                        [showRequired]="twitchLink?.errors?.required && twitchLink.touched"
+                                        minLength=16
+                                        maxLength=72>
+                </ngx-validation-message>
+
+                <label for="inputYoutubeLink">Youtube</label>
+                <input nbInput fullWidth id="inputYoutubeLink" formControlName="youtubeLink"
+                       [status]="(youtubeLink?.errors?.required || youtubeLink?.hasError('minlength') || youtubeLink?.hasError('maxlength')) && youtubeLink.touched ? 'danger' : 'primary'"
+                       class="form-control" placeholder="Youtube link">
+                <ngx-validation-message label="youtubeLink"
+                                        [showMinLength]="youtubeLink?.hasError('minlength')"
+                                        [showMaxLength]="youtubeLink?.hasError('maxlength')"
+                                        [showRequired]="youtubeLink?.errors?.required && youtubeLink.touched"
+                                        minLength=16
+                                        maxLength=72>
+                </ngx-validation-message>
+
+                <label for="inputFacebookLink">Facebook</label>
+                <input nbInput fullWidth id="inputFacebookLink" formControlName="facebookLink"
+                       [status]="(facebookLink?.errors?.required || facebookLink?.hasError('minlength') || facebookLink?.hasError('maxlength')) && facebookLink.touched ? 'danger' : 'primary'"
+                       class="form-control" placeholder="Facebook link">
+                <ngx-validation-message label="facebookLink"
+                                        [showMinLength]="facebookLink?.hasError('minlength')"
+                                        [showMaxLength]="facebookLink?.hasError('maxlength')"
+                                        [showRequired]="facebookLink?.errors?.required && facebookLink.touched"
+                                        minLength=16
+                                        maxLength=72>
+                </ngx-validation-message>
+            </div>
+
         </div>
     </nb-card-body>
     <nb-card-footer>

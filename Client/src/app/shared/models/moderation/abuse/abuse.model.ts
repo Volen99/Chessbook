@@ -16,7 +16,7 @@ export interface AdminVideoAbuse {
   endAt: number | null;
 
   thumbnailPath?: string;
-  channel?: any; // VideoChannel
+  channel?: IUser; // VideoChannel
 
   countReports: number;
   nthReport: number;

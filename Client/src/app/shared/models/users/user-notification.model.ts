@@ -26,7 +26,9 @@ export enum UserNotificationType {
 
   ABUSE_STATE_CHANGE = 15,
 
-  ABUSE_NEW_MESSAGE = 16
+  ABUSE_NEW_MESSAGE = 16,
+
+  NEW_LIKE_ON_MY_POST
 }
 
 export interface VideoInfo {

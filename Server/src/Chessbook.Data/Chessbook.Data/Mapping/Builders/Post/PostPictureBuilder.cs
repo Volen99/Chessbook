@@ -1,9 +1,8 @@
 ﻿using FluentMigrator.Builders.Create.Table;
 
 using Chessbook.Data.Models.Media;
-using Chessbook.Data.Models.Post;
-using Nop.Core.Domain.Catalog;
 using Nop.Data.Extensions;
+using Chessbook.Core.Domain.Posts;
 
 namespace Nop.Data.Mapping.Builders.Catalog
 {

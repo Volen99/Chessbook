@@ -28,13 +28,19 @@ import {UserStore} from "../../../../../core/stores/user.store";
 import {IUser} from "../../../../../core/interfaces/common/users";
 import {NbToastrService} from "../../../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {Post} from "../../../../../shared/shared-main/post/post.model";
+import {PostSend} from "../../../../../shared/posts/post-send";
+import {FormValidatorService} from 'app/shared/shared-forms/form-validator.service';
+import {CanComponentDeactivateResult} from "../../../../../core/routing/can-deactivate-guard.service";
+import {FormGroup, Validators} from '@angular/forms';
+import {map} from "rxjs/operators";
+import {VIDEO_PRIVACY_VALIDATOR, VIDEO_TAGS_ARRAY_VALIDATOR} from "../../../../../shared/shared-forms/form-validators/video-validators";
 
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.scss'],
+  styleUrls: ['./upload.component.scss', './post-send.scss'],
 })
-export class UploadComponent implements OnInit, OnChanges, OnDestroy {
+export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDestroy {
   @Output() textChange = new EventEmitter<string>();
 
   @Input() title: string;
@@ -42,12 +48,16 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
   @Input() replyPost: Post;
 
   private globes: IconDefinition[] = [faGlobeEurope, faGlobeAsia, faGlobeAmericas, faGlobeAfrica];
+  private firstPatchDone = false;
 
   constructor(private uploadService: UploadService,
-              private postsService: PostsService,
+              protected postsService: PostsService,
               protected ref: NbDialogRef<ShowcaseDialogComponent>,
               private userStore: UserStore,
-              private notifier: NbToastrService) {
+              protected notifier: NbToastrService,
+              protected formValidatorService: FormValidatorService,) {
+    super();
+
     this.hasBaseDropZoneOver = false;
     this.hasAnotherDropZoneOver = false;
 
@@ -69,6 +79,31 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  updateForm() {
+    const defaultValues: any = {
+      nsfw: 'false',
+      commentsEnabled: 'true',
+      downloadEnabled: 'true',
+      waitTranscoding: 'true',
+      tags: []
+    };
+
+    const obj: any = {
+      privacy: VIDEO_PRIVACY_VALIDATOR,
+      tags: VIDEO_TAGS_ARRAY_VALIDATOR,
+    };
+
+    this.formValidatorService.updateForm(
+      this.form,
+      this.formErrors,
+      this.validationMessages,
+      obj,
+      defaultValues
+    );
+
+    this.trackPrivacyChange();
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (this.initialPoll.options.length > 2) {
       this.isPoll = true;
@@ -76,6 +111,10 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
+
+    this.updateForm();
+
     this.response = '';
 
     this.user = this.userStore.getUser();
@@ -102,7 +141,7 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
   user: IUser;
   isPoll: boolean = false;
   textPlaceholder: string;
-  privacy: PostPrivacy = PostPrivacy.EVERYONE;
+  privacy: PostPrivacy = PostPrivacy.PUBLIC;
   privacyClient: string = 'Everyone can reply';
 
   public whoCanReplyComponent = WhoCanReplyComponent;
@@ -151,9 +190,8 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public async fileDrop(files: File[]) {
-
+      debugger
   }
-
 
   canSubmit() {
     this.anyMedia = this.uploader.queue.length > 0;
@@ -166,7 +204,7 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
 
   getFulltextForCharacterCounting = () => {
     return ['', countableText(this.text)].join('');
-  }
+  };
 
 
   dismiss() {
@@ -243,5 +281,46 @@ export class UploadComponent implements OnInit, OnChanges, OnDestroy {
 
   getGlobe() {
     this.globeCurrent = this.globes[this.globes.length * Math.random() | 0];
+  }
+
+  firstStepDone: EventEmitter<string>;
+  firstStepError: EventEmitter<void>;
+
+  canDeactivate(): CanComponentDeactivateResult {
+    return undefined;
+  }
+
+  changePrivacy(privacy: number) {
+    this.firstStepPrivacyId = privacy;
+  }
+
+  private trackPrivacyChange() {
+    // We will update the schedule input and the wait transcoding checkbox validators
+    this.form.controls['privacy']
+      .valueChanges
+      .pipe(map(res => parseInt(res.toString(), 10)))
+      .subscribe(
+        newPrivacyId => {
+
+          // Value changed
+          const scheduleControl = this.form.get('schedulePublicationAt');
+          const waitTranscodingControl = this.form.get('waitTranscoding');
+
+            scheduleControl.clearValidators();
+
+            waitTranscodingControl.enable();
+
+            // Do not update the control value on first patch (values come from the server)
+            if (this.firstPatchDone === true) {
+              waitTranscodingControl.setValue(true);
+            }
+
+          scheduleControl.updateValueAndValidity();
+          waitTranscodingControl.updateValueAndValidity();
+
+          this.firstPatchDone = true;
+
+        }
+      );
   }
 }

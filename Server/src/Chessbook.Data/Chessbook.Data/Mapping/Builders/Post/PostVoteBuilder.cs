@@ -1,7 +1,8 @@
-﻿using FluentMigrator.Builders.Create.Table;
+﻿using System.Data;
 
+using FluentMigrator.Builders.Create.Table;
 using Nop.Data.Extensions;
-using Chessbook.Data.Models.Post;
+using Chessbook.Core.Domain.Posts;
 
 namespace Nop.Data.Mapping.Builders.Forums
 {
@@ -19,7 +20,8 @@ namespace Nop.Data.Mapping.Builders.Forums
         public override void MapEntity(CreateTableExpressionBuilder table)
         {
             table
-                .WithColumn(nameof(PostVote.PostId)).AsInt32().ForeignKey<Post>();
+                .WithColumn(nameof(PostVote.PostId)).AsInt32().NotNullable().ForeignKey<Post>().OnDelete(Rule.Cascade)
+                .WithColumn(nameof(PostVote.Type)).AsInt32().NotNullable();
         }
 
         #endregion

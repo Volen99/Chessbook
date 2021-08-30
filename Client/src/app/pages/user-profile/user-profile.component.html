@@ -6,7 +6,7 @@
                 <div class="sharebook-container align-items-stretch element-background-color-rgba flex-direction-row flex-grow-expand justify-content-space-between r-2llsf width-100-per">
                     <div class="sharebook-container background-color-lights-out main-left-right-vertical-border-color main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1"
                          data-testid="primaryColumn">
-                        <div class="sharebook-container">
+                        <div *ngIf="this.profileCurrent" class="sharebook-container">
                             <nb-card>
                                 <nb-card-header>
                                     <div class="sharebook-container backface-visibility-hidden background-color-lights-out border-bottom-color border-bottom-style-solid border-bottom-width-1px position-sticky top-0px header-z-index">
@@ -42,7 +42,7 @@
                                                                                         class="css-901oao sharebook-text-inherit sharebook-text lights-out-text-color font-family font-weight-800 inside-element-container-line-height min-width-0px white-space-nowrap text-overflow-wrap"><span
                                                                                         class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span
                                                                                         class="css-901oao dtc user-display-name inside-element-container-line-height">{{this.profileCurrent?.displayName}}</span></span></span>
-                                                                                    <span *ngIf="this.profileCurrent?.protected"
+                                                                                    <span *ngIf="this.profileCurrent.protected"
                                                                                           class="css-901oao sharebook-text-inherit flex-direction-row svg-flex-shrink-0 font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><svg
                                                                                             viewBox="0 0 24 24"
                                                                                             aria-label="Protected account"
@@ -54,8 +54,8 @@
                                                                     </h2>
                                                                     <div dir="auto"
                                                                          class="css-901oao sharebook-text third-wheel-color font-family third-wheel-text-font-size font-weight-400 line-height-calc min-width-0px text-overflow-wrap">
-                                                                         <span class="videos-count" *ngIf="this.profileCurrent?.statusesCount">
-                                                                             {this.profileCurrent?.statusesCount, plural, =1 {1 Post} other {{{ this.profileCurrent?.statusesCount }} Posts}}
+                                                                         <span class="videos-count" *ngIf="this.profileCurrent.statusesCount">
+                                                                             {this.profileCurrent.statusesCount, plural, =1 {1 Post} other {{{ this.profileCurrent.statusesCount }} Posts}}
                                                                          </span>
 
                                                                     </div>
@@ -103,7 +103,7 @@
                                                 role="link"
                                                 aria-hidden="true" tabindex="-1"
                                                 class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer outline-style-none transition-duration transition-property"
-                                            (click)="this.handleOpenMedia(this.profileCurrent?.profileBannerURL, 0)">
+                                            (click)="this.handleOpenMedia(this.profileCurrent.profileBannerURL, 0)">
                                             <div class="sharebook-container display-block overflow-hidden" style="">
                                                 <div class="display-block width-100-per"
                                                      style="padding-bottom: 33.3333%;"></div>
@@ -112,9 +112,9 @@
                                                          class="sharebook-container bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">
                                                         <div
                                                                 class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
-                                                                [style.background-image]="'url(' + this.profileCurrent?.profileBannerURL +')'"></div>
+                                                                [style.background-image]="'url(' + this.profileCurrent.profileBannerURL +')'"></div>
                                                         <img alt="" draggable="true"
-                                                             [src]="this.profileCurrent?.profileBannerURL"
+                                                             [src]="this.profileCurrent.profileBannerURL"
                                                              class="sharebook-image"></div>
                                                 </div>
                                             </div>
@@ -134,9 +134,9 @@
                                                                      class="sharebook-container border-radius-9999px bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">
                                                                     <div
                                                                             class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
-                                                                            [style.background-image]="'url(' + this.profileCurrent?.profileImageUrlHttps +')'"></div>
+                                                                            [style.background-image]="'url(' + this.profileCurrent.profileImageUrlHttps +')'"></div>
                                                                     <img alt="" class="sharebook-image"
-                                                                         [src]="this.profileCurrent?.profileImageUrlHttps"
+                                                                         [src]="this.profileCurrent.profileImageUrlHttps"
                                                                          draggable="true"></div>
                                                             </div>
                                                         </div>
@@ -186,8 +186,8 @@
                                                                 <div dir="auto"
                                                                      class="css-901oao lights-out-text-color font-family heading-font-size font-weight-800 inside-element-container-line-height min-width-0px text-overflow-wrap">
                     <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span
-                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height user-display-name">{{this.profileCurrent?.displayName}}</span></span><span
-                                                                        *ngIf="this.profileCurrent?.protected"
+                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height user-display-name">{{this.profileCurrent.displayName}}</span></span><span
+                                                                        *ngIf="this.profileCurrent.protected"
                                                                         class="css-901oao sharebook-text-inherit flex-direction-row svg-flex-shrink-0 font-family heading-font-size inside-element-container-line-height min-width-0px text-overflow-wrap"><svg
                                                                         viewBox="0 0 24 24"
                                                                         aria-label="Protected account"
@@ -209,12 +209,35 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div *ngIf="this.hasSocialLink();" class="sharebook-container display-block r-15d164r">
+                                                    <div class="sharebook-container">
+                                                        <div dir="auto" [ngStyle]="{ display: 'flex', 'justify-content': this.shouldISpaceAround(), 'align-items': 'center', width: 40 + '%' }"
+                                                             class="css-901oao lights-out-text-color font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"
+                                                             data-testid="UserDescription">
+                                                            <a *ngIf="this.profileCurrent.websiteLink" [href]="this.profileCurrent.websiteLink" target="_blank">
+                                                                <fa-icon style="font-size: 0.9rem;" [icon]="this.faGlobe"></fa-icon>
+                                                            </a>
+                                                            <a *ngIf="this.profileCurrent.twitterLink" [href]="this.profileCurrent.twitterLink" target="_blank">
+                                                                <i class="link-icon ion-social-twitter"></i>
+                                                            </a>
+                                                            <a *ngIf="this.profileCurrent.twitchLink" [href]="this.profileCurrent.twitchLink" target="_blank">
+                                                                <i class="link-icon ion-social-twitch"></i>
+                                                            </a>
+                                                            <a *ngIf="this.profileCurrent.youtubeLink" [href]="this.profileCurrent.youtubeLink" target="_blank">
+                                                                <i class="link-icon ion-social-youtube"></i>
+                                                            </a>
+                                                            <a *ngIf="this.profileCurrent.facebookLink" [href]="this.profileCurrent.facebookLink" target="_blank">
+                                                                <i class="link-icon ion-social-facebook"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="sharebook-container display-block r-15d164r">
                                                     <div class="sharebook-container">
                                                         <div dir="auto"
                                                              class="css-901oao lights-out-text-color font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"
                                                              data-testid="UserDescription">
-                                                            <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.profileCurrent?.description}} </span>
+                                                            <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap" [innerHTML]="this.accountDescriptionHTML"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -228,15 +251,15 @@
                                                         </span>
                                                         <span class="css-901oao sharebook-text-inherit third-wheel-color svg-display-inline-block font-family inside-element-container-line-height container-left-side-margin-right-10px min-width-0px text-overflow-wrap">
                                                             <fa-icon [icon]="this.faCalendarAlt"></fa-icon>
-                                                            <!--Joined {{this.monthEnum[this.profileCurrent?.createdOn.getUTCMonth() + 1] + ' ' + this.profileCurrent?.createdOn.getFullYear()}}-->
-                                                            Joined {{this.profileCurrent?.createdOn | date}}
+                                                            <!--Joined {{this.monthEnum[this.profileCurrent.createdOn.getUTCMonth() + 1] + ' ' + this.profileCurrent.createdOn.getFullYear()}}-->
+                                                            Joined {{this.profileCurrent.createdOn | date}}
                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div class="sharebook-container flex-expand flex-direction-row flex-wrap">
                                                     <div class="sharebook-container margin-right-20px">
                                                         <a
-                                                                [routerLink]="'/' + this.profileCurrent?.screenName + '/following'"
+                                                                [routerLink]="'/' + this.profileCurrent.screenName + '/following'"
                                                                 dir="auto" role="link"
                                                                 data-focusable="true"
                                                                 class="link sharebook-link sharebook-cursor-pointer css-901oao lights-out-text-color cursor-pointer font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"
@@ -244,7 +267,7 @@
                                                             <span style="margin-right: 2px"
                                                                   class="css-901oao sharebook-text-inherit lights-out-text-color font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                 <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap dtc">
-                                                                     {this.profileCurrent?.followingCount, plural, =1 {1} other {{{ this.profileCurrent?.followingCount | myNumberFormatter }}}}
+                                                                     {this.profileCurrent.followingCount, plural, =1 {1} other {{{ this.profileCurrent.followingCount | myNumberFormatter }}}}
                                                                 </span>
                                                             </span>
                                                             <span class="css-901oao sharebook-text-inherit third-wheel-color font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
@@ -253,22 +276,22 @@
                                                         </a>
                                                     </div>
                                                     <div class="sharebook-container">
-                                                        <a [routerLink]="'/' + this.profileCurrent?.screenName + '/followers'"
+                                                        <a [routerLink]="'/' + this.profileCurrent.screenName + '/followers'"
                                                            dir="auto"
                                                            role="link"
                                                            data-focusable="true"
                                                            class="link sharebook-link sharebook-cursor-pointer css-901oao lights-out-text-color cursor-pointer font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"
-                                                           [title]="this.profileCurrent?.followersCount">
+                                                           [title]="this.profileCurrent.followersCount">
                                                             <span style="margin-right: 3px"
                                                                   class="css-901oao sharebook-text-inherit lights-out-text-color font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                 <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap dtc">
-                                                                    {this.profileCurrent?.followersCount, plural, =1 {1} other {{{ this.profileCurrent?.followersCount | myNumberFormatter }}}}
+                                                                    {this.profileCurrent.followersCount, plural, =1 {1} other {{{ this.profileCurrent.followersCount | myNumberFormatter }}}}
                                                                 </span>
                                                             </span>
                                                             <span style="margin-right: 3px"
                                                                   class="css-901oao sharebook-text-inherit third-wheel-color font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                 <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
-                                                                    {this.profileCurrent?.followersCount, plural, =1 {Follower} other {Followers}}
+                                                                    {this.profileCurrent.followersCount, plural, =1 {Follower} other {Followers}}
                                                                 </span>
                                                             </span>
                                                         </a>
@@ -293,9 +316,9 @@
                                                 </div>
                                                 <div class="sharebook-container display-block flex-grow-expand flex-shrink height-100-per overflow-hidden">
                                                     <nb-card>
-<!--                                                        <nb-card-body>-->
-<!--                                                            <nb-route-tabset [tabs]="tabs" fullWidth></nb-route-tabset>-->
-<!--                                                        </nb-card-body>-->
+                                                        <nb-card-body>
+                                                            <nb-route-tabset [tabs]="this.tabs" fullWidth></nb-route-tabset>
+                                                        </nb-card-body>
                                                     </nb-card>
                                                 </div>
                                             </div>

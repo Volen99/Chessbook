@@ -73,9 +73,9 @@
                                 class="css-4rbku5 css-901oao r-4iw3lz r-1xk2f4g r-109y4c4 overflow-hidden r-wwvuq4 position-absolute r-92ng3h"
                                 id="accessible-list-0">Conversation</h1>
                             <div aria-label="Timeline: Conversation" class="sharebook-container">
-                                <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.post.commentsCount) + 'px'}">
-                                    <app-post-thread
-                                                     [transform]="this?.setTransform(0)"
+                                <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.post?.commentsCount) + 'px'}">
+                                    <app-post-thread *ngIf="this.post"
+                                                     [transform]="this.setTransform(0)"
                                                      [post]="post">
                                     </app-post-thread>
                                     <div style="position: absolute; width: 100%; transform: translateY(852.4px); transition: opacity 0.3s ease-out 0s;">

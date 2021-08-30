@@ -1,12 +1,13 @@
-﻿using Chessbook.Data.Models;
+﻿using System.Data;
 using FluentMigrator.Builders.Create.Table;
+
 using Nop.Data.Mapping.Builders;
-using System.Data;
 using Nop.Data.Extensions;
+using Chessbook.Data.Models;
 
 namespace Chessbook.Data.Mapping.Builders.Post
 {
-    public class PostBuilder : NopEntityBuilder<Models.Post.Post>
+    public class PostBuilder : NopEntityBuilder<Core.Domain.Posts.Post>
     {
         #region Methods
 
@@ -17,7 +18,7 @@ namespace Chessbook.Data.Mapping.Builders.Post
         public override void MapEntity(CreateTableExpressionBuilder table)
         {
             table
-                  .WithColumn(nameof(Models.Post.Post.UserId)).AsInt32().ForeignKey<Customer>().OnDelete(Rule.None);
+                  .WithColumn(nameof(Core.Domain.Posts.Post.UserId)).AsInt32().ForeignKey<Customer>().OnDelete(Rule.None);
         }
 
         #endregion

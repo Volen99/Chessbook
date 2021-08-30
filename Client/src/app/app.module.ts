@@ -34,8 +34,6 @@ import {NbCardModule} from "./sharebook-nebular/theme/components/card/card.modul
 import {NbButtonModule} from "./sharebook-nebular/theme/components/button/button.module";
 import {ServerService} from "./core/server/server.service";
 import {PluginService} from "./core/plugins";
-import {tap} from "rxjs/operators";
-import {OverlayContainer} from "@angular/cdk/overlay";
 
 // registerLocaleData(localeOc, 'oc')
 

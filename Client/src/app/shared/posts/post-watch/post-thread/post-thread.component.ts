@@ -190,18 +190,21 @@ export class PostThreadComponent implements OnInit {
       return;
     }
 
-    this.postService.getUserVideoRating(this.post.id)
-      .subscribe(
-        ratingObject => {
-          if (ratingObject) {
-            this.userRating = ratingObject.type === true ? 'like' : 'none';
+    this.userRating = this.post.favorited ? 'like' : 'none';
+    this.updateLikeStuff(this.userRating);
 
-            this.updateLikeStuff(this.userRating);
-          }
-        },
-
-        err => this.notifier.danger(err.message)
-      );
+    // this.postService.getUserVideoRating(this.post.id)
+    //   .subscribe(
+    //     ratingObject => {
+    //       if (ratingObject) {
+    //         this.userRating = ratingObject.type === true ? 'like' : 'none';
+    //
+    //         this.updateLikeStuff(this.userRating);
+    //       }
+    //     },
+    //
+    //     err => this.notifier.danger(err.message)
+    //   );
   }
 
   private setRating(nextRating: UserVideoRateType) {
@@ -252,7 +255,7 @@ export class PostThreadComponent implements OnInit {
     // Before HTML rendering restore line feed for markdown list compatibility
     const commentText = this.post.status.replace(/<br.?\/?>/g, '\r\n');
     const html = await this.markdownService.textMarkdownToHTML(commentText, true, true);
-    this.statusHTMLText = this.markdownService.processVideoTimestamps(html);
+    this.statusHTMLText = this.markdownService.processVideoTimestamps(this.post.user.screenName, this.post.id, html);
   }
 
   private updateLikeStuff(rating: UserVideoRateType) {

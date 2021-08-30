@@ -230,9 +230,11 @@
                                             </div>
                                         </div>
                                         <div aria-label="" role="group"
-                                             class="sharebook-container flex-direction-row justify-content-space-between margin-top-10px r-1mdbhws">
-                                            <div class="sharebook-container flex-direction-row justify-content-flex-start">
-                                                <div aria-label="0 Replies. Reply" role="button" data-focusable="true"
+                                             class="sharebook-container flex-direction-row justify-content-space-between margin-top-10px"> <!-- TODO: WARNING!! r-1mdbhws was a class!!!-->
+                                            <div class="sharebook-container flex-direction-row justify-content-flex-start"
+                                                 [attr.aria-label]="this.tooltipComment" [ngbTooltip]="this.tooltipComment"
+                                                 placement="auto" [openDelay]="700">
+                                                <div aria-label="0 Comments. Comment" role="button" data-focusable="true"
                                                      tabindex="0"
                                                      class="sharebook-cursor-pointer sharebook-container justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none"
                                                      data-testid="reply"
@@ -249,13 +251,15 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="sharebook-container flex-direction-row justify-content-flex-start">
+                                            <div class="sharebook-container flex-direction-row justify-content-flex-start"
+                                                 (click)="this.handleReshareButton(this.post)"
+                                                 [attr.aria-label]="this.tooltipRePost" [ngbTooltip]="this.tooltipRePost"
+                                                 placement="auto" [openDelay]="700">
                                                 <div aria-expanded="false" aria-haspopup="true"
                                                      aria-label="0 Retweets. Retweet" role="button"
                                                      data-focusable="true" tabindex="0"
                                                      class="sharebook-cursor-pointer sharebook-container justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none"
-                                                     data-testid="retweet"
-                                                     (click)="this.handleReshareButton(this.post)">
+                                                     data-testid="retweet">
                                                     <div dir="ltr"
                                                          class="css-901oao r-9ilb82 align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
                                                         <div class="sharebook-container display-inline-flex">
@@ -298,15 +302,18 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="sharebook-container flex-direction-row justify-content-flex-start">
+                                            <div class="sharebook-container flex-direction-row justify-content-flex-start"
+                                                 (click)="showShareModal()" (keyup.enter)="showShareModal()"
+                                                 [attr.aria-label]="this.tooltipShare" [ngbTooltip]="this.tooltipShare"
+                                                 placement="auto" [openDelay]="700">
                                                 <div aria-expanded="false" aria-haspopup="true" aria-label="Share Tweet"
                                                      role="button" data-focusable="true" tabindex="0"
                                                      class="sharebook-cursor-pointer sharebook-container justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none">
                                                     <div dir="ltr"
                                                          class="css-901oao align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
                                                         <div class="sharebook-container display-inline-flex">
-                                                            <div class="sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
-                                                            <fa-icon [icon]="this.faShare"></fa-icon>
+                                                            <div class="icon-hover sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
+                                                            <fa-icon [icon]="this.faSatelliteDish"></fa-icon>
                                                         </div>
                                                         <div class="sharebook-container display-inline-flex overflow-hidden"><span
                                                                 class="css-901oao sharebook-text-inherit text-font-family third-wheel-text-font-size line-height-calc r-1j6idkz padding-left-right r-d3hbe1 r-1wgg2b2 r-axxi2z text-overflow-wrap"></span>
@@ -314,7 +321,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="sharebook-container flex-direction-row justify-content-flex-start">
+                                            <!--<div class="sharebook-container flex-direction-row justify-content-flex-start">
                                                 <a
                                                         href="/WorldFeedTest12/status/1349046021976944642/analytics"
                                                         aria-label="View Tweet activity" role="link"
@@ -332,7 +339,7 @@
                                                             </svg>
                                                         </div>
                                                     </div>
-                                                </a></div>
+                                                </a></div>-->
                                         </div>
                                     </div>
                                 </div>

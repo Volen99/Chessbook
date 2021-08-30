@@ -1,10 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 import {Observable, Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
 
 import {IconDefinition} from "@fortawesome/fontawesome-common-types";
-import {faAlarmExclamation} from '@fortawesome/pro-solid-svg-icons';
 import {
   faComment,
   faShare,
@@ -16,11 +14,15 @@ import {
   faFlag,
   faTrashAlt,
   faThumbtack,
+  faSatelliteDish,
 } from '@fortawesome/pro-light-svg-icons';
+
 import {
   faHeart as faHeartSolid,
   faShare as faShareSolid,
-  faLockAlt} from '@fortawesome/pro-solid-svg-icons';
+  faAlarmExclamation,
+  faLockAlt,
+} from '@fortawesome/pro-solid-svg-icons';
 
 import {UserStore} from "../../../../core/stores/user.store";
 import {UserVideoRateType} from "../../../posts/models/rate/user-video-rate.type";
@@ -39,6 +41,8 @@ import {AccountReportComponent} from "../../../shared-moderation/report-modals/a
 import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {VideoReportComponent} from "../../../shared-moderation/report-modals/video-report.component";
 import {IPost} from "../../../posts/models/tweet";
+import {VideoShareComponent} from "../../../shared-share-modal/video-share.component";
+import {title} from "process";
 
 export interface ISocialContextProps {
   screenName: string;
@@ -92,6 +96,10 @@ export class PostComponent implements OnInit {
 
     this.checkUserRating();
 
+    this.tooltipShare = 'Share';
+    this.tooltipRePost = 'Repost';
+    this.tooltipComment = 'Comment';
+
     this.svgLikeStyles.color = this.userRating === 'like' ? 'blue' : 'inherit';
 
     // this.init();
@@ -113,6 +121,7 @@ export class PostComponent implements OnInit {
   faShare = faShare;
   faHeart = faHeart;
   faLockAlt = faLockAlt;
+  faSatelliteDish = faSatelliteDish;
 
   // meatballs menu
   faUserTimes = faUserTimes;
@@ -123,7 +132,7 @@ export class PostComponent implements OnInit {
   faTrashAlt = faTrashAlt;
 
   svgLikeStyles = {
-    "color": 'inherit',    // blue is such a beautiful color 💙
+    color: 'inherit',    // blue is such a beautiful color 💙
   };
   meatballsMenu: any;
   imageBackgroundStyle: SafeStyle;
@@ -131,6 +140,10 @@ export class PostComponent implements OnInit {
   test: boolean;
   tooltipLike = '';
   tooltipDislike = '';
+
+  tooltipShare = '';
+  tooltipRePost = '';
+  tooltipComment = '';
 
   getMenuItems() {
     let userCurrent = this.userStore.getUser();
@@ -292,6 +305,18 @@ export class PostComponent implements OnInit {
     this.router.navigate([`/${this.post.user.screenName}/post`, this.post.id]);
   }
 
+  showShareModal () {
+    this.dialogService.open(VideoShareComponent, {
+      context: {
+        // @ts-ignore
+        video: this.post,
+        playlistPosition: 0,
+        videoCaptions: [{language: null, captionPath: ''}],
+      }
+    });
+    /*this.videoShareModal.show(0, 0);*/
+  }
+
   onContecxtItemSelection(title) {
     console.log('click', title);
   }
@@ -302,18 +327,21 @@ export class PostComponent implements OnInit {
       return;
     }
 
-    this.postService.getUserVideoRating(this.post.id)
-      .subscribe(
-        ratingObject => {
-          if (ratingObject) {
-            this.userRating = ratingObject.type === true ? 'like' : 'none';
+    this.userRating = this.post.favorited ? 'like' : 'none';
+    this.updateLikeStuff(this.userRating);
 
-            this.updateLikeStuff(this.userRating);
-          }
-        },
-
-         err => this.notifier.danger(err.message, 'Error')
-      );
+    // this.postService.getUserVideoRating(this.post.id)
+    //   .subscribe(
+    //     ratingObject => {
+    //       if (ratingObject) {
+    //         this.userRating = ratingObject.type === true ? 'like' : 'none';
+    //
+    //         this.updateLikeStuff(this.userRating);
+    //       }
+    //     },
+    //
+    //      err => this.notifier.danger(err.message, 'Error')
+    //   );
   }
 
   private setRating(nextRating: UserVideoRateType) {
@@ -365,7 +393,7 @@ export class PostComponent implements OnInit {
     // Before HTML rendering restore line feed for markdown list compatibility
     const commentText = this.post.status.replace(/<br.?\/?>/g, '\r\n');
     const html = await this.markdownService.textMarkdownToHTML(commentText, true, true);
-    this.statusHTMLText = this.markdownService.processVideoTimestamps(html);
+    this.statusHTMLText = this.markdownService.processVideoTimestamps(this.post.user.screenName, this.post.id, html);
   }
 
   private updateLikeStuff(rating: UserVideoRateType) {

@@ -1,9 +1,11 @@
 ﻿using Chessbook.Core.Domain.Customers;
 using Chessbook.Data;
+using Chessbook.Data.Models;
 using Chessbook.Services.Data;
 using Chessbook.Services.Data.Services;
 using Nop.Core;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,12 +17,15 @@ namespace Chessbook.Services.Blocklist
 
         private readonly IUserService userService;
         private readonly IRelationshipService relationshipService;
+        private readonly IWorkContext workContext;
 
-        public BlocklistService(IRepository<UserBlocklist> userBlocklistRepository, IUserService userService, IRelationshipService relationshipService)
+        public BlocklistService(IRepository<UserBlocklist> userBlocklistRepository, IUserService userService, IRelationshipService relationshipService,
+            IWorkContext workContext)
         {
             this.userBlocklistRepository = userBlocklistRepository;
             this.userService = userService;
             this.relationshipService = relationshipService;
+            this.workContext = workContext;
         }
 
         public async Task<UserBlocklist> LoadByUserAndTarget(int accountId, int targetAccountId)
@@ -103,6 +108,44 @@ namespace Chessbook.Services.Blocklist
             await this.relationshipService.Update(yourRelationship);
             await this.relationshipService.Update(crushRelationship);
 
+        }
+
+        // Ofc it might bug..
+        public async Task<Dictionary<int, bool>> IsAccountMutedByMulti(List<int> accountIds, int targetAccountId)
+        {
+            var rows = await this.userBlocklistRepository.GetAllAsync(query =>
+            {
+                query = query.Where(b => accountIds.Contains(b.UserId) && b.TargetUserId == targetAccountId);
+
+                return query;
+            });
+
+            var result = new Dictionary<int, bool>();
+            foreach (var accountId in accountIds)
+            {
+                result[accountId] = rows.FirstOrDefault(r => r.UserId == accountId) != null;
+            }
+
+            return result;
+        }
+
+        public async Task<bool> IsBlockedByServerOrAccount(Customer targetAccount, Customer userAccount)
+        {
+            var serverAccountId = (await this.workContext.GetCurrentCustomerAsync()).Id;
+            var sourceAccounts = new List<int>() { serverAccountId };
+
+            if (userAccount != null)
+            {
+                sourceAccounts.Add(userAccount.Id);
+            }
+
+            var accountMutedHash = await this.IsAccountMutedByMulti(sourceAccounts, targetAccount.Id);
+            if (accountMutedHash[serverAccountId] || (userAccount != null && accountMutedHash[userAccount.Id]))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

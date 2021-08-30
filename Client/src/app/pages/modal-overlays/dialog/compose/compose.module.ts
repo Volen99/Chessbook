@@ -28,6 +28,7 @@ import {
 import {NbInputModule} from "../../../../sharebook-nebular/theme/components/input/input.module";
 import {NbSelectModule} from "../../../../sharebook-nebular/theme/components/select/select.module";
 import { ReplyCommentComponent } from './upload/reply-comment/reply-comment.component';
+import {SharedFormModule} from "../../../../shared/shared-forms/shared-form.module";
 
 @NgModule({
   declarations: [
@@ -44,19 +45,20 @@ import { ReplyCommentComponent } from './upload/reply-comment/reply-comment.comp
     ReplyCommentComponent,
   ],
 
-  imports: [
-    CommonModule,
+    imports: [
+        CommonModule,
 
-    SharedModule,
-    NbCardModule,
-    NbButtonModule,
-    NbIconModule,
-    NbPopoverModule,
-    SharedMainModule,
-    NbInputModule,
-    NbSelectModule,
-    FontAwesomeModule,
-  ],
+        SharedModule,
+        NbCardModule,
+        NbButtonModule,
+        NbIconModule,
+        NbPopoverModule,
+        SharedMainModule,
+        NbInputModule,
+        NbSelectModule,
+        FontAwesomeModule,
+        SharedFormModule,
+    ],
 
     exports: [
         UploadComponent,

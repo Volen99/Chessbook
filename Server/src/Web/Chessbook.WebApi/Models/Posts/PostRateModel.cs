@@ -4,6 +4,6 @@ namespace Chessbook.Web.Api.Models.Posts
 {
     public class PostRateModel
     {
-        public bool Type { get; set; }
+        public PostRateType Type { get; set; }
     }
 }

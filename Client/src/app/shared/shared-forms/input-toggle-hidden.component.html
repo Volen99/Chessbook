@@ -1,5 +1,5 @@
 <div class="input-group input-group-sm">
-  <input
+  <input nbInput
     [id]="inputId" [autocomplete]="autocomplete" [value]="value" [placeholder]="placeholder" [tabindex]="tabindex"
     [(ngModel)]="value" (ngModelChange)="update()" [ngClass]="{ 'readonly': readonly }" [readonly]="readonly"
     #input (click)="input.select()" (input)="update()" (change)="update()" [type]="inputType" class="form-control"
@@ -14,7 +14,8 @@
       *ngIf="withCopy" [cdkCopyToClipboard]="input.value" (click)="activateCopiedMessage()" type="button"
       class="btn btn-outline-secondary" i18n-title title="Copy"
     >
-      <span class="glyphicon glyphicon-copy"></span>
+      <!--<span class="glyphicon glyphicon-copy"></span>-->
+      <fa-icon [icon]="this.faWalkieTalkie" class="glyphicon glyphicon-copy"></fa-icon>
     </button>
   </div>
 </div>

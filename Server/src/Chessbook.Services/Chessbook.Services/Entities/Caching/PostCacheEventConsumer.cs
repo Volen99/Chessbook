@@ -1,7 +1,8 @@
-﻿using Chessbook.Data.Models.Post;
-using Chessbook.Services.Caching;
+﻿using System.Threading.Tasks;
+
 using Nop.Services.Catalog;
-using System.Threading.Tasks;
+using Chessbook.Core.Domain.Posts;
+using Chessbook.Services.Caching;
 
 namespace Nop.Services.Forums.Caching
 {

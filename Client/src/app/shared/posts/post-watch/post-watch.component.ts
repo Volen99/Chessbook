@@ -3,6 +3,13 @@ import {ActivatedRoute} from "@angular/router";
 import {forkJoin, Subscription} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
+import {
+  faHeart,
+} from '@fortawesome/pro-light-svg-icons';
+
+import {faHeart as faHeartSolid} from "@fortawesome/pro-solid-svg-icons";
+
+
 import {HttpStatusCode} from "../../core-utils/miscs";
 import {PostDetails} from "../../shared-main/post/post-details.model";
 import {PostsService} from "../posts.service";
@@ -12,6 +19,9 @@ import {UserVideoRateType} from "../models/rate/user-video-rate.type";
 import {UserStore} from "../../../core/stores/user.store";
 import {Notifier} from "../../../core/notification/notifier.service";
 import {scrollToTop} from "../../../helpers/utils";
+import {NbToastrService} from "../../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {MetaService} from "../../../core/routing/meta.service";
+
 
 @Component({
   selector: 'app-post-watch',
@@ -24,7 +34,8 @@ export class PostWatchComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private postService: PostsService,
               private restExtractor: RestExtractor, private markdownService: MarkdownService,
-              private userStore: UserStore, private notifier: Notifier) {
+              private userStore: UserStore, private notifier: NbToastrService,
+              private metaService: MetaService) {
   }
 
   get user() {
@@ -59,8 +70,11 @@ export class PostWatchComponent implements OnInit {
     // });
   }
 
+  faHeart = faHeart;
+
   post: PostDetails = null;
   userRating: UserVideoRateType = null;
+  tooltipLike = '';
 
   isUserLoggedIn() {
     return !!this.userStore.getUser();
@@ -115,7 +129,7 @@ export class PostWatchComponent implements OnInit {
         };
 
         this.onVideoFetched(video)
-          .catch(err => this.notifier.error(err));
+          .catch(err => this.notifier.danger(err, 'Error'));
       });
   }
 
@@ -130,8 +144,7 @@ export class PostWatchComponent implements OnInit {
 
 
   private async onVideoFetched(post: PostDetails) {
-    // @ts-ignore
-    this.post = post.postFromServer;
+    this.post = post;
     this.post.commentsEnabled = true;
 
     // Re init attributes
@@ -149,6 +162,7 @@ export class PostWatchComponent implements OnInit {
 
     // this.setVideoDescriptionHTML();
     this.checkUserRating();
+    this.setOpenGraphTags();
 
     // this.hooks.runAction('action:video-watch.video.loaded', 'video-watch', {videojs});
   }
@@ -164,15 +178,18 @@ export class PostWatchComponent implements OnInit {
       return;
     }
 
-    this.postService.getUserVideoRating(this.post.id)
-      .subscribe(
-        ratingObject => {
-          if (ratingObject) {
-            this.userRating = ratingObject.rating;
-          }
-        },
-        err => this.notifier.error(err.message)
-      );
+    this.userRating = this.post.favorited ? 'like' : 'none';
+    this.updateLikeStuff(this.userRating);
+
+    // this.postService.getUserVideoRating(this.post.id)
+    //   .subscribe(
+    //     ratingObject => {
+    //       if (ratingObject) {
+    //         this.userRating = ratingObject.rating;
+    //       }
+    //     },
+    //     err => this.notifier.error(err.message)
+    //   );
   }
 
   calcMinHeight(commentsCount?: number): number {
@@ -185,6 +202,35 @@ export class PostWatchComponent implements OnInit {
 
   setTransform(i: number): number {
     return i * 388.7; // 😁
+  }
+
+  private updateLikeStuff(rating: UserVideoRateType) {
+    if (rating === 'like') {
+      this.faHeart = faHeartSolid;
+      this.tooltipLike = 'Unlike';
+    } else {
+      this.faHeart = faHeart;
+      this.tooltipLike = 'Like';
+    }
+  }
+
+  private setOpenGraphTags() {
+    this.metaService.setTitle(this.post.status);
+
+    this.metaService.setTag('og:type', 'video');
+
+    this.metaService.setTag('og:title', this.post.status);
+    this.metaService.setTag('name', this.post.status);
+
+    this.metaService.setTag('og:description', this.post.status);
+    this.metaService.setTag('description', this.post.status);
+
+    this.metaService.setTag('og:image', this.post.entities.medias[0].imageUrl ?? '');
+
+    this.metaService.setTag('og:site_name', 'Chessbook');
+
+    this.metaService.setTag('og:url', window.location.href);
+    this.metaService.setTag('url', window.location.href);
   }
 
 }

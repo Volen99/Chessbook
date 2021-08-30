@@ -28,7 +28,7 @@ using Chessbook.Data.Models.Post;
 using SkiaSharp;
 using Chessbook.Data;
 using Nop.Core;
-using Nop.Core.Domain.Catalog;
+using Chessbook.Core.Domain.Posts;
 
 namespace Chessbook.Services.Data.Services.Media
 {

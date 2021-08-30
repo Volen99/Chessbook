@@ -32,6 +32,7 @@ import {
   faChevronDown,
   faChartLine,
   faChessClock,
+  faTrophy,
 } from '@fortawesome/pro-light-svg-icons';
 import {
   faHouse as faHouseSolid,
@@ -42,6 +43,7 @@ import {
   faTv as faTvSolid,
   faChartLine as faChartLineSolid,
   faChessClock as faChessClockSolid,
+  faTrophy as faTrophySolid,
 } from '@fortawesome/pro-solid-svg-icons';
 import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 import {IUser} from "../../../../core/interfaces/common/users";
@@ -394,6 +396,7 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     tv: faTv,
     'chart-line': faChartLine,
     'chess-clock': faChessClock,
+    trophy: faTrophy,
   };
 
   solidIconsObj = {
@@ -405,6 +408,7 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     tv: faTvSolid,
     'chart-line': faChartLineSolid,
     'chess-clock': faChessClockSolid,
+    trophy: faTrophySolid,
   };
 
   lastIconClicked: IconDefinition;

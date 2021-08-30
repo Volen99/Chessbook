@@ -1,6 +1,12 @@
 import {Component, forwardRef, Input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
+import {
+  faWalkieTalkie
+} from '@fortawesome/pro-light-svg-icons';
+
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
+
 @Component({
   selector: 'app-input-toggle-hidden',
   templateUrl: './input-toggle-hidden.component.html',
@@ -24,7 +30,7 @@ export class InputToggleHiddenComponent implements ControlValueAccessor {
   @Input() readonly = false;
   @Input() show = false;
 
-  constructor(/*private notifier: Notifier*/) {
+  constructor(private notifier: NbToastrService) {
   }
 
   get inputType() {
@@ -39,12 +45,14 @@ export class InputToggleHiddenComponent implements ControlValueAccessor {
       : `Show`;
   }
 
+  faWalkieTalkie = faWalkieTalkie;
+
   toggle() {
     this.show = !this.show;
   }
 
   activateCopiedMessage() {
-    // this.notifier.success(`Copied`);
+    this.notifier.success(`Copied`, 'Success');
   }
 
   propagateChange = (_: any) => { /* empty */

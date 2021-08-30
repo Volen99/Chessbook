@@ -1,9 +1,14 @@
 import {Post} from "./post.model";
 
+export interface IPostTag {
+  name: string;
+  postCount: number;
+  id: number;
+}
+
 export class PostDetails extends Post {
   descriptionPath: string;
   support: string;
-  tags: string[];
   account: Account;
   commentsEnabled: boolean = true;
 

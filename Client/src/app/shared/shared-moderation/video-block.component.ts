@@ -11,6 +11,7 @@ import { Notifier } from 'app/core/notification/notifier.service';
 import {
   faTimes,
 } from '@fortawesome/pro-light-svg-icons';
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
 
 @Component({
   selector: 'app-video-block',
@@ -32,7 +33,7 @@ export class VideoBlockComponent extends FormReactive implements OnInit {
     protected formValidatorService: FormValidatorService,
     private modalService: NgbModal,
     private videoBlocklistService: VideoBlockService,
-    private notifier: Notifier) {
+    private notifier: NbToastrService) {
     super();
   }
 
@@ -72,7 +73,7 @@ export class VideoBlockComponent extends FormReactive implements OnInit {
           this.videoBlocked.emit();
         },
 
-        err => this.notifier.error(err.message)
+        err => this.notifier.danger(err.message, 'Error')
       );
   }
 }

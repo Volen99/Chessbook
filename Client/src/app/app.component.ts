@@ -167,7 +167,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }, undefined, `Streamers`),
 
       new Hotkey('g u', (event: KeyboardEvent): boolean => {
-        let inputElement = document.getElementById('searchBox_search_input') as HTMLInputElement;
+        let inputElement = document.getElementById('search-video') as HTMLInputElement;
         if (!inputElement) {
           return;
         }
@@ -205,7 +205,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }, undefined, `New Direct Message`),
 
       new Hotkey('/', (event: KeyboardEvent): boolean => {
-        document.getElementById('searchBox_search_input').focus();
+        document.getElementById('search-video').focus();
         return false;
       }, undefined, `Focus the search bar`),
 

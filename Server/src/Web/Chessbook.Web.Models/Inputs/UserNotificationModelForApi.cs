@@ -1,10 +1,5 @@
 ﻿using Chessbook.Core.Domain.Notifications;
-using Chessbook.Data.Models.Post;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Chessbook.Core.Domain.Posts;
 
 namespace Chessbook.Web.Models.Inputs
 {

@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using System.IO;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
 
     using Chessbook.Data.Models.Memory;
@@ -11,12 +12,9 @@
     using Chessbook.Web.Models.Outputs.Chunked;
     using Chessbook.Web.Api.Extensions;
     using Chessbook.Data.Repositories;
-    using Chessbook.Common;
-    using Chessbook.Web.Api.Identity;
-    using System.Threading.Tasks;
     using Chessbook.Services.Data.Services.Entities;
-    using Chessbook.Common.Infrastructure.Helpers;
     using Chessbook.Services.Data.Services.Media;
+    using Chessbook.Common.Infrastructure.Helpers;
 
     [Route("upload")]
     public class UploadController : BaseApiController
@@ -62,6 +60,11 @@
                     return this.BadRequest(new { success = false, message = "No file uploaded 😟" });
                 }
 
+                if (!file.ContentType.Contains("image"))
+                {
+                    return this.BadRequest(new { success = false, message = "No file uploaded 😟" });
+                }
+
                 const string qqFileNameParameter = "qqfilename";
 
                 var qqFileName = Request.Form.ContainsKey(qqFileNameParameter)
@@ -77,8 +80,6 @@
                 // TODO: check for invalid input
 
                 Session session = uploadService.GetSession(query.MediaId.Value);
-
-
 
                 // FINALIZE
                 string fileFolderPath = Path.Combine(Resources.ROOT, session.GetMediaIdForFile(query.MediaId.Value));
@@ -100,16 +101,6 @@
             }
 
             return BadRequest();
-        }
-
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
 
         private byte[] ToByteArray(Stream stream)

@@ -12,7 +12,7 @@ import {TimelineService} from "./timeline.service";
 import {GetHomeTimelineParameters} from "../models/timeline/get-home-timeline-parameters";
 import {PostsService} from "../posts/posts.service";
 import {Post} from "../shared-main/post/post.model";
-import {AbstractPostList} from "../post-miniature/abstract-post-list/abstract-post-list";
+import {AbstractPostList} from "../post-miniature/abstract-post-list";
 import {ActivatedRoute, Router} from '@angular/router';
 import {UsersService} from 'app/core/backend/common/services/users.service';
 import {ScreenService} from 'app/core/wrappers/screen.service';

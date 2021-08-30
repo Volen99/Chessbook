@@ -1,0 +1,30 @@
+<div class="no-results" i18n *ngIf="hasDoneFirstQuery && this.posts.length === 0">{{ noResultMessage }}</div>
+
+<div appInfiniteScroller [autoInit]="true" (nearOfBottom)="onNearOfBottom()" [dataObservable]="onDataSubject.asObservable()" class="videos">
+  <div class="video" *ngFor="let video of this.posts; let i = index; trackBy: videoById">
+
+    <div class="checkbox-container" *ngIf="enableSelection">
+      <app-peertube-checkbox [inputName]="'video-check-' + video.id" [(ngModel)]="_selection[video.id]"></app-peertube-checkbox>
+    </div>
+
+    <my-video-miniature
+      [video]="video" [displayAsRow]="true" [displayOptions]="miniatureDisplayOptions"
+      [displayVideoActions]="false" [user]="user"
+    ></my-video-miniature>
+
+    <!-- Display only once -->
+    <div class="action-selection-mode" *ngIf="isInSelectionMode() === true && i === 0">
+      <div class="action-selection-mode-child">
+        <span i18n class="action-button action-button-cancel-selection" (click)="abortSelectionMode()">
+          Cancel
+        </span>
+
+        <ng-container *ngTemplateOutlet="globalButtonsTemplate"></ng-container>
+      </div>
+    </div>
+
+    <ng-container  *ngIf="isInSelectionMode() === false">
+      <ng-container *ngTemplateOutlet="rowButtonsTemplate; context: {$implicit: video}"></ng-container>
+    </ng-container>
+  </div>
+</div>

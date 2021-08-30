@@ -1,5 +1,7 @@
-import {Observable, Subject} from 'rxjs';
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
+import {takeUntil, tap} from "rxjs/operators";
+
 import {FormReactive} from "../../../../shared/shared-forms/form-reactive";
 import {User} from "../../../../shared/shared-main/user/user.model";
 import {FormValidatorService} from "../../../../shared/shared-forms/form-validator.service";
@@ -8,8 +10,13 @@ import {
   USER_DESCRIPTION_VALIDATOR,
   USER_DISPLAY_NAME_REQUIRED_VALIDATOR
 } from "../../../../shared/shared-forms/form-validators/user-validators";
-import {UsersService} from "../../../../core/backend/common/services/users.service";
-import {takeUntil, tap} from "rxjs/operators";
+
+import {
+  faChessKingAlt,
+  faChessQueenAlt,
+} from '@fortawesome/pro-solid-svg-icons';
+
+
 import {IUser, UserData} from "../../../../core/interfaces/common/users";
 import {UserStore} from "../../../../core/stores/user.store";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -19,7 +26,6 @@ import {NbTokenService} from "../../../../sharebook-nebular/auth/services/token/
 import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {EMAIL_PATTERN, NUMBERS_PATTERN} from "../../../../auth/components";
 import {NbAuthOAuth2JWTToken} from "../../../../sharebook-nebular/auth/services/token/token";
-import {faChessKingAlt, faChessQueenAlt} from '@fortawesome/pro-solid-svg-icons';
 import {Util} from "leaflet";
 import formatNum = Util.formatNum;
 
@@ -61,6 +67,26 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
     return this.userForm.get('description');
   }
 
+  get websiteLink() {
+    return this.userForm.get('websiteLink');
+  }
+
+  get twitterLink() {
+    return this.userForm.get('twitterLink');
+  }
+
+  get twitchLink() {
+    return this.userForm.get('twitchLink');
+  }
+
+  get youtubeLink() {
+    return this.userForm.get('youtubeLink');
+  }
+
+  get facebookLink() {
+    return this.userForm.get('facebookLink');
+  }
+
 
   mode: UserFormMode;
 
@@ -87,9 +113,11 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
       this.years.push(year);
     }
 
+    debugger
     this.initUserForm();
     this.loadUserData();
   }
+
 
   genderSelected = '';
 
@@ -104,10 +132,30 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
   public days: number[] = [];
   public years: number[] = [];
 
+  user: IUser;
+
   initUserForm() {
     this.userForm = this.fb.group({
-      displayName: this.fb.control('', [Validators.minLength(3), Validators.maxLength(18)]),
-      description: this.fb.control('', [Validators.minLength(3), Validators.maxLength(140)]),
+      displayName: USER_DISPLAY_NAME_REQUIRED_VALIDATOR,
+      description: USER_DESCRIPTION_VALIDATOR,
+      websiteLink: this.fb.control('', [Validators.minLength(16), Validators.maxLength(72)]),
+      twitterLink: this.fb.control('', [Validators.minLength(16), Validators.maxLength(72)]),
+      twitchLink: this.fb.control('', [Validators.minLength(16), Validators.maxLength(72)]),
+      youtubeLink: this.fb.control('', [Validators.minLength(16), Validators.maxLength(72)]),
+      facebookLink: this.fb.control('', [Validators.minLength(16), Validators.maxLength(72)]),
+    });
+
+    this.user = this.userStore.getUser();
+
+    this.userForm.patchValue({
+      displayName: this.user.displayName,
+      description: this.user.description,
+
+      websiteLink: this.user.websiteLink ?? '',
+      twitterLink: this.user.twitterLink ?? '',
+      twitchLink: this.user.twitchLink ?? '',
+      youtubeLink: this.user.youtubeLink ?? '',
+      facebookLink: this.user.facebookLink ?? '',
     });
   }
 
@@ -170,6 +218,12 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
       displayName: this.userForm.get('displayName').value,
       description: this.userForm.get('description').value,
 
+      websiteLink: this.userForm.get('websiteLink').value,
+      twitterLink: this.userForm.get('twitterLink').value,
+      twitchLink: this.userForm.get('twitchLink').value,
+      youtubeLink: this.userForm.get('youtubeLink').value,
+      facebookLink: this.userForm.get('facebookLink').value,
+
       gender: this.genderSelected,
 
       dateOfBirthMonth: +this.monthSelected,
@@ -206,7 +260,8 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['/pages/users/list']);
+    this.router.navigate(['/', this.userStore.getUser().screenName.substring(1)]);
+    // this.router.navigate(['/pages/users/list']);
   }
 
   ngOnDestroy(): void {

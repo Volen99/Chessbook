@@ -2,7 +2,7 @@
 using FluentMigrator.Builders.Create.Table;
 
 using Chessbook.Core.Domain.Abuse;
-using Chessbook.Core.Domain.Post;
+using Chessbook.Core.Domain.Posts;
 using Nop.Data.Extensions;
 using Nop.Data.Mapping.Builders;
 

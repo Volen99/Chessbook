@@ -7,7 +7,6 @@ export interface GenericHeaderData {
 
 export abstract class GenericHeaderComponent {
   constructor(@Inject('data') public data: GenericHeaderData) {
-
   }
 }
 

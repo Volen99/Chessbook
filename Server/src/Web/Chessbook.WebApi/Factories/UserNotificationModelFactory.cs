@@ -4,6 +4,7 @@ using Chessbook.Core.Domain.Notifications;
 using Chessbook.Services.Data;
 using Chessbook.Services.Data.Services;
 using Chessbook.Services.Data.Services.Entities;
+using Chessbook.Services.Entities;
 using Chessbook.Web.Api.Areas.Admin.Models.Users;
 using Chessbook.Web.Api.Models.Posts;
 using Chessbook.Web.Api.Models.Relationships;
@@ -17,14 +18,16 @@ namespace Chessbook.Web.Api.Factories
         private readonly IUserService userService;
         private readonly IUserModelFactory userModelFactory;
         private readonly IRelationshipService relationshipService;
+        private readonly IPostCommentService postCommentService;
 
         public UserNotificationModelFactory(IPostsService postService, IUserService userService, IUserModelFactory userModelFactory,
-            IRelationshipService relationshipService)
+            IRelationshipService relationshipService, IPostCommentService postCommentService)
         {
             this.postService = postService;
             this.userService = userService;
             this.userModelFactory = userModelFactory;
             this.relationshipService = relationshipService;
+            this.postCommentService = postCommentService;
         }
 
         public async Task<UserNotificationModel> PrepareUserNotificationModelAsync(UserNotification notification)
@@ -32,6 +35,7 @@ namespace Chessbook.Web.Api.Factories
             var userWhoReceiveTheNotification = await this.userService.GetCustomerByIdAsync(notification.UserId);
             var model = new UserNotificationModel
             {
+                Id = notification.Id,
                 Type = (int)notification.Type,
                 Read = notification.Read,
                 CreatedAt = notification.CreatedAt,
@@ -63,6 +67,39 @@ namespace Chessbook.Web.Api.Factories
 
                 model.Post = post;
             }
+            else if (notification.CommentId.HasValue)
+            {
+                var notificationComment = await this.postCommentService.GetById(notification.CommentId.Value);
+
+                var notificationSenderUser = await this.userService.GetCustomerByIdAsync(notificationComment.UserId);
+                var avatarUrl = await this.userModelFactory.PrepareCustomerAvatarModelAsync(notificationSenderUser.Id);
+
+                var userInfo = new UserInfoModel
+                {
+                    Id = notificationSenderUser.Id,
+                    DisplayName = notificationSenderUser.DisplayName,
+                    ScreenName = notificationSenderUser.ScreenName,
+                    AvatarUrl = avatarUrl,
+                };
+
+                var post = await this.postService.GetPostByIdAsync(notificationComment.PostId);
+                var postInfo = new PostInfoModel
+                {
+                    Id = notificationComment.PostId,
+                    Name = post.Status,
+                };
+
+                var comment = new PostCommentNotificationModel
+                {
+                    Id = notificationComment.Id,
+                    ThreadId = notificationComment.OriginCommentId.Value,
+                    Account = userInfo,
+                    Post = postInfo,
+                };
+
+                model.Comment = comment;
+
+            }
             else if (notification.RelationshipId.HasValue)
             {
                 // relationship
@@ -73,7 +110,7 @@ namespace Chessbook.Web.Api.Factories
                 var follow = new FollowInfoModel
                 {
                     Id = relationship.Id,
-                    Follower = new Follower
+                    Follower = new UserInfoModel
                     {
                         Id = follower.Id,
                         DisplayName = follower.DisplayName,
@@ -83,6 +120,39 @@ namespace Chessbook.Web.Api.Factories
                 };
 
                 model.ActorFollow = follow;
+            }
+            else if (notification.PostVoteId.HasValue) // notification.UserId userId is the user who is receiving the notification
+            {
+                var notificationPostLike = await this.postService.GetPostVoteByIdAsync(notification.PostVoteId.Value);
+
+                if (notificationPostLike == null)
+                {
+                    return model;
+                }
+
+                var liker = await this.userService.GetCustomerByIdAsync(notificationPostLike.UserId);
+                var avatarUrl = await this.userModelFactory.PrepareCustomerAvatarModelAsync(liker.Id);
+
+                var post = await this.postService.GetPostByIdAsync(notificationPostLike.PostId);
+                var postInfo = new PostInfoModel
+                {
+                    Id = notificationPostLike.PostId,
+                    Name = post.Status,
+                };
+
+                var like = new PostLikeNotificationModel
+                {
+                    Account = new UserInfoModel
+                    {
+                        Id = liker.Id,
+                        DisplayName = liker.DisplayName,
+                        ScreenName = liker.ScreenName,
+                        AvatarUrl = avatarUrl,
+                    },
+                    Post = postInfo,
+                };
+
+                model.PostLike = like;
             }
 
             return model;

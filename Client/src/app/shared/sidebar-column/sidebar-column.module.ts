@@ -16,6 +16,8 @@ import {NbFormFieldModule} from "../../sharebook-nebular/theme/components/form-f
 import {NbSidebarModule} from "../../sharebook-nebular/theme/components/sidebar/sidebar.module";
 import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";
 import {UserFollowModule} from "../user-follow/user-follow.module";
+import {SharedSearchModule} from "../shared-search/shared-search.module";
+import {MatRippleModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import {UserFollowModule} from "../user-follow/user-follow.module";
     NbSidebarModule,
     NbCardModule,
     UserFollowModule,
+    SharedSearchModule,
+    MatRippleModule,
   ],
   exports: [
     SidebarColumnComponent,

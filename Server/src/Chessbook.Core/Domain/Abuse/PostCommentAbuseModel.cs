@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Chessbook.Core.Domain.Post;
+using Chessbook.Core.Domain.Posts;
 using Chessbook.Data.Models;
 
 namespace Chessbook.Core.Domain.Abuse

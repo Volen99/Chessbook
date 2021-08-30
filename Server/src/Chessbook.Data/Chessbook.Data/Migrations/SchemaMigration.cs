@@ -2,7 +2,7 @@
 
 using Chessbook.Core.Domain.Abuse;
 using Chessbook.Core.Domain.Notifications;
-using Chessbook.Core.Domain.Post;
+using Chessbook.Core.Domain.Posts;
 using Chessbook.Core.Domain.Relationships;
 using Chessbook.Data.Models;
 using Chessbook.Data.Models.Comments;
@@ -12,7 +12,6 @@ using Chessbook.Data.Models.Phone;
 using Chessbook.Data.Models.Polls;
 using Chessbook.Data.Models.Post;
 using Chessbook.Data.Models.Post.Entities;
-using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Configuration;
 using Nop.Core.Domain.Customers;
@@ -24,6 +23,7 @@ using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Stores;
 using Nop.Core.Domain.Tasks;
 using Chessbook.Core.Domain.Customers;
+using Chessbook.Core.Domain.Tournaments;
 
 namespace Nop.Data.Migrations
 {
@@ -64,6 +64,8 @@ namespace Nop.Data.Migrations
             _migrationManager.BuildTable<CustomerCustomerRoleMapping>(Create);
 
             _migrationManager.BuildTable<Post>(Create);
+            _migrationManager.BuildTable<Tag>(Create);
+            _migrationManager.BuildTable<PostTag>(Create);
 
             _migrationManager.BuildTable<Store>(Create);
             _migrationManager.BuildTable<StoreMapping>(Create);
@@ -140,6 +142,7 @@ namespace Nop.Data.Migrations
             _migrationManager.BuildTable<UserNotificationSettingModel>(Create);
 
             _migrationManager.BuildTable<UserBlocklist>(Create);
+            _migrationManager.BuildTable<Tournament>(Create);
 
         }
     }

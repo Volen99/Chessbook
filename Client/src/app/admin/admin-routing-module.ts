@@ -5,6 +5,7 @@ import {AdminComponent} from "./admin.component";
 import {UsersRoutes} from "./users";
 import {ModerationRoutes} from "./moderation";
 import {SurveyRoutes} from "./survey/survey.routes";
+import {TournamentsRoutes} from "./tournaments/tournaments-routes";
 
 const adminRoutes: Routes = [
     {
@@ -23,6 +24,7 @@ const adminRoutes: Routes = [
             // ...ConfigRoutes,
             // ...PluginsRoutes
                ...SurveyRoutes,
+               ...TournamentsRoutes,
         ]
     }
 ];

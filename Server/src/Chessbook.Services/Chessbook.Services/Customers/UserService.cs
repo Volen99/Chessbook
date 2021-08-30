@@ -447,6 +447,16 @@
             return customer;
         }
 
+        public virtual async Task<List<Customer>> ListByUsernames(string[] usernames)
+        {
+            var query = from c in _customerRepository.Table
+                        orderby c.Id
+                        where usernames.Contains(c.ScreenName) && !c.Deleted
+                        select c;
+
+            return await query.ToListAsync();
+        }
+
         /// <summary>
         /// Insert a customer
         /// </summary>

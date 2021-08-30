@@ -15,7 +15,7 @@
                   <h2 aria-level="2" role="heading" class="sharebook-link sharebook-container flex-direction-row">
                     <div class="sharebook-container align-self-flex-start height-20px justify-content-center margin-top-2px"></div>
                     <div dir="auto"
-                         class="css-901oao css-cens5h align-items-flex-start lights-out-text-color flex-grow-expand flex-shrink font-family heading-font-size font-weight-800 height-100-per justify-content-center inside-element-container-line-height min-width-0px text-overflow-wrap"
+                         class="css-901oao css-cens5h align-items-flex-start flex-grow-expand flex-shrink font-family heading-font-size font-weight-800 height-100-per justify-content-center inside-element-container-line-height min-width-0px text-overflow-wrap"
                          style="-webkit-line-clamp: 3;"><span
                       class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap dtc">Trends for you</span></div>
                     <div class="sharebook-container align-self-flex-start height-20px justify-content-center margin-top-2px"><a href="/settings/trends"
@@ -31,43 +31,44 @@
                     </a></div>
                   </h2>
                 </div>
-                <div class="sharebook-container border-bottom-color border-bottom-width-1px display-block outline-style-none">
-                  <div data-focusable="true" tabindex="0"
-                       class="sharebook-container cursor-pointer display-flex outline-style-none left-right-padding-15px stacked-elements-padding-bottom-top transition-duration transition-property"
+                <div *ngFor="let tag of this.tags" [routerLink]="[ '/search' ]" [queryParams]="{ tagsOneOf: [ tag.name ] }" matRipple class="sharebook-container border-bottom-color border-bottom-width-1px display-block outline-style-none">
+                  <div data-focusable="true" tabindex="0" class="sharebook-container cursor-pointer display-flex outline-style-none left-right-padding-15px stacked-elements-padding-bottom-top transition-duration transition-property"
                        data-testid="trend" role="link">
                     <div class="sharebook-container flex-grow-expand svg-position-relative">
                       <div class="sharebook-container post--trend-top-info-align-items flex-direction-row flex-shrink">
                         <div dir="auto"
-                             class="css-901oao third-wheel-color font-family third-wheel-text-font-size font-weight-400 line-height-calc min-width-0px text-overflow-wrap"><span
-                          class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Holidays · Trending</span>
+                             class="css-901oao text-hint font-family third-wheel-text-font-size font-weight-400 line-height-calc min-width-0px text-overflow-wrap"><span
+                          class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Tag · Trending</span>
                         </div>
                       </div>
                       <div dir="ltr"
-                           class="css-901oao lights-out-text-color font-family font-size-15px font-weight-700 inside-element-container-line-height min-width-0px r-vmopo1 text-overflow-wrap">
-                        <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Happy New Year</span>
+                           class="css-901oao font-family font-size-15px font-weight-700 inside-element-container-line-height min-width-0px r-vmopo1 text-overflow-wrap">
+                        <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{tag.name}}</span>
                       </div>
                       <div dir="auto"
-                           class="css-901oao third-wheel-color font-family third-wheel-text-font-size font-weight-400 line-height-calc margin-top-5px min-width-0px text-overflow-wrap"
+                           class="css-901oao text-hint font-family third-wheel-text-font-size font-weight-400 line-height-calc margin-top-5px min-width-0px text-overflow-wrap"
                            data-testid="metadata"><span
-                        class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">2.19M Posts</span></div>
+                        class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{tag.postCount, plural, =1 {1 Post} other {{{ tag.postCount | myNumberFormatter }} Posts}}</span></div>
                       <div class="sharebook-container position-absolute right-0px meatballs-menu-top">
                         <div class="sharebook-container flex-direction-row justify-content-flex-start margin-left-20px">
-                          <div aria-expanded="false" aria-haspopup="true" aria-label="More" role="button"
+                          <div aria-expanded="false" aria-haspopup="true" aria-label="More" role="button" [title]="tag.name + ' roars!'"
                                data-focusable="true" tabindex="0"
                                class="sharebook-cursor-pointer sharebook-container justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none"
                                data-testid="caret">
                             <div dir="ltr"
-                                 class="css-901oao align-items-center third-wheel-color display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
+                                 class="css-901oao align-items-center display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap"> <!--third-wheel-color-->
                               <div class="sharebook-container display-inline-flex">
-                                <div
-                                  class="sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property"></div>
-                                <svg viewBox="0 0 24 24"
-                                     class="svg-display-inline-block svg-fill-currentcolor miniature-element-height max-width-100-per svg-position-relative svg-vertical-align users-select-none second-class-svg-width">
-                                  <g>
-                                    <path
-                                      d="M19.39 14.882c-1.58 0-2.862-1.283-2.862-2.86s1.283-2.862 2.86-2.862 2.862 1.283 2.862 2.86-1.284 2.862-2.86 2.862zm0-4.223c-.75 0-1.362.61-1.362 1.36s.61 1.36 1.36 1.36 1.362-.61 1.362-1.36-.61-1.36-1.36-1.36zM12 14.882c-1.578 0-2.86-1.283-2.86-2.86S10.42 9.158 12 9.158s2.86 1.282 2.86 2.86S13.578 14.88 12 14.88zm0-4.223c-.75 0-1.36.61-1.36 1.36s.61 1.362 1.36 1.362 1.36-.61 1.36-1.36-.61-1.363-1.36-1.363zm-7.39 4.223c-1.577 0-2.86-1.283-2.86-2.86S3.034 9.16 4.61 9.16s2.862 1.283 2.862 2.86-1.283 2.862-2.86 2.862zm0-4.223c-.75 0-1.36.61-1.36 1.36s.61 1.36 1.36 1.36 1.362-.61 1.362-1.36-.61-1.36-1.36-1.36z"></path>
-                                  </g>
-                                </svg>
+                                <div class="sharebook-container element-background-color-rgba border-radius-9999px bottom-0px display-inline-flex left-0px second-class-svg-margin outline-style-none position-absolute right-0px top-0px transition-duration transition-property">
+
+                                </div>
+<!--                                <svg viewBox="0 0 24 24"-->
+<!--                                     class="svg-display-inline-block svg-fill-currentcolor miniature-element-height max-width-100-per svg-position-relative svg-vertical-align users-select-none second-class-svg-width">-->
+<!--                                  <g>-->
+<!--                                    <path-->
+<!--                                      d="M19.39 14.882c-1.58 0-2.862-1.283-2.862-2.86s1.283-2.862 2.86-2.862 2.862 1.283 2.862 2.86-1.284 2.862-2.86 2.862zm0-4.223c-.75 0-1.362.61-1.362 1.36s.61 1.36 1.36 1.36 1.362-.61 1.362-1.36-.61-1.36-1.36-1.36zM12 14.882c-1.578 0-2.86-1.283-2.86-2.86S10.42 9.158 12 9.158s2.86 1.282 2.86 2.86S13.578 14.88 12 14.88zm0-4.223c-.75 0-1.36.61-1.36 1.36s.61 1.362 1.36 1.362 1.36-.61 1.36-1.36-.61-1.363-1.36-1.363zm-7.39 4.223c-1.577 0-2.86-1.283-2.86-2.86S3.034 9.16 4.61 9.16s2.862 1.283 2.862 2.86-1.283 2.862-2.86 2.862zm0-4.223c-.75 0-1.36.61-1.36 1.36s.61 1.36 1.36 1.36 1.362-.61 1.362-1.36-.61-1.36-1.36-1.36z"></path>-->
+<!--                                  </g>-->
+<!--                                </svg>-->
+                                <fa-icon [icon]="this.faPawClaws"></fa-icon>
                               </div>
                             </div>
                           </div>
@@ -76,7 +77,7 @@
                     </div>
                   </div>
                 </div>
-                <a routerLink="/i/trends" role="link" data-focusable="true"
+                <a routerLink="/trends" role="link" data-focusable="true"
                    class="show-more-link sharebook-cursor-pointer sharebook-container r-1pp923h r-1moyyf3 cursor-pointer outline-style-none left-right-padding-15px padding-bottom-top-15px transition-duration transition-property">
                   <div dir="auto" class="css-901oao r-13gxpu9 font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
                     <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Show more</span></div>

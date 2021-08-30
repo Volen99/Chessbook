@@ -1,25 +1,18 @@
 import {Component, forwardRef, HostListener, Input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-
-export type SelectOptionsItem = {
-  id: string | number
-  label: string
-  description?: string
-  group?: string
-  groupLabel?: string
-};
+import {SelectOptionsItem} from "../../../../types/select-options-item.model";
 
 @Component({
   selector: 'app-select-options',
   styleUrls: ['./select-shared.component.scss'],
   templateUrl: './select-options.component.html',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SelectOptionsComponent),
-      multi: true
-    }
-  ]
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SelectOptionsComponent),
+            multi: true
+        }
+    ]
 })
 export class SelectOptionsComponent implements ControlValueAccessor {
   @Input() items: SelectOptionsItem[] = [];
@@ -31,29 +24,28 @@ export class SelectOptionsComponent implements ControlValueAccessor {
 
   selectedId: number | string;
 
-  propagateChange = (_: any) => { /* empty */
-  }
+  propagateChange = (_: any) => { /* empty */ };
 
   // Allow plugins to update our value
-  @HostListener('change', ['$event.target'])
-  handleChange(event: any) {
+  @HostListener('change', [ '$event.target' ])
+  handleChange (event: any) {
     this.writeValue(event.value);
     this.onModelChange();
   }
 
-  writeValue(id: number | string) {
+  writeValue (id: number | string) {
     this.selectedId = id;
   }
 
-  registerOnChange(fn: (_: any) => void) {
+  registerOnChange (fn: (_: any) => void) {
     this.propagateChange = fn;
   }
 
-  registerOnTouched() {
+  registerOnTouched () {
     // Unused
   }
 
-  onModelChange() {
+  onModelChange () {
     this.propagateChange(this.selectedId);
   }
 }

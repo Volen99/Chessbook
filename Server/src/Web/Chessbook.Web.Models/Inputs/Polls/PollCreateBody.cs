@@ -15,5 +15,7 @@ namespace Chessbook.Web.Models.Polls
         public int ExpiresIn { get; set; }
 
         public bool Multiple { get; set; }
+
+        public string PostTags { get; set; } // u put it here, for test only
     }
 }

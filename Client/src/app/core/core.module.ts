@@ -31,6 +31,7 @@ import {MetaGuard} from "./routing/meta-guard.service";
 import {HotkeyModule} from "angular2-hotkeys";
 import {ServerConfigResolver} from "./routing/server-config-resolver.service";
 import {UserRightGuard} from "./routing/user-right-guard.service";
+import {CanDeactivateGuard} from "./routing/can-deactivate-guard.service";
 
 export const NB_CORE_PROVIDERS = [
   ...CommonMockModule.forRoot().providers,
@@ -93,6 +94,7 @@ export class CoreModule {
         RedirectService,
         Notifier,
         PeerTubeSocket,
+        CanDeactivateGuard,
 
         MetaService,
         MetaGuard,

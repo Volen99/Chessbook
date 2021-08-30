@@ -1,4 +1,4 @@
-﻿using Nop.Core.Domain.Catalog;
+﻿using Chessbook.Core.Domain.Posts;
 using Chessbook.Services.Caching;
 
 namespace Nop.Services.Catalog.Caching

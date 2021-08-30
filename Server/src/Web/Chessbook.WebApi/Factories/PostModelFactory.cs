@@ -1,9 +1,10 @@
 ﻿using Chessbook.Common;
 using Chessbook.Core;
-using Chessbook.Core.Domain.Post;
+using Chessbook.Core.Domain.Posts;
 using Chessbook.Data.Models;
 using Chessbook.Data.Models.Media;
 using Chessbook.Data.Models.Post;
+using Chessbook.Data.Models.Post.Enums;
 using Chessbook.Services.Data.Services;
 using Chessbook.Services.Data.Services.Entities;
 using Chessbook.Services.Data.Services.Media;
@@ -17,6 +18,7 @@ using Nop.Core.Domain.Media;
 using Nop.Services.Common;
 using Nop.Web.Areas.Admin.Models.Customers;
 using Nop.Web.Infrastructure.Cache;
+using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Media;
 using SkiaSharp;
 using System;
@@ -42,6 +44,7 @@ namespace Chessbook.Web.Api.Factories
         private readonly IGenericAttributeService genericAttributeService;
         private readonly IPostCommentService postCommentService;
         private readonly IPostsService postService;
+        private readonly IPostTagService postTagService;
 
         #endregion
 
@@ -49,7 +52,8 @@ namespace Chessbook.Web.Api.Factories
 
         public PostModelFactory(MediaSettings mediaSettings, IStaticCacheManager staticCacheManager, IWebHelper webHelper, IWorkContext workContext,
             IStoreContext storeContext, IPictureService pictureService, ILocaleStringResourceService localeStringResourceService, IUserModelFactory userModelFactory,
-            IUserService userService, IGenericAttributeService genericAttributeService, IPostCommentService postCommentService, IPostsService postService)
+            IUserService userService, IGenericAttributeService genericAttributeService, IPostCommentService postCommentService, IPostsService postService,
+            IPostTagService postTagService)
         {
             this.mediaSettings = mediaSettings;
             this.staticCacheManager = staticCacheManager;
@@ -63,6 +67,7 @@ namespace Chessbook.Web.Api.Factories
             this.genericAttributeService = genericAttributeService;
             this.postCommentService = postCommentService;
             this.postService = postService;
+            this.postTagService = postTagService;
         }
 
         #endregion
@@ -192,11 +197,27 @@ namespace Chessbook.Web.Api.Factories
             var postUser = await this.userService.GetCustomerByIdAsync(post.UserId);
             model.User = await this.userModelFactory.PrepareCustomerModelAsync(model.User, postUser);
 
+            // post tags
+            model.Tags = await PrepareProductTagModelsAsync(post);
+
             if (model.HasMedia)
             {
                 // pictures
                 var allPictureModels = await PrepareProductDetailsPictureModelAsync(model, isAssociatedProduct);
                 model.Entities.Medias = allPictureModels;
+            }
+
+            // liked?
+            var userCurrent = await this.workContext.GetCurrentCustomerAsync();
+
+            var postVote = await this.postService.GetPostVoteAsync(post.Id, userCurrent);
+            if (postVote == null)
+            {
+                model.Favorited = false;
+            }
+            else
+            {
+                model.Favorited = postVote.Type == PostRateType.Like;
             }
 
             // comments
@@ -311,6 +332,274 @@ namespace Chessbook.Web.Api.Factories
             }
 
             return thread;
+        }
+
+        /// <summary>
+        /// Prepare products by tag model
+        /// </summary>
+        /// <param name="productTag">Product tag</param>
+        /// <param name="command">Model to get the catalog products</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the products by tag model
+        /// </returns>
+        public virtual async Task<ProductsByTagModel> PrepareProductsByTagModelAsync(Tag productTag, CatalogProductsCommand command)
+        {
+            if (productTag == null)
+            {
+                throw new ArgumentNullException(nameof(productTag));
+            }
+
+            if (command == null)
+            {
+                throw new ArgumentNullException(nameof(command));
+            }
+
+            var model = new ProductsByTagModel
+            {
+                Id = productTag.Id,
+                TagName = productTag.Name,
+                CatalogProductsModel = await PrepareTagProductsModelAsync(productTag, command)
+            };
+
+            return model;
+        }
+
+        /// <summary>
+        /// Prepares the tag products model
+        /// </summary>
+        /// <param name="productTag">Product tag</param>
+        /// <param name="command">Model to get the catalog products</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the ag products model
+        /// </returns>
+        public virtual async Task<CatalogProductsModel> PrepareTagProductsModelAsync(Tag productTag, CatalogProductsCommand command)
+        {
+            if (productTag == null)
+            {
+                throw new ArgumentNullException(nameof(productTag));
+            }
+
+            if (command == null)
+            {
+                throw new ArgumentNullException(nameof(command));
+            }
+
+            var model = new CatalogProductsModel
+            {
+                // UseAjaxLoading = _catalogSettings.UseAjaxCatalogProductsLoading
+            };
+
+            ////sorting
+            //await PrepareSortingOptionsAsync(model, command);
+            ////view mode
+            //await PrepareViewModesAsync(model, command);
+            ////page size
+            //await PreparePageSizeOptionsAsync(model, command, _catalogSettings.ProductsByTagAllowCustomersToSelectPageSize,
+            //    _catalogSettings.ProductsByTagPageSizeOptions, _catalogSettings.ProductsByTagPageSize);
+
+            ////price range
+            //PriceRangeModel selectedPriceRange = null;
+            //if (_catalogSettings.EnablePriceRangeFiltering && _catalogSettings.ProductsByTagPriceRangeFiltering)
+            //{
+            //    selectedPriceRange = await GetConvertedPriceRangeAsync(command);
+
+            //    PriceRangeModel availablePriceRange = null;
+            //    if (!_catalogSettings.ProductsByTagManuallyPriceRange)
+            //    {
+            //        async Task<decimal?> getProductPriceAsync(ProductSortingEnum orderBy)
+            //        {
+            //            var products = await _productService.SearchProductsAsync(0, 1,
+            //                storeId: (await _storeContext.GetCurrentStoreAsync()).Id,
+            //                productTagId: productTag.Id,
+            //                visibleIndividuallyOnly: true,
+            //                orderBy: orderBy);
+
+            //            return products?.FirstOrDefault()?.Price ?? 0;
+            //        }
+
+            //        availablePriceRange = new PriceRangeModel
+            //        {
+            //            From = await getProductPriceAsync(ProductSortingEnum.PriceAsc),
+            //            To = await getProductPriceAsync(ProductSortingEnum.PriceDesc)
+            //        };
+            //    }
+            //    else
+            //    {
+            //        availablePriceRange = new PriceRangeModel
+            //        {
+            //            From = _catalogSettings.ProductsByTagPriceFrom,
+            //            To = _catalogSettings.ProductsByTagPriceTo
+            //        };
+            //    }
+
+            //    model.PriceRangeFilter = await PreparePriceRangeFilterAsync(selectedPriceRange, availablePriceRange);
+            //}
+
+            // products
+            var products = await this.postService.SearchProductsAsync(
+                command.Start,
+                command.Count,
+                priceMin: null, // selectedPriceRange?.From,
+                priceMax: null, // selectedPriceRange?.To,
+                storeId: 1,     // (await _storeContext.GetCurrentStoreAsync()).Id,
+                productTagId: productTag.Id,
+                visibleIndividuallyOnly: true,
+                orderBy: ProductSortingEnum.Position /*(ProductSortingEnum)command.OrderBy*/);
+
+            // var isFiltering = selectedPriceRange?.From is not null;
+            await PrepareCatalogProductsAsync(model, products, false);
+
+            return model;
+        }
+
+        /// <summary>
+        /// Prepare the product overview models
+        /// </summary>
+        /// <param name="products">Collection of products</param>
+        /// <param name="preparePriceModel">Whether to prepare the price model</param>
+        /// <param name="preparePictureModel">Whether to prepare the picture model</param>
+        /// <param name="productThumbPictureSize">Product thumb picture size (longest side); pass null to use the default value of media settings</param>
+        /// <param name="prepareSpecificationAttributes">Whether to prepare the specification attribute models</param>
+        /// <param name="forceRedirectionAfterAddingToCart">Whether to force redirection after adding to cart</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the collection of product overview model
+        /// </returns>
+        public virtual async Task<IEnumerable<PostModel>> PrepareProductOverviewModelsAsync(IEnumerable<Post> products,
+            bool preparePriceModel = true, bool preparePictureModel = true,
+            int? productThumbPictureSize = null, bool prepareSpecificationAttributes = false,
+            bool forceRedirectionAfterAddingToCart = false)
+        {
+            if (products == null)
+            {
+                throw new ArgumentNullException(nameof(products));
+            }
+
+            var models = new List<PostModel>();
+            foreach (var product in products)
+            {
+                var model = new PostModel
+                {
+                    Id = product.Id,
+                    Status = product.Status,
+                    HasMedia = product.HasMedia,
+                    FavoriteCount = product.FavoriteCount,
+                    CreatedAt = product.CreatedAt,
+                };
+
+                // user 
+                var postUser = await this.userService.GetCustomerByIdAsync(product.UserId);
+                model.User = await this.userModelFactory.PrepareCustomerModelAsync(model.User, postUser);
+
+                // post tags
+                model.Tags = await PrepareProductTagModelsAsync(product);
+
+                if (model.HasMedia)
+                {
+                    // pictures
+                    var allPictureModels = await this.PrepareProductDetailsPictureModelAsync(model, false);
+                    model.Entities.Medias = allPictureModels;
+                }
+
+                models.Add(model);
+            }
+
+            return models;
+        }
+
+        /// <summary>
+        /// Prepare popular product tags model
+        /// </summary>
+        /// <param name="numberTagsToReturn">The number of tags to be returned; pass 0 to get all tags</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the product tags model
+        /// </returns>
+        public virtual async Task<PopularProductTagsModel> PreparePopularProductTagsModelAsync(int numberTagsToReturn = 0)
+        {
+            var model = new PopularProductTagsModel();
+
+            var tagStats = await this.postTagService.GetPostCountAsync(1);
+
+            model.TotalTags = tagStats.Count;
+
+            model.Tags.AddRange(await tagStats
+                // Take the most popular tags if specified
+                .OrderByDescending(x => x.Value).Take(numberTagsToReturn > 0 ? numberTagsToReturn : tagStats.Count)
+                .SelectAwait(async tagStat =>
+                {
+                    var tag = await this.postTagService.GetPostTagByIdAsync(tagStat.Key);
+
+                    return new PostTagModel
+                    {
+                        Id = tag.Id,
+                        Name = tag.Name,
+                        PostCount = tagStat.Value
+                    };
+                })
+                // sorting result
+                .OrderBy(x => x.PostCount)  // x.Name
+                .ToListAsync());
+
+            return model;
+        }
+
+        /// <summary>
+        /// Prepares catalog products
+        /// </summary>
+        /// <param name="model">Catalog products model</param>
+        /// <param name="products">The products</param>
+        /// <param name="isFiltering">A value indicating that filtering has been applied</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        protected virtual async Task PrepareCatalogProductsAsync(CatalogProductsModel model, IPagedList<Post> products, bool isFiltering = false)
+        {
+            if (!string.IsNullOrEmpty(model.WarningMessage))
+            {
+                return;
+            }
+
+            if (products.Count == 0 && isFiltering)
+            {
+                model.NoResultMessage = await this.localeStringResourceService.GetResourceAsync("Catalog.Products.NoResult");
+            }
+            else
+            {
+                model.Products = (await this.PrepareProductOverviewModelsAsync(products)).ToList();
+                model.LoadPagedList(products);
+            }
+        }
+
+        /// <summary>
+        /// Prepare the product tag models
+        /// </summary>
+        /// <param name="product">Product</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the list of product tag model
+        /// </returns>
+        protected virtual async Task<IList<PostTagModel>> PrepareProductTagModelsAsync(Post post)
+        {
+            if (post == null)
+            {
+                throw new ArgumentNullException(nameof(post));
+            }
+
+            // var store = await _storeContext.GetCurrentStoreAsync();
+            var productsTags = await this.postTagService.GetAllPostTagsByPostIdAsync(post.Id);
+
+            var model = await productsTags
+                    // filter by store
+                    .WhereAwait(async x => await this.postTagService.GetPostCountByPostTagIdAsync(x.Id, 1) > 0)
+                    .SelectAwait(async x => new PostTagModel
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        PostCount = await this.postTagService.GetPostCountByPostTagIdAsync(x.Id, 1)
+                    }).ToListAsync();
+
+            return model;
         }
 
         private async Task<List<int>> BuildBlockerAccountIds(int postId, Customer currentLoggedUser)

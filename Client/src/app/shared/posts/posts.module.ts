@@ -13,9 +13,11 @@ import {SharedVideoCommentModule} from "../shared-post-comment/shared-video-comm
 import {SharedModerationModule} from "../shared-moderation/shared-moderation.module";
 import {SharedMainModule} from "../shared-main/shared-main.module";
 import {SharedFormModule} from "../shared-forms/shared-form.module";
+import {VideoViewsCounterComponent} from "./video-views-counter.component";
 
 @NgModule({
   declarations: [
+    VideoViewsCounterComponent,
   ],
 
   imports: [
@@ -39,6 +41,7 @@ import {SharedFormModule} from "../shared-forms/shared-form.module";
   ],
 
   exports: [
+    VideoViewsCounterComponent,
   ]
 })
 export class PostsModule {

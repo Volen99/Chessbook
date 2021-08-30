@@ -243,4 +243,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return User.GET_DEFAULT_ANONYMOUS_AVATAR_URL();
   }
 
+  getLichessPictureName() {
+    if (this.currentTheme === 'dark') {
+      return '-dark';
+    }
+
+    return '';
+  }
+
+  getChess24PictureName() {
+    if (this.currentTheme === 'material-light') {
+      return '-material-light';
+    }
+
+    return '';
+  }
+
 }

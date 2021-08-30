@@ -19,6 +19,7 @@ import {SelectOptionsComponent} from "./select/select-options.component";
 import {SelectTagsComponent} from "./select/select-tags.component";
 import {SelectCheckboxComponent} from "./select/select-checkbox.component";
 import {AdvancedInputFilterComponent} from "./advanced-input-filter.component";
+import {NbInputModule} from "../../sharebook-nebular/theme/components/input/input.module";
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import {AdvancedInputFilterComponent} from "./advanced-input-filter.component";
 
     SharedMainModule,
     FontAwesomeModule,
+    NbInputModule,
   ],
 
   declarations: [

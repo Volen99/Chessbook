@@ -4,6 +4,9 @@ import {FileLikeObject} from './file-like-object.class';
 import {FileItem} from './file-item.class';
 import {FileType} from './file-type.class';
 import {UploadService} from "./upload.service";
+import {AppInjector} from "../../../../../app-injector";
+import {NbToastrService} from "../../../../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {NbGlobalPhysicalPosition} from "../../../../../sharebook-nebular/theme/components/cdk/overlay/position-helper";
 
 function isFile(value: any): boolean {
   return (File && value instanceof File);
@@ -100,6 +103,15 @@ export class FileUploader {
   public addToQueue(files: File[], options?: FileUploaderOptions, filters?: FilterFunction[] | string): void {
     let list: File[] = [];
     for (let file of files) {
+      if (file.type.includes('video')) {
+        let notifier = AppInjector.get(NbToastrService);
+        notifier.warning('Currently Chessbook does not support uploading videos on its servers, but you can share videos from youtube.', 'Not supported — yet',
+          {
+            position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
+            duration: 0,
+          });
+        return;
+      }
       list.push(file);
     }
 

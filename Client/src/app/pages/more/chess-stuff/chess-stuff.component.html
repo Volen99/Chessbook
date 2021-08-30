@@ -13,7 +13,7 @@
     <div class="col-md-6 col-xxxl-4">
         <nb-card size="medium" class="headings-card">
             <nb-card-header>
-                Internet chess servers
+                Internet Chess Servers
             </nb-card-header>
             <nb-card-body>
                 <div class="header">
@@ -304,7 +304,7 @@
     <div class="col-md-6 col-xxxl-4">
         <nb-card [size]="breakpoint.width >= breakpoints.xxxl ? 'medium' : 'large'">
             <nb-card-header>
-                Origin of chess
+                Origin of Chess
             </nb-card-header>
             <nb-card-body>
                 <!--<div class="picture" [style.background-image]="'url(assets/images/kitten-dark.png)'"></div>-->
@@ -492,73 +492,19 @@
     <div class="col-md-6 col-xxxl-4">
         <nb-card size="large">
             <nb-card-header>
-                Font Colors
+                Chess Quotes
             </nb-card-header>
             <nb-card-body>
                 <div class="colors">
-                    <div class="item text-heading">
-                        <div class="color bg-heading"></div>
+                    <ng-container *ngFor="let quote of this.quotes">
+                    <div class="item text-{{quote.one}}">
+                        <div class="color bg-{{quote.two}}"></div>
                         <div>
-                            <h5 class="text-heading">Heading Text</h5>
-                            Far far away, behind the your awesomeness.
+                            <h5 class="text-{{quote.three}}">{{quote.name}}</h5>
+                            <q>{{quote.text}}</q>
                         </div>
                     </div>
-                    <div class="item text-basic">
-                        <div class="color bg-body"></div>
-                        <div>
-                            <h5 class="text-basic">Body Text</h5>
-                            Far far away, behind the your awesomeness.
-                        </div>
-                    </div>
-                    <div class="item text-hint">
-                        <div class="color bg-hint"></div>
-                        <div>
-                            <h5 class="text-hint">Hint Text</h5>
-                            Far far away, behind the your awesomeness.
-                        </div>
-                    </div>
-                    <div class="item text-link">
-                        <div class="color bg-link"></div>
-                        <div>
-                            <h5 class="text-link">Link Text</h5>
-                            Far far away, behind the your awesomeness.
-                        </div>
-                    </div>
-                    <div class="item text-primary">
-                        <div class="color bg-status-primary"></div>
-                        <div>
-                            <h5 class="text-primary">Primary Text</h5>
-                            Far far away, behind the your awesomeness.
-                        </div>
-                    </div>
-                    <div class="item text-success">
-                        <div class="color bg-status-success"></div>
-                        <div>
-                            <h5 class="text-success">Success Text</h5>
-                            Far far away, behind the your awesomeness.
-                        </div>
-                    </div>
-                    <div class="item text-info">
-                        <div class="color bg-status-info"></div>
-                        <div>
-                            <h5 class="text-info">Info Text</h5>
-                            Far far away, behind the your awesomeness.
-                        </div>
-                    </div>
-                    <div class="item text-warning">
-                        <div class="color bg-status-warning"></div>
-                        <div>
-                            <h5 class="text-warning">Warning Text</h5>
-                            Far far away, behind the your awesomeness.
-                        </div>
-                    </div>
-                    <div class="item text-danger">
-                        <div class="color bg-status-danger"></div>
-                        <div>
-                            <h5 class="text-danger">Danger Text</h5>
-                            Far far away, behind the your awesomeness.
-                        </div>
-                    </div>
+                    </ng-container>
                 </div>
             </nb-card-body>
         </nb-card>
@@ -567,7 +513,7 @@
     <div class="col-md-6 col-xxxl-4">
         <nb-card size="large">
             <nb-card-header>
-                Alerts
+                Funny Chess Pictures
             </nb-card-header>
             <nb-card-body>
                 <nb-alert>

@@ -115,6 +115,7 @@ export class PublishTweetParameters extends CustomRequestParameters implements I
   }
 
   poll: IPoll;
+  tags: string;
 
 
   public text: string;

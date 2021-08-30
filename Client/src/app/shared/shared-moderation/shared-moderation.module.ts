@@ -18,6 +18,7 @@ import {NbCheckboxModule} from "../../sharebook-nebular/theme/components/checkbo
 import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";
 import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/button.module";
 import {NbInputModule} from "../../sharebook-nebular/theme/components/input/input.module";
+import {TournamentService} from "./tournament-service";
 
 @NgModule({
   imports: [
@@ -55,7 +56,8 @@ import {NbInputModule} from "../../sharebook-nebular/theme/components/input/inpu
     BlocklistService,
     BulkService,
     AbuseService,
-    VideoBlockService
+    VideoBlockService,
+    TournamentService,
   ]
 })
 export class SharedModerationModule {

@@ -34,6 +34,8 @@ import {
 } from "./moderation";
 import {VideoCommentListComponent} from "./moderation/video-comment-list";
 import {UserPasswordComponent, UserUpdateComponent} from "./users/user-edit";
+import { TournamentComponent } from './tournaments/tournament.component';
+import {Ng2SmartTableModule} from "ng2-smart-table";
 
 @NgModule({
   declarations: [
@@ -54,6 +56,7 @@ import {UserPasswordComponent, UserUpdateComponent} from "./users/user-edit";
     VideoCommentListComponent,
 
     InstanceAccountBlocklistComponent,
+     TournamentComponent,
   ],
   imports: [
     AdminRoutingModule,
@@ -75,6 +78,7 @@ import {UserPasswordComponent, UserUpdateComponent} from "./users/user-edit";
     NbSelectModule,
     NbButtonModule,
     NbInputModule,
+    Ng2SmartTableModule,
   ],
 
   exports: [

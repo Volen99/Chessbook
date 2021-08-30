@@ -26,19 +26,24 @@ export interface IUserNotification {
     id: number
     threadId: number
     account: ActorInfo
-    video: VideoInfo
+    post: VideoInfo
+  };
+
+  postLike?: {
+    account: ActorInfo & { avatarUrl?: string },
+    post: VideoInfo,
   };
 
   abuse?: {
     id: number
     state: AbuseState
 
-    video?: VideoInfo
+    post?: VideoInfo
 
     comment?: {
       threadId: number
 
-      video: {
+      post: {
         id: number
         uuid: string
         name: string
@@ -93,19 +98,24 @@ export class UserNotification implements IUserNotification {
     id: number
     threadId: number
     account: ActorInfo & { avatarUrl?: string }
-    video: VideoInfo
+    post: VideoInfo
+  };
+
+  postLike?: {
+    account: ActorInfo & { avatarUrl?: string },
+    post: VideoInfo,
   };
 
   abuse?: {
     id: number
     state: AbuseState
 
-    video?: VideoInfo
+    post?: VideoInfo
 
     comment?: {
       threadId: number
 
-      video: {
+      post: {
         id: number
         uuid: string
         name: string
@@ -168,6 +178,8 @@ export class UserNotification implements IUserNotification {
         this.setAccountAvatarUrl(this.comment.account);
       }
 
+      this.postLike = hash.postLike;
+
       this.abuse = hash.abuse;
 
       this.videoBlacklist = hash.videoBlacklist;
@@ -183,26 +195,26 @@ export class UserNotification implements IUserNotification {
 
       switch (this.type) {
         case UserNotificationType.NEW_VIDEO_FROM_SUBSCRIPTION:
-          this.videoUrl = this.buildVideoUrl(this.post);
+          this.videoUrl = this.buildVideoUrl(this.post, this.account.screenName);
           break;
 
         case UserNotificationType.UNBLACKLIST_ON_MY_VIDEO:
-          this.videoUrl = this.buildVideoUrl(this.post);
+          this.videoUrl = this.buildVideoUrl(this.post, this.account.screenName);
           break;
 
         case UserNotificationType.NEW_COMMENT_ON_MY_VIDEO:
         case UserNotificationType.COMMENT_MENTION:
           if (!this.comment) break;
           this.accountUrl = this.buildAccountUrl(this.comment.account);
-          this.commentUrl = this.buildCommentUrl(this.comment);
+          this.commentUrl = this.buildCommentUrl(this.comment, this.comment.account.screenName);
           break;
 
         case UserNotificationType.NEW_ABUSE_FOR_MODERATORS:
           this.abuseUrl = '/admin/shared-moderation/abuses/list';
           this.abuseQueryParams.search = '#' + this.abuse.id;
 
-          if (this.abuse.video) this.videoUrl = this.buildVideoUrl(this.abuse.video);
-          else if (this.abuse.comment) this.commentUrl = this.buildCommentUrl(this.abuse.comment);
+          if (this.abuse.post) this.videoUrl = this.buildVideoUrl(this.abuse.post, this.account.screenName);
+          else if (this.abuse.comment) this.commentUrl = this.buildCommentUrl(this.abuse.comment, this.abuse.account.screenName);
           else if (this.abuse.account) this.accountUrl = this.buildAccountUrl(this.abuse.account);
           break;
 
@@ -223,22 +235,22 @@ export class UserNotification implements IUserNotification {
           // Backward compatibility where we did not assign videoBlacklist to this type of notification before
           if (!this.videoBlacklist) this.videoBlacklist = {id: null, video: this.post};
 
-          this.videoUrl = this.buildVideoUrl(this.videoBlacklist.video);
+          this.videoUrl = this.buildVideoUrl(this.videoBlacklist.video, this.account.screenName);
           break;
 
         case UserNotificationType.BLACKLIST_ON_MY_VIDEO:
-          this.videoUrl = this.buildVideoUrl(this.videoBlacklist.video);
+          this.videoUrl = this.buildVideoUrl(this.videoBlacklist.video, this.account.screenName);
           break;
 
         case UserNotificationType.MY_VIDEO_PUBLISHED:
-          this.videoUrl = this.buildVideoUrl(this.post);
+          this.videoUrl = this.buildVideoUrl(this.post, this.account.screenName);
           break;
 
         case UserNotificationType.MY_VIDEO_IMPORT_SUCCESS:
           this.videoImportUrl = this.buildVideoImportUrl();
           this.videoImportIdentifier = this.buildVideoImportIdentifier(this.videoImport);
 
-          if (this.videoImport.video) this.videoUrl = this.buildVideoUrl(this.videoImport.video);
+          if (this.videoImport.video) this.videoUrl = this.buildVideoUrl(this.videoImport.video, this.account.screenName);
           break;
 
         case UserNotificationType.MY_VIDEO_IMPORT_ERROR:
@@ -261,6 +273,12 @@ export class UserNotification implements IUserNotification {
         case UserNotificationType.AUTO_INSTANCE_FOLLOWING:
           this.instanceFollowUrl = '/admin/follows/following-list';
           break;
+
+        case UserNotificationType.NEW_LIKE_ON_MY_POST:
+          debugger
+          this.accountUrl = this.buildAccountUrl(this.postLike.account);
+          this.videoUrl = this.buildVideoUrl(this.postLike.post, this.postLike.account.screenName);
+          break;
       }
     } catch (err) {
       this.type = null;
@@ -268,8 +286,8 @@ export class UserNotification implements IUserNotification {
     }
   }
 
-  private buildVideoUrl(video: { id: number }) {
-    return '/' + this.post.user.screenName + '/post/' + this.post.id;
+  private buildVideoUrl(post: { id: number }, screenName: string) {
+    return '/' + screenName + '/post/' + post.id;
   }
 
   private buildAccountUrl(account: { screenName: string }) {
@@ -284,8 +302,8 @@ export class UserNotification implements IUserNotification {
     return videoImport.targetUrl || videoImport.magnetUri || videoImport.torrentName;
   }
 
-  private buildCommentUrl(comment: { video: { id: number }, threadId: number }) {
-    return [this.buildVideoUrl(comment.video), {threadId: comment.threadId}];
+  private buildCommentUrl(comment: { post: { id: number }, threadId: number }, screenName: string) {
+    return [this.buildVideoUrl(comment.post, screenName), {threadId: comment.threadId}];
   }
 
   private setAccountAvatarUrl(actor: { avatarUrl?: string, avatar?: { url?: string, path: string } }) {

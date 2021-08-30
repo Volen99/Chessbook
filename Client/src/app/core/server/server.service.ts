@@ -221,6 +221,62 @@ export class ServerService {
   }
 
   getHTMLConfig () {
+    this.htmlConfig = {
+      autoBlacklist: {videos: {ofUsers: {enabled: false}}},
+      avatar: {file: {extensions: [], size: {max: 0}}},
+      banner: {file: {extensions: [], size: {max: 0}}},
+      broadcastMessage: {dismissable: false, enabled: false, level: undefined, message: ""},
+      contactForm: {enabled: false},
+      email: {enabled: false},
+      followings: {instance: {autoFollowIndex: {indexUrl: ""}}},
+      import: {videos: {http: {enabled: false}, torrent: {enabled: false}}},
+      instance: {
+        customizations: {css: "", javascript: ""},
+        defaultClientRoute: "",
+        defaultNSFWPolicy: undefined,
+        isNSFW: false,
+        name: "",
+        shortDescription: ""
+      },
+      live: {
+        allowReplay: false,
+        enabled: false,
+        maxDuration: 0,
+        maxInstanceLives: 0,
+        maxUserLives: 0,
+        rtmp: {port: 0},
+        transcoding: {availableProfiles: [], enabled: false, enabledResolutions: [], profile: ""}
+      },
+      plugin: {registered: [], registeredExternalAuths: [], registeredIdAndPassAuths: []},
+      search: {
+        remoteUri: {
+          users: true,
+          anonymous: false,
+        },
+        searchIndex: {
+          enabled: false,
+          url: '',
+          disableLocalSearch: false,
+          isDefaultSearch: false,
+        }
+      },
+      serverVersion: "",
+      theme: {default: "", registered: []},
+      tracker: {enabled: false},
+      transcoding: {
+        availableProfiles: [],
+        enabledResolutions: [],
+        hls: {enabled: false},
+        profile: "",
+        webtorrent: {enabled: false}
+      },
+      trending: {videos: {algorithms: {default: "", enabled: []}, intervalDays: 0}},
+      user: {videoQuota: 0, videoQuotaDaily: 0},
+      video: {file: {extensions: []}, image: {extensions: [], size: {max: 0}}},
+      videoCaption: {file: {extensions: [], size: {max: 0}}}
+
+    };
+
     return this.htmlConfig;
   }
 

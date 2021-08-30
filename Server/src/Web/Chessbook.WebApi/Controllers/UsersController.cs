@@ -476,10 +476,10 @@
 
             if (postVote == null)
             {
-                return this.Ok(new PostRateModel { Type = false });
+                return this.Ok(new PostRateModel { Type = postVote.Type });
             }
 
-            return this.Ok(new PostRateModel { Type = postVote.IsUp });
+            return this.Ok(new PostRateModel { Type = postVote.Type });
         }
 
         [HttpGet]
@@ -510,13 +510,17 @@
             var currentUserId = User.GetUserId();
             var customer = await userService.GetCustomerByIdAsync(currentUserId);
 
-            if (input.Description != null || input.DisplayName != null)
-            {
-                customer.Description = input.Description;
-                customer.DisplayName = input.DisplayName;
+            customer.Description = input.Description;
+            customer.DisplayName = input.DisplayName;
 
-                await this.userService.Update(customer);
-            }
+            // social pages
+            customer.WebsiteLink = input.WebsiteLink;
+            customer.TwitterLink = input.TwitterLink;
+            customer.TwitchLink = input.TwitchLink;
+            customer.YoutubeLink = input.YoutubeLink;
+            customer.FacebookLink = input.FacebookLink;
+
+            await this.userService.Update(customer);
 
             await this.genericAttributeService.SaveAttributeAsync(customer, NopCustomerDefaults.GenderAttribute, input.Gender);
 
@@ -637,7 +641,7 @@
                 var models = new List<AbuseModel>();
                 foreach (var abuse in abuses)
                 {
-                   models.Add(await this.abuseModelFactory.PrepareAbuseModel(abuse));
+                    models.Add(await this.abuseModelFactory.PrepareAbuseModel(abuse));
                 }
 
                 return this.Ok(new
@@ -647,11 +651,11 @@
                 });
             }
 
-             return this.Ok(new
-             {
-                 total = abuses.TotalCount,
-                 data = abuses,
-             });
+            return this.Ok(new
+            {
+                total = abuses.TotalCount,
+                data = abuses,
+            });
         }
 
         [HttpGet]
@@ -689,7 +693,7 @@
         [HttpGet]
         [Route("me/blocklist/accounts")]
         [Authorize]
-        public async Task<IActionResult> GetBlockListAccounts([FromQuery] QueryGetInputModel input) 
+        public async Task<IActionResult> GetBlockListAccounts([FromQuery] QueryGetInputModel input)
         {
             var blockedAccounts = await this.blocklistService.GetUserBlocklistAccounts(input.Start, input.Count, input.Sort, User.GetUserId(), input.Search);
 

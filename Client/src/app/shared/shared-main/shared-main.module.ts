@@ -53,6 +53,8 @@ import {TopMenuDropdownComponent} from "./misc/top-menu-dropdown.component";
 import {ListOverflowComponent} from "./misc/list-overflow.component";
 import {SmallLoaderComponent} from "./loaders/small-loader.component";
 import {LoaderComponent} from "./loaders/loader.component";
+import {RedundancyService} from "./post/redundancy.service";
+import {LinkComponent} from "./angular/link.component";
 
 @NgModule({
   imports: [
@@ -135,6 +137,8 @@ import {LoaderComponent} from "./loaders/loader.component";
     AnimatedNumberComponent,
     PopoverMoreComponent,
 
+    LinkComponent,
+
   ],
 
   exports: [
@@ -149,7 +153,7 @@ import {LoaderComponent} from "./loaders/loader.component";
     NgbPopoverModule,
     NgbNavModule,
     NgbTooltipModule,
-    // NgbCollapseModule,
+    NgbCollapseModule,
     //
     ClipboardModule,
     //
@@ -195,6 +199,8 @@ import {LoaderComponent} from "./loaders/loader.component";
     // DisableDirective,
     // GroupByPipe,
     // BootstrapToggleDirective,
+
+    LinkComponent,
   ],
 
   providers: [
@@ -209,7 +215,7 @@ import {LoaderComponent} from "./loaders/loader.component";
     UserHistoryService,
     UserNotificationService,
     //
-    // RedundancyService,
+    RedundancyService,
     // VideoImportService,
     // VideoOwnershipService,
     // VideoService,

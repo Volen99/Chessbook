@@ -86,6 +86,16 @@ namespace Nop.Web.Areas.Admin.Models.Customers
 
         public bool Active { get; set; }
 
+        public string WebsiteLink { get; set; }
+
+        public string TwitterLink { get; set; }
+
+        public string TwitchLink { get; set; }
+
+        public string YoutubeLink { get; set; }
+
+        public string FacebookLink { get; set; }
+
         public DateTime LastActivityDate { get; set; }
 
         public string LastIpAddress { get; set; }

@@ -8,7 +8,7 @@ namespace Chessbook.Services.Relationships
 {
     public interface IFollowService
     {
-        Task<Relationship> Follow(int userId, int targetUserId, FollowState state);
+        Task<UserFollow> Follow(int userId, int targetUserId, FollowState state);
 
         Task<Relationship> UnFollow(int userId, int targetUserId);
 

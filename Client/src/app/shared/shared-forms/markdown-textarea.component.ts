@@ -6,6 +6,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ScreenService} from "../../core/wrappers/screen.service";
 import truncate from 'lodash-es/truncate';
 import {MarkdownService} from "../../core/renderer/markdown.service";
+import {SafeHtml} from "@angular/platform-browser";
+import { IPost } from '../posts/models/tweet';
 
 
 @Component({
@@ -23,22 +25,31 @@ import {MarkdownService} from "../../core/renderer/markdown.service";
 
 export class MarkdownTextareaComponent implements ControlValueAccessor, OnInit {
   @Input() content = '';
+
   @Input() classes: string[] | { [klass: string]: any[] | any } = [];
+
   @Input() textareaMaxWidth = '100%';
   @Input() textareaHeight = '150px';
+
   @Input() truncate: number;
+
   @Input() markdownType: 'text' | 'enhanced' = 'text';
-  @Input() markdownVideo = false;
+  @Input() customMarkdownRenderer?: (text: string) => Promise<string | HTMLElement>;
+
+  @Input() markdownVideo: IPost;
+
   @Input() name = 'description';
 
   @ViewChild('textarea') textareaElement: ElementRef;
+  @ViewChild('previewElement') previewElement: ElementRef;
 
-  truncatedPreviewHTML = '';
-  previewHTML = '';
+  truncatedPreviewHTML: SafeHtml | string = '';
+  previewHTML: SafeHtml | string = '';
+
   isMaximized = false;
 
-  maximizeInText = `Maximize editor`;
-  maximizeOutText = `Exit maximized editor`;
+  maximizeInText = $localize`Maximize editor`;
+  maximizeOutText = $localize`Exit maximized editor`;
 
   private contentChanged = new Subject<string>();
   private scrollPosition: [number, number];
@@ -46,7 +57,8 @@ export class MarkdownTextareaComponent implements ControlValueAccessor, OnInit {
   constructor(
     private viewportScroller: ViewportScroller,
     private screenService: ScreenService,
-    private markdownService: MarkdownService) {
+    private markdownService: MarkdownService
+  ) {
   }
 
   ngOnInit() {
@@ -118,10 +130,31 @@ export class MarkdownTextareaComponent implements ControlValueAccessor, OnInit {
   }
 
   private async markdownRender(text: string) {
-    const html = this.markdownType === 'text' ?
-      await this.markdownService.textMarkdownToHTML(text) :
-      await this.markdownService.enhancedMarkdownToHTML(text);
+    let html: string;
 
-    return this.markdownVideo ? this.markdownService.processVideoTimestamps(html) : html;
+    if (this.customMarkdownRenderer) {
+      const result = await this.customMarkdownRenderer(text);
+
+      if (result instanceof HTMLElement) {
+        html = '';
+
+        const wrapperElement = this.previewElement.nativeElement as HTMLElement;
+        wrapperElement.innerHTML = '';
+        wrapperElement.appendChild(result);
+        return;
+      }
+
+      html = result;
+    } else if (this.markdownType === 'text') {
+      html = await this.markdownService.textMarkdownToHTML(text);
+    } else {
+      html = await this.markdownService.enhancedMarkdownToHTML(text);
+    }
+
+    if (this.markdownVideo) {
+      html = this.markdownService.processVideoTimestamps(this.markdownVideo.user.screenName, this.markdownVideo.id, html);
+    }
+
+    return html;
   }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Chessbook.Core.Domain.Post;
+using Chessbook.Core.Domain.Posts;
 using Nop.Core;
 
 namespace Chessbook.Services.Entities
@@ -26,5 +26,7 @@ namespace Chessbook.Services.Entities
         Task<int> GetPostCommentsCount(int postId);
 
         Task Delete(PostComment comment);
+
+        string[] ExtractMentions(string text);
     }
 }

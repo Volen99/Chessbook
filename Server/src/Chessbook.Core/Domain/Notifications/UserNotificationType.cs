@@ -28,6 +28,6 @@
 
         ABUSE_NEW_MESSAGE = 16,
 
-        NEW_PLUGIN_VERSION = 17,
+        NEW_LIKE_ON_MY_POST = 17,
     }
 }

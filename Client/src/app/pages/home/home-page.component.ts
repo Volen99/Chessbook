@@ -12,7 +12,7 @@ import {PostsService} from "../../shared/posts/posts.service";
 import {Post} from "../../shared/shared-main/post/post.model";
 import {immutableAssign, scrollToTop} from "../../helpers/utils";
 import {GetHomeTimelineParameters} from "../../shared/models/timeline/get-home-timeline-parameters";
-import {AbstractPostList} from "../../shared/post-miniature/abstract-post-list/abstract-post-list";
+import {AbstractPostList} from "../../shared/post-miniature/abstract-post-list";
 import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {UserStore} from 'app/core/stores/user.store';
 import {InitUserService} from 'app/theme/services/init-user.service';

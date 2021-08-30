@@ -14,7 +14,11 @@ namespace Chessbook.Web.Api.Models.UserNotification
 
         public PostInfoModel Post { get; set; }
 
+        public PostCommentNotificationModel Comment { get; set; }
+
         public FollowInfoModel ActorFollow { get; set; }
+
+        public PostLikeNotificationModel PostLike { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

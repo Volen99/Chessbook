@@ -119,6 +119,16 @@ export interface IUser extends IUserIdentifier {
   canManage(user: IUser);
 
   notificationSettings?: UserNotificationSetting;
+
+  websiteLink: string;
+
+  twitterLink: string;
+
+  twitchLink: string;
+
+  youtubeLink: string;
+
+  facebookLink: string;
 }
 
 export abstract class UserData {
@@ -154,18 +164,17 @@ export abstract class UserData {
 
   abstract updateUsers(users: IUser[], userUpdate: UserUpdate);
 
-  abstract getUserWithCache (userId: number);
+  abstract getUserWithCache(userId: number);
 
-  abstract getUser (userId: number, withStats: boolean);
+  abstract getUser(userId: number, withStats: boolean);
 
-  abstract getAnonymousUser ();
+  abstract getAnonymousUser();
 
   // abstract getUsers (parameters: { pagination: RestPagination, sort: SortMeta, search?: string }): Observable<ResultList<IUser>>;
 
   abstract getUsers(pageNumber: number, pageSize: number);
 
   abstract getYourBirthday(userId: number);
-
 
 
   // end

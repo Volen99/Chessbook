@@ -36,8 +36,8 @@ export class ActorAvatarComponent {
 
   get title() {
     if (this._title) return this._title;
-    if (this.account) return `${this.account.screenName} (account page)`;
-    if (this.channel) return `${this.channel.screenName} (channel page)`;
+    if (this.account) return `${this.account.screenName} (user profile)`;
+    if (this.channel) return `${this.channel.screenName} (user profile)`;
 
     return '';
   }
@@ -66,7 +66,9 @@ export class ActorAvatarComponent {
   }
 
   get defaultAvatarUrl() {
-    if (this.channel) return User.GET_DEFAULT_ANONYMOUS_AVATAR_URL();
+    if (this.channel) {
+      return User.GET_DEFAULT_ANONYMOUS_AVATAR_URL();
+    }
 
     return User.GET_DEFAULT_ANONYMOUS_AVATAR_URL();
   }
@@ -76,7 +78,7 @@ export class ActorAvatarComponent {
       return this.account.profileImageUrlHttps;
     }
     if (this.channel) {
-      return User.GET_ACTOR_AVATAR_URL(this.channel);
+      return this.channel.profileImageUrlHttps;  // User.GET_ACTOR_AVATAR_URL(this.channel);
     }
 
     return '';

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Chessbook.Core.Domain.Customers;
-using Chessbook.Core.Domain.Post;
+using Chessbook.Core.Domain.Posts;
 using Chessbook.Data;
 using Chessbook.Data.Models;
 using Chessbook.Data.Models.Post;
@@ -203,13 +203,15 @@ namespace Chessbook.Services.Entities
 
             var localMention = $"@({ACTOR_NAME_ALPHABET}+)";
 
-            var mentionRegex = $"(?:(?:' + remoteMention + ')|(?:' + {localMention} + '))";
+            var mentionRegex = $"(?:{localMention})";
 
-            var firstMentionRegex = new Regex($"^{mentionRegex} ");
-            var endMentionRegex = new Regex($" {mentionRegex}$");
+            var firstMentionRegex = new Regex($"^{mentionRegex} ").ToString();
+            var endMentionRegex = new Regex($" {mentionRegex}$").ToString();
 
-            MatchCollection matchesFirst = Regex.Matches(text, firstMentionRegex.ToString());
-            MatchCollection matchesEnd = Regex.Matches(text, endMentionRegex.ToString());
+            var t = firstMentionRegex.ToString();
+
+            MatchCollection matchesFirst = Regex.Matches(text, firstMentionRegex);
+            MatchCollection matchesEnd = Regex.Matches(text, endMentionRegex);
 
             foreach (Match match in matchesFirst)
             {

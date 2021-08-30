@@ -1,7 +1,9 @@
 ﻿namespace Chessbook.Web.Api.Areas.Admin.Models.Post
 {
     using System;
+    using System.Collections.Generic;
     using AutoMapper;
+    using Chessbook.Web.Api.Models.Posts;
     using Chessbook.Web.Models.Outputs.Polls;
     using Newtonsoft.Json;
     using Nop.Web.Areas.Admin.Models.Customers;
@@ -15,6 +17,8 @@
             {
                 Poll = this.Poll,
             };
+
+            this.Tags = new List<PostTagModel>();
         }
 
         public string IdStr => this.Id.ToString();
@@ -99,6 +103,8 @@
         public bool Reshared { get; set; }
 
         public PostModel ResharedStatus { get; set; }
+
+        public IList<PostTagModel> Tags { get; set; }
 
         //[JsonProperty("possibly_sensitive")]
         //public bool PossiblySensitive { get; set; }
