@@ -14,11 +14,13 @@ import {AuthModule} from "../../../auth/auth.module";
 import {NbSpinnerModule} from "../../../sharebook-nebular/theme/components/spinner/spinner.module";
 import {MatRippleModule} from "@angular/material/core";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {SnackbarSampleComponent} from "./snackbar/snackbar.sample";
 
 @NgModule({
   declarations: [
     ChessStuffComponent,
     WorldChampionsComponent,
+    SnackbarSampleComponent,
   ],
 
   imports: [

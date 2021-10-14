@@ -4,14 +4,13 @@ using System.Threading.Tasks;
 using Chessbook.Core.Domain.Notifications;
 using Chessbook.Core.Domain.Posts;
 using Chessbook.Data.Models;
-using Chessbook.Data.Models.Post;
 using Chessbook.Services.Blocklist;
-using Chessbook.Services.Data.Services;
+using Chessbook.Services;
 using Chessbook.Services.Data.Services.Entities;
 using Chessbook.Services.Notifications;
 using Chessbook.Services.Notifications.Settings;
 using Chessbook.Web.Api.Lib.Shared.Common;
-using Nop.Core.Infrastructure;
+using Chessbook.Core.Infrastructure;
 
 namespace Chessbook.Web.Api.Lib.Shared.Like
 {

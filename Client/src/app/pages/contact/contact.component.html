@@ -1,0 +1,78 @@
+<div class="request">
+    <div *ngIf="!this.isLeftContainerHidden" class="req_left_container" [style.background-image]="'url(assets/images/request_img.png)'"><h3 style="color: #b4b4db;" >Hello!</h3>
+        <p style="color: #b4b4db;">Have a question about Chessbook? Let us know. We will get back to you ASAP.</p></div>
+    <div class="req_right_container" style="height: 100vh;" [ngStyle]="{width: this.isLeftContainerHidden ? '100%' : 'calc(100vw - 500px)', 'margin-left': this.isLeftContainerHidden ? '0px' : '100px' }">
+        <div class="header">
+            <div class="sharebook-container align-items-flex-start align-self-stretch justify-content-center min-height-30px header-left-icon-min-width-59px">
+                <div aria-label="Close" role="button" data-focusable="true"
+                     tabindex="0"
+                     class="icon-hover close-button sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
+                     style="margin-left: calc(5px + (-1 * (41px - 1.5em)) / 2);">
+                    <div dir="auto" class="align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
+                         (click)="this.back()">
+                        <fa-icon [icon]="this.faTimes" [styles]="this.svgStyles"></fa-icon>
+                        <span
+                                class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="req_form"><h3>Contact us</h3>
+            <form [formGroup]="this.contactForm">
+                <div class="input_wrapper"><label for="fromEmail" class="label"
+                                                  style="display: initial;">Your contact email address
+                    <div class="required">*</div>
+                </label><input id="fromEmail" class="input" formControlName="fromEmail">
+                    <ngx-validation-message label="Email address"
+                                            [showPattern]="this.fromEmail?.hasError('pattern') && this.fromEmail.touched"
+                                            [showRequired]="this.fromEmail?.errors?.required && this.fromEmail.touched"></ngx-validation-message>
+                </div>
+                <div class="input_wrapper"><label for="fromName" class="label"
+                                                  style="display: initial;">Your username</label>
+                    <input id="fromName"
+                           class="input" formControlName="fromName" autocomplete="off">
+                    <ngx-validation-message label="username"
+                                            [showMinLength]="this.fromName?.hasError('minlength')"
+                                            [showMaxLength]="this.fromName?.hasError('maxlength')"
+                                            [showRequired]="this.fromName?.errors?.required && this.fromName.touched"
+                                            minLength=2
+                                            maxLength=120>
+                    </ngx-validation-message>
+                </div>
+                <div class="input_wrapper"><label for="subject" class="label"
+                                                  style="display: initial;">Subject
+                    <div class="required">*</div>
+                </label>
+                    <input nbInput fullWidth id="subject" class="input" formControlName="subject" autocomplete="off"
+                           [status]="(this.subject?.errors?.required || this.subject?.hasError('minlength') || this.subject?.hasError('maxlength')) && this.subject.touched ? 'danger' : 'primary'">
+                    <ngx-validation-message label="subject"
+                                            [showMinLength]="this.subject?.hasError('minlength')"
+                                            [showMaxLength]="this.subject?.hasError('maxlength')"
+                                            [showRequired]="this.subject?.errors?.required && this.subject.touched"
+                                            minLength=3
+                                            maxLength=120>
+                    </ngx-validation-message>
+
+                </div>
+                <div class="input_wrapper">
+                    <label class="label" for="body">Detailed description</label><span class="required">*</span>
+                    <textarea nbInput fullWidth id="body" rows="1" class="input"
+                              formControlName="body"
+                              autocomplete="off"
+                              style="height: 56px;"
+                              [status]="(this.body?.errors?.required || this.body?.hasError('pattern')) && this.body.touched ? 'danger' : 'primary'">
+                    </textarea>
+                    <ngx-validation-message label="description"
+                                            [showPattern]="this.body?.hasError('pattern') && this.body.touched"
+                                            [showRequired]="this.body?.errors?.required && this.body.touched" min=3
+                                            max=5000>
+                    </ngx-validation-message>
+                </div>
+                <button nbButton fullWidth class="button" status="primary" [disabled]="!this.contactForm.valid"
+                        (click)="this.sendForm()">Submit
+                </button>
+                <!--<div class="button disabled_btn">Submit</div>-->
+            </form>
+        </div>
+    </div>
+</div>

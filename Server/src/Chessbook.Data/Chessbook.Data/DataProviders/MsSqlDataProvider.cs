@@ -5,16 +5,16 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Chessbook.Data.Models;
 using LinqToDB;
 using LinqToDB.Data;
 using LinqToDB.DataProvider;
 using LinqToDB.DataProvider.SqlServer;
-using Nop.Core;
-using Nop.Core.Infrastructure;
-using Nop.Data.Migrations;
 
-namespace Nop.Data.DataProviders
+using Chessbook.Core.Infrastructure;
+using Chessbook.Data.Migrations;
+using Chessbook.Data.Models;
+
+namespace Chessbook.Data.DataProviders
 {
     /// <summary>
     /// Represents the MS SQL Server data provider

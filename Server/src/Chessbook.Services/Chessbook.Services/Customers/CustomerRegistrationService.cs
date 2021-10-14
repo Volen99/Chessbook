@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Chessbook.Core;
 using Chessbook.Data.Models;
-using Chessbook.Services.Data.Services;
+using Chessbook.Services;
 using Chessbook.Services.Localization;
 using Chessbook.Web.Api.Identity;
 using Chessbook.Web.Models.AuthDTO;
-using Microsoft.AspNetCore.Mvc;
-using Nop.Core;
-using Nop.Core.Domain.Customers;
-using Nop.Core.Events;
-using Nop.Services.Common;
-using Nop.Services.Customers;
-using Nop.Services.Localization;
-using Nop.Services.Logging;
-using Nop.Services.Security;
-using Nop.Services.Stores;
+using Chessbook.Core.Domain.Customers;
+using Chessbook.Core.Events;
+using Chessbook.Services.Common;
+using Chessbook.Services.Customers;
+using Chessbook.Services.Logging;
+using Chessbook.Services.Security;
+using Chessbook.Services.Stores;
 
 namespace Chessbook.Services.Authentication
 {
@@ -422,7 +420,7 @@ namespace Chessbook.Services.Authentication
             }
 
             // sign in new customer
-            var result = await _authenticationService.Login(customer, isPersist);
+            var result = await _authenticationService.SignInAsync(customer, isPersist);
 
             // raise event       
             await _eventPublisher.PublishAsync(new CustomerLoggedinEvent(customer));

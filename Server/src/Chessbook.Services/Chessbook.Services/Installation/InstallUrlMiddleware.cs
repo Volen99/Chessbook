@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Nop.Core;
-using Nop.Data;
 
-namespace Nop.Services.Installation
+using Chessbook.Core;
+using Chessbook.Data;
+
+namespace Chessbook.Services.Installation
 {
     /// <summary>
     /// Represents middleware that checks whether database is installed and redirects to installation URL in otherwise

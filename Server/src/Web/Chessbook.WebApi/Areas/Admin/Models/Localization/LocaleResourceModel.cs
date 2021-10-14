@@ -1,6 +1,6 @@
-﻿using Nop.Web.Framework.Models;
+﻿using Chessbook.Web.Framework.Models;
 
-namespace Nop.Web.Areas.Admin.Models.Localization
+namespace Chessbook.Web.Areas.Admin.Models.Localization
 {
     /// <summary>
     /// Represents a locale resource model

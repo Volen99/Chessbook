@@ -263,7 +263,8 @@ export class NbSearchComponent implements OnInit, OnDestroy {
     private router: Router,
     private overlayService: NbOverlayService,
     private changeDetector: ChangeDetectorRef,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.router.events
@@ -278,7 +279,12 @@ export class NbSearchComponent implements OnInit, OnDestroy {
         filter(data => !this.tag || data.tag === this.tag),
         takeUntil(this.destroy$),
       )
-      .subscribe(() => this.openSearch());
+      .subscribe(() => {
+        if (window.location.href.includes('search?')) {
+          return;
+        }
+        this.openSearch();
+      });
 
     this.searchService.onSearchDeactivate()
       .pipe(
@@ -286,9 +292,6 @@ export class NbSearchComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(() => this.hideSearch());
-
-
-
 
   }
 

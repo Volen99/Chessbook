@@ -17,6 +17,9 @@ import {ITweetDTO} from "./models/DTO/tweet-dto";
 import {addWarning} from "@angular-devkit/build-angular/src/utils/webpack-diagnostics";
 import {PeerTubeSocket} from "../../core/notification/sharebook-socket.service";
 import {UserStore} from "../../core/stores/user.store";
+import {objectToFormData} from "../../helpers/utils";
+import {catchError} from "rxjs/operators";
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
 
 // export interface ITweetQueryExecutor {
 //   getTweetAsync(parameters: IGetTweetParameters): Promise<ITwitterResult<ITweetDTO>>;
@@ -55,7 +58,8 @@ import {UserStore} from "../../core/stores/user.store";
 export class TweetQueryExecutorService {
 
   constructor(private tweetQueryGeneratorService: TweetQueryGeneratorService,
-              private postsApi: PostsApi,  private socket: PeerTubeSocket, private userStore: UserStore) {
+              private postsApi: PostsApi, private socket: PeerTubeSocket,
+              private userStore: UserStore, private notifier: NbToastrService) {
   }
 
   // public async getTweetAsync(parameters: IGetTweetParameters): Promise<ITweetDTO> {
@@ -78,20 +82,17 @@ export class TweetQueryExecutorService {
   //       });
   // }
 
-  public async publishTweetAsync(parameters: IPublishTweetParameters): Promise<ITweetDTO> {
+  public async publishTweetAsync(parameters: IPublishTweetParameters, body: {}): Promise<ITweetDTO> {
     let params = this.tweetQueryGeneratorService.getPublishTweetQuery(parameters);
 
-    let body = {};
-    if (parameters.hasPoll) {
-      body = parameters.poll;
-    }
+    const data = objectToFormData(body);
 
-    return await this.postsApi.publishTweetAsync(params, body)
+    return await this.postsApi.publishTweetAsync(params, data)
         .toPromise()
         .then(post => {
-          // this.socket.newPostAdded(post); // this.userStore.getUser().id,
-          return post;
-        });
+            this.notifier.success('Your post has been uploaded.', 'Success');
+            return post;
+        }).catch(err => this.notifier.danger(err.error, 'Error', {duration: 5000}));
   }
 
   // // Publish Retweet

@@ -15,7 +15,6 @@ import { NbDialogService } from './sharebook-nebular/theme/components/dialog/dia
 import {UploadComponent} from "./pages/modal-overlays/dialog/compose/upload/upload.component";
 import {NbDialogRef} from "./sharebook-nebular/theme/components/dialog/dialog-ref";
 import {User} from "./shared/shared-main/user/user.model";
-import {HooksService} from "./core/plugins";
 
 @Component({
   selector: 'app-root',
@@ -38,7 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.iconLibraries.registerFontPack('solid', {packClass: 'fas', iconClassPrefix: 'fa'});
     this.iconLibraries.registerFontPack('regular', {packClass: 'far', iconClassPrefix: 'fa'});
     this.iconLibraries.registerFontPack('light', {packClass: 'fal', iconClassPrefix: 'fa'});
-    this.iconLibraries.registerFontPack('duotone', {packClass: 'fad', iconClassPrefix: 'fa'});
+    // this.iconLibraries.registerFontPack('duotone', {packClass: 'fad', iconClassPrefix: 'fa'});
     this.iconLibraries.registerFontPack('brands', {packClass: 'fab', iconClassPrefix: 'fa'});
 
     // this.iconLibraries.setDefaultPack('duotone');
@@ -186,7 +185,7 @@ export class AppComponent implements OnInit, OnDestroy {
       new Hotkey('n', (event: KeyboardEvent): boolean => {
         if (this.ref === null) {
           this.dialogService.open(UploadComponent, {
-            closeOnEsc: true,
+            closeOnEsc: false,
           });
           return false;
         }

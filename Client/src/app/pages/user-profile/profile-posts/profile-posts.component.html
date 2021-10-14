@@ -24,11 +24,25 @@
             WorldFeedTest’s Posts</h1>
         <div [attr.aria-label]="'Timeline: ' + this.profileCurrent?.displayName + '’s Posts'"
              class="sharebook-container">
-            <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.posts.length) + 'px'}">
+            <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.pinnedPost ? this.posts.length + 1 : this.posts.length) + 'px'}">
+                <ng-container *ngIf="this.pinnedPost">
+                    <app-post
+                            [i]="0"
+                            [transform]="this.postTransformBuffer"
+                            (transformBuffer)="this.setTransformBuffer($event)"
+                            [post]="this.pinnedPost"
+                            [posts]="this.posts"
+                            [removeVideoFromArray]="this.removeVideoFromArray">
+                    </app-post>
+                </ng-container>
                 <ng-container *ngIf="this.posts?.length > 0;">
                     <app-post *ngFor="let post of this.posts; let i = index"
-                              [transform]="this?.setTransform(i)"
-                              [post]="post">
+                              [transform]="this.postTransformBuffer"
+                              (transformBuffer)="this.setTransformBuffer($event)"
+                              [post]="post"
+                              [posts]="this.posts"
+                              [i]="this.pinnedPost ? i + 1 : i"
+                              [removeVideoFromArray]="this.removeVideoFromArray">
                     </app-post>
                 </ng-container>
             </div>

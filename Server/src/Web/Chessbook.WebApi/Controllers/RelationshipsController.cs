@@ -1,20 +1,16 @@
-﻿using Chessbook.Core.Domain.Relationships;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+
+using Chessbook.Core.Domain.Relationships;
 using Chessbook.Data.Models;
 using Chessbook.Services.Data;
-using Chessbook.Services.Data.Services;
+using Chessbook.Services;
 using Chessbook.Services.Relationships;
 using Chessbook.Web.Api.Factories;
 using Chessbook.Web.Api.Identity;
 using Chessbook.Web.Api.Lib;
 using Chessbook.Web.Models.Inputs;
-using Chessbook.Web.Models.Outputs;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Chessbook.Web.Api.Controllers
 {

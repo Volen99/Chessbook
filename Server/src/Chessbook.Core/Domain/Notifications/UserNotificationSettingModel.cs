@@ -11,13 +11,7 @@ namespace Chessbook.Core.Domain.Notifications
 
         public UserNotificationSettingValue AbuseAsModerator { get; set; }
 
-        public UserNotificationSettingValue VideoAutoBlacklistAsModerator { get; set; }
-
         public UserNotificationSettingValue BlacklistOnMyVideo { get; set; }
-
-        public UserNotificationSettingValue MyVideoPublished { get; set; }
-
-        public UserNotificationSettingValue NewUserRegistration { get; set; }
 
         public UserNotificationSettingValue NewFollow { get; set; }
 

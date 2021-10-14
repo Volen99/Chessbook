@@ -1,12 +1,12 @@
-﻿using Chessbook.Services.Data.Services;
-using Chessbook.Services.Data.Services.Entities;
-using Chessbook.Services.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-using Nop.Web.Models.Catalog;
-using Nop.Web.Areas.Admin.Models.Customers;
+using Chessbook.Services;
+using Chessbook.Services.Data.Services.Entities;
+using Chessbook.Services.Entities;
+using Chessbook.Web.Models.Catalog;
+using Chessbook.Web.Areas.Admin.Models.Customers;
 using Chessbook.Web.Api.Factories;
 using Chessbook.Web.Api.Models.Posts;
 

@@ -1,30 +1,32 @@
-﻿using Chessbook.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using SkiaSharp;
+
+using Chessbook.Common;
 using Chessbook.Core;
 using Chessbook.Core.Domain.Posts;
 using Chessbook.Data.Models;
 using Chessbook.Data.Models.Media;
-using Chessbook.Data.Models.Post;
 using Chessbook.Data.Models.Post.Enums;
-using Chessbook.Services.Data.Services;
+using Chessbook.Services.Cards;
+using Chessbook.Services;
 using Chessbook.Services.Data.Services.Entities;
 using Chessbook.Services.Data.Services.Media;
 using Chessbook.Services.Entities;
 using Chessbook.Services.Localization;
 using Chessbook.Web.Api.Areas.Admin.Models.Post;
 using Chessbook.Web.Api.Models.Posts;
-using Nop.Core;
-using Nop.Core.Caching;
-using Nop.Core.Domain.Media;
-using Nop.Services.Common;
-using Nop.Web.Areas.Admin.Models.Customers;
-using Nop.Web.Infrastructure.Cache;
-using Nop.Web.Models.Catalog;
-using Nop.Web.Models.Media;
-using SkiaSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Chessbook.Core.Caching;
+using Chessbook.Core.Domain.Media;
+using Chessbook.Services.Common;
+using Chessbook.Services.Helpers;
+using Chessbook.Web.Areas.Admin.Models.Customers;
+using Chessbook.Web.Factories;
+using Chessbook.Web.Infrastructure.Cache;
+using Chessbook.Web.Models.Catalog;
+using Chessbook.Web.Models.Media;
 
 namespace Chessbook.Web.Api.Factories
 {
@@ -45,6 +47,11 @@ namespace Chessbook.Web.Api.Factories
         private readonly IPostCommentService postCommentService;
         private readonly IPostsService postService;
         private readonly IPostTagService postTagService;
+        private readonly IPollService pollService;
+        private readonly IPollModelFactory pollModelFactory;
+        private readonly IDateTimeHelper dateTimeHelper;
+        private readonly IPreviewCardFactory previewCardFactory;
+        private readonly IPreviewCardService previewCardService;
 
         #endregion
 
@@ -53,7 +60,8 @@ namespace Chessbook.Web.Api.Factories
         public PostModelFactory(MediaSettings mediaSettings, IStaticCacheManager staticCacheManager, IWebHelper webHelper, IWorkContext workContext,
             IStoreContext storeContext, IPictureService pictureService, ILocaleStringResourceService localeStringResourceService, IUserModelFactory userModelFactory,
             IUserService userService, IGenericAttributeService genericAttributeService, IPostCommentService postCommentService, IPostsService postService,
-            IPostTagService postTagService)
+            IPostTagService postTagService, IPollService pollService, IPollModelFactory pollModelFactory, IDateTimeHelper dateTimeHelper,
+            IPreviewCardFactory previewCardFactory, IPreviewCardService previewCardService)
         {
             this.mediaSettings = mediaSettings;
             this.staticCacheManager = staticCacheManager;
@@ -68,6 +76,11 @@ namespace Chessbook.Web.Api.Factories
             this.postCommentService = postCommentService;
             this.postService = postService;
             this.postTagService = postTagService;
+            this.pollService = pollService;
+            this.pollModelFactory = pollModelFactory;
+            this.dateTimeHelper = dateTimeHelper;
+            this.previewCardFactory = previewCardFactory;
+            this.previewCardService = previewCardService;
         }
 
         #endregion
@@ -108,11 +121,35 @@ namespace Chessbook.Web.Api.Factories
                 (imageUrl, defaultPicture) = await this.pictureService.GetPictureUrlAsync(defaultPicture, defaultPictureSize, !isAssociatedProduct);
                 (fullSizeImageUrl, defaultPicture) = await this.pictureService.GetPictureUrlAsync(defaultPicture, 0, !isAssociatedProduct);
 
+                // TODO: you know what to do kk
+                using var image = SKBitmap.Decode(@"C:\Users\volen\OneDrive\Desktop\Chessbook\Server\src\Web\Chessbook.WebApi\wwwroot" + fullSizeImageUrl);
+                using var imageSmall = SKBitmap.Decode(@"C:\Users\volen\OneDrive\Desktop\Chessbook\Server\src\Web\Chessbook.WebApi\wwwroot" + imageUrl);
+
                 var defaultPictureModel = new PictureModel
                 {
                     ImageUrl = ChessbookConstants.SiteHttps + imageUrl,
                     FullSizeImageUrl = ChessbookConstants.SiteHttps + fullSizeImageUrl,
                     Blurhash = defaultPicture.Blurhash,
+                    Meta = new Dictionary<string, MediaEntitySizeModel>
+                        {
+                            { "original", new MediaEntitySizeModel
+                                {
+                                 Width = image.Width,
+                                 Height = image.Height,
+                                 Size = image.Width + "x" + image.Height,
+                                 Aspect = (double) image.Width / image.Height
+                                }
+                            },
+                            { "small", new MediaEntitySizeModel
+                                {
+                                 Width = imageSmall.Width,
+                                 Height = imageSmall.Height,
+                                 Size = imageSmall.Width + "x" + imageSmall.Height,
+                                 Aspect = (double) imageSmall.Width / imageSmall.Height
+                                }
+                            },
+
+                        }
                 };
                 // "title" attribute
                 defaultPictureModel.Title = (defaultPicture != null && !string.IsNullOrEmpty(defaultPicture.TitleAttribute)) ?
@@ -133,10 +170,6 @@ namespace Chessbook.Web.Api.Factories
                     (fullSizeImageUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture);
                     (thumbImageUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture, this.mediaSettings.ProductThumbPictureSizeOnProductDetailsPage);
 
-
-                    using var image = SKBitmap.Decode(@"C:\Users\volen\OneDrive\Desktop\Chessbook\Server\src\Web\Chessbook.WebApi\wwwroot" + fullSizeImageUrl);
-
-
                     var pictureModel = new PictureModel
                     {
                         ImageUrl = ChessbookConstants.SiteHttps + imageUrl,
@@ -151,8 +184,19 @@ namespace Chessbook.Web.Api.Factories
                                 {
                                  Width = image.Width,
                                  Height = image.Height,
+                                 Size = image.Width + "x" + image.Height,
+                                 Aspect = (double) image.Width / image.Height
                                 }
-                            }
+                            },
+                            { "small", new MediaEntitySizeModel
+                                {
+                                 Width = imageSmall.Width,
+                                 Height = imageSmall.Height,
+                                 Size = imageSmall.Width + "x" + imageSmall.Height,
+                                 Aspect = (double) imageSmall.Width / imageSmall.Height
+                                }
+                            },
+
                         }
                     };
                     // "title" attribute
@@ -183,13 +227,16 @@ namespace Chessbook.Web.Api.Factories
                 throw new ArgumentNullException(nameof(post));
             }
 
+            var userTime = await this.dateTimeHelper.ConvertToUserTimeAsync(post.CreatedAt, DateTimeKind.Utc);
             var model = new PostModel
             {
                 Id = post.Id,
                 Status = post.Status,
                 HasMedia = post.HasMedia,
                 FavoriteCount = post.FavoriteCount,
-                CreatedAt = post.CreatedAt,
+                RepostCount = post.RepostCount,
+                Pinned = post.Pinned,
+                CreatedAt = userTime,
             };
 
 
@@ -197,32 +244,63 @@ namespace Chessbook.Web.Api.Factories
             var postUser = await this.userService.GetCustomerByIdAsync(post.UserId);
             model.User = await this.userModelFactory.PrepareCustomerModelAsync(model.User, postUser);
 
-            // post tags
-            model.Tags = await PrepareProductTagModelsAsync(post);
+            // card
+            var card = await this.previewCardService.GetPreviewCardByPostIdAsync(post.Id);
 
-            if (model.HasMedia)
+            // repost
+            if (post.RepostId.HasValue)
             {
-                // pictures
-                var allPictureModels = await PrepareProductDetailsPictureModelAsync(model, isAssociatedProduct);
-                model.Entities.Medias = allPictureModels;
-            }
-
-            // liked?
-            var userCurrent = await this.workContext.GetCurrentCustomerAsync();
-
-            var postVote = await this.postService.GetPostVoteAsync(post.Id, userCurrent);
-            if (postVote == null)
-            {
-                model.Favorited = false;
+                model.Repost = await this.PreparePostModelAsync(await this.postService.GetPostByIdAsync(post.RepostId.Value)); // 💫
             }
             else
             {
-                model.Favorited = postVote.Type == PostRateType.Like;
-            }
+                // post tags
+                model.Tags = await PrepareProductTagModelsAsync(post);
 
-            // comments
-            var commentsCount = await this.postCommentService.GetPostCommentsCount(post.Id);
-            model.CommentsCount = commentsCount;
+                if (model.HasMedia)
+                {
+                    // pictures
+                    var allPictureModels = await PrepareProductDetailsPictureModelAsync(model, isAssociatedProduct);
+                    model.Entities.Medias = allPictureModels;
+                }
+                else if (post.PollId.HasValue)
+                {
+                    var poll = await this.pollService.GetPollByIdAsync(post.PollId.Value);
+                    model.Poll = await this.pollModelFactory.PreparePollModelAsync(poll, true);
+                }
+                else if (card != null)
+                {
+                    model.Card = await this.previewCardFactory.PreparePreviewCardModel(card);
+                }
+
+                // liked?
+                var userCurrent = await this.workContext.GetCurrentCustomerAsync();
+
+                var postVote = await this.postService.GetPostVoteAsync(post.Id, userCurrent);
+                if (postVote == null)
+                {
+                    model.Favorited = false;
+                }
+                else
+                {
+                    model.Favorited = postVote.Type == PostRateType.Like;
+                }
+
+                // reposted?
+                var reposted = await this.postService.GetRepostStatus(post.Id, userCurrent.Id);
+                if (reposted != null)
+                {
+                    model.Reposted = true;
+                }
+                else
+                {
+                    model.Reposted = false;
+                }
+
+                // comments
+                var commentsCount = await this.postCommentService.GetPostCommentsCount(post.Id);
+                model.CommentsCount = commentsCount;
+            }
 
             return model;
         }
@@ -256,9 +334,9 @@ namespace Chessbook.Web.Api.Factories
                 InReplyToCommentId = postComment.InReplyToCommentId,
                 PostId = postComment.PostId,
 
-                CreatedAt = postComment.CreatedAt,
-                UpdatedAt = postComment.UpdatedAt,
-                DeletedAt = postComment.DeletedAt,
+                CreatedAt = await this.dateTimeHelper.ConvertToUserTimeAsync(postComment.CreatedAt, DateTimeKind.Utc),
+                UpdatedAt = await this.dateTimeHelper.ConvertToUserTimeAsync(postComment.UpdatedAt, DateTimeKind.Utc),
+                DeletedAt = postComment.DeletedAt.HasValue ? await this.dateTimeHelper.ConvertToUserTimeAsync(postComment.DeletedAt.Value, DateTimeKind.Utc) : null,
 
                 IsDeleted = this.IsDeleted(postComment.DeletedAt),
 
@@ -480,13 +558,14 @@ namespace Chessbook.Web.Api.Factories
             var models = new List<PostModel>();
             foreach (var product in products)
             {
+                var userTime = await this.dateTimeHelper.ConvertToUserTimeAsync(product.CreatedAt, DateTimeKind.Utc);
                 var model = new PostModel
                 {
                     Id = product.Id,
                     Status = product.Status,
                     HasMedia = product.HasMedia,
                     FavoriteCount = product.FavoriteCount,
-                    CreatedAt = product.CreatedAt,
+                    CreatedAt = userTime,
                 };
 
                 // user 

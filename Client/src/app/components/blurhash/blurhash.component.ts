@@ -12,11 +12,11 @@ import {decode} from "blurhash";
 export class BlurhashComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('canvasRef') canvasRef: ElementRef<HTMLCanvasElement>;
 
-  @Input() hash: any;
+  @Input() hash: string;
   @Input() width: number = 32;
-  @Input() height: number = this.width;
+  @Input() height: number = 32;
   @Input() dummy: boolean = false;
-  @Input() canvasProps;
+  @Input() canvasProps: { };
 
   constructor() { }
 
@@ -25,14 +25,14 @@ export class BlurhashComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit(): void {
-    this.canvas = this.canvasRef;
+    this.canvas = this.canvasRef; // nativeElement
   }
 
   // https://reactjs.org/docs/hooks-effect.html
   ngOnChanges(changes: SimpleChanges) {
     let { dummy, hash, width, height } = changes;
-    if (dummy.previousValue !== dummy.currentValue && hash.previousValue !== hash.currentValue
-      && width.previousValue !== width.currentValue && height.previousValue !== height.currentValue) {
+    if (dummy?.previousValue !== dummy?.currentValue && hash?.previousValue !== hash?.currentValue
+      && width?.previousValue !== width?.currentValue && height?.previousValue !== height?.currentValue) {
       if (this.dummy || !this.hash) {
         return;
       }

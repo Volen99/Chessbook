@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Nop.Core.Domain.Stores;
+using Chessbook.Core.Domain.Stores;
 
-namespace Nop.Core
+namespace Chessbook.Core
 {
     /// <summary>
     /// Store context

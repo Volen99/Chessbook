@@ -4,10 +4,10 @@
     using System.Threading.Tasks;
 
     using Chessbook.Data.Common.Filters;
-    using Chessbook.Web.Models.Phone;
+    using Chessbook.Data.Models.Phone;
 
     public interface IPhoneCallService
     {
-        Task<IEnumerable<PhoneCallDTO>> GetRecentCalls(BaseFilter filter);
+        Task<IEnumerable<PhoneCall>> GetRecentCalls(BaseFilter filter);
     }
 }

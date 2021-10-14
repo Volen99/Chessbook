@@ -5,11 +5,12 @@ using Chessbook.Core.Domain.Notifications;
 using Chessbook.Core.Domain.Relationships;
 using Chessbook.Web.Api.Lib.Shared.Common;
 using Chessbook.Data.Models;
-using Chessbook.Services.Data.Services;
-using Nop.Core.Infrastructure;
+using Chessbook.Services;
+using Chessbook.Core.Infrastructure;
 using Chessbook.Services.Blocklist;
 using Chessbook.Services.Notifications.Settings;
 using Chessbook.Services.Notifications;
+
 using static Chessbook.Web.Api.Controllers.RelationshipsController;
 
 namespace Chessbook.Web.Api.Lib.Shared.Follow
@@ -20,7 +21,6 @@ namespace Chessbook.Web.Api.Lib.Shared.Follow
         private readonly IBlocklistService blocklistService = EngineContext.Current.Resolve<IBlocklistService>();
         private readonly INotificationsSettingsService notificationsSettingsService = EngineContext.Current.Resolve<INotificationsSettingsService>();
         private readonly IUserNotificationService userNotificationService = EngineContext.Current.Resolve<IUserNotificationService>();
-
 
         private Customer user;
 
@@ -51,8 +51,6 @@ namespace Chessbook.Web.Api.Lib.Shared.Follow
             return userNotificationSettings.NewFollow;
         }
 
-       
-
         public override List<Customer> GetTargetUsers()
         {
             if (this.user == null)
@@ -63,7 +61,7 @@ namespace Chessbook.Web.Api.Lib.Shared.Follow
             return new List<Customer>() { this.user };
         }
 
-        public async override Task<UserNotification> CreateNotification(Customer user)
+        public async override Task<UserNotification> CreateNotification(Customer user) // 'user' is the user who is getting followed!!
         {
             var notification = await this.userNotificationService.Create(UserNotificationType.NEW_FOLLOW, user.Id, this.ActorFollow().UserFollow.Id);
             notification.UserFollow = new UserFollow { UserFollower = this.ActorFollow().UserFollower, UserFollowing = this.ActorFollow().TargetUser };           //  this.ActorFollow();

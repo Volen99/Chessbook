@@ -20,7 +20,7 @@ import {SortMeta} from "primeng/api";
 
 @Injectable()
 export class AbuseService {
-  private static BASE_ABUSE_URL = 'admin/abuses';
+  private static BASE_ABUSE_URL = 'abuses';
   private static BASE_MY_ABUSE_URL = 'users/me/abuses';
 
   constructor(
@@ -72,6 +72,7 @@ export class AbuseService {
   }
 
   reportVideo(parameters: AbuseCreate) {
+    debugger
     const url = AbuseService.BASE_ABUSE_URL + '/report';
 
     const body = omit(parameters, ['id']);

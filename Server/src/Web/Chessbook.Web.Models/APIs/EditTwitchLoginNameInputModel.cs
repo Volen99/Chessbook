@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Chessbook.Web.Models.APIs
+﻿namespace Chessbook.Web.Models.APIs
 {
     public class EditTwitchLoginNameInputModel
     {

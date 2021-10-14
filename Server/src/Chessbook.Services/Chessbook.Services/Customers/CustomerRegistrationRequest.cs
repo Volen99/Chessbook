@@ -1,7 +1,7 @@
 ﻿using Chessbook.Data.Models;
-using Nop.Core.Domain.Customers;
+using Chessbook.Core.Domain.Customers;
 
-namespace Nop.Services.Customers
+namespace Chessbook.Services.Customers
 {
     /// <summary>
     /// Customer registration request

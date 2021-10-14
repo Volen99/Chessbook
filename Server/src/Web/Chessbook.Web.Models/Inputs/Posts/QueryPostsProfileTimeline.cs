@@ -1,9 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chessbook.Web.Models.Inputs.Posts
 {
@@ -14,6 +9,8 @@ namespace Chessbook.Web.Models.Inputs.Posts
         public int UserId { get; set; }
 
         public int Start { get; set; }
+
+        public bool OnlyMedia { get; set; }
 
         public int Count { get; set; }
 

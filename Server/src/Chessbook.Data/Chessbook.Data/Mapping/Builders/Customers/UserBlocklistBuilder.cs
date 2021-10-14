@@ -1,9 +1,10 @@
-﻿using Chessbook.Core.Domain.Customers;
-using Chessbook.Data.Models;
+﻿using System.Data;
 using FluentMigrator.Builders.Create.Table;
-using Nop.Data.Mapping.Builders;
-using Nop.Data.Extensions;
-using System.Data;
+
+using Chessbook.Data.Mapping.Builders;
+using Chessbook.Data.Extensions;
+using Chessbook.Data.Models;
+using Chessbook.Core.Domain.Customers;
 
 namespace Chessbook.Data.Mapping.Builders.Customers
 {

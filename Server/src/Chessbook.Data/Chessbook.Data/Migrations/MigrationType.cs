@@ -1,4 +1,4 @@
-﻿namespace Nop.Data.Migrations
+﻿namespace Chessbook.Data.Migrations
 {
     /// <summary>
     /// Represents an update migration type

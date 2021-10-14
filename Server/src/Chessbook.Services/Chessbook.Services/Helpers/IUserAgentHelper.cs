@@ -1,4 +1,4 @@
-﻿namespace Nop.Services.Helpers
+﻿namespace Chessbook.Services.Helpers
 {
     /// <summary>
     /// User agent helper interface

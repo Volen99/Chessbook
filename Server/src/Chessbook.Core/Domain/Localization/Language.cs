@@ -1,7 +1,7 @@
 using Chessbook.Data.Models;
-using Nop.Core.Domain.Stores;
+using Chessbook.Core.Domain.Stores;
 
-namespace Nop.Core.Domain.Localization
+namespace Chessbook.Core.Domain.Localization
 {
     /// <summary>
     /// Represents a language

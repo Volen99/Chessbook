@@ -1,10 +1,11 @@
 ﻿﻿using System.Threading.Tasks;
-using Chessbook.Data.Models;
-using Nop.Core.Domain.Customers;
-using Chessbook.Services.Caching;
-using Nop.Services.Events;
 
-namespace Nop.Services.Customers.Caching
+using Chessbook.Data.Models;
+using Chessbook.Core.Domain.Customers;
+using Chessbook.Services.Caching;
+using Chessbook.Services.Events;
+
+namespace Chessbook.Services.Customers.Caching
 {
     /// <summary>
     /// Represents a customer cache event consumer

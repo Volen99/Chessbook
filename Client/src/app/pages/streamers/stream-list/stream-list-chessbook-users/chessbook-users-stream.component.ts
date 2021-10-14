@@ -13,11 +13,13 @@ import {RestService} from "../../../../core/rest/rest.service";
 import {UserStore} from "../../../../core/stores/user.store";
 import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {NbGlobalPhysicalPosition} from "../../../../sharebook-nebular/theme/components/cdk/overlay/position-helper";
+import {Animations} from "../../../../core/animations";
 
 @Component({
   selector: 'app-chessbook-users-stream',
   templateUrl: './chessbook-users-stream.component.html',
-  styleUrls: ['./chessbook-users-stream.component.scss']
+  styleUrls: ['./chessbook-users-stream.component.scss'],
+  animations: [Animations.listItemLoadAnimation],
 })
 export class ChessbookUsersStreamComponent implements OnInit {
 

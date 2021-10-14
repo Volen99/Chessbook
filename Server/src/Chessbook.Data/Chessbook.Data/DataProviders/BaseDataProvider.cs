@@ -5,20 +5,20 @@ using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Chessbook.Data.Models;
+using StackExchange.Profiling;
+using StackExchange.Profiling.Data;
 using LinqToDB;
 using LinqToDB.Data;
 using LinqToDB.DataProvider;
 using LinqToDB.Mapping;
 using LinqToDB.Tools;
-using Nop.Core;
-using Nop.Core.Configuration;
-using Nop.Core.Infrastructure;
-using Nop.Data.Mapping;
-using StackExchange.Profiling;
-using StackExchange.Profiling.Data;
 
-namespace Nop.Data.DataProviders
+using Chessbook.Core.Configuration;
+using Chessbook.Core.Infrastructure;
+using Chessbook.Data.Mapping;
+using Chessbook.Data.Models;
+
+namespace Chessbook.Data.DataProviders
 {
     public abstract class BaseDataProvider
     {

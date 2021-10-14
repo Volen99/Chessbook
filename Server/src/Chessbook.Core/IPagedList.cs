@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nop.Core
+namespace Chessbook.Core
 {
     /// <summary>
     /// Paged list interface

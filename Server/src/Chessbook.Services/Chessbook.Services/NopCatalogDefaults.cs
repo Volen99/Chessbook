@@ -1,7 +1,7 @@
 ﻿using Chessbook.Core.Domain.Posts;
-using Nop.Core.Caching;
+using Chessbook.Core.Caching;
 
-namespace Nop.Services.Catalog
+namespace Chessbook.Services.Catalog
 {
     /// <summary>
     /// Represents default values related to catalog services

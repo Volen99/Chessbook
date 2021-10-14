@@ -112,7 +112,7 @@
 
   <div class="form-control-group accept-group" *ngIf="getConfigValue('forms.register.terms')">
     <nb-checkbox formControlName="terms" [required]="getConfigValue('forms.register.terms')">
-      Agree to <a href="#" target="_blank"><strong>Terms & Conditions</strong></a>
+      Agree to <a routerLink="/terms" target="_blank"><strong>Terms & Conditions</strong></a>
     </nb-checkbox>
   </div>
 

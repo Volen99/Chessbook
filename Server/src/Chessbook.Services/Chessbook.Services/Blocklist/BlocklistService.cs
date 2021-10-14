@@ -1,13 +1,14 @@
-﻿using Chessbook.Core.Domain.Customers;
-using Chessbook.Data;
-using Chessbook.Data.Models;
-using Chessbook.Services.Data;
-using Chessbook.Services.Data.Services;
-using Nop.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Chessbook.Core.Domain.Customers;
+using Chessbook.Data;
+using Chessbook.Data.Models;
+using Chessbook.Services.Data;
+using Chessbook.Services;
+using Chessbook.Core;
 
 namespace Chessbook.Services.Blocklist
 {
@@ -26,6 +27,42 @@ namespace Chessbook.Services.Blocklist
             this.userService = userService;
             this.relationshipService = relationshipService;
             this.workContext = workContext;
+        }
+
+        public async Task Block(int serverUserId, string screenName)
+        {
+            if (string.IsNullOrWhiteSpace(screenName))
+            {
+                return;
+            }
+
+            var targetUser = await this.userService.GetCustomerByUsernameAsync(screenName);
+
+            var blockListModel = await this.LoadByUserAndTarget(serverUserId, targetUser.Id);
+
+            if (blockListModel != null)
+            {
+                return;
+            }
+
+            var blockNew = new UserBlocklist
+            {
+                UserId = serverUserId,
+                TargetUserId = targetUser.Id,
+                CreatedAt = DateTime.UtcNow,
+            };
+
+            await this.userBlocklistRepository.InsertAsync(blockNew);
+
+            // update relationship
+            var yourRelationship = await this.relationshipService.GetByUsersId(serverUserId, targetUser.Id);
+            var crushRelationship = await this.relationshipService.GetByUsersId(targetUser.Id, serverUserId);
+
+            yourRelationship.Blocking = true;
+            crushRelationship.BlockedBy = true;
+
+            await this.relationshipService.Update(yourRelationship);
+            await this.relationshipService.Update(crushRelationship);
         }
 
         public async Task<UserBlocklist> LoadByUserAndTarget(int accountId, int targetAccountId)
@@ -54,35 +91,6 @@ namespace Chessbook.Services.Blocklist
             }, start, count);
 
             return blocks;
-        }
-
-        public async Task Block(int userId, string screenName)
-        {
-            if (string.IsNullOrWhiteSpace(screenName))
-            {
-                return;
-            }
-
-            var targetUser = await this.userService.GetCustomerByUsernameAsync(screenName);
-
-            var blockNew = new UserBlocklist
-            {
-                UserId = userId,
-                TargetUserId = targetUser.Id,
-                CreatedAt = DateTime.UtcNow,
-            };
-
-            await this.userBlocklistRepository.InsertAsync(blockNew);
-
-            // update relationship
-            var yourRelationship = await this.relationshipService.GetByUsersId(userId, targetUser.Id);
-            var crushRelationship = await this.relationshipService.GetByUsersId(targetUser.Id, userId);
-
-            yourRelationship.Blocking = true;
-            crushRelationship.BlockedBy = true;
-
-            await this.relationshipService.Update(yourRelationship);
-            await this.relationshipService.Update(crushRelationship);
         }
 
         public async Task UnBlock(int userId, string screenName)

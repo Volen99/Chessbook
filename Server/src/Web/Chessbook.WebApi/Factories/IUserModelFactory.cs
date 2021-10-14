@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
+
 using Chessbook.Data.Models;
 using Chessbook.Web.Api.Areas.Admin.Models.Users;
-using Chessbook.Web.Models;
-using Nop.Core;
-using Nop.Web.Areas.Admin.Models.Customers;
+using Chessbook.Web.Areas.Admin.Models.Customers;
 
 namespace Chessbook.Web.Api.Factories
 {

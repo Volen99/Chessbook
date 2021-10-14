@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Nop.Data.Mapping
+namespace Chessbook.Data.Mapping
 {
     /// <summary>
     /// Base instance of backward compatibility of table naming

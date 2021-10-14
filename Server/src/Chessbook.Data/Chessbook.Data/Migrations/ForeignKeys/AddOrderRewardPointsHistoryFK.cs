@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using FluentMigrator;
 
-namespace Nop.Data.Migrations.Indexes
+namespace Chessbook.Data.Migrations.Indexes
 {
     [NopMigration("2020/03/17 11:26:08:9037680")]
     public class AddOrderRewardPointsHistoryFK : AutoReversingMigration

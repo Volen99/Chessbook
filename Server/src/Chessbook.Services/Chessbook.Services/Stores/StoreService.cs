@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Chessbook.Data;
-using Nop.Core.Domain.Stores;
-using Nop.Data;
 
-namespace Nop.Services.Stores
+using Chessbook.Data;
+using Chessbook.Core.Domain.Stores;
+
+namespace Chessbook.Services.Stores
 {
     /// <summary>
     /// Store service

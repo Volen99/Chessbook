@@ -302,7 +302,7 @@
     </div>
 
     <div class="col-md-6 col-xxxl-4">
-        <nb-card [size]="breakpoint.width >= breakpoints.xxxl ? 'medium' : 'large'">
+        <nb-card size="large"> <!--[size]="breakpoint.width >= breakpoints.xxxl ? 'medium' : 'large'"-->
             <nb-card-header>
                 Origin of Chess
             </nb-card-header>
@@ -483,7 +483,7 @@
                     added to the game's popularity,<sup id="cite_ref-Britannica02b_13-1" class="reference"><a
                             href="https://en.wikipedia.org/wiki/History_of_chess#cite_note-Britannica02b-13" target="_blank">[13]</a></sup> further bolstered by reliable timing
                     mechanisms (first introduced in 1861), effective rules,<sup id="cite_ref-Britannica02b_13-2" class="reference">
-                        <a href="https://en.wikipedia.org/wiki/History_of_chess#cite_note-Britannica02b-13" target="_blank">[13]</a></sup> and charismatic players. [wiki]
+                        <a href="https://en.wikipedia.org/wiki/History_of_chess#cite_note-Britannica02b-13" target="_blank">[13]</a></sup> and charismatic players. <a href="https://en.wikipedia.org/wiki/History_of_chess#Origin" target="_blank">[from wiki]</a>
                 </p>
             </nb-card-body>
         </nb-card>
@@ -511,56 +511,29 @@
     </div>
 
     <div class="col-md-6 col-xxxl-4">
-        <nb-card size="large">
+        <nb-card size="medium">
             <nb-card-header>
-                Funny Chess Pictures
+                Click me for an awesome world fact
             </nb-card-header>
             <nb-card-body>
-                <nb-alert>
-                    <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
-                </nb-alert>
-                <nb-alert status="primary">
-                    <strong>Oh snap!</strong> Change a few things up and try submitting again.
-                </nb-alert>
-                <nb-alert status="success">
-                    <strong>Well done!</strong> You successfully read this important alert message.
-                </nb-alert>
-                <nb-alert status="info">
-                    <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
-                </nb-alert>
-                <nb-alert status="warning">
-                    <strong>Warning!</strong> Better check yourself, you're not looking too good.
-                </nb-alert>
-                <nb-alert status="danger">
-                    <strong>Oh snap!</strong> Change a few things up and try submitting again.
-                </nb-alert>
+              <app-snackbar-sample></app-snackbar-sample>
             </nb-card-body>
         </nb-card>
     </div>
 
     <div class="col-md-6 col-xxxl-4">
-        <nb-card size="large">
+        <nb-card size="medium">
             <nb-card-header>
-                Lists
+                What's Your Chess Personality?
             </nb-card-header>
             <nb-card-body>
-                <h4>Ordered List</h4>
-                <ol class="mb-5">
-                    <li>Far far away, behind the word mountains</li>
-                    <li>Far from the countries Vokalia and Consonantia</li>
-                    <li>There live the blind texts.</li>
-                    <li>Right at the coast of the Semantics.</li>
-                    <li>A small river named Duden flows</li>
-                </ol>
+                <div class="picture" style="height: 330px;" [style.background-image]="'url(' + this.personalityImg +')'" (click)="this.onNavigate()"></div>
 
-                <h4>Unordered List</h4>
-                <ul class="mb-5">
-                    <li>Far far away, behind the word mountains</li>
-                    <li>Far from the countries Vokalia and Consonantia</li>
-                    <li>There live the blind texts.</li>
-                    <li>Right at the coast of the Semantics.</li>
-                    <li>A small river named Duden flows</li>
-                </ul>
+                <div>
+                    <div class="description">
+                        Find out what style of chess player you are at ChessPersonality.com
+                    </div>
+                </div>
             </nb-card-body>
         </nb-card>
     </div>

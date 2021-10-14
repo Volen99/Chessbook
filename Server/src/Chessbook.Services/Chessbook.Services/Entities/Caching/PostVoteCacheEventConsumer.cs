@@ -1,7 +1,7 @@
 ﻿using Chessbook.Core.Domain.Posts;
 using Chessbook.Services.Caching;
 
-namespace Nop.Services.Forums.Caching
+namespace Chessbook.Services.Forums.Caching
 {
     /// <summary>
     /// Represents a forum post vote cache event consumer

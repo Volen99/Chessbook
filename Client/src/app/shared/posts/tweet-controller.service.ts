@@ -22,9 +22,10 @@ export class TweetControllerService {
   //   return this.tweetQueryExecutorService.getTweetsAsync(parameters);
   // }
 
-  public async publishTweetAsync(parameters: IPublishTweetParameters): Promise<ITweetDTO> {
-    parameters.mediaIds = parameters.mediaIds.concat(parameters.medias.map(x => x.uploadedMediaInfo.mediaId)); // .AddRange()
-    return await this.tweetQueryExecutorService.publishTweetAsync(parameters);
+  public async publishTweetAsync(parameters: IPublishTweetParameters, body: {}): Promise<ITweetDTO> {
+    // @ts-ignore
+    parameters.mediaIds = parameters.mediaIds.concat(parameters.medias.map(x => x.mediaId/*.uploadedMediaInfo*/)); // .AddRange()
+    return await this.tweetQueryExecutorService.publishTweetAsync(parameters, body);
   }
 
 //   public canBePublished(textOrParameters: string | IPublishTweetParameters): boolean {

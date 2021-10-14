@@ -10,8 +10,8 @@ import {
   faImagePolaroid,
   faPoll,
   faTimes,
-  faCode,
   faSmileWink,
+  faCalendarDay,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {FileUploader} from "./file-uploader.class";
@@ -33,7 +33,12 @@ import {FormValidatorService} from 'app/shared/shared-forms/form-validator.servi
 import {CanComponentDeactivateResult} from "../../../../../core/routing/can-deactivate-guard.service";
 import {FormGroup, Validators} from '@angular/forms';
 import {map} from "rxjs/operators";
-import {VIDEO_PRIVACY_VALIDATOR, VIDEO_TAGS_ARRAY_VALIDATOR} from "../../../../../shared/shared-forms/form-validators/video-validators";
+import {
+  VIDEO_PRIVACY_VALIDATOR,
+  VIDEO_TAGS_ARRAY_VALIDATOR
+} from "../../../../../shared/shared-forms/form-validators/video-validators";
+import { FormReactiveValidationMessages } from 'app/shared/shared-forms/form-reactive';
+import {IsVideoPipe} from "../../../../../shared/shared-main/angular/pipes/is-video.pipe";
 
 @Component({
   selector: 'app-upload',
@@ -47,6 +52,10 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
   @Input() text: string = '';
   @Input() replyPost: Post;
 
+  @Input() form: FormGroup;
+  @Input() formErrors: { [id: string]: string } = {};
+  @Input() validationMessages: FormReactiveValidationMessages = {};
+
   private globes: IconDefinition[] = [faGlobeEurope, faGlobeAsia, faGlobeAmericas, faGlobeAfrica];
   private firstPatchDone = false;
 
@@ -55,7 +64,7 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
               protected ref: NbDialogRef<ShowcaseDialogComponent>,
               private userStore: UserStore,
               protected notifier: NbToastrService,
-              protected formValidatorService: FormValidatorService,) {
+              protected formValidatorService: FormValidatorService) {
     super();
 
     this.hasBaseDropZoneOver = false;
@@ -132,9 +141,11 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
   ngOnDestroy(): void {
   }
 
+  public videoId: string;
+
   initialPoll: any = {
     options: ['', ''],
-    expires_in: 24 * 3600,
+    expiresIn: 24 * 3600,
     multiple: false,
   };
 
@@ -142,7 +153,6 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
   isPoll: boolean = false;
   textPlaceholder: string;
   privacy: PostPrivacy = PostPrivacy.PUBLIC;
-  privacyClient: string = 'Everyone can reply';
 
   public whoCanReplyComponent = WhoCanReplyComponent;
 
@@ -152,7 +162,7 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
 
   faPoll = faPoll;
   faTimes = faTimes;
-  faCode = faCode;
+  faCalendarDay = faCalendarDay;
   faSmileWink = faSmileWink;
 
   faImagePolaroid = faImagePolaroid;
@@ -190,7 +200,6 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
   }
 
   public async fileDrop(files: File[]) {
-      debugger
   }
 
   canSubmit() {
@@ -199,7 +208,7 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
     const fulltext = this.getFulltextForCharacterCounting();
     const isOnlyWhitespace = fulltext.length !== 0 && fulltext.trim().length === 0;
 
-    return !(length(fulltext) > 440 || (isOnlyWhitespace && !this.anyMedia));
+    return !(length(fulltext) > 440 || (isOnlyWhitespace && !this.anyMedia) || !this.form.valid);
   }
 
   getFulltextForCharacterCounting = () => {
@@ -233,17 +242,32 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
 
     let publishPostParameters = new PublishTweetParameters(this.text);
     let medias = [];
+
+    let tags = this.form.get('tags').value ?? [];
+    let privacy = this.firstStepPrivacyId;
+    let publishPostBody: any = {
+      tags: tags,
+      privacy: privacy,
+    };
     if (this.uploader.queue.length) {
       for (const file of this.uploader.queue) {
         let fileCurrent = file._file;
 
-        let mediaType = fileCurrent.type;
-        let bytes = await fileCurrent.arrayBuffer();
+        let formData = new FormData();
+        formData.append(fileCurrent.name, fileCurrent);
 
-        let uploadedImage = await this.uploadService.uploadBinaryAsync(bytes, mediaType)
+        await this.uploadService.uploadImage(formData).toPromise()
           .then((data) => {
             medias.push(data);
           });
+
+        // let mediaType = fileCurrent.type;
+        // let bytes = await fileCurrent.arrayBuffer();
+        //
+        // let uploadedImage = await this.uploadService.uploadBinaryAsync(bytes, mediaType)
+        //   .then((data) => {
+        //     medias.push(data);
+        //   });
       }
 
       if (this.replyPost) {
@@ -252,18 +276,15 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
       }
 
       publishPostParameters.medias = medias;
-      let postWithImage = await this.postsService.publishTweetAsync(publishPostParameters);
+
+      let postWithImage = await this.postsService.publishTweetAsync(publishPostParameters, publishPostBody);
     } else if (this.isPoll) {
-      publishPostParameters.poll = this.initialPoll;
-      publishPostParameters.hasPoll = true;
+      publishPostBody.poll = this.initialPoll;
 
-      await this.postsService.publishTweetAsync(publishPostParameters);
+      await this.postsService.publishTweetAsync(publishPostParameters, publishPostBody);
     } else if (String(this.text).trim().length) {
-      await this.postsService.publishTweetAsync(publishPostParameters);
+      await this.postsService.publishTweetAsync(publishPostParameters, publishPostBody);
     }
-
-    this.notifier.success('Your post has been uploaded.', 'Success');
-
 
     this.text = '';
     this.uploader.queue = [];
@@ -272,10 +293,26 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
     this.dismiss();
   }
 
+  private expiresInFromExpiresAt (expires_at) {
+    if (!expires_at) return 24 * 3600;
+    const delta = (new Date(expires_at).getTime() - Date.now()) / 1000;
+    return [300, 1800, 3600, 21600, 86400, 259200, 604800].find(expires_in => expires_in >= delta) || 24 * 3600;
+  }
+
   pollButtonHandler() {
     this.isPoll = !this.isPoll;
 
     this.textPlaceholder = !this.isPoll ? `What's happening?` : 'Ask a question...';
+  }
+
+  emojiButtonHandler() {
+    this.notifier.warning('', 'Coming out soon');
+    return;
+  }
+
+  scheduleButtonHandler() {
+    this.notifier.warning('', 'Coming out soon');
+    return;
   }
 
 
@@ -290,8 +327,41 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
     return undefined;
   }
 
-  changePrivacy(privacy: number) {
-    this.firstStepPrivacyId = privacy;
+  changePrivacy(newPrivacyId: number) {
+    this.firstStepPrivacyId = newPrivacyId;
+  }
+
+  embedUrl: string;
+  public getVideoEmbedLink() {
+    if (IsVideoPipe.isYoutube(this.text)) {
+      const parts = IsVideoPipe._youtubeRegEx.exec(this.text);
+      if (this.videoId && this.videoId === parts[5]) {
+        return true;
+      }
+
+      this.videoId = parts[5];
+      this.embedUrl = IsVideoPipe.getYoutubeEmbedLink(this.text);
+      return true;
+    } else if (IsVideoPipe.isTwitch(this.text)) {
+      const parts = IsVideoPipe._twitchRegEx.exec(this.text);
+      if (this.videoId && this.videoId === parts[3]) {
+        return true;
+      }
+
+      this.videoId = parts[3];
+      this.embedUrl = IsVideoPipe.getTwitchEmbedLink(this.text);
+      return true;
+    } else if (IsVideoPipe.isTwitchClip(this.text)) {
+      const parts = IsVideoPipe._twitchClipRegEx.exec(this.text);
+      if (!parts[2].includes('clip')) {
+        return false;
+      }
+
+      this.embedUrl = IsVideoPipe.getTwitchClipEmbedLink(this.text);
+      return true;
+    }
+
+    return false;
   }
 
   private trackPrivacyChange() {
@@ -306,14 +376,14 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
           const scheduleControl = this.form.get('schedulePublicationAt');
           const waitTranscodingControl = this.form.get('waitTranscoding');
 
-            scheduleControl.clearValidators();
+          scheduleControl.clearValidators();
 
-            waitTranscodingControl.enable();
+          waitTranscodingControl.enable();
 
-            // Do not update the control value on first patch (values come from the server)
-            if (this.firstPatchDone === true) {
-              waitTranscodingControl.setValue(true);
-            }
+          // Do not update the control value on first patch (values come from the server)
+          if (this.firstPatchDone === true) {
+            waitTranscodingControl.setValue(true);
+          }
 
           scheduleControl.updateValueAndValidity();
           waitTranscodingControl.updateValueAndValidity();

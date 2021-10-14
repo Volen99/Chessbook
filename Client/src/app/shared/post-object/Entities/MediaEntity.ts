@@ -3,7 +3,7 @@ import {IMediaEntitySize} from "./interfaces/IMediaEntitySize";
 import {IVideoInformationEntity} from "./interfaces/ExtendedEntities/IVideoInformationEntity";
 
 // Object storing information related with a Media on Twitter
-export class MediaEntity implements IMediaEntity {
+export class MediaEntity implements IMediaEntity { // TODO: you use it in code, but you should not. Delete it.
   fullSizeImageUrl: string;
   imageUrl: string;
   thumbImageUrl: string;

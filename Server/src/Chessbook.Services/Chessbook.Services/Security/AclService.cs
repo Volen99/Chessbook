@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Chessbook.Data;
+using Chessbook.Core;
+using Chessbook.Core.Caching;
+using Chessbook.Core.Domain.Security;
 using Chessbook.Data.Models;
-using Chessbook.Services.Data.Services;
-using Nop.Core;
-using Nop.Core.Caching;
-using Nop.Core.Domain.Customers;
-using Nop.Core.Domain.Security;
-using Nop.Data;
-using Nop.Services.Customers;
 
-namespace Nop.Services.Security
+namespace Chessbook.Services.Security
 {
     /// <summary>
     /// ACL service

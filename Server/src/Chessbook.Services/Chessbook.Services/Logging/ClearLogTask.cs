@@ -1,6 +1,6 @@
-﻿using Nop.Services.Tasks;
+﻿using Chessbook.Services.Tasks;
 
-namespace Nop.Services.Logging
+namespace Chessbook.Services.Logging
 {
     /// <summary>
     /// Represents a task to clear [Log] table

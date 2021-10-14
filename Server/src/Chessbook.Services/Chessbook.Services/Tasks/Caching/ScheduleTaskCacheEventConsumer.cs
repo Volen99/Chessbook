@@ -1,7 +1,7 @@
-﻿using Nop.Core.Domain.Tasks;
+﻿using Chessbook.Core.Domain.Tasks;
 using Chessbook.Services.Caching;
 
-namespace Nop.Services.Tasks.Caching
+namespace Chessbook.Services.Tasks.Caching
 {
     /// <summary>
     /// Represents a schedule task cache event consumer

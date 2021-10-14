@@ -1,11 +1,11 @@
 ﻿﻿using System.Threading.Tasks;
+
 using Chessbook.Data.Models;
 using Chessbook.Web.Api.Identity;
 using Chessbook.Web.Models.AuthDTO;
-using Microsoft.AspNetCore.Mvc;
-using Nop.Core.Domain.Customers;
+using Chessbook.Core.Domain.Customers;
 
-namespace Nop.Services.Customers
+namespace Chessbook.Services.Customers
 {
     /// <summary>
     /// Customer registration interface

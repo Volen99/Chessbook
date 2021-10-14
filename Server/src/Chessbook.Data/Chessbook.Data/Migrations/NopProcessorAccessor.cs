@@ -5,7 +5,7 @@ using FluentMigrator;
 using FluentMigrator.Exceptions;
 using FluentMigrator.Runner.Processors;
 
-namespace Nop.Data.Migrations
+namespace Chessbook.Data.Migrations
 {
     /// <summary>
     /// An <see cref="IProcessorAccessor"/> implementation that selects one generator by data settings

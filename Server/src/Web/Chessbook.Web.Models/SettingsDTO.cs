@@ -1,4 +1,4 @@
-﻿using Nop.Core.Configuration;
+﻿using Chessbook.Core.Configuration;
 
 namespace Chessbook.Web.Models
 {

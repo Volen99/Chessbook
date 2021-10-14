@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 
-using Nop.Core;
-using Nop.Core.Caching;
-using Nop.Core.Domain.Tasks;
-using Nop.Core.Infrastructure;
-using Nop.Services.Logging;
+using Chessbook.Core;
+using Chessbook.Core.Caching;
+using Chessbook.Core.Domain.Tasks;
+using Chessbook.Core.Infrastructure;
+using Chessbook.Services.Logging;
 
-namespace Nop.Services.Tasks
+namespace Chessbook.Services.Tasks
 {
     /// <summary>
     /// Task

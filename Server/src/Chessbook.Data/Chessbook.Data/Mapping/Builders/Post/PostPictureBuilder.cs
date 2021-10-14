@@ -1,10 +1,10 @@
 ﻿using FluentMigrator.Builders.Create.Table;
 
+using Chessbook.Data.Extensions;
 using Chessbook.Data.Models.Media;
-using Nop.Data.Extensions;
 using Chessbook.Core.Domain.Posts;
 
-namespace Nop.Data.Mapping.Builders.Catalog
+namespace Chessbook.Data.Mapping.Builders.Catalog
 {
     /// <summary>
     /// Represents a product picture entity builder
@@ -21,7 +21,7 @@ namespace Nop.Data.Mapping.Builders.Catalog
         {
             table
                 .WithColumn(nameof(PostPicture.PictureId)).AsInt32().ForeignKey<Picture>()
-                .WithColumn(nameof(PostPicture.PostId)).AsInt32().ForeignKey<Post>();
+                .WithColumn(nameof(PostPicture.PostId)).AsInt32().ForeignKey<Chessbook.Core.Domain.Posts.Post>();
         }
 
         #endregion

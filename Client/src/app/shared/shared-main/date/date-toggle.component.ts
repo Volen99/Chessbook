@@ -39,6 +39,10 @@ export class DateToggleComponent implements OnChanges {
   }
 
   private updateDates() {
+    if (!this.date) {
+      return;
+    }
+
     this.dateRelative = this.fromNowPipe.transform(this.date);
     if (typeof this.date !== 'string') {
       this.dateAbsolute = this.date.toLocaleDateString();

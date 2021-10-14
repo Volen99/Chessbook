@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Nop.Core.ComponentModel;
-using Nop.Core.Infrastructure;
 
-namespace Nop.Data.Mapping
+using Chessbook.Core.ComponentModel;
+using Chessbook.Core.Infrastructure;
+
+namespace Chessbook.Data.Mapping
 {
     /// <summary>
     /// Helper class for maintaining backward compatibility of table naming

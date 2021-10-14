@@ -1,5 +1,6 @@
 ﻿namespace Chessbook.Web.Api
 {
+    using System.IO;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
@@ -9,18 +10,11 @@
     using Microsoft.Extensions.Hosting;
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
-
-    using Chessbook.Data;
-    using Chessbook.Services.Mapping;
-    using Chessbook.Web.Api.Identity;
-    using Chessbook.Web.Api.Setup;
-    using Chessbook.Web.Models;
-    using System.IO;
-    using System.Reflection;
     using AutoMapperConfiguration = AutoMapper.Configuration;
-    using Chessbook.Web.Api.Factories;
-    using Nop.Web.Framework.Infrastructure.Extensions;
+
     using Ordering.SignalrHub;
+    using Chessbook.Web.Api.Setup;
+    using Chessbook.Web.Framework.Infrastructure.Extensions;
 
     public class Startup
     {
@@ -59,11 +53,11 @@
             ConfigureDependencies(services);
             // RegisterMapping();
 
-            services.ConfigureSwagger();
+            // services.ConfigureSwagger();
 
             services.ConfigureCors();
 
-            services.AddAuthorization(opt => opt.RegisterPolicies());
+            services.AddAuthorization(); // opt => opt.RegisterPolicies()
 
             services.AddSignalR(options =>
             {

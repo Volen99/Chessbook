@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Chessbook.Data;
 using Chessbook.Data.Models;
-using Nop.Core;
-using Nop.Core.Caching;
-using Nop.Core.Domain.Stores;
-using Nop.Data;
+using Chessbook.Core;
+using Chessbook.Core.Caching;
+using Chessbook.Core.Domain.Stores;
 
-namespace Nop.Services.Stores
+namespace Chessbook.Services.Stores
 {
     /// <summary>
     /// Store mapping service

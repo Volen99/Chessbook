@@ -1,7 +1,7 @@
 ﻿using FluentMigrator.Builders.Create.Table;
-using Nop.Core.Domain.Configuration;
+using Chessbook.Core.Domain.Configuration;
 
-namespace Nop.Data.Mapping.Builders.Configuration
+namespace Chessbook.Data.Mapping.Builders.Configuration
 {
     /// <summary>
     /// Represents a setting entity builder

@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Nop.Core;
-using Nop.Core.Caching;
-using Nop.Services.Catalog;
-using Nop.Services.Security;
-using Nop.Services.Stores;
+using Chessbook.Core;
+using Chessbook.Core.Caching;
+using Chessbook.Services.Catalog;
+using Chessbook.Services.Security;
+using Chessbook.Services.Stores;
 using Chessbook.Core.Domain.Posts;
 using Chessbook.Data;
-using Chessbook.Services.Data.Services;
 
 namespace Chessbook.Services.Entities
 {
@@ -281,37 +280,64 @@ namespace Chessbook.Services.Entities
             var customer = await _workContext.GetCurrentCustomerAsync();
             var customerRoleIds = await _customerService.GetCustomerRoleIdsAsync(customer);
 
-            var key = _staticCacheManager.PrepareKeyForDefaultCache(NopCatalogDefaults.ProductTagCountCacheKey, storeId, customerRoleIds, showHidden);
+            //var key = _staticCacheManager.PrepareKeyForDefaultCache(NopCatalogDefaults.ProductTagCountCacheKey, storeId, customerRoleIds, showHidden);
 
-            return await _staticCacheManager.GetAsync(key, async () =>
+            //return await _staticCacheManager.GetAsync(key, async () =>
+            //{
+            //    var query = _productProductTagMappingRepository.Table;
+
+            //    if (!showHidden)
+            //    {
+            //        // var productsQuery = _productRepository.Table.Where(p => p.Published);
+            //        var productsQuery = _productRepository.Table.Where(p => p.CreatedAt != null);
+
+            //        //apply store mapping constraints
+            //        // productsQuery = await _storeMappingService.ApplyStoreMapping(productsQuery, storeId);
+
+            //        //apply ACL constraints
+            //        // productsQuery = await _aclService.ApplyAcl(productsQuery, customerRoleIds);
+
+            //        query = query.Where(pc => productsQuery.Any(p => !p.Deleted && pc.PostId == p.Id));
+            //    }
+
+            //    var pTagCount = from pt in _productTagRepository.Table
+            //                    join ptm in query on pt.Id equals ptm.TagId
+            //                    group ptm by ptm.TagId into ptmGrouped
+            //                    select new
+            //                    {
+            //                        ProductTagId = ptmGrouped.Key,
+            //                        ProductCount = ptmGrouped.Count()
+            //                    };
+
+            //    return pTagCount.ToDictionary(item => item.ProductTagId, item => item.ProductCount);
+            //});
+
+            var query = _productProductTagMappingRepository.Table;
+
+            if (!showHidden)
             {
-                var query = _productProductTagMappingRepository.Table;
+                // var productsQuery = _productRepository.Table.Where(p => p.Published);
+                var productsQuery = _productRepository.Table.Where(p => p.CreatedAt != null);
 
-                if (!showHidden)
-                {
-                    // var productsQuery = _productRepository.Table.Where(p => p.Published);
-                    var productsQuery = _productRepository.Table.Where(p => p.CreatedAt != null);
+                //apply store mapping constraints
+                // productsQuery = await _storeMappingService.ApplyStoreMapping(productsQuery, storeId);
 
-                    //apply store mapping constraints
-                    // productsQuery = await _storeMappingService.ApplyStoreMapping(productsQuery, storeId);
+                //apply ACL constraints
+                // productsQuery = await _aclService.ApplyAcl(productsQuery, customerRoleIds);
 
-                    //apply ACL constraints
-                    // productsQuery = await _aclService.ApplyAcl(productsQuery, customerRoleIds);
+                query = query.Where(pc => productsQuery.Any(p => !p.Deleted && pc.PostId == p.Id));
+            }
 
-                    query = query.Where(pc => productsQuery.Any(p => !p.Deleted && pc.PostId == p.Id));
-                }
+            var pTagCount = from pt in _productTagRepository.Table
+                            join ptm in query on pt.Id equals ptm.TagId
+                            group ptm by ptm.TagId into ptmGrouped
+                            select new
+                            {
+                                ProductTagId = ptmGrouped.Key,
+                                ProductCount = ptmGrouped.Count()
+                            };
 
-                var pTagCount = from pt in _productTagRepository.Table
-                                join ptm in query on pt.Id equals ptm.TagId
-                                group ptm by ptm.TagId into ptmGrouped
-                                select new
-                                {
-                                    ProductTagId = ptmGrouped.Key,
-                                    ProductCount = ptmGrouped.Count()
-                                };
-
-                return pTagCount.ToDictionary(item => item.ProductTagId, item => item.ProductCount);
-            });
+            return pTagCount.ToDictionary(item => item.ProductTagId, item => item.ProductCount);
         }
 
         /// <summary>

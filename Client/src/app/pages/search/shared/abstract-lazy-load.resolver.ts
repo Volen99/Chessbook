@@ -18,7 +18,6 @@ export abstract class AbstractLazyLoadResolver<T> implements Resolve<any> {
     return this.finder(url)
       .pipe(
         map(result => {
-          debugger
           if (result.data.length !== 1) {
             console.error('Cannot find result for this URL');
             return this.router.navigateByUrl('/404');

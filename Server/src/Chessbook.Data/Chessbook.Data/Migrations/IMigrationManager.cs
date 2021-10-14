@@ -3,7 +3,7 @@ using System.Reflection;
 using FluentMigrator.Builders.Create;
 using FluentMigrator.Expressions;
 
-namespace Nop.Data.Migrations
+namespace Chessbook.Data.Migrations
 {
     /// <summary>
     /// Represents a migration manager

@@ -1,8 +1,49 @@
-<nb-card>
-    <nb-card-body style="padding: 0">
-        <div id="player"></div>
-    </nb-card-body>
-    <nb-card-footer style="padding: 0">
+<!--<nb-card>-->
+
+
+    <!-- We need the video container for videojs so we just hide it -->
+
+<!--<nb-card>-->
+<!--    <nb-card-body style="padding: 0">-->
+<!--        <div id="player"></div>-->
+<!--    </nb-card-body>-->
+
+<!--        <div id="video-wrapper">-->
+<!--            <div *ngIf="false" class="remote-server-down">-->
+<!--                Sorry, but this video is not available because the the live stream is not responding.-->
+<!--                <br />-->
+<!--                Please try again later.-->
+<!--            </div>-->
+
+<!--            <div id="videojs-wrapper">-->
+<!--                <div id="player"></div>-->
+<!--                &lt;!&ndash;<img class="placeholder-image" *ngIf="playerPlaceholderImgSrc" [src]="playerPlaceholderImgSrc" alt="Placeholder image" i18n-alt>&ndash;&gt;-->
+<!--            </div>-->
+
+<!--&lt;!&ndash;            <my-video-watch-playlist&ndash;&gt;-->
+<!--&lt;!&ndash;                #videoWatchPlaylist&ndash;&gt;-->
+<!--&lt;!&ndash;                [playlist]="playlist" class="playlist"&ndash;&gt;-->
+<!--&lt;!&ndash;                (videoFound)="onPlaylistVideoFound($event)"&ndash;&gt;-->
+<!--&lt;!&ndash;            ></my-video-watch-playlist>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <my-plugin-placeholder pluginId="player-next"></my-plugin-placeholder>&ndash;&gt;-->
+<!--        </div>-->
+
+
+<div class="row">
+    <div class="cell cell-12 twitch">
+        <div class="twitch-video">
+            <iframe [src]="this.streamUrl | safe" frameborder="0" scrolling="no" allowfullscreen="true" height="100%" width="100%">
+            </iframe>
+        </div>
+        <div class="twitch-chat">
+            <iframe frameborder="0" scrolling="no" [src]="this.chatUrl | safe" height="100%" width="100%">
+            </iframe>
+        </div>
+    </div>
+</div>
+<div class="root" [ngClass]="{ 'theater-enabled': false }">
+    <!--<nb-card-footer style="padding: 0">-->
         <!-- Video information -->
         <div *ngIf="this.stream" class="margin-content video-bottom">
             <div class="video-info">
@@ -66,5 +107,7 @@
                 </div>-->
             </div>
         </div>
-    </nb-card-footer>
-</nb-card>
+<!--    </nb-card-footer>
+</nb-card>-->
+</div>
+<!--</nb-card>-->

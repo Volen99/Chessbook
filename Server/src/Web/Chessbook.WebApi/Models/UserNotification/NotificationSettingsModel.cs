@@ -1,5 +1,5 @@
 ﻿using Chessbook.Core.Domain.Notifications;
-using Nop.Web.Framework.Models;
+using Chessbook.Web.Framework.Models;
 
 namespace Chessbook.Web.Api.Models.UserNotification
 {

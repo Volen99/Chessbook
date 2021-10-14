@@ -1,16 +1,13 @@
-﻿using Chessbook.Data;
-using Chessbook.Data.Common.Repositories;
-using Chessbook.Data.Models.Polls;
-using Chessbook.Services.Mapping;
-using Chessbook.Web.Models.Outputs.Polls;
-using Chessbook.Web.Models.Polls;
-using Nop.Core;
-using Nop.Services.Stores;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+
+using Chessbook.Data;
+using Chessbook.Web.Models.Polls;
+using Chessbook.Core;
+using Chessbook.Services.Stores;
+using Chessbook.Core.Domain.Polls;
 
 namespace Chessbook.Services.Data.Services.Entities
 {
@@ -33,11 +30,36 @@ namespace Chessbook.Services.Data.Services.Entities
             _storeMappingService = storeMappingService;
         }
 
-        public async Task<bool> AlreadyVotedAsync(int pollId, int customerId)
+        public async Task<int> InsertPollAsync(long expiresIn, string status, bool isSurvey)
+        {
+            var expiresAt = DateTime.UtcNow.AddSeconds(expiresIn);
+            var pollNew = new Poll
+            {
+                Question = status,
+                SystemKeyword = string.Empty,
+                Published = true,
+                ShowOnHomepage = isSurvey,
+                IsSurvey = isSurvey,
+                DisplayOrder = 1,
+                StartDateUtc = DateTime.UtcNow,
+                ExpiresAt = expiresAt,
+            };
+
+            await this._pollRepository.InsertAsync(pollNew);
+
+            return pollNew.Id;
+        }
+
+        public async Task InsertPollVotingRecordAsync(PollVotingRecord pollVotingRecord)
+        {
+            await this._pollVotingRecordRepository.InsertAsync(pollVotingRecord);
+        }
+
+        public async Task<List<PollVotingRecord>> AlreadyVotedAsync(int pollId, int customerId)
         {
             if (pollId == 0 || customerId == 0)
             {
-                return false;
+                return new List<PollVotingRecord>();
             }
 
             var result = await
@@ -45,7 +67,8 @@ namespace Chessbook.Services.Data.Services.Entities
                 join pvr in _pollVotingRecordRepository.Table on pa.Id equals pvr.PollAnswerId
                 where pa.PollId == pollId && pvr.CustomerId == customerId
                 select pvr)
-               .AnyAsync();
+                .ToListAsync();
+               // .AnyAsync();
 
             return result;
         }
@@ -93,7 +116,7 @@ namespace Chessbook.Services.Data.Services.Entities
         /// A task that represents the asynchronous operation
         /// The task result contains the poll
         /// </returns>
-        public virtual async Task<Poll> GetPollByIdAsync(int pollId)
+        public async Task<Poll> GetPollByIdAsync(int pollId)
         {
             return await _pollRepository.GetByIdAsync(pollId, cache => default);
         }
@@ -112,24 +135,24 @@ namespace Chessbook.Services.Data.Services.Entities
         /// A task that represents the asynchronous operation
         /// The task result contains the polls
         /// </returns>
-        public virtual async Task<IPagedList<Poll>> GetPollsAsync(int storeId, int languageId = 0, bool showHidden = false,
+        public async Task<IPagedList<Poll>> GetPollsAsync(int storeId, int languageId = 0, bool showHidden = false,
             bool loadShownOnHomepageOnly = false, string systemKeyword = null, int pageIndex = 0, int pageSize = int.MaxValue)
         {
             var query = _pollRepository.Table;
 
-            //whether to load not published, not started and expired polls
+            // whether to load not published, not started and expired polls
             if (!showHidden)
             {
                 var utcNow = DateTime.UtcNow;
                 query = query.Where(poll => poll.Published);
-                query = query.Where(poll => !poll.StartDateUtc.HasValue || poll.StartDateUtc <= utcNow);
+                query = query.Where(poll => poll.StartDateUtc == null || poll.StartDateUtc <= utcNow);
                 query = query.Where(poll => !poll.EndDateUtc.HasValue || poll.EndDateUtc >= utcNow);
             }
 
-            // apply store mapping constraints
-            query = await _storeMappingService.ApplyStoreMapping(query, storeId);
+            //// apply store mapping constraints
+            // query = await _storeMappingService.ApplyStoreMapping(query, storeId);
 
-            //load homepage polls only
+            // load homepage polls only
             if (loadShownOnHomepageOnly)
             {
                 query = query.Where(poll => poll.ShowOnHomepage);
@@ -143,7 +166,9 @@ namespace Chessbook.Services.Data.Services.Entities
 
             // filter by system keyword
             if (!string.IsNullOrEmpty(systemKeyword))
+            {
                 query = query.Where(poll => poll.SystemKeyword == systemKeyword);
+            }
 
             // order records by display order
             query = query.OrderBy(poll => poll.DisplayOrder).ThenBy(poll => poll.Id);
@@ -198,29 +223,6 @@ namespace Chessbook.Services.Data.Services.Entities
             return options;
         }
 
-        public async Task<int> InsertPollAsync(PollCreateBody poll, string status, bool isSurvey)
-        {
-            var pollNew = new Poll
-            {
-                Question = status,
-                SystemKeyword = string.Empty,
-                Published = true,
-                ShowOnHomepage = isSurvey,
-                DisplayOrder = 1,
-                StartDateUtc = DateTime.UtcNow,
-            };
-            
-
-            await this._pollRepository.InsertAsync(pollNew);
-
-            return pollNew.Id;
-        }
-
-        public async Task InsertPollVotingRecordAsync(PollVotingRecord pollVotingRecord)
-        {
-            await this._pollVotingRecordRepository.InsertAsync(pollVotingRecord);
-        }
-
         public async Task UpdatePollAnswerAsync(PollAnswer pollAnswer)
         {
             await this._pollAnswerRepository.UpdateAsync(pollAnswer);
@@ -231,11 +233,10 @@ namespace Chessbook.Services.Data.Services.Entities
             await _pollRepository.UpdateAsync(poll);
         }
 
-        public async Task<T> WeeklySurvey<T>()
+        public async Task<Poll> WeeklySurvey()
         {
-            var survey = await _pollRepository.Table.Where(p => p.ShowOnHomepage == true)
+            var survey = await _pollRepository.Table.Where(p => p.ShowOnHomepage == true && p.IsSurvey == true)
                .OrderByDescending(x => x.Id)
-               .To<T>()
                .FirstOrDefaultAsyncExt();
 
             return survey;

@@ -1,4 +1,4 @@
-﻿namespace Nop.Core.Security
+﻿namespace Chessbook.Core.Security
 {
     /// <summary>
     /// Represents default values related to data protection

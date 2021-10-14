@@ -1,4 +1,4 @@
-﻿namespace Nop.Data
+﻿namespace Chessbook.Data
 {
     /// <summary>
     /// Represents default values related to data settings

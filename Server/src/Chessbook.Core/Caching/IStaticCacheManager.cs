@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Nop.Core.Caching
+namespace Chessbook.Core.Caching
 {
     /// <summary>
     /// Represents a manager for caching between HTTP requests (long term caching)

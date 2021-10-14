@@ -1,4 +1,3 @@
-
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 export const Animations = {

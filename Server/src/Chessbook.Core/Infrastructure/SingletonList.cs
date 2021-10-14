@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nop.Core.Infrastructure
+namespace Chessbook.Core.Infrastructure
 {
     /// <summary>
     /// Provides a singleton list for a certain type.

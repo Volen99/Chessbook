@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 
 using Chessbook.Data.Models;
-using Nop.Core.Caching;
-using Nop.Core.Events;
-using Nop.Core.Infrastructure;
-using Nop.Services.Events;
+using Chessbook.Core.Caching;
+using Chessbook.Core.Events;
+using Chessbook.Core.Infrastructure;
+using Chessbook.Services.Events;
 
 namespace Chessbook.Services.Caching
 {

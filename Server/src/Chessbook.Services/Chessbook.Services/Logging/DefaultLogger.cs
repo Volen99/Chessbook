@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Chessbook.Data;
 using Chessbook.Data.Models;
-using Nop.Core;
-using Nop.Core.Domain.Common;
-using Nop.Core.Domain.Customers;
-using Nop.Core.Domain.Logging;
-using Nop.Data;
+using Chessbook.Core;
+using Chessbook.Core.Domain.Common;
+using Chessbook.Core.Domain.Logging;
 
-namespace Nop.Services.Logging
+namespace Chessbook.Services.Logging
 {
     /// <summary>
     /// Default logger

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.AccessControl;
 using Microsoft.Extensions.FileProviders;
 
-namespace Nop.Core.Infrastructure
+namespace Chessbook.Core.Infrastructure
 {
     /// <summary>
     /// A file provider abstraction

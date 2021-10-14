@@ -1,7 +1,7 @@
 ﻿using System;
 
-using Nop.Web.Areas.Admin.Models.Customers;
-using Nop.Web.Framework.Models;
+using Chessbook.Web.Areas.Admin.Models.Customers;
+using Chessbook.Web.Framework.Models;
 
 namespace Chessbook.Web.Api.Models.Blocklist
 {

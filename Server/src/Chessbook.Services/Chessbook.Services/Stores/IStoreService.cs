@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nop.Core.Domain.Stores;
 
-namespace Nop.Services.Stores
+using Chessbook.Core.Domain.Stores;
+
+namespace Chessbook.Services.Stores
 {
     /// <summary>
     /// Store service interface

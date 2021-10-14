@@ -11,9 +11,9 @@ export const VIDEO_NAME_VALIDATOR: BuildFormValidator = {
 };
 
 export const VIDEO_PRIVACY_VALIDATOR: BuildFormValidator = {
-  VALIDATORS: [Validators.required],
+  VALIDATORS: [/*Validators.required*/],
   MESSAGES: {
-    'required': `Video privacy is required.`
+    // 'required': `Video privacy is required.` TODO: undo to required but make it change form-like in da upload-compa
   }
 };
 
@@ -63,7 +63,7 @@ export const VIDEO_TAG_VALIDATOR: BuildFormValidator = {
 export const VIDEO_TAGS_ARRAY_VALIDATOR: BuildFormValidator = {
   VALIDATORS: [Validators.maxLength(5), arrayTagLengthValidator()],
   MESSAGES: {
-    'maxlength': `A maximum of 5 tags can be used on a video.`,
+    'maxlength': `A maximum of 5 tags can be used on a post.`,
     'arrayTagLength': `A tag should be more than 1 and less than 30 characters long.`
   }
 };

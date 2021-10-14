@@ -1,7 +1,7 @@
 ﻿using FluentMigrator.Builders.Create.Table;
-using Nop.Core.Domain.Customers;
+using Chessbook.Core.Domain.Customers;
 
-namespace Nop.Data.Mapping.Builders.Customers
+namespace Chessbook.Data.Mapping.Builders.Customers
 {
     /// <summary>
     /// Represents a customer role entity builder

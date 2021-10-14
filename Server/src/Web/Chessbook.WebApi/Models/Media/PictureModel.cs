@@ -1,8 +1,9 @@
-﻿using Chessbook.Web.Api.Areas.Admin.Models.Post;
-using Nop.Web.Framework.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Nop.Web.Models.Media
+using Chessbook.Web.Api.Areas.Admin.Models.Post;
+using Chessbook.Web.Framework.Models;
+
+namespace Chessbook.Web.Models.Media
 {
     public partial record PictureModel : BaseNopModel
     {

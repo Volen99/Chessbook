@@ -10,22 +10,24 @@ import {ExploreService} from "./explore.service";
 import {SharedMainModule} from "../../shared/shared-main/shared-main.module";
 import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.module";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {MatRippleModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
     ExploreComponent,
   ],
 
-    imports: [
-        ExploreRoutingModule,
-        CommonModule,
-        TimelineModule,
-        SidebarColumnModule,
-        NbCardModule,
-        SharedMainModule,
-        NbListModule,
-        FontAwesomeModule,
-    ],
+  imports: [
+    ExploreRoutingModule,
+    CommonModule,
+    TimelineModule,
+    SidebarColumnModule,
+    NbCardModule,
+    SharedMainModule,
+    NbListModule,
+    FontAwesomeModule,
+    MatRippleModule,
+  ],
 
   providers: [
     ExploreService,

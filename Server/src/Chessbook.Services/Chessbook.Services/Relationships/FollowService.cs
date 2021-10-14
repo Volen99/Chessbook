@@ -7,8 +7,8 @@ using Chessbook.Core.Domain.Relationships;
 using Chessbook.Data;
 using Chessbook.Data.Models;
 using Chessbook.Services.Data;
-using Chessbook.Services.Data.Services;
-using Nop.Core;
+using Chessbook.Services;
+using Chessbook.Core;
 
 namespace Chessbook.Services.Relationships
 {
@@ -23,6 +23,11 @@ namespace Chessbook.Services.Relationships
             this.userFollowRepository = userFollowRepository;
             this.relationshipService = relationshipService;
             this.userService = userService;
+        }
+
+        public async Task<UserFollow> GetByIdAsync(int id)
+        {
+            return await this.userFollowRepository.GetByIdAsync(id, cache => default);
         }
 
         public async Task<UserFollow> Follow(int userId, int targetUserId, FollowState state)
@@ -53,8 +58,8 @@ namespace Chessbook.Services.Relationships
             sourceUser.FollowingCount += 1;
             crushUser.FollowersCount += 1;
 
-            await this.userService.Update(sourceUser);
-            await this.userService.Update(crushUser);
+            await this.userService.UpdateCustomerAsync(sourceUser);
+            await this.userService.UpdateCustomerAsync(crushUser);
 
             return followNew;
         }
@@ -77,8 +82,8 @@ namespace Chessbook.Services.Relationships
             sourceUser.FollowingCount -= 1;
             crushUser.FollowersCount -= 1;
 
-            await this.userService.Update(sourceUser);
-            await this.userService.Update(crushUser);
+            await this.userService.UpdateCustomerAsync(sourceUser);
+            await this.userService.UpdateCustomerAsync(crushUser);
 
             // followModel
             var follow = await this.userFollowRepository.Table
@@ -125,6 +130,20 @@ namespace Chessbook.Services.Relationships
             var users = await this.userService.GetCustomersByIdsAsync(ids.ToArray());
 
             return users;
+        }
+
+        public async Task<UserFollow> GetByUsersId(int yourId, int crushId)
+        {
+            var userFollow = await this.userFollowRepository.Table
+               .Where(r => r.UserId == yourId && r.TargetUserId == crushId)
+               .FirstOrDefaultAsyncExt();
+
+            if (userFollow == null)
+            {
+                return null;
+            }
+
+            return userFollow;
         }
     }
 }

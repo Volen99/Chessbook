@@ -1,7 +1,7 @@
 using FluentMigrator.Expressions;
 using FluentMigrator.Runner.Conventions;
 
-namespace Nop.Data.Migrations
+namespace Chessbook.Data.Migrations
 {
     /// <summary>
     /// Column type convention

@@ -5,7 +5,10 @@ import {
   faExclamationTriangle,
   faCommentExclamation,
   faCog,
-  faSensorAlert
+  faSensorAlert,
+  faUndo,
+  faBan,
+  faFlag,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {
@@ -60,6 +63,9 @@ export class UserNotificationsComponent implements OnInit {
   faCommentExclamation = faCommentExclamation;
   faCog = faCog;
   faSensorAlert = faSensorAlert;
+  faUndo = faUndo;
+  faBan = faBan;
+  faFlag = faFlag;
 
   faUserSolid = faUserSolid;
   faHeartCircle = faHeartCircle;

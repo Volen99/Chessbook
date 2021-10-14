@@ -1,22 +1,23 @@
-﻿using Chessbook.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+using Chessbook.Common;
 using Chessbook.Core;
 using Chessbook.Data.Models;
 using Chessbook.Data.Models.Media;
-using Chessbook.Services.Data.Services;
+using Chessbook.Services;
 using Chessbook.Services.Data.Services.Entities;
 using Chessbook.Services.Data.Services.Media;
 using Chessbook.Services.Notifications.Settings;
-using Chessbook.Web.Models;
-using Nop.Services.Common;
-using Nop.Services.Helpers;
-using Nop.Web.Areas.Admin.Models.Customers;
-using System;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Collections.Generic;
+using Chessbook.Services.Common;
+using Chessbook.Services.Helpers;
+using Chessbook.Web.Areas.Admin.Models.Customers;
 using Chessbook.Web.Api.Areas.Admin.Models.Users;
-using Nop.Web.Framework.Models.Extensions;
-using Nop.Web.Areas.Admin.Infrastructure.Mapper.Extensions;
+using Chessbook.Web.Framework.Models.Extensions;
+using Chessbook.Services.Data;
+using Chessbook.Services.Configuration;
 
 namespace Chessbook.Web.Api.Factories
 {
@@ -30,12 +31,15 @@ namespace Chessbook.Web.Api.Factories
         private readonly ISettingsService settingsService;
         private readonly INotificationsSettingsService notificationsSettingsService;
         private readonly IUserNotificationSettingModelFactory userNotificationSettingModelFactory;
+        private readonly IRelationshipService relationshipService;
+        private readonly IWorkContext workContext;
 
         public UserModelFactory(IPictureService pictureService, IPostsService postsService,
              IGenericAttributeService genericAttributeService, IDateTimeHelper dateTimeHelper,
              IUserService userService, ISettingsService settingsService,
              INotificationsSettingsService notificationsSettingsService,
-             IUserNotificationSettingModelFactory userNotificationSettingModelFactory)
+             IUserNotificationSettingModelFactory userNotificationSettingModelFactory,
+             IRelationshipService relationshipService, IWorkContext workContext)
         {
             this.pictureService = pictureService;
             this.postsService = postsService;
@@ -45,6 +49,8 @@ namespace Chessbook.Web.Api.Factories
             this.settingsService = settingsService;
             this.notificationsSettingsService = notificationsSettingsService;
             this.userNotificationSettingModelFactory = userNotificationSettingModelFactory;
+            this.relationshipService = relationshipService;
+            this.workContext = workContext;
         }
 
          /// <summary>
@@ -92,6 +98,10 @@ namespace Chessbook.Web.Api.Factories
 
         public async Task<CustomerModel> PrepareCustomerModelAsync(CustomerModel model, Customer customer, bool excludeProperties = false)
         {
+            var loggedInUser = await this.workContext.GetCurrentCustomerAsync();
+            // relationship between the logged user and the current model user
+            var relationship = await this.relationshipService.GetByUsersId(loggedInUser.Id, customer.Id);
+
             if (customer != null)
             {
                 // fill in model values from the entity
@@ -107,15 +117,20 @@ namespace Chessbook.Web.Api.Factories
                     model.ScreenName = customer.ScreenName;
                     model.Active = customer.Active;
                     model.FollowedBy = customer.FollowedBy;
+                    model.BlockedBy = relationship.BlockedBy;
+                    model.Blocking = relationship.Blocking;
                     model.FollowersCount = customer.FollowersCount;
                     model.FollowingCount = customer.FollowingCount;
                     model.County = await this.genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.CountyAttribute);
                     model.Description = customer.Description;
                     // model.CountryId = await this.genericAttributeService.GetAttributeAsync<int>(customer, NopCustomerDefaults.CountryIdAttribute);
-                    model.CreatedOn = await dateTimeHelper.ConvertToUserTimeAsync(customer.CreatedOn, DateTimeKind.Utc, model.Id);
-                    model.LastActivityDate = await this.dateTimeHelper.ConvertToUserTimeAsync(customer.LastActivityDateUtc, DateTimeKind.Utc, model.Id);
+                    model.CreatedOn = await dateTimeHelper.ConvertToUserTimeAsync(customer.CreatedOn, DateTimeKind.Utc);
+                    model.LastActivityDate = await this.dateTimeHelper.ConvertToUserTimeAsync(customer.LastActivityDateUtc, DateTimeKind.Utc);
                     model.LastIpAddress = customer.LastIpAddress;
-                    model.LastLoginDate = customer.LastLoginDateUtc;
+                    if (customer.LastLoginDateUtc.HasValue)
+                    {
+                        model.LastLoginDate = await this.dateTimeHelper.ConvertToUserTimeAsync(customer.LastLoginDateUtc.Value, DateTimeKind.Utc);
+                    }
                     model.WebsiteLink = customer.WebsiteLink;
                     model.TwitterLink = customer.TwitterLink;
                     model.TwitchLink = customer.TwitchLink;

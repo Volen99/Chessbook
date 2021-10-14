@@ -1,9 +1,7 @@
 ﻿namespace Chessbook.Web.Api.Areas.Admin.Models.Post
 {
-    using Chessbook.Data.Models.Media;
-    using Chessbook.Data.Models.Post.Entities;
-    using Chessbook.Web.Models.Outputs.Polls;
-    using Nop.Web.Models.Media;
+    using Chessbook.Web.Models.Media;
+    using Chessbook.Web.Models.Polls;
     using System.Collections.Generic;
 
     public class ObjectEntitiesDTO
@@ -23,6 +21,6 @@
 
         public IList<PictureModel> Medias { get; set; }
 
-        public PollDTO Poll { get; set; }
+        public PollModel Poll { get; set; }
     }
 }

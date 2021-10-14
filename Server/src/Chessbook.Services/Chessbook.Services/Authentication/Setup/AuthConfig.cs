@@ -2,7 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
-    using Chessbook.Web.Api.Setup;
+
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;

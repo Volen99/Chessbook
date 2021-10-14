@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
-
-using Chessbook.Data.Models;
+using Chessbook.Core.Domain.Relationships;
 
 namespace Chessbook.Services.Data
 {

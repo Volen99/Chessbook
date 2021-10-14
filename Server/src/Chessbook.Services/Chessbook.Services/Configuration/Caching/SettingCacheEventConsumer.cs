@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Nop.Core.Domain.Configuration;
+
+using Chessbook.Core.Domain.Configuration;
 using Chessbook.Services.Caching;
 
-namespace Nop.Services.Configuration.Caching
+namespace Chessbook.Services.Configuration.Caching
 {
     /// <summary>
     /// Represents a setting cache event consumer

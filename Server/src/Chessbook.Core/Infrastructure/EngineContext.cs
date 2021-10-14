@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Nop.Core.Infrastructure
+namespace Chessbook.Core.Infrastructure
 {
     /// <summary>
     /// Provides access to the singleton instance of the Nop engine.

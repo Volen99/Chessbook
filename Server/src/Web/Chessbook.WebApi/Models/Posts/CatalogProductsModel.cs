@@ -1,9 +1,7 @@
-﻿using Chessbook.Web.Api.Areas.Admin.Models.Post;
-using Nop.Web.Framework.UI.Paging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+
+using Chessbook.Web.Api.Areas.Admin.Models.Post;
+using Chessbook.Web.Framework.UI.Paging;
 
 namespace Chessbook.Web.Api.Models.Posts
 {

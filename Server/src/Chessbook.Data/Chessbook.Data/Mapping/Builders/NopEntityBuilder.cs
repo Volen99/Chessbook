@@ -1,8 +1,7 @@
-﻿using Chessbook.Data.Models;
-using FluentMigrator.Builders.Create.Table;
-using Nop.Core;
+﻿using FluentMigrator.Builders.Create.Table;
+using Chessbook.Data.Models;
 
-namespace Nop.Data.Mapping.Builders
+namespace Chessbook.Data.Mapping.Builders
 {
     /// <summary>
     /// Represents base entity builder

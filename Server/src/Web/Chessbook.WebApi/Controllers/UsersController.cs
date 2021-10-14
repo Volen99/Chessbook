@@ -1,46 +1,53 @@
 ﻿namespace Chessbook.Web.Api.Controllers
 {
+    using System;
+    using System.Linq;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Authorization;
+    using System.IO;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
+    using SkiaSharp;
+
     using Chessbook.Data.Common.Filters;
-    using Chessbook.Services.Data.Services;
+    using Chessbook.Services;
     using Chessbook.Services.Data.Services.Entities;
     using Chessbook.Web.Api.Identity;
     using Chessbook.Web.Models;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
     using Chessbook.Services.Data.Services.Media;
-    using Microsoft.AspNetCore.Http;
-    using System.IO;
-    using Nop.Services.Common;
-    using System;
-    using System.Linq;
+    using Chessbook.Services.Common;
     using Chessbook.Common;
-    using Chessbook.Services.Mapping;
     using Chessbook.Web.Models.Inputs;
     using Chessbook.Services.Data;
     using Chessbook.Web.Models.Outputs;
     using Chessbook.Data.Models;
     using Chessbook.Data.Models.Media;
     using Chessbook.Web.Api.Factories;
-    using System.Collections.Generic;
     using Chessbook.Core;
-    using Nop.Services.Logging;
-    using Nop.Web.Areas.Admin.Models.Customers;
+    using Chessbook.Services.Logging;
+    using Chessbook.Web.Areas.Admin.Models.Customers;
     using Chessbook.Services.Authentication;
     using Chessbook.Web.Api.Models.Posts;
     using Chessbook.Services.Notifications;
     using Chessbook.Core.Domain.Notifications;
     using Chessbook.Services.Notifications.Settings;
-    using Nop.Services.Customers;
+    using Chessbook.Services.Customers;
     using Chessbook.Services.Abuses;
-    using Chessbook.Web.Api.Extensions;
     using Chessbook.Web.Api.Models.Abuses;
     using Chessbook.Services.Relationships;
     using Chessbook.Services.Blocklist;
     using Chessbook.Web.Api.Models.Blocklist;
     using Chessbook.Web.Models.Users;
+    using Chessbook.Web.Models.Media;
+    using Chessbook.Web.Api.Areas.Admin.Models.Post;
+    using Chessbook.Services.Directory;
+    using Chessbook.Web.Api.Models.Utc;
+    using Chessbook.Services.Helpers;
+    using Chessbook.Services.Localization;
+    using Chessbook.Core.Domain.Gdpr;
+    using Chessbook.Services.Gdpr;
+    using Chessbook.Services.ExportImport;
 
     [Route("users")]
     public class UsersController : BaseApiController
@@ -64,13 +71,21 @@
         private readonly IFollowService followService;
         private readonly IBlocklistService blocklistService;
         private readonly IUserBlocklistFactory userBlocklistFactory;
+        private readonly IWorkContext workContext;
+        private readonly ICountryService countryService;
+        private readonly IDateTimeHelper dateTimeHelper;
+        private readonly ILocaleStringResourceService localeStringResourceService;
+        private readonly IGdprService gdprService;
+        private readonly IExportManager exportManager;
 
         public UsersController(IUserService userService, JwtManager jwtManager, IAuthenticationService authService, IPostsService postsService,
             IPictureService pictureService, IGenericAttributeService genericAttributeService, IRelationshipService relationshipService, IUserModelFactory userModelFactory,
             ICustomerActivityService customerActivityService, IUserNotificationService notificationsService, INotificationsSettingsService notificationsSettingsService,
             IUserNotificationSettingModelFactory userNotificationSettingModelFactory, IUserNotificationModelFactory userNotificationModelFactory,
             ICustomerRegistrationService customerRegistrationService, IAbuseService abuseService, IAbuseModelFactory abuseModelFactory,
-            IFollowService followService, IBlocklistService blocklistService, IUserBlocklistFactory userBlocklistFactory)
+            IFollowService followService, IBlocklistService blocklistService, IUserBlocklistFactory userBlocklistFactory, IWorkContext workContext,
+            ICountryService countryService, IDateTimeHelper dateTimeHelper, ILocaleStringResourceService localeStringResourceService,
+            IGdprService gdprService, IExportManager exportManager)
         {
             this.userService = userService;
             this.jwtManager = jwtManager;
@@ -91,6 +106,12 @@
             this.followService = followService;
             this.blocklistService = blocklistService;
             this.userBlocklistFactory = userBlocklistFactory;
+            this.workContext = workContext;
+            this.countryService = countryService;
+            this.dateTimeHelper = dateTimeHelper;
+            this.localeStringResourceService = localeStringResourceService;
+            this.gdprService = gdprService;
+            this.exportManager = exportManager;
         }
 
         //[HttpGet]
@@ -175,6 +196,7 @@
                 return this.Ok(model);
             }
 
+            return this.Ok();
             return Unauthorized();
         }
 
@@ -507,6 +529,11 @@
         [Route("personal")]
         public async Task<IActionResult> PostEditPersonalDetails([FromBody] EditPersonalDetailsInputModel input)
         {
+            if (!await this.userService.IsRegisteredAsync(await this.workContext.GetCurrentCustomerAsync()))
+            {
+                return this.Unauthorized();
+            }
+
             var currentUserId = User.GetUserId();
             var customer = await userService.GetCustomerByIdAsync(currentUserId);
 
@@ -520,9 +547,13 @@
             customer.YoutubeLink = input.YoutubeLink;
             customer.FacebookLink = input.FacebookLink;
 
-            await this.userService.Update(customer);
+            await this.userService.UpdateCustomerAsync(customer);
 
             await this.genericAttributeService.SaveAttributeAsync(customer, NopCustomerDefaults.GenderAttribute, input.Gender);
+
+            await this.genericAttributeService.SaveAttributeAsync(customer, NopCustomerDefaults.TimeZoneIdAttribute, input.TimeZoneId);
+
+            await this.genericAttributeService.SaveAttributeAsync(customer, NopCustomerDefaults.CountryIdAttribute, input.CountryId);
 
             var dateOfBirth = input.ParseDateOfBirth();
             await this.genericAttributeService.SaveAttributeAsync(customer, NopCustomerDefaults.DateOfBirthAttribute, dateOfBirth);
@@ -612,17 +643,19 @@
         {
             var userNotificationSettings = await this.notificationsSettingsService.GetByUserId(User.GetUserId());
 
+            if (userNotificationSettings == null)
+            {
+                return this.NotFound();
+            }
+
             userNotificationSettings.AbuseAsModerator = body.AbuseAsModerator;
             userNotificationSettings.AbuseNewMessage = body.AbuseNewMessage;
             userNotificationSettings.AbuseStateChange = body.AbuseStateChange;
             userNotificationSettings.BlacklistOnMyVideo = body.BlacklistOnMyVideo;
             userNotificationSettings.CommentMention = body.CommentMention;
-            userNotificationSettings.MyVideoPublished = body.MyVideoPublished;
             userNotificationSettings.NewCommentOnMyVideo = body.NewCommentOnMyVideo;
             userNotificationSettings.NewFollow = body.NewFollow;
-            userNotificationSettings.NewUserRegistration = body.NewUserRegistration;
             userNotificationSettings.NewVideoFromSubscription = body.NewVideoFromSubscription;
-            userNotificationSettings.VideoAutoBlacklistAsModerator = body.VideoAutoBlacklistAsModerator;
 
             await this.notificationsSettingsService.UpdateUserNotificationSettingModelAsync(userNotificationSettings);
 
@@ -730,6 +763,224 @@
             return this.NoContent();
         }
 
+        [HttpGet]
+        [Route("user-photo/{id:int}")]
+        public async Task<IActionResult> GetBannerForZoom(int id, [FromQuery] string bannerOrAvatar) // userId
+        {
+            var userCurrent = await this.userService.GetCustomerByIdAsync(id);
+
+            string attr;
+            int imgSize = 0;
+            PictureType picType;
+            if (bannerOrAvatar == "banner")
+            {
+                attr = NopCustomerDefaults.ProfileBannerIdAttribute;
+                imgSize = 1500;
+                picType = PictureType.Banner;
+            }
+            else
+            {
+                attr = NopCustomerDefaults.AvatarPictureIdAttribute;
+                imgSize = 400;
+                picType = PictureType.Avatar;
+            }
+
+            var profileBannerOrAvatarPictureId = await this.genericAttributeService.GetAttributeAsync<int>(userCurrent, attr);
+            var defaultPicture = await this.pictureService.GetPictureByIdAsync(profileBannerOrAvatarPictureId);
+
+            string fullSizeImageUrl, imageUrl, thumbImageUrl;
+            (imageUrl, defaultPicture) = await this.pictureService.GetPictureUrlAsync(defaultPicture, imgSize, true, defaultPictureType: picType);
+
+            // TODO: you know what to do kk
+            using var image = SKBitmap.Decode(@"C:\Users\volen\OneDrive\Desktop\Chessbook\Server\src\Web\Chessbook.WebApi\wwwroot" + imageUrl);
+
+            var defaultPictureModel = new PictureModel
+            {
+                ImageUrl = ChessbookConstants.SiteHttps + imageUrl,
+                FullSizeImageUrl = ChessbookConstants.SiteHttps + imageUrl,
+                Blurhash = defaultPicture.Blurhash,
+                Meta = new Dictionary<string, MediaEntitySizeModel>
+                        {
+                            { "original", new MediaEntitySizeModel
+                                {
+                                 Width = image.Width,
+                                 Height = image.Height,
+                                 Size = image.Width + "x" + image.Height,
+                                 Aspect = (double) image.Width / image.Height
+                                }
+                            },
+                        }
+            };
+
+            return this.Ok(defaultPictureModel);
+        }
+
+        // I can't believe I wrote this.. It is sooo wrong and sooo cool at the same time xD 9/6/2021, Monday | Warm summer nights • instrumental hip hop - chillhop - lofi hip hop mix
+        [HttpGet]
+        [Route("utc-stuff")]
+        public async Task<IActionResult> FetchUtcStuff()
+        {
+            var customer = await this.workContext.GetCurrentCustomerAsync();
+
+            // prepare available countries
+            var countriesModel = new List<CountryUtcModel>();
+            var availableCountries = await this.countryService.GetAllCountriesAsync(showHidden: true);
+            foreach (var country in availableCountries)
+            {
+                countriesModel.Add(new CountryUtcModel { Value = country.Id.ToString(), Text = country.Name });
+            }
+
+            var countryId = await this.genericAttributeService.GetAttributeAsync<int>(customer, NopCustomerDefaults.CountryIdAttribute);
+            var countryText = countriesModel.FirstOrDefault(c => int.Parse(c.Value) == countryId)?.Text;
+
+            if (countryText != null)
+            {
+                await this.PrepareDefaultItemAsync(countriesModel, true, countryText, countryId.ToString());
+
+            }
+
+            // prepare available time zones
+            var availableTimeZones = this.dateTimeHelper.GetSystemTimeZones();
+            var timeZonesModel = new List<TimeZoneUtcModel>();
+            foreach (var timeZone in availableTimeZones)
+            {
+                timeZonesModel.Add(new TimeZoneUtcModel { Value = timeZone.Id, Text = timeZone.DisplayName });
+            }
+
+            var timeZoneId = await this.genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.TimeZoneIdAttribute);
+            var text = timeZoneId != null ? timeZonesModel.FirstOrDefault(tz => tz.Value == timeZoneId)?.Text : null;
+
+            if (text == null)
+            {
+                var defaultTimeZone = this.dateTimeHelper.DefaultStoreTimeZone;
+                timeZoneId = defaultTimeZone.Id;
+                text = defaultTimeZone.DisplayName;
+            }
+
+            await this.PrepareDefaultItemAsync(timeZonesModel, true, text, timeZoneId);
+
+
+            var model = new UtcStuffModel
+            {
+                Countries = countriesModel,
+                TimeZones = timeZonesModel,
+            };
+
+            return this.Ok(model);
+        }
+
+        [HttpPost, ActionName("GdprTools")]
+        [Route("gdpr-tools")]
+        [Authorize]
+        public async Task<IActionResult> GdprToolsExport()
+        {
+            if (!await this.userService.IsRegisteredAsync(await this.workContext.GetCurrentCustomerAsync()))
+            {
+                return Challenge();
+            }
+
+            if (false) // !_gdprSettings.GdprEnabled
+            {
+                return RedirectToRoute("CustomerInfo");
+            } 
+                
+
+            // log
+            await this.gdprService.InsertLogAsync(await this.workContext.GetCurrentCustomerAsync(), 0, GdprRequestType.ExportData, "Exported personal data");
+                
+            // export
+            var bytes = await this.exportManager.ExportCustomerGdprInfoToXlsxAsync(await this.workContext.GetCurrentCustomerAsync(), 1);
+
+            return File(bytes, MimeTypes.TextXlsx, "customerdata.xlsx");
+        }
+
+        [HttpPost, ActionName("GdprTools")]
+        [Route("delete-account")]
+        public virtual async Task<IActionResult> GdprDelete(int id)
+        {
+            // try to get a customer with the specified id
+            var customer = await this.userService.GetCustomerByIdAsync(id);
+            if (customer == null)
+            {
+                return this.NotFound();
+            }
+            try
+            {  
+                // prevent attempts to delete the user, if it is the last active administrator
+                if (await this.userService.IsAdminAsync(customer) && !await SecondAdminAccountExistsAsync(customer))
+                {
+                    return this.BadRequest();
+                }
+
+                if (customer.Id != (await this.workContext.GetCurrentCustomerAsync()).Id && !await this.userService.IsAdminAsync(await this.workContext.GetCurrentCustomerAsync()))
+                {
+                    return this.Unauthorized();
+                }
+
+                // delete
+                await this.gdprService.PermanentDeleteCustomerAsync(customer);
+
+                // activity log
+                await _customerActivityService.InsertActivityAsync("DeleteCustomer", string.Format("ActivityLog.DeleteCustomer", customer.Id), customer);
+
+                return this.NoContent();
+            }
+            catch (Exception exc)
+            {
+                return this.BadRequest(exc.Message);
+
+                //_notificationService.ErrorNotification(exc.Message);
+                //return RedirectToAction("Edit", new { id = customer.Id });
+            }
+        }
+
+        /// <summary>
+        /// Prepare default item
+        /// </summary>
+        /// <param name="items">Available items</param>
+        /// <param name="withSpecialDefaultItem">Whether to insert the first special item for the default value</param>
+        /// <param name="defaultItemText">Default item text; pass null to use "All" text</param>
+        /// <param name="defaultItemValue">Default item value; defaults 0</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        private async Task PrepareDefaultItemAsync(IList<CountryUtcModel> items, bool withSpecialDefaultItem, string defaultItemText = null, string defaultItemValue = "0")
+        {
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+
+            // whether to insert the first special item for the default value
+            if (!withSpecialDefaultItem)
+            {
+                return;
+            }
+
+            // prepare item text
+            defaultItemText ??= await this.localeStringResourceService.GetResourceAsync("Admin.Common.All");
+
+            // insert this default item at first
+            items.Insert(0, new CountryUtcModel { Text = defaultItemText, Value = defaultItemValue });
+        }
+        private async Task PrepareDefaultItemAsync(IList<TimeZoneUtcModel> items, bool withSpecialDefaultItem, string defaultItemText = null, string defaultItemValue = "0")
+        {
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+
+            // whether to insert the first special item for the default value
+            if (!withSpecialDefaultItem)
+            {
+                return;
+            }
+
+            // prepare item text
+            defaultItemText ??= await this.localeStringResourceService.GetResourceAsync("Admin.Common.All");
+
+            // insert this default item at first
+            items.Insert(0, new TimeZoneUtcModel { Text = defaultItemText, Value = defaultItemValue });
+        }
+
         private async Task<bool> SecondAdminAccountExistsAsync(Customer customer)
         {
             var customers = await this.userService.GetAllCustomersAsync(customerRoleIds: new[] { (await this.userService.GetCustomerRoleBySystemNameAsync(NopCustomerDefaults.AdministratorsRoleName)).Id });
@@ -737,6 +988,7 @@
             return customers.Any(c => c.Active && c.Id != customer.Id);
         }
     }
+
 
     public class GetProfileInputQueryModel
     {

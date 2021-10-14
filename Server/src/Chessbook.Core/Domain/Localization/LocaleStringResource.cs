@@ -1,6 +1,6 @@
 ﻿using Chessbook.Data.Models;
 
-namespace Nop.Core.Domain.Localization
+namespace Chessbook.Core.Domain.Localization
 {
     /// <summary>
     /// Represents a locale string resource

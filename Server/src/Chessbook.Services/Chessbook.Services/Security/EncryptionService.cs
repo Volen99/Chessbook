@@ -2,10 +2,11 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using Nop.Core;
-using Nop.Core.Domain.Security;
 
-namespace Nop.Services.Security
+using Chessbook.Core;
+using Chessbook.Core.Domain.Security;
+
+namespace Chessbook.Services.Security
 {
     /// <summary>
     /// Encryption service

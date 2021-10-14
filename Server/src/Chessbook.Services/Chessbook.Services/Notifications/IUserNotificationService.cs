@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 
 using Chessbook.Core.Domain.Notifications;
-using Nop.Core;
+using Chessbook.Core;
 
 namespace Chessbook.Services.Notifications
 {

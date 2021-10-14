@@ -1,9 +1,10 @@
-﻿using Chessbook.Data.Models;
-using Chessbook.Data.Models.Polls;
-using FluentMigrator.Builders.Create.Table;
-using Nop.Data.Extensions;
+﻿using FluentMigrator.Builders.Create.Table;
 
-namespace Nop.Data.Mapping.Builders.Polls
+using Chessbook.Data.Extensions;
+using Chessbook.Data.Models;
+using Chessbook.Core.Domain.Polls;
+
+namespace Chessbook.Data.Mapping.Builders.Polls
 {
     /// <summary>
     /// Represents a poll voting record entity builder

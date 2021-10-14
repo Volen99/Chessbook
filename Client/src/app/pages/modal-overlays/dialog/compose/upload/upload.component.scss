@@ -25,6 +25,7 @@
 @import "./src/sass/application.scss";
 
 /*15.11.2020, Sunday*/
+/*i haven't given up.. 10/11/2021, Monday, 21:56 | Someone To You (Shalom Margaret Cover) - Lofi HipHop by Fasetya [10 HOURS]*/
 
 fa-icon {
   > svg {
@@ -214,9 +215,9 @@ fa-icon {
   cursor: pointer;
 }
 
-.element-background-color-rgba {
-  background-color: rgba(0, 0, 0, 0);
-}
+//.element-background-color-rgba {
+//  background-color: rgba(0, 0, 0, 0);
+//}
 
 .element-border-color-rgba {
   border-color: rgba(0, 0, 0, 0);
@@ -866,3 +867,12 @@ fa-icon {
   margin-right: 12px;
   margin-top: 12px;
 }
+
+
+.video-frame {
+  width: 507px;
+  height: 315px;
+
+  margin-bottom: 24px;
+}
+

@@ -1,5 +1,5 @@
 import {Settings} from "../../../core/interfaces/common/settings";
-import {IPost} from "../../posts/models/tweet";
+import {IPost} from "../../posts/models/post.model";
 import {IUser, UserData} from "../../../core/interfaces/common/users";
 import {IUserEntities} from "../../post-object/Entities/interfaces/IUserEntities";
 import {UserRight} from "../../models/users/user-right.enum";
@@ -32,6 +32,7 @@ export class User implements IUser {
   }
 
   constructor(hash: Partial<IUser>) {
+    if (!hash) return;
     this.id = hash.id;
     this.idStr = hash.idStr;
     this.displayName = hash.displayName;
@@ -79,6 +80,7 @@ export class User implements IUser {
 
     this.blocked = hash.blocked;
     this.blockedReason = hash.blockedReason;
+    this.blocking = hash.blocking;
 
     this.roles = hash.roles;
     this.roleLabel = hash.roleLabel;
@@ -92,7 +94,8 @@ export class User implements IUser {
 
     this.followedBy = hash.followedBy;
 
-    this.mutedByUser = false;
+    this.mutedByUser = hash.mutedByUser; // false;
+    this.blockedBy = hash.blockedBy; // false;
 
     this.notificationSettings = hash.notificationSettings;
 
@@ -117,7 +120,7 @@ export class User implements IUser {
   location: string;
   geoEnabled?: boolean;
   url: string;
-  statusesCount: number;
+  statusesCount: number = 0;
   followersCount: number;
   followingCount: number;
   following?: boolean;
@@ -163,6 +166,8 @@ export class User implements IUser {
   age: number;
   settings: Settings;
   mutedByUser: boolean;
+  blockedBy: boolean;
+  blocking: boolean;
 
   lastLoginDate: Date | null;
 

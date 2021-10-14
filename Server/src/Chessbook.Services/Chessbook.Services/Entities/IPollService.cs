@@ -1,17 +1,21 @@
-﻿using Chessbook.Data.Models.Polls;
-using Chessbook.Web.Models.Outputs.Polls;
-using Chessbook.Web.Models.Polls;
-using Nop.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+
+using Chessbook.Web.Models.Polls;
+using Chessbook.Core;
+using Chessbook.Core.Domain.Polls;
 
 namespace Chessbook.Services.Data.Services.Entities
 {
     public interface IPollService
     {
+        /// <summary>
+        /// Inserts a poll
+        /// </summary>
+        /// <param name="poll">Poll</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        Task<int> InsertPollAsync(long expiresIn, string status, bool isSurvey);
+
         /// <summary>
         /// Gets a poll
         /// </summary>
@@ -46,13 +50,6 @@ namespace Chessbook.Services.Data.Services.Entities
         /// <param name="poll">The poll</param>
         /// <returns>A task that represents the asynchronous operation</returns>
         Task DeletePollAsync(Poll poll);
-
-        /// <summary>
-        /// Inserts a poll
-        /// </summary>
-        /// <param name="poll">Poll</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        Task<int> InsertPollAsync(PollCreateBody poll, string status, bool isSurvey);
 
         /// <summary>
         /// Updates the poll
@@ -109,7 +106,7 @@ namespace Chessbook.Services.Data.Services.Entities
         /// A task that represents the asynchronous operation
         /// The task result contains the result
         /// </returns>
-        Task<bool> AlreadyVotedAsync(int pollId, int customerId);
+        Task<List<PollVotingRecord>> AlreadyVotedAsync(int pollId, int customerId);
 
         /// <summary>
         /// Inserts a poll voting record
@@ -128,7 +125,7 @@ namespace Chessbook.Services.Data.Services.Entities
         /// <returns>A task that represents the asynchronous operation</returns>
         Task<IPagedList<PollVotingRecord>> GetPollVotingRecordsByPollAnswerAsync(int pollAnswerId, int pageIndex = 0, int pageSize = int.MaxValue);
 
-        Task<T> WeeklySurvey<T>();
+        Task<Poll> WeeklySurvey();
 
         Task<int> GetPollVotes(int pollId);
     }

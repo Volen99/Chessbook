@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Nop.Core.Configuration
+namespace Chessbook.Core.Configuration
 {
     /// <summary>
     /// Represents distributed cache configuration parameters

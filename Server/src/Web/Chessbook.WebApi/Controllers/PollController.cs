@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Chessbook.Data.Models.Polls;
-using Chessbook.Services.Data.Services;
-using Chessbook.Services.Data.Services.Entities;
-using Chessbook.Services.Localization;
-using Chessbook.Web.Api.Controllers;
-using Chessbook.Web.Api.Identity;
-using Chessbook.Web.Models.Inputs.Polls;
-using Chessbook.Web.Models.Outputs.Polls;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Nop.Core;
-using Nop.Services.Stores;
-using Nop.Web.Factories;
+
+using Chessbook.Core;
+using Chessbook.Services.Stores;
+using Chessbook.Web.Factories;
+using Chessbook.Core.Domain.Polls;
+using Chessbook.Services;
+using Chessbook.Services.Data.Services.Entities;
+using Chessbook.Services.Localization;
+using Chessbook.Web.Api.Identity;
 
 namespace Chessbook.Web.Api.Controllers
 {
+    // TODO: change to "polls"
     [Route("poll")]
     public class PollController : BaseApiController
     {
@@ -47,7 +46,6 @@ namespace Chessbook.Web.Api.Controllers
         [Route("vote/{id?}")]
         public async Task<IActionResult> Vote(int id)
         {
-            var test = User.GetUserId();
             var pollAnswer = await this.pollService.GetPollAnswerByIdAsync(id);
             if (pollAnswer == null)
             {
@@ -56,7 +54,7 @@ namespace Chessbook.Web.Api.Controllers
 
             var poll = await this.pollService.GetPollByIdAsync(pollAnswer.PollId);
 
-            if (!poll.Published || !await _storeMappingService.AuthorizeAsync(poll))
+            if (!poll.Published)
             {
                 return this.BadRequest(new { error = "Poll is not available" });
             }
@@ -67,7 +65,7 @@ namespace Chessbook.Web.Api.Controllers
             }
 
             var alreadyVoted = await this.pollService.AlreadyVotedAsync(poll.Id, (await _workContext.GetCurrentCustomerAsync()).Id);
-            if (!alreadyVoted)
+            if (!alreadyVoted.Any())
             {
                 // vote
                 await this.pollService.InsertPollVotingRecordAsync(new PollVotingRecord
@@ -85,42 +83,10 @@ namespace Chessbook.Web.Api.Controllers
 
             var model = await _pollModelFactory.PreparePollModelAsync(poll, true);
             return this.Ok(model);
-
-            //var pollAnswer = await pollService.GetPollAnswerByIdAsync(id);
-            //if (pollAnswer == null)
-            //{
-            //    return this.BadRequest(new { error = "No poll answer found with the specified id" });
-            //}
-
-            //var poll = await pollService.GetPollByIdAsync<PollDTO>(pollAnswer.PollId);
-
-            //if (!poll.Published)
-            //{
-            //    return this.BadRequest(new { error = "Poll is not available" });
-            //}
-
-            //var alreadyVoted = await pollService.AlreadyVotedAsync(poll.Id, User.GetUserId());
-            //if (!alreadyVoted)
-            //{
-            //    // vote
-            //    await pollService.InsertPollVotingRecordAsync(new PollVotingRecord
-            //    {
-            //        PollAnswerId = pollAnswer.Id,
-            //        CustomerId = User.GetUserId(),
-            //        CreatedOnUtc = DateTime.UtcNow
-            //    });
-
-            //    // update totals
-            //    pollAnswer.NumberOfVotes = (await pollService.GetPollVotingRecordsByPollAnswerAsync(pollAnswer.Id)).Count();
-            //    await pollService.UpdatePollAnswerAsync(pollAnswer);
-            //    // await _pollService.UpdatePollAsync(poll);
-            //}
-
-            //return this.Ok(pollAnswer);
         }
 
-        [Route("survey")]
         [HttpGet]
+        [Route("survey")]
         public async Task<IActionResult> DailySurvey()
         {
             var polls = await this.pollService.GetPollsAsync(1, 0, false, true);
@@ -137,20 +103,25 @@ namespace Chessbook.Web.Api.Controllers
 
 
             var alreadyVoted = await this.pollService.AlreadyVotedAsync(poll.Id, (await _workContext.GetCurrentCustomerAsync()).Id);
-            var model = await this._pollModelFactory.PreparePollModelAsync(poll, alreadyVoted);
+            var model = await this._pollModelFactory.PreparePollModelAsync(poll, alreadyVoted.Any());
 
             return this.Ok(model);
+        }
 
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<IActionResult> GetPoll(int id)
+        {
+            var poll = await this.pollService.GetPollByIdAsync(id);
 
-            //var alreadyVoted = await pollService.AlreadyVotedAsync(poll.Id, User.GetUserId());
-            //poll.Voted = alreadyVoted;
+            if (poll == null)
+            {
+                return this.BadRequest("This poll no longer exists :(");
+            }
 
-            //var votes =  await this.pollService.GetPollVotes(poll.Id);
+            var model = await this._pollModelFactory.PreparePollModelAsync(poll, true);
 
-            //poll.VotesCount = votes;
-            //poll.VotersCount = votes;
-
-            //return this.Ok(poll);
+            return this.Ok(model);
         }
     }
 }

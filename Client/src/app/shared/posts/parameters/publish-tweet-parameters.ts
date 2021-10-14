@@ -1,6 +1,6 @@
 ﻿import {Inject, Injectable, InjectionToken} from "@angular/core";
 import {CustomRequestParameters, ICustomRequestParameters} from "../../models/query/custom-request-parameters";
-import {IPost} from "../models/tweet";
+import {IPost} from "../models/post.model";
 import {ITweetIdentifier} from "../models/tweet-identifier";
 import {ICoordinates} from "../models/properties/ICoordinates";
 import {IMedia} from "../../models/upload/media/media";

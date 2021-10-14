@@ -1,7 +1,7 @@
 ﻿using System;
 using Chessbook.Data.Models;
 
-namespace Nop.Core.Domain.Common
+namespace Chessbook.Core.Domain.Common
 {
     /// <summary>
     /// Represents a generic attribute

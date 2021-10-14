@@ -60,7 +60,7 @@
     <fa-icon *ngIf="menuItem.icon && !(this.menuItem.title === 'More')" [icon]="menuItem.icon" class="menu-icon"></fa-icon>
     <fa-stack *ngIf="this.menuItem.icon && this.menuItem.title === 'More'" size="sm" class="menu-icon">
         <fa-icon [icon]="menuItem.icon" stackItemSize="1x"></fa-icon>
-        <fa-icon [icon]="this.faEllipsisH" [inverse]="true" stackItemSize="1x"></fa-icon>
+        <fa-icon [icon]="this.faEllipsisH" [inverse]="true" [styles]="{color: '#8f9bb3'}" stackItemSize="1x"></fa-icon>
     </fa-stack>
     <span class="menu-title">{{ menuItem.title }}</span>
     <ng-container *ngIf="badge" [ngTemplateOutlet]="badgeTemplate"></ng-container>

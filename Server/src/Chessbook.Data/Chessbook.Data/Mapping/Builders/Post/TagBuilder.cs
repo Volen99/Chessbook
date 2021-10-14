@@ -1,6 +1,6 @@
 ﻿using FluentMigrator.Builders.Create.Table;
 
-using Nop.Data.Mapping.Builders;
+using Chessbook.Data.Mapping.Builders;
 using Chessbook.Core.Domain.Posts;
 
 namespace Chessbook.Data.Mapping.Builders.Post

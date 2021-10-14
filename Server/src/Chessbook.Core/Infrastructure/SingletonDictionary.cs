@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nop.Core.Infrastructure
+namespace Chessbook.Core.Infrastructure
 {
     /// <summary>
     /// Provides a singleton dictionary for a certain key and vlaue type.

@@ -43,7 +43,7 @@
             <!--                {{ getCurrentGroupedDateLabel(video) }}-->
             <!--            </h2>-->
 
-            <div class="video-wrapper">
+            <div class="video-wrapper" [@listAnimation]="this.streams?.data.length">
                 <my-video-miniature [video]="video"></my-video-miniature>
             </div>
         </ng-container>

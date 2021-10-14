@@ -101,6 +101,9 @@ export class PollFormComponent implements OnInit {
   @Input() options: any[];
   @Input() expiresIn: number;
   @Input() isMultiple: boolean;
+
+  @Input() poll: any;
+
   // @Input() onChangeOption: () => any;
   // @Input() onAddOption: (...params: any[]) => any;
   // @Input() onRemoveOption: () => any;
@@ -125,7 +128,7 @@ export class PollFormComponent implements OnInit {
   };
 
   handleSelectDuration = e => {
-    this.onChangeSettings(e.target.value, this.isMultiple);
+    this.onChangeSettings(e, this.isMultiple);
   };
 
   handleToggleMultiple = () => {
@@ -146,6 +149,8 @@ export class PollFormComponent implements OnInit {
   }
 
   onChangeSettings(expiresIn, isMultiple) {
+    this.poll.expiresIn = expiresIn;
+
     this.expiresIn = expiresIn;
     this.isMultiple = isMultiple;
   }

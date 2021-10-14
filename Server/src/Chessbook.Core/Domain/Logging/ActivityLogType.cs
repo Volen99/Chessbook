@@ -1,6 +1,6 @@
 ﻿using Chessbook.Data.Models;
 
-namespace Nop.Core.Domain.Logging
+namespace Chessbook.Core.Domain.Logging
 {
     /// <summary>
     /// Represents an activity log type record

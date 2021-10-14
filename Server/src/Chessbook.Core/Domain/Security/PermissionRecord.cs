@@ -1,6 +1,6 @@
 ﻿using Chessbook.Data.Models;
 
-namespace Nop.Core.Domain.Security
+namespace Chessbook.Core.Domain.Security
 {
     /// <summary>
     /// Represents a permission record

@@ -1,6 +1,6 @@
-﻿using Nop.Core.Caching;
+﻿using Chessbook.Core.Caching;
 
-namespace Nop.Web.Infrastructure.Cache
+namespace Chessbook.Web.Infrastructure.Cache
 {
     public static partial class NopModelCacheDefaults
     {

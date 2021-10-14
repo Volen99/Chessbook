@@ -15,7 +15,7 @@ const routes: Routes = [
     },
     children: [
       {
-        path: ':id',
+        path: ':messageId',
         component: DetailHeaderMessageSelectedComponent
       }
     ]

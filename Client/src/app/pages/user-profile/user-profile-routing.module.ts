@@ -25,6 +25,9 @@ const accountsRoutes: Routes = [
       {
         path: 'followers',
         component: FollowingComponent,
+      },
+      {
+        path: 'media'
       }
     ]
   },

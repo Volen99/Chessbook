@@ -1,0 +1,34 @@
+$base-overlay-background: #000 !default;
+
+.media-gallery__preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  background: $base-overlay-background;
+
+  &--hidden {
+    display: none;
+  }
+}
+
+.status-card__image-preview {
+  border-radius: 4px 0 0 4px;
+  display: block;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  background: #000000;
+
+  &--hidden {
+    display: none;
+  }
+}

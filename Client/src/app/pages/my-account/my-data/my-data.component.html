@@ -1,1 +1,40 @@
-<p>my-data works!</p>
+<div class="row">
+    <div class="col-lg-12">
+        <nb-card>
+            <nb-card-header>
+                <h6>Get insights into the type of information stored for your account</h6>
+                <div class="caption description">
+                    You can use the button below to download all the data we store and use for a better experience in our website.
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <div class="buttons-row">
+                    <button nbButton status="primary" size="giant" (click)="this.handleExport()">
+                        <fa-icon style="margin-right: 0.5rem;" size="2x" [icon]="this.faDownload"></fa-icon>
+                        Export your data
+                    </button>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+
+    <div class="col-lg-12">
+        <nb-card>
+            <nb-card-header>
+               <h6>Right to be Forgotten</h6>
+                <div class="caption description">
+                    You can use the button below to remove your personal and other data from our website. Keep in mind that this process will delete your account, so you will no longer be able to access or use it anymore.
+                    <span style="display: inline-block">You are not only getting checkmated, but you are also getting eliminated from World Cup.</span>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <div class="buttons-row">
+                    <button nbButton status="danger" size="giant" (click)="this.handleDelete()">
+                        <fa-icon style="margin-right: 0.5rem;" size="2x" [icon]="this.faTrashAlt"></fa-icon>
+                        Permanent delete
+                    </button>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

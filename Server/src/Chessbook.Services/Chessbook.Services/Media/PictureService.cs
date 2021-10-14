@@ -1,33 +1,19 @@
-﻿using Chessbook.Common;
-using Chessbook.Data.Common.Repositories;
-using Chessbook.Data.Models.Media;
-using Chessbook.Data.Models.Memory;
-using Microsoft.AspNetCore.Http;
-using Nop.Core.Infrastructure;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.Formats.Bmp;
-using SixLabors.ImageSharp.Formats.Gif;
-using SixLabors.ImageSharp.Formats.Jpeg;
-using SixLabors.ImageSharp.Formats.Png;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
-using static SixLabors.ImageSharp.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Nop.Services.Media;
-using Nop.Core.Domain.Media;
+using System.IO;
 using System.Threading;
-using Chessbook.Data.Models.Post.Entities;
-using Chessbook.Data.Models.Post;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using SkiaSharp;
+
+using Chessbook.Services.Media;
+using Chessbook.Common;
+using Chessbook.Core.Infrastructure;
+using Chessbook.Data.Models.Media;
 using Chessbook.Data;
-using Nop.Core;
+using Chessbook.Core;
 using Chessbook.Core.Domain.Posts;
 
 namespace Chessbook.Services.Data.Services.Media
@@ -834,7 +820,7 @@ namespace Chessbook.Services.Data.Services.Media
         /// A task that represents the asynchronous operation
         /// The task result contains the picture
         /// </returns>
-        public virtual async Task<Picture> InsertPictureAsync(Session formFile, string filePath, string defaultFileName = "", string virtualPath = "")
+        public virtual async Task<Picture> InsertPictureAsync(IFormFile formFile, string defaultFileName = "", string virtualPath = "")
         {
             var imgExt = new List<string>
             {
@@ -852,16 +838,14 @@ namespace Chessbook.Services.Data.Services.Media
                 ".tif"
             } as IReadOnlyCollection<string>;
 
-            var fileName = formFile.FileInfo.Name;
+            var fileName = formFile.FileName;
             if (string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(defaultFileName))
-            {
                 fileName = defaultFileName;
-            }
 
-            // remove path (passed in IE)
-            fileName = this.fileProvider.GetFileName(fileName + formFile.FileInfo.Extension);
+            //remove path (passed in IE)
+            fileName = this.fileProvider.GetFileName(fileName);
 
-            var contentType = "";
+            var contentType = formFile.ContentType;
 
             var fileExtension = this.fileProvider.GetFileExtension(fileName);
             if (!string.IsNullOrEmpty(fileExtension))
@@ -910,7 +894,7 @@ namespace Chessbook.Services.Data.Services.Media
                 }
             }
 
-            var picture = await InsertPictureAsync(await this.GetDownloadBitsAsync(File.OpenRead(filePath)), contentType, this.fileProvider.GetFileNameWithoutExtension(fileName));
+            var picture = await InsertPictureAsync(await this.GetDownloadBitsAsync(formFile), contentType, this.fileProvider.GetFileNameWithoutExtension(fileName));
 
             if (string.IsNullOrEmpty(virtualPath))
             {
@@ -921,6 +905,92 @@ namespace Chessbook.Services.Data.Services.Media
             await UpdatePictureAsync(picture);
 
             return picture;
+
+            //var imgExt = new List<string>
+            //{
+            //    ".bmp",
+            //    ".gif",
+            //    ".webp",
+            //    ".jpeg",
+            //    ".jpg",
+            //    ".jpe",
+            //    ".jfif",
+            //    ".pjpeg",
+            //    ".pjp",
+            //    ".png",
+            //    ".tiff",
+            //    ".tif"
+            //} as IReadOnlyCollection<string>;
+
+            //var fileName = formFile.FileInfo.Name;
+            //if (string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(defaultFileName))
+            //{
+            //    fileName = defaultFileName;
+            //}
+
+            //// remove path (passed in IE)
+            //fileName = this.fileProvider.GetFileName(fileName + formFile.FileInfo.Extension);
+
+            //var contentType = "";
+
+            //var fileExtension = this.fileProvider.GetFileExtension(fileName);
+            //if (!string.IsNullOrEmpty(fileExtension))
+            //{
+            //    fileExtension = fileExtension.ToLowerInvariant();
+            //}
+
+            //if (imgExt.All(ext => !ext.Equals(fileExtension, StringComparison.CurrentCultureIgnoreCase)))
+            //{
+            //    return null;
+            //}
+
+            //// contentType is not always available 
+            //// that's why we manually update it here
+            //// http://www.sfsu.edu/training/mimetype.htm
+            //if (string.IsNullOrEmpty(contentType))
+            //{
+            //    switch (fileExtension)
+            //    {
+            //        case ".bmp":
+            //            contentType = MimeTypes.ImageBmp;
+            //            break;
+            //        case ".gif":
+            //            contentType = MimeTypes.ImageGif;
+            //            break;
+            //        case ".jpeg":
+            //        case ".jpg":
+            //        case ".jpe":
+            //        case ".jfif":
+            //        case ".pjpeg":
+            //        case ".pjp":
+            //            contentType = MimeTypes.ImageJpeg;
+            //            break;
+            //        case ".webp":
+            //            contentType = MimeTypes.ImageWebp;
+            //            break;
+            //        case ".png":
+            //            contentType = MimeTypes.ImagePng;
+            //            break;
+            //        case ".tiff":
+            //        case ".tif":
+            //            contentType = MimeTypes.ImageTiff;
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
+
+            //var picture = await InsertPictureAsync(await this.GetDownloadBitsAsync(File.OpenRead(filePath)), contentType, this.fileProvider.GetFileNameWithoutExtension(fileName));
+
+            //if (string.IsNullOrEmpty(virtualPath))
+            //{
+            //    return picture;
+            //}
+
+            //picture.VirtualPath = this.fileProvider.GetVirtualPath(virtualPath);
+            //await UpdatePictureAsync(picture);
+
+            //return picture;
         }
 
         /// <summary>
@@ -1099,6 +1169,33 @@ namespace Chessbook.Services.Data.Services.Media
         /// A task that represents the asynchronous operation
         /// The task result contains the 
         /// </returns>
+        public async Task<IDictionary<int, string>> GetPicturesHashAsync(int[] picturesIds)
+        {
+            //if (!picturesIds.Any())
+            //    return new Dictionary<int, string>();
+
+            //var hashes = (await _dataProvider.GetTableAsync<PictureBinary>())
+            //        .Where(p => picturesIds.Contains(p.PictureId))
+            //        .Select(x => new
+            //        {
+            //            x.PictureId,
+            //            Hash = Hash(x.BinaryData, _dataProvider.SupportedLengthOfBinaryHash)
+            //        });
+
+            //return await AsyncIQueryableExtensions.ToDictionaryAsync(hashes, p => p.PictureId, p => p.Hash);
+
+            throw new NotImplementedException();
+        }
+
+
+        /// <summary>
+        /// Get pictures hashes
+        /// </summary>
+        /// <param name="picturesIds">Pictures Ids</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the 
+        /// </returns>
         //public async Task<IDictionary<int, string>> GetPicturesHashAsync(int[] picturesIds)
         //{
         //    if (!picturesIds.Any())
@@ -1240,24 +1337,14 @@ namespace Chessbook.Services.Data.Services.Media
         /// </summary>
         /// <param name="file">File</param>
         /// <returns>Download binary array</returns>
-        public virtual async Task<byte[]> GetDownloadBitsAsync(FileStream file)
+        public virtual async Task<byte[]> GetDownloadBitsAsync(IFormFile file)
         {
-            // await using var fileStream = file.Read();
+            await using var fileStream = file.OpenReadStream();
             await using var ms = new MemoryStream();
-            await file.CopyToAsync(ms); // fileStream.
+            await fileStream.CopyToAsync(ms);
             var fileBytes = ms.ToArray();
 
             return fileBytes;
-        }
-
-        public Task<Picture> InsertPictureAsync(IFormFile formFile, string defaultFileName = "", string virtualPath = "")
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IDictionary<int, string>> GetPicturesHashAsync(int[] picturesIds)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

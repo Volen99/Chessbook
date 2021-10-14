@@ -26,10 +26,10 @@ export class TweetsRequesterService {
   // }
 
   // Tweets - Publish
-  public publishTweetAsync(parameters: IPublishTweetParameters): Promise<ITweetDTO> {
+  public publishTweetAsync(parameters: IPublishTweetParameters, body: {}): Promise<ITweetDTO> {
     // this._tweetsClientRequiredParametersValidator.validate(parameters);
 
-    return this.tweetControllerService.publishTweetAsync(parameters);
+    return this.tweetControllerService.publishTweetAsync(parameters, body);
   }
 
   // Tweets - Destroy

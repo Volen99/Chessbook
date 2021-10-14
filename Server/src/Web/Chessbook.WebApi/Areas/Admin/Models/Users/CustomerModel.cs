@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 using Chessbook.Data.Models;
 using Chessbook.Web.Api.Models.UserNotification;
-using Nop.Web.Framework.Models;
+using Chessbook.Web.Framework.Models;
 
-namespace Nop.Web.Areas.Admin.Models.Customers
+namespace Chessbook.Web.Areas.Admin.Models.Customers
 {
     /// <summary>
     /// Represents a customer model
@@ -50,6 +50,10 @@ namespace Nop.Web.Areas.Admin.Models.Customers
         public bool Protected { get; set; }
 
         public bool Verified { get; set; }
+
+        public bool BlockedBy { get; set; }
+
+        public bool Blocking { get; set; }
 
         //[JsonProperty("entities")]
         //public IUserEntities Entities { get; set; }

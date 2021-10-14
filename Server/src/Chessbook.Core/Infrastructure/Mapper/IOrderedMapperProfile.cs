@@ -1,4 +1,4 @@
-﻿namespace Nop.Core.Infrastructure.Mapper
+﻿namespace Chessbook.Core.Infrastructure.Mapper
 {
     /// <summary>
     /// Mapper profile registrar interface

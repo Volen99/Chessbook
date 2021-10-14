@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 
+using Ordering.SignalrHub;
 using Chessbook.Core.Domain.Notifications;
 using Chessbook.Core.Domain.Posts;
 using Chessbook.Data.Models;
-using Chessbook.Data.Models.Post;
-using Chessbook.Services.Data.Services;
+using Chessbook.Services;
 using Chessbook.Services.Notifications;
 using Chessbook.Services.Notifications.Settings;
 using Chessbook.Web.Api.Factories;
 using Chessbook.Web.Api.Models.UserNotification;
 using Chessbook.Web.Api.Lib.Shared.Comment;
 using Chessbook.Web.Api.Lib.Shared.Common;
-using Nop.Core.Infrastructure;
-using Nop.Services.Logging;
-using Ordering.SignalrHub;
+using Chessbook.Core.Infrastructure;
+using Chessbook.Services.Logging;
 using Chessbook.Web.Api.Lib.Shared.Follow;
 using Chessbook.Core.Domain.Relationships;
-using static Chessbook.Web.Api.Controllers.RelationshipsController;
 using Chessbook.Web.Api.Lib.Shared.Like;
+
+using static Chessbook.Web.Api.Controllers.RelationshipsController;
 
 namespace Chessbook.Web.Api.Lib
 {
@@ -103,7 +103,7 @@ namespace Chessbook.Web.Api.Lib
 
             var logger = EngineContext.Current.Resolve<ILogger>();
 
-            await logger.InformationAsync(string.Format($"Notifying {0} users of new video {1}.", users.Count, post.Urls));
+            await logger.InformationAsync(string.Format($"Notifying {0} users of new video {1}.", users.Count, post.Id));
 
 
             Func<UserNotificationSettingModel, UserNotificationSettingValue> SettingGetter = delegate (UserNotificationSettingModel user)

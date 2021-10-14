@@ -1,14 +1,15 @@
 ﻿namespace Chessbook.Data
 {
-    using Chessbook.Data.Models;
-    using global::System;
-    using global::System.Collections.Generic;
-    using global::System.Linq;
-    using global::System.Linq.Expressions;
-    using global::System.Threading.Tasks;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
     using LinqToDB.Data;
-    using Nop.Core;
-    using Nop.Core.Caching;
+
+    using Chessbook.Core;
+    using Chessbook.Core.Caching;
+    using Chessbook.Data.Models;
 
     /// <summary>
     /// Represents an entity repository
@@ -23,7 +24,7 @@
         /// </summary>
         /// <param name="id">Entity entry identifier</param>
         /// <param name="getCacheKey">Function to get a cache key; pass null to don't cache; return null from this function to use the default key</param>
-        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
+        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Chessbook.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the entity entry
@@ -35,7 +36,7 @@
         /// </summary>
         /// <param name="ids">Entity entry identifiers</param>
         /// <param name="getCacheKey">Function to get a cache key; pass null to don't cache; return null from this function to use the default key</param>
-        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
+        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Chessbook.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the entity entries
@@ -47,7 +48,7 @@
         /// </summary>
         /// <param name="func">Function to select entries</param>
         /// <param name="getCacheKey">Function to get a cache key; pass null to don't cache; return null from this function to use the default key</param>
-        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
+        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Chessbook.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the entity entries
@@ -60,7 +61,7 @@
         /// </summary>
         /// <param name="func">Function to select entries</param>
         /// <param name="getCacheKey">Function to get a cache key; pass null to don't cache; return null from this function to use the default key</param>
-        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
+        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Chessbook.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the entity entries
@@ -73,7 +74,7 @@
         /// </summary>
         /// <param name="func">Function to select entries</param>
         /// <param name="getCacheKey">Function to get a cache key; pass null to don't cache; return null from this function to use the default key</param>
-        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
+        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Chessbook.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>Entity entries</returns>
         IList<TEntity> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
             Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = false);
@@ -83,7 +84,7 @@
         /// </summary>
         /// <param name="func">Function to select entries</param>
         /// <param name="getCacheKey">Function to get a cache key; pass null to don't cache; return null from this function to use the default key</param>
-        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
+        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Chessbook.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the entity entries
@@ -95,7 +96,7 @@
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="getOnlyTotalCount">Whether to get only the total number of entries without actually loading data</param>
-        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
+        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Chessbook.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the paged list of entity entries
@@ -107,7 +108,7 @@
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="getOnlyTotalCount">Whether to get only the total number of entries without actually loading data</param>
-        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
+        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Chessbook.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the paged list of entity entries
@@ -211,20 +212,5 @@
         IQueryable<TEntity> Table { get; }
 
         #endregion
-
-
-
-
-        //IQueryable<TEntity> All();
-
-        //IQueryable<TEntity> AllAsNoTracking();
-
-        //Task AddAsync(TEntity entity);
-
-        //void Update(TEntity entity);
-
-        //void Delete(TEntity entity);
-
-        //Task<int> SaveChangesAsync();
     }
 }

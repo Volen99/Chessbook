@@ -1,4 +1,4 @@
-﻿namespace Nop.Services.Installation
+﻿namespace Chessbook.Services.Installation
 {
     /// <summary>
     /// Represents default values related to installation services

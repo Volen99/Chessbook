@@ -9,28 +9,33 @@ import {ResultList} from "../models";
 @Injectable()
 export class TournamentService {
 
-  constructor(private http: HttpService, private restExtractor: RestExtractor,) {
+  constructor(private http: HttpService, private restExtractor: RestExtractor) {
   }
 
   create(body: object) {
-    return this.http.post('tournaments/create', body)
+    return this.http.post('admin/tournaments/create', body)
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 
-  listTournaments() {
-    return this.http.get<ResultList<ITournament>>('tournaments/list')
-      .pipe(
-        catchError(err => this.restExtractor.handleError(err)),
-      );
-  }
-
   edit(id: number, body: object) {
-    return this.http.post('tournaments/edit/' + id, body)
+    return this.http.post('admin/tournaments/edit/' + id, body)
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 
   delete(id: number) {
-    return this.http.post('tournaments/delete/' + id, {})
+    return this.http.post('admin/tournaments/delete/' + id, {})
+      .pipe(catchError(err => this.restExtractor.handleError(err)));
+  }
+
+  listTournaments(toListFor: 'public' | 'admin') {
+    let url;
+    if (toListFor === 'public') {
+      url = 'tournaments/list';
+    } else {
+      url = 'admin/tournaments/list';
+    }
+
+    return this.http.get<ResultList<ITournament>>(url)
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 

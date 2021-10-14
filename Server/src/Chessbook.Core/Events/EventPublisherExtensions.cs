@@ -1,7 +1,7 @@
-﻿using Chessbook.Data.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Chessbook.Data.Models;
 
- namespace Nop.Core.Events
+ namespace Chessbook.Core.Events
  {
      /// <summary>
      /// Event publisher extensions

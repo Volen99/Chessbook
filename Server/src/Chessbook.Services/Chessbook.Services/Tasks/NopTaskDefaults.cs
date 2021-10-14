@@ -1,4 +1,4 @@
-﻿namespace Nop.Services.Tasks
+﻿namespace Chessbook.Services.Tasks
 {
     /// <summary>
     /// Represents default values related to task services

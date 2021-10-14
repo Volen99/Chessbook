@@ -2,7 +2,6 @@
 {
     using global::System.Collections.Generic;
 
-    using Chessbook.Data.Common.Models;
     using Chessbook.Data.Models.Phone;
 
     public class Contact : BaseEntity // BaseTrackableEntity

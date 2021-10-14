@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Nop.Core.Domain.Security;
+using Chessbook.Core.Domain.Security;
 
-namespace Nop.Services.Security
+namespace Chessbook.Services.Security
 {
     /// <summary>
     /// Permission provider

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Chessbook.Data.Models;
-using Nop.Core.Domain.Customers;
-using Nop.Core.Domain.Security;
 
-namespace Nop.Services.Security
+using Chessbook.Data.Models;
+using Chessbook.Core.Domain.Customers;
+using Chessbook.Core.Domain.Security;
+
+namespace Chessbook.Services.Security
 {
     /// <summary>
     /// Permission service interface

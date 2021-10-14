@@ -1,4 +1,4 @@
-﻿namespace Nop.Core.Configuration
+﻿namespace Chessbook.Core.Configuration
 {
     /// <summary>
     /// Setting interface

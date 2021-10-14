@@ -38,18 +38,12 @@ export class MyAccountNotificationPreferencesComponent implements OnInit, OnDest
   constructor(private userNotificationService: UserNotificationService, private serverService: ServerService, private notifier: Notifier,
               private userStore: UserStore, private toasterService: NbToastrService) {
     this.labelNotifications = {
-      newVideoFromSubscription: `New video from your subscriptions`,
-      newCommentOnMyVideo: `New comment on your video`,
+      newVideoFromSubscription: `New post from your subscriptions`,
+      newCommentOnMyVideo: `New comment on your post`,
       abuseAsModerator: `New abuse`,
-      videoAutoBlacklistAsModerator: `Video blocked automatically waiting review`,
-      blacklistOnMyVideo: `One of your video is blocked/unblocked`,
-      myVideoPublished: `Video published (after transcoding/scheduled update)`,
-      myVideoImportFinished: `Video import finished`,
-      newUserRegistration: `A new user registered on your instance`,
-      newFollow: `You or your channel(s) has a new follower`,
-      commentMention: `Someone mentioned you in video comments`,
-      newInstanceFollower: `Your instance has a new follower`,
-      autoInstanceFollowing: `Your instance automatically followed another instance`,
+      blacklistOnMyVideo: `One of your post is blocked/unblocked`,
+      newFollow: `You has a new follower`,
+      commentMention: `Someone mentioned you in post comments`,
       abuseNewMessage: `An abuse report received a new message`,
       abuseStateChange: `One of your abuse reports has been accepted or rejected by moderators`
     };
@@ -57,10 +51,7 @@ export class MyAccountNotificationPreferencesComponent implements OnInit, OnDest
 
     this.rightNotifications = {
       abuseAsModerator: UserRight.MANAGE_ABUSES,
-      videoAutoBlacklistAsModerator: UserRight.MANAGE_VIDEO_BLACKLIST,
-      newUserRegistration: UserRight.MANAGE_USERS,
-      newInstanceFollower: UserRight.MANAGE_SERVER_FOLLOW,
-      autoInstanceFollowing: UserRight.MANAGE_CONFIGURATION
+      // ..
     };
   }
 

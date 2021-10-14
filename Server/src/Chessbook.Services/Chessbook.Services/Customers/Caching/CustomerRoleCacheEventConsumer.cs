@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Nop.Core.Domain.Customers;
+
+using Chessbook.Core.Domain.Customers;
 using Chessbook.Services.Caching;
 
-namespace Nop.Services.Customers.Caching
+namespace Chessbook.Services.Customers.Caching
 {
     /// <summary>
     /// Represents a customer role cache event consumer

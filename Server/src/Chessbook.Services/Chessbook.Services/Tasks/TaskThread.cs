@@ -4,14 +4,14 @@ using System.Net.Http;
 using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
 
-using Nop.Core;
-using Nop.Core.Configuration;
-using Nop.Core.Domain.Tasks;
-using Nop.Core.Http;
-using Nop.Core.Infrastructure;
-using Nop.Services.Logging;
+using Chessbook.Core;
+using Chessbook.Core.Configuration;
+using Chessbook.Core.Domain.Tasks;
+using Chessbook.Core.Http;
+using Chessbook.Core.Infrastructure;
+using Chessbook.Services.Logging;
 
-namespace Nop.Services.Tasks
+namespace Chessbook.Services.Tasks
 {
     /// <summary>
     /// Represents task thread

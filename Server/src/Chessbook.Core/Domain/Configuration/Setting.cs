@@ -1,11 +1,11 @@
 using Chessbook.Data.Models;
 
-namespace Nop.Core.Domain.Configuration
+namespace Chessbook.Core.Domain.Configuration
 {
     /// <summary>
     /// Represents a setting
     /// </summary>
-    public partial class Setting : BaseEntity //  ILocalizedEntity
+    public partial class Setting : BaseEntity
     {
         public Setting()
         {

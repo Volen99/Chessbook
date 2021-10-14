@@ -1,8 +1,7 @@
 ﻿using FluentMigrator.Builders.Create.Table;
-using Nop.Core.Domain.Localization;
-using Nop.Data.Extensions;
+using Chessbook.Core.Domain.Localization;
 
-namespace Nop.Data.Mapping.Builders.Localization
+namespace Chessbook.Data.Mapping.Builders.Localization
 {
     /// <summary>
     /// Represents a locale string resource entity builder

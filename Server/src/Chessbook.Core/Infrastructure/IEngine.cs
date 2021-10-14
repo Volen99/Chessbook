@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Nop.Core.Configuration;
 
-namespace Nop.Core.Infrastructure
+using Chessbook.Core.Configuration;
+
+namespace Chessbook.Core.Infrastructure
 {
     /// <summary>
     /// Classes implementing this interface can serve as a portal for the various services composing the Nop engine. 

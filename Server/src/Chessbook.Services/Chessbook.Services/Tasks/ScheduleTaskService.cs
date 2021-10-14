@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Chessbook.Data;
-using Nop.Core.Domain.Tasks;
-using Nop.Data;
 
-namespace Nop.Services.Tasks
+using Chessbook.Data;
+using Chessbook.Core.Domain.Tasks;
+using Chessbook.Data;
+
+namespace Chessbook.Services.Tasks
 {
     /// <summary>
     /// Task service

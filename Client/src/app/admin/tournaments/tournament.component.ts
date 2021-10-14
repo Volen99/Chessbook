@@ -21,7 +21,7 @@ export class TournamentComponent implements OnInit {
               private tournamentService: TournamentService, private notifier: NbToastrService) {
     this.source.setPage(2);
 
-    this.tournamentService.listTournaments()
+    this.tournamentService.listTournaments('admin')
       .subscribe((dataServer) => {
           let data = dataServer.data;
           this.source.load(data);
@@ -118,7 +118,6 @@ export class TournamentComponent implements OnInit {
   }
 
   onEditConfirm(event) {
-    debugger
     this.tournamentService.edit(event.data.id, event.newData)
       .subscribe((data) => {
           event.confirm.resolve();

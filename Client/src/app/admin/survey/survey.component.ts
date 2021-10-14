@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SurveyService} from "../../shared/services/survey.service";
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
 
 
 @Component({
@@ -59,37 +60,37 @@ export class OptionComponent implements OnInit {
   handleOptionTitleChange = e => {
     // this.onChange(this.index, e.target.value);
     this.options[this.index] = e.target.value;
-  }
+  };
 
   handleOptionRemove = () => {
     this.options.splice(this.index, 1);
-  }
+  };
 
 
   handleToggleMultiple = e => {
     this.onToggleMultiple();
     e.preventDefault();
     e.stopPropagation();
-  }
+  };
 
   handleCheckboxKeypress = e => {
     if (e.key === 'Enter' || e.key === ' ') {
       this.handleToggleMultiple(e);
     }
-  }
+  };
 
   onSuggestionsClearRequested = () => {
     this.onClearSuggestions();
-  }
+  };
 
   onSuggestionsFetchRequested = (token) => {
     this.onFetchSuggestions(token);
-  }
+  };
 
   // @ts-ignore
   onSuggestionSelected = (tokenStart, token, value) => {
     this.onSuggestionSelected(tokenStart, token, value, ['poll', 'options', this.index]);
-  }
+  };
 
 }
 
@@ -106,8 +107,7 @@ export class SurveyComponent implements OnInit {
     multiple: false,
   };
 
-
-  constructor(private surveyService: SurveyService) {
+  constructor(private surveyService: SurveyService, private notifier: NbToastrService) {
   }
 
   ngOnInit(): void {
@@ -118,23 +118,25 @@ export class SurveyComponent implements OnInit {
 
   handleQuestionChange = (e) => {
     this.initialPoll.question = e.target.value;
-  }
+  };
 
   handleAddOption = () => {
     this.onAddOption('');
-  }
+  };
 
   handleSelectDuration = e => {
     this.onChangeSettings(e.target.value, this.initialPoll.isMultiple);
-  }
+  };
 
   handleToggleMultiple = () => {
     // this.onChangeSettings(this.expiresIn, !this.isMultiple);
-  }
+  };
 
   handlePublish() {
     this.surveyService.publish(this.initialPoll)
-        .subscribe();
+      .subscribe((data) => {
+        this.notifier.success('', 'If today is your lucky day, users will see the new survey 👽');
+      }, err => this.notifier.danger(err.message, 'Error'));
   }
 
 

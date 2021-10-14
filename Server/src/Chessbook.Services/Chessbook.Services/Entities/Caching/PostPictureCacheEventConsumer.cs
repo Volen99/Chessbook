@@ -1,7 +1,7 @@
 ﻿using Chessbook.Core.Domain.Posts;
 using Chessbook.Services.Caching;
 
-namespace Nop.Services.Catalog.Caching
+namespace Chessbook.Services.Catalog.Caching
 {
     /// <summary>
     /// Represents a product picture mapping cache event consumer

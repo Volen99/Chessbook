@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Nop.Core.Configuration;
-using Nop.Core.Domain.Configuration;
 
-namespace Nop.Services.Configuration
+using Chessbook.Core.Configuration;
+using Chessbook.Core.Domain.Configuration;
+
+namespace Chessbook.Services.Configuration
 {
     /// <summary>
     /// Setting service interface

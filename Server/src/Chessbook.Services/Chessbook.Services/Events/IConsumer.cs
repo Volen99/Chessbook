@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Nop.Services.Events
+namespace Chessbook.Services.Events
 {
     /// <summary>
     /// Consumer interface

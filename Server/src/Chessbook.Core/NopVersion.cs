@@ -1,7 +1,7 @@
-﻿namespace Nop.Core
+﻿namespace Chessbook.Core
 {
     /// <summary>
-    /// Represents nopCommerce version
+    /// Represents chessbook version
     /// </summary>
     public static class NopVersion
     {

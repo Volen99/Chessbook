@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Nop.Data
+namespace Chessbook.Data
 {
     /// <summary>
     /// Represents data provider type enumeration

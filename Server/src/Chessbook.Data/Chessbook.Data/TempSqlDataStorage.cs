@@ -2,7 +2,7 @@
 using LinqToDB;
 using LinqToDB.Data;
 
-namespace Nop.Data
+namespace Chessbook.Data
 {
     /// <summary>
     /// Represents temporary storage

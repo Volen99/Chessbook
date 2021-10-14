@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Nop.Core.Caching;
+using Chessbook.Core.Caching;
 
-namespace Nop.Services.Plugins
+namespace Chessbook.Services.Plugins
 {
     /// <summary>
     /// Represents default values related to plugins

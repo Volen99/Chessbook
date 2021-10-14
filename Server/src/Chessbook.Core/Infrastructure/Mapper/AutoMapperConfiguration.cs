@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace Nop.Core.Infrastructure.Mapper
+namespace Chessbook.Core.Infrastructure.Mapper
 {
     /// <summary>
     /// AutoMapper configuration

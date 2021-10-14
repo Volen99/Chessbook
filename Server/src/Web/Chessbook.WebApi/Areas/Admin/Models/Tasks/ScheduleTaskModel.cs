@@ -1,6 +1,6 @@
-﻿using Nop.Web.Framework.Models;
+﻿using Chessbook.Web.Framework.Models;
 
-namespace Nop.Web.Areas.Admin.Models.Tasks
+namespace Chessbook.Web.Areas.Admin.Models.Tasks
 {
     /// <summary>
     /// Represents a schedule task model

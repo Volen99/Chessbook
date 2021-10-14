@@ -1,7 +1,7 @@
-﻿using Nop.Core.Caching;
-using Nop.Core.Domain.Configuration;
+﻿using Chessbook.Core.Caching;
+using Chessbook.Core.Domain.Configuration;
 
-namespace Nop.Services.Configuration
+namespace Chessbook.Services.Configuration
 {
     /// <summary>
     /// Represents default values related to configuration services

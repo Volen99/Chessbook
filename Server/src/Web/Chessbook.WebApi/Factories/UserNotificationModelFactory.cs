@@ -1,14 +1,17 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 using Chessbook.Core.Domain.Notifications;
 using Chessbook.Services.Data;
-using Chessbook.Services.Data.Services;
+using Chessbook.Services;
 using Chessbook.Services.Data.Services.Entities;
 using Chessbook.Services.Entities;
 using Chessbook.Web.Api.Areas.Admin.Models.Users;
 using Chessbook.Web.Api.Models.Posts;
 using Chessbook.Web.Api.Models.Relationships;
 using Chessbook.Web.Api.Models.UserNotification;
+using Chessbook.Services.Helpers;
+using Chessbook.Services.Relationships;
 
 namespace Chessbook.Web.Api.Factories
 {
@@ -19,15 +22,20 @@ namespace Chessbook.Web.Api.Factories
         private readonly IUserModelFactory userModelFactory;
         private readonly IRelationshipService relationshipService;
         private readonly IPostCommentService postCommentService;
+        private readonly IDateTimeHelper dateTimeHelper;
+        private readonly IFollowService followService;
 
         public UserNotificationModelFactory(IPostsService postService, IUserService userService, IUserModelFactory userModelFactory,
-            IRelationshipService relationshipService, IPostCommentService postCommentService)
+            IRelationshipService relationshipService, IPostCommentService postCommentService, IDateTimeHelper dateTimeHelper,
+            IFollowService followService)
         {
             this.postService = postService;
             this.userService = userService;
             this.userModelFactory = userModelFactory;
             this.relationshipService = relationshipService;
             this.postCommentService = postCommentService;
+            this.dateTimeHelper = dateTimeHelper;
+            this.followService = followService;
         }
 
         public async Task<UserNotificationModel> PrepareUserNotificationModelAsync(UserNotification notification)
@@ -38,8 +46,8 @@ namespace Chessbook.Web.Api.Factories
                 Id = notification.Id,
                 Type = (int)notification.Type,
                 Read = notification.Read,
-                CreatedAt = notification.CreatedAt,
-                UpdatedAt = notification.UpdatedAt,
+                CreatedAt = await this.dateTimeHelper.ConvertToUserTimeAsync(notification.CreatedAt, DateTimeKind.Utc),
+                UpdatedAt = await this.dateTimeHelper.ConvertToUserTimeAsync(notification.UpdatedAt, DateTimeKind.Utc),
             };
 
             if (notification.PostId.HasValue)
@@ -100,16 +108,16 @@ namespace Chessbook.Web.Api.Factories
                 model.Comment = comment;
 
             }
-            else if (notification.RelationshipId.HasValue)
+            else if (notification.UserFollowId.HasValue)
             {
                 // relationship
-                var relationship = await this.relationshipService.GetByIdAsync(notification.RelationshipId.Value);
+                var userFollow = await this.followService.GetByIdAsync(notification.UserFollowId.Value);
 
-                var follower = await this.userService.GetCustomerByIdAsync(relationship.SourceId);
+                var follower = await this.userService.GetCustomerByIdAsync(userFollow.UserId);
                 var avatarUrl = await this.userModelFactory.PrepareCustomerAvatarModelAsync(follower.Id);
                 var follow = new FollowInfoModel
                 {
-                    Id = relationship.Id,
+                    Id = userFollow.Id,
                     Follower = new UserInfoModel
                     {
                         Id = follower.Id,

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {Observable} from "rxjs";
@@ -70,7 +70,8 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
               protected notifier: NbToastrService,
               protected userStore: UserStore,
               private userFollowService: UserFollowService,
-              protected initCurrentUser: InitUserService
+              protected initCurrentUser: InitUserService,
+              private cdr: ChangeDetectorRef,
 ) {
     super();
   }
@@ -145,9 +146,7 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
     return postsCount * 670;
   }
 
-  setTransform(i: number): number {
-    return i * 388.7; // 😁
-  }
+  postTransformBuffer: number = 0;
 
   firstCard = {
     news: [],
@@ -164,6 +163,7 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
   pageSize = 10;
 
   removeVideoFromArray(post: Post) {
+    debugger
     super.removeVideoFromArray(post);
   }
 
@@ -171,6 +171,11 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
     this.filter = this.buildLocalFilter(this.filter, 'local');
 
     this.reloadVideos();
+  }
+
+  setTransformBuffer = buffer => {
+    this.postTransformBuffer = buffer;
+    // this.cdr.detectChanges();
   }
 
 }

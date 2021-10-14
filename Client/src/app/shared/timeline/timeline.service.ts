@@ -8,7 +8,7 @@ import {IGetRetweetsOfMeTimelineParameters} from "../models/timeline/get-retweet
 import {RestService} from "../../core/rest/rest.service";
 import {TimelineQueryGeneratorService} from "./query/timeline-query-generator.service";
 import {TimelineApi} from "./backend/timeline.api";
-import {IPost} from "../posts/models/tweet";
+import {IPost} from "../posts/models/post.model";
 
 @Injectable()
 export class TimelineService {

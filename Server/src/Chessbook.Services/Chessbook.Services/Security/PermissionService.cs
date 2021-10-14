@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Chessbook.Data;
 using Chessbook.Data.Models;
-using Chessbook.Services.Data.Services;
-using Nop.Core;
-using Nop.Core.Caching;
-using Nop.Core.Domain.Customers;
-using Nop.Core.Domain.Security;
-using Nop.Data;
-using Nop.Services.Customers;
+using Chessbook.Services;
+using Chessbook.Core;
+using Chessbook.Core.Caching;
+using Chessbook.Core.Domain.Customers;
+using Chessbook.Core.Domain.Security;
 
-namespace Nop.Services.Security
+namespace Chessbook.Services.Security
 {
     /// <summary>
     /// Permission service
@@ -152,9 +151,9 @@ namespace Nop.Services.Security
         /// <returns>A task that represents the asynchronous operation</returns>
         public virtual async Task InstallPermissionsAsync(IPermissionProvider permissionProvider)
         {
-            //install new permissions
+            // install new permissions
             var permissions = permissionProvider.GetPermissions();
-            //default customer role mappings
+            // default customer role mappings
             var defaultPermissions = permissionProvider.GetDefaultPermissions().ToList();
 
             foreach (var permission in permissions)
@@ -163,7 +162,7 @@ namespace Nop.Services.Security
                 if (permission1 != null)
                     continue;
 
-                //new permission (install it)
+                // new permission (install it)
                 permission1 = new PermissionRecord
                 {
                     Name = permission.Name,
@@ -179,7 +178,7 @@ namespace Nop.Services.Security
                     var customerRole = await _customerService.GetCustomerRoleBySystemNameAsync(defaultPermission.systemRoleName);
                     if (customerRole == null)
                     {
-                        //new role (save it)
+                        // new role (save it)
                         customerRole = new CustomerRole
                         {
                             Name = defaultPermission.systemRoleName,
@@ -290,7 +289,9 @@ namespace Nop.Services.Security
         public virtual async Task<bool> AuthorizeAsync(string permissionRecordSystemName, int customerRoleId)
         {
             if (string.IsNullOrEmpty(permissionRecordSystemName))
+            {
                 return false;
+            }
 
             var key = _staticCacheManager.PrepareKeyForDefaultCache(NopSecurityDefaults.PermissionAllowedCacheKey, permissionRecordSystemName, customerRoleId);
 

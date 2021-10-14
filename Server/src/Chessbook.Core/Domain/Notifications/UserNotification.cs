@@ -3,7 +3,6 @@
 using Chessbook.Core.Domain.Posts;
 using Chessbook.Core.Domain.Relationships;
 using Chessbook.Data.Models;
-using Chessbook.Data.Models.Post;
 
 namespace Chessbook.Core.Domain.Notifications
 {

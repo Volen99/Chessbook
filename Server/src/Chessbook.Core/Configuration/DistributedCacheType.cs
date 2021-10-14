@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Nop.Core.Configuration
+namespace Chessbook.Core.Configuration
 {
     /// <summary>
     /// Represents distributed cache types enumeration

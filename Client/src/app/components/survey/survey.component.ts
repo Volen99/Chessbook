@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
   Input,
@@ -8,12 +7,15 @@ import {
   SimpleChanges
 } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import { debounce } from 'lodash';
 
 import {IPoll} from "../../shared/posts/models/poll/poll";
 import {environment} from "../../../environments/environment";
 import {IPollOption} from "../../shared/posts/models/poll/poll-option";
-import {Month} from "../../pages/my-account/my-account-settings/my-account-profile/my-account-profile.component";
 import {SurveyService} from "../../shared/services/survey.service";
+import {UserStore} from "../../core/stores/user.store";
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-survey',
@@ -28,11 +30,14 @@ export class SurveyComponent implements OnInit, OnChanges {
   private _timer: any;
 
   // private dateService: NbDateService<Date> -> just to remind to that there is such service kk..
-  constructor(private http: HttpClient, private surveyService: SurveyService, protected cd: ChangeDetectorRef) {
+  constructor(private http: HttpClient, private surveyService: SurveyService,
+              protected cd: ChangeDetectorRef, private userStore: UserStore,
+              private notifier: NbToastrService) {
+
   }
 
   ngOnInit(): void {
-    this.timeRemaining = this.expired ? 'Closed' : this.poll.expires_at;
+    this.timeRemaining = this.expired ? 'Closed' : this.poll.expiresAt;
     this.showResults = this.poll.alreadyVoted || this.expired;
 
     if (this.poll.votersCount !== null && this.poll.votersCount !== undefined) {
@@ -70,9 +75,13 @@ export class SurveyComponent implements OnInit, OnChanges {
   votesCount: any = null;
 
   handleVote = () => {
+    if (!this.userStore.isLoggedIn()) {
+      this.notifier.warning('', 'You need to be logged in to vote');
+      return;
+    }
+
     if (this.poll.alreadyVoted) {
       this.alreadyVotedWarning = true;
-
       return;
     }
 
@@ -89,22 +98,31 @@ export class SurveyComponent implements OnInit, OnChanges {
 
         this.cd.detectChanges(); // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
       });
-  };
+  }
 
   get apiUrl(): string {
     return environment.apiUrl;
   }
 
   handleRefresh = () => {
-    this.refresh();
-  };
+    debounce(
+      () => {
+        this.surveyService.getPoll(this.poll.id)
+          .subscribe((data: IPoll) => {
+            this.poll = data;
+          });
+      },
+      1000,
+      { leading: true },
+    );
+  }
 
   timeRemaining: any;
   showResults: boolean;
 
   handleOptionChange = (value) => {  // { target: { value } }
     this._toggleOption(value);
-  };
+  }
 
   handleOptionKeyPress = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -112,14 +130,15 @@ export class SurveyComponent implements OnInit, OnChanges {
       e.stopPropagation();
       e.preventDefault();
     }
-  };
+  }
 
 
+  // FIXME: you don't use this. You go here, assign {8: true}, but then it is just 8
   private _toggleOption = value => {
     const tmp = {};
     tmp[value] = true;
     this.selected = tmp;
-  };
+  }
 
   // by mi
 

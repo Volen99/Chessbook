@@ -1,15 +1,15 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-using Nop.Core;
+using Chessbook.Core;
 using Chessbook.Core.Domain.Tournaments;
-using Chessbook.Services.Data.Services;
+using Chessbook.Services;
 using Chessbook.Services.Tournaments;
 using Chessbook.Web.Api.Areas.Admin.Models.Tournaments;
 
 namespace Chessbook.Web.Api.Areas.Admin.Controllers
 {
-    [Route("tournaments")]
+    [Route("admin/tournaments")]
     public class TournamentsController : BaseAdminController
     {
         private readonly IUserService userService;

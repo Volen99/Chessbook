@@ -14,7 +14,7 @@
 
         public int PostId { get; set; }
 
-        public virtual Chessbook.Core.Domain.Posts.Post Post { get; set; }
+        public virtual Core.Domain.Posts.Post Post { get; set; }
 
         public long UserId { get; set; }
 

@@ -6,7 +6,7 @@ import {HubConnection, HubConnectionBuilder, LogLevel} from "@microsoft/signalr"
 import {InitUserService} from "../../theme/services/init-user.service";
 import {NbAuthService} from "../../sharebook-nebular/auth/services/auth.service";
 import {NbTokenLocalStorage} from "../../sharebook-nebular/auth/services/token/token-storage";
-import {IPost} from "../../shared/posts/models/tweet";
+import {IPost} from "../../shared/posts/models/post.model";
 import {takeUntil} from "rxjs/operators";
 import {IUser} from "../interfaces/common/users";
 import {User} from "../../shared/shared-main/user/user.model";

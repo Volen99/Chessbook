@@ -1,4 +1,4 @@
-﻿import {IPost} from "./tweet";
+﻿import {IPost} from "./post.model";
 import {ITweetFromSearchMetadata} from "./DTO/tweet-from-search-metadata";
 
 export interface ITweetWithSearchMetadata extends IPost {

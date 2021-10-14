@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nop.Core.Domain.Localization;
 
-namespace Nop.Services.Localization
+using Chessbook.Core.Domain.Localization;
+
+namespace Chessbook.Services.Localization
 {
     /// <summary>
     /// Language service interface

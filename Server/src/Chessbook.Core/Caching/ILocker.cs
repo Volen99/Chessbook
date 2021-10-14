@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nop.Core.Caching
+namespace Chessbook.Core.Caching
 {
     public interface ILocker
     {

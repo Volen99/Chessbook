@@ -21,6 +21,11 @@
         </a>
       </div>
 
+      <button nbButton status="primary" size="small" style="margin-left: 0.5rem;" (click)="this.handleExport()">
+        <fa-icon [icon]="this.faDownload" style="font-size: 14px;"></fa-icon>
+        Export to Excel (all found)
+      </button>
+
       <div class="ml-auto">
         <my-advanced-input-filter [filters]="inputFilters" (search)="onSearch($event)"></my-advanced-input-filter>
       </div>

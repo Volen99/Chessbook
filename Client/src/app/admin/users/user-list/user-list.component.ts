@@ -1,6 +1,8 @@
-import {SortMeta} from 'primeng/api';
-import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {SortMeta} from 'primeng/api';
+import {saveAs} from 'file-saver';
+
 import {IUser} from "../../../core/interfaces/common/users";
 import {RestTable} from "../../../core/rest/rest-table";
 import {UserBanModalComponent} from "../../../shared/shared-moderation/user-ban-modal.component";
@@ -13,10 +15,12 @@ import {ServerService} from "../../../core/server/server.service";
 import {UserStore} from "../../../core/stores/user.store";
 import {UsersService} from "../../../core/backend/common/services/users.service";
 import {UserRole} from "../../../shared/models/users/user-role";
+import {GdprService} from "../../../shared/services/gdpr.service";
 
 import {
   faChevronRight,
   faChevronDown,
+  faDownload,
 } from '@fortawesome/pro-light-svg-icons';
 
 
@@ -35,7 +39,8 @@ type UserForList = IUser & {
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  styleUrls: ['./user-list.component.scss'],
+  providers: [GdprService],
 })
 export class UserListComponent extends RestTable implements OnInit {
   @ViewChild('userBanModal', {static: true}) userBanModal: UserBanModalComponent;
@@ -70,7 +75,8 @@ export class UserListComponent extends RestTable implements OnInit {
     private confirmService: ConfirmService,
     private serverService: ServerService,
     private userStore: UserStore,
-    private userService: UsersService
+    private userService: UsersService,
+    private gdprService: GdprService,
   ) {
     super();
   }
@@ -140,6 +146,7 @@ export class UserListComponent extends RestTable implements OnInit {
   // light
   faChevronDown = faChevronDown;
   faChevronRight = faChevronRight;
+  faDownload = faDownload;
 
   // solid
   faColumns = faColumns;
@@ -250,5 +257,12 @@ export class UserListComponent extends RestTable implements OnInit {
 
       err => this.notifier.danger(err.message, 'Error')
     );
+  }
+
+  handleExport() {
+    this.gdprService.exportUsers()
+      .subscribe((data) => {
+        saveAs(data.body, 'users.xlsx');
+      }, err => this.notifier.danger(err.message, 'Error'));
   }
 }

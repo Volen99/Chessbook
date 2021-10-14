@@ -3,9 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Chessbook.Data.Models;
-using Nop.Core.Domain.Stores;
+using Chessbook.Core.Domain.Stores;
 
-namespace Nop.Services.Stores
+namespace Chessbook.Services.Stores
 {
     /// <summary>
     /// Store mapping service interface

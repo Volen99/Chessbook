@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Nop.Core.Configuration
+namespace Chessbook.Core.Configuration
 {
     /// <summary>
     /// Represents a configuration from app settings

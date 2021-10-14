@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Text.RegularExpressions;
-using Nop.Core.Infrastructure;
 
-namespace Nop.Core
+using Chessbook.Core.Infrastructure;
+
+namespace Chessbook.Core
 {
     /// <summary>
     /// Represents a common helper

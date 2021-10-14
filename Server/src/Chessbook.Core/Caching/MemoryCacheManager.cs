@@ -5,9 +5,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Primitives;
-using Nop.Core.Configuration;
 
-namespace Nop.Core.Caching
+using Chessbook.Core.Configuration;
+
+namespace Chessbook.Core.Caching
 {
     /// <summary>
     /// Represents a memory cache manager 

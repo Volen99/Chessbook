@@ -1,8 +1,7 @@
-﻿namespace Chessbook.Services.Data.Services
+﻿namespace Chessbook.Services.Configuration
 {
     using System.Threading.Tasks;
     using Chessbook.Data.Models;
-    using Chessbook.Web.Models;
 
     public interface ISettingsService
     {

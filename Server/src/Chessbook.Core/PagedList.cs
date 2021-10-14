@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nop.Core
+namespace Chessbook.Core
 {
     /// <summary>
     /// Paged list

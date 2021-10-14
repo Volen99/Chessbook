@@ -84,18 +84,24 @@
 
       <div class="form-group">
         <label i18n for="role">Role</label>
-        <div class="peertube-select-container">
-            <select id="role" formControlName="role" class="form-control">
-              <option *ngFor="let role of roles" [value]="role.value">
-               {{ role.label }}
-              </option>
-            </select>
+<!--        <div class="peertube-select-container">-->
+<!--            <select id="role" formControlName="role" class="form-control">-->
+<!--              <option *ngFor="let role of roles" [value]="(role.value)">-->
+<!--               {{ role.label }}-->
+<!--              </option>-->
+<!--            </select>-->
+
+          <nb-select multiple placeholder="Multiple Select" id="role" formControlName="role">
+            <nb-option *ngFor="let role of roles" [value]="(role.value)">
+              {{ role.label }}
+            </nb-option>
+          </nb-select>
         </div>
 
         <div *ngIf="formErrors.role" class="form-error">
           {{ formErrors.role }}
         </div>
-      </div>
+<!--      </div>-->
 
       <div class="form-group">
         <app-peertube-checkbox

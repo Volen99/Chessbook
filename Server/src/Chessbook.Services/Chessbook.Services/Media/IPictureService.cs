@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+
 using Chessbook.Core.Domain.Posts;
 using Chessbook.Data.Models.Media;
-using Chessbook.Data.Models.Memory;
-using Chessbook.Data.Models.Post;
-using Microsoft.AspNetCore.Http;
 
 namespace Chessbook.Services.Data.Services.Media
 {
@@ -174,7 +173,7 @@ namespace Chessbook.Services.Data.Services.Media
         /// A task that represents the asynchronous operation
         /// The task result contains the picture
         /// </returns>
-        Task<Picture> InsertPictureAsync(Session formFile, string filePath, string defaultFileName = "", string virtualPath = "");
+        Task<Picture> InsertPictureAsync(IFormFile formFile, string defaultFileName = "", string virtualPath = "");
 
         /// <summary>
         /// Updates the picture

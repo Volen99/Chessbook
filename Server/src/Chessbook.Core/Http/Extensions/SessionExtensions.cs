@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace Nop.Core.Http.Extensions
+namespace Chessbook.Core.Http.Extensions
 {
     /// <summary>
     /// Represents extensions of ISession

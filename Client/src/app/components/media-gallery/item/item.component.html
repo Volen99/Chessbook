@@ -1,10 +1,10 @@
-<ng-container *ngIf="this.attachment.get('type') === 'unknown'">
+<ng-container *ngIf="!this.attachment"> <!--.get('type')--> <!--TODO: check for unknown-->
     <div class="media-gallery__item {{this.standalone}}"
          [ngStyle]="{'left': this.left, 'top': this.top, 'right': this.right, 'bottom': this.bottom, 'width': this.width + '%', 'height': this.height + '%'}">
-        <a class="media-gallery__item-thumbnail" [href]="attachment.get('remote_url') || attachment.get('url')"
-           [style]="{'cursor': 'pointer'}" [title]="attachment.get('description')" target="_blank">
+        <a class="media-gallery__item-thumbnail" [href]="this.attachment.imageUrl"
+           [style]="{'cursor': 'pointer'}" target="_blank">
             <!--rel='noopener noreferrer'-->
-            <app-blurhash class="media-gallery__preview" [hash]="attachment.get('blurhash')" [dummy]="true">
+            <app-blurhash [canvasProps]="'media-gallery__preview'" [hash]="attachment.blurhash" [dummy]="true">
             </app-blurhash>
         </a>
     </div>
@@ -13,21 +13,22 @@
 
 <div class="media-gallery__item {{this.standalone}}"
      [ngStyle]="{'left': this.left, 'top': this.top, 'right': this.right, 'bottom': this.bottom, 'width': this.width + '%', 'height': this.height + '%'}">
-    <a class="media-gallery__item-thumbnail" [href]="attachment.get('remote_url') || attachment.get('url')"
-       [style]="{'cursor': 'pointer'}" [title]="attachment.get('description')" target="_blank">
+    <a class="media-gallery__item-thumbnail" [href]="this.attachment.imageUrl"
+       [style]="{'cursor': 'pointer'}" target="_blank"
+       (click)="this.handleClick($event)">
         <!--rel='noopener noreferrer'-->
         <app-blurhash
-                [ngClass]="{'media-gallery__preview': true, 'media-gallery__preview--hidden': this.visible && this.loaded}"
-                [hash]="attachment.get('blurhash')" [dummy]="true">
+                [canvasProps]="{'media-gallery__preview': true, 'media-gallery__preview--hidden': this.visible && this.loaded}"
+                [hash]="attachment.blurhash" [dummy]="true">
         </app-blurhash>
 
-        <ng-container *ngIf="this.attachment.get('type') === 'image' && this.visible">
-            <a class="media-gallery__item-thumbnail" [href]="this.attachment.get('remote_url') || this.originalUrl"
+        <ng-container *ngIf="this.visible"> <!--this.attachment.get('type') === 'image' &&-->
+            <a class="media-gallery__item-thumbnail" [href]="this.originalUrl"
                (click)="this.onClick" target="_blank"> <!--rel='noopener noreferrer'-->
                 <img [src]="this.previewUrl"
                      srcSet="{{this.srcSet}}"
                      [sizes]="this.sizes"
-                     [alt]="attachment.get('description')"
+                     [alt]="attachment.id"
                      [style]="{objectPosition: this.x + '%' + ' ' + this.y + '%'}">
             </a>
         </ng-container>

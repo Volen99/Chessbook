@@ -42,6 +42,7 @@ export interface ActorInfo {
   displayName: string;
   screenName: string;
   host: string;
+  avatarUrl: string;
   avatar?: {
     path: string
   };

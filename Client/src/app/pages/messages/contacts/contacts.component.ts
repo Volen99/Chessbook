@@ -3,6 +3,19 @@ import { takeWhile } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 
 import {Contact, PhoneData, RecentUser} from "../../../core/interfaces/iot/phone";
+import {ChatService} from "../../../shared/shared-messages/chat.service";
+import {ActorInfo} from "../../../shared/models/users/user-notification.model";
+
+export interface PrivateMessage {
+  id: number;
+  fromUser: ActorInfo;
+
+  toCustomerId: number;
+  subject: number;
+  message: string;
+  createdOn: number;
+  isRead: number;
+}
 
 @Component({
   selector: 'ngx-contacts',
@@ -13,18 +26,20 @@ export class ContactsComponent implements OnDestroy {
 
   private alive = true;
 
-  contacts: any[];
-  recent: any[];
+  contacts: PrivateMessage[];
+  recent: PrivateMessage[];
 
-  constructor(private phoneService: PhoneData) {
+  constructor(private chatService: ChatService) {
     forkJoin([
-      this.phoneService.getContacts(),
-      this.phoneService.getRecentUsers(),
+      this.chatService.getAllPrivateMessagesAsync('inbox'),
+      this.chatService.getAllPrivateMessagesAsync('sent')
     ])
       .pipe(takeWhile(() => this.alive))
-      .subscribe(([contacts, recent]: [Contact[], RecentUser[]]) => {
-        this.contacts = contacts;
-        this.recent = recent;
+      .subscribe(([inbox, sent]: [PrivateMessage[], PrivateMessage[]]) => {
+        // @ts-ignore
+        this.contacts = inbox.data;
+        // @ts-ignore
+        this.recent = sent.data;
       });
   }
 

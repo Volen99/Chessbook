@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nop.Core.Domain.Directory;
 
-namespace Nop.Services.Directory
+using Chessbook.Core.Domain.Directory;
+
+namespace Chessbook.Services.Directory
 {
     /// <summary>
     /// Country service interface
     /// </summary>
-    public partial interface ICountryService
+    public interface ICountryService
     {
         /// <summary>
         /// Deletes a country

@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Chessbook.Data.Models;
-using Nop.Core.Domain.Localization;
 
-namespace Nop.Core
+using Chessbook.Data.Models;
+using Chessbook.Core.Domain.Localization;
+
+namespace Chessbook.Core
 {
     /// <summary>
     /// Represents work context

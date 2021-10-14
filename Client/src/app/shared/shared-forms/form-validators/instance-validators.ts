@@ -12,7 +12,7 @@ export const FROM_EMAIL_VALIDATOR: BuildFormValidator = {
 export const FROM_NAME_VALIDATOR: BuildFormValidator = {
   VALIDATORS: [
     Validators.required,
-    Validators.minLength(1),
+    Validators.minLength(2),
     Validators.maxLength(120)
   ],
   MESSAGES: {
@@ -25,7 +25,7 @@ export const FROM_NAME_VALIDATOR: BuildFormValidator = {
 export const SUBJECT_VALIDATOR: BuildFormValidator = {
   VALIDATORS: [
     Validators.required,
-    Validators.minLength(1),
+    Validators.minLength(3),
     Validators.maxLength(120)
   ],
   MESSAGES: {

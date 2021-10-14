@@ -30,6 +30,28 @@
             </div>
 
             <div class="form-group col-12 col-lg-8 col-xl-9">
+                <nb-card>
+                    <nb-card-header>Country</nb-card-header>
+                    <nb-card-body>
+                        <nb-select [selected]="this.countryId" (selectedChange)="this.changeCountry($event)" status="primary" fullWidth>
+                            <nb-option *ngFor="let country of this.utcStuff?.countries" [value]="country.value"> {{ country.text }}</nb-option>
+                        </nb-select>
+                    </nb-card-body>
+                </nb-card>
+            </div>
+
+            <div class="form-group col-12 col-lg-8 col-xl-9">
+                <nb-card>
+                    <nb-card-header>Time zone</nb-card-header>
+                    <nb-card-body>
+                        <nb-select [selected]="this.timeZoneId" (selectedChange)="this.changeTimeZone($event)" status="primary" fullWidth>
+                            <nb-option *ngFor="let timeZone of this.utcStuff?.timeZones" [value]="timeZone.value"> {{ timeZone.text }}</nb-option>
+                        </nb-select>
+                    </nb-card-body>
+                </nb-card>
+            </div>
+
+            <div class="form-group col-12 col-lg-8 col-xl-9">
                 <div aria-label="Date of birth" role="group" class="sharebook-container r-1v1z2uz">
                     <div dir="auto" class="css-901oao r-1fmj7o5 font-family r-a023e6 font-weight-700 r-rjixqe min-width-0px text-overflow-wrap">
                         <span class="css-901oao paragraph text-font-family min-width-0px text-overflow-wrap">Gender</span></div>
@@ -38,8 +60,8 @@
                     </div>
                     <div class="sharebook-container">
                         <nb-radio-group [(value)]="this.genderSelected">
-                            <nb-radio [value]="'Female'" title="female"> <fa-icon [icon]="this.faChessQueenAlt" size="2x"></fa-icon> Female </nb-radio>
-                            <nb-radio [value]="'Male'" title="male"> <fa-icon [icon]="this.faChessKingAlt" size="2x"></fa-icon> Male </nb-radio>
+                            <nb-radio [value]="'Female'" title="female"> Female </nb-radio>
+                            <nb-radio [value]="'Male'" title="male"> Male </nb-radio>
                             <nb-radio [value]="'Other'" title="other"> Other </nb-radio>
                         </nb-radio-group>
                     </div>
@@ -56,7 +78,7 @@
                     </div>
                     <div class="sharebook-container">
                         <div aria-label="Date of birth" role="group" class="sharebook-container flex-direction-row r-1r5su4o">
-                            <div class="sharebook-container r-kemksi main-left-right-vertical-border-color input-form-border border-width-1px r-16xksha r-1b7u577">
+                            <div style="border-width: 0px;" class="sharebook-container r-kemksi main-left-right-vertical-border-color input-form-border border-width-1px r-16xksha r-1b7u577">
                                 <div dir="auto"
                                      class="css-901oao third-wheel-color font-family r-n6v787 font-weight-400 r-1cwl3u0 min-width-0px r-1pn2ns4 r-tskmnb r-633pao position-absolute text-overflow-wrap">
                                     <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Month</span></div>
@@ -64,7 +86,7 @@
                                         <nb-option *ngFor="let month of this.months | enumToArray" [value]="month.index"> {{ month.name }}</nb-option>
                                     </nb-select>
                             </div>
-                            <div class="sharebook-container r-kemksi main-left-right-vertical-border-color input-form-border border-width-1px flex-grow-expand r-1b7u577">
+                            <div style="border-width: 0px;" class="sharebook-container r-kemksi main-left-right-vertical-border-color input-form-border border-width-1px flex-grow-expand r-1b7u577">
                                 <div dir="auto"
                                      class="css-901oao third-wheel-color font-family r-n6v787 font-weight-400 r-1cwl3u0 min-width-0px r-1pn2ns4 r-tskmnb r-633pao position-absolute text-overflow-wrap">
                                     <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Day</span></div>
@@ -72,7 +94,7 @@
                                     <nb-option *ngFor="let day of this.days" value="{{day}}"> {{ day }}</nb-option>
                                 </nb-select>
                             </div>
-                            <div class="sharebook-container r-kemksi main-left-right-vertical-border-color input-form-border border-width-1px flex-grow-expand">
+                            <div style="border-width: 0px;" class="sharebook-container r-kemksi main-left-right-vertical-border-color input-form-border border-width-1px flex-grow-expand">
                                 <div dir="auto"
                                      class="css-901oao third-wheel-color font-family r-n6v787 font-weight-400 r-1cwl3u0 min-width-0px r-1pn2ns4 r-tskmnb r-633pao position-absolute text-overflow-wrap">
                                     <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Year</span></div>
@@ -88,65 +110,54 @@
             <div class="form-group col-12 col-lg-8 col-xl-9">
                 <label for="inputDisplayName">Website</label>
                 <input nbInput fullWidth id="inputWebsiteLink" formControlName="websiteLink"
-                       [status]="(websiteLink?.errors?.required || websiteLink?.hasError('minlength') || websiteLink?.hasError('maxlength')) && websiteLink.touched ? 'danger' : 'primary'"
-                       class="form-control" placeholder="Website link">
-                <ngx-validation-message label="websiteLink"
-                                        [showMinLength]="websiteLink?.hasError('minlength')"
-                                        [showMaxLength]="websiteLink?.hasError('maxlength')"
-                                        [showRequired]="websiteLink?.errors?.required && websiteLink.touched"
-                                        minLength=16
-                                        maxLength=72>
+                       [status]="(websiteLink?.errors?.required || websiteLink?.hasError('pattern')) && websiteLink.touched ? 'danger' : 'primary'"
+                       class="form-control" placeholder="Website link"
+                       type="url">
+                <ngx-validation-message label="website link"
+                                        [showPattern]="websiteLink?.hasError('pattern')"
+                                        [showRequired]="websiteLink?.errors?.required && websiteLink.touched">
                 </ngx-validation-message>
 
                 <label for="inputTwitterLink">Twitter</label>
                 <input nbInput fullWidth id="inputTwitterLink" formControlName="twitterLink"
-                       [status]="(twitterLink?.errors?.required || twitterLink?.hasError('minlength') || twitterLink?.hasError('maxlength')) && twitterLink.touched ? 'danger' : 'primary'"
-                       class="form-control" placeholder="Twitter link">
-                <ngx-validation-message label="twitterLink"
-                                        [showMinLength]="twitterLink?.hasError('minlength')"
-                                        [showMaxLength]="twitterLink?.hasError('maxlength')"
-                                        [showRequired]="twitterLink?.errors?.required && twitterLink.touched"
-                                        minLength=16
-                                        maxLength=72>
+                       [status]="(twitterLink?.errors?.required || twitterLink?.hasError('pattern')) && twitterLink.touched ? 'danger' : 'primary'"
+                       class="form-control" placeholder="Twitter link"
+                       type="url">
+                <ngx-validation-message label="twitter link"
+                                        [showPattern]="twitterLink?.hasError('pattern')"
+                                        [showRequired]="twitterLink?.errors?.required && twitterLink.touched">
                 </ngx-validation-message>
 
                 <label for="inputTwitchLink">Twitch</label>
                 <input nbInput fullWidth id="inputTwitchLink" formControlName="twitchLink"
-                       [status]="(twitchLink?.errors?.required || twitchLink?.hasError('minlength') || twitchLink?.hasError('maxlength')) && twitchLink.touched ? 'danger' : 'primary'"
-                       class="form-control" placeholder="Twitch link">
-                <ngx-validation-message label="twitchLink"
-                                        [showMinLength]="twitchLink?.hasError('minlength')"
-                                        [showMaxLength]="twitchLink?.hasError('maxlength')"
-                                        [showRequired]="twitchLink?.errors?.required && twitchLink.touched"
-                                        minLength=16
-                                        maxLength=72>
+                       [status]="(twitchLink?.errors?.required || twitchLink?.hasError('pattern')) && twitchLink.touched ? 'danger' : 'primary'"
+                       class="form-control" placeholder="Twitch link"
+                       type="url">
+                <ngx-validation-message label="twitch link"
+                                        [showPattern]="twitchLink?.hasError('pattern')"
+                                        [showRequired]="twitchLink?.errors?.required && twitchLink.touched">
                 </ngx-validation-message>
 
                 <label for="inputYoutubeLink">Youtube</label>
                 <input nbInput fullWidth id="inputYoutubeLink" formControlName="youtubeLink"
-                       [status]="(youtubeLink?.errors?.required || youtubeLink?.hasError('minlength') || youtubeLink?.hasError('maxlength')) && youtubeLink.touched ? 'danger' : 'primary'"
-                       class="form-control" placeholder="Youtube link">
-                <ngx-validation-message label="youtubeLink"
-                                        [showMinLength]="youtubeLink?.hasError('minlength')"
-                                        [showMaxLength]="youtubeLink?.hasError('maxlength')"
-                                        [showRequired]="youtubeLink?.errors?.required && youtubeLink.touched"
-                                        minLength=16
-                                        maxLength=72>
+                       [status]="(youtubeLink?.errors?.required || youtubeLink?.hasError('pattern')) && youtubeLink.touched ? 'danger' : 'primary'"
+                       class="form-control" placeholder="Youtube link"
+                       type="url">
+                <ngx-validation-message label="youtube link"
+                                        [showPattern]="youtubeLink?.hasError('pattern')"
+                                        [showRequired]="youtubeLink?.errors?.required && youtubeLink.touched">
                 </ngx-validation-message>
 
                 <label for="inputFacebookLink">Facebook</label>
                 <input nbInput fullWidth id="inputFacebookLink" formControlName="facebookLink"
-                       [status]="(facebookLink?.errors?.required || facebookLink?.hasError('minlength') || facebookLink?.hasError('maxlength')) && facebookLink.touched ? 'danger' : 'primary'"
-                       class="form-control" placeholder="Facebook link">
-                <ngx-validation-message label="facebookLink"
-                                        [showMinLength]="facebookLink?.hasError('minlength')"
-                                        [showMaxLength]="facebookLink?.hasError('maxlength')"
-                                        [showRequired]="facebookLink?.errors?.required && facebookLink.touched"
-                                        minLength=16
-                                        maxLength=72>
+                       [status]="(facebookLink?.errors?.required || facebookLink?.hasError('pattern')) && facebookLink.touched ? 'danger' : 'primary'"
+                       class="form-control" placeholder="Facebook link"
+                       type="url">
+                <ngx-validation-message label="facebook link"
+                                        [showPattern]="facebookLink?.hasError('pattern')"
+                                        [showRequired]="facebookLink?.errors?.required && facebookLink.touched">
                 </ngx-validation-message>
             </div>
-
         </div>
     </nb-card-body>
     <nb-card-footer>

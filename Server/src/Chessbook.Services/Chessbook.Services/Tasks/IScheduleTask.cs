@@ -1,4 +1,4 @@
-﻿namespace Nop.Services.Tasks
+﻿namespace Chessbook.Services.Tasks
 {
     /// <summary>
     /// Interface that should be implemented by each task

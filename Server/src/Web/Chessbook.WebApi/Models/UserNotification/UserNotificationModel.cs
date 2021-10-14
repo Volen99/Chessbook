@@ -2,7 +2,7 @@
 
 using Chessbook.Web.Api.Models.Posts;
 using Chessbook.Web.Api.Models.Relationships;
-using Nop.Web.Framework.Models;
+using Chessbook.Web.Framework.Models;
 
 namespace Chessbook.Web.Api.Models.UserNotification
 {

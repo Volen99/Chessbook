@@ -484,7 +484,7 @@
 
   &:checked + span {
     border-color: transparent;
-    background: pvar(--mainColor);
+    background: red; // pvar(--mainColor);
     animation: jelly 0.6s ease;
 
     &:after {
@@ -1050,3 +1050,69 @@
     padding-right: $value;
   }
 }
+
+// from kspc
+
+// Font settings
+@mixin set_font(
+  $size: false,
+  $line_height: false,
+  $weight: false,
+  $spacing: false,
+  $colour: false
+) {
+  @if $size {
+    font-size: $size;
+  }
+  @if $colour {
+    color: $colour;
+  }
+  @if $weight {
+    font-weight: $weight;
+  }
+  @if $line_height {
+    line-height: $line_height;
+  }
+  @if $spacing {
+    letter-spacing: $spacing;
+  }
+}
+
+@mixin flexBox($direction, $content, $align) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $content;
+  align-items: $align;
+}
+
+@mixin square($size) {
+  width: $size;
+  height: $size;
+}
+
+// Centre a block element
+@mixin push_auto {
+  margin: {
+    left: auto;
+    right: auto;
+  }
+}
+
+// Breakpoints
+@mixin respond_to($breakpoint) {
+  // If the key exists in the map
+  @if map-has-key($breakpoints, $breakpoint) {
+    // Prints a media query based on the value
+    @media only screen and #{inspect(map-get($breakpoints, $breakpoint))} {
+      @content;
+    }
+  }
+
+    // If the key doesn't exist in the map
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}
+
+// end

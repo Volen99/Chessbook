@@ -1,6 +1,7 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 import {Observable, Subject} from "rxjs";
+import {debounce} from 'lodash';
 
 import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 import {
@@ -15,6 +16,10 @@ import {
   faTrashAlt,
   faThumbtack,
   faSatelliteDish,
+  faBan,
+  faCircle,
+  faExpand,
+  faSignInAlt,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {
@@ -40,25 +45,51 @@ import {PopoverMoreComponent} from "./popover-more-component/popover-more.compon
 import {AccountReportComponent} from "../../../shared-moderation/report-modals/account-report.component";
 import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {VideoReportComponent} from "../../../shared-moderation/report-modals/video-report.component";
-import {IPost} from "../../../posts/models/tweet";
+import {IPost} from "../../../posts/models/post.model";
 import {VideoShareComponent} from "../../../shared-share-modal/video-share.component";
-import {title} from "process";
+import {AppInjector} from "../../../../app-injector";
+import {SurveyService} from "../../../services/survey.service";
+import {IPoll} from 'app/shared/posts/models/poll/poll';
+import {IsVideoPipe} from "../../angular/pipes/is-video.pipe";
+import {animate, query, stagger, style, transition, trigger, useAnimation} from "@angular/animations";
+import {slideInTop} from "../../animations/slide";
 
 export interface ISocialContextProps {
   screenName: string;
   displayName: string;
   faIcon: IconDefinition;
+  postId: number;
+  type: 'repost' | 'pinned';
 }
 
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
-  styleUrls: ['./post.component.scss']
+  styleUrls: ['./post.component.scss'],
+  animations: [
+    trigger('likeAnimation', [
+      transition('inactive => active', [
+        query(':self', style({transform: 'scale(1.0)'})),
+        query(':self',
+          stagger('0ms linear', [
+            animate('150ms linear', style({transform: 'scale(1.5)'}))
+          ]))
+      ])
+    ])
+  ]
 })
 export class PostComponent implements OnInit {
+  static MAX_HEIGHT = 642; // 20px * 32 (+ 2px padding at the top)
+
+  @Output() transformBuffer = new EventEmitter();
+
   @Input() transform: number = 0;
   @Input() post: Post = null;  // PostDetails = null;
   @Input() removeVideoFromArray: (post: Post) => any;
+  @Input() featured: boolean = false;
+  @Input() posts: Post[];
+  @Input() i: number;
+
   @Input()
   set picture(value: string) {
     this.imageBackgroundStyle = value ? this.domSanitizer.bypassSecurityTrustStyle(`url(${value})`) : null;
@@ -72,22 +103,37 @@ export class PostComponent implements OnInit {
               private postService: PostsService,
               private dialogService: NbDialogService,
               private markdownService: MarkdownService,
-              protected notifier: NbToastrService) {
+              protected notifier: NbToastrService,
+              private surveyService: SurveyService) {
     this.tooltipDislike = `Dislike`;
 
     this.faAlarmExclamation = faAlarmExclamation;
   }
 
   ngOnInit(): void {
-    if (this.post.reshared) {
+    if (this.isARepost(this.post)) {
       this.socialContextProps = {
         screenName: this.post.user.screenName,
         displayName: this.post.user.displayName,
         faIcon: this.faShare,
+        postId: this.post.id,
+        type: 'repost',
+      };
+      this.featured = true;
+
+      this.post = this.post.repost;
+    } else if (this.post.pinned) {
+      this.socialContextProps = {
+        screenName: this.post.user.screenName,
+        displayName: this.post.user.displayName,
+        faIcon: this.faThumbtack,
+        postId: this.post.id,
+        type: 'pinned',
       };
 
-      // @ts-ignore
-      this.post = this.post.resharedStatus;
+      this.featured = true;
+    } else {
+      this.featured = false;
     }
 
     this.meatballsMenu = this.getMenuItems();
@@ -95,9 +141,9 @@ export class PostComponent implements OnInit {
     this.setStatusTextHTML();
 
     this.checkUserRating();
+    this.updateShareStuff(this.post.reposted);
 
     this.tooltipShare = 'Share';
-    this.tooltipRePost = 'Repost';
     this.tooltipComment = 'Comment';
 
     this.svgLikeStyles.color = this.userRating === 'like' ? 'blue' : 'inherit';
@@ -105,17 +151,20 @@ export class PostComponent implements OnInit {
     // this.init();
 
     this.buildVideoLink();
+
+    this.transformState = this.setTransform(this.i, this.post);
   }
 
   popoverMoreComponent = PopoverMoreComponent;
 
   faAlarmExclamation: IconDefinition;
-  oldPost: PostDetails;
 
   socialContextProps: ISocialContextProps;
 
   sanitizedCommentHTML = '';
   statusHTMLText = '';
+
+  faThumbtack = faThumbtack;
 
   faComment = faComment;
   faShare = faShare;
@@ -130,6 +179,10 @@ export class PostComponent implements OnInit {
   faCode = faCode;
   faFlag = faFlag;
   faTrashAlt = faTrashAlt;
+  faBan = faBan;
+  faCircle = faCircle;
+  faExpand = faExpand;
+  faSignInAlt = faSignInAlt;
 
   svgLikeStyles = {
     color: 'inherit',    // blue is such a beautiful color 💙
@@ -142,28 +195,52 @@ export class PostComponent implements OnInit {
   tooltipDislike = '';
 
   tooltipShare = '';
-  tooltipRePost = '';
+  tooltipRepost = '';
   tooltipComment = '';
+
+  autoPlayGif: boolean = true;
+
+  handleMouseEnter() {
+    if (this.autoPlayGif) {
+      return;
+    }
+  }
 
   getMenuItems() {
     let userCurrent = this.userStore.getUser();
 
-     if (this.post?.user?.id === userCurrent.id) {
-       return [
-         {icon: this.faTrashAlt, title: `Delete`, link: '#'},
-         {icon: faThumbtack, title: `Pin to your profile`, link: '#'}
-       ];
-     }
+    if (!userCurrent) {
+      return [
+        {icon: this.faSignInAlt, title: `You need to log in`, link: '#'},
+      ];
+    }
 
-     const screenName = this.post?.user?.screenName;
-     const userLink = this.post?.user ? `/${screenName.substring(1)}` : '';
-     return [
-       {icon: this.faUserPlus, title: `Follow ${screenName}`, link: userLink, queryParams: {profile: true}},
-       {icon: this.faVolumeSlash, title: `Mute ${screenName}`, link: '#'},
-       {icon: this.faUserTimes, title: `Block ${screenName}`, link: '#'},
-       {icon: this.faCode, title: `Embed Post`, link: '#'},
-       {icon: this.faFlag, title: `Report Post`, link: '#'},
-     ];
+    if (this.post?.user?.id === userCurrent.id) {
+      let pinOrUnpinText = !this.post.pinned ? 'Pin to your profile' : 'Unpin from profile';
+      return [
+        {icon: this.faTrashAlt, title: `Delete`, link: '#'},
+        {icon: faThumbtack, title: pinOrUnpinText, link: '#'}
+      ];
+    }
+
+    const screenName = this.post?.user?.screenName;
+    const userLink = this.post?.user ? `/${screenName.substring(1)}` : '';
+
+    const isDisplayed = this.post?.user.blocking === true;
+    let blockOrUnblock;
+    if (isDisplayed) {
+      blockOrUnblock = {icon: this.faCircle, title: `Unblock ${screenName}`, link: '#'};
+    } else {
+      blockOrUnblock = {icon: this.faBan, title: `Block ${screenName}`, link: '#'};
+    }
+
+    return [
+      {icon: this.faUserPlus, title: `Follow ${screenName}`, link: userLink, queryParams: {profile: true}},
+      blockOrUnblock,
+      {icon: this.faExpand, title: `Expand this post`, link: '#'},
+      {icon: this.faCode, title: `Embed Post`, link: '#'},
+      {icon: this.faFlag, title: `Report Post`, link: '#'},
+    ];
   }
 
   getSaveStyle(value: string) {
@@ -172,7 +249,8 @@ export class PostComponent implements OnInit {
 
   setLike() {
     this.test = !this.test;
-    if (this.isUserLoggedIn() === false) {
+    if (!this.userStore.isLoggedIn()) {
+      this.notifier.warning('', 'You need to be logged in to like');
       return;
     }
 
@@ -198,30 +276,41 @@ export class PostComponent implements OnInit {
   }
 
   handleReplyButton(post: Post) {
-    this.dialogService.open(UploadComponent, { // ShowcaseDialogComponent
-      context: {
-        title: 'This is a title passed to the dialog component',
-        replyPost: post,
-      },
-    });
-  }
-
-  async handleReshareButton(post: Post) {
-    // just for test
-    if (this.post.reshared) {
-      this.deletePost(this.oldPost.id, true);
-
-      this.post.reshareCount -= 1;
-      this.post.reshared = false;
+    if (!this.userStore.isLoggedIn()) {
+      this.notifier.warning('', 'You need to be logged in to reply'); // TODO: GroupBy them kk
       return;
     }
 
-    let res = await this.postService.publishRetweetAsync(this.post.id);
+    this.handleExpandClick(true);
 
-    this.post.reshareCount += 1;
-    this.post.reshared = true;
+  }
 
-    this.updateShareStuff();
+  async handleRepostClick(post: Post) {
+    if (!this.userStore.isLoggedIn()) {
+      this.notifier.warning('', 'You need to be logged in to repost');
+      return;
+    }
+
+    if (this.post.reposted) {
+      this.postService.unrepost(this.post.id)
+        .subscribe((data) => {
+          this.post.repostCount -= 1;
+          this.post.reposted = false;
+
+          this.updateShareStuff(this.post.reposted);
+        });
+    } else {
+      this.postService.repost(this.post.id)
+        .subscribe((data: Post) => {
+          // The reblog API method returns a new status wrapped around the original. In this case we are only
+          // interested in how the original is modified, hence passing it skipping the wrapper
+
+          this.post.repostCount += 1;
+          this.post.reposted = true;
+          this.updateShareStuff(this.post.reposted);
+        });
+    }
+
   }
 
   isUserLoggedIn() {
@@ -237,15 +326,6 @@ export class PostComponent implements OnInit {
       return;
     }
 
-    // if (this.videoLinkType === 'external') {
-    //   this.videoRouterLink = null;
-    //   this.videoHref = this.video.url;
-    //   this.videoTarget = '_blank';
-    //   return
-    // }
-    //
-    // // Lazy load
-    // this.videoRouterLink = [ '/search/lazy-load-video', { url: this.video.url } ]
   }
 
   getVideoRouterLink() {
@@ -259,39 +339,23 @@ export class PostComponent implements OnInit {
   }
 
   async deletePost(postId: number, unshare: boolean) {
+    if (!this.userStore.isLoggedIn()) {
+      this.notifier.warning('', 'You need to be logged in to delete this post');
+      return;
+    }
+
     await this.postService.destroyTweetAsync(postId, unshare)
       .then((data) => {
       });
 
-    this.notifier.success(`Post ${this.oldPost.id} deleted.`, 'Success');
-    this.removeVideoFromArray(this.oldPost);
+    this.notifier.success(`Post ${this.post.id} deleted.`, 'Success');
+    this.removeVideoFromArray(this.post);
   }
 
   handleOpenMedia(media, index) {
-    // const reactComponents = document.querySelectorAll('[data-component]');
-    //
-    // import('../../../../features/media-container/media-container.component')
-    //   .then(( {MediaContainerComponent} ) => {
-    //     [].forEach.call(reactComponents, (component) => {
-    //       [].forEach.call(component.children, (child) => {
-    //         component.removeChild(child);
-    //       });
-    //     });
-    //
-    //     const content = document.createElement('div');
-    //
-    //     // ReactDOM.render(<MediaContainer locale={locale} components={reactComponents} />, content);
-    //     document.body.appendChild(content);
-    //     // scrollToDetailedStatus();
-    //
-    //     debugger
-    //
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //    // scrollToDetailedStatus();
-    //   });
-
+    if (!this.dialogService) {
+      this.dialogService = AppInjector.get(NbDialogService);
+    }
     this.dialogService.open(MediaContainerComponent, {
       context: {
         media,
@@ -301,11 +365,11 @@ export class PostComponent implements OnInit {
     });
   }
 
-  handleExpandClick() {
-    this.router.navigate([`/${this.post.user.screenName}/post`, this.post.id]);
+  handleExpandClick(withScroll: boolean = false) {
+    this.router.navigate([`/${this.post.user.screenName}/post`, this.post.id], {queryParams: {withScroll}});
   }
 
-  showShareModal () {
+  showShareModal() {
     this.dialogService.open(VideoShareComponent, {
       context: {
         // @ts-ignore
@@ -319,6 +383,64 @@ export class PostComponent implements OnInit {
 
   onContecxtItemSelection(title) {
     console.log('click', title);
+  }
+
+  handleRefresh(pollId: number) {
+    debounce(
+      () => {
+        this.surveyService.getPoll(this.post.poll.id)
+          .subscribe((data: IPoll) => {
+            this.post.poll = data;
+          });
+      },
+      1000,
+      {leading: true},
+    );
+  }
+
+
+  transformState: number = 0;
+
+  // wish i was never born, Wednesday, 11:14 AM, 9/22/2021 | I can't say goodbye
+  setTransform(i: number, post: Post): number {
+    if (i === 0) {
+      return 0;
+    }
+
+    let lastPost = this.posts[i - 1];
+    if (!lastPost) {
+      return;
+    }
+
+    if (lastPost.repost) {
+      lastPost = lastPost.repost;
+      this.transform += 30;
+    }
+
+    debugger
+    let statusCharCount = lastPost.status ? lastPost.status.length : 0;
+    if (lastPost.hasMedia) {
+      this.transform += (399.7 + (statusCharCount / 2) ?? 0); // 😁
+    }
+
+    if (!lastPost.hasMedia) {
+      if (lastPost.card) {
+        this.transform += (199.7 + (statusCharCount / 2) ?? 0);
+      } else if (lastPost.poll) {
+        this.transform += ((64.7 + (lastPost.poll.answers.length * 100)) + (lastPost.poll.question.length / 2) ?? 0);
+      } else if (IsVideoPipe.isYoutube(lastPost.status) || IsVideoPipe.isTwitch(lastPost.status) || IsVideoPipe.isTwitchClip(lastPost.status)) {
+        this.transform += (409.7 + (statusCharCount / 2) ?? 0);
+      } else {
+        this.transform += (110.7 + (statusCharCount / 2) ?? 0);
+      }
+
+    }
+
+    this.transformBuffer.emit(this.transform);
+    return this.transform;
+  }
+
+  handleVote() {
   }
 
   private checkUserRating() {
@@ -359,7 +481,7 @@ export class PostComponent implements OnInit {
           this.userRating = nextRating;
         },
 
-         (err: { message: string }) => this.notifier.danger(err.message, 'Error')
+        (err: { message: string }) => this.notifier.danger(err.message, 'Error')
       );
   }
 
@@ -379,13 +501,15 @@ export class PostComponent implements OnInit {
     this.post.favoriteCount += likesToIncrement;
     this.post.dislikeCount += dislikesToIncrement;
 
+    useAnimation(slideInTop, {params: {duration: '1000ms'}});
+
     this.updateLikeStuff(newRating);
 
     // this.post.buildLikeAndDislikePercents();
     // this.setVideoLikesBarTooltipText();
   }
 
-  private async setStatusTextHTML () {
+  private async setStatusTextHTML() {
     if (!this.post.status) {
       return;
     }
@@ -406,8 +530,53 @@ export class PostComponent implements OnInit {
     }
   }
 
-  private updateShareStuff() {
-    this.faShare = faShareSolid;
+  private updateShareStuff(reposted: boolean) {
+    if (reposted) {
+      this.faShare = faShareSolid;
+      this.tooltipRepost = 'Undo Repost';
+    } else {
+      this.faShare = faShare;
+      this.tooltipRepost = 'Repost';
+    }
+  }
+
+  isARepost(post: Post) {
+    return this.post.repost !== null && typeof post.repost === 'object';
+  }
+
+  videoId: string;
+  embedUrl: string;
+
+  public getVideoEmbedLink() {
+    if (IsVideoPipe.isYoutube(this.post.status)) {
+      const parts = IsVideoPipe._youtubeRegEx.exec(this.post.status);
+      if (this.videoId && this.videoId === parts[5]) {
+        return true;
+      }
+
+      this.videoId = parts[5];
+      this.embedUrl = IsVideoPipe.getYoutubeEmbedLink(this.post.status);
+      return true;
+    } else if (IsVideoPipe.isTwitch(this.post.status)) {
+      const parts = IsVideoPipe._twitchRegEx.exec(this.post.status);
+      if (this.videoId && this.videoId === parts[3]) {
+        return true;
+      }
+
+      this.videoId = parts[3];
+      this.embedUrl = IsVideoPipe.getTwitchEmbedLink(this.post.status);
+      return true;
+    } else if (IsVideoPipe.isTwitchClip(this.post.status)) {
+      const parts = IsVideoPipe._twitchClipRegEx.exec(this.post.status);
+      if (!parts[2].includes('clip')) {
+        return false;
+      }
+
+      this.embedUrl = IsVideoPipe.getTwitchClipEmbedLink(this.post.status);
+      return true;
+    }
+
+    return false;
   }
 
 }

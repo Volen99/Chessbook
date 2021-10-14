@@ -1,8 +1,9 @@
-﻿using Nop.Core.Domain.Security;
-using Chessbook.Services.Caching;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace Nop.Services.Security.Caching
+using Chessbook.Core.Domain.Security;
+using Chessbook.Services.Caching;
+
+namespace Chessbook.Services.Security.Caching
 {
     /// <summary>
     /// Represents a permission record cache event consumer

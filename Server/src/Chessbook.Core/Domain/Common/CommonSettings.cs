@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Nop.Core.Configuration;
+using Chessbook.Core.Configuration;
 
-namespace Nop.Core.Domain.Common
+namespace Chessbook.Core.Domain.Common
 {
     /// <summary>
     /// Common settings

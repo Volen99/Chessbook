@@ -2,10 +2,6 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {takeUntil, tap} from "rxjs/operators";
 
-import {FormReactive} from "../../../../shared/shared-forms/form-reactive";
-import {User} from "../../../../shared/shared-main/user/user.model";
-import {FormValidatorService} from "../../../../shared/shared-forms/form-validator.service";
-import {Notifier} from "../../../../core/notification/notifier.service";
 import {
   USER_DESCRIPTION_VALIDATOR,
   USER_DISPLAY_NAME_REQUIRED_VALIDATOR
@@ -24,10 +20,8 @@ import {UserFormMode} from "../../../users/user/user.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NbTokenService} from "../../../../sharebook-nebular/auth/services/token/token.service";
 import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";
-import {EMAIL_PATTERN, NUMBERS_PATTERN} from "../../../../auth/components";
 import {NbAuthOAuth2JWTToken} from "../../../../sharebook-nebular/auth/services/token/token";
-import {Util} from "leaflet";
-import formatNum = Util.formatNum;
+import {HttpService} from "../../../../core/backend/common/api/http.service";
 
 export enum Month {
   Jan = 1,
@@ -44,13 +38,27 @@ export enum Month {
   Dec,
 }
 
+export interface IUtcStuff {
+  countries: ICountryUtc[];
+  timeZones: ITimeZoneUtc[];
+}
+
+export interface ICountryUtc {
+  value: string;
+  text: string;
+}
+
+export interface ITimeZoneUtc {
+  value: string;
+  text: string;
+}
+
 @Component({
   selector: 'my-account-profile',
   templateUrl: './my-account-profile.component.html',
   styleUrls: ['./my-account-profile.component.scss']
 })
 export class MyAccountProfileComponent implements OnInit, OnDestroy {
-
   userForm: FormGroup;
 
   protected readonly unsubscribe$ = new Subject<void>();
@@ -100,10 +108,21 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
               private tokenService: NbTokenService,
               private userStore: UserStore,
               private toasterService: NbToastrService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private httpService: HttpService) {
   }
 
+  utcStuff: IUtcStuff;
+
   ngOnInit(): void {
+    this.httpService.get('users/utc-stuff')
+        .subscribe((data: IUtcStuff) => {
+          this.utcStuff = data;
+
+          this.countryId = data.countries[0].value;
+          this.timeZoneId = data.timeZones[0].value;
+        }, err => console.log(err.message));
+
     let date = new Date();
     for (let day = 1; day <= 31; day++) {
       this.days.push(day);
@@ -113,7 +132,6 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
       this.years.push(year);
     }
 
-    debugger
     this.initUserForm();
     this.loadUserData();
   }
@@ -132,17 +150,20 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
   public days: number[] = [];
   public years: number[] = [];
 
+  countryId: string;  // yeap - string xD
+  timeZoneId: string; // yeap - string xD
+
   user: IUser;
 
   initUserForm() {
     this.userForm = this.fb.group({
       displayName: USER_DISPLAY_NAME_REQUIRED_VALIDATOR,
       description: USER_DESCRIPTION_VALIDATOR,
-      websiteLink: this.fb.control('', [Validators.minLength(16), Validators.maxLength(72)]),
-      twitterLink: this.fb.control('', [Validators.minLength(16), Validators.maxLength(72)]),
-      twitchLink: this.fb.control('', [Validators.minLength(16), Validators.maxLength(72)]),
-      youtubeLink: this.fb.control('', [Validators.minLength(16), Validators.maxLength(72)]),
-      facebookLink: this.fb.control('', [Validators.minLength(16), Validators.maxLength(72)]),
+      websiteLink: this.fb.control('', [Validators.pattern(/^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)]),
+      twitterLink: this.fb.control('', [Validators.pattern(/http(?:s)?:\/\/(?:www)?twitter\.com\/([a-zA-Z0-9_]+)/)]),
+      twitchLink: this.fb.control('', [Validators.pattern(/^(?:http(s)?:\/\/)[\w.-]+(twitch\.tv\/)([^\?&"'>]+)/)]),
+      youtubeLink: this.fb.control('', [Validators.pattern(/^(?:http(s)?:\/\/)[\w.-]+(youtu\.be\/|youtube\.com\/)([^\?&"'>]+)/)]),
+      facebookLink: this.fb.control('', [Validators.pattern(/^(?:http(s)?:\/\/)[\w.-]+?(?:www.)?facebook.com\/([^\?&"'>]+)/)]),
     });
 
     this.user = this.userStore.getUser();
@@ -229,6 +250,9 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
       dateOfBirthMonth: +this.monthSelected,
       dateOfBirthDay: +this.daySelected,
       dateOfBirthYear: +this.yearSelected,
+
+      countryId: +this.countryId,
+      timeZoneId: this.timeZoneId,
     };
 
     let observable = new Observable<IUser>();
@@ -269,56 +293,12 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
+  changeCountry(id: string) {
+    this.countryId = id;
+  }
 
-  // @Input() user: IUser = null; // was User
-  // @Input() userInformationLoaded: Subject<any>;
-  //
-  // error: string = null;
-  //
-  // constructor(protected formValidatorService: FormValidatorService, private notifier: Notifier,
-  //             private userService: UsersService,
-  //             private userStore: UserStore) {
-  //   super();
-  // }
-  //
-  // ngOnInit() {
-  //   this.buildForm({
-  //     username: null,
-  //     'display-name': USER_DISPLAY_NAME_REQUIRED_VALIDATOR,
-  //     description: USER_DESCRIPTION_VALIDATOR
-  //   });
-  //   this.form.controls['username'].disable();
-  //
-  //   // this.userInformationLoaded.subscribe(() => {
-  //   //   this.form.patchValue({
-  //   //     username: this.user.screenName,
-  //   //     'display-name': this.user.name,
-  //   //     description: this.user.description
-  //   //   });
-  //   // });
-  //
-  //   this.user = this.userStore.getUser();
-  // }
-  //
-  // get instanceHost() {
-  //   return window.location.host;
-  // }
-  //
-  // updateMyProfile() {
-  //   const displayName = this.form.value['display-name'];
-  //   const description = this.form.value['description'] || null;
-  //
-  //   this.error = null;
-  //
-  //   this.userService.updateMyProfile({displayName, description}).subscribe(
-  //     () => {
-  //       this.user.name = displayName;
-  //       this.user.description = description;
-  //
-  //       this.notifier.success(`Profile updated.`);
-  //     },
-  //
-  //     err => this.error = err.message
-  //   );
-  // }
+  changeTimeZone(id: string) {
+    this.timeZoneId = id;
+  }
+
 }

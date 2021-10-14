@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Threading.Tasks;
 
-namespace Nop.Services.Installation
+namespace Chessbook.Services.Installation
 {
     /// <summary>
     /// Installation service

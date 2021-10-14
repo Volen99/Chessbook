@@ -1,4 +1,4 @@
-﻿namespace Nop.Services.Security
+﻿namespace Chessbook.Services.Security
 {
     /// <summary>
     /// Encryption service

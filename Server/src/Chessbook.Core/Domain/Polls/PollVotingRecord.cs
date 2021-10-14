@@ -1,6 +1,7 @@
 ﻿using System;
+using Chessbook.Data.Models;
 
-namespace Chessbook.Data.Models.Polls
+namespace Chessbook.Core.Domain.Polls
 {
     /// <summary>
     /// Represents a poll voting record

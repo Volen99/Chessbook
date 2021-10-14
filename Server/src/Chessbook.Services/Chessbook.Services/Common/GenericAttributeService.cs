@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Chessbook.Common;
-using Chessbook.Data;
-using Chessbook.Data.Common.Repositories;
-using Chessbook.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Nop.Core;
-using Nop.Core.Caching;
-using Nop.Core.Domain.Common;
 
-namespace Nop.Services.Common
+using Chessbook.Data;
+using Chessbook.Data.Models;
+using Chessbook.Core;
+using Chessbook.Core.Caching;
+using Chessbook.Core.Domain.Common;
+
+namespace Chessbook.Services.Common
 {
     /// <summary>
     /// Generic attribute service
@@ -100,7 +99,7 @@ namespace Nop.Services.Common
         /// </returns>
         public virtual async Task<IList<GenericAttribute>> GetAttributesForEntityAsync(int entityId, string keyGroup)
         {
-            var key = _staticCacheManager.PrepareKeyForShortTermCache(NopCommonDefaults.GenericAttributeCacheKey, entityId, keyGroup);
+            var key = _staticCacheManager.PrepareKeyForShortTermCache(CBCommonDefaults.GenericAttributeCacheKey, entityId, keyGroup);
 
             var query = from ga in _genericAttributeRepository.Table
                         where ga.EntityId == entityId &&

@@ -1,14 +1,13 @@
 ﻿using System.Threading.Tasks;
+
 using Chessbook.Data.Models.Media;
-using Chessbook.Data.Models.Polls;
-using Nop.Core.Caching;
-using Nop.Core.Domain.Configuration;
+using Chessbook.Core.Domain.Polls;
+using Chessbook.Core.Caching;
+using Chessbook.Core.Domain.Configuration;
+using Chessbook.Core.Events;
+using Chessbook.Services.Events;
 
-using Nop.Core.Events;
-using Nop.Services.Events;
-using Nop.Services.Plugins;
-
-namespace Nop.Web.Infrastructure.Cache
+namespace Chessbook.Web.Infrastructure.Cache
 {
     /// <summary>
     /// Model cache event consumer (used for caching of presentation layer models)

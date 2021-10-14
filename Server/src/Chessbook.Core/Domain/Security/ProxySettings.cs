@@ -1,6 +1,6 @@
-﻿using Nop.Core.Configuration;
+﻿using Chessbook.Core.Configuration;
 
-namespace Nop.Core.Domain.Security
+namespace Chessbook.Core.Domain.Security
 {
     /// <summary>
     /// Proxy settings

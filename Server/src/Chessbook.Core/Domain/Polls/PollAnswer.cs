@@ -1,4 +1,6 @@
-﻿namespace Chessbook.Data.Models.Polls
+﻿using Chessbook.Data.Models;
+
+namespace Chessbook.Core.Domain.Polls
 {
     /// <summary>
     /// Represents a poll answer

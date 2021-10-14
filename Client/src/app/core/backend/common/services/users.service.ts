@@ -65,7 +65,6 @@ export class UsersService extends UserData {
   }
 
   get(id: number): Observable<IUser> {
-    debugger
     return this.api.get(id);
   }
 
@@ -315,6 +314,10 @@ export class UsersService extends UserData {
         first(),
         map(() => this.userStore.getUser())
       );
+  }
+
+  updateUserAsAdmin(body: any) {
+    return this.api.updateUserAsAdmin(body);
   }
 
 

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Nop.Web.Framework.Models;
+using Chessbook.Web.Framework.Models;
 
-namespace Nop.Web.Areas.Admin.Models.Polls
+namespace Chessbook.Web.Areas.Admin.Models.Polls
 {
     /// <summary>
     /// Represents a poll search model

@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
 
-using Chessbook.Data.Models;
+using Chessbook.Core.Domain.Relationships;
 using Chessbook.Web.Models.Outputs;
 
 namespace Chessbook.Web.Api.Factories

@@ -11,7 +11,6 @@ import {Champion, FemaleChampion} from "../../../../core/interfaces/iot/champion
   templateUrl: './world-champions.component.html',
 })
 export class WorldChampionsComponent implements OnDestroy {
-
   private alive = true;
 
   constructor(private championsService: WorldChampionsService) {

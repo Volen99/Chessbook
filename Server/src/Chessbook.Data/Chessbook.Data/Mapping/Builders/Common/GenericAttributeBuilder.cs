@@ -1,7 +1,7 @@
 ﻿using FluentMigrator.Builders.Create.Table;
-using Nop.Core.Domain.Common;
+using Chessbook.Core.Domain.Common;
 
-namespace Nop.Data.Mapping.Builders.Common
+namespace Chessbook.Data.Mapping.Builders.Common
 {
     /// <summary>
     /// Represents a generic attribute entity builder

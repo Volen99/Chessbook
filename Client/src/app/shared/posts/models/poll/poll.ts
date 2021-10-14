@@ -7,7 +7,7 @@ export interface IPoll {
 
   answers: IPollOption[];
 
-  expires_at: Date;
+  expiresAt: Date;
 
   expired: boolean;
 

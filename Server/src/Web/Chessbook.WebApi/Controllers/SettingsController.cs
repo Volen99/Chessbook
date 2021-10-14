@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
 
-    using Chessbook.Services.Data.Services;
+    using Chessbook.Services.Configuration;
     using Chessbook.Web.Api.Identity;
     using Chessbook.Web.Models;
     using Chessbook.Data.Models;

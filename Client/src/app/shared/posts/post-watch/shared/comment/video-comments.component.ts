@@ -148,7 +148,6 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
 
     this.videoCommentService.getVideoCommentThreads(params).subscribe(
       res => {
-        debugger
         this.comments = this.comments.concat(res.data);
         this.componentPagination.totalItems = res.total;
         this.totalNotDeletedComments = res.totalNotDeletedComments;
@@ -229,7 +228,6 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
   async onWantedToRedraft(commentToRedraft: PostComment) {
     // const confirm = await this.onWantedToDelete(commentToRedraft, `Delete and re-draft`, `Do you really want to delete and re-draft this comment?`);
 
-    debugger
     if (true) { // confirm
       this.inReplyToCommentId = commentToRedraft.inReplyToCommentId;
 

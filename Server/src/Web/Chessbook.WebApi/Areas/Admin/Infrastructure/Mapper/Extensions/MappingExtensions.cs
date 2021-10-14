@@ -1,12 +1,12 @@
 ﻿using System;
 using Chessbook.Data.Models;
-using Nop.Core;
-using Nop.Core.Configuration;
-using Nop.Core.Infrastructure.Mapper;
-using Nop.Services.Plugins;
-using Nop.Web.Framework.Models;
+using Chessbook.Core;
+using Chessbook.Core.Configuration;
+using Chessbook.Core.Infrastructure.Mapper;
+using Chessbook.Services.Plugins;
+using Chessbook.Web.Framework.Models;
 
-namespace Nop.Web.Areas.Admin.Infrastructure.Mapper.Extensions
+namespace Chessbook.Web.Areas.Admin.Infrastructure.Mapper.Extensions
 {
     /// <summary>
     /// Represents the extensions to map entity to model and vise versa

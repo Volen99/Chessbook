@@ -1,4 +1,6 @@
-﻿namespace Chessbook.Data.Models
+﻿using Chessbook.Data.Models;
+
+namespace Chessbook.Core.Domain.Relationships
 {
     public class Relationship : BaseEntity
     {

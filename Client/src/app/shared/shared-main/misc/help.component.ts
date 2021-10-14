@@ -10,6 +10,10 @@ import {
 } from '@angular/core';
 import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 
+import {
+  faQuestion
+} from '@fortawesome/pro-light-svg-icons';
+
 import {SharebookTemplateDirective} from "../angular/directives/sharebook-template.directive";
 import {ENHANCED_RULES, TEXT_RULES} from "../../../core/utils/markdown";
 
@@ -22,8 +26,8 @@ import {ENHANCED_RULES, TEXT_RULES} from "../../../core/utils/markdown";
 export class HelpComponent implements OnInit, OnChanges, AfterContentInit {
   @Input() helpType: 'custom' | 'markdownText' | 'markdownEnhanced' = 'custom';
   @Input() tooltipPlacement = 'right auto';
-  @Input() iconName: string = 'help';
-  @Input() title = $localize`Get help`;
+  @Input() iconName: IconDefinition = faQuestion;
+  @Input() title = `Get help`;
   @Input() autoClose = 'outside';
 
   @ContentChildren(SharebookTemplateDirective) templates: QueryList<SharebookTemplateDirective<'preHtml' | 'customHtml' | 'postHtml'>>;
@@ -34,6 +38,10 @@ export class HelpComponent implements OnInit, OnChanges, AfterContentInit {
   preHtmlTemplate: TemplateRef<any>;
   customHtmlTemplate: TemplateRef<any>;
   postHtmlTemplate: TemplateRef<any>;
+
+  ngOnChanges() {
+    this.init();
+  }
 
   ngOnInit() {
     this.init();
@@ -56,9 +64,8 @@ export class HelpComponent implements OnInit, OnChanges, AfterContentInit {
     }
   }
 
-  ngOnChanges() {
-    this.init();
-  }
+
+  faQuestion = faQuestion;
 
   onPopoverHidden() {
     this.isPopoverOpened = false;
@@ -82,17 +89,17 @@ export class HelpComponent implements OnInit, OnChanges, AfterContentInit {
 
   private formatMarkdownSupport(rules: string[]) {
     // tslint:disable:max-line-length
-    return $localize`<a href="https://en.wikipedia.org/wiki/Markdown#Example" target="_blank" rel="noopener noreferrer">Markdown</a> compatible that supports:` +
+    return `<a href="https://en.wikipedia.org/wiki/Markdown#Example" target="_blank" rel="noopener noreferrer">Markdown</a> compatible that supports:` +
       this.createMarkdownList(rules);
   }
 
   private createMarkdownList(rules: string[]) {
     const rulesToText = {
-      'emphasis': $localize`Emphasis`,
-      'link': $localize`Links`,
-      'newline': $localize`New lines`,
-      'list': $localize`Lists`,
-      'image': $localize`Images`
+      'emphasis': `Emphasis`,
+      'link': `Links`,
+      'newline': `New lines`,
+      'list': `Lists`,
+      'image': `Images`
     };
 
     const bullets = rules.map(r => rulesToText[r])

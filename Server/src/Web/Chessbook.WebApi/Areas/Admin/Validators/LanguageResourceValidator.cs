@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using Nop.Core.Domain.Localization;
-using Nop.Data;
-using Nop.Services.Localization;
-using Nop.Web.Areas.Admin.Models.Localization;
-using Nop.Web.Framework.Validators;
+using Chessbook.Core.Domain.Localization;
+using Chessbook.Data;
+using Chessbook.Services.Localization;
+using Chessbook.Web.Areas.Admin.Models.Localization;
+using Chessbook.Web.Framework.Validators;
 
-namespace Nop.Web.Areas.Admin.Validators.Localization
+namespace Chessbook.Web.Areas.Admin.Validators.Localization
 {
     public partial class LanguageResourceValidator : BaseNopValidator<LocaleResourceModel>
     {

@@ -1,11 +1,4 @@
-﻿using Chessbook.Data.Models.Post.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Chessbook.Data.Models.Media
+﻿namespace Chessbook.Data.Models.Media
 {
     public class Picture : BaseEntity
     {

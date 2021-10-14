@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.IO;
-
     using System.Text.RegularExpressions;
+
     using Chessbook.Common.Extensions;
 
     public enum EDataType

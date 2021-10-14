@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Nop.Data
+namespace Chessbook.Data
 {
     /// <summary>
     /// Represents temporary storage

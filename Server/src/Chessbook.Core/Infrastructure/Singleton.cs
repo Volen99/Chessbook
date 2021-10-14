@@ -1,4 +1,4 @@
-﻿namespace Nop.Core.Infrastructure
+﻿namespace Chessbook.Core.Infrastructure
 {
     /// <summary>
     /// A statically compiled "singleton" used to store objects throughout the 

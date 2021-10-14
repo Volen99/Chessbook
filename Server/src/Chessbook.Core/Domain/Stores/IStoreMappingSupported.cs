@@ -1,4 +1,4 @@
-namespace Nop.Core.Domain.Stores
+namespace Chessbook.Core.Domain.Stores
 {
     /// <summary>
     /// Represents an entity which supports store mapping

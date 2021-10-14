@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
 using Chessbook.Core.Domain.Customers;
 using Chessbook.Core.Domain.Posts;
 using Chessbook.Data;
 using Chessbook.Data.Models;
-using Chessbook.Data.Models.Post;
-using Microsoft.EntityFrameworkCore;
-using Nop.Core;
+using Chessbook.Core;
 
 namespace Chessbook.Services.Entities
 {

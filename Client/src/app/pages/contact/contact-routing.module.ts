@@ -1,24 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MessagesComponent } from './messages.component';
-import { DetailHeaderMessageSelectedComponent } from './detail-header-message-selected/detail-header-message-selected.component';
+import {ContactComponent} from "./contact.component";
 
 const routes: Routes = [
   {
     path: '',
-    component: MessagesComponent,
+    component: ContactComponent,
     data: {
       meta: {
-        title: `Messages`
+        title: `Contact`
       }
     },
-    children: [
-      {
-        path: ':messageId',
-        component: DetailHeaderMessageSelectedComponent
-      }
-    ]
   },
 ];
 
@@ -29,5 +22,5 @@ const routes: Routes = [
   exports: [ RouterModule ]
 })
 
-export class MessagesRoutingModule {
+export class ContactRoutingModule {
 }

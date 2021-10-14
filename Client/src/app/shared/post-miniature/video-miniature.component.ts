@@ -1,4 +1,3 @@
-import {switchMap} from 'rxjs/operators';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -124,7 +123,6 @@ export class VideoMiniatureComponent implements OnInit {
   }
 
   buildVideoLink() {
-    debugger
     if (this.videoLinkType === 'internal' || !this.video.url) {
       this.videoRouterLink = Post.buildWatchUrl(this.video);
       return;

@@ -1,6 +1,7 @@
-﻿using Chessbook.Core.Domain.Abuse;
+﻿using System.Threading.Tasks;
+
+using Chessbook.Core.Domain.Abuse;
 using Chessbook.Web.Api.Models.Abuses;
-using System.Threading.Tasks;
 
 namespace Chessbook.Web.Api.Factories
 {

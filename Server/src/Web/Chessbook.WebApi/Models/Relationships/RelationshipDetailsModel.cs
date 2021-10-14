@@ -1,4 +1,4 @@
-﻿using Nop.Web.Framework.Models;
+﻿using Chessbook.Web.Framework.Models;
 
 namespace Chessbook.Web.Models.Outputs
 {

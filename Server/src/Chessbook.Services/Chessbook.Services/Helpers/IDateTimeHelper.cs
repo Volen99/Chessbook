@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+
 using Chessbook.Data.Models;
 
-namespace Nop.Services.Helpers
+namespace Chessbook.Services.Helpers
 {
     /// <summary>
     /// Represents a datetime helper
@@ -24,7 +25,7 @@ namespace Nop.Services.Helpers
         /// A task that represents the asynchronous operation
         /// The task result contains a DateTime value that represents time that corresponds to the dateTime parameter in customer time zone.
         /// </returns>
-        Task<DateTime> ConvertToUserTimeAsync(DateTime dt, int userId);
+        Task<DateTime> ConvertToUserTimeAsync(DateTime dt);
 
         /// <summary>
         /// Converts the date and time to current user date and time
@@ -35,7 +36,7 @@ namespace Nop.Services.Helpers
         /// A task that represents the asynchronous operation
         /// The task result contains a DateTime value that represents time that corresponds to the dateTime parameter in customer time zone.
         /// </returns>
-        Task<DateTime> ConvertToUserTimeAsync(DateTime dt, DateTimeKind sourceDateTimeKind, int userId);
+        Task<DateTime> ConvertToUserTimeAsync(DateTime dt, DateTimeKind sourceDateTimeKind);
 
         /// <summary>
         /// Converts the date and time to current user date and time
@@ -86,7 +87,7 @@ namespace Nop.Services.Helpers
         /// A task that represents the asynchronous operation
         /// The task result contains the current user time zone
         /// </returns>
-        Task<TimeZoneInfo> GetCurrentTimeZoneAsync(int userId);
+        Task<TimeZoneInfo> GetCurrentTimeZoneAsync();
 
         /// <summary>
         /// Gets or sets a default store time zone

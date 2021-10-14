@@ -7,6 +7,7 @@ import {MyAccountNotificationsComponent} from './my-account-notifications/my-acc
 import {MyAccountSettingsComponent} from './my-account-settings/my-account-settings.component';
 import {MyAccountComponent} from './my-account.component';
 import {AuthGuard} from "../../auth/auth.guard";
+import {MyDataComponent} from "./my-data/my-data.component";
 
 const myAccountRoutes: Routes = [
   {
@@ -25,6 +26,15 @@ const myAccountRoutes: Routes = [
         data: {
           meta: {
             title: `Account settings`
+          }
+        }
+      },
+      {
+        path: 'download_your_data',
+        component: MyDataComponent,
+        data: {
+          meta: {
+            title: `Download an archive of your data`
           }
         }
       },
@@ -108,15 +118,6 @@ const myAccountRoutes: Routes = [
           }
         }
       },
-      // {
-      //   path: 'applications',
-      //   component: MyAccountApplicationsComponent,
-      //   data: {
-      //     meta: {
-      //       title: `Applications`
-      //     }
-      //   }
-      // }
     ]
   }
 ];

@@ -2,13 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+
 using Chessbook.Core;
 using Chessbook.Data.Models;
-using Chessbook.Services.Data.Services;
-using Nop.Core;
-using Nop.Services.Common;
+using Chessbook.Services.Common;
 
-namespace Nop.Services.Helpers
+namespace Chessbook.Services.Helpers
 {
     /// <summary>
     /// Represents a datetime helper
@@ -17,19 +16,19 @@ namespace Nop.Services.Helpers
     {
         #region Fields
 
-        private readonly IGenericAttributeService _genericAttributeService;
-        private readonly IUserService userService;
         private readonly DateTimeSettings _dateTimeSettings;
+        private readonly IGenericAttributeService _genericAttributeService;
+        private readonly IWorkContext workContext;
 
         #endregion
 
         #region Ctor
 
-        public DateTimeHelper(IGenericAttributeService genericAttributeService, IUserService userService, DateTimeSettings dateTimeSettings)
+        public DateTimeHelper(DateTimeSettings dateTimeSettings, IGenericAttributeService genericAttributeService, IWorkContext workContext)
         {
             _genericAttributeService = genericAttributeService;
-            this.userService = userService;
             _dateTimeSettings = dateTimeSettings;
+            this.workContext = workContext;
         }
 
         #endregion
@@ -67,9 +66,9 @@ namespace Nop.Services.Helpers
         /// A task that represents the asynchronous operation
         /// The task result contains a DateTime value that represents time that corresponds to the dateTime parameter in customer time zone.
         /// </returns>
-        public virtual async Task<DateTime> ConvertToUserTimeAsync(DateTime dt, int userId)
+        public virtual async Task<DateTime> ConvertToUserTimeAsync(DateTime dt)
         {
-            return await ConvertToUserTimeAsync(dt, dt.Kind, userId);
+            return await ConvertToUserTimeAsync(dt, dt.Kind);
         }
 
         /// <summary>
@@ -81,7 +80,7 @@ namespace Nop.Services.Helpers
         /// A task that represents the asynchronous operation
         /// The task result contains a DateTime value that represents time that corresponds to the dateTime parameter in customer time zone.
         /// </returns>
-        public virtual async Task<DateTime> ConvertToUserTimeAsync(DateTime dt, DateTimeKind sourceDateTimeKind, int userId)
+        public virtual async Task<DateTime> ConvertToUserTimeAsync(DateTime dt, DateTimeKind sourceDateTimeKind)
         {
             dt = DateTime.SpecifyKind(dt, sourceDateTimeKind);
             if (sourceDateTimeKind == DateTimeKind.Local && TimeZoneInfo.Local.IsInvalidTime(dt))
@@ -89,7 +88,7 @@ namespace Nop.Services.Helpers
                 return dt;
             }
 
-            var currentUserTimeZoneInfo = await GetCurrentTimeZoneAsync(userId);
+            var currentUserTimeZoneInfo = await GetCurrentTimeZoneAsync();
             return TimeZoneInfo.ConvertTime(dt, currentUserTimeZoneInfo);
         }
 
@@ -160,7 +159,7 @@ namespace Nop.Services.Helpers
         /// </returns>
         public virtual async Task<TimeZoneInfo> GetCustomerTimeZoneAsync(Customer customer)
         {
-            if (!_dateTimeSettings.AllowCustomersToSetTimeZone)
+            if (false) // !_dateTimeSettings.AllowCustomersToSetTimeZone
             {
                 return DefaultStoreTimeZone;
             }
@@ -194,11 +193,9 @@ namespace Nop.Services.Helpers
         /// A task that represents the asynchronous operation
         /// The task result contains the current user time zone
         /// </returns>
-        public virtual async Task<TimeZoneInfo> GetCurrentTimeZoneAsync(int userId)
+        public virtual async Task<TimeZoneInfo> GetCurrentTimeZoneAsync()
         {
-            var user = await userService.GetCustomerByIdAsync(userId);
-
-            return await GetCustomerTimeZoneAsync(user);
+            return await GetCustomerTimeZoneAsync(await this.workContext.GetCurrentCustomerAsync());
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ import {ScreenService} from "../../core/wrappers/screen.service";
 import truncate from 'lodash-es/truncate';
 import {MarkdownService} from "../../core/renderer/markdown.service";
 import {SafeHtml} from "@angular/platform-browser";
-import { IPost } from '../posts/models/tweet';
+import { IPost } from '../posts/models/post.model';
 
 
 @Component({

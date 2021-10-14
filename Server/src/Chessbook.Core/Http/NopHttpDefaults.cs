@@ -1,4 +1,4 @@
-﻿namespace Nop.Core.Http
+﻿namespace Chessbook.Core.Http
 {
     /// <summary>
     /// Represents default values related to HTTP features

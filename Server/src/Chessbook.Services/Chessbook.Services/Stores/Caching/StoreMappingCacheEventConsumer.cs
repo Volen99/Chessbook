@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Nop.Core.Domain.Stores;
+
+using Chessbook.Core.Domain.Stores;
 using Chessbook.Services.Caching;
 
-namespace Nop.Services.Stores.Caching
+namespace Chessbook.Services.Stores.Caching
 {
     /// <summary>
     /// Represents a store mapping cache event consumer

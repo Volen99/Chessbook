@@ -4,9 +4,10 @@ using System.Threading.Tasks;
 
 using Chessbook.Core.Domain.Abuse;
 using Chessbook.Services.Abuses;
-using Chessbook.Services.Data.Services;
+using Chessbook.Services;
 using Chessbook.Web.Api.Models.Abuses;
-using Nop.Web.Areas.Admin.Models.Customers;
+using Chessbook.Services.Helpers;
+using Chessbook.Web.Areas.Admin.Models.Customers;
 
 namespace Chessbook.Web.Api.Factories
 {
@@ -15,12 +16,15 @@ namespace Chessbook.Web.Api.Factories
         private readonly IUserService userService;
         private readonly IUserModelFactory userModelFactory;
         private readonly IAbuseService abuseService;
+        private readonly IDateTimeHelper dateTimeHelper;
 
-        public AbuseModelFactory(IUserService userService, IUserModelFactory userModelFactory, IAbuseService abuseService)
+        public AbuseModelFactory(IUserService userService, IUserModelFactory userModelFactory, IAbuseService abuseService,
+            IDateTimeHelper dateTimeHelper)
         {
             this.userService = userService;
             this.userModelFactory = userModelFactory;
             this.abuseService = abuseService;
+            this.dateTimeHelper = dateTimeHelper;
         }
 
         public async Task<AbuseModel> PrepareAbuseModel(Abuse abuse)
@@ -41,7 +45,7 @@ namespace Chessbook.Web.Api.Factories
                     Label = "string",
                 },
                 ModerationComment = abuse.ModerationComment,
-                CreatedAt = abuse.CreatedAt,
+                CreatedAt = await this.dateTimeHelper.ConvertToUserTimeAsync(abuse.CreatedAt, DateTimeKind.Utc),
             };
 
             if (abuse.ReporterAccountId.HasValue)

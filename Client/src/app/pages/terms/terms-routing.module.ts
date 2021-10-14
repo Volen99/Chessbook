@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import {ContactComponent} from "./contact.component";
+import {TermsComponent} from "./terms.component";
 
 const routes: Routes = [
   {
     path: '',
-    component: ContactComponent,
+    component: TermsComponent,
     data: {
       meta: {
-        title: `Contact`
+        title: `Terms of Service`
       }
     },
   },
@@ -22,5 +22,5 @@ const routes: Routes = [
   exports: [ RouterModule ]
 })
 
-export class ContactRoutingModule {
+export class TermsRoutingModule {
 }

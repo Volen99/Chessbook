@@ -34,6 +34,8 @@ import {NbRadioModule} from "../../sharebook-nebular/theme/components/radio/radi
 import {NotificationsModule} from "../notifications/notifications.module";
 import {SharedActorImageEditModule} from "../../shared/shared-actor-image-edit/shared-actor-image-edit.module";
 import {SharedActorImageModule} from "../../shared/shared-actor-image/shared-actor-image.module";
+import { MyDataComponent } from './my-data/my-data.component';
+import {DialogAreYouSureComponent} from "./my-data/dialog-are-u-sure/dialog-are-u-sure.component";
 
 @NgModule({
   imports: [
@@ -79,6 +81,8 @@ import {SharedActorImageModule} from "../../shared/shared-actor-image/shared-act
     MyAccountNotificationPreferencesComponent,
     MyAccountThemeComponent,
     DialogUsernamePromptComponent,
+    DialogAreYouSureComponent,
+    MyDataComponent,
   ],
 
   exports: [

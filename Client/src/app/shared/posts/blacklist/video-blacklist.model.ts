@@ -1,4 +1,4 @@
-import {IPost} from "../models/tweet";
+import {IPost} from "../models/post.model";
 
 export const enum VideoBlacklistType {
   MANUAL = 1,

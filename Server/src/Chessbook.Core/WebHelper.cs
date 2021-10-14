@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
-using Nop.Core.Configuration;
-using Nop.Core.Http;
-using Nop.Core.Infrastructure;
 
-namespace Nop.Core
+using Chessbook.Core.Configuration;
+using Chessbook.Core.Http;
+using Chessbook.Core.Infrastructure;
+
+namespace Chessbook.Core
 {
     /// <summary>
     /// Represents a web helper
@@ -122,7 +122,7 @@ namespace Nop.Core
                 //IP address is valid 
                 result = ip.ToString();
             }
-               
+
             else if (!string.IsNullOrEmpty(result))
             {
                 // remove port

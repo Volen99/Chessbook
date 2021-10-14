@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Chessbook.Data.Models.Polls;
-using Chessbook.Services.Data.Services.Entities;
-using Nop.Core;
-using Nop.Core.Caching;
-using Nop.Web.Infrastructure.Cache;
-using Nop.Web.Models.Polls;
 
-namespace Nop.Web.Factories
+using Chessbook.Core;
+using Chessbook.Core.Caching;
+using Chessbook.Web.Infrastructure.Cache;
+using Chessbook.Web.Models.Polls;
+using Chessbook.Services.Data.Services.Entities;
+using Chessbook.Core.Domain.Polls;
+using Chessbook.Services.Helpers;
+
+namespace Chessbook.Web.Factories
 {
     /// <summary>
     /// Represents the poll model factory
@@ -22,17 +24,20 @@ namespace Nop.Web.Factories
         private readonly IStaticCacheManager _staticCacheManager;
         private readonly IStoreContext _storeContext;
         private readonly IWorkContext _workContext;
+        private readonly IDateTimeHelper dateTimeHelper;
 
         #endregion
 
         #region Ctor
 
-        public PollModelFactory(IPollService pollService, IStaticCacheManager staticCacheManager, IStoreContext storeContext, IWorkContext workContext)
+        public PollModelFactory(IPollService pollService, IStaticCacheManager staticCacheManager, IStoreContext storeContext, IWorkContext workContext,
+            IDateTimeHelper dateTimeHelper)
         {
             _pollService = pollService;
             _staticCacheManager = staticCacheManager;
             _storeContext = storeContext;
             _workContext = workContext;
+            this.dateTimeHelper = dateTimeHelper;
         }
 
         #endregion
@@ -55,12 +60,15 @@ namespace Nop.Web.Factories
                 throw new ArgumentNullException(nameof(poll));
             }
 
+            var alreadyVoted =  await _pollService.AlreadyVotedAsync(poll.Id, (await _workContext.GetCurrentCustomerAsync()).Id);
             var model = new PollModel
             {
                 Id = poll.Id,
-                AlreadyVoted = setAlreadyVotedProperty && await _pollService.AlreadyVotedAsync(poll.Id, (await _workContext.GetCurrentCustomerAsync()).Id),
+                AlreadyVoted = setAlreadyVotedProperty && alreadyVoted.Any(),
+                OwnVotes = alreadyVoted.Select(pvr => pvr.PollAnswerId).ToList(),
                 Question = poll.Question,
-                StartDateUtc = poll.StartDateUtc,
+                StartDateUtc = await this.dateTimeHelper.ConvertToUserTimeAsync(poll.StartDateUtc, DateTimeKind.Utc),
+                ExpiresAt = await this.dateTimeHelper.ConvertToUserTimeAsync(poll.ExpiresAt, DateTimeKind.Utc),
                 Views = poll.Views,
             };
             var answers = await _pollService.GetPollAnswerByPollAsync(poll.Id);
@@ -73,7 +81,7 @@ namespace Nop.Web.Factories
             foreach (var pa in answers)
             {
                 model.Answers.Add(new PollAnswerModel
-                {
+                {   
                     Id = pa.Id,
                     Label = pa.Label,
                     NumberOfVotes = pa.NumberOfVotes,
@@ -121,7 +129,7 @@ namespace Nop.Web.Factories
             // "AlreadyVoted" property of "PollModel" object depends on the current customer. Let's update it.
             // But first we need to clone the cached model (the updated one should not be cached)
             var model = cachedModel with { };
-            model.AlreadyVoted = await _pollService.AlreadyVotedAsync(model.Id, (await _workContext.GetCurrentCustomerAsync()).Id);
+            model.AlreadyVoted = (await _pollService.AlreadyVotedAsync(model.Id, (await _workContext.GetCurrentCustomerAsync()).Id)).Any();
 
             return model;
         }
@@ -153,7 +161,7 @@ namespace Nop.Web.Factories
             foreach (var poll in cachedPolls)
             {
                 var pollModel = poll with { };
-                pollModel.AlreadyVoted = await _pollService.AlreadyVotedAsync(pollModel.Id, customer.Id);
+                pollModel.AlreadyVoted = (await _pollService.AlreadyVotedAsync(pollModel.Id, customer.Id)).Any();
                 model.Add(pollModel);
             }
 

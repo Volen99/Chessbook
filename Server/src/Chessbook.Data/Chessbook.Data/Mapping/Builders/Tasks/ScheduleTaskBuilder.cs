@@ -1,7 +1,7 @@
 ﻿using FluentMigrator.Builders.Create.Table;
-using Nop.Core.Domain.Tasks;
+using Chessbook.Core.Domain.Tasks;
 
-namespace Nop.Data.Mapping.Builders.Tasks
+namespace Chessbook.Data.Mapping.Builders.Tasks
 {
     /// <summary>
     /// Represents a schedule task entity builder

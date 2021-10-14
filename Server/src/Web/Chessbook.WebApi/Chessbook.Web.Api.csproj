@@ -14,13 +14,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Chessbook.Common\Chessbook.Common.csproj" />
     <ProjectReference Include="..\..\Chessbook.Data\Chessbook.Data\Chessbook.Data.csproj" />
-    <ProjectReference Include="..\..\Chessbook.DIContainerCore\Chessbook.DIContainerCore.csproj" />
-    <ProjectReference Include="..\..\Chessbook.IdentityManagementCore\Chessbook.IdentityManagementCore.csproj" />
     <ProjectReference Include="..\..\Chessbook.Services\Chessbook.Services.Data\Chessbook.Services.Data.csproj" />
     <ProjectReference Include="..\..\Chessbook.Services\Chessbook.Services.Mapping\Chessbook.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\Chessbook.Services\Chessbook.Services\Chessbook.Services.csproj" />
+    <ProjectReference Include="..\Chessbook.Web.Framework\Chessbook.Web.Framework.csproj" />
     <ProjectReference Include="..\Chessbook.Web.Models\Chessbook.Web.Models.csproj" />
-    <ProjectReference Include="..\Nop.Web.Framework\Nop.Web.Framework.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
@@ -52,6 +50,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Files\" />
   </ItemGroup>
 </Project>

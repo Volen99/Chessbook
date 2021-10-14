@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Chessbook.Core.Domain.Posts;
+using System.Collections.Generic;
 
 namespace Chessbook.Web.Models.Inputs
 {
@@ -9,6 +10,8 @@ namespace Chessbook.Web.Models.Inputs
         public List<string> PredefinedReasons { get; set; }
 
         public Account Account { get; set; }
+
+        public Post Post { get; set; }
     }
 
     public class Account

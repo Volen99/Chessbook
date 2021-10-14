@@ -1,6 +1,6 @@
-﻿using Nop.Web.Framework.Models;
+﻿using Chessbook.Web.Framework.Models;
 
-namespace Nop.Web.Areas.Admin.Models.Customers
+namespace Chessbook.Web.Areas.Admin.Models.Customers
 {
     /// <summary>
     /// Represents a customer list model

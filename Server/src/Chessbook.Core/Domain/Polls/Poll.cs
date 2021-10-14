@@ -1,13 +1,14 @@
-﻿using Nop.Core.Domain.Stores;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Chessbook.Data.Models.Polls
+using Chessbook.Data.Models;
+
+namespace Chessbook.Core.Domain.Polls
 {
     /// <summary>
     /// Pollllll <33333
     /// </summary>
-    public class Poll : BaseEntity, IStoreMappingSupported
+    public class Poll : BaseEntity
     {
         /// <summary>
         /// Gets or sets the language identifier
@@ -34,6 +35,8 @@ namespace Chessbook.Data.Models.Polls
         /// </summary>
         public bool ShowOnHomepage { get; set; }
 
+        public bool IsSurvey { get; set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether the anonymous votes are allowed
         /// </summary>
@@ -45,11 +48,6 @@ namespace Chessbook.Data.Models.Polls
         public int DisplayOrder { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the entity is limited/restricted to certain stores
-        /// </summary>
-        public bool LimitedToStores { get; set; }
-
-        /// <summary>
         /// Gets or sets the number of views
         /// </summary>
         public int Views { get; set; }
@@ -57,12 +55,14 @@ namespace Chessbook.Data.Models.Polls
         /// <summary>
         /// Gets or sets the poll start date and time
         /// </summary>
-        public DateTime? StartDateUtc { get; set; }
+        public DateTime StartDateUtc { get; set; }
 
         /// <summary>
         /// Gets or sets the poll end date and time
         /// </summary>
         public DateTime? EndDateUtc { get; set; }
+
+        public DateTime ExpiresAt { get; set; }
 
         public ICollection<PollAnswer> Options { get; set; }
     }

@@ -1,14 +1,28 @@
 <div class="poll">
-    <ul>
-        <ng-container *ngFor="let option of this.poll.answers; let i = index">
-            <app-render-option [poll]="this.poll" [option]="option" [optionIndex]="i" [showResults]="this.showResults"></app-render-option>
+    <ul style="padding: 0; list-style: none;">
+        <ng-container *ngFor="let answer of this.poll.answers; let i = index">
+            <app-render-option [poll]="this.poll"
+                               [option]="answer"
+                               [optionIndex]="answer.id"
+                               [showResults]="this.showResults"
+                               (selected)="this.setBackgroundColor($event)">
+            </app-render-option>
         </ng-container>
     </ul>
 
-    <div class="poll__footer">
-        <button *ngIf="!this.showResults" class="button button-secondary" [disabled]="this.disabled" (click)="this.handleVote()">Vote</button>
-        <span *ngIf="this.showResults && !this.disabled"><button class="poll__link" (click)="this.handleRefresh()">Refresh</button> · </span>
-        {{this.votesCount}}
-        <span *ngIf="this.poll.expires_at"> · {{this.timeRemaining}}</span>
+    <div class="poll__footer text-hint">
+        <button *ngIf="!this.showResults" nbButton size="small" status="primary" shape="rectangle"
+                [disabled]="this.disabled"
+                (click)="this.handleVote()">Vote
+        </button>
+        <span *ngIf="this.showResults && !this.disabled"><button class="poll__link text-hint" (click)="this.handleRefresh()">Refresh</button> · </span>
+        {{this.votesCount}} votes
+        <span *ngIf="this.poll.expiresAt"> · <ng-container *ngIf="this.expired">Final results</ng-container>
+            <ng-container *ngIf="!this.expired">
+                <app-relative-timestamp [timestamp]="this.poll.expiresAt" [futureDate]="true">
+
+                </app-relative-timestamp>
+            </ng-container>
+        </span>
     </div>
 </div>

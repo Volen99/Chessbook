@@ -1,7 +1,7 @@
-﻿using Nop.Core.Caching;
-using Nop.Core.Domain.Directory;
+﻿using Chessbook.Core.Caching;
+using Chessbook.Core.Domain.Directory;
 
-namespace Nop.Services.Directory
+namespace Chessbook.Services.Directory
 {
     /// <summary>
     /// Represents default values related to directory services

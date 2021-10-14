@@ -2,9 +2,10 @@
 using System.Threading.Tasks;
 
 using Chessbook.Core.Domain.Customers;
-using Chessbook.Services.Data.Services;
+using Chessbook.Services;
 using Chessbook.Web.Api.Models.Blocklist;
-using Nop.Web.Areas.Admin.Models.Customers;
+using Chessbook.Services.Helpers;
+using Chessbook.Web.Areas.Admin.Models.Customers;
 
 namespace Chessbook.Web.Api.Factories
 {
@@ -12,11 +13,13 @@ namespace Chessbook.Web.Api.Factories
     {
         private readonly IUserService userService;
         private readonly IUserModelFactory userFactory;
+        private readonly IDateTimeHelper dateTimeHelper;
 
-        public UserBlocklistFactory(IUserService userService, IUserModelFactory userFactory)
+        public UserBlocklistFactory(IUserService userService, IUserModelFactory userFactory, IDateTimeHelper dateTimeHelper)
         {
             this.userService = userService;
             this.userFactory = userFactory;
+            this.dateTimeHelper = dateTimeHelper;
         }
 
         public async Task<UserBlocklistModel> PrepareUserBlocklistModel(UserBlocklist userBlocklist)
@@ -33,7 +36,7 @@ namespace Chessbook.Web.Api.Factories
             {
                 ByAccount = await this.userFactory.PrepareCustomerModelAsync(new CustomerModel(), byAccountUser),
                 BlockedAccount = await this.userFactory.PrepareCustomerModelAsync(new CustomerModel(), blockedAccount),
-                CreatedAt = userBlocklist.CreatedAt,
+                CreatedAt = await this.dateTimeHelper.ConvertToUserTimeAsync(userBlocklist.CreatedAt, DateTimeKind.Utc),
             };
 
             return model;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Nop.Services.Installation
+namespace Chessbook.Services.Installation
 {
     /// <summary>
     /// Represents the implementation of ISO3166-1

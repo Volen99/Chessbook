@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 
-using Nop.Services.Catalog;
+using Chessbook.Services.Catalog;
 using Chessbook.Core.Domain.Posts;
 using Chessbook.Services.Caching;
 
-namespace Nop.Services.Forums.Caching
+namespace Chessbook.Services.Forums.Caching
 {
     /// <summary>
     /// Represents a forum post cache event consumer

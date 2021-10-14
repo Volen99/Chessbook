@@ -1,17 +1,17 @@
 ﻿using System.Linq;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using FluentMigrator;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
 using FluentMigrator.Runner.Initialization;
 using FluentMigrator.Runner.Processors;
 
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Nop.Core.Infrastructure;
-using Nop.Data.Migrations;
+using Chessbook.Core.Infrastructure;
+using Chessbook.Data.Migrations;
 
-namespace Nop.Data
+namespace Chessbook.Data
 {
     /// <summary>
     /// Represents object for the configuring DB context on application startup

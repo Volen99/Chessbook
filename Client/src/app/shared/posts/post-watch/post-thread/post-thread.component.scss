@@ -228,3 +228,28 @@ a {
   width: 100%;
   z-index: -1;
 }
+
+
+.video-frame {
+  /*width: 507px;*/
+  height: 326px;
+}
+
+.like-hover {
+  &:hover {
+    background-color: rgba(0, 3, 182, 0.2); // rgb(249, 24, 128);
+    border-color: rgba(0, 3, 182, 0.2); // rgb(249, 24, 128);
+    color: rgba(0, 3, 182, 0.2); // rgb(249, 24, 128);
+
+    & + fa-icon {
+      color: blue !important;
+    }
+  }
+}
+
+
+
+
+
+
+

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace Nop.Core
+namespace Chessbook.Core
 {
     /// <summary>
     /// Hash helper class

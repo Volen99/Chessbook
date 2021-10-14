@@ -22,7 +22,7 @@
                                                            style="margin-right: calc(0px + (-1 * (41px - 1.5em)) / 2);">
                                                             <div dir="auto"
                                                                  class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center inside-element-container-line-height max-width-100-per min-width-0px text-align-center text-overflow-wrap">
-                                                                <fa-icon [icon]="this.faKiwiBird" size="2x"></fa-icon>
+                                                                <fa-icon [icon]="this.faRadio" size="2x"></fa-icon>
                                                                 <span class="css-901oao sharebook-text-inherit sharebook-text text-font-family min-width-0px text-overflow-wrap"></span>
                                                             </div>
                                                         </a></div>
@@ -68,10 +68,11 @@
                                                 <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.newsPost?.length) + 'px'}">
                                                     <div style="position: absolute; width: 100%; transform: translateY(0px); transition: opacity 0.3s ease-out 0s;">
                                                         <div class="sharebook-container border-bottom-color border-bottom-width-1px display-block outline-style-none">
-                                                            <a data-focusable="true" tabindex="0"
+                                                            <a data-focusable="true" tabindex="0" mat-ripple
                                                                class="sharebook-container cursor-pointer outline-style-none transition-duration transition-property"
                                                                data-testid="eventHero" role="link"
-                                                               [href]="this.topNew.url" target="_blank">
+                                                               [href]="this.topNew?.url" target="_blank"
+                                                               >
                                                                 <div class="sharebook-container display-block overflow-hidden">
                                                                     <div class="display-block width-100-per"
                                                                          style="padding-bottom: 56.25%;"></div>
@@ -87,9 +88,9 @@
                                                                                              data-testid="image"
                                                                                              style="margin-bottom: 0px; margin-top: 0px;">
                                                                                             <div class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
-                                                                                                 [style.background-image]="'url(' + this.getImageUrl(this.topNew.image) +')'"></div>
+                                                                                                 [style.background-image]="'url(' + this.getImageUrl(this.topNew?.image) +')'"></div>
                                                                                             <img alt="" draggable="true"
-                                                                                                 [src]="this.getImageUrl(this.topNew.image)"
+                                                                                                 [src]="this.getImageUrl(this.topNew?.image)"
                                                                                                  class="sharebook-image"></div>
                                                                                     </div>
                                                                                 </div>
@@ -104,7 +105,7 @@
                                                                         <div class="sharebook-container align-items-center flex-direction-row flex-shrink">
                                                                             <div dir="auto"
                                                                                  class="css-901oao sharebook-text share-button-text-color font-family third-wheel-text-font-size font-weight-400 line-height-calc min-width-0px text-overflow-wrap">
-                                                                                <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">{{this.topNew.source}}</span>
+                                                                                <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">{{this.topNew?.source}}</span>
                                                                             </div>
                                                                             <div dir="auto" aria-hidden="true"
                                                                                  class="css-901oao share-button-text-color svg-flex-shrink-0 font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px created-at-dot text-overflow-wrap">
@@ -120,7 +121,7 @@
                                                                         <div dir="ltr"
                                                                              class="css-901oao css-cens5h share-button-text-color font-family very-strong-title font-weight-800 inside-element-container-line-height r-hrzydr min-width-0px text-overflow-wrap"
                                                                              style="-webkit-line-clamp: 3;"><span
-                                                                                class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">{{this.topNew.title}}</span>
+                                                                                class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">{{this.topNew?.title}}</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -277,12 +278,12 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div *ngFor="let post of this.newsPost; let i = index" style="position: absolute; width: 100%; transform: translateY({{this.setTransform(i + 1)}}px); transition: opacity 0.3s ease-out 0s;">
+                                                    <div *ngFor="let post of this.newsPost; let i = index" style="position: absolute; cursor: pointer; width: 100%; transform: translateY({{this.setTransform(i + 1)}}px); transition: opacity 0.3s ease-out 0s;">
                                                         <div class="sharebook-container border-bottom-color border-bottom-width-1px display-block outline-style-none">
-                                                            <a data-focusable="true" tabindex="0"
+                                                            <a data-focusable="true" tabindex="0" mat-ripple
                                                                  class="sharebook-container cursor-pointer outline-style-none left-right-padding-15px stacked-elements-padding-bottom-top transition-duration transition-property"
                                                                  role="link"
-                                                            [href]="post.url" target="_blank">
+                                                               [href]="post.url" target="_blank">
                                                                 <div class="sharebook-container flex-direction-row">
                                                                     <div class="sharebook-container flex-expand container-left-side-margin-right-10px">
                                                                         <div class="sharebook-container align-items-center flex-direction-row flex-shrink">
@@ -300,10 +301,10 @@
                                                                                                         <div aria-label=""
                                                                                                              class="sharebook-container border-radius-9999px bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">
                                                                                                             <div class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
-                                                                                                                 style="background-image: url(&quot;https://pbs.twimg.com/profile_images/1325664416558354434/FLlKusI3_mini.png&quot;);"></div>
+                                                                                                                 style="background-image: url('assets/images/news-image.png');"></div>
                                                                                                             <img alt=""
                                                                                                                  draggable="true"
-                                                                                                                 src="https://pbs.twimg.com/profile_images/1325664416558354434/FLlKusI3_mini.png"
+                                                                                                                 src="assets/images/news-image.png"
                                                                                                                  class="sharebook-image">
                                                                                                         </div>
                                                                                                     </div>
@@ -335,7 +336,7 @@
                                                                             </div>
                                                                             <div class="sharebook-container r-r2y082">
                                                                                 <div dir="auto"
-                                                                                     class="css-901oao sharebook-text r-9ilb82 font-family third-wheel-text-font-size font-weight-400 line-height-calc min-width-0px text-overflow-wrap">
+                                                                                     class="text-hint css-901oao sharebook-text r-9ilb82 font-family third-wheel-text-font-size font-weight-400 line-height-calc min-width-0px text-overflow-wrap">
                                                                                     <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">
                                                                                         <app-date-toggle *ngIf="post.published_at" [date]="post.published_at"></app-date-toggle>
                                                                                     </span>
@@ -388,7 +389,7 @@
         </nb-card>
     </div>
     <div class="col-md-12 col-lg-5 col-xxxl-6">
-        <nb-card>
+        <nb-card style="position: fixed">
             <app-sidebar-column></app-sidebar-column>
         </nb-card>
     </div>

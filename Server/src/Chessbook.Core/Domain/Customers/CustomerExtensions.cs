@@ -1,8 +1,7 @@
-﻿using Chessbook.Core;
+﻿using System;
 using Chessbook.Data.Models;
-using System;
 
-namespace Nop.Core.Domain.Customers
+namespace Chessbook.Core.Domain.Customers
 {
     /// <summary>
     /// Customer extensions

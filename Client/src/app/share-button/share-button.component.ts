@@ -21,7 +21,7 @@ export class ShareButtonComponent implements OnInit {
 
   open() {
     if (!this.userStore.isLoggedIn()) {
-      this.notifier.warning('', 'You need to be logged in order to post');
+      this.notifier.warning('', 'You need to be logged in to post');
       return;
     }
 
@@ -29,6 +29,7 @@ export class ShareButtonComponent implements OnInit {
       context: {
         title: 'This is a title passed to the dialog component',
       },
+      closeOnEsc: false,
     });
   }
 

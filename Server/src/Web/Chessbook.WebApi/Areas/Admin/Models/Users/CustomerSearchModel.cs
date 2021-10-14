@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Nop.Web.Framework.Models;
+using Chessbook.Web.Framework.Models;
 
 namespace Chessbook.Web.Api.Areas.Admin.Models.Users
 {

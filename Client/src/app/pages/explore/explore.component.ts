@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Subject} from "rxjs/Subject";
 
-import {faKiwiBird} from '@fortawesome/pro-light-svg-icons';
+import {
+  faRadio
+} from '@fortawesome/pro-light-svg-icons';
 
 import {ExploreService, NewsPost, Pagination} from "./explore.service";
 
@@ -42,7 +44,7 @@ export class ExploreComponent implements OnInit {
   newsPost: NewsPost[];
   pagination: Pagination;
 
-  faKiwiBird = faKiwiBird;
+  faRadio = faRadio;
 
   getImageUrl (url: string) {
     if (url) {
@@ -93,5 +95,4 @@ export class ExploreComponent implements OnInit {
 
     return this.translateY;
   }
-
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Nop.Web.Framework.Models;
+
+using Chessbook.Web.Framework.Models;
 
 namespace Chessbook.Web.Api.Models.Posts
 {

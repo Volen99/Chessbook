@@ -5,7 +5,7 @@ import {Subscription} from 'rxjs';
 import {Subject} from "rxjs/Subject";
 import {catchError, distinctUntilChanged, map, switchMap, takeUntil, tap} from 'rxjs/operators';
 
-import {faBirthdayCake, faCalendarAlt, faGlobe, faLongArrowLeft} from '@fortawesome/pro-light-svg-icons';
+import {faBirthdayCake, faCalendarAlt, faGlobe, faLongArrowLeft, faEnvelope} from '@fortawesome/pro-light-svg-icons';
 
 import {IUser} from "../../core/interfaces/common/users";
 import {UserStore} from "../../core/stores/user.store";
@@ -28,6 +28,10 @@ import {AccountReportComponent} from "../../shared/shared-moderation/report-moda
 import {MediaContainerComponent} from "../../features/media-container/media-container.component";
 import {Title} from "@angular/platform-browser";
 import {MarkdownService} from 'app/core/renderer/markdown.service';
+import {HttpService} from "../../core/backend/common/api/http.service";
+import {HttpParams} from "@angular/common/http";
+import {RestService} from "../../core/rest/rest.service";
+import {ContactAdminModalComponent} from "../../shared/shared-messages/contact-admin-modal.component";
 
 @Component({
   templateUrl: './user-profile.component.html',
@@ -52,7 +56,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               private initUserService: InitUserService,
               private dialogService: NbDialogService,
               private titleService: Title,
-              private markdown: MarkdownService) {
+              private markdown: MarkdownService,
+              private http: HttpService,
+              private restService: RestService) {
   }
 
   private accountSub: Subscription;
@@ -132,6 +138,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   loggedInUser: IUser;
   profileCurrent: IUser;
 
+  faEnvelope = faEnvelope;
+
   // snapshot only gets the initial value of the parameter map with this technique.
   // Use the observable paramMap approach if there's a possibility that the router
   // could re-use the component. This tutorial sample app uses with the observable paramMap.
@@ -199,6 +207,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.profileCurrent = user;
     // this.profileCurrent.createdOn = new Date(this.profileCurrent.createdOn);
 
+    if (!this.isUserLoggedIn()) {
+      return;
+    }
+
     const currentUserId = this.userStore.getUser().id;
     if (currentUserId === this.profileCurrent.id) {
       this.usersService.getYourBirthday(currentUserId)
@@ -238,14 +250,26 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     return this.profileCurrent?.id === this.userStore.getUser().id;
   }
 
-  handleOpenMedia(media, index) {
-    this.dialogService.open(MediaContainerComponent, {
-      context: {
-        media,
-        index,
-      },
+  handleOpenMedia(bannerOrAvatar: 'banner' | 'avatar', index) {
+    if ((bannerOrAvatar === 'banner' && this.profileCurrent.profileBannerURL.includes('default-banner'))
+      || (bannerOrAvatar === 'avatar' && this.profileCurrent.profileImageUrlHttps.includes('default-avatar'))) {
+      return;
+    }
 
-    });
+    let params = new HttpParams();
+
+    let res = bannerOrAvatar === 'banner' ? 'banner' : 'avatar';
+    params = this.restService.addParameterToQuery(params, 'bannerOrAvatar', res);
+
+    this.http.get('users/user-photo/' + this.profileCurrent.id, {params})
+      .subscribe((data) => {
+        this.dialogService.open(MediaContainerComponent, {
+          context: {
+            media: [data],
+            index,
+          },
+        });
+      });
   }
 
   hasSocialLink() {
@@ -299,26 +323,45 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     });
   }
 
+  public showMessageModal() {
+    if (!this.userStore.isLoggedIn()) {
+      this.notifier.warning('', 'You need to be logged in to send them a message');
+      return;
+    }
+
+    this.dialogService.open(ContactAdminModalComponent, {
+      context: {
+        toCustomerId: this.profileCurrent.id,
+        screenName: this.profileCurrent.screenName,
+      },
+      closeOnEsc: false,
+      closeOnBackdropClick: false,
+    });
+  }
+
   private getTabs() {
     return [
       {
         title: 'Posts',
-        route: './tab1',
+        route: './',
       },
       {
         title: 'Posts & replies',
-        route: ['./tab2'],
+        route: ['./replies'],
+        disabled: true,
       },
       {
         title: 'Media',
-        route: './tab3'
+        route: './media',
+        disabled: true,
         // icon: 'flash-outline',
         // responsive: true,
         // disabled: true,
       },
       {
         title: 'Likes',
-        route: './tab4'
+        route: './likes',
+        disabled: true,
       },
     ];
   }

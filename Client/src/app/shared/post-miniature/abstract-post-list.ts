@@ -55,7 +55,7 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
 
   pagination: ComponentPaginationLight = {
     currentPage: 1,
-    itemsPerPage: 3,
+    itemsPerPage: 61,
   };
   sort: PostSortField = '-publishedAt';
 
@@ -209,6 +209,7 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
   }
 
   removeVideoFromArray(post: Post) {
+    debugger
     this.posts = this.posts.filter(v => v.id !== post.id);
   }
 

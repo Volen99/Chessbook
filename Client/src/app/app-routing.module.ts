@@ -101,6 +101,16 @@ const routes: Routes = [
         canActivateChild: [ MetaGuard ],
       },
       {
+        path: 'contact',
+        loadChildren: () => import('./pages/contact/contact.module').then(m => m.ContactModule),
+        canActivateChild: [ MetaGuard ],
+      },
+      {
+        path: 'terms',
+        loadChildren: () => import('./pages/terms/terms.module').then(m => m.TermsModule),
+        canActivateChild: [ MetaGuard ],
+      },
+      {
         path: ':screenName',
         loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule),
         canActivateChild: [ MetaGuard ],

@@ -50,5 +50,9 @@ namespace Chessbook.Web.Models.Inputs
         public string YoutubeLink { get; set; }
 
         public string FacebookLink { get; set; }
+
+        public int CountryId { get; set; }
+
+        public string TimeZoneId { get; set; }
     }
 }

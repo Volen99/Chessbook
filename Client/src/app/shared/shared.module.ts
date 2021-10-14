@@ -16,9 +16,12 @@ import {NbCardModule} from "../sharebook-nebular/theme/components/card/card.modu
 import {UserFollowModule} from "./user-follow/user-follow.module";
 import {SharedMainModule} from "./shared-main/shared-main.module";
 import {TagsService} from "./services/tags.service";
+import {ContactAdminModalComponent} from "./shared-messages/contact-admin-modal.component";
+import {ChatService} from "./shared-messages/chat.service";
+import {NbInputModule} from "../sharebook-nebular/theme/components/input/input.module";
 
 @NgModule({
-  declarations: [ShareButtonComponent, ListUsersComponent],
+  declarations: [ShareButtonComponent, ListUsersComponent, ContactAdminModalComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -29,6 +32,7 @@ import {TagsService} from "./services/tags.service";
     NbCardModule,
     UserFollowModule,
     SharedMainModule,
+    NbInputModule,
   ],
   exports: [
     ShareButtonComponent,
@@ -40,6 +44,7 @@ import {TagsService} from "./services/tags.service";
     RelationshipsApi,
     SurveyService,
     TagsService,
+    ChatService,
   ]
 })
 export class SharedModule {

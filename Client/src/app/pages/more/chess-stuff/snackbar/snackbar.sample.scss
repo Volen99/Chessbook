@@ -1,3 +1,5 @@
+@import '../../../../theme/styles/themes';
+
 .sample-content {
     flex-flow: column nowrap;
 }
@@ -31,9 +33,18 @@
     width: 100%;
     bottom: 50px;
     text-align: center;
+
+    @media screen and (max-width: 1101px) {
+        bottom: 9px;
+    }
 }
 
-fa-icon {
-    margin: 1rem;
-    color: red;
+@include nb-install-component() {
+    fa-icon {
+        margin: 1rem;
+    }
 }
+
+
+
+

@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.Versioning;
-using System.Security.AccessControl;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Security.AccessControl;
+using System.Runtime.Versioning;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.FileProviders;
 
-namespace Nop.Core.Infrastructure
+namespace Chessbook.Core.Infrastructure
 {
     /// <summary>
     /// IO functions using the on-disk file system
@@ -240,29 +241,78 @@ namespace Nop.Core.Infrastructure
             return this.Combine(allPaths.ToArray());
         }
 
-        public DirectorySecurity GetAccessControl(string path)
+        /// <summary>
+        /// Gets a System.Security.AccessControl.DirectorySecurity object that encapsulates the access control list (ACL) entries for a specified directory
+        /// </summary>
+        /// <param name="path">The path to a directory containing a System.Security.AccessControl.DirectorySecurity object that describes the file's access control list (ACL) information</param>
+        /// <returns>An object that encapsulates the access control rules for the file described by the path parameter</returns>
+        [SupportedOSPlatform("windows")]
+        public virtual DirectorySecurity GetAccessControl(string path)
         {
-            throw new NotImplementedException();
+            return new DirectoryInfo(path).GetAccessControl();
         }
 
-        public DateTime GetCreationTime(string path)
+        /// <summary>
+        /// Returns the creation date and time of the specified file or directory
+        /// </summary>
+        /// <param name="path">The file or directory for which to obtain creation date and time information</param>
+        /// <returns>
+        /// A System.DateTime structure set to the creation date and time for the specified file or directory. This value
+        /// is expressed in local time
+        /// </returns>
+        public virtual DateTime GetCreationTime(string path)
         {
-            throw new NotImplementedException();
+            return File.GetCreationTime(path);
         }
 
-        public string[] GetDirectories(string path, string searchPattern = "", bool topDirectoryOnly = true)
+        /// <summary>
+        /// Returns the names of the subdirectories (including their paths) that match the
+        /// specified search pattern in the specified directory
+        /// </summary>
+        /// <param name="path">The path to the directory to search</param>
+        /// <param name="searchPattern">
+        /// The search string to match against the names of subdirectories in path. This
+        /// parameter can contain a combination of valid literal and wildcard characters
+        /// , but doesn't support regular expressions.
+        /// </param>
+        /// <param name="topDirectoryOnly">
+        /// Specifies whether to search the current directory, or the current directory and all
+        /// subdirectories
+        /// </param>
+        /// <returns>
+        /// An array of the full names (including paths) of the subdirectories that match
+        /// the specified criteria, or an empty array if no directories are found
+        /// </returns>
+        public virtual string[] GetDirectories(string path, string searchPattern = "", bool topDirectoryOnly = true)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(searchPattern))
+                searchPattern = "*";
+
+            return Directory.GetDirectories(path, searchPattern,
+                topDirectoryOnly ? SearchOption.TopDirectoryOnly : SearchOption.AllDirectories);
         }
 
-        public string GetDirectoryName(string path)
+        /// <summary>
+        /// Returns the directory information for the specified path string
+        /// </summary>
+        /// <param name="path">The path of a file or directory</param>
+        /// <returns>
+        /// Directory information for path, or null if path denotes a root directory or is null. Returns
+        /// System.String.Empty if path does not contain directory information
+        /// </returns>
+        public virtual string GetDirectoryName(string path)
         {
-            throw new NotImplementedException();
+            return Path.GetDirectoryName(path);
         }
 
-        public string GetDirectoryNameOnly(string path)
+        /// <summary>
+        /// Returns the directory name only for the specified path string
+        /// </summary>
+        /// <param name="path">The path of directory</param>
+        /// <returns>The directory name</returns>
+        public virtual string GetDirectoryNameOnly(string path)
         {
-            throw new NotImplementedException();
+            return new DirectoryInfo(path).Name;
         }
 
         /// <summary>
@@ -323,26 +373,58 @@ namespace Nop.Core.Infrastructure
             return Directory.GetFiles(directoryPath, searchPattern, topDirectoryOnly ? SearchOption.TopDirectoryOnly : SearchOption.AllDirectories);
         }
 
-        public DateTime GetLastAccessTime(string path)
+        /// <summary>
+        /// Returns the date and time the specified file or directory was last accessed
+        /// </summary>
+        /// <param name="path">The file or directory for which to obtain access date and time information</param>
+        /// <returns>A System.DateTime structure set to the date and time that the specified file</returns>
+        public virtual DateTime GetLastAccessTime(string path)
         {
-            throw new NotImplementedException();
+            return File.GetLastAccessTime(path);
         }
 
-        public DateTime GetLastWriteTime(string path)
+        /// <summary>
+        /// Returns the date and time the specified file or directory was last written to
+        /// </summary>
+        /// <param name="path">The file or directory for which to obtain write date and time information</param>
+        /// <returns>
+        /// A System.DateTime structure set to the date and time that the specified file or directory was last written to.
+        /// This value is expressed in local time
+        /// </returns>
+        public virtual DateTime GetLastWriteTime(string path)
         {
-            throw new NotImplementedException();
+            return File.GetLastWriteTime(path);
         }
 
-        public DateTime GetLastWriteTimeUtc(string path)
+        /// <summary>
+        /// Returns the date and time, in coordinated universal time (UTC), that the specified file or directory was last
+        /// written to
+        /// </summary>
+        /// <param name="path">The file or directory for which to obtain write date and time information</param>
+        /// <returns>
+        /// A System.DateTime structure set to the date and time that the specified file or directory was last written to.
+        /// This value is expressed in UTC time
+        /// </returns>
+        public virtual DateTime GetLastWriteTimeUtc(string path)
         {
-            throw new NotImplementedException();
+            return File.GetLastWriteTimeUtc(path);
         }
 
-        public string GetParentDirectory(string directoryPath)
+        /// <summary>
+        /// Retrieves the parent directory of the specified path
+        /// </summary>
+        /// <param name="directoryPath">The path for which to retrieve the parent directory</param>
+        /// <returns>The parent directory, or null if path is the root directory, including the root of a UNC server or share name</returns>
+        public virtual string GetParentDirectory(string directoryPath)
         {
-            throw new NotImplementedException();
+            return Directory.GetParent(directoryPath).FullName;
         }
 
+        /// <summary>
+        /// Gets a virtual path from a physical disk path.
+        /// </summary>
+        /// <param name="path">The physical disk path</param>
+        /// <returns>The virtual path. E.g. "~/bin"</returns>
         public string GetVirtualPath(string path)
         {
             if (string.IsNullOrEmpty(path))

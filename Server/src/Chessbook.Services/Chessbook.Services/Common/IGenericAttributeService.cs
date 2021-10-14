@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Chessbook.Data.Models;
-using Nop.Core;
-using Nop.Core.Domain.Common;
 
-namespace Nop.Services.Common
+using Chessbook.Data.Models;
+using Chessbook.Core.Domain.Common;
+
+namespace Chessbook.Services.Common
 {
     /// <summary>
     /// Generic attribute service interface

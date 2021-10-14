@@ -134,7 +134,6 @@ export class VideoCommentService {
   // }
 
   private extractVideoComment(postComment: IPostComment) {
-    debugger
     return new PostComment(postComment);
   }
 

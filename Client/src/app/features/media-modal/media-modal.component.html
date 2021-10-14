@@ -33,19 +33,19 @@
             <fa-icon id="chevron-right" [icon]="this.faChevronRight" size="2x" fixedWidth></fa-icon>
         </button>
 
-        <div class="media-modal__overlay">
-            <ul *ngIf="this.media.length > 1" class="media-modal__pagination">
-                <button [ngClass]="{'media-modal__page-dot': true, 'active': i === this.getIndex()}" [attr.data-index]="i"
-                        *ngFor="let item of this.media; let i = index;" (click)="this.handleChangeIndex($event)">
-                    {{i + 1}}
-                </button>
-            </ul>
-            <div class="picture-in-picture__footer">
-                <fa-icon [icon]="this.faComment" class="status__action-bar-button icon-button" style="font-size: 18px;width: auto;line-height: 18px;"></fa-icon>
-                <fa-icon [icon]="this.faShare" class="status__action-bar-button icon-button" style="font-size: 18px;width: auto;line-height: 18px;"></fa-icon>
-                <fa-icon [icon]="this.faHeart" class="status__action-bar-button icon-button star-icon" style="font-size: 18px;width: auto;line-height: 18px;"></fa-icon>
-            </div>
-            <!--{statusId && <Footer statusId={statusId} withOpenButton onClose={onClose} />}-->
-        </div>
+<!--        <div class="media-modal__overlay">-->
+<!--            <ul *ngIf="this.media.length > 1" class="media-modal__pagination">-->
+<!--                <button [ngClass]="{'media-modal__page-dot': true, 'active': i === this.getIndex()}" [attr.data-index]="i"-->
+<!--                        *ngFor="let item of this.media; let i = index;" (click)="this.handleChangeIndex($event)">-->
+<!--                    {{i + 1}}-->
+<!--                </button>-->
+<!--            </ul>-->
+<!--            <div class="picture-in-picture__footer">-->
+<!--                <fa-icon [icon]="this.faComment" class="status__action-bar-button icon-button" style="font-size: 18px;width: auto;line-height: 18px;"></fa-icon>-->
+<!--                <fa-icon [icon]="this.faShare" class="status__action-bar-button icon-button" style="font-size: 18px;width: auto;line-height: 18px;"></fa-icon>-->
+<!--                <fa-icon [icon]="this.faHeart" class="status__action-bar-button icon-button star-icon" style="font-size: 18px;width: auto;line-height: 18px;"></fa-icon>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;{statusId && <Footer statusId={statusId} withOpenButton onClose={onClose} />}&ndash;&gt;-->
+<!--        </div>-->
     </div>
 </div>

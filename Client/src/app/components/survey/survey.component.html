@@ -15,7 +15,7 @@
                 <ng-container *ngFor="let option of this.poll.answers">
                     <div>
                         <div class="survey-results-label-title text-basic">
-                            {{this.option.label}} <span class="survey-results-subtitle">({{this.getOptionPercentage(option.percentOfTotalVotes)}}%, {option.numberOfVotes, plural, =1 {1 Vote} other {{{ option.numberOfVotes}} Votes }})</span>
+                            {{this.option.label}} <span class="survey-results-subtitle">({{this.getOptionPercentage(option.percentOfTotalVotes)}}%, {option.numberOfVotes, plural, =1 {1 Vote} other {{{ option.numberOfVotes}} Votes}})</span>
                         </div>
                         <nb-progress-bar size="tiny" [value]="option.percentOfTotalVotes" status="primary"></nb-progress-bar>
                     </div>

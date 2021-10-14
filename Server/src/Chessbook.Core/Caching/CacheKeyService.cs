@@ -2,10 +2,11 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Chessbook.Data.Models;
-using Nop.Core.Configuration;
 
-namespace Nop.Core.Caching
+using Chessbook.Data.Models;
+using Chessbook.Core.Configuration;
+
+namespace Chessbook.Core.Caching
 {
     /// <summary>
     /// Represents the default cache key service implementation

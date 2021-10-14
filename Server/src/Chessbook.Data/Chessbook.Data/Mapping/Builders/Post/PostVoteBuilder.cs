@@ -1,10 +1,10 @@
 ﻿using System.Data;
-
 using FluentMigrator.Builders.Create.Table;
-using Nop.Data.Extensions;
+
+using Chessbook.Data.Extensions;
 using Chessbook.Core.Domain.Posts;
 
-namespace Nop.Data.Mapping.Builders.Forums
+namespace Chessbook.Data.Mapping.Builders.Forums
 {
     /// <summary>
     /// Represents a forum post vote entity builder
@@ -20,7 +20,7 @@ namespace Nop.Data.Mapping.Builders.Forums
         public override void MapEntity(CreateTableExpressionBuilder table)
         {
             table
-                .WithColumn(nameof(PostVote.PostId)).AsInt32().NotNullable().ForeignKey<Post>().OnDelete(Rule.Cascade)
+                .WithColumn(nameof(PostVote.PostId)).AsInt32().NotNullable().ForeignKey<Chessbook.Core.Domain.Posts.Post>().OnDelete(Rule.Cascade)
                 .WithColumn(nameof(PostVote.Type)).AsInt32().NotNullable();
         }
 

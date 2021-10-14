@@ -1,7 +1,7 @@
-﻿using Chessbook.Data.Models;
-using System;
+﻿using System;
+using Chessbook.Data.Models;
 
-namespace Nop.Core.Domain.Customers
+namespace Chessbook.Core.Domain.Customers
 {
     /// <summary>
     /// Represents a customer password

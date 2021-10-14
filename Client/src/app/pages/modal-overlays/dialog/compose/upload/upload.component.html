@@ -248,6 +248,7 @@
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
+                                                                                            <iframe *ngIf="this.getVideoEmbedLink()" class="video-frame" [src]="this.embedUrl | safeVideoLink" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
                                                                                         </div>
                                                                                     </div>
@@ -259,7 +260,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="sharebook-container display-inline-flex flex-direction-row post-padding-bottom">
-                                                            <div class="sharebook-container">
+                                                            <div class="sharebook-container" [formGroup]="this.form">
 <!--                                                                <div role="button"-->
 <!--                                                                     data-focusable="true"-->
 <!--                                                                     tabindex="0"-->
@@ -298,8 +299,8 @@
                                                                     </app-help>
 
                                                                     <app-select-tags labelForId="label-tags" formControlName="tags"></app-select-tags>
-                                                                    <div *ngIf="formErrors.tags" class="form-error">
-                                                                        {{ formErrors.tags }}
+                                                                    <div *ngIf="this.formErrors.tags" class="form-error">
+                                                                        {{ this.formErrors.tags }}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -307,7 +308,7 @@
                                                         <!--bottom border-->
                                                         <div class="sharebook-container upload-bottom-border-background-color height-1px width-100-per"></div>
                                                         <ng-container *ngIf="this.isPoll" >
-                                                            <app-poll-form [options]="this.initialPoll.options" [expiresIn]="this.initialPoll.expires_in" [isMultiple]="this.initialPoll.multiple"></app-poll-form>
+                                                            <app-poll-form [poll]="this.initialPoll" [options]="this.initialPoll.options" [expiresIn]="this.initialPoll.expiresIn" [isMultiple]="this.initialPoll.multiple"></app-poll-form>
                                                         </ng-container>
                                                         <nb-card-footer style="border: none">
                                                             <!--<button nbButton hero status="primary" (click)="dismiss()">Dismiss Dialog</button>-->
@@ -321,12 +322,14 @@
                                                                                  data-focusable="true"
                                                                                  tabindex="0"
                                                                                  class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty  border-height-0px add-photos-or-video-margin upload-svg-margin-left-right add-photos-or-video-margin-left element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"> <!--border-width-1px-->
-                                                                                <div dir="auto" class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
+                                                                                <div dir="auto" class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
+                                                                                title="Media">
                                                                                     <fa-icon size="1" [styles]="this.svgStyles" [icon]="this.faImagePolaroid"></fa-icon>
                                                                                     <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
                                                                                 </div>
                                                                             </div>
-                                                                            <input
+                                                                            <input  style="width: 19px; height: 19px; z-index: 1"
+                                                                                    title="Media"
                                                                                     accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/quicktime,video/webm"
                                                                                     multiple=""
                                                                                     tabindex="-1"
@@ -334,8 +337,7 @@
                                                                                     data-focusable="true"
                                                                                     class="add-photos-or-video-default-input-height opacity-0 overflow-hidden position-absolute add-photos-or-video-default-input-width z-index-minus-1"
                                                                                     data-testid="fileInput"
-                                                                                    appFileSelect>
-                                                                            <!--<app-poll-button (click)="this.pollButtonHandler()" [onClick]="this.pollButtonHandler"></app-poll-button>-->
+                                                                                    appFileSelect [uploader]="this.uploader">
                                                                             <div aria-label="Add poll"
                                                                                  role="button"
                                                                                  data-focusable="true"
@@ -344,7 +346,8 @@
                                                                                  data-testid="scheduleOption"
                                                                                  (click)="this.pollButtonHandler()">
                                                                                 <div dir="auto"
-                                                                                     class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
+                                                                                     class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
+                                                                                     title="Poll">
                                                                                     <fa-icon [icon]="this.faPoll" [styles]="this.svgStyles"></fa-icon>
                                                                                     <span
                                                                                             class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
@@ -356,9 +359,12 @@
                                                                                      role="button"
                                                                                      data-focusable="true"
                                                                                      tabindex="0"
-                                                                                     class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty  border-height-0px upload-svg-margin-left-right element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none z-index-plus-2">
+                                                                                     title="Emoji"
+                                                                                     class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty  border-height-0px upload-svg-margin-left-right element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none z-index-plus-2"
+                                                                                     (click)="this.emojiButtonHandler()">
                                                                                     <div dir="auto"
-                                                                                         class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
+                                                                                         class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
+                                                                                    >
                                                                                         <fa-icon [icon]="this.faSmileWink" [styles]="this.svgStyles"></fa-icon>
                                                                                         <span
                                                                                                 class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
@@ -371,10 +377,12 @@
                                                                                  data-focusable="true"
                                                                                  tabindex="0"
                                                                                  class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty border-height-0px upload-svg-margin-left-right element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
-                                                                                 data-testid="scheduleOption">
+                                                                                 data-testid="scheduleOption"
+                                                                                 (click)="this.scheduleButtonHandler()">
                                                                                 <div dir="auto"
-                                                                                     class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
-                                                                                    <fa-icon [icon]="this.faCode"></fa-icon>
+                                                                                     class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
+                                                                                title="Schedule">
+                                                                                    <fa-icon [icon]="this.faCalendarDay" [styles]="this.svgStyles"></fa-icon>
                                                                                     <span
                                                                                             class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
                                                                                 </div>

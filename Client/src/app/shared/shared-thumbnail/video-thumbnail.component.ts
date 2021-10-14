@@ -37,13 +37,19 @@ export class VideoThumbnailComponent {
   // }
 
   getImageUrl() {
-    if (!this.video) return '';
-
-    if (this.screenService.isInMobileView()) {
-      return this.video.entities.medias[0].thumbImageUrl;
+    if (!this.video) {
+      return '';
     }
 
-    return this.video.entities.medias[0].thumbImageUrl;
+    if (this.video.entities.medias.length === 0) {
+      return `assets/images/default-post-image.jpg`;
+    }
+
+    if (this.screenService.isInMobileView()) {
+      return this.video.entities.medias[0].thumbImageUrl; // consider to be thumbUrl kk
+    }
+
+    return this.video.entities.medias[0].imageUrl; // // consider to be thumbUrl kk
   }
 
   // getProgressPercent() {

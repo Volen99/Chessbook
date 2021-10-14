@@ -1,5 +1,14 @@
 ﻿using FluentMigrator;
 
+using Chessbook.Core.Domain.Common;
+using Chessbook.Core.Domain.Configuration;
+using Chessbook.Core.Domain.Customers;
+using Chessbook.Core.Domain.Directory;
+using Chessbook.Core.Domain.Localization;
+using Chessbook.Core.Domain.Logging;
+using Chessbook.Core.Domain.Security;
+using Chessbook.Core.Domain.Stores;
+using Chessbook.Core.Domain.Tasks;
 using Chessbook.Core.Domain.Abuse;
 using Chessbook.Core.Domain.Notifications;
 using Chessbook.Core.Domain.Posts;
@@ -9,23 +18,14 @@ using Chessbook.Data.Models.Comments;
 using Chessbook.Data.Models.Contact;
 using Chessbook.Data.Models.Media;
 using Chessbook.Data.Models.Phone;
-using Chessbook.Data.Models.Polls;
-using Chessbook.Data.Models.Post;
-using Chessbook.Data.Models.Post.Entities;
-using Nop.Core.Domain.Common;
-using Nop.Core.Domain.Configuration;
-using Nop.Core.Domain.Customers;
-using Nop.Core.Domain.Directory;
-using Nop.Core.Domain.Localization;
-using Nop.Core.Domain.Logging;
-using Nop.Core.Domain.Media;
-using Nop.Core.Domain.Security;
-using Nop.Core.Domain.Stores;
-using Nop.Core.Domain.Tasks;
-using Chessbook.Core.Domain.Customers;
 using Chessbook.Core.Domain.Tournaments;
+using Chessbook.Core.Domain.Cards;
+using Chessbook.Core.Domain.Polls;
+using Chessbook.Core.Domain.Chat;
+using Chessbook.Core.Domain.Messages;
+using Chessbook.Core.Domain.Gdpr;
 
-namespace Nop.Data.Migrations
+namespace Chessbook.Data.Migrations
 {
     [SkipMigrationOnUpdate]
     [NopMigration("2020/01/31 11:24:16:2551771", "Nop.Data base schema")]
@@ -58,7 +58,6 @@ namespace Nop.Data.Migrations
 
             _migrationManager.BuildTable<Customer>(Create);
             _migrationManager.BuildTable<CustomerPassword>(Create);
-            //_migrationManager.BuildTable<CustomerAddressMapping>(Create);
 
             _migrationManager.BuildTable<CustomerRole>(Create);
             _migrationManager.BuildTable<CustomerCustomerRoleMapping>(Create);
@@ -83,25 +82,16 @@ namespace Nop.Data.Migrations
 
             _migrationManager.BuildTable<Setting>(Create);
 
-            //_migrationManager.BuildTable<Discount>(Create);
-
-            //_migrationManager.BuildTable<DiscountCategoryMapping>(Create);
-            //_migrationManager.BuildTable<DiscountProductMapping>(Create);
-            //_migrationManager.BuildTable<DiscountRequirement>(Create);
-            //_migrationManager.BuildTable<DiscountUsageHistory>(Create);
-            //_migrationManager.BuildTable<DiscountManufacturerMapping>(Create);
-
-            //_migrationManager.BuildTable<PrivateMessage>(Create);
-            //_migrationManager.BuildTable<ForumGroup>(Create);
-            //_migrationManager.BuildTable<Forum>(Create);
-            //_migrationManager.BuildTable<ForumTopic>(Create);
-            //_migrationManager.BuildTable<ForumPost>(Create);
-            //_migrationManager.BuildTable<ForumPostVote>(Create);
-            //_migrationManager.BuildTable<ForumSubscription>(Create);
+            _migrationManager.BuildTable<GdprConsent>(Create);
+            _migrationManager.BuildTable<GdprLog>(Create);
 
             _migrationManager.BuildTable<ActivityLogType>(Create);
             _migrationManager.BuildTable<ActivityLog>(Create);
             _migrationManager.BuildTable<Log>(Create);
+
+            _migrationManager.BuildTable<EmailAccount>(Create);
+            _migrationManager.BuildTable<MessageTemplate>(Create);
+            _migrationManager.BuildTable<QueuedEmail>(Create);
 
             _migrationManager.BuildTable<Poll>(Create);
             _migrationManager.BuildTable<PollAnswer>(Create);
@@ -118,13 +108,7 @@ namespace Nop.Data.Migrations
 
             _migrationManager.BuildTable<Relationship>(Create);
             _migrationManager.BuildTable<UserFollow>(Create);
-            _migrationManager.BuildTable<MediaEntity>(Create);
-            _migrationManager.BuildTable<MediaEntitySize>(Create);
-            _migrationManager.BuildTable<HashtagEntity>(Create);
-            _migrationManager.BuildTable<UrlEntity>(Create);
-            _migrationManager.BuildTable<UserMentionEntity>(Create);
-            _migrationManager.BuildTable<SymbolEntity>(Create);
-            _migrationManager.BuildTable<Indices>(Create);
+            //_migrationManager.BuildTable<MediaEntity>(Create);
             _migrationManager.BuildTable<PostVote>(Create);
             _migrationManager.BuildTable<Comment>(Create);
             _migrationManager.BuildTable<Contact>(Create);
@@ -132,17 +116,22 @@ namespace Nop.Data.Migrations
             _migrationManager.BuildTable<ContactPhoto>(Create);
             _migrationManager.BuildTable<TwitchLoginName>(Create);
             _migrationManager.BuildTable<PostComment>(Create);
-            _migrationManager.BuildTable<PostReshare>(Create);
             _migrationManager.BuildTable<Settings>(Create);
 
             _migrationManager.BuildTable<Abuse>(Create);
             _migrationManager.BuildTable<PostCommentAbuseModel>(Create);
+            _migrationManager.BuildTable<PostAbuseModel>(Create);
 
             _migrationManager.BuildTable<UserNotification>(Create);
             _migrationManager.BuildTable<UserNotificationSettingModel>(Create);
 
             _migrationManager.BuildTable<UserBlocklist>(Create);
             _migrationManager.BuildTable<Tournament>(Create);
+
+            _migrationManager.BuildTable<PreviewCard>(Create);
+            _migrationManager.BuildTable<PreviewCardPost>(Create);
+
+            _migrationManager.BuildTable<PrivateMessage>(Create);
 
         }
     }

@@ -1,22 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using Nop.Core.Domain.Common;
-using Nop.Core.Infrastructure;
-using Nop.Web.Framework;
-//using Nop.Web.Framework.Controllers;
-//using Nop.Web.Framework.Mvc.Filters;
+
+using Chessbook.Web.Framework.Mvc.Filters;
+using Chessbook.Web.Framework;
 
 namespace Chessbook.Web.Api.Areas.Admin.Controllers
 {
     [ApiController]
     [Area(AreaNames.Admin)]
-    // [AutoValidateAntiforgeryToken]
-    // [ValidateIpAddress]
-    // [AuthorizeAdmin]
-    // [ValidateVendor]
-    // [SaveSelectedTab]
-    // [NotNullValidationMessage]
+    [ValidateIpAddress]
+    [AuthorizeAdmin]
     public abstract class BaseAdminController : ControllerBase
     {
         /// <summary>

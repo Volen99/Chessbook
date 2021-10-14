@@ -3,10 +3,11 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
-using Nop.Core.Configuration;
-using Nop.Core.Infrastructure;
 
-namespace Nop.Services.Helpers
+using Chessbook.Core.Configuration;
+using Chessbook.Core.Infrastructure;
+
+namespace Chessbook.Services.Helpers
 {
     /// <summary>
     /// User agent helper

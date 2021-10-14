@@ -69,6 +69,7 @@
               "linkifyjs",
               "markdown-it",
               "markdown-it-emoji/light",
+              "linkifyjs/lib/linkify-html",
               "sanitize-html",
               "socket.io-client",
               "socket.io-parser",

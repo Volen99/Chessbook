@@ -101,11 +101,11 @@
     width: 421px; // by mi
   }
 
-  //@media screen and (max-width: 1496px) and (min-width: 1196px) {
-  //  input {
-  //    width: auto !important;
-  //  }
-  //}
+  @media screen and (min-width: 1196px) and (max-width: 1496px)  {
+    input {
+      width: 354px;
+    }
+  }
 
   @media screen and (min-width: $mobile-view) {
     @include margin-left(10px);
@@ -114,9 +114,9 @@
   @media screen and (max-width: $small-view) {
     flex: 1;
 
-    input {
-      width: 70px;
-    }
+    //input {
+    //  width: 70px;
+    //}
   }
 
   span {

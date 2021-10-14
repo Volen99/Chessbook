@@ -1,4 +1,4 @@
-﻿namespace Nop.Core.Domain.Customers
+﻿namespace Chessbook.Core.Domain.Customers
 {
     /// <summary>
     /// Represents the customer login result enumeration

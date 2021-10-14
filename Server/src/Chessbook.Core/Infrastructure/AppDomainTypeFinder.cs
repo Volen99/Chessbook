@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace Nop.Core.Infrastructure
+namespace Chessbook.Core.Infrastructure
 {
     /// <summary>
     /// A class that finds types needed by Nop by looping assemblies in the 

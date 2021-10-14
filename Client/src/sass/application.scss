@@ -308,9 +308,9 @@ noscript,
 @import './src/app/theme/styles/themes';
 
 @include nb-install-component() {
-  .element-background-color-rgba {
-    background-color: rgba(0, 0, 0, 0);
-  }
+  //.element-background-color-rgba {
+  //  background-color: rgba(0, 0, 0, 0);
+  //}
 
   .r-13gxpu9 {
     color: nb-theme(color-primary-default);

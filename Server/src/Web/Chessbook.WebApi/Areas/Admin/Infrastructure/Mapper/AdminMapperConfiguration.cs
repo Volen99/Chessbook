@@ -1,20 +1,17 @@
 ﻿using AutoMapper;
-using Nop.Core.Configuration;
 
-using Nop.Core.Domain.Stores;
-using Nop.Core.Domain.Tasks;
+using Chessbook.Core.Configuration;
+using Chessbook.Core.Domain.Stores;
+using Chessbook.Core.Domain.Tasks;
+using Chessbook.Core.Infrastructure.Mapper;
+using Chessbook.Web.Areas.Admin.Models.Polls;
+using Chessbook.Web.Areas.Admin.Models.Stores;
+using Chessbook.Web.Areas.Admin.Models.Tasks;
+using Chessbook.Web.Framework.Models;
+using Chessbook.Core.Domain.Security;
+using Chessbook.Core.Domain.Polls;
 
-using Nop.Core.Infrastructure.Mapper;
-using Nop.Web.Areas.Admin.Models.Polls;
-
-using Nop.Web.Areas.Admin.Models.Stores;
-using Nop.Web.Areas.Admin.Models.Tasks;
-
-using Chessbook.Data.Models.Polls;
-using Nop.Web.Framework.Models;
-using Nop.Core.Domain.Security;
-
-namespace Nop.Web.Areas.Admin.Infrastructure.Mapper
+namespace Chessbook.Web.Areas.Admin.Infrastructure.Mapper
 {
     /// <summary>
     /// AutoMapper configuration for admin area models

@@ -1,9 +1,9 @@
 ﻿using Chessbook.Data.Models.Media;
-using Nop.Core.Domain.Media;
+using Chessbook.Core.Domain.Media;
 using Chessbook.Services.Caching;
 using System.Threading.Tasks;
 
-namespace Nop.Services.Media.Caching
+namespace Chessbook.Services.Media.Caching
 {
     /// <summary>
     /// Represents a picture cache event consumer

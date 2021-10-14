@@ -1,5 +1,5 @@
 ﻿using Chessbook.Web.Api.Areas.Admin.Models.Users;
-using Nop.Web.Framework.Models;
+using Chessbook.Web.Framework.Models;
 
 namespace Chessbook.Web.Api.Models.Relationships
 {

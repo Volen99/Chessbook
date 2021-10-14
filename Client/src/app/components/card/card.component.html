@@ -30,7 +30,7 @@
                 </a>
                 <strong *ngIf="!this.interactive" class="status-card__title" [title]="this.card.title">{{this.card.title}}</strong>
 
-                <p *ngIf="!(this.horizontal || this.compact)" class="status-card__description">
+                <p *ngIf="!(this.horizontal || this.compact)" class="status-card__description text-hint">
                     {{this.getCardDescription()}}
                 </p>
 
@@ -41,16 +41,31 @@
 
    <ng-template #link>
        <a [ngClass]="this.className" [href]="this.card.url" target="_blank" #nodeRef>
+           <!--{embed}-->
            <div *ngIf="this.card.image; else noImageIcon" class="status-card__image">
-               <app-blurhash [canvasProps]="'status-card__image-preview'" [hash]="this.card.blurhash" [dummy]="true">
+               <app-blurhash [canvasProps]="{'status-card__image-preview': true, 'status-card__image-preview--hidden': this.revealed && this.previewLoaded}" [hash]="this.card.blurhash" [dummy]="true">
                </app-blurhash>
-               <img [src]="this.card.image" alt="" class="status-card__image-image" [ngStyle]="{width: horizontal ? width : null, height: horizontal ? height : null, visibility: revealed ? null : 'hidden' }" (load)="this.handleImageLoad()"/>;
+               <img [src]="this.card.image" alt="" class="status-card__image-image" [ngStyle]="{width: horizontal ? width : null, height: horizontal ? height : null, visibility: revealed ? null : 'hidden' }" (load)="this.handleImageLoad()"/>
            </div>
            <ng-template #noImageIcon>
                <div class="status-card__image">
                    <fa-icon [icon]="this.faFileAlt"></fa-icon>
                </div>
            </ng-template>
+
+           <!--{description}-->
+           <div class="status-card__content">
+               <a *ngIf="this.interactive" class="status-card__title" [href]="this.card.url" [title]="this.card.title" target="_blank">
+                   <strong>{{this.card.title}}</strong>
+               </a>
+               <strong *ngIf="!this.interactive" class="status-card__title" [title]="this.card.title">{{this.card.title}}</strong>
+
+               <p *ngIf="!(this.horizontal || this.compact)" class="status-card__description text-hint">
+                   {{this.getCardDescription()}}
+               </p>
+
+               <span class="status-card__host">{{this.provider}}</span>
+           </div>
        </a>
    </ng-template>
 

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-using Nop.Core.Caching;
+using Chessbook.Core.Caching;
 using Chessbook.Core.Domain.Posts;
 using Chessbook.Services.Caching;
 

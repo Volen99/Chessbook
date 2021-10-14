@@ -1,17 +1,15 @@
-﻿using Chessbook.Common.Extensions;
+﻿using System;
+using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+
+using Chessbook.Common.Extensions;
 using Chessbook.Core.JsonConverters;
 using Chessbook.Services.Data;
 using Chessbook.Web.Api.Identity;
 using Chessbook.Web.Models.APIs;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chessbook.Web.Api.Controllers
 {

@@ -1,8 +1,6 @@
 namespace Chessbook.Web.Api.Exceptions
 {
-    using System;
     using Microsoft.AspNetCore.Mvc;
-
     using Chessbook.Storage.API.Exception;
 
     public class SampleExceptionMapper

@@ -1,4 +1,4 @@
-﻿namespace Nop.Core.Domain.Security
+﻿namespace Chessbook.Core.Domain.Security
 {
     /// <summary>
     /// Represents an type of reCAPTCHA

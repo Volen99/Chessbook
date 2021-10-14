@@ -1,6 +1,6 @@
-﻿using Nop.Core.Caching;
+﻿using Chessbook.Core.Caching;
 
-namespace Nop.Services.Localization
+namespace Chessbook.Services.Localization
 {
     /// <summary>
     /// Represents default values related to localization services

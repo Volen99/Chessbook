@@ -1,8 +1,9 @@
-﻿using Nop.Core.Domain.Logging;
-using Chessbook.Services.Caching;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace Nop.Services.Logging.Caching
+using Chessbook.Core.Domain.Logging;
+using Chessbook.Services.Caching;
+
+namespace Chessbook.Services.Logging.Caching
 {
     /// <summary>
     /// Represents a activity log type cache event consumer

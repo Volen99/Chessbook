@@ -1,8 +1,7 @@
-﻿using Chessbook.Data.Models.Polls;
-using FluentMigrator.Builders.Create.Table;
-using Nop.Data.Extensions;
+﻿using FluentMigrator.Builders.Create.Table;
+using Chessbook.Core.Domain.Polls;
 
-namespace Nop.Data.Mapping.Builders.Polls
+namespace Chessbook.Data.Mapping.Builders.Polls
 {
     /// <summary>
     /// Represents a poll entity builder
@@ -18,7 +17,8 @@ namespace Nop.Data.Mapping.Builders.Polls
         public override void MapEntity(CreateTableExpressionBuilder table)
         {
             //table
-            //    .WithColumn(nameof(Poll.Name)).AsString(int.MaxValue).NotNullable();
+            //    .WithColumn(nameof(Poll.Name)).AsString(int.MaxValue).NotNullable()
+            //    .WithColumn(nameof(Poll.LanguageId)).AsInt32().ForeignKey<Language>();
         }
 
         #endregion

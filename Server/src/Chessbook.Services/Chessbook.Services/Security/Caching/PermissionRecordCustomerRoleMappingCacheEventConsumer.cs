@@ -1,7 +1,7 @@
-﻿using Nop.Core.Domain.Security;
+﻿using Chessbook.Core.Domain.Security;
 using Chessbook.Services.Caching;
 
-namespace Nop.Services.Security.Caching
+namespace Chessbook.Services.Security.Caching
 {
     /// <summary>
     /// Represents a permission record-customer role mapping cache event consumer

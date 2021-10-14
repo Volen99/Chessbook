@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 
-import {messages} from './messages';
-import {botReplies, gifsLinks, imageLinks} from './bot-replies';
-import {HttpService} from "../../../core/backend/common/api/http.service";
+import {messages} from '../../pages/messages/chat/messages';
+import {botReplies, gifsLinks, imageLinks} from '../../pages/messages/chat/bot-replies';
+import {HttpService} from "../../core/backend/common/api/http.service";
 import {HttpParams} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
-import {RestService} from "../../../core/rest/rest.service";
-import {RestExtractor} from "../../../core/rest/rest-extractor";
+import {RestService} from "../../core/rest/rest.service";
+import {RestExtractor} from "../../core/rest/rest-extractor";
 
 @Injectable()
 export class ChatService {
@@ -55,6 +55,28 @@ export class ChatService {
 
     let url = 'pm/index';
     return this.http.get(url, {params})
+      .pipe(catchError(res => this.restExtractor.handleError(res)));
+  }
+
+  send(toCustomerId: number, replyToMessageId: number, subject: string, message: string) {
+    const body = {
+      toCustomerId,
+      replyToMessageId,
+      subject,
+      message: message,
+    };
+
+    return this.http.post('pm/send', body)
+      .pipe(catchError(res => this.restExtractor.handleError(res)));
+  }
+
+  loadMessage(messageId: number) {
+    return this.http.get(`pm/view-pm/${messageId}`)
+      .pipe(catchError(res => this.restExtractor.handleError(res)));
+  }
+
+  delete(id: number, tab: string) {
+    return this.http.post(`pm/delete-${tab}/${id}`, {})
       .pipe(catchError(res => this.restExtractor.handleError(res)));
   }
 }

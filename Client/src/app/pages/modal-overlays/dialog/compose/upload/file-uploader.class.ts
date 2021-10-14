@@ -103,9 +103,9 @@ export class FileUploader {
   public addToQueue(files: File[], options?: FileUploaderOptions, filters?: FilterFunction[] | string): void {
     let list: File[] = [];
     for (let file of files) {
-      if (file.type.includes('video')) {
+      if (file.type.includes('video') || this.isAudioFile(file.name)) {
         let notifier = AppInjector.get(NbToastrService);
-        notifier.warning('Currently Chessbook does not support uploading videos on its servers, but you can share videos from youtube.', 'Not supported — yet',
+        notifier.warning('Currently Chessbook does not support uploading videos on its servers, but you can share videos from Youtube, Twitch or Twitter.', 'Not supported — yet',
           {
             position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
             duration: 0,
@@ -142,6 +142,12 @@ export class FileUploader {
     if (this.options.autoUpload) {
       this.uploadAll();
     }
+  }
+
+  private isAudioFile (filename: string) {;
+    const extensions = [ '.mp3', '.flac', '.ogg', '.wma', '.wav' ];
+
+    return extensions.some(e => filename.endsWith(e));
   }
 
   public removeFromQueue(value: FileItem): void {

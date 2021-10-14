@@ -2,7 +2,8 @@
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using LinqToDB;
-using Nop.Core;
+
+using Chessbook.Core;
 
 namespace System.Linq
 {

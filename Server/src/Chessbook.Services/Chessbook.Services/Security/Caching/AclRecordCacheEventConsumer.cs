@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Nop.Core.Domain.Security;
+
+using Chessbook.Core.Domain.Security;
 using Chessbook.Services.Caching;
 
-namespace Nop.Services.Security.Caching
+namespace Chessbook.Services.Security.Caching
 {
     /// <summary>
     /// Represents a ACL record cache event consumer

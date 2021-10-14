@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Chessbook.Data.Models;
-using Nop.Core;
-using Nop.Core.Domain.Customers;
-using Nop.Core.Domain.Logging;
 
-namespace Nop.Services.Logging
+using Chessbook.Data.Models;
+using Chessbook.Core;
+using Chessbook.Core.Domain.Logging;
+
+namespace Chessbook.Services.Logging
 {
     /// <summary>
     /// Customer activity service interface

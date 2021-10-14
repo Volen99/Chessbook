@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 
-namespace Nop.Services.ExportImport
+namespace Chessbook.Services.ExportImport
 {
     /// <summary>
     /// Import manager interface

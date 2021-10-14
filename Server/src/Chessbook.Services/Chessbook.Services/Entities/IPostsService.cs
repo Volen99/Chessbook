@@ -3,11 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using Chessbook.Core.Domain.Posts;
     using Chessbook.Data.Models;
     using Chessbook.Data.Models.Post.Enums;
     using Chessbook.Web.Models.Inputs;
-    using Nop.Core;
+    using Chessbook.Core;
 
     public interface IPostsService
     {
@@ -68,9 +69,7 @@
             bool showHidden = false,
             bool? overridePublished = null);
 
-        Task<Post> CreateAsync(QueryPostParams query, int userId, int[] mediaIds = null, int pollId = 0);
-
-        Task<Post> CreateRetweet(int id, int userId, bool trimUser);
+        Task<Post> CreateAsync(QueryPostParams query, int userId, int[] mediaIds = null, int? pollId = null);
 
         /// <summary>
         /// Gets product
@@ -82,12 +81,20 @@
         /// </returns>
         Task<Post> GetPostByIdAsync(int productId);
 
-        Task<T> GetResharedOriginal<T>(int resharedPostId);
+        /// <summary>
+        /// Gets products by identifier
+        /// </summary>
+        /// <param name="productIds">Product identifiers</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the products
+        /// </returns>
+        Task<IList<Post>> GetPostsByIdsAsync(int[] productIds);
 
         Task<IList<Post>> GetHomeTimeline(bool ascSort = false,
             int pageIndex = 0, int pageSize = int.MaxValue);
 
-        Task<IPagedList<Post>> GetUserProfileTimeline(int userId, bool ascSort = false,
+        Task<IPagedList<Post>> GetUserProfileTimeline(int userId, bool ascSort = false, bool onlyMedia = false,
             int pageIndex = 0, int pageSize = int.MaxValue);
 
 
@@ -131,14 +138,9 @@
 
         Task<IList<Customer>> GetLikers(int postId);
 
+        Task<IList<Customer>> GetReposters(int postId);
+
         Task<int> GetPostsCountByUserId(int userId);
-
-        Task<bool> GetReshareStatus(int postId, int userId);
-
-        Task<int> GetReshareCount(int postId);
-
-
-
 
         /// <summary>
         /// Check whether customer is allowed to delete post
@@ -153,8 +155,6 @@
         /// </summary>
         /// <param name="product">Product</param>
         Task DeleteProductAsync(Post product);
-
-        Task Unshare(Post product);
 
         /// <summary>
         /// Gets a product pictures by product identifier
@@ -176,6 +176,50 @@
         /// </returns>
         Task<PostPicture> GetProductPictureByIdAsync(int productPictureId);
 
+        /// <summary>
+        /// Updates the post
+        /// </summary>
+        /// <param name="post">Post</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        Task UpdatePostAsync(Post post);
+
         Task<Customer> LoadAccountIdFromVideo(int postId);
+
+        Task<Post> GetPinnedPost(int userId);
+
+        Task<Post> GetRepostStatus(int postId, int userId);
+
+        /// <summary>
+        /// Gets all comments
+        /// </summary>
+        /// <param name="customerId">Customer identifier; 0 to load all records</param>
+        /// <param name="storeId">Store identifier; pass 0 to load all records</param>
+        /// <param name="blogPostId">Blog post ID; 0 or null to load all records</param>
+        /// <param name="approved">A value indicating whether to content is approved; null to load all records</param> 
+        /// <param name="fromUtc">Item creation from; null to load all records</param>
+        /// <param name="toUtc">Item creation to; null to load all records</param>
+        /// <param name="commentText">Search comment text; null to load all records</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the comments
+        /// </returns>
+        Task<IList<PostComment>> GetAllCommentsAsync(int customerId = 0, int storeId = 0, int? blogPostId = null,
+            bool? approved = null, DateTime? fromUtc = null, DateTime? toUtc = null, string commentText = null);
+
+        /// <summary>
+        /// Deletes post comments
+        /// </summary>
+        /// <param name="postComments">Blog comments</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        Task DeleteBlogCommentsAsync(IList<PostComment> postComments);
+
+        Task<IList<Post>> GetPostsByUserId(int userId);
+
+        /// <summary>
+        /// Delete products
+        /// </summary>
+        /// <param name="posts">Products</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        Task DeletePostsAsync(IList<Post> posts);
     }
 }

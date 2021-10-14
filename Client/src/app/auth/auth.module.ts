@@ -1,8 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpRequest } from '@angular/common/http';
+import { HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthInterceptor } from './auth.interceptor';
 import { AuthGuard } from './auth.guard';

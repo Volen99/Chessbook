@@ -1,9 +1,5 @@
 ﻿namespace Chessbook.Common.Infrastructure
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     using Microsoft.Extensions.Configuration;
 
     public static class ConfigurationExtensions

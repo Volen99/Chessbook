@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nop.Core.Domain.Common;
-using Nop.Core.Domain.Directory;
 
-namespace Nop.Services.Directory
+using Chessbook.Core.Domain.Directory;
+
+namespace Chessbook.Services.Directory
 {
     /// <summary>
     /// State province service interface
     /// </summary>
-    public partial interface IStateProvinceService
+    public interface IStateProvinceService
     {
         /// <summary>
         /// Deletes a state/province

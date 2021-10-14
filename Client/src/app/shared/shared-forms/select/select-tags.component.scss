@@ -1,3 +1,25 @@
+@import '../../../theme/styles/themes';
+
 ng-select ::ng-deep .ng-arrow-wrapper {
   display: none;
 }
+
+@include nb-install-component() {
+  ng-select ::ng-deep {
+    .ng-select-container {
+      border: 1px solid nb-theme(color-primary-500);
+      color: green;
+
+      .ng-value-container {
+        .ng-placeholder {
+          color: nb-theme(text-hint-color);
+        }
+
+        input {
+          color: green;
+        }
+      }
+    }
+  }
+}
+

@@ -2,12 +2,12 @@
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Chessbook.Common;
 using Newtonsoft.Json;
-using Nop.Core;
-using Nop.Core.Infrastructure;
 
-namespace Nop.Data
+using Chessbook.Core;
+using Chessbook.Core.Infrastructure;
+
+namespace Chessbook.Data
 {
     /// <summary>
     /// Represents the data settings manager

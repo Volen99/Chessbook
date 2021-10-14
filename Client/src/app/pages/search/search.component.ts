@@ -94,7 +94,6 @@ export class SearchComponent implements OnInit, OnDestroy {
         }
         const searchTarget = queryParams['searchTarget'];
 
-        debugger
         // Search updated, reset filters
         if (this.currentSearch !== querySearch || searchTarget !== this.advancedSearch.searchTarget) {
           this.resetPagination();
@@ -151,7 +150,6 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   search() {
-    debugger
     this.error = this.checkFieldsAndGetError();
     if (this.error) {
       return;
@@ -176,7 +174,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     forkJoin(
       arr,
     ).subscribe(results => {
-      debugger
         for (const result of results) {
           // @ts-ignore
           this.results = this.results.concat(result.data);

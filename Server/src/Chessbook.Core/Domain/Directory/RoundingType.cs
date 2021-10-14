@@ -1,4 +1,4 @@
-﻿namespace Nop.Core.Domain.Directory
+﻿namespace Chessbook.Core.Domain.Directory
 {
     /// <summary>
     /// Rounding type

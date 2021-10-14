@@ -27,6 +27,7 @@ export class FileSelectDirective {
 
   @HostListener('change')
   public onChange(): any {
+    debugger
     let files = this.element.nativeElement.files;
     let options = this.getOptions();
     let filters = this.getFilters();

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Nop.Core.Infrastructure
+namespace Chessbook.Core.Infrastructure
 {
     /// <summary>
     /// Interface which should be implemented by tasks run on startup

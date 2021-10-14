@@ -1,6 +1,6 @@
 ﻿using Chessbook.Data.Models;
 
-namespace Nop.Core.Domain.Customers
+namespace Chessbook.Core.Domain.Customers
 {
     /// <summary>
     /// Represents a customer-customer role mapping class

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nop.Core.Domain.Tasks;
 
-namespace Nop.Services.Tasks
+using Chessbook.Core.Domain.Tasks;
+
+namespace Chessbook.Services.Tasks
 {
     /// <summary>
     /// Task service interface

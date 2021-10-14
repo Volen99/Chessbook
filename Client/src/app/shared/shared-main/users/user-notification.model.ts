@@ -275,7 +275,6 @@ export class UserNotification implements IUserNotification {
           break;
 
         case UserNotificationType.NEW_LIKE_ON_MY_POST:
-          debugger
           this.accountUrl = this.buildAccountUrl(this.postLike.account);
           this.videoUrl = this.buildVideoUrl(this.postLike.post, this.postLike.account.screenName);
           break;

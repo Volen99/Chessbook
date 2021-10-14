@@ -3,6 +3,8 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 import {RestService} from "../../core/rest/rest.service";
+import {RestExtractor} from "../../core/rest/rest-extractor";
+import {catchError} from "rxjs/operators";
 
 export class NewsPost {
   author: string;
@@ -31,7 +33,7 @@ const TOTAL_PAGES = 7;
 export class ExploreService {
   private readonly ACCESS_KEY = 'da15f48b7a3df86235e7cb85e0379467';
 
-  constructor(private http: HttpClient, private restService: RestService) {
+  constructor(private http: HttpClient, private restService: RestService, private restExtractor: RestExtractor) {
 
   }
 
@@ -48,7 +50,8 @@ export class ExploreService {
 
     // Access Restricted - Your current Subscription Plan does not support HTTPS Encryption.
     return this.http
-      .get<any>(`http://api.mediastack.com/v1/news?${params}`); //
+      .get<any>(`http://api.mediastack.com/v1/news?${params}`)
+      .pipe(catchError(err => this.restExtractor.handleError(err))); //
       // .pipe(
       //   map(news => news.splice(startIndex, pageSize)),
       //   delay(1500),

@@ -1,7 +1,7 @@
 ﻿using FluentMigrator.Builders.Create.Table;
-using Nop.Core.Domain.Logging;
+using Chessbook.Core.Domain.Logging;
 
-namespace Nop.Data.Mapping.Builders.Logging
+namespace Chessbook.Data.Mapping.Builders.Logging
 {
     /// <summary>
     /// Represents an activity log type entity builder

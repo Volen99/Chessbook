@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using Nop.Core.Events;
-using Nop.Core.Infrastructure;
-using Nop.Services.Logging;
+using Chessbook.Core.Events;
+using Chessbook.Core.Infrastructure;
+using Chessbook.Services.Logging;
 
-namespace Nop.Services.Events
+namespace Chessbook.Services.Events
 {
     /// <summary>
     /// Represents the event publisher implementation

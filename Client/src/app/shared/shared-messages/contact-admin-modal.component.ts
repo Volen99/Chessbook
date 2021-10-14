@@ -1,109 +1,124 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
-import { Router } from '@angular/router'
-import { Notifier, ServerService } from '@app/core'
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
+import {FormReactive} from "../shared-forms/form-reactive";
+import {HTMLServerConfig} from "../models/server/server-config.model";
+import {FormValidatorService} from "../shared-forms/form-validator.service";
+import {InstanceService} from "../shared-instance/instance.service";
+import {ServerService} from "../../core/server/server.service";
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {
   BODY_VALIDATOR,
   FROM_EMAIL_VALIDATOR,
   FROM_NAME_VALIDATOR,
   SUBJECT_VALIDATOR
-} from '@app/shared/form-validators/instance-validators'
-import { FormReactive, FormValidatorService } from '@app/shared/shared-forms'
-import { InstanceService } from '@app/shared/shared-instance'
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref'
-import { HTMLServerConfig, HttpStatusCode } from '@shared/models'
+} from "../shared-forms/form-validators/instance-validators";
+import {HttpStatusCode} from "../core-utils/miscs";
+
+import {
+  faTimes,
+} from '@fortawesome/pro-light-svg-icons';
+import {ChatService} from "./chat.service";
+import {NbDialogRef} from "../../sharebook-nebular/theme/components/dialog/dialog-ref";
 
 type Prefill = {
   subject?: string
   body?: string
-}
+};
 
 @Component({
-  selector: 'my-contact-admin-modal',
+  selector: 'app-contact-admin-modal',
   templateUrl: './contact-admin-modal.component.html',
-  styleUrls: [ './contact-admin-modal.component.scss' ]
+  styleUrls: ['./contact-admin-modal.component.scss']
 })
 export class ContactAdminModalComponent extends FormReactive implements OnInit {
-  @ViewChild('modal', { static: true }) modal: NgbModal
+  @ViewChild('modal', {static: true}) modal: NgbModal;
 
-  error: string
+  @Input() toCustomerId: number;
+  @Input() replyToMessageId: number;
+  @Input() screenName: string;
+  @Input() reMessage: string;
 
-  private openedModal: NgbModalRef
-  private serverConfig: HTMLServerConfig
+  error: string;
 
-  constructor (
+  private openedModal: NgbModalRef;
+  private serverConfig: HTMLServerConfig;
+
+  constructor(
     protected formValidatorService: FormValidatorService,
     private router: Router,
     private modalService: NgbModal,
-    private instanceService: InstanceService,
+    private chatService: ChatService,
     private serverService: ServerService,
-    private notifier: Notifier
+    private notifier: NbToastrService,
+    protected ref: NbDialogRef<ContactAdminModalComponent>
   ) {
-    super()
+    super();
   }
 
-  get instanceName () {
-    return this.serverConfig.instance.name
+  get instanceName() {
+    return this.serverConfig.instance.name;
   }
 
-  ngOnInit () {
-    this.serverConfig = this.serverService.getHTMLConfig()
+  ngOnInit() {
+    this.serverConfig = this.serverService.getHTMLConfig();
 
     this.buildForm({
-      fromName: FROM_NAME_VALIDATOR,
-      fromEmail: FROM_EMAIL_VALIDATOR,
       subject: SUBJECT_VALIDATOR,
       body: BODY_VALIDATOR
-    })
+    });
   }
 
-  isContactFormEnabled () {
-    return this.serverConfig.email.enabled && this.serverConfig.contactForm.enabled
+  faTimes = faTimes;
+
+
+  isContactFormEnabled() {
+    return this.serverConfig.email.enabled && this.serverConfig.contactForm.enabled;
   }
 
-  show (prefill: Prefill = {}) {
-    this.openedModal = this.modalService.open(this.modal, { centered: true, keyboard: false })
+  show(prefill: Prefill = {}) {
+    this.openedModal = this.modalService.open(this.modal, {centered: true, keyboard: false});
 
-    this.openedModal.shown.subscribe(() => this.prefillForm(prefill))
-    this.openedModal.result.finally(() => this.router.navigateByUrl('/about/instance'))
+    this.openedModal.shown.subscribe(() => this.prefillForm(prefill));
+    this.openedModal.result.finally(() => this.router.navigateByUrl('/about/instance'));
   }
 
-  hide () {
-    this.form.reset()
-    this.error = undefined
+  hide() {
+    this.form.reset();
+    this.error = undefined;
 
-    this.openedModal.close()
-    this.openedModal = null
+    this.ref.close();
+    // this.openedModal.close();
+    // this.openedModal = null;
   }
 
-  sendForm () {
-    const fromName = this.form.value['fromName']
-    const fromEmail = this.form.value['fromEmail']
-    const subject = this.form.value['subject']
-    const body = this.form.value['body']
+  sendForm() {
+    const subject = this.form.value['subject'];
+    const body = this.form.value['body'];
 
-    this.instanceService.contactAdministrator(fromEmail, fromName, subject, body)
-        .subscribe({
-          next: () => {
-            this.notifier.success($localize`Your message has been sent.`)
-            this.hide()
-          },
+    this.chatService.send(this.toCustomerId, this.replyToMessageId, subject, body)
+      .subscribe({
+        next: () => {
+          this.notifier.success(`Your message has been sent.`, 'Success');
+          this.hide();
+        },
 
-          error: err => {
-            this.error = err.status === HttpStatusCode.FORBIDDEN_403
-              ? $localize`You already sent this form recently`
-              : err.message
-          }
-        })
+        error: err => {
+          this.error = err.status === HttpStatusCode.FORBIDDEN_403
+            ? `You already sent this form recently`
+            : err.message;
+        }
+      });
   }
 
-  private prefillForm (prefill: Prefill) {
+  private prefillForm(prefill: Prefill) {
     if (prefill.subject) {
-      this.form.get('subject').setValue(prefill.subject)
+      this.form.get('subject').setValue(prefill.subject);
     }
 
     if (prefill.body) {
-      this.form.get('body').setValue(prefill.body)
+      this.form.get('body').setValue(prefill.body);
     }
   }
 }

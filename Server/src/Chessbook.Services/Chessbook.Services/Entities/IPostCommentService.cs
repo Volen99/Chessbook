@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Chessbook.Core.Domain.Posts;
-using Nop.Core;
+using Chessbook.Core;
 
 namespace Chessbook.Services.Entities
 {

@@ -1,6 +1,5 @@
-﻿using Chessbook.Common.Extensions;
+﻿using Newtonsoft.Json;
 using Chessbook.Core.JsonConverters.Logic;
-using Newtonsoft.Json;
 
 namespace Chessbook.Core.JsonConverters
 {

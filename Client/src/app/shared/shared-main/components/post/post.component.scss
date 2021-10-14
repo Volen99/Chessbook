@@ -1,5 +1,36 @@
 @import "src/sass/application";
 
+.status__prepend {
+  margin-left: 68px;
+  color: #444B5DFF;
+  padding: 8px 0;
+  padding-bottom: 2px;
+  font-size: 14px;
+  position: relative;
+
+  .status__display-name strong {
+    color: #444B5DFF;
+  }
+
+  > span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.status__prepend-icon-wrapper {
+  left: -26px;
+  position: absolute;
+}
+
+.status__prepend-icon-wrapper {
+  left: -26px;
+  position: absolute;
+}
+
+
+
 .r-ku1wi2 {
   margin-bottom: 15px;
 }
@@ -276,3 +307,22 @@
   height: 100%;
   cursor: pointer;
 }
+
+.video-frame {
+  /*width: 507px;*/
+  height: 315px;
+}
+
+
+.like-hover {
+  &:hover {
+    background-color: rgba(0, 3, 182, 0.2); // rgb(249, 24, 128);
+    border-color: rgba(0, 3, 182, 0.2); // rgb(249, 24, 128);
+    color: rgba(0, 3, 182, 0.2); // rgb(249, 24, 128);
+
+    & + fa-icon {
+      color: blue !important;
+    }
+  }
+}
+

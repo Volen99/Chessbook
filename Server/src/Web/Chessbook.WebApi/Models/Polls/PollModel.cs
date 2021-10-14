@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using Nop.Web.Framework.Models;
 
-namespace Nop.Web.Models.Polls
+using Chessbook.Web.Framework.Models;
+
+namespace Chessbook.Web.Models.Polls
 {
     public partial record PollModel : BaseNopEntityModel
     {
         public PollModel()
         {
-            Answers = new List<PollAnswerModel>();
+            this.Answers = new List<PollAnswerModel>();
+            this.OwnVotes = new List<int>();
         }
 
         public string Question { get; set; }
@@ -22,6 +24,10 @@ namespace Nop.Web.Models.Polls
         public IList<PollAnswerModel> Answers { get; set; }
 
         public DateTime? StartDateUtc { get; set; }
+
+        public DateTime ExpiresAt { get; set; }
+
+        public List<int> OwnVotes { get; set; }
     }
 
     public partial record PollAnswerModel : BaseNopEntityModel

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Chessbook.Data.Models.Polls;
-using Nop.Web.Models.Polls;
 
-namespace Nop.Web.Factories
+using Chessbook.Core.Domain.Polls;
+using Chessbook.Web.Models.Polls;
+
+namespace Chessbook.Web.Factories
 {
     /// <summary>
     /// Represents the interface of the poll model factory

@@ -1,6 +1,6 @@
 ﻿using Chessbook.Data.Models;
 
-namespace Nop.Core.Caching
+namespace Chessbook.Core.Caching
 {
     /// <summary>
     /// Represents default values related to caching entities

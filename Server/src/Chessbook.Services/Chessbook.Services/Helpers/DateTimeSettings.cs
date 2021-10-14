@@ -1,6 +1,6 @@
-﻿using Nop.Core.Configuration;
+﻿using Chessbook.Core.Configuration;
 
-namespace Nop.Services.Helpers
+namespace Chessbook.Services.Helpers
 {
     /// <summary>
     /// DateTime settings
@@ -15,6 +15,6 @@ namespace Nop.Services.Helpers
         /// <summary>
         /// Gets or sets a value indicating whether customers are allowed to select theirs time zone
         /// </summary>
-        public bool AllowCustomersToSetTimeZone { get; set; }
+        public bool AllowCustomersToSetTimeZone { get; set; } = true;
     }
 }

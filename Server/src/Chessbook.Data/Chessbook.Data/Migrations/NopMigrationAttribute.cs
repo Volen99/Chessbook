@@ -2,7 +2,7 @@
 using System.Globalization;
 using FluentMigrator;
 
-namespace Nop.Data.Migrations
+namespace Chessbook.Data.Migrations
 {
     /// <summary>
     /// Attribute for a migration

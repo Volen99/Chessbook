@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 import {ISocialContextProps} from "../post.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-social-context',
@@ -8,10 +9,10 @@ import {ISocialContextProps} from "../post.component";
   styleUrls: ['./social-context.component.scss']
 })
 export class SocialContextComponent implements OnInit {
-  @Input() socialContextProps: ISocialContextProps;
+  @Input() props: ISocialContextProps;
 
-
-  constructor() { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit(): void {
   }
@@ -30,5 +31,9 @@ export class SocialContextComponent implements OnInit {
     '-webkit-user-select': 'none',
     'user-select': 'none',
   };
+
+  handleExpandClick() {
+    this.router.navigate([`/${this.props.screenName}/post`, this.props.postId]);
+  }
 
 }

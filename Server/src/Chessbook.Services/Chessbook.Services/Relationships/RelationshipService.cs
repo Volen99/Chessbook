@@ -1,13 +1,8 @@
-﻿using Chessbook.Data;
-using Chessbook.Data.Common.Repositories;
-using Chessbook.Data.Models;
-using Chessbook.Services.Mapping;
-using Chessbook.Web.Models.Outputs;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Chessbook.Core.Domain.Relationships;
+using Chessbook.Data;
 
 namespace Chessbook.Services.Data
 {

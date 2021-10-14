@@ -1,25 +1,32 @@
 <li>
     <label class="poll__option" [ngClass]="{selectable: !this.showResults}">
         <input name="vote-options" [type]="this.poll.multiple ? 'checkbox' : 'radio'"
-               [value]="this.optionIndex" [checked]="this.active" (change)="this.handleOptionChange"
+               [value]="this.optionIndex" [checked]="this.active" (change)="this.handleOptionChange($event)"
                [disabled]="this.disabled"/>
+
+<!--        <nb-radio-group [disabled]="this.disabled" [(value)]="this.selected">-->
+<!--            <nb-radio [checked]="this.active" [value]="this.optionIndex" (valueChange)="this.handleOptionChange($event)">{{option.label}}</nb-radio>-->
+<!--        </nb-radio-group>-->
 
         <span *ngIf="!this.showResults" class="poll__input" tabIndex='0'
               [attr.role]="this.poll.multiple ? 'checkbox' : 'radio'"
-              (keypress)="this.handleOptionKeyPress"
+              (keypress)="this.handleOptionKeyPress($event)"
               [attr.aria-checked]="this.active"
-              [attr.aria-label]="option.title"
+              [attr.aria-label]="option.label"
               [attr.data-index]="optionIndex">
         </span>
 
-        <span *ngIf="this.showResults" class='poll__number'>this.math.round(this.percent)%</span>
+        <!--this.math.round(this.percent)%-->
+        <span *ngIf="this.showResults" class='poll__number'>{{this.getOptionPercentage(option.percentOfTotalVotes)}}%</span>
 
-        <span>{{this.option.label}}</span>
+        <span class="poll__option__text translate">{{this.option.label}}</span>
 
         <span *ngIf="!!this.voted" class="poll__voted">
-                 <nb-icon id="check" icon="checkmark-circle-2" class="poll__voted__mark"></nb-icon>
+                 <nb-icon id="check" icon="checkmark-circle-2" class="poll__voted__mark" title="You voted for this answer"></nb-icon>
             </span>
     </label>
 
-    <!--Motion-->
+    <ng-container *ngIf="this.showResults">
+        <nb-progress-bar size="tiny" [value]="option.percentOfTotalVotes" status="primary" class="poll__chart"></nb-progress-bar>
+    </ng-container>
 </li>

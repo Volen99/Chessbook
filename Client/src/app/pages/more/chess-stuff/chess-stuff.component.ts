@@ -819,4 +819,10 @@ export class ChessStuffComponent implements OnInit, OnDestroy {
     this.quotes = this.quotes.sort(() => Math.random() - 0.5);
   }
 
+  personalityImg = 'assets/images/the-queens-gambit.jpg';
+
+  onNavigate() {
+    window.open("https://www.chesspersonality.com/", "_blank");
+  }
+
 }

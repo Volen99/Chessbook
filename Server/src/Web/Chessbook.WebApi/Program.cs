@@ -6,7 +6,7 @@
     using Microsoft.Extensions.Hosting;
     using Autofac.Extensions.DependencyInjection;
 
-    using Nop.Services.Configuration;
+    using Chessbook.Services.Configuration;
 
     public class Program
     {

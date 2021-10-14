@@ -1,7 +1,7 @@
 ﻿using FluentMigrator;
-using Nop.Core.Domain.Localization;
+using Chessbook.Core.Domain.Localization;
 
-namespace Nop.Data.Migrations.Indexes
+namespace Chessbook.Data.Migrations.Indexes
 {
     [NopMigration("2020/03/13 09:36:08:9037677")]
     public class AddLocaleStringResourceIX : AutoReversingMigration

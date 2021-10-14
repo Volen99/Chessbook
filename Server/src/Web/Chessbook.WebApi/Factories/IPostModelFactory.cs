@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 
 using Chessbook.Core.Domain.Posts;
-using Chessbook.Data.Models.Post;
 using Chessbook.Web.Api.Areas.Admin.Models.Post;
 using Chessbook.Web.Api.Models.Posts;
-using Nop.Web.Models.Catalog;
+using Chessbook.Web.Models.Catalog;
 
 namespace Chessbook.Web.Api.Factories
 {

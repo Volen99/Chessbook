@@ -1,19 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Chessbook.Data;
-using Nop.Core.Caching;
-using Nop.Core.Domain.Common;
-using Nop.Core.Domain.Directory;
-using Nop.Data;
-using Nop.Services.Localization;
 
-namespace Nop.Services.Directory
+using Chessbook.Data;
+using Chessbook.Core.Caching;
+using Chessbook.Core.Domain.Directory;
+
+namespace Chessbook.Services.Directory
 {
     /// <summary>
     /// State province service
     /// </summary>
-    public partial class StateProvinceService : IStateProvinceService
+    public class StateProvinceService : IStateProvinceService
     {
         #region Fields
 

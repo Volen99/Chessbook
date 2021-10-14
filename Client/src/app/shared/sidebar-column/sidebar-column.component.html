@@ -1,5 +1,5 @@
         <div class="sharebook-container backface-visibility-hidden container-left-side-margin-right-10px r-1hycxz"
-             data-testid="sidebarColumn" style="width: 80.8%; margin-left: 10px;"> <!--style by mi!!-->
+             data-testid="sidebarColumn" style="width: 80.8%; margin-left: 10px; height: 100vh;"> <!--style by mi!!-->
             <div class="sharebook-container height-100-per" style="min-height: 730.222px;">
                 <div class="sharebook-container" style="margin-top: 0px;"></div>
                 <div class="sharebook-container position-sticky r-1hycxz" style="bottom: -420px">
@@ -14,28 +14,18 @@
                                     <nav aria-label="Footer" role="navigation"
                                          class="sharebook-container flex-direction-row flex-wrap left-right-padding-15px">
                                         <a
-                                                href="https://twitter.com/tos" target="_blank" dir="auto" role="link"
+                                                routerLink="/terms" dir="auto" role="link"
                                                 data-focusable="true"
                                                 class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"
                                                 rel=" noopener noreferrer"><span
-                                                class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Terms of Service</span></a><a
-                                            href="https://twitter.com/privacy" target="_blank" dir="auto" role="link"
-                                            data-focusable="true"
-                                            class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"
-                                            rel=" noopener noreferrer"><span
-                                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Privacy Policy</span></a><a
-                                            href="https://support.twitter.com/articles/20170514" target="_blank"
-                                            dir="auto" role="link"
-                                            data-focusable="true"
-                                            class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"
-                                            rel=" noopener noreferrer"><span
-                                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Cookie Policy</span></a><a
-                                            href="https://business.twitter.com/en/help/troubleshooting/how-twitter-ads-work.html"
-                                            target="_blank"
+                                                class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Terms of Service</span>
+                                        </a>
+                                        <a
+                                            routerLink="/contact"
                                             dir="auto" role="link" data-focusable="true"
                                             class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"
                                             rel=" noopener noreferrer"><span
-                                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Ads info</span></a>
+                                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Contact us</span></a>
                                         <nb-actions size="small">
                                             <nb-action class="user-action">
                                                 <div [nbContextMenu]="this.moreMenu" aria-expanded="false"
@@ -60,7 +50,7 @@
                                              class="css-901oao third-wheel-color font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap">
                   <span
                           class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">© {{ this.currentYear }}
-                      Chessbook, Inc.</span>
+                      Chessbook</span>
                                         </div>
                                     </nav>
                                 </div>

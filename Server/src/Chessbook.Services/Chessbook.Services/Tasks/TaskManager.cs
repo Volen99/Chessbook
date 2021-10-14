@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Nop.Core.Infrastructure;
 
-namespace Nop.Services.Tasks
+using Chessbook.Core.Infrastructure;
+
+namespace Chessbook.Services.Tasks
 {
     /// <summary>
     /// Represents task manager

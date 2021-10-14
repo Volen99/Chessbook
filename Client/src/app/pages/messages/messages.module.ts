@@ -16,6 +16,9 @@ import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.m
 import {AuthModule} from "../../auth/auth.module";
 import {NbSpinnerModule} from "../../sharebook-nebular/theme/components/spinner/spinner.module";
 import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/button.module";
+import {ChatComponent} from "./chat/chat.component";
+import {NbChatModule} from "../../sharebook-nebular/theme/components/chat/chat.module";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -23,6 +26,7 @@ import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/bu
     ContactsComponent,
     DetailHeaderMessageSelectedComponent,
     DetailHeaderNoMessageSelectedComponent,
+    ChatComponent,
   ],
   imports: [
     CommonModule,
@@ -37,7 +41,11 @@ import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/bu
     MatRippleModule,
     NbSpinnerModule,
     NbButtonModule,
-  ]
+    NbChatModule,
+    FontAwesomeModule,
+  ],
+  providers: [
+  ],
 })
 export class MessagesModule {
 }

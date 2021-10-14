@@ -1,10 +1,11 @@
 ﻿using System.Data;
+
 using LinqToDB;
 using LinqToDB.Common;
 using LinqToDB.Data;
 using LinqToDB.DataProvider.PostgreSQL;
 
-namespace Nop.Data.DataProviders.LinqToDB
+namespace Chessbook.Data.DataProviders.LinqToDB
 {
     /// <summary>
     /// Represents a data provider for PostgreSQL

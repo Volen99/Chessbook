@@ -1,11 +1,11 @@
 ﻿using System.Data;
-
 using FluentMigrator.Builders.Alter.Table;
 using FluentMigrator.Builders.Create.Table;
-using Nop.Data.Mapping;
+
+using Chessbook.Data.Mapping;
 using Chessbook.Data.Models;
 
-namespace Nop.Data.Extensions
+namespace Chessbook.Data.Extensions
 {
     /// <summary>
     /// FluentMigrator extensions

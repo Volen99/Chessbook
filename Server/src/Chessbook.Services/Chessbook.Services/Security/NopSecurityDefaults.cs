@@ -1,7 +1,7 @@
-﻿using Nop.Core.Caching;
-using Nop.Core.Domain.Security;
+﻿using Chessbook.Core.Caching;
+using Chessbook.Core.Domain.Security;
 
-namespace Nop.Services.Security
+namespace Chessbook.Services.Security
 {
     /// <summary>
     /// Represents default values related to security services

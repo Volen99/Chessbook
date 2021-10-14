@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
-using Nop.Web.Framework.UI.Paging;
+using Chessbook.Web.Framework.UI.Paging;
 
-namespace Nop.Web.Models.Catalog
+namespace Chessbook.Web.Models.Catalog
 {
     /// <summary>
     /// Represents a model to get the catalog products

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using Chessbook.Data.Models;
 using FluentMigrator;
 using FluentMigrator.Builders.Create;
 using FluentMigrator.Builders.Create.Table;
@@ -13,12 +12,13 @@ using FluentMigrator.Infrastructure;
 using FluentMigrator.Model;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Initialization;
-using Nop.Core;
-using Nop.Core.Infrastructure;
-using Nop.Data.Mapping;
-using Nop.Data.Mapping.Builders;
 
-namespace Nop.Data.Migrations
+using Chessbook.Core.Infrastructure;
+using Chessbook.Data.Mapping;
+using Chessbook.Data.Mapping.Builders;
+using Chessbook.Data.Models;
+
+namespace Chessbook.Data.Migrations
 {
     /// <summary>
     /// Represents the migration manager

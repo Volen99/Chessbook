@@ -5,14 +5,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using Chessbook.Data;
-using Nop.Core;
-using Nop.Core.Caching;
-using Nop.Core.Configuration;
-using Nop.Core.Domain.Configuration;
-using Nop.Data;
 
-namespace Nop.Services.Configuration
+using Chessbook.Data;
+using Chessbook.Core;
+using Chessbook.Core.Caching;
+using Chessbook.Core.Configuration;
+using Chessbook.Core.Domain.Configuration;
+
+namespace Chessbook.Services.Configuration
 {
     /// <summary>
     /// Setting manager

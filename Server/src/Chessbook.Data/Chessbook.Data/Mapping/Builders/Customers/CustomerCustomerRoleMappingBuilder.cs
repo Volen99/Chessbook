@@ -1,9 +1,10 @@
-﻿using Chessbook.Data.Models;
-using FluentMigrator.Builders.Create.Table;
-using Nop.Core.Domain.Customers;
-using Nop.Data.Extensions;
+﻿using FluentMigrator.Builders.Create.Table;
 
-namespace Nop.Data.Mapping.Builders.Customers
+using Chessbook.Core.Domain.Customers;
+using Chessbook.Data.Extensions;
+using Chessbook.Data.Models;
+
+namespace Chessbook.Data.Mapping.Builders.Customers
 {
     /// <summary>
     /// Represents a customer customer role mapping entity builder

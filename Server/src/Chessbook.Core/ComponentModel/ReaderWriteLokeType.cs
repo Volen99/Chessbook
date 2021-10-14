@@ -1,4 +1,4 @@
-﻿namespace Nop.Core.ComponentModel
+﻿namespace Chessbook.Core.ComponentModel
 {
     /// <summary>
     /// Reader/Write locker type

@@ -1,8 +1,4 @@
-﻿using Nop.Web.Framework.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Chessbook.Web.Framework.Models;
 
 namespace Chessbook.Web.Api.Models.Posts
 {

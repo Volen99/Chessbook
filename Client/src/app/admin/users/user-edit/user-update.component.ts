@@ -79,11 +79,15 @@ export class UserUpdateComponent extends UserEdit implements OnInit, OnDestroy {
 
     const userUpdate: UserUpdate = this.form.value;
     userUpdate.adminFlags = this.buildAdminFlags(this.form.value);
+    userUpdate.userId = this.user.id;
 
-    if (userUpdate.pluginAuth === 'null') userUpdate.pluginAuth = null;
+    if (userUpdate.pluginAuth === 'null') {
+      userUpdate.pluginAuth = null;
+    }
 
-    this.userService.updateUser(this.user.id, userUpdate).subscribe(
+    this.userService.updateUserAsAdmin(userUpdate).subscribe(
       () => {
+        debugger
         this.notifier.success(`User ${this.user.screenName} updated.`, 'Success');
         this.router.navigate(['/admin/users/list']);
       },

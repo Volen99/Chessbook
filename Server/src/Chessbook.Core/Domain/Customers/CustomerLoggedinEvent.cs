@@ -1,6 +1,6 @@
 using Chessbook.Data.Models;
 
-namespace Nop.Core.Domain.Customers
+namespace Chessbook.Core.Domain.Customers
 {
     /// <summary>
     /// Customer logged-in event

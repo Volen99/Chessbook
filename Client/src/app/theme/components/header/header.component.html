@@ -14,7 +14,7 @@
   <nb-actions size="small">
 
     <nb-action class="control-item">
-      <nb-search type="rotate-layout" [poll]="this.poll" (click)="this.handleSurveyClick()"></nb-search>
+      <nb-search [type]="this.searchType" [poll]="this.poll" (click)="this.handleSurveyClick()"></nb-search>
     </nb-action>
     <nb-action class="control-item">
       <a href="https://www.chess.com/" target="_blank" title="chess.com">

@@ -1,70 +1,95 @@
-import { useAnimation } from '@angular/animations';
-import { Component, OnInit, ViewChild } from '@angular/core';
-// eslint-disable-next-line max-len
-import { HorizontalAlignment, IgxSnackbarComponent, PositionSettings, slideInLeft, slideInRight, VerticalAlignment } from 'igniteui-angular';
+import {Component, OnInit} from '@angular/core';
+
+import {IconDefinition} from "@fortawesome/fontawesome-common-types";
+import {
+  faChessPawnAlt,
+  faChessKnightAlt,
+  faChessBishopAlt,
+  faChessRookAlt,
+  faChessQueenAlt,
+  faChessKingAlt,
+
+  faTrophy,
+} from '@fortawesome/pro-light-svg-icons';
+
+import {FactsService} from "./facts.service";
 
 @Component({
-    selector: 'app-snackbar-sample',
-    styleUrls: ['snackbar.sample.css'],
-    templateUrl: 'snackbar.sample.html'
+  selector: 'app-snackbar-sample',
+  styleUrls: ['snackbar.sample.scss'],
+  templateUrl: 'snackbar.sample.html',
+  providers: [FactsService]
 })
 export class SnackbarSampleComponent implements OnInit {
-    @ViewChild('snackbar')
-    private snackbar: IgxSnackbarComponent;
+  private _colors: string[];
+  private facts: string[];
 
-    public color: string;
-    public actionName: string;
-    public newPositionSettings: PositionSettings = {
-        openAnimation: useAnimation(slideInLeft, { params: { duration: '1000ms' } }),
-        closeAnimation: useAnimation(slideInRight, { params: { duration: '1000ms' } }),
-        horizontalDirection: HorizontalAlignment.Center,
-        verticalDirection: VerticalAlignment.Middle,
-        horizontalStartPoint: HorizontalAlignment.Center,
-        verticalStartPoint: VerticalAlignment.Middle,
-        minSize: { height: 100, width: 100 }
+  constructor(private factsService: FactsService) {
+  }
+
+  ngOnInit() {
+    const randomBool = Math.random() < 0.5;
+
+    this.facts = this.factsService.fetchFacts();
+
+    this.pieces = randomBool ? this.pieces : this.pieces.reverse();
+
+    this.color = 'mediumpurple';
+    this.actionName = 'Undo';
+    this._colors = [];
+
+    this.fact = '';
+  }
+
+  public color: string;
+  public actionName: string;
+  public fact: string;
+
+  backgroundColorStyles: {};
+
+  faTrophy = faTrophy;
+  pieces: IconDefinition[] = [faChessPawnAlt, faChessKnightAlt, faChessBishopAlt, faChessRookAlt, faChessQueenAlt, faChessKingAlt];
+
+  public changeColor() {
+    const characters = '0123456789ABCDEF';
+    let color = '#';
+
+    for (let i = 0; i < 6; i++) {
+      color += characters[Math.floor(Math.random() * 16)];
+    }
+
+    this._colors.push(this.color);
+    this.color = color;
+
+    this.fact = this.facts[Math.floor(Math.random() * this.facts.length)];
+    // snackbar.open('Changed color to ' + this.color);
+
+
+    this.backgroundColorStyles = {
+      'background-color': `${this.color}`,
+      'background-image': `linear-gradient(315deg, ${this.color} 0%, #000000 74%)`,
     };
+  }
 
-    private _colors: string[];
+  public undoColorChange(snackbar) {
+    this.color = this._colors.pop();
 
-    public ngOnInit() {
-        this.color = 'mediumpurple';
-        this.actionName = 'Undo';
-        this._colors = [];
-    }
+    snackbar.close();
+  }
 
-    public changeColor(snackbar: IgxSnackbarComponent) {
-        const characters = '0123456789ABCDEF';
-        let color = '#';
+  public onAnimationStarted() {
+    console.log('animation started');
+  }
 
-        for (let i = 0; i < 6; i++) {
-            color += characters[Math.floor(Math.random() * 16)];
-        }
+  public onAnimationDone() {
+    console.log('animation ended');
+  }
 
-        this._colors.push(this.color);
-        this.color = color;
+  public toggleSnackbar() {
+    // this.snackbar.toggle();
+  }
 
-        snackbar.open('Changed color to ' + this.color);
-    }
-
-    public undoColorChange(snackbar) {
-        this.color = this._colors.pop();
-
-        snackbar.close();
-    }
-
-    public onAnimationStarted() {
-        console.log('animation started');
-    }
-
-    public onAnimationDone() {
-        console.log('animation ended');
-    }
-
-    public toggleSnackbar() {
-        this.snackbar.toggle();
-    }
-
-    public close(element) {
-        element.close();
-    }
+  public close(element) {
+    element.close();
+  }
 }

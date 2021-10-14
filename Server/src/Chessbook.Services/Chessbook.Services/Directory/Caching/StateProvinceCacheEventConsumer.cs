@@ -1,9 +1,10 @@
 ﻿﻿using System.Threading.Tasks;
-﻿using Nop.Core.Caching;
-using Nop.Core.Domain.Directory;
+
+﻿using Chessbook.Core.Caching;
+using Chessbook.Core.Domain.Directory;
 using Chessbook.Services.Caching;
 
-namespace Nop.Services.Directory.Caching
+namespace Chessbook.Services.Directory.Caching
 {
     /// <summary>
     /// Represents a state province cache event consumer

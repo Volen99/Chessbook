@@ -1,4 +1,13 @@
-import {Component, ComponentFactoryResolver, Input, OnDestroy, OnInit} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import {forkJoin, Subscription} from 'rxjs';
 import {first, tap} from 'rxjs/operators';
 
@@ -19,14 +28,16 @@ import {PostsService} from "../../../shared/posts/posts.service";
 import {IUser} from "../../../core/interfaces/common/users";
 import {InitUserService} from "../../../theme/services/init-user.service";
 import {GetUserTimelineParameters} from "../../../shared/models/timeline/get-user-timeline-parameters";
+import {Post} from "../../../shared/shared-main/post/post.model";
 
 @Component({
   selector: 'app-profile-posts',
   templateUrl: './profile-posts.component.html',
   styleUrls: ['../user-profile.component.scss', './profile-posts.component.scss']
 })
-export class ProfilePostsComponent extends AbstractPostList implements OnInit, OnDestroy {
+export class ProfilePostsComponent extends AbstractPostList implements OnInit, OnDestroy, OnChanges {
   @Input() profileCurrent: IUser;
+  @Input() tab: string;
 
   // No value because we don't want a page title
   titlePage: string;
@@ -53,11 +64,22 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
     private postService: PostsService,
     protected initCurrentUser: InitUserService,
     protected userStore: UserStore,
+    private cdr: ChangeDetectorRef,
   ) {
     super();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    // so user posts change when profile changes kk
+    this.reloadVideos();
+  }
+
   ngOnInit() {
+    this.postService.getPinnedPost(this.profileCurrent.id)
+      .subscribe((data) => {
+        this.pinnedPost = data;
+      }, err => this.notifier.danger(err.message, 'Error'));
+
     super.ngOnInit();
 
     this.enableAllFilterIfPossible();
@@ -80,6 +102,14 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
     }
 
     super.ngOnDestroy();
+  }
+
+  pinnedPost: Post;
+  postTransformBuffer: number = 0;
+
+  setTransformBuffer = buffer => {
+    this.postTransformBuffer = buffer;
+    // this.cdr.detectChanges();
   }
 
   getPostsObservable(page: number) {
@@ -113,10 +143,6 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
 
   displayAsRow() {
     return this.screenService.isInMobileView();
-  }
-
-  setTransform(i: number): number {
-    return i * 388.7; // 😁
   }
 
   calcMinHeight(postsCount?: number): number {

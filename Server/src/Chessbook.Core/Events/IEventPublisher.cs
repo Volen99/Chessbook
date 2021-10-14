@@ -1,6 +1,6 @@
 ﻿﻿using System.Threading.Tasks;
 
- namespace Nop.Core.Events
+ namespace Chessbook.Core.Events
  {
      /// <summary>
      /// Represents an event publisher

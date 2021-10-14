@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Chessbook.Core.Domain.Notifications;
+using Microsoft.EntityFrameworkCore;
+
 using Chessbook.Data;
 using Chessbook.Services.Data;
-using Chessbook.Services.Data.Services;
-using Microsoft.EntityFrameworkCore;
+using Chessbook.Services;
+using Chessbook.Core.Domain.Notifications;
 
 namespace Chessbook.Services.Notifications.Settings
 {

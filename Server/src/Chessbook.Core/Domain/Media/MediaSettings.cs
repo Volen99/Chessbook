@@ -1,6 +1,6 @@
-﻿using Nop.Core.Configuration;
+﻿using Chessbook.Core.Configuration;
 
-namespace Nop.Core.Domain.Media
+namespace Chessbook.Core.Domain.Media
 {
     /// <summary>
     /// Media settings

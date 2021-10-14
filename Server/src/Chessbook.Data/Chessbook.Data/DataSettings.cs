@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using FluentMigrator.Runner.Initialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using FluentMigrator.Runner.Initialization;
 
-namespace Nop.Data
+namespace Chessbook.Data
 {
     /// <summary>
     /// Represents the data settings

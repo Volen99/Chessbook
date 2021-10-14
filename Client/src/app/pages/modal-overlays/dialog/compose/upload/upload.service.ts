@@ -19,17 +19,25 @@ import {
   UploadMessageVideoParameters
 } from "../../../../../shared/models/upload/upload-message-video-parameters";
 import {IMedia} from "../../../../../shared/models/upload/media/media";
+import { HttpService } from "app/core/backend/common/api/http.service";
+import {catchError} from "rxjs/operators";
+import { RestExtractor } from "app/core/rest/rest-extractor";
 
 
 @Injectable()
 export class UploadService {
 
-  constructor(private uploadRequesterService: UploadRequesterService) {
+  constructor(private http: HttpService, private restExtractor: RestExtractor, private uploadRequesterService: UploadRequesterService) {
   }
 
   // get parametersValidator(): IUploadClientParametersValidator {
   //   return this._client.parametersValidator;
   // }
+
+  uploadImage(pictureData: FormData) {
+    return this.http.post('upload', pictureData)
+      .pipe(catchError(res => this.restExtractor.handleError(res)));
+  }
 
   public async uploadBinaryAsync(binaryOrParameters: ArrayBuffer | IUploadParameters, mediaType?: string): Promise<IMedia> {
     let parameters: IUploadParameters;

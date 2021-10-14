@@ -3,12 +3,12 @@ using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
 
-using Nop.Core;
-using Nop.Core.Domain.Directory;
-using Nop.Services.Directory;
-using Nop.Services.Logging;
+using Chessbook.Core;
+using Chessbook.Core.Domain.Directory;
+using Chessbook.Services.Directory;
+using Chessbook.Services.Logging;
 
-namespace Nop.Services.ExportImport
+namespace Chessbook.Services.ExportImport
 {
     /// <summary>
     /// Import manager

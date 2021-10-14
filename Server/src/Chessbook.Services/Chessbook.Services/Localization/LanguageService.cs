@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using Chessbook.Data;
-using Nop.Core.Caching;
-using Nop.Core.Domain.Localization;
-using Nop.Data;
-using Nop.Services.Configuration;
-using Nop.Services.Stores;
+using System.Globalization;
 
-namespace Nop.Services.Localization
+using Chessbook.Data;
+using Chessbook.Core.Caching;
+using Chessbook.Core.Domain.Localization;
+using Chessbook.Services.Configuration;
+using Chessbook.Services.Stores;
+
+namespace Chessbook.Services.Localization
 {
     /// <summary>
     /// Language service

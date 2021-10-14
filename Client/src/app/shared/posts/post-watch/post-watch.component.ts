@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {forkJoin, Subscription} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {forkJoin, Subject, Subscription} from 'rxjs';
+import {catchError, map, takeUntil} from 'rxjs/operators';
 
 import {
   faHeart,
+  faLongArrowLeft,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {faHeart as faHeartSolid} from "@fortawesome/pro-solid-svg-icons";
@@ -21,6 +22,12 @@ import {Notifier} from "../../../core/notification/notifier.service";
 import {scrollToTop} from "../../../helpers/utils";
 import {NbToastrService} from "../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {MetaService} from "../../../core/routing/meta.service";
+import {NbLayoutScrollService} from "../../../sharebook-nebular/theme/services/scroll.service";
+import {Post} from "../../shared-main/post/post.model";
+import {Location} from "@angular/common";
+import {IsVideoPipe} from "../../shared-main/angular/pipes/is-video.pipe";
+import {NbMediaBreakpointsService} from "../../../sharebook-nebular/theme/services/breakpoints.service";
+import {NbThemeService} from "../../../sharebook-nebular/theme/services/theme.service";
 
 
 @Component({
@@ -28,14 +35,17 @@ import {MetaService} from "../../../core/routing/meta.service";
   templateUrl: './post-watch.component.html',
   styleUrls: ['./post-watch.component.scss']
 })
-export class PostWatchComponent implements OnInit {
+export class PostWatchComponent implements OnInit, OnDestroy {
   private paramsSub: Subscription;
   private queryParamsSub: Subscription;
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private route: ActivatedRoute, private postService: PostsService,
               private restExtractor: RestExtractor, private markdownService: MarkdownService,
               private userStore: UserStore, private notifier: NbToastrService,
-              private metaService: MetaService) {
+              private metaService: MetaService, private location: Location,
+              private breakpointService: NbMediaBreakpointsService,
+              private themeService: NbThemeService) {
   }
 
   get user() {
@@ -68,13 +78,47 @@ export class PostWatchComponent implements OnInit {
     //   const start = queryParams['start'];
     //   if (this.player && start) this.player.currentTime(parseInt(start, 10));
     // });
+
+
+    const {md} = this.breakpointService.getBreakpointsMap();
+    this.themeService.onMediaQueryChange()
+      .pipe(
+        map(([, currentBreakpoint]) => currentBreakpoint.width < md),
+        takeUntil(this.destroy$),
+      )
+      .subscribe((isLessThanMD: boolean) => {
+        if (isLessThanMD) {
+          this.commentsTransform += 100;
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   faHeart = faHeart;
+  faLongArrowLeft = faLongArrowLeft;
 
-  post: PostDetails = null;
+  post: Post = null;
   userRating: UserVideoRateType = null;
   tooltipLike = '';
+
+  svgStyles = {
+    display: 'inline-block',
+    fill: 'currentcolor',
+    'flex-shrink': '0',
+    width: '1.5em',
+    height: '1.5em',
+    'max-width': '100% ',
+    position: 'relative',
+    'vertical-align': 'text-bottom',
+    '-moz-user-select': 'none',
+    '-ms-user-select': 'none',
+    '-webkit-user-select': 'none',
+    'user-select': 'none',
+  };
 
   isUserLoggedIn() {
     return !!this.userStore.getUser();
@@ -112,22 +156,6 @@ export class PostWatchComponent implements OnInit {
         })
       )
       .subscribe(([video]) => {
-        const queryParams = this.route.snapshot.queryParams;
-
-        const urlOptions = {
-          resume: queryParams.resume,
-
-          startTime: queryParams.start,
-          stopTime: queryParams.stop,
-
-          muted: queryParams.muted,
-          loop: queryParams.loop,
-          subtitle: queryParams.subtitle,
-
-          playerMode: queryParams.mode,
-          peertubeLink: false
-        };
-
         this.onVideoFetched(video)
           .catch(err => this.notifier.danger(err, 'Error'));
       });
@@ -146,6 +174,8 @@ export class PostWatchComponent implements OnInit {
   private async onVideoFetched(post: PostDetails) {
     this.post = post;
     this.post.commentsEnabled = true;
+
+    this.commentsTransform = this.getCommentsTransform();
 
     // Re init attributes
     // this.descriptionLoading = false;
@@ -200,8 +230,13 @@ export class PostWatchComponent implements OnInit {
     return (commentsCount + 1) * 650;
   }
 
-  setTransform(i: number): number {
+  setTransform(i: number, post: Post): number {
     return i * 388.7; // 😁
+  }
+
+  back() {
+    this.location.back();
+    return false;
   }
 
   private updateLikeStuff(rating: UserVideoRateType) {
@@ -212,6 +247,29 @@ export class PostWatchComponent implements OnInit {
       this.faHeart = faHeart;
       this.tooltipLike = 'Like';
     }
+  }
+
+  commentsTransform: number = 0;
+  private getCommentsTransform(): number {
+    let statusCharCount = this.post.status ? this.post.status.length : 0;
+    if (this.post.hasMedia) {
+      if (this.post.entities.medias.length === 1) {
+        return (580 / this.post.entities.medias[0].meta['original'].aspect + 338) + (statusCharCount / 2) ?? 0;
+        // return ((this.post.entities.medias[0].meta['original'].height / 2)) + (statusCharCount / 2) ?? 0;
+      } else {
+        return 573.4 + (statusCharCount / 2) ?? 0;
+      }
+    } else {
+      if (this.post.card) {
+        return (393.4 + (statusCharCount / 2) ?? 0);
+      } else if (this.post.poll) {
+        return ((229.7 + (this.post.poll.answers.length * 100)) + (this.post.poll.question.length / 2) ?? 0);
+      } else if (IsVideoPipe.isYoutube(this.post.status) || IsVideoPipe.isTwitch(this.post.status) || IsVideoPipe.isTwitchClip(this.post.status)) {
+        return (599.7 + (statusCharCount / 2) ?? 0);
+      }
+    }
+
+    return 573.4;
   }
 
   private setOpenGraphTags() {
@@ -225,12 +283,14 @@ export class PostWatchComponent implements OnInit {
     this.metaService.setTag('og:description', this.post.status);
     this.metaService.setTag('description', this.post.status);
 
-    this.metaService.setTag('og:image', this.post.entities.medias[0].imageUrl ?? '');
+    this.metaService.setTag('og:image', this.post?.entities?.medias[0]?.imageUrl ?? '');
 
     this.metaService.setTag('og:site_name', 'Chessbook');
 
     this.metaService.setTag('og:url', window.location.href);
     this.metaService.setTag('url', window.location.href);
   }
+
+
 
 }

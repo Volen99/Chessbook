@@ -1,10 +1,10 @@
-﻿using Nop.Core.Caching;
-using Nop.Core.Domain.Stores;
-using Chessbook.Services.Caching;
-using Nop.Services.Localization;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace Nop.Services.Stores.Caching
+using Chessbook.Core.Domain.Stores;
+using Chessbook.Services.Caching;
+using Chessbook.Services.Localization;
+
+namespace Chessbook.Services.Stores.Caching
 {
     /// <summary>
     /// Represents a store cache event consumer

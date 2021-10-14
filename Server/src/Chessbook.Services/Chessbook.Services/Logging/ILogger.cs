@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Chessbook.Data.Models;
-using Nop.Core;
-using Nop.Core.Domain.Logging;
+using Chessbook.Core;
+using Chessbook.Core.Domain.Logging;
 
-namespace Nop.Services.Logging
+namespace Chessbook.Services.Logging
 {
     /// <summary>
     /// Logger interface

@@ -1,5 +1,16 @@
-@use '_variables' as *;
-@use '_mixins' as *;
+@import '_variables';
+@import '_mixins';
+
+@import '../../theme/styles/themes';
+
+@include nb-install-component() {
+  nb-card {
+    //min-width: 800px;
+    //min-height: 487px;
+
+
+  }
+}
 
 .modal-subtitle {
   font-size: 16px;

@@ -1,7 +1,7 @@
-﻿using Nop.Core.Caching;
-using Nop.Core.Domain.Customers;
+﻿using Chessbook.Core.Caching;
+using Chessbook.Core.Domain.Customers;
 
-namespace Nop.Services.Customers
+namespace Chessbook.Services.Customers
 {
     /// <summary>
     /// Represents default values related to customer services

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Chessbook.Data.Models;
 using LinqToDB;
 using LinqToDB.Data;
 using LinqToDB.Mapping;
-using Nop.Core;
 
-namespace Nop.Data
+using Chessbook.Data.Models;
+
+namespace Chessbook.Data
 {
     /// <summary>
     /// Represents a data provider

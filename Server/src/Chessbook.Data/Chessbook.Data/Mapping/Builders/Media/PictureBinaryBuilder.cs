@@ -1,8 +1,9 @@
 ﻿using FluentMigrator.Builders.Create.Table;
-using Nop.Core.Domain.Media;
-using Nop.Data.Extensions;
 
-namespace Nop.Data.Mapping.Builders.Media
+using Chessbook.Core.Domain.Media;
+using Chessbook.Data.Extensions;
+
+namespace Chessbook.Data.Mapping.Builders.Media
 {
     /// <summary>
     /// Represents a picture binary entity builder

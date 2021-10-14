@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IPoll} from "../../../shared/posts/models/poll/poll";
+import {IPollOption} from "../../../shared/posts/models/poll/poll-option";
 
 @Component({
   selector: 'app-render-option',
@@ -7,15 +8,16 @@ import {IPoll} from "../../../shared/posts/models/poll/poll";
   styleUrls: ['./render-option.component.scss']
 })
 export class RenderOptionComponent implements OnInit {
-  @Input() option: any;
-  @Input() optionIndex: number;
+  @Input() option: IPollOption;
+  @Input() optionIndex: number; // it is actually answer.id;
   @Input() showResults: any;
 
   @Input() poll: IPoll;
   @Input() disabled: boolean;
 
   // state
-  @Input() selected: { };
+  @Output() selected = new EventEmitter<{}>();
+  // @Input() selected = {};
 
 
   constructor() {
@@ -23,14 +25,13 @@ export class RenderOptionComponent implements OnInit {
 
   ngOnInit(): void {
     this.pollVotesCount = this.poll.votersCount || this.poll.totalVotes;
-    this.percent = this.pollVotesCount === 0 ? 0 : (this.option.votes_count / this.pollVotesCount) * 100;
-    this.leading = this.poll.answers.filter(other => other.label === this.option.title).every(other => this.option.votes_count >= other.numberOfVotes);
-      /*this.active = !!this.selected[`${this.optionIndex}`];*/
-    this.voted = this.option.voted || (this.poll.ownVotes && this.poll.ownVotes.includes(this.optionIndex));
+    // this.percent = this.pollVotesCount === 0 ? 0 : (this.option.votes_count / this.pollVotesCount) * 100;
+    this.leading = this.poll.answers.filter(other => other.label === this.option.label).every(other => this.option.numberOfVotes >= other.numberOfVotes);
+    this.active = !!this.selected[`${this.optionIndex}`];
+    this.voted = (this.poll.ownVotes && this.poll.ownVotes.includes(this.option.id));
   }
 
   math: Math = Math;
-
 
   pollVotesCount: number;
   percent: number;
@@ -59,11 +60,15 @@ export class RenderOptionComponent implements OnInit {
       } else {
         tmp[value] = true;
       }
-      this.selected = tmp;
+      this.selected.emit(tmp);
     } else {
-      const tmp = {};
-      tmp[value] = true;
-      this.selected = tmp;
+      /*const tmp = {};*/
+      /*tmp[value] = true;*/
+      this.selected.emit(+value);
     }
+  }
+
+  getOptionPercentage(percentOfTotalVotes: number) {
+    return Math.round(percentOfTotalVotes);
   }
 }

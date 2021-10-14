@@ -11,8 +11,7 @@
     using Chessbook.Data.Models;
     using Chessbook.Web.Models.AuthDTO;
     using Chessbook.Web.Api.Setup;
-    using Chessbook.Services.Data.Services;
-    using System.Threading.Tasks;
+    using Chessbook.Services;
 
     public class JwtManager
     {
@@ -39,7 +38,7 @@
 
         private string CreateToken<TUser>(TUser user, DateTime expiration, SigningCredentials credentials) where TUser : Customer
         {
-            var identity = GenerateClaimsIdentity(user);
+            var identity = this.GenerateClaimsIdentity(user);
             var jwt = new JwtSecurityToken(
                 issuer: jwtOptions.Issuer,
                 audience: jwtOptions.Audience,

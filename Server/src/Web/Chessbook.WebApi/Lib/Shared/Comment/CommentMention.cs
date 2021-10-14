@@ -1,18 +1,19 @@
-﻿using Chessbook.Core.Domain.Notifications;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+
+using Chessbook.Core.Domain.Notifications;
 using Chessbook.Core.Domain.Posts;
 using Chessbook.Data.Models;
 using Chessbook.Services.Blocklist;
-using Chessbook.Services.Data.Services;
+using Chessbook.Services;
 using Chessbook.Services.Entities;
 using Chessbook.Services.Notifications;
 using Chessbook.Services.Notifications.Settings;
 using Chessbook.Web.Api.Lib.Shared.Common;
-using Microsoft.Extensions.Logging;
-using Nop.Core;
-using Nop.Core.Infrastructure;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Chessbook.Core;
+using Chessbook.Core.Infrastructure;
 
 namespace Chessbook.Web.Api.Lib.Shared.Comment
 {

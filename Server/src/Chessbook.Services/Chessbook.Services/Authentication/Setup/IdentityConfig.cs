@@ -22,7 +22,6 @@
             //services.AddTransient<IRoleStore<Role>, RoleStore<Role>>();
             //services.AddTransient<IUserStore<User>, UserStore<User, Role, UserRole, UserClaim>>();
             // services.AddTransient<UserManager<Customer>, ApplicationUserManager>();
-            services.AddTransient(typeof(RoleManager<Role>));
 
             var identityBuilder = new IdentityBuilder(typeof(Customer), typeof(Customer), services);
             identityBuilder.AddDefaultTokenProviders();

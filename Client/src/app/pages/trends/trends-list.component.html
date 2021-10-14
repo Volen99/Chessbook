@@ -11,7 +11,7 @@
                 <ul *ngIf="this.tags.length > 0" class="post-tags-list">
                     <li *ngFor="let item of this.tags">
                         <a [routerLink]="[ '/search' ]" [queryParams]="{ tagsOneOf: [ item.name ] }" class="posttag" [ngStyle]="{'font-size': (this.getFontSize(item)) + '%'}">
-                            {{item.name}}
+                            {{item.name}} ({{item.postCount}})
                         </a>
                     </li>
                 </ul>

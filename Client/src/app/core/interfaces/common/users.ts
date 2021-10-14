@@ -2,7 +2,7 @@ import {Observable} from 'rxjs';
 import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 import {Settings} from './settings';
 import {getAbsoluteAPIUrl} from "../../../helpers/utils";
-import {IPost} from "../../../shared/posts/models/tweet";
+import {IPost} from "../../../shared/posts/models/post.model";
 import {IUserEntities} from "../../../shared/post-object/Entities/interfaces/IUserEntities";
 import {IUserIdentifier} from "../../../shared/models/users/user-identifier";
 import {UserUpdate} from "../../../shared/models/users/user-update.model";
@@ -109,10 +109,13 @@ export interface IUser extends IUserIdentifier {
   blocked: boolean;
   blockedReason?: string;
 
+  blocking: boolean;
+
   suspended: boolean;
   suspendedReason?: string;
 
   mutedByUser: boolean;
+  blockedBy: boolean;
 
   hasRight(right: UserRight);
 

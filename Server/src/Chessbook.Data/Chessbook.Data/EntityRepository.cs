@@ -4,17 +4,17 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Transactions;
-using Chessbook.Core.Domain.Common;
-using Chessbook.Data;
-using Chessbook.Data.Models;
 using LinqToDB;
 using LinqToDB.Data;
-using Nop.Core;
-using Nop.Core.Caching;
-using Nop.Core.Domain.Common;
-using Nop.Core.Events;
 
-namespace Nop.Data
+using Chessbook.Core;
+using Chessbook.Core.Caching;
+using Chessbook.Core.Events;
+using Chessbook.Data.Models;
+using Chessbook.Data;
+using Chessbook.Core.Domain.Common;
+
+namespace Chessbook.Data
 {
     /// <summary>
     /// Represents the entity repository implementation
@@ -162,7 +162,7 @@ namespace Nop.Data
         /// </summary>
         /// <param name="ids">Entity entry identifiers</param>
         /// <param name="getCacheKey">Function to get a cache key; pass null to don't cache; return null from this function to use the default key</param>
-        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
+        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Chessbook.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the entity entries
@@ -205,7 +205,7 @@ namespace Nop.Data
         /// </summary>
         /// <param name="func">Function to select entries</param>
         /// <param name="getCacheKey">Function to get a cache key; pass null to don't cache; return null from this function to use the default key</param>
-        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
+        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Chessbook.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the entity entries
@@ -229,7 +229,7 @@ namespace Nop.Data
         /// </summary>
         /// <param name="func">Function to select entries</param>
         /// <param name="getCacheKey">Function to get a cache key; pass null to don't cache; return null from this function to use the default key</param>
-        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
+        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Chessbook.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>Entity entries</returns>
         public virtual IList<TEntity> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null,
             Func<IStaticCacheManager, CacheKey> getCacheKey = null, bool includeDeleted = false)
@@ -250,7 +250,7 @@ namespace Nop.Data
         /// </summary>
         /// <param name="func">Function to select entries</param>
         /// <param name="getCacheKey">Function to get a cache key; pass null to don't cache; return null from this function to use the default key</param>
-        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
+        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Chessbook.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the entity entries
@@ -275,7 +275,7 @@ namespace Nop.Data
         /// </summary>
         /// <param name="func">Function to select entries</param>
         /// <param name="getCacheKey">Function to get a cache key; pass null to don't cache; return null from this function to use the default key</param>
-        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
+        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Chessbook.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the entity entries
@@ -302,7 +302,7 @@ namespace Nop.Data
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="getOnlyTotalCount">Whether to get only the total number of entries without actually loading data</param>
-        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
+        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Chessbook.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the paged list of entity entries
@@ -324,7 +324,7 @@ namespace Nop.Data
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="getOnlyTotalCount">Whether to get only the total number of entries without actually loading data</param>
-        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Nop.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
+        /// <param name="includeDeleted">Whether to include deleted items (applies only to <see cref="Chessbook.Core.Domain.Common.ISoftDeletedEntity"/> entities)</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the paged list of entity entries

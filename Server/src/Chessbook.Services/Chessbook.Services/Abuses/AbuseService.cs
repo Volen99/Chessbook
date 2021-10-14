@@ -1,11 +1,12 @@
-﻿using Chessbook.Core.Domain.Abuse;
-using Chessbook.Data;
-using Microsoft.EntityFrameworkCore;
-using Nop.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
+using Chessbook.Core;
+using Chessbook.Core.Domain.Abuse;
+using Chessbook.Data;
 
 namespace Chessbook.Services.Abuses
 {
@@ -33,6 +34,15 @@ namespace Chessbook.Services.Abuses
             await this.abuseRepository.InsertAsync(abuseNew);
 
             return abuseNew.Id;
+        }
+
+        public async Task<Abuse> LoadByIdWithReporter(int id)
+        {
+            var abuse = await this.abuseRepository.Table.Where(a => a.ReporterAccountId == id)
+                .Include(x => x.ReporterAccount)
+                .FirstOrDefaultAsync();
+
+            return abuse;
         }
 
         public async Task<IPagedList<Abuse>> ListMyAbuses(int start, int count, string sort, int? id = null, string search = null,
@@ -68,13 +78,49 @@ namespace Chessbook.Services.Abuses
             return abuses;
         }
 
-        public async Task<Abuse> LoadByIdWithReporter(int id)
+        /// <summary>
+        /// Parse "predefinedReasons enum Ids" property
+        /// </summary>
+        /// <param name="product">Product</param>
+        /// <returns>A list of required product IDs</returns>
+        public int[] ParsePredefinedReasonsIds(Abuse abuse)
         {
-            var abuse = await this.abuseRepository.Table.Where(a => a.ReporterAccountId == id)
-                .Include(x => x.ReporterAccount)
-                .FirstOrDefaultAsync();
+            if (abuse == null)
+            {
+                throw new ArgumentNullException(nameof(abuse));
+            }
 
-            return abuse;
+            if (string.IsNullOrEmpty(abuse.PredefinedReasons))
+            {
+                return Array.Empty<int>();
+            }
+
+            var ids = new List<int>();
+
+            foreach (var idStr in abuse.PredefinedReasons
+                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => x.Trim()))
+                if (int.TryParse(idStr, out var id))
+                    ids.Add(id);
+
+            return ids.ToArray();
+        }
+
+        public async Task<int> CreatePostAbuse(int reporterAccountId, string reason, AbuseState state, string predefinedReasons, int postId)
+        {
+            var abuseNew = new Abuse
+            {
+                ReporterAccountId = reporterAccountId,
+                PostId = postId,
+                Reason = reason,
+                PredefinedReasons = predefinedReasons,
+                State = state,
+                CreatedAt = DateTime.UtcNow,
+            };
+
+            await this.abuseRepository.InsertAsync(abuseNew);
+
+            return abuseNew.Id;
         }
     }
 }

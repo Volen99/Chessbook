@@ -40,7 +40,7 @@ export class CommentReportComponent extends FormReactive implements OnInit {
   }
 
   get currentHost() {
-    return window.location.host;
+    return 'Chessbook';
   }
 
   get originHost() {
@@ -74,18 +74,19 @@ export class CommentReportComponent extends FormReactive implements OnInit {
   }
 
   report() {
+    debugger
     const reason = this.form.get('reason').value;
     const predefinedReasons = Object.keys(pickBy(this.form.get('predefinedReasons').value)) as AbusePredefinedReasonsString[];
 
     this.abuseService.reportVideo({
       reason,
       predefinedReasons,
-      account: {
+      comment: {
         id: this.comment.id
       }
     }).subscribe(
       () => {
-        this.notifier.success(`Account reported.`);
+        this.notifier.success(`Comment reported.`, 'Success');
         this.hide();
       },
 

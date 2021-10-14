@@ -1,9 +1,10 @@
-﻿using Chessbook.Common;
-using Chessbook.Data.Models;
+﻿using System.Data;
 using FluentMigrator.Builders.Create.Table;
-using Nop.Data.Mapping.Builders;
-using Nop.Data.Extensions;
-using System.Data;
+
+using Chessbook.Data.Mapping.Builders;
+using Chessbook.Data.Extensions;
+using Chessbook.Common;
+using Chessbook.Data.Models;
 
 namespace Chessbook.Data.Mapping.Builders.Abuse
 {

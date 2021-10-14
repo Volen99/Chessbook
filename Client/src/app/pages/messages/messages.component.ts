@@ -1,11 +1,21 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NavigationEnd, Router} from "@angular/router";
-import {Subscription} from "rxjs";
-import {filter} from "rxjs/operators";
+import {Router} from "@angular/router";
+import {forkJoin, Subscription} from "rxjs";
+import {takeWhile} from "rxjs/operators";
+import {ChatService} from "../../shared/shared-messages/chat.service";
+import {IUser} from "../../core/interfaces/common/users";
+import {Location} from "@angular/common";
 
-enum MessageMode {
-  EDIT = 'Edit',
-  ADD = 'Add',
+export interface PrivateMessage {
+  id: number;
+  fromUser: IUser;
+  toUser: IUser;
+
+  toCustomerId: number;
+  subject: number;
+  message: string;
+  createdOn: Date;
+  isRead: number;
 }
 
 @Component({
@@ -17,38 +27,40 @@ export class MessagesComponent implements OnInit, OnDestroy {
 
   private routeSub: Subscription;
 
-  constructor(private router: Router) {
+  private alive = true;
+
+  constructor(private router: Router, private chatService: ChatService,
+              private location: Location) {
+    forkJoin([
+      this.chatService.getAllPrivateMessagesAsync('inbox'),
+      this.chatService.getAllPrivateMessagesAsync('sent')
+    ])
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(([inbox, sent]: [PrivateMessage[], PrivateMessage[]]) => {
+        // @ts-ignore
+        this.messages = inbox.data;
+        // @ts-ignore
+        this.sent = sent.data;
+      });
   }
 
   ngOnInit(): void {
-    this.routeSub = this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((route) => {
-        // @ts-ignore
-        if (route.id) {
-          // @ts-ignore
-          this.setMessageId(route.id);
-        }
-      });
+
   }
+
 
   ngOnDestroy(): void {
     if (this.routeSub) {
       this.routeSub.unsubscribe();
     }
+
+    this.alive = false;
   }
 
-  messageId: number;
+  messages: PrivateMessage[];
+  sent: PrivateMessage[];
 
-  setMessageId(id) {
-    if (id) {
-      // @ts-ignore
-      this.messageId = id;
-    } else {
-      // @ts-ignore
-      this.messageId = null;
-    }
+  isMessageSelected() {
+    return this.location.path(false).endsWith('s');
   }
-
-
 }

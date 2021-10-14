@@ -1,4 +1,4 @@
-import {IPost} from "../../posts/models/tweet";
+import {IPost} from "../../posts/models/post.model";
 import {IUser} from "../../../core/interfaces/common/users";
 import {ITweetEntities} from "../../post-object/Entities/interfaces/ITweetEntities";
 import {ICoordinates} from "../../posts/models/properties/ICoordinates";
@@ -14,6 +14,7 @@ import {User} from "../user/user.model";
 import {UserRight} from "../../models/users/user-right.enum";
 import {PostPrivacy} from "../../models/enums/post-privacy";
 import {IPostConstant} from "../../posts/models/post-constant.model";
+import {ICard} from "../../posts/models/card.model";
 
 export class Post /*implements IPost*/ {
   static buildWatchUrl(post: Partial<Pick<Post, 'id'>>) {
@@ -29,11 +30,15 @@ export class Post /*implements IPost*/ {
     this.uuid = hash.uuid;
 
     this.status = hash.status;
+    this.reposted = hash.reposted;
+    this.repostCount = hash.repostCount;
+    this.repost = hash.repost;
 
     this.entities = hash.entities;
     this.entities.medias = hash.entities.medias;
 
     this.favoriteCount = hash.favoriteCount;
+    this.favorited = hash.favorited;
     this.dislikeCount = hash.dislikeCount;
 
     this.nsfw = hash.nsfw;
@@ -45,6 +50,12 @@ export class Post /*implements IPost*/ {
 
     this.commentsCount = hash.commentsCount;
     this.tags = hash.tags;
+
+    this.pinned = hash.pinned;
+    this.poll = hash.poll;
+    this.commentsEnabled = hash.commentsEnabled;
+    this.card = hash.card;
+    this.hasMedia = hash.hasMedia;
   }
 
   privacy: IPostConstant<PostPrivacy>;
@@ -64,13 +75,17 @@ export class Post /*implements IPost*/ {
   inReplyToStatusId: number;
   inReplyToUserId: number;
   inReplyToScreenName: string;
-  reshareCount: number;
-  reshared: boolean;
+  repostCount: number;
+  reposted: boolean;
   hasMedia: boolean;
   blacklisted?: boolean;
   blockedReason?: string;
   tags: IPostTag[];
-  resharedStatus: Post;
+  repost: Post;
+  pinned: boolean;
+  poll: IPoll;
+  commentsEnabled: boolean;
+  card: ICard;
 
   get url(): string {
     return `/${this.user?.screenName}/post/${this.id.toLocaleString().toLocaleLowerCase()}`;

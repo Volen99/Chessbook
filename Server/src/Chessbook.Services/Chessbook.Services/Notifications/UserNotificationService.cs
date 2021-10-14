@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 using Chessbook.Core.Domain.Notifications;
 using Chessbook.Data;
 using Chessbook.Web.Models.Inputs;
-using Microsoft.EntityFrameworkCore;
-using Nop.Core;
+using Chessbook.Core;
 
 namespace Chessbook.Services.Notifications
 {
@@ -38,7 +38,8 @@ namespace Chessbook.Services.Notifications
             }
             else if (type == UserNotificationType.NEW_FOLLOW)
             {
-                notification.RelationshipId = entityId;
+                // notification.RelationshipId = entityId;
+                notification.UserFollowId = entityId;
             }
             else if (type == UserNotificationType.COMMENT_MENTION)
             {

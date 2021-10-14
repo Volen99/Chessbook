@@ -8,7 +8,8 @@
 
     public interface IContactService
     {
-        Task<IEnumerable<ContactDTO>> GetAllContacts(ContactFilter filter);
         Task<byte[]> GetContactPhoto(int contactId);
+
+        Task<IEnumerable<ContactDTO>> GetAllContacts(ContactFilter filter);
     }
 }

@@ -1,48 +1,48 @@
 ﻿namespace Chessbook.Web.Api.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using Chessbook.Web.Api.Identity;
-    using Chessbook.Web.Models.AuthDTO;
-    using Nop.Services.Customers;
-    using Nop.Core.Domain.Customers;
-    using Chessbook.Core;
-    using Chessbook.Services.Data.Services;
-    using Chessbook.Services.Authentication;
-    using Chessbook.Services.Localization;
-    using Chessbook.Data.Models;
-    using System;
-    using System.Collections.Generic;
-    using Nop.Services.Logging;
-    using System.Linq;
+    using Chessbook.Services.Logging;
     using Chessbook.Core.Domain.Notifications;
     using Chessbook.Services.Notifications.Settings;
+    using Chessbook.Web.Models.AuthDTO;
+    using Chessbook.Services.Customers;
+    using Chessbook.Core.Domain.Customers;
+    using Chessbook.Core;
+    using Chessbook.Services;
+    using Chessbook.Services.Localization;
+    using Chessbook.Data.Models;
 
     [Route("auth")]
     public class AuthController : BaseApiController
     {
         protected readonly JwtManager jwtManager;
-        private readonly CustomerSettings _customerSettings;
-        protected readonly IAuthenticationService authService;
-        private readonly ICustomerRegistrationService _customerRegistrationService;
+        private readonly CustomerSettings customerSettings;
+        private readonly ICustomerRegistrationService customerRegistrationService;
         private readonly IUserService userService;
         private readonly ILocaleStringResourceService localeStringResourceService;
-        private readonly ICustomerActivityService _customerActivityService;
+        private readonly ICustomerActivityService customerActivityService;
         private readonly INotificationsSettingsService notificationsSettingsService;
+        private readonly IWorkContext workContext;
 
-        public AuthController(JwtManager jwtManager, IAuthenticationService authService, ICustomerRegistrationService customerRegistrationService, IUserService customerService,
-            ILocaleStringResourceService localeStringResourceService, ICustomerActivityService customerActivityService, CustomerSettings customerSettings, INotificationsSettingsService notificationsSettingsService)
+        public AuthController(JwtManager jwtManager, ICustomerRegistrationService customerRegistrationService, IUserService customerService,
+            ILocaleStringResourceService localeStringResourceService, ICustomerActivityService customerActivityService,
+            CustomerSettings customerSettings, INotificationsSettingsService notificationsSettingsService,
+            IWorkContext workContext)
         {
             this.jwtManager = jwtManager;
-            this._customerSettings = customerSettings;
-            this.authService = authService;
-            _customerRegistrationService = customerRegistrationService;
+            this.customerSettings = customerSettings;
+            this.customerRegistrationService = customerRegistrationService;
             this.userService = customerService;
             this.localeStringResourceService = localeStringResourceService;
-            this._customerActivityService = customerActivityService;
+            this.customerActivityService = customerActivityService;
             this.notificationsSettingsService = notificationsSettingsService;
+            this.workContext = workContext;
         }
 
         [HttpPost]
@@ -52,28 +52,17 @@
         {
             var customerEmail = loginDto.Email?.Trim();
 
-            var loginResult = await _customerRegistrationService.ValidateCustomerAsync(customerEmail, loginDto.Password);
+            var loginResult = await this.customerRegistrationService.ValidateCustomerAsync(customerEmail, loginDto.Password);
             switch (loginResult)
             {
                 case CustomerLoginResults.Successful:
                     {
                         var customer = await this.userService.GetCustomerByEmailAsync(customerEmail);
 
-                        var token = await _customerRegistrationService.SignInCustomerAsync(customer, null, loginDto.RememberMe);
+                        var token = await this.customerRegistrationService.SignInCustomerAsync(customer, null, loginDto.RememberMe);
 
                         return Ok(new { token = token.Data });
                     }
-                //case CustomerLoginResults.MultiFactorAuthenticationRequired:
-                //    {
-                //        var customerMultiFactorAuthenticationInfo = new CustomerMultiFactorAuthenticationInfo
-                //        {
-                //            UserName = customerEmail,
-                //            RememberMe = loginDto.RememberMe,
-                //            ReturnUrl = returnUrl
-                //        };
-                //        HttpContext.Session.Set(NopCustomerDefaults.CustomerMultiFactorAuthenticationInfo, customerMultiFactorAuthenticationInfo);
-                //        return RedirectToRoute("MultiFactorVerification");
-                //    }
                 case CustomerLoginResults.CustomerNotExist:
                     ModelState.AddModelError("", await this.localeStringResourceService.GetResourceAsync("Account.Login.WrongCredentials.CustomerNotExist"));
                     break;
@@ -93,34 +82,6 @@
                 default:
                     ModelState.AddModelError("", await this.localeStringResourceService.GetResourceAsync("Account.Login.WrongCredentials"));
                     break;
-            }
-
-            //var result = await authService.Login(loginDto);
-
-            //if (result.Succeeded)
-            //{
-            //    return Ok(new { token = result.Data });
-            //}
-            //if (result.IsModelValid)
-            //{
-            //    return Unauthorized();
-            //}
-
-            return BadRequest();
-        }
-
-        [HttpPost]
-        [Authorize]
-        [Route("reset-pass")]
-        public async Task<IActionResult> ChangePassword(ChangePasswordDTO changePasswordDto)
-        {
-            var currentUserId = User.GetUserId();
-
-            var result = await authService.ChangePassword(changePasswordDto, currentUserId);
-
-            if (result.Succeeded)
-            {
-                return Ok();
             }
 
             return BadRequest();
@@ -163,30 +124,26 @@
                 Active = true,
             };
 
-          
-                await this.userService.InsertCustomerAsync(newUser);
+
+            await this.userService.InsertCustomerAsync(newUser);
 
             // notifications settings
             var settings = new UserNotificationSettingModel
             {
+                CustomerId = newUser.Id,
                 AbuseAsModerator = UserNotificationSettingValue.EMAIL,
                 AbuseNewMessage = UserNotificationSettingValue.EMAIL,
-                AbuseStateChange = UserNotificationSettingValue.WEB,
+                AbuseStateChange = UserNotificationSettingValue.EMAIL,
                 BlacklistOnMyVideo = UserNotificationSettingValue.EMAIL,
                 CommentMention = UserNotificationSettingValue.WEB,
-                MyVideoPublished = UserNotificationSettingValue.WEB,
                 NewCommentOnMyVideo = UserNotificationSettingValue.WEB,
-                NewFollow = UserNotificationSettingValue.EMAIL,
-                NewUserRegistration = UserNotificationSettingValue.WEB,
+                NewFollow = UserNotificationSettingValue.WEB,
                 NewVideoFromSubscription = UserNotificationSettingValue.WEB,
-                VideoAutoBlacklistAsModerator = UserNotificationSettingValue.WEB,
-                CustomerId = newUser.Id,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
             };
 
             await this.notificationsSettingsService.CreateAsync(settings);
-
 
             //// form fields
             //if (_dateTimeSettings.AllowCustomersToSetTimeZone)
@@ -206,84 +163,91 @@
 
             //validate customer roles
             var allCustomerRoles = await this.userService.GetAllCustomerRolesAsync(true);
-                var newCustomerRoles = new List<CustomerRole>();
-                foreach (var customerRole in allCustomerRoles)
-                    if (customerRole.Id == 3)
-                        newCustomerRoles.Add(customerRole);
-                var customerRolesError = await ValidateCustomerRolesAsync(newCustomerRoles, new List<CustomerRole>());
-                if (!string.IsNullOrEmpty(customerRolesError))
-                {
-                    //ModelState.AddModelError(string.Empty, customerRolesError);
-                    //_notificationService.ErrorNotification(customerRolesError);
-                }
+            var newCustomerRoles = new List<CustomerRole>();
+            foreach (var customerRole in allCustomerRoles)
+                if (customerRole.Id == 3)
+                    newCustomerRoles.Add(customerRole);
+            var customerRolesError = await ValidateCustomerRolesAsync(newCustomerRoles, new List<CustomerRole>());
+            if (!string.IsNullOrEmpty(customerRolesError))
+            {
+                //ModelState.AddModelError(string.Empty, customerRolesError);
+                //_notificationService.ErrorNotification(customerRolesError);
+            }
 
-                // custom customer attributes
-                // await _genericAttributeService.SaveAttributeAsync(newUser, NopCustomerDefaults.CustomCustomerAttributes, customerAttributesXml);
+            // Ensure that valid email address is entered if Registered role is checked to avoid registered customers with empty email address
+            if (newCustomerRoles.Any() && newCustomerRoles.FirstOrDefault(c => c.SystemName == NopCustomerDefaults.RegisteredRoleName) != null &&
+                !CommonHelper.IsValidEmail(newUser.Email))
+            {
+                ModelState.AddModelError(string.Empty, await this.localeStringResourceService.GetResourceAsync("Admin.Customers.Customers.ValidEmailRequiredRegisteredRole"));
 
-                //password
-                if (!string.IsNullOrWhiteSpace(signUpDto.Password))
+                // _notificationService.ErrorNotification(await this.localeStringResourceService.GetResourceAsync("Admin.Customers.Customers.ValidEmailRequiredRegisteredRole"));
+            }
+
+            // custom customer attributes
+            // await _genericAttributeService.SaveAttributeAsync(newUser, NopCustomerDefaults.CustomCustomerAttributes, customerAttributesXml);
+
+            //password
+            if (!string.IsNullOrWhiteSpace(signUpDto.Password))
+            {
+                var changePassRequest = new ChangePasswordRequest(signUpDto.Email, false, this.customerSettings.DefaultPasswordFormat, signUpDto.Password);
+                var changePassResult = await this.customerRegistrationService.ChangePasswordAsync(changePassRequest);
+                if (!changePassResult.Success)
                 {
-                    var changePassRequest = new ChangePasswordRequest(signUpDto.Email, false, _customerSettings.DefaultPasswordFormat, signUpDto.Password);
-                    var changePassResult = await _customerRegistrationService.ChangePasswordAsync(changePassRequest);
-                    if (!changePassResult.Success)
+                    foreach (var changePassError in changePassResult.Errors)
                     {
-                        foreach (var changePassError in changePassResult.Errors)
-                        {
-                            // _notificationService.ErrorNotification(changePassError);
-                        }
+                        // _notificationService.ErrorNotification(changePassError);
                     }
                 }
+            }
 
-                //customer roles
-                foreach (var customerRole in newCustomerRoles)
+            //customer roles
+            foreach (var customerRole in newCustomerRoles)
+            {
+                // ensure that the current customer cannot add to "Administrators" system role if he's not an admin himself
+                if (customerRole.SystemName == NopCustomerDefaults.AdministratorsRoleName && !await this.userService.IsAdminAsync(await this.workContext.GetCurrentCustomerAsync()))
                 {
-                    // ensure that the current customer cannot add to "Administrators" system role if he's not an admin himself
-                    //if (customerRole.SystemName == NopCustomerDefaults.AdministratorsRoleName && !await this.userService.IsAdminAsync(await _workContext.GetCurrentCustomerAsync()))
-                    //{
-                    //    continue;
-                    //}
-
-                    await this.userService.AddCustomerRoleMappingAsync(new CustomerCustomerRoleMapping { CustomerId = newUser.Id, CustomerRoleId = customerRole.Id });
+                    continue;
                 }
 
-                await this.userService.UpdateCustomerAsync(newUser);
+                await this.userService.AddCustomerRoleMappingAsync(new CustomerCustomerRoleMapping { CustomerId = newUser.Id, CustomerRoleId = customerRole.Id });
+            }
 
-                //activity log
-                await _customerActivityService.InsertActivityAsync("AddNewCustomer",
-                    string.Format(await this.localeStringResourceService.GetResourceAsync("ActivityLog.AddNewCustomer"), newUser.Id), newUser);
+            await this.userService.UpdateCustomerAsync(newUser);
+
+            // activity log
+            await this.customerActivityService.InsertActivityAsync("AddNewCustomer", string.Format(await this.localeStringResourceService.GetResourceAsync("ActivityLog.AddNewCustomer"), newUser.Id), newUser);
             // _notificationService.SuccessNotification(await this.localeStringResourceService.GetResourceAsync("Admin.Customers.Customers.Added"));
-
 
             var token = jwtManager.GenerateToken(newUser);
 
             return Ok(new { token });
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        [Route("request-pass")]
-        public async Task<IActionResult> RequestPassword(RequestPasswordDTO requestPasswordDto)
-        {
-            var result = await authService.RequestPassword(requestPasswordDto);
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[Route("request-pass")]
+        //public async Task<IActionResult> RequestPassword(RequestPasswordDTO requestPasswordDto)
+        //{
+        //    var result = await authService.RequestPassword(requestPasswordDto);
 
-            if (result.Succeeded)
-                return Ok(new { result.Data, Description = "Reset Token should be sent via Email. Token in response - just for testing purpose." });
+        //    if (result.Succeeded)
+        //        return Ok(new { result.Data, Description = "Reset Token should be sent via Email. Token in response - just for testing purpose." });
 
-            return BadRequest();
-        }
+        //    return BadRequest();
+        //}
 
-        [HttpPost]
-        [AllowAnonymous]
-        [Route("restore-pass")]
-        public async Task<IActionResult> RestorePassword(RestorePasswordDTO restorePasswordDto)
-        {
-            var result = await authService.RestorePassword(restorePasswordDto);
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[Route("restore-pass")]
+        //public async Task<IActionResult> RestorePassword(RestorePasswordDTO restorePasswordDto)
+        //{
+        //    var result = await authService.RestorePassword(restorePasswordDto);
 
-            if (result.Succeeded)
-                return Ok(new { token = result.Data });
+        //    if (result.Succeeded)
+        //        return Ok(new { token = result.Data });
 
-            return BadRequest();
-        }
+        //    return BadRequest();
+        //}
 
         [HttpPost]
         [Authorize]
@@ -294,18 +258,18 @@
             return Ok();
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        [Route("refresh-token")]
-        public async Task<IActionResult> RefreshToken(RefreshTokenDTO refreshTokenDTO)
-        {
-            var result = await authService.RefreshToken(refreshTokenDTO);
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[Route("refresh-token")]
+        //public async Task<IActionResult> RefreshToken(RefreshTokenDTO refreshTokenDTO)
+        //{
+        //    var result = await authService.RefreshToken(refreshTokenDTO);
 
-            if (result.Succeeded)
-                return Ok(new { token = result.Data });
+        //    if (result.Succeeded)
+        //        return Ok(new { token = result.Data });
 
-            return BadRequest();
-        }
+        //    return BadRequest();
+        //}
 
         /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task<string> ValidateCustomerRolesAsync(IList<CustomerRole> customerRoles, IList<CustomerRole> existingCustomerRoles)

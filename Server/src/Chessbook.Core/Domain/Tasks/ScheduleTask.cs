@@ -1,7 +1,7 @@
 ﻿using System;
 using Chessbook.Data.Models;
 
-namespace Nop.Core.Domain.Tasks
+namespace Chessbook.Core.Domain.Tasks
 {
     /// <summary>
     /// Schedule task

@@ -1,4 +1,4 @@
-﻿namespace Nop.Services.Media
+﻿namespace Chessbook.Services.Media
 {
     /// <summary>
     /// Represents default values related to media services

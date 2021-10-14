@@ -1,4 +1,4 @@
-﻿using Nop.Web.Framework.Models;
+﻿using Chessbook.Web.Framework.Models;
 using Chessbook.Web.Api.Areas.Admin.Models.Users;
 
 namespace Chessbook.Web.Api.Models.Posts

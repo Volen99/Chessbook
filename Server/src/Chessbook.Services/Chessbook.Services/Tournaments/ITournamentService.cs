@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-using Nop.Core;
+using Chessbook.Core;
 using Chessbook.Core.Domain.Tournaments;
 
 namespace Chessbook.Services.Tournaments

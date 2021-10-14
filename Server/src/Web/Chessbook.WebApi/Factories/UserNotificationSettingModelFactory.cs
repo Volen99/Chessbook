@@ -1,6 +1,7 @@
-﻿using Chessbook.Core.Domain.Notifications;
+﻿using System.Threading.Tasks;
+
+using Chessbook.Core.Domain.Notifications;
 using Chessbook.Web.Api.Models.UserNotification;
-using System.Threading.Tasks;
 
 namespace Chessbook.Web.Api.Factories
 {
@@ -15,12 +16,9 @@ namespace Chessbook.Web.Api.Factories
                 AbuseStateChange = (int)userNotificationSettingModel.AbuseStateChange,
                 BlacklistOnMyVideo = (int)userNotificationSettingModel.BlacklistOnMyVideo,
                 CommentMention = (int)userNotificationSettingModel.CommentMention,
-                MyVideoPublished = (int)userNotificationSettingModel.MyVideoPublished,
                 NewCommentOnMyVideo = (int)userNotificationSettingModel.NewCommentOnMyVideo,
                 NewFollow = (int)userNotificationSettingModel.NewFollow,
-                NewUserRegistration = (int)userNotificationSettingModel.NewUserRegistration,
                 NewVideoFromSubscription = (int)userNotificationSettingModel.NewVideoFromSubscription,
-                VideoAutoBlacklistAsModerator = (int)userNotificationSettingModel.VideoAutoBlacklistAsModerator,
             };
 
             return model;

@@ -1,7 +1,7 @@
-﻿using Nop.Core.Domain.Logging;
+﻿using Chessbook.Core.Domain.Logging;
 using Chessbook.Services.Caching;
 
-namespace Nop.Services.Logging.Caching
+namespace Chessbook.Services.Logging.Caching
 {
     /// <summary>
     /// Represents a log cache event consumer

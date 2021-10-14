@@ -1,4 +1,10 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
+import {debounce} from 'lodash';
+
 import {IMediaEntity} from "../../shared/post-object/Entities/interfaces/IMediaEntity";
 
 @Component({
@@ -6,13 +12,13 @@ import {IMediaEntity} from "../../shared/post-object/Entities/interfaces/IMediaE
   templateUrl: './media-gallery.component.html',
   styleUrls: ['./media-gallery.component.scss']
 })
-export class MediaGalleryComponent implements OnInit, AfterViewInit {
+export class MediaGalleryComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy, AfterViewChecked {
   @ViewChild('nodeRef') nodeRef: ElementRef<HTMLDivElement>;
 
   @Input() sensitive: boolean;
   @Input() standalone: boolean;
   @Input() media: IMediaEntity[];
-  @Input() size: { };
+  @Input() size: {};
   @Input() height: number;
   @Input() onOpenMedia: (media: IMediaEntity[], index: number) => any;
   @Input() defaultWidth: number;
@@ -24,35 +30,55 @@ export class MediaGalleryComponent implements OnInit, AfterViewInit {
   constructor() {
   }
 
-  ngOnInit(): void {
-    if (this.isFullSizeEligible() && (this.standalone)) { //   || !cropImages
-      if (this.width) {
-        this.style.height = this.width / this.media[0].meta['original'].small.aspect;
-      }
-    } else if (this.width) {
-      this.style.height = this.width / (16/9);
-    } else {
-      this.style.height = this.height;
+  ngOnChanges(changes: SimpleChanges): void {
+        // ..
     }
 
-    this.sizeState     = this.media/*.take(4)*/.length;
-    this.uncached = this.media.every(attachment => attachment.mediaType === 'unknown');
-
-
+  ngOnInit(): void {
 
   }
 
   ngAfterViewInit(): void {
-    this.node = this.nodeRef;
+    window.addEventListener('resize', this.handleResize, { passive: true });
+
+    this.node = this.nodeRef.nativeElement;
 
     if (this.node) {
       this._setDimensions();
     }
   }
 
-  width: number;
-  style: any;
-  sizeState: number;
+  ngAfterViewChecked(): void {
+    this.width = this.width || this.defaultWidth;
+
+    if (this.isFullSizeEligible() && (this.standalone)) { //   || !cropImages
+      if (this.width) {
+        this.style.height = this.width / this.media[0].meta['small'].aspect;
+      }
+    } else if (this.width) {
+      this.style.height = this.width / (16 / 9);
+    } else {
+      this.style.height = this.height;
+    }
+
+    this.uncached = this.media.every(attachment => attachment.mediaType === 'unknown');
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  handleResize = debounce(() => {
+    if (this.node) {
+      this._setDimensions();
+    }
+  }, 250, {
+    trailing: true,
+  });
+
+
+  width: number = 250;
+  style: any = {};
   uncached: boolean;
 
   node = null;
@@ -77,7 +103,7 @@ export class MediaGalleryComponent implements OnInit, AfterViewInit {
     }
   }
 
-  _setDimensions () {
+  private _setDimensions () {
     const width = this.node.offsetWidth;
 
     // offsetWidth triggers a layout, so only calculate when we need to
@@ -86,12 +112,10 @@ export class MediaGalleryComponent implements OnInit, AfterViewInit {
     }
 
     this.width = width;
-
   }
 
   isFullSizeEligible() {
-    return this.media.length === 1 && this.media[0].meta['original'].small.aspect;
+    return this.media.length === 1 && this.media[0].meta['small'].aspect;
   }
-
 
 }

@@ -1,4 +1,4 @@
-﻿namespace Nop.Services.ExportImport
+﻿namespace Chessbook.Services.ExportImport
 {
     public class ExportSpecificationAttribute
     {

@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Chessbook.Data;
-using Nop.Core;
-using Nop.Core.Caching;
-using Nop.Core.Domain.Common;
-using Nop.Core.Domain.Directory;
-using Nop.Data;
-using Nop.Services.Stores;
 
-namespace Nop.Services.Directory
+using Chessbook.Data;
+using Chessbook.Core;
+using Chessbook.Core.Caching;
+using Chessbook.Core.Domain.Directory;
+using Chessbook.Services.Stores;
+
+namespace Chessbook.Services.Directory
 {
     /// <summary>
     /// Country service

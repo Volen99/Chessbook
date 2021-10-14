@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
 
-namespace Nop.Data.Migrations
+namespace Chessbook.Data.Migrations
 {
     /// <summary>
     /// A set conventions to be applied to expressions

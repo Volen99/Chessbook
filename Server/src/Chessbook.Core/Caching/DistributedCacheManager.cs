@@ -8,10 +8,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using Nito.AsyncEx;
-using Nop.Core.ComponentModel;
-using Nop.Core.Configuration;
 
-namespace Nop.Core.Caching
+using Chessbook.Core.ComponentModel;
+using Chessbook.Core.Configuration;
+
+namespace Chessbook.Core.Caching
 {
     /// <summary>
     /// Represents a distributed cache 

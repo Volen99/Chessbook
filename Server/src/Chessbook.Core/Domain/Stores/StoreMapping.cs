@@ -1,6 +1,6 @@
 ﻿using Chessbook.Data.Models;
 
-namespace Nop.Core.Domain.Stores
+namespace Chessbook.Core.Domain.Stores
 {
     /// <summary>
     /// Represents a store mapping record

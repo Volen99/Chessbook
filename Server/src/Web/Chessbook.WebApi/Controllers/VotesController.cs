@@ -11,8 +11,8 @@
     using Chessbook.Web.Models.Inputs;
     using Chessbook.Web.Api.Areas.Admin.Models.Post;
     using Chessbook.Web.Api.Factories;
-    using Chessbook.Services.Data.Services;
-    using Nop.Core;
+    using Chessbook.Services;
+    using Chessbook.Core;
     using Chessbook.Services.Localization;
     using Chessbook.Web.Api.Lib;
 

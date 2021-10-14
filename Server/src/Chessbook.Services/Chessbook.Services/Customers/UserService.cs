@@ -2,107 +2,99 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
+    using System.Globalization;
     using System.Threading.Tasks;
+
     using Chessbook.Core;
     using Chessbook.Data;
     using Chessbook.Data.Common.Filters;
-    using Chessbook.Data.Common.Repositories;
-    using Chessbook.Data.Common.System;
     using Chessbook.Data.Models;
-    using Chessbook.Data.Models.System;
-    using Chessbook.Data.Repositories;
-    using Chessbook.Services.Data;
-    using Chessbook.Services.Data.Services;
-    using Chessbook.Services.Mapping;
-    using Chessbook.Web.Models;
-    using Nop.Core;
-    using Nop.Core.Caching;
-    using Nop.Core.Domain.Common;
-    using Nop.Core.Domain.Customers;
-    using Nop.Services.Common;
-    using Nop.Services.Customers;
+    using Chessbook.Core.Caching;
+    using Chessbook.Core.Domain.Common;
+    using Chessbook.Core.Domain.Customers;
+    using Chessbook.Services.Common;
+    using Chessbook.Services.Customers;
+    using Chessbook.Core.Domain.Relationships;
 
-    public class UserService<TUser> : BaseService, IUserService where TUser : Customer, new()
+    public class UserService<TUser> : IUserService where TUser : Customer, new()
     {
-        private readonly IRepository<CustomerRole> _customerRoleRepository;
-
+        private readonly IRepository<CustomerRole> customerRoleRepository;
         private readonly IRepository<Relationship> relationshipRepository;
-        private readonly IGenericAttributeService _genericAttributeService;
-        private readonly IRepository<GenericAttribute> _gaRepository;
-        private readonly IRepository<Customer> _customerRepository;
-        private readonly IStaticCacheManager _staticCacheManager;
-        private readonly IRepository<CustomerCustomerRoleMapping> _customerCustomerRoleMappingRepository;
-        private readonly IRepository<CustomerPassword> _customerPasswordRepository;
+        private readonly IGenericAttributeService genericAttributeService;
+        private readonly IRepository<GenericAttribute> gaRepository;
+        private readonly IRepository<Customer> customerRepository;
+        private readonly IStaticCacheManager staticCacheManager;
+        private readonly IRepository<CustomerCustomerRoleMapping> customerCustomerRoleMappingRepository;
+        private readonly IRepository<CustomerPassword> customerPasswordRepository;
 
         private Customer _cachedCustomer;
 
-        public UserService(ICurrentContextProvider contextProvider,
-            IRepository<Relationship> relationshipRepository,
+        public UserService(IRepository<Relationship> relationshipRepository,
             IGenericAttributeService genericAttributeService,
              IRepository<Customer> customerRepository,
              IRepository<CustomerRole> customerRoleRepository,
              IStaticCacheManager staticCacheManager,
              IRepository<CustomerCustomerRoleMapping> customerCustomerRoleMappingRepository,
              IRepository<GenericAttribute> gaRepository,
-             IRepository<CustomerPassword> customerPasswordRepository) : base(contextProvider)
+             IRepository<CustomerPassword> customerPasswordRepository)
         {
             this.relationshipRepository = relationshipRepository;
-            this._genericAttributeService = genericAttributeService;
-            this._customerRepository = customerRepository;
-            this._customerRoleRepository = customerRoleRepository;
-            this._staticCacheManager = staticCacheManager;
-            this._customerCustomerRoleMappingRepository = customerCustomerRoleMappingRepository;
-            _gaRepository = gaRepository;
-            _customerPasswordRepository = customerPasswordRepository;
+            this.genericAttributeService = genericAttributeService;
+            this.customerRepository = customerRepository;
+            this.customerRoleRepository = customerRoleRepository;
+            this.staticCacheManager = staticCacheManager;
+            this.customerCustomerRoleMappingRepository = customerCustomerRoleMappingRepository;
+            this.gaRepository = gaRepository;
+            this.customerPasswordRepository = customerPasswordRepository;
         }
 
-        //public async Task<GridData<UserDTO>> GetDataForGrid(UsersGridFilter filter, bool includeDeleted = false)
-        //{
-        //    var tuple = await userRepository.GetFilteredListWithTotalCount(filter, Session, includeDeleted);
-
-        //    return new GridData<UserDTO>
-        //    {
-        //        Items = tuple.Item1.MapTo<IEnumerable<UserDTO>>(),
-        //        TotalCount = tuple.Item2
-        //    };
-        //}
-
-        //public async Task<bool> Delete(int id)
-        //{
-        //    await userRepository.Delete(id, Session);
-        //    return true;
-        //}
-
-
-
-
-        public virtual async Task<IPagedList<Customer>> GetAllCustomersAsync(DateTime? createdFromUtc = null, DateTime? createdToUtc = null,
+        /// <summary>
+        /// Gets all customers
+        /// </summary>
+        /// <param name="createdFromUtc">Created date from (UTC); null to load all records</param>
+        /// <param name="createdToUtc">Created date to (UTC); null to load all records</param>
+        /// <param name="affiliateId">Affiliate identifier</param>
+        /// <param name="vendorId">Vendor identifier</param>
+        /// <param name="customerRoleIds">A list of customer role identifiers to filter by (at least one match); pass null or empty list in order to load all customers; </param>
+        /// <param name="email">Email; null to load all customers</param>
+        /// <param name="username">Username; null to load all customers</param>
+        /// <param name="firstName">First name; null to load all customers</param>
+        /// <param name="lastName">Last name; null to load all customers</param>
+        /// <param name="dayOfBirth">Day of birth; 0 to load all customers</param>
+        /// <param name="monthOfBirth">Month of birth; 0 to load all customers</param>
+        /// <param name="company">Company; null to load all customers</param>
+        /// <param name="phone">Phone; null to load all customers</param>
+        /// <param name="zipPostalCode">Phone; null to load all customers</param>
+        /// <param name="ipAddress">IP address; null to load all customers</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="getOnlyTotalCount">A value in indicating whether you want to load only total number of records. Set to "true" if you don't want to load data from database</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the customers
+        /// </returns>
+        public async Task<IPagedList<Customer>> GetAllCustomersAsync(DateTime? createdFromUtc = null, DateTime? createdToUtc = null,
            int affiliateId = 0, int vendorId = 0, int[] customerRoleIds = null,
            string email = null, string username = null, string firstName = null, string lastName = null,
            int dayOfBirth = 0, int monthOfBirth = 0,
            string company = null, string phone = null, string zipPostalCode = null, string ipAddress = null,
            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false)
         {
-            var customers = await _customerRepository.GetAllPagedAsync(query =>
+            var customers = await this.customerRepository.GetAllPagedAsync(query =>
             {
                 if (createdFromUtc.HasValue)
                     query = query.Where(c => createdFromUtc.Value <= c.CreatedOn);
 
                 if (createdToUtc.HasValue)
                     query = query.Where(c => createdToUtc.Value >= c.CreatedOn);
-                //if (affiliateId > 0)
-                //    query = query.Where(c => affiliateId == c.AffiliateId);
-                //if (vendorId > 0)
-                //    query = query.Where(c => vendorId == c.VendorId);
 
                 query = query.Where(c => !c.Deleted);
                 query = query.Where(c => c.ScreenName != null); // by mi
 
                 if (customerRoleIds != null && customerRoleIds.Length > 0)
                 {
-                    query = query.Join(_customerCustomerRoleMappingRepository.Table, x => x.Id, y => y.CustomerId,
+                    query = query.Join(this.customerCustomerRoleMappingRepository.Table, x => x.Id, y => y.CustomerId,
                             (x, y) => new { Customer = x, Mapping = y })
                         .Where(z => customerRoleIds.Contains(z.Mapping.CustomerRoleId))
                         .Select(z => z.Customer)
@@ -116,7 +108,7 @@
                 if (!string.IsNullOrWhiteSpace(firstName))
                 {
                     query = query
-                        .Join(_gaRepository.Table, x => x.Id, y => y.EntityId,
+                        .Join(this.gaRepository.Table, x => x.Id, y => y.EntityId,
                             (x, y) => new { Customer = x, Attribute = y })
                         .Where(z => z.Attribute.KeyGroup == nameof(Customer) &&
                                     z.Attribute.Key == NopCustomerDefaults.FirstNameAttribute &&
@@ -127,7 +119,7 @@
                 if (!string.IsNullOrWhiteSpace(lastName))
                 {
                     query = query
-                        .Join(_gaRepository.Table, x => x.Id, y => y.EntityId,
+                        .Join(this.gaRepository.Table, x => x.Id, y => y.EntityId,
                             (x, y) => new { Customer = x, Attribute = y })
                         .Where(z => z.Attribute.KeyGroup == nameof(Customer) &&
                                     z.Attribute.Key == NopCustomerDefaults.LastNameAttribute &&
@@ -147,7 +139,7 @@
                     //z.Attribute.Value.Length - dateOfBirthStr.Length = 5
                     //dateOfBirthStr.Length = 5
                     query = query
-                        .Join(_gaRepository.Table, x => x.Id, y => y.EntityId,
+                        .Join(this.gaRepository.Table, x => x.Id, y => y.EntityId,
                             (x, y) => new { Customer = x, Attribute = y })
                         .Where(z => z.Attribute.KeyGroup == nameof(Customer) &&
                                     z.Attribute.Key == NopCustomerDefaults.DateOfBirthAttribute &&
@@ -162,7 +154,7 @@
                     //z.Attribute.Value.Length - dateOfBirthStr.Length = 8
                     //dateOfBirthStr.Length = 2
                     query = query
-                        .Join(_gaRepository.Table, x => x.Id, y => y.EntityId,
+                        .Join(this.gaRepository.Table, x => x.Id, y => y.EntityId,
                             (x, y) => new { Customer = x, Attribute = y })
                         .Where(z => z.Attribute.KeyGroup == nameof(Customer) &&
                                     z.Attribute.Key == NopCustomerDefaults.DateOfBirthAttribute &&
@@ -174,7 +166,7 @@
                     //only month is specified
                     var dateOfBirthStr = "-" + monthOfBirth.ToString("00", CultureInfo.InvariantCulture) + "-";
                     query = query
-                        .Join(_gaRepository.Table, x => x.Id, y => y.EntityId,
+                        .Join(this.gaRepository.Table, x => x.Id, y => y.EntityId,
                             (x, y) => new { Customer = x, Attribute = y })
                         .Where(z => z.Attribute.KeyGroup == nameof(Customer) &&
                                     z.Attribute.Key == NopCustomerDefaults.DateOfBirthAttribute &&
@@ -186,7 +178,7 @@
                 if (!string.IsNullOrWhiteSpace(company))
                 {
                     query = query
-                        .Join(_gaRepository.Table, x => x.Id, y => y.EntityId,
+                        .Join(this.gaRepository.Table, x => x.Id, y => y.EntityId,
                             (x, y) => new { Customer = x, Attribute = y })
                         .Where(z => z.Attribute.KeyGroup == nameof(Customer) &&
                                     z.Attribute.Key == NopCustomerDefaults.CompanyAttribute &&
@@ -198,7 +190,7 @@
                 if (!string.IsNullOrWhiteSpace(phone))
                 {
                     query = query
-                        .Join(_gaRepository.Table, x => x.Id, y => y.EntityId,
+                        .Join(this.gaRepository.Table, x => x.Id, y => y.EntityId,
                             (x, y) => new { Customer = x, Attribute = y })
                         .Where(z => z.Attribute.KeyGroup == nameof(Customer) &&
                                     z.Attribute.Key == NopCustomerDefaults.PhoneAttribute &&
@@ -210,7 +202,7 @@
                 if (!string.IsNullOrWhiteSpace(zipPostalCode))
                 {
                     query = query
-                        .Join(_gaRepository.Table, x => x.Id, y => y.EntityId,
+                        .Join(this.gaRepository.Table, x => x.Id, y => y.EntityId,
                             (x, y) => new { Customer = x, Attribute = y })
                         .Where(z => z.Attribute.KeyGroup == nameof(Customer) &&
                                     z.Attribute.Key == NopCustomerDefaults.ZipPostalCodeAttribute &&
@@ -232,7 +224,6 @@
             return customers;
         }
 
-
         /// <summary>
         /// Gets a customer
         /// </summary>
@@ -243,7 +234,7 @@
         /// </returns>
         public virtual async Task<Customer> GetCustomerByIdAsync(int customerId)
         {
-            return await _customerRepository.GetByIdAsync(customerId,
+            return await this.customerRepository.GetByIdAsync(customerId,
                 cache => cache.PrepareKeyForShortTermCache(NopEntityCacheDefaults<Customer>.ByIdCacheKey, customerId));
         }
 
@@ -257,9 +248,8 @@
         /// </returns>
         public virtual async Task<IList<Customer>> GetCustomersByIdsAsync(int[] customerIds)
         {
-            return await _customerRepository.GetByIdsAsync(customerIds, includeDeleted: false);
+            return await this.customerRepository.GetByIdsAsync(customerIds, includeDeleted: false);
         }
-
 
         /// <summary>
         /// Get customer role identifiers
@@ -277,17 +267,15 @@
                 throw new ArgumentNullException(nameof(customer));
             }
 
-            var query = from cr in _customerRoleRepository.Table
-                        join crm in _customerCustomerRoleMappingRepository.Table on cr.Id equals crm.CustomerRoleId
+            var query = from cr in this.customerRoleRepository.Table
+                        join crm in this.customerCustomerRoleMappingRepository.Table on cr.Id equals crm.CustomerRoleId
                         where crm.CustomerId == customer.Id && (showHidden || cr.Active)
                         select cr.Id;
 
-            var key = _staticCacheManager.PrepareKeyForShortTermCache(NopCustomerServicesDefaults.CustomerRoleIdsCacheKey, customer, showHidden);
+            var key = this.staticCacheManager.PrepareKeyForShortTermCache(NopCustomerServicesDefaults.CustomerRoleIdsCacheKey, customer, showHidden);
 
-            return await _staticCacheManager.GetAsync(key, () => query.ToArray());
+            return await this.staticCacheManager.GetAsync(key, () => query.ToArray());
         }
-
-
 
         /// <summary>
         /// Delete a customer
@@ -320,8 +308,8 @@
                 }
             }
 
-            await _customerRepository.UpdateAsync(customer, false);
-            await _customerRepository.DeleteAsync(customer);
+            await this.customerRepository.UpdateAsync(customer, false);
+            await this.customerRepository.DeleteAsync(customer);
         }
 
         /// <summary>
@@ -339,7 +327,7 @@
                 return null;
             }
 
-            var query = from c in _customerRepository.Table
+            var query = from c in this.customerRepository.Table
                         orderby c.Id
                         where c.Email == email && !c.Deleted
                         select c;
@@ -392,34 +380,16 @@
             if (string.IsNullOrWhiteSpace(systemName))
                 return null;
 
-            var key = _staticCacheManager.PrepareKeyForDefaultCache(NopCustomerServicesDefaults.CustomerBySystemNameCacheKey, systemName);
+            var key = this.staticCacheManager.PrepareKeyForDefaultCache(NopCustomerServicesDefaults.CustomerBySystemNameCacheKey, systemName);
 
-            var query = from c in _customerRepository.Table
+            var query = from c in this.customerRepository.Table
                         orderby c.Id
                         where c.SystemName == systemName
                         select c;
 
-            var customer = await _staticCacheManager.GetAsync(key, async () => await query.FirstOrDefaultAsyncExt());
+            var customer = await this.staticCacheManager.GetAsync(key, async () => await query.FirstOrDefaultAsyncExt());
 
             return customer;
-        }
-
-        public async Task<(IEnumerable<TUser>, int)> GetFilteredListWithTotalCount(UsersGridFilter filter,
-            ContextSession session, bool includeDeleted = false)
-        {
-            //var query = GetEntities(session, includeDeleted).ApplyFilter(filter);
-            //return (
-            //    await query
-            //        .Skip(filter.PageSize * (filter.PageNumber - 1))
-            //        .Take(filter.PageSize)
-            //        .Include(u => u.UserRoles)
-            //        .ThenInclude(x => x.Role)
-            //        .Include(u => u.Settings)
-            //        .ToArrayAsync(),
-            //    await query
-            //        .CountAsync());
-
-            return default;
         }
 
         /// <summary>
@@ -437,7 +407,7 @@
                 return null;
             }
 
-            var query = from c in _customerRepository.Table
+            var query = from c in this.customerRepository.Table
                         orderby c.Id
                         where c.ScreenName == username && !c.Deleted
                         select c;
@@ -449,7 +419,7 @@
 
         public virtual async Task<List<Customer>> ListByUsernames(string[] usernames)
         {
-            var query = from c in _customerRepository.Table
+            var query = from c in this.customerRepository.Table
                         orderby c.Id
                         where usernames.Contains(c.ScreenName) && !c.Deleted
                         select c;
@@ -464,7 +434,7 @@
         /// <returns>A task that represents the asynchronous operation</returns>
         public virtual async Task InsertCustomerAsync(Customer customer)
         {
-            await _customerRepository.InsertAsync(customer);
+            await this.customerRepository.InsertAsync(customer);
         }
 
         /// <summary>
@@ -474,7 +444,7 @@
         /// <returns>A task that represents the asynchronous operation</returns>
         public virtual async Task UpdateCustomerAsync(Customer customer)
         {
-            await _customerRepository.UpdateAsync(customer);
+            await this.customerRepository.UpdateAsync(customer);
         }
 
 
@@ -487,7 +457,7 @@
         /// <returns>A task that represents the asynchronous operation</returns>
         public async Task AddCustomerRoleMappingAsync(CustomerCustomerRoleMapping roleMapping)
         {
-            await _customerCustomerRoleMappingRepository.InsertAsync(roleMapping);
+            await this.customerCustomerRoleMappingRepository.InsertAsync(roleMapping);
         }
 
         /// <summary>
@@ -508,12 +478,12 @@
                 throw new ArgumentNullException(nameof(role));
             }
 
-            var mapping = await _customerCustomerRoleMappingRepository.Table
+            var mapping = await this.customerCustomerRoleMappingRepository.Table
                 .SingleOrDefaultAsync(ccrm => ccrm.CustomerId == customer.Id && ccrm.CustomerRoleId == role.Id);
 
             if (mapping != null)
             {
-                await _customerCustomerRoleMappingRepository.DeleteAsync(mapping);
+                await this.customerCustomerRoleMappingRepository.DeleteAsync(mapping);
             }
         }
 
@@ -534,7 +504,7 @@
                 throw new NopException("System role could not be deleted");
             }
 
-            await _customerRoleRepository.DeleteAsync(customerRole);
+            await this.customerRoleRepository.DeleteAsync(customerRole);
         }
 
         /// <summary>
@@ -547,7 +517,7 @@
         /// </returns>
         public virtual async Task<CustomerRole> GetCustomerRoleByIdAsync(int customerRoleId)
         {
-            return await _customerRoleRepository.GetByIdAsync(customerRoleId, cache => default);
+            return await this.customerRoleRepository.GetByIdAsync(customerRoleId, cache => default);
         }
 
         /// <summary>
@@ -565,14 +535,14 @@
                 return null;
             }
 
-            var key = _staticCacheManager.PrepareKeyForDefaultCache(NopCustomerServicesDefaults.CustomerRolesBySystemNameCacheKey, systemName);
+            var key = this.staticCacheManager.PrepareKeyForDefaultCache(NopCustomerServicesDefaults.CustomerRolesBySystemNameCacheKey, systemName);
 
-            var query = from cr in _customerRoleRepository.Table
+            var query = from cr in this.customerRoleRepository.Table
                         orderby cr.Id
                         where cr.SystemName == systemName
                         select cr;
 
-            var customerRole = await _staticCacheManager.GetAsync(key, async () => await query.FirstOrDefaultAsyncExt());
+            var customerRole = await this.staticCacheManager.GetAsync(key, async () => await query.FirstOrDefaultAsyncExt());
 
             return customerRole;
         }
@@ -587,44 +557,17 @@
         /// </returns>
         public virtual async Task<IList<CustomerRole>> GetAllCustomerRolesAsync(bool showHidden = false)
         {
-            var key = _staticCacheManager.PrepareKeyForDefaultCache(NopCustomerServicesDefaults.CustomerRolesAllCacheKey, showHidden);
+            var key = this.staticCacheManager.PrepareKeyForDefaultCache(NopCustomerServicesDefaults.CustomerRolesAllCacheKey, showHidden);
 
-            var query = from cr in _customerRoleRepository.Table
+            var query = from cr in this.customerRoleRepository.Table
                         orderby cr.Name
                         where showHidden || cr.Active
                         select cr;
 
-            var customerRoles = await _staticCacheManager.GetAsync(key, async () => await query.ToListAsync());
+            var customerRoles = await this.staticCacheManager.GetAsync(key, async () => await query.ToListAsync());
 
             return customerRoles;
         }
-
-        ///// <summary>
-        ///// Gets a value indicating whether customer is in a certain customer role
-        ///// </summary>
-        ///// <param name="customer">Customer</param>
-        ///// <param name="customerRoleSystemName">Customer role system name</param>
-        ///// <param name="onlyActiveCustomerRoles">A value indicating whether we should look only in active customer roles</param>
-        ///// <returns>
-        ///// A task that represents the asynchronous operation
-        ///// The task result contains the result
-        ///// </returns>
-        //public virtual async Task<bool> IsInCustomerRoleAsync(User customer, string customerRoleSystemName, bool onlyActiveCustomerRoles = true)
-        //{
-        //    if (customer == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(customer));
-        //    }
-
-        //    if (string.IsNullOrEmpty(customerRoleSystemName))
-        //    {
-        //        throw new ArgumentNullException(nameof(customerRoleSystemName));
-        //    }
-
-        //    var customerRoles = await GetCustomerRolesAsync(customer, !onlyActiveCustomerRoles);
-
-        //    return customerRoles?.Any(cr => cr.SystemName == customerRoleSystemName) ?? false;
-        //}
 
         /// <summary>
         /// Gets a value indicating whether customer is administrator
@@ -703,7 +646,7 @@
         /// <returns>A task that represents the asynchronous operation</returns>
         public virtual async Task UpdateCustomerRoleAsync(CustomerRole customerRole)
         {
-            await _customerRoleRepository.UpdateAsync(customerRole);
+            await this.customerRoleRepository.UpdateAsync(customerRole);
         }
 
         /// <summary>
@@ -713,69 +656,14 @@
         /// <returns>A task that represents the asynchronous operation</returns>
         public virtual async Task InsertCustomerRoleAsync(CustomerRole customerRole)
         {
-            await _customerRoleRepository.InsertAsync(customerRole);
+            await this.customerRoleRepository.InsertAsync(customerRole);
         }
 
         #endregion
-
-        //public async Task<(IList<User>, int)> GetAllUsers(UsersGridFilter filter, int userId)
-        //{
-        //    var users = await this.userRepository.GetFilteredListWithTotalCount(filter, Session);
-
-        //    var loggedinUserRelationships = await this.relationshipRepository.Table.Where(r => r.SourceId == userId).ToListAsync();
-
-        //    var usersModel = new List<User>();
-        //    foreach (var user in users.Item1)
-        //    {
-        //        if (user.Id == userId)
-        //        {
-        //            continue;
-        //        }
-
-        //        var currentRelationship = loggedinUserRelationships.Where(r => r.TargetId == user.Id).FirstOrDefault();
-
-        //        if (currentRelationship == null)
-        //        {
-        //            usersModel.Add(user);
-        //            continue;
-        //        }
-
-        //        if (currentRelationship.Following)
-        //        {
-        //            continue;
-        //        }
-
-        //        user.FollowedBy = currentRelationship.FollowedBy; // for who to follow and connect. Usually it is not ok to have this prop in the user
-
-        //        usersModel.Add(user);
-        //    }
-
-        //   var tuple = (usersModel, users.Item2);
-
-        //    return tuple;
-        //}
-
-        //public async Task<UserDTO> GetByScreenName(string screenName, bool includeDeleted = true)
-        //{
-        //    var profile = await this.userRepository.GetByLogin(screenName, base.Session);
-
-        //    return profile.MapTo<UserDTO>();
-        //}
-
-        ////public async Task SaveAvatarId(int userId, int pictureId)
-        ////{
-        ////    var user = (await this.userRepository.Get(userId, Session));
-
-        ////    user.ProfilePictureId = pictureId;
-
-        ////    await this.userRepository.Edit(user, Session);
-        ////}
-
         public async Task Update(Customer user)
         {
-            await this._customerRepository.UpdateAsync(user);
+            await this.customerRepository.UpdateAsync(user);
         }
-
 
         /// <summary>
         /// Gets list of customer roles
@@ -793,10 +681,10 @@
                 throw new ArgumentNullException(nameof(customer));
             }
 
-            return await _customerRoleRepository.GetAllAsync(query =>
+            return await this.customerRoleRepository.GetAllAsync(query =>
             {
                 return from cr in query
-                       join crm in _customerCustomerRoleMappingRepository.Table on cr.Id equals crm.CustomerRoleId
+                       join crm in this.customerCustomerRoleMappingRepository.Table on cr.Id equals crm.CustomerRoleId
                        where crm.CustomerId == customer.Id &&
                              (showHidden || cr.Active)
                        select cr;
@@ -857,7 +745,7 @@
         /// <returns>A task that represents the asynchronous operation</returns>
         public virtual async Task InsertCustomerPasswordAsync(CustomerPassword customerPassword)
         {
-            await _customerPasswordRepository.InsertAsync(customerPassword);
+            await this.customerPasswordRepository.InsertAsync(customerPassword);
         }
 
         /// <summary>
@@ -884,7 +772,7 @@
                 throw new NopException("'Guests' role could not be loaded");
             }
 
-            await _customerRepository.InsertAsync(customer);
+            await this.customerRepository.InsertAsync(customer);
 
             await AddCustomerRoleMappingAsync(new CustomerCustomerRoleMapping { CustomerId = customer.Id, CustomerRoleId = guestRole.Id });
 
@@ -905,7 +793,7 @@
         public virtual async Task<IList<CustomerPassword>> GetCustomerPasswordsAsync(int? customerId = null,
             PasswordFormat? passwordFormat = null, int? passwordsToReturn = null)
         {
-            var query = _customerPasswordRepository.Table;
+            var query = this.customerPasswordRepository.Table;
 
             //filter by customer
             if (customerId.HasValue)
@@ -924,13 +812,13 @@
 
         public async Task<IPagedList<Customer>> GetWhoToFollowUsers(UsersGridFilter filter, int userId, int[] customerRoleIds, bool getOnlyTotalCount)
         {
-            var customers = await _customerRepository.GetAllPagedAsync(query =>
+            var customers = await this.customerRepository.GetAllPagedAsync(query =>
             {
                 query = query.Where(c => !c.Deleted);
 
                 if (customerRoleIds != null && customerRoleIds.Length > 0)
                 {
-                    query = query.Join(_customerCustomerRoleMappingRepository.Table, x => x.Id, y => y.CustomerId,
+                    query = query.Join(this.customerCustomerRoleMappingRepository.Table, x => x.Id, y => y.CustomerId,
                             (x, y) => new { Customer = x, Mapping = y })
                         .Where(z => customerRoleIds.Contains(z.Mapping.CustomerRoleId))
                         .Select(z => z.Customer)
@@ -973,6 +861,37 @@
             }
 
             return customers;
+        }
+
+        /// <summary>
+        /// Formats the customer name
+        /// </summary>
+        /// <param name="customer">Source</param>
+        /// <param name="stripTooLong">Strip too long customer name</param>
+        /// <param name="maxLength">Maximum customer name length</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the formatted text
+        /// </returns>
+        public virtual async Task<string> FormatUsernameAsync(Customer customer, bool stripTooLong = false, int maxLength = 0)
+        {
+            if (customer == null)
+            {
+                return string.Empty;
+            }
+
+            if (await IsGuestAsync(customer))
+            {
+                return "Customer.Guest";
+            }
+            string result = customer.DisplayName;
+
+            if (stripTooLong && maxLength > 0)
+            {
+                result = CommonHelper.EnsureMaximumLength(result, maxLength);
+            }
+
+            return result;
         }
     }
 }

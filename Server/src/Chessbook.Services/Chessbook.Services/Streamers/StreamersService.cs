@@ -1,9 +1,9 @@
-﻿using Chessbook.Data;
-using Chessbook.Data.Common.Repositories;
-using Chessbook.Data.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Chessbook.Data;
+using Chessbook.Data.Models;
 
 namespace Chessbook.Services.Data
 {

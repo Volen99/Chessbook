@@ -1,6 +1,6 @@
-﻿using Nop.Core.Configuration;
+﻿using Chessbook.Core.Configuration;
 
-namespace Nop.Core.Security
+namespace Chessbook.Core.Security
 {
     public partial class CookieSettings : ISettings
     {

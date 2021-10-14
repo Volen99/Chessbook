@@ -1,4 +1,4 @@
-﻿namespace Nop.Services.ExportImport
+﻿namespace Chessbook.Services.ExportImport
 {
     /// <summary>
     /// Represents the type of the exported attribute

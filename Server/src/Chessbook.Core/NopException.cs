@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Nop.Core
+namespace Chessbook.Core
 {
     /// <summary>
     /// Represents errors that occur during application execution

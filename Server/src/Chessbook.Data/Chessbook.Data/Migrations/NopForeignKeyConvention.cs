@@ -2,7 +2,7 @@
 using FluentMigrator.Model;
 using FluentMigrator.Runner.Conventions;
 
-namespace Nop.Data.Migrations
+namespace Chessbook.Data.Migrations
 {
     /// <summary>
     /// Convention for the default naming of a foreign key

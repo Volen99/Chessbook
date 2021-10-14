@@ -30,6 +30,7 @@ import {TimestampRouteTransformerDirective} from "./shared/timestamp-route-trans
 import { PostAttributesComponent } from './shared/metadata/post-attributes/post-attributes.component';
 import {NbTagModule} from "../../../sharebook-nebular/theme/components/tag/tag.module";
 import {SharedShareModal} from "../../shared-share-modal/shared-share-modal.module";
+import {ComponentsModule} from "../../../components/components.module";
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import {SharedShareModal} from "../../shared-share-modal/shared-share-modal.modu
     SharedModerationModule,
     NbTagModule,
     SharedShareModal,
+    ComponentsModule,
   ],
 
   exports: [

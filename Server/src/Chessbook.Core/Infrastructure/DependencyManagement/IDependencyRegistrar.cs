@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Nop.Core.Configuration;
+using Chessbook.Core.Configuration;
 
-namespace Nop.Core.Infrastructure.DependencyManagement
+namespace Chessbook.Core.Infrastructure.DependencyManagement
 {
     /// <summary>
     /// Dependency registrar interface

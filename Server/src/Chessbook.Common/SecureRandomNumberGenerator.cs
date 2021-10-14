@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace Nop.Core
+namespace Chessbook.Core
 {
     /// <summary>
     ///  Represents the class implementation of cryptographic random number generator derive

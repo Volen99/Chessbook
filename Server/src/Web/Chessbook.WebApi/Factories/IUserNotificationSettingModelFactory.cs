@@ -1,6 +1,7 @@
-﻿using Chessbook.Core.Domain.Notifications;
+﻿using System.Threading.Tasks;
+
+using Chessbook.Core.Domain.Notifications;
 using Chessbook.Web.Api.Models.UserNotification;
-using System.Threading.Tasks;
 
 namespace Chessbook.Web.Api.Factories
 {

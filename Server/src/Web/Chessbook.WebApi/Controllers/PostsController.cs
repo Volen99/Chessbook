@@ -1,37 +1,31 @@
 ﻿namespace Chessbook.Web.Api.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
 
-    using Chessbook.Data.Models.Post.Entities;
-    using Chessbook.Services.Data.Services;
+    using Chessbook.Services;
     using Chessbook.Services.Data.Services.Entities;
     using Chessbook.Web.Api.Identity;
     using Chessbook.Web.Models.Inputs;
     using Chessbook.Web.Models.Inputs.Posts;
-    using Chessbook.Data.Models.Polls;
     using Chessbook.Web.Models.Polls;
-    using Chessbook.Web.Models.Outputs.Polls;
-    using Chessbook.Web.Models;
     using Chessbook.Services.Data.Services.Media;
-    using Chessbook.Common;
     using Chessbook.Web.Api.Factories;
-    using Chessbook.Data.Models.Media;
     using Chessbook.Web.Api.Areas.Admin.Models.Post;
-    using Nop.Services.Logging;
+    using Chessbook.Services.Logging;
     using Chessbook.Services.Localization;
-    using Nop.Web.Areas.Admin.Models.Customers;
-    using Chessbook.Data.Models.Post;
+    using Chessbook.Web.Areas.Admin.Models.Customers;
     using Chessbook.Web.Api.Lib;
     using Chessbook.Services.Entities;
     using Chessbook.Web.Api.Models.Posts;
     using Chessbook.Core.Domain.Posts;
-    using Microsoft.AspNetCore.Authorization;
     using Chessbook.Data.Models;
-    using System;
-    using Nop.Web.Models.Catalog;
+    using Chessbook.Services.Security;
+    using Chessbook.Core;
 
     [Route("posts")]
     public class PostsController : BaseApiController
@@ -43,7 +37,6 @@
         private IUserService userService;
 
 
-        private readonly IMediaService mediaService;
         private readonly IPictureService pictureService;
         private readonly IUserModelFactory userModelFactory;
         private readonly IPostModelFactory postModelFactory;
@@ -51,15 +44,17 @@
         private readonly ILocaleStringResourceService localeStringResourceService;
         private readonly IPostCommentService postCommentService;
         private readonly IPostTagService postTagService;
+        private readonly IPermissionService permissionService;
+        private readonly IWorkContext workContext;
 
-        public PostsController(IPostsService postService, IPollService pollService, IUserService userService, IMediaService mediaService,
+        public PostsController(IPostsService postService, IPollService pollService, IUserService userService,
             IPictureService pictureService, IUserModelFactory userModelFactory, IPostModelFactory productModelFactory,
             ICustomerActivityService customerActivityService, ILocaleStringResourceService localeStringResourceService,
-            IPostCommentService postCommentService, IPostTagService postTagService)
+            IPostCommentService postCommentService, IPostTagService postTagService, IPermissionService permissionService,
+            IWorkContext workContext)
         {
             this.postService = postService;
             this.userService = userService;
-            this.mediaService = mediaService;
             this.pollService = pollService;
             this.pictureService = pictureService;
             this.userModelFactory = userModelFactory;
@@ -68,6 +63,8 @@
             this.localeStringResourceService = localeStringResourceService;
             this.postCommentService = postCommentService;
             this.postTagService = postTagService;
+            this.permissionService = permissionService;
+            this.workContext = workContext;
         }
 
         [HttpGet]
@@ -143,8 +140,7 @@
                 skip = query.Start;
             }
 
-
-            var posts = await this.postService.GetUserProfileTimeline(query.UserId, true, query.Start, query.Count);
+            var posts = await this.postService.GetUserProfileTimeline(query.UserId, true, query.OnlyMedia, query.Start, query.Count);
             var models = new List<PostModel>();
             for (int i = 0; i < posts.Count; i++)
             {
@@ -152,41 +148,6 @@
 
                 var model = (await postModelFactory.PreparePostModelAsync(postCurrent));
                 models.Add(model);
-
-                //if (postDTO.Reshared)
-                //{
-                //    postDTO = postDTO.ResharedStatus = await this.postService.GetResharedOriginal<PostModel>(postDTO.Id);
-                //}
-
-                if (postCurrent.HasMedia)
-                {
-                    //var picture = (await this.pictureService.GetPicturesByProductIdAsync(postDTO.Id)).FirstOrDefault();
-
-                    //var pictureSize = 480;
-
-                    //string displayUrl;
-                    //string expandUrl;
-
-                    //(expandUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture);
-                    //(displayUrl, _) = await this.pictureService.GetPictureUrlAsync(picture, pictureSize);
-
-                    //var pictureModel = new MediaEntityDTO
-                    //{
-                    //    Id = picture.Id,
-                    //    IdStr = picture.Id.ToString(),
-                    //    DisplayURL = ChessbookConstants.SiteHttps + displayUrl,
-                    //    ExpandedURL = ChessbookConstants.SiteHttps + expandUrl,
-                    //    MediaURL = picture.VirtualPath,
-                    //};
-
-                    //if (picture != null)
-                    //{
-                    //    postDTO.Entities.Medias.Add(pictureModel);
-                    //}
-                }
-
-                //postDTO.Reshared = await this.postService.GetReshareStatus(postDTO.Id, User.GetUserId());
-                //postDTO.ReshareCount = await this.postService.GetReshareCount(postDTO.Id);
             }
 
             return this.Ok(new
@@ -197,40 +158,42 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostPublish([FromQuery] QueryPostParams query, [FromBody] PollCreateBody pollBody)
+        public async Task<IActionResult> PostPublish([FromQuery] QueryPostParams query, [FromForm] PostCreateBody body)
         {
+            if (!await this.userService.IsRegisteredAsync(await this.workContext.GetCurrentCustomerAsync()))
+            {
+                return this.Unauthorized("You have to be registered in order to post.");
+            }
+
             Post post = null;
-            if (!query.HasPoll)
+            if (body.Poll == null)
             {
                 post = await this.postService.CreateAsync(query, User.GetUserId(), query.MediaIds);
             }
-            else
+            else if(body.Poll != null)
             {
-                var pollId = await this.pollService.InsertPollAsync(pollBody, query.Status, false);
+                if (body.Poll.Options.Any(o => String.IsNullOrEmpty(o)))
+                {
+                    return this.UnprocessableEntity("Validation failed: Choices can't be blank, Choices must have more than one item");
+                }
 
-                var options = await this.pollService.InsertPollAnswerAsync(pollId, pollBody.Options);
+                var pollId = await this.pollService.InsertPollAsync(body.Poll.ExpiresIn, query.Status, false);
+
+                var options = await this.pollService.InsertPollAnswerAsync(pollId, body.Poll.Options);
 
                 post = await this.postService.CreateAsync(query, User.GetUserId(), null, pollId);
             }
 
             // tags
-            pollBody.PostTags = "gaming,movies,carlsen,tag with space";
-            await this.postTagService.UpdatePostTagsAsync(post, ParsePostTags(pollBody.PostTags));
+            if (body.Tags.Length > 0 && body.Tags[0] != "null")
+            {
+                await this.postTagService.UpdatePostTagsAsync(post, ParsePostTags(string.Join(",", body.Tags)));
+            }
 
             var postUser = await this.userService.GetCustomerByIdAsync(post.UserId);
             post.User = postUser;
 
             Notifier.Instance.NotifyOnNewVideoIfNeeded(post);
-            return this.Ok(post);
-        }
-
-
-        [HttpPost]
-        [Route("reshare")]
-        public async Task<IActionResult> PostReshare([FromQuery] QueryRetweetParams query)
-        {
-            var post = await this.postService.CreateRetweet(query.Id, User.GetUserId(), query.TrimUser);
-
             return this.Ok(post);
         }
 
@@ -250,8 +213,6 @@
             return this.Ok(model);
         }
 
-
-
         [HttpGet]
         [Route("likers/{id}")]
         public async Task<IActionResult> Likers(int id)
@@ -267,10 +228,30 @@
             return this.Ok(models);
         }
 
-        [HttpPost]
-        [Route("Delete")]
-        public async Task<IActionResult> Delete([FromQuery] int id)
+        [HttpGet]
+        [Route("reposters/{id:int}")]
+        public async Task<IActionResult> Reposters(int id)
         {
+            var users = await this.postService.GetReposters(id);
+
+            var models = new List<CustomerModel>();
+            foreach (var user in users)
+            {
+                models.Add(await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), user));
+            }
+
+            return this.Ok(models);
+        }
+
+        [HttpPost]
+        [Route("delete/{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            //if (!await this.permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            //{
+            //    return this.Unauthorized();
+            //}
+
             // try to get a product with the specified id
             var product = await this.postService.GetPostByIdAsync(id);
             if (product == null)
@@ -278,28 +259,12 @@
                 return this.NotFound("List");
             }
 
-
             await this.postService.DeleteProductAsync(product);
 
-            //activity log
+            // activity log
             await this.customerActivityService.InsertActivityAsync("DeleteProduct", string.Format(await this.localeStringResourceService.GetResourceAsync("ActivityLog.DeleteProduct"), product.Id), product);
 
             // _notificationService.SuccessNotification(await this.localeStringResourceService.GetResourceAsync("Admin.Catalog.Products.Deleted"));
-
-            return RedirectToAction("List");
-        }
-
-        [HttpPost]
-        [Route("unshare")]
-        public async Task<IActionResult> PostUnshare([FromQuery] int id)
-        {
-            //var product = await postService.GetByIdClean(id);
-            //if (product == null)
-            //{
-            //    return this.BadRequest("List");
-            //}
-
-            //await this.postService.Unshare(product);
 
             return this.Ok();
         }
@@ -454,6 +419,65 @@
         public async Task<IActionResult> GetPostTags([FromQuery] int count = 2)
         {
             var model = await this.postModelFactory.PreparePopularProductTagsModelAsync(count);
+
+            return this.Ok(model);
+        }
+
+        [HttpPost]
+        [Route("pin/{postId:int}")]
+        public async Task<IActionResult> PostPin(int postId)
+        {
+            // get current pinned post if any
+            var pinnedPost = await this.postService.GetPinnedPost(User.GetUserId());
+
+            if (pinnedPost != null)
+            {
+                pinnedPost.Pinned = false;
+                await this.postService.UpdatePostAsync(pinnedPost);
+            }
+
+            var post = await this.postService.GetPostByIdAsync(postId);
+
+            if (post == null)
+            {
+                return this.NotFound();
+            }
+
+            post.Pinned = true;
+            await this.postService.UpdatePostAsync(post);
+
+            return this.Ok();
+        }
+
+        [HttpPost]
+        [Route("unpin/{postId:int}")]
+        public async Task<IActionResult> PostUnpin(int postId)
+        {
+            var post = await this.postService.GetPostByIdAsync(postId);
+
+            if (post == null)
+            {
+                return this.NotFound();
+            }
+
+            post.Pinned = false;
+            await this.postService.UpdatePostAsync(post);
+
+            return this.Ok();
+        }
+
+        [HttpGet]
+        [Route("pinned/{id:int}")]
+        public async Task<IActionResult> GetPinnedPost(int id) // userId
+        {
+            var pinnedPost = await this.postService.GetPinnedPost(id);
+
+            if (pinnedPost == null)
+            {
+                return this.Ok();
+            }
+
+            var model = await this.postModelFactory.PreparePostModelAsync(pinnedPost);
 
             return this.Ok(model);
         }

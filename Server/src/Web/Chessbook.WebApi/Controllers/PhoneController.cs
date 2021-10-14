@@ -1,13 +1,13 @@
 ﻿namespace Chessbook.Web.Api.Controllers
 {
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+
     using Chessbook.Data.Models;
     using Chessbook.Services.Data.Services.Contacts;
     using Chessbook.Services.Data.Services.Phone;
     using Chessbook.Web.Api;
-    using Chessbook.Web.Api.Controllers;
-    using global::System.Threading.Tasks;
     using Chessbook.Data.Common.Filters;
 
     [Route("phone")]

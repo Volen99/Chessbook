@@ -1,14 +1,13 @@
-﻿using Chessbook.Core.Domain.Abuse;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+
+using Chessbook.Core.Domain.Abuse;
 using Chessbook.Services.Abuses;
-using Chessbook.Services.Data.Services;
+using Chessbook.Services;
 using Chessbook.Web.Api.Identity;
 using Chessbook.Web.Models.Inputs;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Chessbook.Web.Api.Controllers
 {
@@ -29,7 +28,11 @@ namespace Chessbook.Web.Api.Controllers
         public async Task<IActionResult> ReportAbuse([FromBody] AbuseCreateInputModel input)
         {
             var reporterAccount = await this.userService.GetCustomerByIdAsync(User.GetUserId());
-            var flaggedAccount = await this.userService.GetCustomerByIdAsync(input.Account.Id);
+
+            if (reporterAccount == null)
+            {
+                return this.BadRequest("Cannot create abuse with the non account actor");
+            }
 
             var temp = new List<int>();
             foreach (var predefinedReason in input.PredefinedReasons)
@@ -37,7 +40,6 @@ namespace Chessbook.Web.Api.Controllers
                 var number = (int)((AbusePredefinedReasons)Enum.Parse(typeof(AbusePredefinedReasons), predefinedReason));
                 temp.Add(number);
             }
-
 
             var predefinedReasons = string.Join(", ", temp);
 
@@ -52,9 +54,17 @@ namespace Chessbook.Web.Api.Controllers
             // check if body has post or comment kk
             // ...
 
-            var id = await this.abuseService.CreateAccountAbuse(baseAbuse.ReporterAccountId, baseAbuse.Reason, baseAbuse.State, baseAbuse.PredefinedReasons, flaggedAccount.Id);
+            if (input.Account != null)
+            {
+                var flaggedAccount = await this.userService.GetCustomerByIdAsync(input.Account.Id);
+                var id = await this.abuseService.CreateAccountAbuse(baseAbuse.ReporterAccountId, baseAbuse.Reason, baseAbuse.State, baseAbuse.PredefinedReasons, flaggedAccount.Id);
+            }
+            else if (input.Post != null)
+            {
+                var id = this.abuseService.CreatePostAbuse(baseAbuse.ReporterAccountId, baseAbuse.Reason, baseAbuse.State, baseAbuse.PredefinedReasons, input.Post.Id);
+            }
 
-            return this.Ok(id);
+            return this.Ok();
         }
 
         private class BaseAbuse

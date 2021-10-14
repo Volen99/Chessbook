@@ -1,9 +1,10 @@
-﻿using Chessbook.Data.Models;
-using FluentMigrator.Builders.Create.Table;
-using Nop.Core.Domain.Logging;
-using Nop.Data.Extensions;
+﻿using FluentMigrator.Builders.Create.Table;
 
-namespace Nop.Data.Mapping.Builders.Logging
+using Chessbook.Core.Domain.Logging;
+using Chessbook.Data.Extensions;
+using Chessbook.Data.Models;
+
+namespace Chessbook.Data.Mapping.Builders.Logging
 {
     /// <summary>
     /// Represents a log entity builder

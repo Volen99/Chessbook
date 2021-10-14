@@ -32,15 +32,14 @@ export class UsersApi {
   }
 
   getCurrent(): Observable<any> {
-    return this.api.get(`${this.apiController}/current`)
-      .pipe(map(data => {
+    return this.api.get(`${this.apiController}/current`);
+     /* .pipe(map(data => {
         const picture = `${this.api.apiUrl}/${this.apiController}/${data.id}/photo`;
         return { ...data, picture };
-      }));
+      }));*/
   }
 
   get(id: number): Observable<any> {
-    debugger
     return this.api.get(`${this.apiController}/${id}`)
       .pipe(map(data => {
         const picture = `${this.api.apiUrl}/${this.apiController}/${data.id}/photo`;
@@ -83,6 +82,10 @@ export class UsersApi {
 
   updateUser(id: number, body) {
     return this.api.put(`${this.apiController}/${id}`, body);
+  }
+
+  updateUserAsAdmin(body) {
+    return this.api.post(`admin/${this.apiController}/edit`, body);
   }
 
   updateUsers(id: number, body) {

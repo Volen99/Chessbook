@@ -2,11 +2,12 @@
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Nop.Core;
-using Nop.Core.Configuration;
-using Nop.Core.Infrastructure;
 
-namespace Nop.Services.Configuration
+using Chessbook.Core;
+using Chessbook.Core.Configuration;
+using Chessbook.Core.Infrastructure;
+
+namespace Chessbook.Services.Configuration
 {
     /// <summary>
     /// Represents the app settings helper

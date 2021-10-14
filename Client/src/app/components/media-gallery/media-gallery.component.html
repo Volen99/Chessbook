@@ -1,8 +1,4 @@
-<div class="media-gallery" style="{{this.style}}" #nodeRef>
-    <div [ngClass]="{'spoiler-button': true, 'spoiler-button--minified': this.visible && !this.uncached, 'spoiler-button--click-thru': this.uncached}">
-        spoilerButton
-    </div>
-
+<div *ngIf="this.media" class="media-gallery" [style.height.px]="this.style.height" #nodeRef> <!--273.375-->
     <ng-container *ngIf="this.standalone && this.isFullSizeEligible(); else multiple">
         <app-item
                 [standalone]="this.standalone"
@@ -10,7 +6,8 @@
                 [onClick]="this.handleClick"
                 [attachment]="this.media[0]"
                 [displayWidth]="this.width"
-                [visible]="this.visible">
+                [visible]="this.visible"
+                [size]="this.media.length">
         </app-item>
     </ng-container>
 
@@ -21,12 +18,10 @@
                       [onClick]="this.handleClick"
                       [attachment]="this.attachment"
                       [index]="i"
-                      [size]="this.sizeState"
+                      [size]="this.media.length"
                       [displayWidth]="this.width"
                       [visible]="this.visible || this.uncached">
             </app-item>
         </ng-container>
     </ng-template>
-
-
 </div>

@@ -1,17 +1,16 @@
-﻿using Chessbook.Core.Domain.Abuse;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+
+using Chessbook.Core.Domain.Abuse;
 using Chessbook.Services.Abuses;
-using Chessbook.Services.Data.Services;
+using Chessbook.Services;
 using Chessbook.Web.Api.Areas.Admin.Web.Models;
 using Chessbook.Web.Api.Factories;
 using Chessbook.Web.Api.Identity;
 using Chessbook.Web.Api.Models.Abuses;
 using Chessbook.Web.Models.Inputs;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Chessbook.Web.Api.Areas.Admin.Controllers
 {
@@ -45,8 +44,8 @@ namespace Chessbook.Web.Api.Areas.Admin.Controllers
 
                 return this.Ok(new
                 {
-                    data = models,
                     total = abuses.TotalCount,
+                    data = models,
                 });
             }
 

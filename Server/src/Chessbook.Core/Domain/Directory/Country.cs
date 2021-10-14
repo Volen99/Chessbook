@@ -1,7 +1,7 @@
 ﻿using Chessbook.Data.Models;
-using Nop.Core.Domain.Stores;
+using Chessbook.Core.Domain.Stores;
 
-namespace Nop.Core.Domain.Directory
+namespace Chessbook.Core.Domain.Directory
 {
     /// <summary>
     /// Represents a country

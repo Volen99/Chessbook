@@ -1,5 +1,4 @@
-﻿
-namespace Chessbook.Core.Domain.Abuse
+﻿namespace Chessbook.Core.Domain.Abuse
 {
     public enum AbuseState
     {

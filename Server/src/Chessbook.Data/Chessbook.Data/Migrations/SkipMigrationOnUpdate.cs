@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nop.Data.Migrations
+namespace Chessbook.Data.Migrations
 {
     /// <summary>
     /// Attribute to exclude migration from the list for use during the upgrade process

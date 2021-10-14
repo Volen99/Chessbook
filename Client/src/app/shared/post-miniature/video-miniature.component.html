@@ -9,12 +9,12 @@
       <div class="d-flex video-miniature-meta">
         <my-actor-avatar
           *ngIf="displayOptions.avatar && displayOwnerVideoChannel() && !displayAsRow" [title]="channelLinkTitle"
-          [channel]="video.user" [size]="actorImageSize" [internalHref]="[ '/c', video.user.screenName ]"
+          [channel]="video.user" [size]="actorImageSize" [internalHref]="[ '/', video.user.screenName ]"
         ></my-actor-avatar>
 
         <my-actor-avatar
           *ngIf="displayOptions.avatar && displayOwnerAccount() && !displayAsRow" [title]="channelLinkTitle"
-          [account]="video.user" [size]="actorImageSize" [internalHref]="[ '/c', video.user.displayName ]"
+          [account]="video.user" [size]="actorImageSize" [internalHref]="[ '/', video.user.displayName ]"
         ></my-actor-avatar>
 
         <div class="w-100 d-flex flex-column">

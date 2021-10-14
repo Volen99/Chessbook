@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Xml;
 
-namespace Nop.Services.ExportImport
+namespace Chessbook.Services.ExportImport
 {
     /// <summary>
     /// Extensions

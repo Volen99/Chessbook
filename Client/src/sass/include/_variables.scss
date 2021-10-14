@@ -94,6 +94,9 @@ $activated-action-button-color: black;
 
 $focus-box-shadow-form: 0 0 0 .2rem;
 
+$video-watch-player-factor: (16 / 9);
+$video-watch-info-margin-left: 44px;
+
 /*** map theme ***/
 
 // pass variables into a sass map,
@@ -162,3 +165,100 @@ $zindex: (
 @function z($label) {
   @return map-get($zindex, $label);
 }
+
+
+// mastodon contrast/variables
+// Dependent colors
+$black: #000000;
+
+$classic-base-color: #282c37;
+$classic-primary-color: #9baec8;
+$classic-secondary-color: #d9e1e8;
+$classic-highlight-color: #2b90d9;
+
+$ui-base-color: $classic-base-color !default;
+$ui-primary-color: $classic-primary-color !default;
+$ui-secondary-color: $classic-secondary-color !default;
+
+// Differences
+$ui-highlight-color: #2b5fd9;
+
+$darker-text-color: lighten($ui-primary-color, 20%) !default;
+$dark-text-color: lighten($ui-primary-color, 12%) !default;
+$secondary-text-color: lighten($ui-secondary-color, 6%) !default;
+$highlight-text-color: $classic-highlight-color !default;
+$action-button-color: #8d9ac2;
+
+$inverted-text-color: $black !default;
+$lighter-text-color: darken($ui-base-color, 6%) !default;
+$light-text-color: darken($ui-primary-color, 40%) !default;
+
+
+// from kspc
+
+// Breakpoints ------------
+$breakpoints: (
+        'mobile_small': (
+                max-width: 415px,
+        ),
+        'mobile': (
+                max-width: 767px,
+        ),
+        'tablet': (
+                max-width: 1023px,
+        ),
+        'laptop': (
+                max-width: 1279px,
+        ),
+        'desktop': (
+                max-width: 1439px,
+        ),
+        'desktop_large': (
+          // max-width: 1599px,
+                max-width: 1920px,
+        ),
+) !default;
+//  ----------------------
+
+// Brands
+$button_color: #613ee8;
+$primary_button_color: #614BEF;
+$secondary_bck: #4c27da;
+$link: #614BEF;
+$link_alt: #727272;
+$error: #E60505;
+$input_text: #fff;
+$input_bg: #4c4c4c;
+
+// Body
+$body_bg: #141414;
+
+// Typography
+$primary_text_color: #fff;
+$base_font_size: 16px;
+$base_font_weight: 400;
+
+// Global
+$wideBreakPoint: 770;
+
+// Logo position
+$logoPaddingMobile: 24;
+$logoPaddingLeftWide: 56;
+
+// ----------------- New Design ----------------- //
+// Brands -----------------
+$link: #53a8e2;
+$button: #53a8e2;
+$tag: #604fc9;
+$notification: #53a8e2;
+$card_bg: #181818;
+$win: #ff6262;
+$lose: #32b17b;
+// ------------------------
+
+// Typography ----------------
+$primary_text_color: #fff;
+//  --------------------------
+
+
+// end

@@ -219,4 +219,20 @@
       background: nb-theme(text-#{$status}-color);
     }
   }
+
+  // chess personality
+  .picture {
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    border-top-left-radius: nb-theme(card-border-radius);
+    border-top-right-radius: nb-theme(card-border-radius);
+    flex: 1;
+    cursor: pointer;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
 }

@@ -1,11 +1,11 @@
 ﻿using System.Data;
 using FluentMigrator.Builders.Create.Table;
 
-using Nop.Data.Mapping.Builders;
-using Nop.Data.Extensions;
+using Chessbook.Data.Extensions;
 using Chessbook.Core.Domain.Notifications;
 using Chessbook.Data.Models;
 using Chessbook.Core.Domain.Posts;
+using Chessbook.Core.Domain.Relationships;
 
 namespace Chessbook.Data.Mapping.Builders.Notifications
 {

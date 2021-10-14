@@ -55,6 +55,9 @@ import {SmallLoaderComponent} from "./loaders/small-loader.component";
 import {LoaderComponent} from "./loaders/loader.component";
 import {RedundancyService} from "./post/redundancy.service";
 import {LinkComponent} from "./angular/link.component";
+import {IsVideoPipe} from "./angular/pipes/is-video.pipe";
+import {SafeVideoLinkPipe} from "./angular/pipes/safe-video-link.pipe";
+import {MatRippleModule} from "@angular/material/core";
 
 @NgModule({
   imports: [
@@ -86,6 +89,7 @@ import {LinkComponent} from "./angular/link.component";
     EmojiModule,
     NbPopoverModule,
     NbButtonModule,
+    MatRippleModule,
   ],
 
   declarations: [
@@ -96,6 +100,8 @@ import {LinkComponent} from "./angular/link.component";
     BytesPipe,
     EnumToArrayPipe,
     // DurationFormatterPipe,
+    IsVideoPipe,
+    SafeVideoLinkPipe,
     //
      InfiniteScrollerDirective,
      SharebookTemplateDirective,
@@ -164,6 +170,8 @@ import {LinkComponent} from "./angular/link.component";
     FromNowPipe,
     BytesPipe,
     NumberFormatterPipe,
+    IsVideoPipe,
+    SafeVideoLinkPipe,
     // DurationFormatterPipe,
     //
     InfiniteScrollerDirective,

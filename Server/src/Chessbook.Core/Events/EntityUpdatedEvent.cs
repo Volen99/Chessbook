@@ -1,6 +1,6 @@
 ﻿using Chessbook.Data.Models;
 
-namespace Nop.Core.Events
+namespace Chessbook.Core.Events
 {
     /// <summary>
     /// A container for entities that are updated.

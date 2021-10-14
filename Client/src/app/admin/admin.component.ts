@@ -85,13 +85,13 @@ export class AdminComponent implements OnInit {
 
     if (this.hasAbusesRight() || this.hasVideoBlocklistRight()) this.menuEntries.push(moderationItems);
 
-    if (this.hasConfigRight()) {
-      this.menuEntries.push({label: `Configuration`, routerLink: '/admin/config'});
-    }
+    // if (this.hasConfigRight()) {
+    //   this.menuEntries.push({label: `Configuration`, routerLink: '/admin/config'});
+    // }
 
-    if (this.hasJobsRight() || this.hasLogsRight() || this.hasDebugRight()) {
-      this.menuEntries.push({label: `System`, routerLink: '/admin/system'});
-    }
+    // if (this.hasJobsRight() || this.hasLogsRight() || this.hasDebugRight()) {
+    //   this.menuEntries.push({label: `System`, routerLink: '/admin/system'});
+    // }
 
     if (this.hasUsersRight()) {
       this.menuEntries.push({label: 'Survey', routerLink: '/admin/survey'});

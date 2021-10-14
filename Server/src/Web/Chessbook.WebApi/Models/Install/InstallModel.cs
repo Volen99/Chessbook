@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Nop.Data;
 
-namespace Nop.Web.Models.Install
+using Chessbook.Data;
+
+namespace Chessbook.Web.Models.Install
 {
     public partial record InstallModel : INopConnectionStringInfo
     {

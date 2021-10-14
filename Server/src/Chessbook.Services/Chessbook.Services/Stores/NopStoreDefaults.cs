@@ -1,6 +1,6 @@
-﻿using Nop.Core.Caching;
+﻿using Chessbook.Core.Caching;
 
-namespace Nop.Services.Stores
+namespace Chessbook.Services.Stores
 {
     /// <summary>
     /// Represents default values related to stores services

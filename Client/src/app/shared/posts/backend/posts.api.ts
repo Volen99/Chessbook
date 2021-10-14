@@ -49,20 +49,6 @@ export class PostsApi {
         return this.api.get(`${this.apiController}/${url}`);
     }
 
-
-    // // Publish Retweet
-    // publishRetweetAsync(parameters: IPublishRetweetParameters): Promise<ITwitterResult<ITweetDTO>>;
-    //
-    // // UnRetweet
-    // destroyRetweetAsync(parameters: IDestroyRetweetParameters): Promise<ITwitterResult<ITweetDTO>>;
-    //
-    // // Get Retweets
-    // getRetweetsAsync(parameters: IGetRetweetsParameters): Promise<ITwitterResult<ITweetDTO[]>>;
-    //
-    // // Get Retweeters Ids
-    // getRetweeterIdsAsync(parameters: IGetRetweeterIdsParameters): Promise<ITwitterResult<IIdsCursorQueryResultDTO>>;
-
-    // Destroy Tweet
     destroyTweetAsync(url: string, params: HttpParams, body?: {}): Observable<any> {
         return this.api.post(`${this.apiController}/${url}`, {}, {params});
     }
@@ -75,9 +61,32 @@ export class PostsApi {
         return this.api.get(`${this.apiController}/${url}`);
     }
 
-    // unfavoriteTweetAsync(parameters: IUnfavoriteTweetParameters): Promise<ITwitterResult<ITweetDTO>>;
-    //
-    // getFavoriteTweetsAsync(parameters: IGetUserFavoriteTweetsParameters): Promise<ITwitterResult<ITweetDTO[]>>;
-    //
-    // getOEmbedTweetAsync(parameters: IGetOEmbedTweetParameters): Promise<ITwitterResult<IOEmbedTweetDTO>>;
+    pinPost(url: string) {
+        return this.api.post(`${this.apiController}/${url}`, {});
+    }
+
+    unpinPost(url: string) {
+        return this.api.post(`${this.apiController}/${url}`, {});
+    }
+
+    getPinnedPost(url: string) {
+        return this.api.get(`${this.apiController}/${url}`);
+    }
+
+    repost(url: string) {
+        return this.api.post(`${this.apiController}/${url}`, {});
+    }
+
+    unrepost(url: string) {
+        return this.api.post(`${this.apiController}/${url}`, {});
+    }
+
+    getReposters(url: string) {
+        return this.api.get(`${this.apiController}/${url}`);
+    }
+
+    deletePost(url: string) {
+        return this.api.post(`${this.apiController}/${url}`, {});
+    }
+
 }

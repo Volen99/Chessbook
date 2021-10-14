@@ -1,9 +1,9 @@
 ﻿using System;
-using Chessbook.Data.Models;
 using FluentMigrator.Runner.VersionTableInfo;
-using Nop.Core;
 
-namespace Nop.Data.Migrations
+using Chessbook.Data.Models;
+
+namespace Chessbook.Data.Migrations
 {
     /// <summary>
     /// The migration version table

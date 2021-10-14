@@ -11,11 +11,13 @@ import {NbDialogService} from "../../../sharebook-nebular/theme/components/dialo
 import {UserStore} from "../../../core/stores/user.store";
 import {Subject, Subscription} from "rxjs";
 import {RestService} from "../../../core/rest/rest.service";
+import {Animations} from "../../../core/animations";
 
 @Component({
   selector: 'app-stream-list',
   templateUrl: './stream-list.component.html',
-  styleUrls: ['./stream-list.component.scss']
+  styleUrls: ['./stream-list.component.scss'],
+  animations: [Animations.listItemLoadAnimation],
 })
 export class StreamListComponent implements OnInit, OnDestroy {
   private routeSub: Subscription;

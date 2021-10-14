@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Nop.Services.Authentication
+namespace Chessbook.Services.Authentication
 {
     /// <summary>
     /// Represents default values related to authentication services

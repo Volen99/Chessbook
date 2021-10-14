@@ -10,7 +10,6 @@
         {
             config.AllowNullCollections = false;
 
-            config.AddProfile<UserProfile>();
             config.AddProfile<SettingsProfile>();
         }
     }

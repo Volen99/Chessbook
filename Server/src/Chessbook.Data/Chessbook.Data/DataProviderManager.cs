@@ -1,8 +1,8 @@
-﻿using Nop.Core;
-using Nop.Core.Infrastructure;
-using Nop.Data.DataProviders;
+﻿using Chessbook.Core;
+using Chessbook.Core.Infrastructure;
+using Chessbook.Data.DataProviders;
 
-namespace Nop.Data
+namespace Chessbook.Data
 {
     /// <summary>
     /// Represents the data provider manager

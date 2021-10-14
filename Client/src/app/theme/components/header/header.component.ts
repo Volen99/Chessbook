@@ -3,13 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {filter, map, takeUntil} from 'rxjs/operators';
 import {ReplaySubject, Subject} from 'rxjs';
 
-import {
-  faUser,
-  faUserPlus,
-  faSignOutAlt,
-  faSignInAlt,
-  faChessPawn,
-} from '@fortawesome/pro-light-svg-icons';
+import {faChessPawn, faSignInAlt, faSignOutAlt, faUser, faUserPlus,} from '@fortawesome/pro-light-svg-icons';
 import {faUserAlien} from '@fortawesome/pro-solid-svg-icons';
 
 import {IUser} from "../../../core/interfaces/common/users";
@@ -121,7 +115,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
         takeUntil(this.destroy$),
       )
-      .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
+      .subscribe((isLessThanXl: boolean) => {
+        this.userPictureOnly = isLessThanXl;
+        if (isLessThanXl) {
+          this.searchType = 'curtain';
+        } else {
+          this.searchType = 'rotate-layout';
+        }
+      });
 
     this.themeService.onThemeChange()
       .pipe(
@@ -137,6 +138,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   isLoggedIn: boolean;
+  searchType: 'rotate-layout' | 'curtain' = 'rotate-layout';
 
   themes = [
     {
@@ -163,7 +165,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
   userMenu: any;
-  anonymousUserMenu = this.getMenuItems();
+  anonymousUserMenu = this.getAnonymousUserMenuItems();
 
   userPictureOnly: boolean = false;
   user: IUser;
@@ -184,7 +186,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       {icon: this.faSignOutAlt, title: 'Log out', link: '/auth/logout'},
     ];
 
-    if (this.user && this.user.hasRight(UserRight.ALL)) {
+    if (this.user && this.user.hasRight(UserRight.ALL) || this.user.hasRight(UserRight.MANAGE_USERS)) {
       menu.push({icon: this.faUserAlien, title: 'Admin', link: '/admin'});
     }
 

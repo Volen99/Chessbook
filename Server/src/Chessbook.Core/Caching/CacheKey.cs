@@ -1,10 +1,8 @@
-﻿using Nop.Core.Configuration;
-using Nop.Core.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nop.Core.Caching
+namespace Chessbook.Core.Caching
 {
     /// <summary>
     /// Represents key for caching objects

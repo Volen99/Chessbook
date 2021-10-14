@@ -1,6 +1,6 @@
 using System;
 
-namespace Nop.Core.Domain.Directory
+namespace Chessbook.Core.Domain.Directory
 {
     /// <summary>
     /// Represents an exchange rate

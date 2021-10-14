@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Nop.Core.Configuration;
-using Nop.Core.Infrastructure.DependencyManagement;
-using Nop.Core.Infrastructure.Mapper;
+using AutoMapper;
 
-namespace Nop.Core.Infrastructure
+using Chessbook.Core.Configuration;
+using Chessbook.Core.Infrastructure.DependencyManagement;
+using Chessbook.Core.Infrastructure.Mapper;
+
+namespace Chessbook.Core.Infrastructure
 {
     /// <summary>
     /// Represents Nop engine

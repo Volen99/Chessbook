@@ -1,6 +1,6 @@
 using Chessbook.Data.Models;
 
-namespace Nop.Core.Domain.Directory
+namespace Chessbook.Core.Domain.Directory
 {
     /// <summary>
     /// Represents a measure weight

@@ -96,6 +96,13 @@ export class CardComponent implements OnInit, OnChanges, AfterViewInit, OnDestro
 
     this.provider = this.card.providerName.length === 0 ? decodeIDNA(getHostname(this.card.url)) : this.card.providerName;
     this.horizontal = (!this.compact && this.card.width > this.card.height && (this.card.width + 100 >= this.width)) || this.card.type !== 'link' || this.embedded;
+
+    debugger
+    // by mi!!!! This might break the youtube card
+    if (!this.compact && this.card.type === 'link') {
+      this.horizontal = false;
+    }
+
     this.interactive = this.card.type !== 'link';
     this.className = {
       'status-card': true,
@@ -163,7 +170,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewInit, OnDestro
 
   handlePhotoClick = () => {
     this.onOpenMedia(
-      fromJS([      // Immutable.
+      fromJS([      // Immutable.fromJS
         {
           type: 'image',
           url: this.card.get('embed_url'),

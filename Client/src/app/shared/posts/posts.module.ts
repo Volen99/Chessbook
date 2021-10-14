@@ -14,21 +14,23 @@ import {SharedModerationModule} from "../shared-moderation/shared-moderation.mod
 import {SharedMainModule} from "../shared-main/shared-main.module";
 import {SharedFormModule} from "../shared-forms/shared-form.module";
 import {VideoViewsCounterComponent} from "./video-views-counter.component";
+import {ComponentsModule} from "../../components/components.module";
 
 @NgModule({
   declarations: [
     VideoViewsCounterComponent,
   ],
 
-  imports: [
-    CommonModule,
+    imports: [
+        CommonModule,
 
-    SharedMainModule,
-    SharedFormModule,
-    SharedModerationModule,
-    SharedVideoCommentModule,
-    FontAwesomeModule,
-  ],
+        SharedMainModule,
+        SharedFormModule,
+        SharedModerationModule,
+        SharedVideoCommentModule,
+        FontAwesomeModule,
+        ComponentsModule,
+    ],
 
   providers: [
     PostsService,

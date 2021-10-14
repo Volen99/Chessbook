@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {catchError, map, switchMap} from "rxjs/operators";
 
 import {GetTweetParameters, IGetTweetParameters} from "./parameters/get-tweet-parameters";
-import {IPost} from "./models/tweet";
+import {IPost} from "./models/post.model";
 import {GetTweetsParameters, IGetTweetsParameters} from "./parameters/get-tweets-parameters";
 import {IPublishTweetParameters, PublishTweetParameters} from "./parameters/publish-tweet-parameters";
 import {DestroyTweetParameters, IDestroyTweetParameters} from "./parameters/destroy-tweet-parameters";
@@ -99,7 +99,7 @@ export class PostsService {
 
   // Tweets - Publish
 
-  public async publishTweetAsync(textOrParameters: string | IPublishTweetParameters): Promise<IPost> {
+  public async publishTweetAsync(textOrParameters: string | IPublishTweetParameters, body: {}): Promise<IPost> {
     let parameters: IPublishTweetParameters;
     if (this.isIPublishTweetParameters(textOrParameters)) {
       parameters = textOrParameters;
@@ -107,7 +107,7 @@ export class PostsService {
       parameters = new PublishTweetParameters(textOrParameters);
     }
 
-    let requestResult = await this.tweetsRequesterService.publishTweetAsync(parameters);
+    let requestResult = await this.tweetsRequesterService.publishTweetAsync(parameters, body);
     return null;
 
     // return this._client.factories.createTweet(requestResult?.model);
@@ -139,6 +139,8 @@ export class PostsService {
 
     return await this.tweetsRequesterService.destroyTweetAsync(parameters, unshare); // .ConfigureAwait(false);
   }
+
+
 
   //
   // // Retweets
@@ -350,7 +352,7 @@ export class PostsService {
     params = this.restService.addFormattedParameterToQuery(params, parameters.formattedCustomQueryParameters);
 
     return this.timelineApi.getHomeTimelineAsync(params)
-    .pipe(                    // @ts-ignore
+    .pipe(// @ts-ignore
       switchMap(res => this.extractVideos(res)),                  // switchMap might bug
       catchError(err => this.restExtractor.handleError(err))
     );
@@ -373,11 +375,13 @@ export class PostsService {
     params = this.restService.addParameterToQuery(params, "include_rts", parameters.includeRetweets);
     params = this.restService.addFormattedParameterToQuery(params, parameters.formattedCustomQueryParameters);
 
-    return this.timelineApi.getUserTimelineAsync(params);
+    return this.timelineApi.getUserTimelineAsync(params).pipe(// @ts-ignore
+      switchMap(res => this.extractVideos(res)),                  // switchMap might bug
+      catchError(err => this.restExtractor.handleError(err))
+    );
   }
 
   extractVideos(result: ResultList<Post>) {
-    debugger
     const postsJson = result.data;
     const totalPosts = result.total;
     const posts: Post[] = [];
@@ -459,13 +463,64 @@ export class PostsService {
   getLikers(postId: number) {
     let url = `likers/${postId}`;
 
-    return this.postsApi.getLikers(url);
+    return this.postsApi.getLikers(url)
+      .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 
   getPostPhotos(postId: number): Observable<IMediaEntity[]> {
     let url = `post/${postId}/photo`;
 
-    return this.postsApi.getPostPhotos(url);
+    return this.postsApi.getPostPhotos(url)
+      .pipe(catchError(err => this.restExtractor.handleError(err)));
+  }
+
+  pinPost(postId: number) {
+    let url = 'pin/' + postId;
+
+    return this.postsApi.pinPost(url)
+      .pipe(catchError(err => this.restExtractor.handleError(err)));
+  }
+
+  unpinPost(postId: number) {
+    let url = 'unpin/' + postId;
+
+    return this.postsApi.unpinPost(url)
+      .pipe(catchError(err => this.restExtractor.handleError(err)));
+  }
+
+  getPinnedPost(userId: number) {
+    let url = 'pinned/' + userId;
+
+    return this.postsApi.getPinnedPost(url)
+      .pipe(catchError(err => this.restExtractor.handleError(err)));
+  }
+
+  repost(postId: number) {
+    let url = postId + '/repost';
+
+    return this.postsApi.repost(url)
+      .pipe(catchError(err => this.restExtractor.handleError(err)));
+  }
+
+  unrepost(postId: number) {
+    let url = postId + '/unrepost';
+
+    return this.postsApi.unrepost(url)
+      .pipe(catchError(err => this.restExtractor.handleError(err)));
+  }
+
+  getReposters(postId: number) {
+    let url = `reposters/${postId}`;
+
+    return this.postsApi.getReposters(url)
+      .pipe(catchError(err => this.restExtractor.handleError(err)));
+  }
+
+  deletePost(postId: number) {
+    let url = `delete/${postId}`;
+
+    return this.postsApi.deletePost(url)
+      .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 
   // #endregion

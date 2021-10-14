@@ -8,6 +8,7 @@ import {
   faComment,
   faShare,
   faHeart,
+  faLongArrowLeft,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {PostDetails} from "../../../shared-main/post/post-details.model";
@@ -20,12 +21,29 @@ import {UserVideoRateType} from "../../models/rate/user-video-rate.type";
 import {UploadComponent} from "../../../../pages/modal-overlays/dialog/compose/upload/upload.component";
 import {LikesComponent} from "../likes/likes.component";
 import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {AppInjector} from "../../../../app-injector";
+import {MediaContainerComponent} from "../../../../features/media-container/media-container.component";
+import {NbLayoutScrollService} from "../../../../sharebook-nebular/theme/services/scroll.service";
+import {ActivatedRoute} from "@angular/router";
+import {IsVideoPipe} from "../../../shared-main/angular/pipes/is-video.pipe";
+import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
 
 
 @Component({
   selector: 'app-post-thread',
   templateUrl: './post-thread.component.html',
-  styleUrls: ['./post-thread.component.scss']
+  styleUrls: ['./post-thread.component.scss'],
+  animations: [
+    trigger('likeAnimation', [
+      transition('inactive => active', [
+        query(':self', style({ transform: 'scale(1.0)'})),
+        query(':self',
+          stagger('0ms linear', [
+            animate('150ms linear', style({ transform: 'scale(1.9)'}))
+          ]))
+      ])
+    ])
+  ]
 })
 export class PostThreadComponent implements OnInit {
   @Input() public transform: number = 0;
@@ -40,6 +58,8 @@ export class PostThreadComponent implements OnInit {
               private dialogService: NbDialogService,
               private markdownService: MarkdownService,
               private notifier: NbToastrService,
+              private scrollService: NbLayoutScrollService,
+              private route: ActivatedRoute
               ) {
     this.tooltipLike = `Like`;
     this.tooltipDislike = `Dislike`;
@@ -63,16 +83,40 @@ export class PostThreadComponent implements OnInit {
     this.setStatusTextHTML();
 
     this.buildVideoLink();
+
+    this.route.queryParams
+      .subscribe(params => {
+        const scroll = params.withScroll || '';
+
+        if (scroll === 'true') {
+          this.scrollService.scrollTo(0, document.body.scrollHeight);
+        }
+      });
+
   }
 
   getSaveStyle(value: string) {
     return this.imageBackgroundStyle = value ? this.domSanitizer.bypassSecurityTrustStyle(`url(${value})`) : null;
   }
 
+  handleOpenMedia(media, index) {
+    if (!this.dialogService) {
+      this.dialogService = AppInjector.get(NbDialogService);
+    }
+    this.dialogService.open(MediaContainerComponent, {
+      context: {
+        media,
+        index,
+      },
+
+    });
+  }
+
   faComment = faComment;
   faShare = faShare;
   faHeart = faHeart;
   faLock = faLock;
+  faLongArrowLeft = faLongArrowLeft;
 
   style = {height: 0};
 
@@ -130,15 +174,6 @@ export class PostThreadComponent implements OnInit {
     }
   }
 
-  handleReplyButton(post: PostDetails) {
-    this.dialogService.open(UploadComponent, { // ShowcaseDialogComponent
-      context: {
-        title: 'This is a title passed to the dialog component',
-        replyPost: post,
-      },
-    });
-  }
-
   isUserLoggedIn() {
     return !!this.userStore.getUser();
   }
@@ -168,16 +203,15 @@ export class PostThreadComponent implements OnInit {
       return this.videoRouterLink;
     }
 
-    return this.post.url;
-
-    // return [ '/videos/watch', this.post.uuid ];
+    return [ '/posts/watch', this.post.id ];
   }
 
-  open() {
+  open(type: 'likes' | 'reposts') {
     this.dialogService.open(LikesComponent, {
       context: {
         postId: this.post.id,
-        title: 'Liked by'
+        title: type === 'likes' ? 'Liked by' : 'Reposted by',
+        type: type,
       },
       closeOnEsc: true,
       closeOnBackdropClick: true,
@@ -266,6 +300,40 @@ export class PostThreadComponent implements OnInit {
       this.faHeart = faHeart;
       this.tooltipLike = 'Like';
     }
+  }
+
+  videoId: string;
+  embedUrl: string;
+  public getVideoEmbedLink() {
+    if (IsVideoPipe.isYoutube(this.post.status)) {
+      const parts = IsVideoPipe._youtubeRegEx.exec(this.post.status);
+      if (this.videoId && this.videoId === parts[5]) {
+        return true;
+      }
+
+      this.videoId = parts[5];
+      this.embedUrl = IsVideoPipe.getYoutubeEmbedLink(this.post.status);
+      return true;
+    } else if (IsVideoPipe.isTwitch(this.post.status)) {
+      const parts = IsVideoPipe._twitchRegEx.exec(this.post.status);
+      if (this.videoId && this.videoId === parts[3]) {
+        return true;
+      }
+
+      this.videoId = parts[3];
+      this.embedUrl = IsVideoPipe.getTwitchEmbedLink(this.post.status);
+      return true;
+    } else if (IsVideoPipe.isTwitchClip(this.post.status)) {
+      const parts = IsVideoPipe._twitchClipRegEx.exec(this.post.status);
+      if (!parts[2].includes('clip')) {
+        return false;
+      }
+
+      this.embedUrl = IsVideoPipe.getTwitchClipEmbedLink(this.post.status);
+      return true;
+    }
+
+    return false;
   }
 
 }

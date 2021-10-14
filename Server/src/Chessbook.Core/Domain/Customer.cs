@@ -4,6 +4,8 @@
     using global::System.Collections.Generic;
 
     using Chessbook.Core.Domain.Common;
+    using Chessbook.Core.Domain.Customers;
+    using global::System.Security.Claims;
 
     // TODO: change "Customer" to "User" kk
     public class Customer : DeletableEntity, ISoftDeletedEntity
@@ -17,6 +19,11 @@
         public string Password { get; set; }
 
         public string Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the email that should be re-validated. Used in scenarios when a customer is already registered and wants to change an email address.
+        /// </summary>
+        public string EmailToRevalidate { get; set; }
 
         /// <summary>
         /// Gets or sets the customer GUID
@@ -51,8 +58,6 @@
 
         public DateTime TimeZone { get; set; }
 
-        public bool GeoEnabled { get; set; }
-
         public bool Verified { get; set; }
 
         public int StatusesCount { get; set; }
@@ -61,21 +66,7 @@
 
         public string Lang { get; set; }
 
-        public bool ContributorsEnabled { get; set; }
-
-        public bool IsTranslator { get; set; }
-
-        public bool IsTranslationEnabled { get; set; }
-
-        public string ProfileBackgroundImageUrl { get; set; }
-
-        public string ProfileBackgroundImageUrlHttps { get; set; }
-
-        public bool ProfileBackgroundTile { get; set; }
-
         public string ProfileBannerUrl { get; set; }
-
-        public bool ProfileUseBackgroundImage { get; set; }
 
         public bool DefaultProfile { get; set; }    // When true, indicates that the user has not altered the theme or background of their user profile
 
@@ -87,8 +78,6 @@
 
         public bool HasCustomTimelines { get; set; }        // https://blog.twitter.com/developer/en_us/a/2013/introducing-custom-timelines.html
 
-        public bool CanMediaTag { get; set; }
-
         public bool FollowedBy { get; set; }
 
         public bool Following { get; set; }
@@ -99,20 +88,13 @@
 
         public bool Blocking { get; set; }
 
+        public bool Banned { get; set; }
+
+        public string BannedReason { get; set; }
+
         public string BusinessProfileState { get; set; }
 
-        public string TranslatorType { get; set; }
-
         public bool RequireSomeConsent { get; set; }
-
-
-        // Account Settings
-
-        //public PrivacyMode PrivacyMode { get; set; }
-
-        //public Language Language { get; set; }
-
-        public bool AlwaysUseHttps { get; set; }
 
         public bool DiscoverableByEmail { get; set; }
 
@@ -120,21 +102,7 @@
 
         public bool UseCookiePersonalization { get; set; }
 
-        //public AllowDirectMessagesFrom AllowDirectMessagesFrom { get; set; }
-
-        //public AllowDirectMessagesFrom AllowGroupDirectMessagesFrom { get; set; }
-
-        //public AllowContributorRequestMode AllowContributorRequest { get; set; }
-
-        public bool DisplaySensitiveMedia { get; set; }
-
         public bool SmartMute { get; set; }
-
-        public bool SleepTimeEnabled { get; set; }
-
-        public int StartSleepHour { get; set; }
-
-        public int EndSleepHour { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time until which a customer cannot login (locked out)
@@ -198,10 +166,16 @@
 
         public string FacebookLink { get; set; }
 
-        public virtual UserPhoto Photo { get; set; }
         public virtual Settings Settings { get; set; }
 
-        public virtual ICollection<UserRole> UserRoles { get; set; }
+        public virtual ICollection<CustomerRole> UserRoles { get; set; }
         public virtual ICollection<UserClaim> Claims { get; set; }
+    }
+
+    public class UserClaim
+    {
+        public string ClaimType { get; set; }
+
+        public string ClaimValue { get; set; }
     }
 }

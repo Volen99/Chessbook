@@ -1,6 +1,6 @@
 ﻿using Chessbook.Data.Models;
-using Nop.Core.Domain.Localization;
-using Nop.Core.Domain.Stores;
+using Chessbook.Core.Domain.Localization;
+using Chessbook.Core.Domain.Stores;
 
 namespace Chessbook.Core.Domain.Messages
 {

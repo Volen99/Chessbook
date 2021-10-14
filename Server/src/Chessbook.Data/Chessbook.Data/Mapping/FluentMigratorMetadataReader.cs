@@ -2,16 +2,16 @@
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Reflection;
-using Chessbook.Data.Models;
 using FluentMigrator.Expressions;
 using LinqToDB.Mapping;
 using LinqToDB.Metadata;
 using LinqToDB.SqlQuery;
-using Nop.Core;
-using Nop.Core.Infrastructure;
-using Nop.Data.Migrations;
 
-namespace Nop.Data.Mapping
+using Chessbook.Core.Infrastructure;
+using Chessbook.Data.Migrations;
+using Chessbook.Data.Models;
+
+namespace Chessbook.Data.Mapping
 {
     /// <summary>
     /// LINQ To DB metadata reader for schema created by FluentMigrator

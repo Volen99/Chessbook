@@ -8,7 +8,7 @@ import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.m
 import {StreamersComponent} from "./streamers.component";
 import {StreamersRoutingModule} from "./streamers-routing.module";
 import {StreamersService} from "./streamers.service";
-import { StreamWatchComponent } from './stream-watch/stream-watch.component';
+import {SafePipe, StreamWatchComponent} from './stream-watch/stream-watch.component';
 import { StreamListComponent } from './stream-list/stream-list.component';
 import {VideoMiniatureComponent} from "./stream-list/stream-miniature/video-miniature.component";
 import {VideoThumbnailComponent} from "./stream-list/shared-thumbnail/video-thumbnail.component";
@@ -39,6 +39,7 @@ import {NbDialogModule} from "../../sharebook-nebular/theme/components/dialog/di
     DialogUsernamePromptComponent,
     DialogUsernameEditPromptComponent,
     ChessbookUsersStreamComponent,
+    SafePipe,
   ],
 
     imports: [
