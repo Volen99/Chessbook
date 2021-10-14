@@ -1,0 +1,57 @@
+<ng-container *ngIf="this.card !== null">
+
+    <ng-container *ngIf="this.interactive; else link">
+        <div [ngClass]="this.className" [attr.role]="this.revealed ? 'button' : null" (click)="this.revealed ? null : this.handleReveal($event)" #nodeRef>
+            <ng-container *ngIf="this.embedded; else notVideo" >
+                <div class="status-card__image status-card-video" [style]="{height: this.videoHeight}" [innerHTML]="this.videoContent" #nodeRef>
+
+                </div>
+            </ng-container>
+
+            <ng-template #notVideo>
+                <div class="status-card__image">
+                    <app-blurhash [canvasProps]="'status-card__image-preview'" [hash]="this.card.blurhash" [dummy]="true">
+                    </app-blurhash>
+                    <img [src]="this.card.image" alt="" class="status-card__image-image" [ngStyle]="{width: horizontal ? width : null, height: horizontal ? height : null, visibility: revealed ? null : 'hidden' }" (load)="this.handleImageLoad()"/>;
+                    <div *ngIf="this.revealed" class="status-card__actions">
+                        <div>
+                            <button (click)="this.handleEmbedClick()"><fa-icon [icon]="this.card.type === 'photo' ? this.faSearchPlus : this.faPlay"></fa-icon></button>
+                            <a *ngIf="this.horizontal" [href]="this.card.url" target="_blank">
+                                <fa-icon [icon]="this.faExternalLink"></fa-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <div *ngIf="!this.compact" class="status-card__content">
+                <a *ngIf="this.interactive" class="status-card__title" [href]="this.card.url" [title]="this.card.title" target="_blank">
+                    <strong>{{this.card.title}}</strong>
+                </a>
+                <strong *ngIf="!this.interactive" class="status-card__title" [title]="this.card.title">{{this.card.title}}</strong>
+
+                <p *ngIf="!(this.horizontal || this.compact)" class="status-card__description">
+                    {{this.getCardDescription()}}
+                </p>
+
+                <span class="status-card__host">{{this.provider}}</span>
+            </div>
+        </div>
+    </ng-container>
+
+   <ng-template #link>
+       <a [ngClass]="this.className" [href]="this.card.url" target="_blank" #nodeRef>
+           <div *ngIf="this.card.image; else noImageIcon" class="status-card__image">
+               <app-blurhash [canvasProps]="'status-card__image-preview'" [hash]="this.card.blurhash" [dummy]="true">
+               </app-blurhash>
+               <img [src]="this.card.image" alt="" class="status-card__image-image" [ngStyle]="{width: horizontal ? width : null, height: horizontal ? height : null, visibility: revealed ? null : 'hidden' }" (load)="this.handleImageLoad()"/>;
+           </div>
+           <ng-template #noImageIcon>
+               <div class="status-card__image">
+                   <fa-icon [icon]="this.faFileAlt"></fa-icon>
+               </div>
+           </ng-template>
+       </a>
+   </ng-template>
+
+</ng-container>
