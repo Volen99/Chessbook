@@ -21,7 +21,7 @@ Social media for chess players
 
 <p align="center">
   <a href="https://framasoft.org">
-    <img width="150px" src="https://games.lol/wp-content/uploads/2020/12/Chess-free-full-version-150x150.jpg.webp" alt="Framasoft logo"/>
+    <img width="150px" src="https://user-images.githubusercontent.com/41373491/138084863-730cb038-1d17-43c4-91b8-7879508608b6.jpg" alt="Volencho"/>
   </a>
 </p>
 
