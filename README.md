@@ -20,7 +20,7 @@ Social media for chess players
 </p>
 
 <p align="center">
-  <a href="https://framasoft.org">
+  <a href="https://chessbook/volencho">
     <img width="150px" src="https://user-images.githubusercontent.com/41373491/138084863-730cb038-1d17-43c4-91b8-7879508608b6.jpg" alt="Volencho"/>
   </a>
 </p>
