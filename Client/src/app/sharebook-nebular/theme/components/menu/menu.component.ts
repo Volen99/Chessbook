@@ -126,6 +126,10 @@ export class NbMenuItemComponent implements DoCheck, AfterViewInit, OnDestroy {
   }
 
   onItemClick(item: NbMenuItem | any) {
+    if (item.title === 'Messages') {
+      this.badge.text = '0';
+    }
+
     this.itemClick.emit(item);
   }
 
@@ -416,7 +420,7 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // I mean, it works...
   onItemClick(item: NbMenuItem | any) {
-    if (!this.tag) {
+    if (!this.tag && item.icon) {
 
       if (item.icon.iconName === 'alicorn') {
         this.hotkeysService.cheatSheetToggle.next(!this.helpVisible);

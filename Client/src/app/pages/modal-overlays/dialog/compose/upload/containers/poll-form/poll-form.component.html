@@ -7,8 +7,10 @@
 
     <div class="poll__footer">
         <button ghost nbButton status="primary" (click)="this.handleAddOption()"
-                [disabled]="this.options.length >= 4">
-            <nb-icon icon="plus-outline"></nb-icon>
+                [disabled]="this.options.length >= 4"
+                ngbTooltip="Add a choice"
+                [openDelay]="700">
+            <fa-icon [icon]="this.faPlus"></fa-icon>
         </button>
 
         <nb-select [selected]="86400"  (selectedChange)="this.handleSelectDuration($event)">

@@ -30,11 +30,11 @@ export class AbuseDetailsComponent {
   }
 
   get startAt() {
-    return durationToString(this.abuse.video.startAt);
+    return durationToString(this.abuse.post.startAt);
   }
 
   get endAt() {
-    return durationToString(this.abuse.video.endAt);
+    return durationToString(this.abuse.post.endAt);
   }
 
   getPredefinedReasons() {

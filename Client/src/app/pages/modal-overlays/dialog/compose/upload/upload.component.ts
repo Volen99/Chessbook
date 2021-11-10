@@ -1,6 +1,20 @@
 // I am back!! 💙 06.11.2020, Friday
-import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges, ViewChild
+} from '@angular/core';
+import {FormGroup} from '@angular/forms';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {map} from "rxjs/operators";
 import {length} from 'stringz';
+
 import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 import {
   faGlobeAfrica,
@@ -22,7 +36,6 @@ import {NbDialogRef} from "../../../../../sharebook-nebular/theme/components/dia
 import {ShowcaseDialogComponent} from "../../showcase-dialog/showcase-dialog.component";
 import {WhoCanReplyComponent} from "../../../popovers/components/who-can-reply/who-can-reply.component";
 import {PostPrivacy} from "../../../../../shared/models/enums/post-privacy";
-import {PostDetails} from "../../../../../shared/shared-main/post/post-details.model";
 import {countableText} from "../../../../../features/compose/util/counter";
 import {UserStore} from "../../../../../core/stores/user.store";
 import {IUser} from "../../../../../core/interfaces/common/users";
@@ -31,14 +44,13 @@ import {Post} from "../../../../../shared/shared-main/post/post.model";
 import {PostSend} from "../../../../../shared/posts/post-send";
 import {FormValidatorService} from 'app/shared/shared-forms/form-validator.service';
 import {CanComponentDeactivateResult} from "../../../../../core/routing/can-deactivate-guard.service";
-import {FormGroup, Validators} from '@angular/forms';
-import {map} from "rxjs/operators";
 import {
   VIDEO_PRIVACY_VALIDATOR,
   VIDEO_TAGS_ARRAY_VALIDATOR
 } from "../../../../../shared/shared-forms/form-validators/video-validators";
 import { FormReactiveValidationMessages } from 'app/shared/shared-forms/form-reactive';
 import {IsVideoPipe} from "../../../../../shared/shared-main/angular/pipes/is-video.pipe";
+import {IMAGE_FILE_EXTENSIONS} from "./assets-panel.service";
 
 @Component({
   selector: 'app-upload',
@@ -46,6 +58,7 @@ import {IsVideoPipe} from "../../../../../shared/shared-main/angular/pipes/is-vi
   styleUrls: ['./upload.component.scss', './post-send.scss'],
 })
 export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDestroy {
+  @ViewChild('emojiModal', {static: true}) emojiModal: NgbModal;
   @Output() textChange = new EventEmitter<string>();
 
   @Input() title: string;
@@ -64,7 +77,9 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
               protected ref: NbDialogRef<ShowcaseDialogComponent>,
               private userStore: UserStore,
               protected notifier: NbToastrService,
-              protected formValidatorService: FormValidatorService) {
+              protected formValidatorService: FormValidatorService,
+              private cdr: ChangeDetectorRef,
+              private modalService: NgbModal) {
     super();
 
     this.hasBaseDropZoneOver = false;
@@ -122,6 +137,8 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
   ngOnInit(): void {
     super.ngOnInit();
 
+    this.loading = false;
+
     this.updateForm();
 
     this.response = '';
@@ -132,7 +149,9 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
 
 
     this.uploader.response.subscribe(res => {
-      this.response = res;
+      // setTimeout(() => {
+      //   this.uploader.progress = 0;
+      // }, 1000);
     });
 
     this.getGlobe();
@@ -141,6 +160,7 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
   ngOnDestroy(): void {
   }
 
+  imageFileExtensions = IMAGE_FILE_EXTENSIONS;
   public videoId: string;
 
   initialPoll: any = {
@@ -213,7 +233,7 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
 
   getFulltextForCharacterCounting = () => {
     return ['', countableText(this.text)].join('');
-  };
+  }
 
 
   dismiss() {
@@ -221,16 +241,26 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
   }
 
   updateValue(value) {
+    if (value.innerText.includes('\n')) {
+      value.innerText = value.innerText.replace(/\n|\r/g, "");
+    }
     this.text = value.innerText;
 
     this.getFulltextForCharacterCounting();
     // this.textChange.emit(value.innerText);
   }
 
+  private loading = false;
   public async shareButtonHandler() {
     if (!this.canSubmit()) {
       return;
     }
+
+    if (this.loading) {
+      return;
+    }
+
+    this.loading = true;
 
     if (this.replyPost) {
       if (this.text) {
@@ -261,13 +291,6 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
             medias.push(data);
           });
 
-        // let mediaType = fileCurrent.type;
-        // let bytes = await fileCurrent.arrayBuffer();
-        //
-        // let uploadedImage = await this.uploadService.uploadBinaryAsync(bytes, mediaType)
-        //   .then((data) => {
-        //     medias.push(data);
-        //   });
       }
 
       if (this.replyPost) {
@@ -293,12 +316,6 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
     this.dismiss();
   }
 
-  private expiresInFromExpiresAt (expires_at) {
-    if (!expires_at) return 24 * 3600;
-    const delta = (new Date(expires_at).getTime() - Date.now()) / 1000;
-    return [300, 1800, 3600, 21600, 86400, 259200, 604800].find(expires_in => expires_in >= delta) || 24 * 3600;
-  }
-
   pollButtonHandler() {
     this.isPoll = !this.isPoll;
 
@@ -320,6 +337,30 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
     this.globeCurrent = this.globes[this.globes.length * Math.random() | 0];
   }
 
+  get emojiMarkupList() {
+    const emojiMarkupObjectList = require('markdown-it-emoji/lib/data/light.json');
+
+    // Populate emoji-markup-list from object to array to avoid keys alphabetical order
+    const emojiMarkupArrayList = [];
+    for (const emojiMarkupName in emojiMarkupObjectList) {
+      if (emojiMarkupName) {
+        const emoji = emojiMarkupObjectList[emojiMarkupName];
+        emojiMarkupArrayList.push([emoji, emojiMarkupName]);
+      }
+    }
+
+    return emojiMarkupArrayList;
+  }
+
+  openEmojiModal(event: any) {
+    event.preventDefault();
+    this.modalService.open(this.emojiModal, {backdrop: true, size: 'lg'});
+  }
+
+  hideModals() {
+    this.modalService.dismissAll();
+  }
+
   firstStepDone: EventEmitter<string>;
   firstStepError: EventEmitter<void>;
 
@@ -329,6 +370,14 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
 
   changePrivacy(newPrivacyId: number) {
     this.firstStepPrivacyId = newPrivacyId;
+  }
+
+  progress() {
+    if (this.uploader.progress === 100) {
+      return 0;
+    }
+
+    return this.uploader.progress;
   }
 
   embedUrl: string;
@@ -362,6 +411,12 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
     }
 
     return false;
+  }
+
+  private expiresInFromExpiresAt (expires_at) {
+    if (!expires_at) return 24 * 3600;
+    const delta = (new Date(expires_at).getTime() - Date.now()) / 1000;
+    return [300, 1800, 3600, 21600, 86400, 259200, 604800].find(expires_in => expires_in >= delta) || 24 * 3600;
   }
 
   private trackPrivacyChange() {

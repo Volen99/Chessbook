@@ -86,6 +86,17 @@ export class UserNotificationService {
       );
   }
 
+  clearAll() {
+    const url = UserNotificationService.BASE_NOTIFICATIONS_URL + '/clear-all';
+    const headers = {ignoreLoadingBar: ''};
+
+    return this.authHttp.post(url, {}, {headers})
+      .pipe(
+        map(this.restExtractor.extractDataBool),
+        catchError(res => this.restExtractor.handleError(res))
+      );
+  }
+
   updateNotificationSettings(settings: UserNotificationSetting) {
     const url = UserNotificationService.BASE_NOTIFICATION_SETTINGS;
 

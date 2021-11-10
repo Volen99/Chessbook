@@ -1,5 +1,6 @@
 @import '_mixins';
 @import '_variables';
+@import "src/sass/application";
 
 @import '../../theme/styles/themes';
 
@@ -15,6 +16,11 @@
   .cancel {
     margin-right: 1rem;
   }
+}
+
+.modal-header {
+  border: none !important;
+  padding: 0;
 }
 
 app-input-toggle-hidden {

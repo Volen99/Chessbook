@@ -8,7 +8,6 @@ import {
   faChessRookAlt,
   faChessQueenAlt,
   faChessKingAlt,
-
   faTrophy,
 } from '@fortawesome/pro-light-svg-icons';
 
@@ -30,7 +29,7 @@ export class SnackbarSampleComponent implements OnInit {
   ngOnInit() {
     const randomBool = Math.random() < 0.5;
 
-    this.facts = this.factsService.fetchFacts();
+    this.facts = this.getFacts();
 
     this.pieces = randomBool ? this.pieces : this.pieces.reverse();
 
@@ -62,7 +61,11 @@ export class SnackbarSampleComponent implements OnInit {
     this.color = color;
 
     this.fact = this.facts[Math.floor(Math.random() * this.facts.length)];
-    // snackbar.open('Changed color to ' + this.color);
+    this.facts = this.facts.filter(f => f !== this.fact);
+
+    if (!this.facts.some(f => f)) {
+      this.facts = this.getFacts();
+    }
 
 
     this.backgroundColorStyles = {
@@ -91,5 +94,9 @@ export class SnackbarSampleComponent implements OnInit {
 
   public close(element) {
     element.close();
+  }
+
+  private getFacts() {
+    return this.factsService.fetchFacts();
   }
 }

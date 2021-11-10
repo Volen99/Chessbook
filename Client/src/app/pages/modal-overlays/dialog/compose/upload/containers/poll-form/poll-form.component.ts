@@ -1,5 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 
+import {
+  faPlus,
+} from '@fortawesome/pro-light-svg-icons';
+
 @Component({
   selector: 'app-poll-form-option',
   template: ` <!--just got the idea for star wishes app 🌠 25.03.2021, Thursday, 19:55 PM | A Soulmate Who Wasnt Meant to Be-->
@@ -29,8 +33,10 @@ import {Component, Input, OnInit} from '@angular/core';
       </label>
 
       <button nbButton ghost status="danger" class="poll__cancel" [disabled]="this.index <= 1"
-              (click)="this.handleOptionRemove()">
-          <nb-icon icon="close-outline"></nb-icon>
+              (click)="this.handleOptionRemove()"
+              ngbTooltip="Remove this choice"
+              [openDelay]="700">
+          <fa-icon [icon]="this.faPlus"></fa-icon>
       </button>
   </li>
   `,
@@ -52,6 +58,8 @@ export class OptionComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  faPlus = faPlus;
 
 
   handleOptionTitleChange = e => {
@@ -121,6 +129,7 @@ export class PollFormComponent implements OnInit {
   }
 
   autoFocusIndex: number;
+  faPlus = faPlus;
 
 
   handleAddOption = () => {

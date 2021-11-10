@@ -147,7 +147,7 @@
                                                         <div *ngIf="!this.isManageable() && this.isUserLoggedIn()" aria-expanded="false"
                                                              aria-haspopup="menu"
                                                              aria-label="More" role="button" tabindex="0"
-                                                             class="icon-hover sharebook-cursor-pointer sharebook-container border-radius-9999px border-style-solid border-width-1px border-height-0px r-6gpygo r-1kb76zh r-ero68b r-vkv6oe outline-style-none element-left-right-padding-0px transition-duration transition-property r-lrvibr"
+                                                             class="icon-hover sharebook-cursor-pointer sharebook-container border-radius-9999px action-button-border-color border-style-solid border-width-1px border-height-0px r-6gpygo r-1kb76zh r-ero68b r-vkv6oe outline-style-none element-left-right-padding-0px transition-duration transition-property r-lrvibr"
                                                              data-testid="userActions">
                                                             <div dir="auto"
                                                                  class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
@@ -155,17 +155,17 @@
 
                                                                 <app-user-moderation-dropdown
                                                                         [prependActions]="prependModerationActions"
-                                                                        buttonSize="small" [account]="this.profileCurrent" [user]="this.profileCurrent" placement="right-top"
+                                                                        buttonSize="small" [account]="this.profileCurrent" [user]="this.profileCurrent" placement="top-left"
                                                                         (userChanged)="onUserChanged()" (userDeleted)="onUserDeleted()"
                                                                 ></app-user-moderation-dropdown>
 
                                                                 <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
                                                             </div>
                                                         </div>
-                                                        <div *ngIf="!this.isManageable()" aria-expanded="false"
+                                                        <div *ngIf="!this.isManageable() && !relationshipDetails?.blockedBy && !this.relationshipDetails?.blocking" aria-expanded="false"
                                                              aria-haspopup="menu"
                                                              aria-label="More" role="button" tabindex="0"
-                                                             class="icon-hover sharebook-cursor-pointer sharebook-container border-radius-9999px border-style-solid border-width-1px border-height-0px r-6gpygo r-1kb76zh r-ero68b r-vkv6oe outline-style-none element-left-right-padding-0px transition-duration transition-property r-lrvibr"
+                                                             class="icon-hover sharebook-cursor-pointer sharebook-container border-radius-9999px action-button-border-color border-style-solid border-width-1px border-height-0px r-6gpygo r-1kb76zh r-ero68b r-vkv6oe outline-style-none element-left-right-padding-0px transition-duration transition-property r-lrvibr"
                                                              data-testid="userActions">
                                                             <div dir="auto" title="Message"
                                                                  class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
@@ -311,31 +311,40 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <nav aria-label="Profile timelines" role="navigation"
-                                             class="sharebook-container align-items-center flex-direction-row height-53px">
-                                            <div class="sharebook-container align-items-center r-1ro0kt6 flex-direction-row flex-grow-expand height-100-per overflow-hidden">
-                                                <div aria-label="Previous" role="button" aria-hidden="true"
-                                                     aria-disabled="true" disabled=""
-                                                     class="sharebook-container background-color-lights-out disabled-element outline-style-none padding-left-right padding-bottom-top-15px position-absolute upload-input-form-transition r-axxi2z upload-input-form-transition-timing-function z-index-1"
-                                                     style="transform: translateX(-46.8px); height: 52px;">
-                                                    <svg viewBox="0 0 24 24"
-                                                         class="r-13zfj0p svg-display-inline-block svg-fill-currentcolor miniature-element-height max-width-100-per svg-position-relative svg-vertical-align users-select-none">
-                                                        <g>
-                                                            <path
-                                                                    d="M8.914 12l6.793-6.793c.39-.39.39-1.023 0-1.414s-1.023-.39-1.414 0l-7.5 7.5c-.39.39-.39 1.023 0 1.414l7.5 7.5c.195.195.45.293.707.293s.512-.098.707-.293c.39-.39.39-1.023 0-1.414L8.914 12z"></path>
-                                                        </g>
-                                                    </svg>
+                                        <ng-container *ngIf="!this.relationshipDetails?.blocking">
+                                            <nav aria-label="Profile timelines" role="navigation"
+                                                 class="sharebook-container align-items-center flex-direction-row height-53px">
+                                                <div class="sharebook-container align-items-center r-1ro0kt6 flex-direction-row flex-grow-expand height-100-per overflow-hidden">
+                                                    <div aria-label="Previous" role="button" aria-hidden="true"
+                                                         aria-disabled="true" disabled=""
+                                                         class="sharebook-container background-color-lights-out disabled-element outline-style-none padding-left-right padding-bottom-top-15px position-absolute upload-input-form-transition r-axxi2z upload-input-form-transition-timing-function z-index-1"
+                                                         style="transform: translateX(-46.8px); height: 52px;">
+                                                        <svg viewBox="0 0 24 24"
+                                                             class="r-13zfj0p svg-display-inline-block svg-fill-currentcolor miniature-element-height max-width-100-per svg-position-relative svg-vertical-align users-select-none">
+                                                            <g>
+                                                                <path
+                                                                        d="M8.914 12l6.793-6.793c.39-.39.39-1.023 0-1.414s-1.023-.39-1.414 0l-7.5 7.5c-.39.39-.39 1.023 0 1.414l7.5 7.5c.195.195.45.293.707.293s.512-.098.707-.293c.39-.39.39-1.023 0-1.414L8.914 12z"></path>
+                                                            </g>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="sharebook-container display-block flex-grow-expand flex-shrink height-100-per overflow-hidden">
+                                                        <nb-route-tabset [tabs]="this.tabs" fullWidth></nb-route-tabset>
+                                                    </div>
                                                 </div>
-                                                <div class="sharebook-container display-block flex-grow-expand flex-shrink height-100-per overflow-hidden">
-                                                    <nb-card>
-                                                        <nb-card-body>
-                                                            <nb-route-tabset [tabs]="this.tabs" fullWidth></nb-route-tabset>
-                                                        </nb-card-body>
-                                                    </nb-card>
-                                                </div>
+                                            </nav>
+                                            <app-profile-posts *ngIf="this.profileCurrent" [profileCurrent]="this.profileCurrent"></app-profile-posts>
+                                        </ng-container>
+                                        <div *ngIf="this.relationshipDetails?.blocking" class="sharebook-container">
+                                           <!-- TODO: use <app-empty-state> xD-->
+                                            <div dir="auto"
+                                                 class="css-901oao font-family heading-font-size font-weight-700 inside-element-container-line-height r-15d164r min-width-0px text-align-center text-overflow-wrap">
+                                                <span class="css-901oao font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.profileCurrent?.screenName}} is blocked</span>
                                             </div>
-                                        </nav>
-                                        <app-profile-posts *ngIf="this.profileCurrent" [profileCurrent]="this.profileCurrent"></app-profile-posts>
+                                            <div dir="auto"
+                                                 class="css-901oao text-hint font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-align-center r-ey96lj text-overflow-wrap">
+                                                <span class="css-901oao  font-family inside-element-container-line-height min-width-0px text-overflow-wrap">If you want to view these Posts, you have to unblock {{this.profileCurrent?.screenName}}</span>
+                                            </div>
+                                        </div>
 
 <!--                                        <div class="sharebook-container">-->
 <!--                                            <app-empty-state *ngIf="this.profileCurrent?.suspended"-->

@@ -1,17 +1,15 @@
+import {Router} from "@angular/router";
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from "../../../user/user.model";
-import {DialogService} from "primeng/dynamicdialog";
-import {AccountReportComponent} from "../../../../shared-moderation/report-modals/account-report.component";
+
 import {NbDialogService} from "../../../../../sharebook-nebular/theme/components/dialog/dialog.service";
 import {AppInjector} from "../../../../../app-injector";
 import {VideoReportComponent} from "../../../../shared-moderation/report-modals/video-report.component";
-import {IPost} from "../../../../posts/models/post.model";
 import {Post} from "../../../post/post.model";
 import {NbToastrService} from "../../../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {BlocklistService} from "../../../../shared-moderation/blocklist.service";
-import {Router} from "@angular/router";
 import {UserStore} from "../../../../../core/stores/user.store";
 import {PostsService} from "../../../../posts/posts.service";
+import {RedirectService} from "../../../../../core/routing/redirect.service";
 
 
 @Component({
@@ -23,9 +21,9 @@ export class PopoverMoreComponent implements OnInit {
   @Input() items: any;
   @Input() post: Post;
 
-
   constructor(private notifier: NbToastrService, private blocklistService: BlocklistService,
-              private router: Router, private userStore: UserStore, private postService: PostsService) {
+              private router: Router, private userStore: UserStore, private postService: PostsService,
+              private redirectService: RedirectService) {
   }
 
   ngOnInit(): void {
@@ -49,6 +47,11 @@ export class PopoverMoreComponent implements OnInit {
   handleClick = e => {
     let userCurrent = this.userStore.getUser();
 
+    if (!userCurrent) {
+      this.router.navigate([`/auth`, 'login']);
+      return;
+    }
+
     const i = Number(e.currentTarget.getAttribute('data-index'));
 
     if (userCurrent.id === this.post.user.id) {
@@ -56,6 +59,11 @@ export class PopoverMoreComponent implements OnInit {
         this.postService.deletePost(this.post.id)
           .subscribe((data) => {
             this.notifier.success('Your post was deleted', 'Success');
+            if (this.router.url.includes('post')) {
+              this.redirectService.redirectToHomepage();
+            } else {
+              // emit delete event or call parent func kk
+            }
           }, err => this.notifier.danger(err.message, 'Error'));
       } else if (i === 1) {
         if (!this.post.pinned) {
@@ -73,6 +81,8 @@ export class PopoverMoreComponent implements OnInit {
               },
               err => this.notifier.danger(err.message, 'Error'));
         }
+      } else if (i === 2) {
+        this.router.navigate([`/${this.post.user.screenName.substring(1)}/post`, this.post.id]);
       }
     } else {
       if (i === 1) {
@@ -102,25 +112,37 @@ export class PopoverMoreComponent implements OnInit {
             );
         }
       } else if (i === 2) {
-        this.router.navigate([`/${this.post.user.screenName.substring(1)}/post`, this.post.id]);
+        if (this.router.url.includes('post')) {
+          this.notifier.warning('Chessbook will allow embedding posts soon.', 'Coming soon');
+        } else {
+          this.router.navigate([`/${this.post.user.screenName.substring(1)}/post`, this.post.id]);
+        }
       }
 
       if (i === 3) {
-        this.notifier.warning('Chessbook will allow embedding posts soon.', 'Coming soon');
+        if (this.router.url.includes('post')) {
+          this.invokeReportModal();
+        } else {
+          this.notifier.warning('Chessbook will allow embedding posts soon.', 'Coming soon');
+        }
       }
 
       if (i === 4) {
-        let dialogService = AppInjector.get(NbDialogService);
-        dialogService.open(VideoReportComponent, {
-          // @ts-ignore
-          context: {
-            video: this.post,
-          },
-          closeOnBackdropClick: true,
-          closeOnEsc: false,
-        });
+        this.invokeReportModal();
       }
     }
-  };
+  }
+
+  private invokeReportModal() {
+    let dialogService = AppInjector.get(NbDialogService);
+    dialogService.open(VideoReportComponent, {
+      // @ts-ignore
+      context: {
+        post: this.post,
+      },
+      closeOnBackdropClick: true,
+      closeOnEsc: false,
+    });
+  }
 
 }

@@ -67,6 +67,12 @@ namespace Chessbook.Web.Api.Controllers
             var alreadyVoted = await this.pollService.AlreadyVotedAsync(poll.Id, (await _workContext.GetCurrentCustomerAsync()).Id);
             if (!alreadyVoted.Any())
             {
+                // is expired
+                if (poll.EndDateUtc <= DateTime.UtcNow)
+                {
+                    return this.BadRequest(new { error = "Poll has expired" });
+                }
+
                 // vote
                 await this.pollService.InsertPollVotingRecordAsync(new PollVotingRecord
                 {

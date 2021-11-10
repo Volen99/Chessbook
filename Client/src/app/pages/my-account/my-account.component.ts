@@ -38,15 +38,15 @@ export class MyAccountComponent implements OnInit {
             label: `Moderation`,
             children: [
                 {
-                    label: `Muted accounts`,
+                    label: `Blocked accounts`,
                     routerLink: '/my-account/blocklist/accounts',
                     iconName: faUserTimes,
                 },
-                {
-                    label: `Abuse reports`,
-                    routerLink: '/my-account/abuses',
-                    iconName: faFlag,
-                }
+                // {
+                //     label: `Abuse reports`,
+                //     routerLink: '/my-account/abuses',
+                //     iconName: faFlag,
+                // }
             ]
         };
 

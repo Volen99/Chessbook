@@ -140,7 +140,7 @@ namespace Chessbook.Web.Api.Factories
             }
 
             var list = await this.chatService.GetAllPrivateMessagesAsync((await _storeContext.GetCurrentStoreAsync()).Id,
-                fromCustomerId, toCustomerId, null, null, false, string.Empty, page, pageSize);
+                fromCustomerId, toCustomerId, null, false, false, string.Empty, page, pageSize);
             foreach (var pm in list)
             {
                 messages.Add(await PreparePrivateMessageModelAsync(pm));

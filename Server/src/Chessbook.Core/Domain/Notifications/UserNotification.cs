@@ -30,6 +30,8 @@ namespace Chessbook.Core.Domain.Notifications
 
         public bool Read { get; set; }
 
+        public bool Cleared { get; set; }
+
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

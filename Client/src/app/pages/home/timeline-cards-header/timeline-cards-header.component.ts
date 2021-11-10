@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  faStars,
+} from '@fortawesome/pro-light-svg-icons';
 
 @Component({
   selector: 'app-timeline-cards-header',
@@ -11,5 +14,7 @@ export class TimelineCardsHeaderComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  faStars = faStars;
 
 }

@@ -75,6 +75,8 @@
 
         public bool Reposted { get; set; }
 
+        public string ClipThumbnail { get; set; }
+
         public IList<PostTagModel> Tags { get; set; }
     }
 }

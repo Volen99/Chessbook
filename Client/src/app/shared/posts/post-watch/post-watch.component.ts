@@ -224,10 +224,10 @@ export class PostWatchComponent implements OnInit, OnDestroy {
 
   calcMinHeight(commentsCount?: number): number {
     if (!commentsCount || commentsCount === 0) {
-      return 1215;
+      return 1660;
     }
 
-    return (commentsCount + 1) * 650;
+    return (commentsCount + 1) * 645;
   }
 
   setTransform(i: number, post: Post): number {
@@ -257,23 +257,24 @@ export class PostWatchComponent implements OnInit, OnDestroy {
         return (580 / this.post.entities.medias[0].meta['original'].aspect + 338) + (statusCharCount / 2) ?? 0;
         // return ((this.post.entities.medias[0].meta['original'].height / 2)) + (statusCharCount / 2) ?? 0;
       } else {
-        return 573.4 + (statusCharCount / 2) ?? 0;
+        return 673.4 + (statusCharCount / 2) ?? 0;
       }
     } else {
       if (this.post.card) {
-        return (393.4 + (statusCharCount / 2) ?? 0);
+        return (433.4 + (statusCharCount / 2) ?? 0);
       } else if (this.post.poll) {
-        return ((229.7 + (this.post.poll.answers.length * 100)) + (this.post.poll.question.length / 2) ?? 0);
+        return ((279.7 + (this.post.poll.answers.length * 100)) + (this.post.poll.question.length / 2) ?? 0);
       } else if (IsVideoPipe.isYoutube(this.post.status) || IsVideoPipe.isTwitch(this.post.status) || IsVideoPipe.isTwitchClip(this.post.status)) {
-        return (599.7 + (statusCharCount / 2) ?? 0);
+        return (699.7 + (statusCharCount / 2) ?? 0);
       }
     }
 
-    return 573.4;
+    return 473.4;
   }
 
   private setOpenGraphTags() {
-    this.metaService.setTitle(this.post.status);
+    let title = `${this.post.user.displayName} on Chessbook: "${this.post.status}"`;
+    this.metaService.setTitle(title);
 
     this.metaService.setTag('og:type', 'video');
 

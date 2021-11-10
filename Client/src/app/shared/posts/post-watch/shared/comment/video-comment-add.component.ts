@@ -18,6 +18,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {
   faTimes,
+  faText,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {FormReactive} from "../../../../shared-forms/form-reactive";
@@ -106,6 +107,22 @@ export class VideoCommentAddComponent extends FormReactive implements OnChanges,
   }
 
   faTimes = faTimes;
+  faText = faText;
+
+  svgStyles = {
+    'display': 'inline-block',
+    'fill': 'currentcolor',
+    'flex-shrink': '0',
+    'width': '1.5em',
+    'height': '1.5em',
+    'max-width': '100% ',
+    'position': 'relative',
+    'vertical-align': 'text-bottom',
+    '-moz-user-select': 'none',
+    '-ms-user-select': 'none',
+    '-webkit-user-select': 'none',
+    'user-select': 'none',
+  };
 
   onValidKey() {
     this.check();
@@ -115,12 +132,15 @@ export class VideoCommentAddComponent extends FormReactive implements OnChanges,
   }
 
   openVisitorModal(event: any) {
-    if (this.user === null) { // we only open it for visitors
+    debugger
+    if (this.user == null) { // we only open it for visitors
       // fixing ng-bootstrap ModalService and the "Expression Changed After It Has Been Checked" Error
-      event.srcElement.blur();
+      // event.srcElement.blur();
       event.preventDefault();
 
-      this.modalService.open(this.visitorModal);
+      // this.modalService.open(this.visitorModal);
+
+      this.notifier.warning('', 'You need to be logged in to comment'); // TODO: GroupBy them kk
     }
   }
 

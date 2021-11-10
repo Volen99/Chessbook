@@ -16,7 +16,7 @@
                 (click)="this.handleVote()">Vote
         </button>
         <span *ngIf="this.showResults && !this.disabled"><button class="poll__link text-hint" (click)="this.handleRefresh()">Refresh</button> · </span>
-        {{this.votesCount}} votes
+        {this.votesCount, plural, =1 {1 vote} other {{{ this.votesCount}} votes }}
         <span *ngIf="this.poll.expiresAt"> · <ng-container *ngIf="this.expired">Final results</ng-container>
             <ng-container *ngIf="!this.expired">
                 <app-relative-timestamp [timestamp]="this.poll.expiresAt" [futureDate]="true">

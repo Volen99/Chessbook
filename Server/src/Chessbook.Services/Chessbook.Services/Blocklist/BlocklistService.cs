@@ -85,6 +85,11 @@ namespace Chessbook.Services.Blocklist
                 // user
                 query = query.Where(b => b.UserId == userId);
 
+                if (search != null)
+                {
+                    // someday.. maybe someday.. you will put the logic in the controller here where it belongs.. 10/31/2021 🎃
+                }
+
                 query = query.OrderByDescending(b => b.CreatedAt).ThenBy(b => b.Id);
 
                 return query;

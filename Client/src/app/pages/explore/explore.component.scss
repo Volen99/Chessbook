@@ -1,12 +1,20 @@
 @import "../../../sass/application";
+@import '../../theme/styles/themes';
 
-a {
-  text-decoration: none;
-
-  &:hover {
+@include nb-install-component() {
+  a {
     text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+      color: nb-theme(text-basic-color);
+    }
+
+    color: nb-theme(text-basic-color);
   }
+
 }
+
 
 .r-150rngu {
 }

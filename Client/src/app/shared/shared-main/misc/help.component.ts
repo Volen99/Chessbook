@@ -11,7 +11,7 @@ import {
 import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 
 import {
-  faQuestion
+  faQuestion,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {SharebookTemplateDirective} from "../angular/directives/sharebook-template.directive";
@@ -26,7 +26,7 @@ import {ENHANCED_RULES, TEXT_RULES} from "../../../core/utils/markdown";
 export class HelpComponent implements OnInit, OnChanges, AfterContentInit {
   @Input() helpType: 'custom' | 'markdownText' | 'markdownEnhanced' = 'custom';
   @Input() tooltipPlacement = 'right auto';
-  @Input() iconName: IconDefinition = faQuestion;
+  @Input() icon: IconDefinition = faQuestion;
   @Input() title = `Get help`;
   @Input() autoClose = 'outside';
 
@@ -95,11 +95,11 @@ export class HelpComponent implements OnInit, OnChanges, AfterContentInit {
 
   private createMarkdownList(rules: string[]) {
     const rulesToText = {
-      'emphasis': `Emphasis`,
-      'link': `Links`,
-      'newline': `New lines`,
-      'list': `Lists`,
-      'image': `Images`
+      emphasis: `Emphasis`,
+      link: `Links`,
+      newline: `New lines`,
+      list: `Lists`,
+      image: `Images`
     };
 
     const bullets = rules.map(r => rulesToText[r])

@@ -1,15 +1,18 @@
 import {Injectable} from '@angular/core';
+import {HttpParams} from "@angular/common/http";
+import {Subject} from "rxjs";
+import {catchError} from "rxjs/operators";
 
 import {messages} from '../../pages/messages/chat/messages';
 import {botReplies, gifsLinks, imageLinks} from '../../pages/messages/chat/bot-replies';
 import {HttpService} from "../../core/backend/common/api/http.service";
-import {HttpParams} from "@angular/common/http";
-import {catchError} from "rxjs/operators";
 import {RestService} from "../../core/rest/rest.service";
 import {RestExtractor} from "../../core/rest/rest-extractor";
 
 @Injectable()
 export class ChatService {
+
+  removeMessageFromArrayEvent: Subject<any> = new Subject();
 
   constructor(private http: HttpService, private restService: RestService,
               private restExtractor: RestExtractor) {
@@ -75,8 +78,16 @@ export class ChatService {
       .pipe(catchError(res => this.restExtractor.handleError(res)));
   }
 
+  getUnreadPrivateMessages() {
+    return this.http.get('pm/unread')
+      .pipe(catchError(res => this.restExtractor.handleError(res)));
+  }
+
   delete(id: number, tab: string) {
+    this.removeMessageFromArrayEvent.next([+id, tab]);
     return this.http.post(`pm/delete-${tab}/${id}`, {})
       .pipe(catchError(res => this.restExtractor.handleError(res)));
   }
+
+
 }

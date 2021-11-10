@@ -165,6 +165,11 @@
                 return this.Unauthorized("You have to be registered in order to post.");
             }
 
+            if (query.Status == null && query.MediaIds?.Length == 0 && body.Poll == null && query.InReplyToStatusId.HasValue == false)
+            {
+                return this.BadRequest();
+            }
+
             Post post = null;
             if (body.Poll == null)
             {
@@ -285,7 +290,9 @@
                 return this.BadRequest("Post comment is not a thread.");
             }
 
-            var model = await this.postModelFactory.PreparePostCommentModelAsync(comment);
+           Notifier.Instance.NotifyOnNewComment(comment);
+
+           var model = await this.postModelFactory.PreparePostCommentModelAsync(comment);
 
             return this.Ok(model);
         }
@@ -331,7 +338,8 @@
                    postId: postId,
                    userId: User.GetUserId(),
                    pageIndex: query.Start,
-                   pageSize: query.Count);
+                   pageSize: query.Count,
+                   sort: query.Sort);
 
             foreach (var pc in comments)
             {
@@ -342,7 +350,13 @@
             // should return all the post comments, not the pagintation ones only.
             var totalNotDeletedComments = await this.postCommentService.GetPostCommentsCount(postId);
 
-
+            // we do the sorting here, coz it is easier :\
+            if (query.Sort == "-totalReplies")
+            {
+                var currentUser = await this.workContext.GetCurrentCustomerAsync();
+                models = models.OrderByDescending(c => c.TotalReplies).ToList();
+            }
+       
             return this.Ok(new
             {
                 total = comments.TotalCount,
@@ -392,7 +406,6 @@
 
             var model = await this.postModelFactory.PreparePostCommentTree(threadReplies);
 
-
             return this.Ok(model);
         }
 
@@ -411,7 +424,6 @@
             await this.postCommentService.Delete(comment);
 
             return this.Ok();
-
         }
 
         [HttpGet]

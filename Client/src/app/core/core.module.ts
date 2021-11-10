@@ -32,6 +32,8 @@ import {HotkeyModule} from "angular2-hotkeys";
 import {ServerConfigResolver} from "./routing/server-config-resolver.service";
 import {UserRightGuard} from "./routing/user-right-guard.service";
 import {CanDeactivateGuard} from "./routing/can-deactivate-guard.service";
+import {ScrollService} from './routing/scroll.service';
+import {ChessbookRouterService} from './routing/chessbook-router.service';
 
 export const NB_CORE_PROVIDERS = [
   ...CommonMockModule.forRoot().providers,
@@ -95,6 +97,8 @@ export class CoreModule {
         Notifier,
         PeerTubeSocket,
         CanDeactivateGuard,
+        ChessbookRouterService,
+        ScrollService,
 
         MetaService,
         MetaGuard,

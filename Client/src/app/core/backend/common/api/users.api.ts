@@ -134,7 +134,7 @@ export class UsersApi {
   }
 
   getUsers(url: string, params: HttpParams) {
-    return this.api.get(`${this.apiController}/${url}`, params);
+    return this.api.get(`${this.apiController}/${url}`, {params});
   }
 
   getUsersForAdmin(url: string, params: HttpParams) {

@@ -18,7 +18,7 @@
         /// <summary>
         /// Gets a default avatar file name
         /// </summary>
-        public static string DefaultAvatarFileName => "default-avatar.jpg";
+        public static string DefaultAvatarFileName => "default-avatar.png";
 
         /// <summary>
         /// Gets a default image file name

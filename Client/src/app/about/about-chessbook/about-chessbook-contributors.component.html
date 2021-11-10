@@ -1,0 +1,24 @@
+<div class="chessbook-contributors">
+    <p class="chessbook">
+        <strong i18n>Developed with &#10084; by <a target="_blank" rel="noopener noreferrer" routerLink="/volencho">Volen
+            Dyulgerov</a></strong>
+    </p>
+
+    <p ngbTooltip="Don't study me, you won't graduate." placement="top" [openDelay]="7000">
+        <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/profile.php?id=100010730917900">
+            <img width="150px" src="/assets/images/about-me.jpg" alt="Creator of the website"/>
+        </a>
+    </p>
+
+    <div [innerHTML]="creditsHtml"></div>
+
+    <div class="track-info">
+        <a href="https://www.nasa.gov/" class="cover" [style.background-image]="'url(assets/images/tpq-logo.ico)'"
+           target="_blank"></a>
+        <div class="details">
+            <h4>The Programming Quiz</h4>
+            <span>For developers</span>
+        </div>
+    </div>
+
+</div>

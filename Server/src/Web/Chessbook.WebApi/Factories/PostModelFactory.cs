@@ -27,6 +27,7 @@ using Chessbook.Web.Factories;
 using Chessbook.Web.Infrastructure.Cache;
 using Chessbook.Web.Models.Catalog;
 using Chessbook.Web.Models.Media;
+using Chessbook.Services.APIs;
 
 namespace Chessbook.Web.Api.Factories
 {
@@ -52,6 +53,7 @@ namespace Chessbook.Web.Api.Factories
         private readonly IDateTimeHelper dateTimeHelper;
         private readonly IPreviewCardFactory previewCardFactory;
         private readonly IPreviewCardService previewCardService;
+        private readonly ITwitchService twitchService;
 
         #endregion
 
@@ -61,7 +63,7 @@ namespace Chessbook.Web.Api.Factories
             IStoreContext storeContext, IPictureService pictureService, ILocaleStringResourceService localeStringResourceService, IUserModelFactory userModelFactory,
             IUserService userService, IGenericAttributeService genericAttributeService, IPostCommentService postCommentService, IPostsService postService,
             IPostTagService postTagService, IPollService pollService, IPollModelFactory pollModelFactory, IDateTimeHelper dateTimeHelper,
-            IPreviewCardFactory previewCardFactory, IPreviewCardService previewCardService)
+            IPreviewCardFactory previewCardFactory, IPreviewCardService previewCardService, ITwitchService twitchService)
         {
             this.mediaSettings = mediaSettings;
             this.staticCacheManager = staticCacheManager;
@@ -81,6 +83,7 @@ namespace Chessbook.Web.Api.Factories
             this.dateTimeHelper = dateTimeHelper;
             this.previewCardFactory = previewCardFactory;
             this.previewCardService = previewCardService;
+            this.twitchService = twitchService;
         }
 
         #endregion
@@ -559,14 +562,17 @@ namespace Chessbook.Web.Api.Factories
             foreach (var product in products)
             {
                 var userTime = await this.dateTimeHelper.ConvertToUserTimeAsync(product.CreatedAt, DateTimeKind.Utc);
-                var model = new PostModel
-                {
-                    Id = product.Id,
-                    Status = product.Status,
-                    HasMedia = product.HasMedia,
-                    FavoriteCount = product.FavoriteCount,
-                    CreatedAt = userTime,
-                };
+                //var model = new PostModel
+                //{
+                //    Id = product.Id,
+                //    Status = product.Status,
+                //    HasMedia = product.HasMedia,
+                //    FavoriteCount = product.FavoriteCount,
+                //    CreatedAt = userTime,
+                //    Poll = product.Poll != null ? await this.pollModelFactory.PreparePollModelAsync(product.Poll, true) : null,
+                //};
+
+                var model = await this.PreparePostModelAsync(product);
 
                 // user 
                 var postUser = await this.userService.GetCustomerByIdAsync(product.UserId);
@@ -580,6 +586,45 @@ namespace Chessbook.Web.Api.Factories
                     // pictures
                     var allPictureModels = await this.PrepareProductDetailsPictureModelAsync(model, false);
                     model.Entities.Medias = allPictureModels;
+                }
+                else if (model.Status != null && model.Status.Contains("https://www.twitch.tv/") && model.Status.Contains("/clip/"))
+                {
+                    var clipPictureUrl = await this.genericAttributeService.GetAttributeAsync<string>(product, NopCustomerDefaults.ClipPictureUrlAttribute);
+                    if (clipPictureUrl != null)
+                    {
+                        model.ClipThumbnail = clipPictureUrl;
+                    }
+                    else
+                    {
+                        var slug = model.Status.Split("/clip/", StringSplitOptions.RemoveEmptyEntries)[1].Split(' ', StringSplitOptions.RemoveEmptyEntries)[0];
+                        var clipData = await this.twitchService.GetTwitchClipImage(slug);
+                        if (clipData.Data.Any())
+                        {
+                            model.ClipThumbnail = clipData.Data[0].ThumbnailUrl;
+                            await this.genericAttributeService.SaveAttributeAsync(product, NopCustomerDefaults.ClipPictureUrlAttribute, clipData.Data[0].ThumbnailUrl);
+                        }
+                    }
+                }
+                else if (model.Status != null && model.Status.Contains("https://www.twitch.tv/") && model.Status.Contains("/videos/"))
+                {
+                    var videoPictureUrl = await this.genericAttributeService.GetAttributeAsync<string>(product, NopCustomerDefaults.VideoPictureUrlAttribute);
+                    if (videoPictureUrl != null)
+                    {
+                        model.ClipThumbnail = videoPictureUrl;
+                    }
+                    else
+                    {
+                        var videoId = model.Status.Split("/videos/", StringSplitOptions.RemoveEmptyEntries)[1].Split(' ', StringSplitOptions.RemoveEmptyEntries)[0];
+                        var videoData = await this.twitchService.GetTwitchVideoImage(videoId);
+                        if (videoData.Data.Any())
+                        {
+                            var thumb = videoData.Data[0].ThumbnailUrl.Replace("%{width}", "280");
+                            thumb = thumb.Replace("%{height}", "153");
+                            model.ClipThumbnail = thumb;
+
+                            await this.genericAttributeService.SaveAttributeAsync(product, NopCustomerDefaults.VideoPictureUrlAttribute, thumb);
+                        }
+                    }
                 }
 
                 models.Add(model);

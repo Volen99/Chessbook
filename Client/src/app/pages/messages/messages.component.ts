@@ -5,6 +5,7 @@ import {takeWhile} from "rxjs/operators";
 import {ChatService} from "../../shared/shared-messages/chat.service";
 import {IUser} from "../../core/interfaces/common/users";
 import {Location} from "@angular/common";
+import {Post} from "../../shared/shared-main/post/post.model";
 
 export interface PrivateMessage {
   id: number;
@@ -24,8 +25,8 @@ export interface PrivateMessage {
   styleUrls: ['./messages.component.scss']
 })
 export class MessagesComponent implements OnInit, OnDestroy {
-
   private routeSub: Subscription;
+  private deleteSubscription: Subscription;
 
   private alive = true;
 
@@ -45,7 +46,14 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.deleteSubscription = this.chatService.removeMessageFromArrayEvent.subscribe((value) => {
+      if (Array.isArray(value)) {
+        const id = value[0];
+        const tab = value[1];
 
+        this.removeMessageFromArray(id, tab);
+      }
+    });
   }
 
 
@@ -54,13 +62,25 @@ export class MessagesComponent implements OnInit, OnDestroy {
       this.routeSub.unsubscribe();
     }
 
+    if (this.deleteSubscription) {
+      this.deleteSubscription.unsubscribe();
+    }
+
     this.alive = false;
   }
 
   messages: PrivateMessage[];
   sent: PrivateMessage[];
 
+  removeMessageFromArray(messageId: number, tab: string) {
+    if (tab === 'inbox') {
+      this.messages = this.messages.filter(m => m.id !== messageId);
+    } else {
+      this.sent = this.sent.filter(m => m.id !== messageId);
+    }
+  }
+
   isMessageSelected() {
-    return this.location.path(false).endsWith('s');
+    return this.location.path(false).endsWith('s') === false;
   }
 }

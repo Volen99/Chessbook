@@ -6,7 +6,6 @@ import {
 } from '@fortawesome/pro-light-svg-icons';
 
 import {NbDialogRef} from "../../../../sharebook-nebular/theme/components/dialog/dialog-ref";
-import {ShowcaseDialogComponent} from "../../../../pages/modal-overlays/dialog/showcase-dialog/showcase-dialog.component";
 import {PostsService} from "../../posts.service";
 import {IUser} from "../../../../core/interfaces/common/users";
 import {UserStore} from "../../../../core/stores/user.store";
@@ -21,7 +20,7 @@ export class LikesComponent implements OnInit {
   @Input() postId: number;
   @Input() type: 'likes' | 'reposts';
 
-  constructor(protected ref: NbDialogRef<ShowcaseDialogComponent>, private router: Router,
+  constructor(private ref: NbDialogRef<LikesComponent>, private router: Router,
               private postService: PostsService, private userStore: UserStore) {
   }
 
@@ -69,6 +68,10 @@ export class LikesComponent implements OnInit {
   }
 
   isManageable(user: IUser) {
+    if (!this.userStore.isLoggedIn()) {
+      return false;
+    }
+
     return user?.id === this.userStore.getUser().id;
   }
 

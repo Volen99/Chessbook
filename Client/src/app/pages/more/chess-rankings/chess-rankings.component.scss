@@ -10,7 +10,7 @@ $flag-icon-css-path: '~flag-icon-css/flags' !default;
 
   ::ng-deep .example-smart-table {
     .form-control {
-      color: nb-theme(form-control-color);
+      color: red; //nb-theme(form-control-color);
     }
 
   }

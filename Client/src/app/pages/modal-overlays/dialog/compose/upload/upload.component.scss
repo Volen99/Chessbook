@@ -44,6 +44,33 @@ fa-icon {
   }
 }
 
+.emoji-flex {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+
+  .emoji-flex-item {
+    text-align: left;
+    margin: auto;
+    min-width: 227px;
+    flex: 1;
+
+    code {
+      @include margin-left(5px);
+
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+}
+
+.modal-body {
+  > span {
+    float: left;
+    margin-bottom: 20px;
+  }
+}
+
 .close-button {
   &:hover {
     background-color: rgba(29, 161, 242, 0.1);

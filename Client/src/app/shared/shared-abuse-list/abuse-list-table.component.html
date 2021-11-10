@@ -58,13 +58,13 @@
         </span>
       </td>
 
-      <ng-container *ngIf="abuse.video">
+      <ng-container *ngIf="abuse.post">
 
-        <td *ngIf="!abuse.video.deleted">
-          <a [href]="getVideoUrl(abuse)" class="table-video-link" [title]="abuse.video.name" target="_blank" rel="noopener noreferrer">
+        <td *ngIf="!abuse.post.deleted">
+          <a [href]="getVideoUrl(abuse)" class="table-video-link" [title]="abuse.post.name" target="_blank" rel="noopener noreferrer">
             <div class="table-video">
               <div class="table-video-image">
-                <img [src]="abuse.video.thumbnailPath">
+                <img [src]="abuse.post.thumbnailPath">
                 <span
                         class="table-video-image-label" *ngIf="abuse.count > 1"
                         i18n-title title="This video has been reported multiple times."
@@ -75,17 +75,17 @@
 
               <div class="table-video-text">
                 <div>
-                  <span *ngIf="!abuse.video.blacklisted" class="glyphicon glyphicon-new-window"></span>
-                  <span *ngIf="abuse.video.blacklisted" i18n-title title="The video was blocked" class="glyphicon glyphicon-ban-circle"></span>
-                  {{ abuse.video.name }}
+                  <span *ngIf="!abuse.post.blacklisted" class="glyphicon glyphicon-new-window"></span>
+                  <span *ngIf="abuse.post.blacklisted" i18n-title title="The video was blocked" class="glyphicon glyphicon-ban-circle"></span>
+                  {{ abuse.post.name }}
                 </div>
-                <div i18n>by {{ abuse.video.channel?.displayName }} on {{ abuse.video.channel?.host }} </div>
+                <div i18n>by {{ abuse.post.channel?.displayName }} on {{ abuse.post.channel?.host }} </div>
               </div>
             </div>
           </a>
         </td>
 
-        <td *ngIf="abuse.video.deleted" class="c-hand" [pRowToggler]="abuse">
+        <td *ngIf="abuse.post.deleted" class="c-hand" [pRowToggler]="abuse">
           <div class="table-video" i18n-title title="Video was deleted">
             <div class="table-video-image">
               <span i18n>Deleted</span>
@@ -93,10 +93,10 @@
 
             <div class="table-video-text">
               <div>
-                {{ abuse.video.name }}
+                {{ abuse.post.name }}
                 <span class="glyphicon glyphicon-trash"></span>
               </div>
-              <div i18n>by {{ abuse.video.channel?.displayName }} on {{ abuse.video.channel?.host }} </div>
+              <div i18n>by {{ abuse.post.channel?.displayName }} on {{ abuse.post.channel?.host }} </div>
             </div>
           </div>
         </td>
@@ -112,7 +112,7 @@
         </td>
       </ng-container>
 
-      <ng-container *ngIf="!abuse.comment && !abuse.video">
+      <ng-container *ngIf="!abuse.comment && !abuse.post">
         <td *ngIf="abuse.flaggedAccount">
           <a [href]="getAccountUrl(abuse)"  class="table-account-link" target="_blank" rel="noopener noreferrer">
             <span>{{ abuse.flaggedAccount.displayName }}</span>

@@ -2,15 +2,647 @@
     <div class="row">
         <nb-card-header>
             <div class="sub-menu" [ngClass]="{ 'sub-menu-fixed': !isBroadcastMessageDisplayed }">
-<!--                <div class="links">-->
-<!--                    <a routerLink="peertube" routerLinkActive="active" class="title-page title-page-about">Chessbook</a>-->
-<!--                </div>-->
+                <!--                <div class="links">-->
+                <!--                    <a routerLink="peertube" routerLinkActive="active" class="title-page title-page-about">Chessbook</a>-->
+                <!--                </div>-->
             </div>
-
         </nb-card-header>
         <nb-card-body>
             <div class="margin-content" [ngClass]="{ 'offset-content': !isBroadcastMessageDisplayed }">
-                <router-outlet></router-outlet>
+                <!--<router-outlet></router-outlet>-->
+                <div class="root">
+                    <h1 i18n class="about-chessbook-title">
+                        What is Chessbook?
+                    </h1>
+
+                    <img class="planet" width="121px" height="147px"
+                         src="/assets/images/icons/chessbook-purple-blue-icon.svg" alt="chessbook logo"/>
+
+                    <div class="description">
+                        <p i18n>
+                            Chessbook is what's happening in the chess world and what people are talking about right
+                            now.
+                        </p>
+
+                        <p i18n>
+                            It is free and ads free.
+                        </p>
+
+                        <p i18n>
+                            For more information, please check our <a routerLink="/terms" rel="noopener noreferrer"
+                                                                      href="https://chessbook.com">Privacy Policy</a>.
+                        </p>
+                    </div>
+
+                    <div class="documentation">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <a i18n target="_blank" rel="noopener noreferrer"
+                                       href="https://docs.joinpeertube.org/use-setup-account">Short introduction video
+                                    to Chessbook</a>
+                                </div>
+
+                                <div i18n class="card-text">
+                                    Discover what is Chessbook, what it offers and much more!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <a i18n target="_blank" rel="noopener noreferrer"
+                                       href="https://docs.joinpeertube.org/use-third-party-application">Chessbook
+                                        Applications</a>
+                                </div>
+
+                                <div i18n class="card-text">
+                                    Discover unofficial Android applications or browser addons!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <a rel="noopener noreferrer" href="javascript:void(0)">Contribute on Chessbook</a>
+                                </div>
+
+                                <div i18n class="card-text">
+                                    Want to help to improve Chessbook? You can <a rel="noopener noreferrer"
+                                                                                  routerLink="/contact">contact</a>
+                                    the creator of this website and walk the walk together! :)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<my-about-instance></my-about-instance>-->
+                    <div class="row">
+                        <div class="col-md-12 col-xl-12">
+
+                            <div class="about-instance-title">
+                                <h1 i18n class="title">About {{ instanceName }}</h1>
+
+                                <!--            <a nbButton routerLink="/about/contact" i18n *ngIf="isContactFormEnabled" class="contact-admin">Contact-->
+                                <!--                administrator</a>-->
+                            </div>
+
+                            <div class="instance-badges" *ngIf="categories.length !== 0 || languages.length !== 0">
+                                <span *ngFor="let category of categories"
+                                      class="badge badge-primary category">{{ category }}</span>
+
+                                <span *ngFor="let language of languages"
+                                      class="badge badge-secondary language">{{ language }}</span>
+                            </div>
+
+                            <div class="short-description">
+                                <div class="block short-description">{{ shortDescription }}</div>
+
+                                <div i18n *ngIf="isNSFW" class="block dedicated-to-nsfw">This instance is dedicated to
+                                    sensitive/NSFW
+                                    content.
+                                </div>
+                            </div>
+
+                            <div class="anchor" id="administrators-and-sustainability"></div>
+                            <a
+                                    *ngIf="html.administrator || html.maintenanceLifetime || html.businessModel"
+                                    class="anchor-link"
+                                    routerLink="/about"
+                                    fragment="administrators-and-sustainability"
+                                    #anchorLink
+                                    (click)="onClickCopyLink(anchorLink)"
+                            >
+                                <h2 i18n class="middle-title">
+                                    ADMINISTRATORS & SUSTAINABILITY
+                                </h2>
+                            </a>
+
+                            <div class="block administrator" *ngIf="html.administrator">
+                                <div class="anchor" id="administrators"></div>
+                                <a
+                                        class="anchor-link"
+                                        routerLink="/about"
+                                        fragment="administrators"
+                                        #anchorLink
+                                        (click)="onClickCopyLink(anchorLink)">
+                                    <h2 i18n class="section-title">Who we are</h2>
+                                </a>
+
+                                <div [innerHTML]="html.administrator"></div>
+                            </div>
+
+                            <div class="block creation-reason" *ngIf="html.creationReason">
+                                <div class="anchor" id="creation-reason"></div>
+                                <a
+                                        class="anchor-link"
+                                        routerLink="/about"
+                                        fragment="creation-reason"
+                                        #anchorLink
+                                        (click)="onClickCopyLink(anchorLink)">
+                                    <h2 i18n class="section-title">Why we created this instance</h2>
+                                </a>
+
+                                <div [innerHTML]="html.creationReason"></div>
+                            </div>
+
+                            <div class="block maintenance-lifetime" *ngIf="html.maintenanceLifetime">
+                                <div class="anchor" id="maintenance-lifetime"></div>
+                                <a
+                                        class="anchor-link"
+                                        routerLink="/about"
+                                        fragment="maintenance-lifetime"
+                                        #anchorLink
+                                        (click)="onClickCopyLink(anchorLink)">
+                                    <h2 i18n class="section-title">How long we plan to maintain this instance</h2>
+                                </a>
+
+                                <div [innerHTML]="html.maintenanceLifetime"></div>
+                            </div>
+
+                            <div class="block business-model" *ngIf="html.businessModel">
+                                <div class="anchor" id="business-model"></div>
+                                <a
+                                        class="anchor-link"
+                                        routerLink="/about"
+                                        fragment="business-model"
+                                        #anchorLink
+                                        (click)="onClickCopyLink(anchorLink)">
+                                    <h2 i18n class="section-title">How we will pay for keeping our website running</h2>
+                                </a>
+
+                                <div [innerHTML]="html.businessModel"></div>
+                            </div>
+
+                            <div class="anchor" id="information"></div>
+                            <a
+                                    *ngIf="descriptionContent"
+                                    class="anchor-link"
+                                    routerLink="/about"
+                                    fragment="information"
+                                    #anchorLink
+                                    (click)="onClickCopyLink(anchorLink)">
+                                <h2 i18n class="middle-title">
+                                    INFORMATION
+                                </h2>
+                            </a>
+
+                            <div class="block description">
+                                <div class="anchor" id="description"></div>
+                                <a
+                                        class="anchor-link"
+                                        routerLink="about"
+                                        fragment="description"
+                                        #anchorLink
+                                        (click)="onClickCopyLink(anchorLink)">
+                                    <h2 i18n class="section-title">Description</h2>
+                                </a>
+
+                                <!--<my-custom-markup-container [content]="descriptionContent"></my-custom-markup-container>-->
+                                <div>
+                                    <p>I created Chessbook to provide a <strong>free</strong> social media for (not only) chess users.</p>
+                                    <ul>
+                                        <li>
+                                            <p>Ads free. I plan to keep it that way forever but can't promise since
+                                            legends say that money corrupt people.</p>
+                                        </li>
+                                        <li>
+                                            <p>Today is <span class="date-color">{{this.today | date}}</span>. Chessbook was founded in <span class="date-color">{{this.chessbookFounded | date}}</span>.
+                                                So doing the math <span class="date-color">{{this.today | date}}</span> - <span class="date-color">{{this.chessbookFounded | date}}</span> = <span class="date-color">{{this.differenceInDays}}</span>
+                                            </p>
+                                            <p>So chess is only <span class="date-color">{{this.differenceInDays}}</span> days old! Chessbook is constantly being worked on and new features are coming
+                                            left and right, so stay tuned! 👀</p>
+                                        </li>
+                                    </ul>
+                                    <p>
+                                        <strong>Support</strong>
+                                        <br>
+                                        Since we do not serve ads and we do not sell data we rely on your support.
+                                        <br>
+                                        You can help support Chessbook using any of the methods below. Any help is much
+                                        appreciated ♥</p>
+                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
+                                        <div role="button" data-button="" data-funding-source="paypal"
+                                             class="patreon paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
+                                             tabindex="0" aria-label="PayPal">
+                                            <div class="paypal-button-label-container">
+                                                <img src="assets/images/patreon.png"
+                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
+                                                     class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
+                                            </div>
+                                            <div class="paypal-button-spinner"></div>
+                                        </div>
+                                    </div>
+                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
+                                        <div role="button" data-button="" data-funding-source="paypal"
+                                             class="ko-fi paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
+                                             tabindex="0" aria-label="PayPal">
+                                            <div class="paypal-button-label-container">
+                                                <img src="assets/images/ko-fi.png"
+                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
+                                                     class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
+                                            </div>
+                                            <div class="paypal-button-spinner"></div>
+                                        </div>
+                                    </div>
+                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
+                                        <div role="button" data-button="" data-funding-source="paypal"
+                                             class="streamlabs paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
+                                             tabindex="0" aria-label="PayPal">
+                                            <div class="paypal-button-label-container">
+                                                <img src="assets/images/streamlabs.png"
+                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
+                                                     class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
+                                            </div>
+                                            <div class="paypal-button-spinner"></div>
+                                        </div>
+                                    </div>
+                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
+                                        <div role="button" data-button="" data-funding-source="paypal"
+                                             class="paypal paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
+                                             tabindex="0" aria-label="PayPal">
+                                            <div class="paypal-button-label-container">
+                                                <img src="assets/images/paypal.svg"
+                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
+                                                     class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
+                                            </div>
+                                            <div class="paypal-button-spinner"></div>
+                                        </div>
+                                    </div>
+                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
+                                        <div role="button" data-button="" data-funding-source="paypal"
+                                             class="google-pay paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
+                                             tabindex="0" aria-label="PayPal">
+                                            <div class="paypal-button-label-container">
+                                                <img src="assets/images/google-pay.svg"
+                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
+                                                     class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
+                                            </div>
+                                            <div class="paypal-button-spinner"></div>
+                                        </div>
+                                    </div>
+                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
+                                        <div role="button" data-button="" data-funding-source="paypal"
+                                             class="bitcoin-btc paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
+                                             tabindex="0" aria-label="PayPal">
+                                            <div class="paypal-button-label-container">
+                                                <img src="assets/images/bitcoin-btc.png"
+                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
+                                                     class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
+                                            </div>
+                                            <div class="paypal-button-spinner"></div>
+                                        </div>
+                                    </div>
+                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
+                                        <div role="button" data-button="" data-funding-source="paypal"
+                                             class="bitcoin-cash paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
+                                             tabindex="0" aria-label="PayPal">
+                                            <div class="paypal-button-label-container">
+                                                <img src="assets/images/bitcoin-cash.png"
+                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
+                                                     class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
+                                            </div>
+                                            <div class="paypal-button-spinner"></div>
+                                        </div>
+                                    </div>
+                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
+                                        <div role="button" data-button="" data-funding-source="paypal"
+                                             class="dogecoin paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
+                                             tabindex="0" aria-label="PayPal">
+                                            <div class="paypal-button-label-container">
+                                                <img src="assets/images/dogecoin.png"
+                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
+                                                     class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
+                                            </div>
+                                            <div class="paypal-button-spinner"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="anchor" id="moderation"></div>
+                            <a
+                                    *ngIf="html.moderationInformation || html.codeOfConduct || html.terms"
+                                    class="anchor-link"
+                                    routerLink="/about"
+                                    fragment="moderation"
+                                    #anchorLink
+                                    (click)="onClickCopyLink(anchorLink)">
+                                <h2 i18n class="middle-title">
+                                    MODERATION
+                                </h2>
+                            </a>
+
+                            <div class="block moderation-information" *ngIf="html.moderationInformation">
+                                <div class="anchor" id="moderation-information"></div>
+                                <a
+                                        class="anchor-link"
+                                        routerLink="/about"
+                                        fragment="moderation-information"
+                                        #anchorLink
+                                        (click)="onClickCopyLink(anchorLink)">
+                                    <h2 i18n class="section-title">Website rules</h2>
+                                </a>
+
+                                <div [innerHTML]="html.moderationInformation"></div>
+                                <ol class="rules-list">
+                                    <li>
+                                        <div class="rules-list__text">No racism, sexism, homophobia, transphobia,
+                                            xenophobia, or casteism
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="rules-list__text">No spam or advertising</div>
+                                    </li>
+                                    <li>
+                                        <div class="rules-list__text">No incitement of violence or promotion of violent
+                                            ideologies
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="rules-list__text">No harassment, dogpiling or doxxing of other
+                                            users
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="rules-list__text">No illegal content</div>
+                                    </li>
+                                    <li>
+                                        <div class="rules-list__text">No right-wing conspiracy theories, misinformation or anti-vaccination spam
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="rules-list__text">Political content is generally fine, but personal
+                                            attacks on specific
+                                            individuals is not cool and should be avoided
+                                        </div>
+                                    </li>
+                                </ol>
+                            </div>
+
+                            <div class="block code-of-conduct" *ngIf="html.codeOfConduct">
+                                <div class="anchor" id="code-of-conduct"></div>
+                                <a
+                                        class="anchor-link"
+                                        routerLink="/about"
+                                        fragment="code-of-conduct"
+                                        #anchorLink
+                                        (click)="onClickCopyLink(anchorLink)">
+                                    <h2 i18n class="section-title">Code of conduct</h2>
+                                </a>
+
+                                <!--<div [innerHTML]="html.codeOfConduct"></div>-->
+                                <div>
+                                    <ul>
+                                        <li><strong>Be friendly and patient.</strong></li>
+                                        <li><strong>Be welcoming.</strong> We strive to be a community that welcomes and
+                                            supports people of
+                                            all backgrounds and identities. This includes, but is not limited to members
+                                            of any race,
+                                            ethnicity, culture, national origin, colour, immigration status, social and
+                                            economic class,
+                                            educational level, sex, sexual orientation, gender identity and expression,
+                                            age, size, family
+                                            status, political belief, religion, and mental and physical ability.
+                                        </li>
+                                        <li><strong>Be considerate.</strong> Your content will be viewed by other
+                                            people. Any decision you
+                                            take will affect your audience, and you should take them into account when
+                                            making editorial
+                                            decisions. Remember that we're a world-wide community, so you might not be
+                                            communicating in
+                                            someone else's primary language. Respect everyone the way they are.
+                                        </li>
+                                        <li><strong>Be respectful.</strong> Not all of us will agree all the time, but
+                                            disagreement is no
+                                            excuse for poor behavior and poor manners. We might all experience some
+                                            frustration now and
+                                            then, but we cannot allow that frustration to turn into a personal attack.
+                                            It’s important to
+                                            remember that a community where people feel uncomfortable or threatened is
+                                            not a productive one.
+                                            Members of the Chessbook community should be respectful when dealing with
+                                            other members as well
+                                            as with people outside the Chessbook community.
+                                        </li>
+                                        <li><strong>Be careful in the words that you choose.</strong> Be kind to others.
+                                            Do not insult or
+                                            put down other participants. Harassment and other exclusionary behavior
+                                            aren't acceptable. This
+                                            includes, but is not limited to:
+                                            <ul>
+                                                <li>Violent threats or language directed against another person.</li>
+                                                <li>Discriminatory jokes and language.</li>
+                                                <li>Posting (or threatening to post) other people's personally
+                                                    identifying information
+                                                    ("doxing").
+                                                </li>
+                                                <li>Personal insults, especially those using racist or sexist terms.
+                                                </li>
+                                                <li>Accusing someone of cheating publicly without being proven.</li>
+                                                <li>Advocating for, or encouraging, any of the above behavior.</li>
+                                                <li>Repeated harassment of others. In general, if someone asks you to
+                                                    stop, then stop.
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>When we disagree, try to understand why.</strong> Disagreements,
+                                            both social and
+                                            technical, happen all the time and Chessbook is no exception. It is
+                                            important that we resolve
+                                            disagreements and differing views constructively. Remember that we're
+                                            different. Some like
+                                            starting with 1.e4 some with 1.d4 etc.. Different people have different
+                                            perspectives on issues.
+                                            Being unable to understand why someone holds a viewpoint doesn’t mean that
+                                            they’re wrong. Don’t
+                                            forget that it is human to blunder and blaming each other doesn't get us
+                                            anywhere. Instead,
+                                            focus on helping to resolve issues and learning from mistakes.
+                                        </li>
+                                    </ul>
+                                    <ol>
+                                        <li>
+                                            The following types of content will be removed from the public
+                                            timeline:
+                                            <ol type="a">
+                                                <li>
+                                                    Excessive advertising
+                                                </li>
+                                                <li>
+                                                    Uncurated news bots posting from third-party news sources
+                                                </li>
+                                                <li>
+                                                    Nudity, pornography and sexually explicit content,
+                                                    including artistic depictions
+                                                </li>
+                                                <li>
+                                                    Fake news, anti-vaccination spam or any of the QAnon bullshit
+                                                </li>
+                                            </ol>
+                                        </li>
+                                        <li>
+                                            The following types of content will be removed from the public
+                                            timeline, and may result in account suspension and revocation of access
+                                            to the service:
+                                            <ol type="a">
+                                                <li>
+                                                    Racism or advocation of racism
+                                                </li>
+                                                <li>
+                                                    Sexism or advocation of sexism
+                                                </li>
+                                                <li>
+                                                    Casteism or advocation of casteism
+                                                </li>
+                                                <li>
+                                                    Discrimination against gender and sexual minorities, or
+                                                    advocation thereof
+                                                </li>
+                                                <li>
+                                                    Xenophobic and/or violent nationalism
+                                                </li>
+                                            </ol>
+                                        </li>
+                                        <li>
+                                            The following types of content are explicitly disallowed and will
+                                            result in revocation of access to the service:
+                                            <ol type="a">
+                                                <li>
+                                                    Content illegal in Germany and/or France, such as holocaust
+                                                    denial or Nazi symbolism
+                                                </li>
+                                                <li>
+                                                    Conduct promoting the ideology of National Socialism
+                                                </li>
+                                            </ol>
+                                        </li>
+                                        <li>
+                                            Any conduct intended to stalk or harass other users, or to impede other
+                                            users from utilizing the service, or to degrade the performance of the
+                                            service, or to harass other users, or to incite other users to perform
+                                            any of the aforementioned actions, is also disallowed, and subject to
+                                            punishment up to and including revocation of access to the service.
+                                            This includes, but is not limited to, the following behaviors:
+                                            <ol type="a">
+                                                <li>
+                                                    Continuing to engage in conversation with a user that has
+                                                    specifically has requested for said engagement with that user
+                                                    to cease and desist may be considered harassment, regardless of
+                                                    platform-specific privacy tools employed.
+                                                </li>
+                                                <li>
+                                                    Aggregating, posting, and/or disseminating a person's
+                                                    demographic, personal, or private data without express
+                                                    permission (informally called doxing or dropping dox) may be
+                                                    considered harassment.
+                                                </li>
+                                                <li>
+                                                    Inciting users to engage another user in continued interaction
+                                                    or discussion after a user has requested for said engagement
+                                                    with that user to cease and desist (informally called brigading
+                                                    or dogpiling) may be considered harassment.
+                                                </li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+
+                            <div class="block terms">
+                                <div class="anchor" id="terms"></div>
+                                <a
+                                        class="anchor-link"
+                                        routerLink="/about"
+                                        fragment="terms"
+                                        #anchorLink
+                                        (click)="onClickCopyLink(anchorLink)">
+                                    <h2 i18n class="section-title">Terms</h2>
+                                </a>
+
+                                <!--<div [innerHTML]="html.terms"></div>-->
+                                <div>
+                                    <p i18n> For more information, please check our <a routerLink="/terms" rel="noopener noreferrer" href="https://chessbook.com">Privacy Policy</a>. </p>
+                                </div>
+                            </div>
+
+                            <div class="anchor" id="other-information"></div>
+                            <a
+                                    *ngIf="html.hardwareInformation"
+                                    class="anchor-link"
+                                    routerLink="/about"
+                                    fragment="other-information"
+                                    #anchorLink
+                                    (click)="onClickCopyLink(anchorLink)">
+                                <h2 i18n class="middle-title">
+                                    OTHER INFORMATION
+                                </h2>
+                            </a>
+
+                            <div class="block hardware-information" *ngIf="html.hardwareInformation">
+                                <div class="anchor" id="hardware-information"></div>
+                                <a
+                                        class="anchor-link"
+                                        routerLink="/about"
+                                        fragment="hardware-information"
+                                        #anchorLink
+                                        (click)="onClickCopyLink(anchorLink)">
+                                    <h2 i18n class="section-title">Hardware information</h2>
+                                </a>
+
+                                <div [innerHTML]="html.hardwareInformation"></div>
+                            </div>
+                        </div>
+
+                        <!--  <div class="col-md-12 col-xl-6">-->
+                        <!--    <h2 class="sr-only" i18n>FEATURES</h2>-->
+                        <!--    &lt;!&ndash;<my-instance-features-table></my-instance-features-table>&ndash;&gt;-->
+                        <!--  </div>-->
+
+                        <div class="col">
+                            <div class="anchor" id="developers"></div>
+                            <a
+                                    class="anchor-link"
+                                    routerLink="/about"
+                                    fragment="developers"
+                                    #anchorLink
+                                    (click)="onClickCopyLink(anchorLink)">
+                                <h2 i18n class="middle-title">DEVELOPERS</h2>
+                            </a>
+                            <!--<my-instance-statistics></my-instance-statistics>-->
+                        </div>
+                    </div>
+
+                    <!--<my-contact-admin-modal #contactAdminModal></my-contact-admin-modal>-->
+
+
+                    <div class="privacy-contributors">
+                        <app-about-chessbook-contributors></app-about-chessbook-contributors>
+
+                        <div class="p2p-privacy">
+                            <h2 class="section-title">
+                                <div class="anchor" id="privacy"></div> <!-- privacy anchor -->
+                                <ng-container>Chessbook & Privacy</ng-container>
+                            </h2>
+
+                            <p>
+                                We Chessbook, welcome your interest in our website. Protecting your private sphere is very important to us.
+                            </p>
+
+                            <p>
+                                We take very seriously the protection of your personal data and the way we handle it confidentially.
+                            </p>
+
+                            <p>
+                                For more information, please check our <a routerLink="/terms" rel="noopener noreferrer"
+                                                                          href="https://chessbook.com">Privacy Policy</a>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </nb-card-body>
     </div>

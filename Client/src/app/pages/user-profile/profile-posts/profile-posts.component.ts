@@ -64,7 +64,6 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
     private postService: PostsService,
     protected initCurrentUser: InitUserService,
     protected userStore: UserStore,
-    private cdr: ChangeDetectorRef,
   ) {
     super();
   }
@@ -84,16 +83,16 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
 
     this.enableAllFilterIfPossible();
 
-    // Parent get the account for us
-    this.accountSub = forkJoin([
-      this.userProfileService.accountLoaded.pipe(first()),
-      this.onUserLoadedSubject.pipe(first())
-    ]).subscribe(([account]) => {
-      this.profileCurrent = account;
-
-      this.reloadVideos();
-      this.generateSyndicationList();
-    });
+    // // Parent get the account for us
+    // this.accountSub = forkJoin([
+    //   this.userProfileService.accountLoaded.pipe(first()),
+    //   this.onUserLoadedSubject.pipe(first())
+    // ]).subscribe(([account]) => {
+    //   this.profileCurrent = account;
+    //
+    //   this.reloadVideos();
+    //   this.generateSyndicationList();
+    // });
   }
 
   ngOnDestroy() {
@@ -102,6 +101,7 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
     }
 
     super.ngOnDestroy();
+    this.postTransformBuffer = 0;
   }
 
   pinnedPost: Post;
@@ -109,14 +109,23 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
 
   setTransformBuffer = buffer => {
     this.postTransformBuffer = buffer;
-    // this.cdr.detectChanges();
   }
 
   getPostsObservable(page: number) {
-    const newPagination = immutableAssign(this.pagination, {currentPage: page});
+    // const newPagination = immutableAssign(this.pagination, {currentPage: page});
+    //
+    // let parameters = new GetUserTimelineParameters(newPagination, this.sort, true, this.profileCurrent.id);
+    // return this.postService.getUserTimelineQuery(parameters);
 
-    let parameters = new GetUserTimelineParameters(newPagination, this.sort, true, this.profileCurrent.id);
-    return this.postService.getUserTimelineQuery(parameters);
+    const newPagination = immutableAssign(this.pagination, { currentPage: page });
+    const params = {
+      videoPagination: newPagination,
+      sort: this.sort,
+      skipCount: true,
+      userId: this.profileCurrent.id,
+    };
+
+    return this.postService.getUserTimelineQuery(params);
 
 
     // const newPagination = immutableAssign(this.pagination, {currentPage: page});
@@ -150,6 +159,6 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
       return 670;
     }
 
-    return postsCount * 670;
+    return postsCount * 470;
   }
 }

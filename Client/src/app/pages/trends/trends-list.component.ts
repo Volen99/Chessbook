@@ -1,25 +1,40 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import {TagsService} from 'app/shared/services/tags.service';
 import {IPostTag} from "../../shared/shared-main/post/post-details.model";
+import {NbThemeService} from "../../sharebook-nebular/theme/services/theme.service";
 
 @Component({
   selector: 'app-trends-list',
   templateUrl: './trends-list.component.html',
   styleUrls: ['./trends-list.component.scss']
 })
-export class TrendsListComponent implements OnInit {
+export class TrendsListComponent implements OnInit, OnDestroy {
+  themeSubscription: any;
 
-  constructor(private tagsService: TagsService) {
+  constructor(private tagsService: TagsService, private themeService: NbThemeService) {
   }
 
   ngOnInit(): void {
+    this.themeSubscription = this.themeService.getJsTheme().subscribe(theme => {
+      if (theme.name === 'default' || theme.name === 'material-light') {
+        this.currentTheme = 'default';
+      } else {
+        this.currentTheme = theme.name;
+      }
+    });
+
     this.tagsService.getPostTags(0)
       .subscribe((data) => {
         this.tags = data.tags?.sort(() => Math.random() - 0.5);
       });
   }
 
+  ngOnDestroy() {
+    this.themeSubscription.unsubscribe();
+  }
+
+  currentTheme = 'default';
   tags: IPostTag[];
 
   getFontSize(tag: IPostTag) {

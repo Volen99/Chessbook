@@ -1,15 +1,22 @@
 @import '_variables';
 @import '_mixins';
 
-.parent-entry {
-  span[role=button] {
-    cursor: pointer;
-  }
+@import '../../../theme/styles/themes';
 
-  a {
-    display: block;
+@include nb-install-component() {
+  .parent-entry {
+    span[role=button] {
+      cursor: pointer;
+    }
+
+    a {
+      display: block;
+    }
+    color: nb-theme(color-primary-default);
   }
 }
+
+
 
 // by miiiiii
 

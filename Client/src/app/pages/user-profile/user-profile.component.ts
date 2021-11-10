@@ -5,7 +5,16 @@ import {Subscription} from 'rxjs';
 import {Subject} from "rxjs/Subject";
 import {catchError, distinctUntilChanged, map, switchMap, takeUntil, tap} from 'rxjs/operators';
 
-import {faBirthdayCake, faCalendarAlt, faGlobe, faLongArrowLeft, faEnvelope} from '@fortawesome/pro-light-svg-icons';
+import {
+  faBirthdayCake,
+  faCalendarAlt,
+  faGlobe,
+  faLongArrowLeft,
+  faEnvelope,
+  faBan,
+  faFlag,
+  faCircle,
+} from '@fortawesome/pro-light-svg-icons';
 
 import {IUser} from "../../core/interfaces/common/users";
 import {UserStore} from "../../core/stores/user.store";
@@ -32,6 +41,7 @@ import {HttpService} from "../../core/backend/common/api/http.service";
 import {HttpParams} from "@angular/common/http";
 import {RestService} from "../../core/rest/rest.service";
 import {ContactAdminModalComponent} from "../../shared/shared-messages/contact-admin-modal.component";
+import {BlocklistService} from '../../shared/shared-moderation/blocklist.service';
 
 @Component({
   templateUrl: './user-profile.component.html',
@@ -58,7 +68,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               private titleService: Title,
               private markdown: MarkdownService,
               private http: HttpService,
-              private restService: RestService) {
+              private restService: RestService,
+              private blocklistService: BlocklistService) {
   }
 
   private accountSub: Subscription;
@@ -295,21 +306,71 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.getModerationActions();
+
     this.initUserService.settingsLoaded$.subscribe(
       () => {
-        if (this.isManageable()) {
-          return;
-        }
-
-        // It's not our account, we can report it
-        this.prependModerationActions = [
-          {
-            label: `Report this account`,
-            handler: () => this.showReportModal()
-          }
-        ];
+        this.getModerationActions();
       }
     );
+  }
+
+  private getModerationActions() {
+    if (this.isManageable()) {
+      return;
+    }
+
+    let blockOrUnblock = this.profileCurrent.blocking
+      ? {label: `Unblock ${this.profileCurrent.screenName}`, handler: () => this.unblockUser(), iconName: faCircle}
+      : {label: `Block ${this.profileCurrent.screenName}`, handler: () => this.blockUser(), iconName: faBan};
+
+    // It's not our account, we can report it
+    this.prependModerationActions = [
+      blockOrUnblock,
+      {
+        label: `Report this account`,
+        handler: () => this.showReportModal(),
+        iconName: faFlag,
+      },
+    ];
+  }
+
+  private blockUser() {
+    if (this.profileCurrent.blocked === true) {
+      return;
+    }
+
+    this.blocklistService.blockAccountByUser(this.profileCurrent)
+      .subscribe(
+        () => {
+          this.notifier.success('Successfully blocked.', 'Success');
+
+          this.profileCurrent.blocking = true;
+          this.getModerationActions();
+          /*this.userChanged.emit();*/
+        },
+
+        err => this.notifier.danger(err.message, 'Error')
+      );
+  }
+
+  private unblockUser() {
+    if (this.profileCurrent.blocked === false) {
+      return;
+    }
+
+    this.blocklistService.unblockAccountByUser(this.profileCurrent)
+      .subscribe(
+        () => {
+          this.notifier.success('Successfully unblocked.', 'Success');
+
+          this.profileCurrent.blocking = false;
+          this.getModerationActions();
+          // this.userChanged.emit();
+        },
+
+        err => this.notifier.danger(err.message, 'Error')
+      );
   }
 
   private showReportModal() {
@@ -349,11 +410,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         title: 'Posts & replies',
         route: ['./replies'],
         disabled: true,
+        responsive: true, // hide title before `route-tabs-icon-only-max-width` value
       },
       {
         title: 'Media',
         route: './media',
         disabled: true,
+        responsive: true,
         // icon: 'flash-outline',
         // responsive: true,
         // disabled: true,
@@ -362,6 +425,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         title: 'Likes',
         route: './likes',
         disabled: true,
+        responsive: true,
       },
     ];
   }

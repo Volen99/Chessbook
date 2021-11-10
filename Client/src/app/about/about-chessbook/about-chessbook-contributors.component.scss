@@ -1,0 +1,83 @@
+@import '_variables';
+@import '_mixins';
+
+@import '../../theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '../../sharebook-nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .chessbook-contributors {
+    .chessbook {
+      font-size: 18px;
+    }
+
+    > p {
+      text-align: center;
+    }
+
+    ::ng-deep h1 {
+      font-size: 1rem;
+      text-align: center;
+      font-weight: $font-semibold;
+      margin-top: 20px;
+    }
+
+    ::ng-deep ul {
+      padding: 0;
+      text-align: center;
+
+      li {
+        @include margin-right(10px);
+
+        display: inline-block;
+      }
+    }
+
+    .track-info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      flex: 1;
+      padding: nb-theme(card-padding);
+    }
+
+    .cover {
+      border-radius: nb-theme(card-border-radius);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 10rem;
+      height: 10rem;
+    }
+
+    .details {
+      text-align: center;
+      padding-top: 1.5rem;
+
+      span {
+        color: nb-theme(text-hint-color);
+      }
+    }
+
+    .track-info .details {
+      @include media-breakpoint-down(is) {
+        span {
+          display: inline-block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+}
+
+

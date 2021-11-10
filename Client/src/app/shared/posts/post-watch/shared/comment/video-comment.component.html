@@ -11,7 +11,7 @@
 
         <div class="comment-account-date">
           <div class="comment-account">
-            <a [routerLink]="[ '/a', comment.by ]">
+            <a [routerLink]="[ '/', comment.by ]">
               <span class="comment-account-name" [ngClass]="{ 'video-author': video.user.id === comment.account.id }">
                 {{ comment.account.displayName }}
               </span>

@@ -25,6 +25,8 @@
     using Chessbook.Services.Cards;
     using Chessbook.Core.Domain.Polls;
     using Chessbook.Core.Domain.Relationships;
+    using Chessbook.Services.Blocklist;
+    using Chessbook.Core.Domain.Customers;
 
     public class PostsService : IPostsService
     {
@@ -32,6 +34,8 @@
         private readonly IRepository<PostPicture> postPictureRepository;
         private readonly IRepository<PostVote> postVoteRepository;
         private readonly IRepository<PostComment> postCommentRepositoy;
+        private readonly IRepository<UserBlocklist> userBlocklistRepository;
+        private readonly IRepository<Customer> customerRepository;
 
         private readonly IUserService userService;
         private readonly IPollService pollService;
@@ -43,6 +47,7 @@
         private readonly INopFileProvider fileProvider;
         private readonly IPreviewCardService previewCardService;
         private readonly IAclService aclService;
+        private readonly IBlocklistService blocklistService;
 
         const string TWITTER_URL_REGEX = @"(?<=^|\s+)" +                      // URL can be prefixed by space or start of line
                    @"\b(?<start>http(?<isSecured>s?)://(?:www\.)?|www\.|)" +  // Start of an url
@@ -60,16 +65,20 @@
                    @"(?<lastChar>[/?])?";                                     // Or a '/'
 
         public PostsService(IRepository<Post> postsRepository, IRepository<PostPicture> postPictureRepository,
-            IRepository<PostVote> postVoteRepository, IRepository<PostComment> postCommentRepositoy, IUserService userService,
+            IRepository<PostVote> postVoteRepository, IRepository<PostComment> postCommentRepositoy,
+            IRepository<Customer> customerRepository,
+            IRepository<UserBlocklist> userBlocklistRepository, IUserService userService,
             IPollService pollService, IRepository<Relationship> relationshipRepository,
             IWorkContext _workContext, IRepository<PostTag> postTagRepository, IRepository<Tag> tagRepository,
             IAclService aclService, IPictureService pictureService, INopFileProvider fileProvider,
-            IPreviewCardService previewCardService)
+            IPreviewCardService previewCardService, IBlocklistService blocklistService)
         {
             this.postsRepository = postsRepository;
             this.postPictureRepository = postPictureRepository;
             this.postVoteRepository = postVoteRepository;
             this.postCommentRepositoy = postCommentRepositoy;
+            this.userBlocklistRepository = userBlocklistRepository;
+            this.customerRepository = customerRepository;
 
             this.userService = userService;
             this.pollService = pollService;
@@ -81,6 +90,7 @@
             this.pictureService = pictureService;
             this.fileProvider = fileProvider;
             this.previewCardService = previewCardService;
+            this.blocklistService = blocklistService;
         }
 
         public async Task<Post> CreateAsync(QueryPostParams query, int userId, int[] mediaIds = null, int? pollId = null)
@@ -542,12 +552,33 @@
         public virtual async Task<IList<Post>> GetHomeTimeline(bool ascSort = true,
             int pageIndex = 0, int pageSize = int.MaxValue)
         {
+            var currentUser = await this._workContext.GetCurrentCustomerAsync();
+            var blockerIds = new List<int>() { currentUser.Id };
+
+            // productsByKeywords = productsByKeywords.Union(
+           //    //        from pptm in this.postTagRepository.Table
+           //    //        join pt in this.tagRepository.Table on pptm.TagId equals pt.Id
+           //    //        where pt.Name == keywords
+           //    //        select pptm.PostId
+           //    //    );
+
+           // no way this works... :D | 11/1/2021, 17:29
+           var blocklistQuery = (from table in this.userBlocklistRepository.Table
+                                  where blockerIds.Contains(table.UserId)
+                                  select table.TargetUserId)
+                                   .Union
+                                   (from users in this.customerRepository.Table
+                                    join pt in this.userBlocklistRepository.Table on users.Id equals pt.TargetUserId
+                                    where blockerIds.Contains(pt.UserId)
+                                    select users.Id);
 
             var posts = await this.postsRepository.GetAllPagedAsync(query =>
             {
                 query = ascSort
                     ? query.OrderBy(fp => fp.CreatedAt).ThenBy(fp => fp.Id)
                     : query.OrderByDescending(fp => fp.CreatedAt).ThenBy(fp => fp.Id);
+
+                query = query.Where(p => blocklistQuery.Contains(p.UserId) == false);
 
                 return query;
 

@@ -1,5 +1,15 @@
 @import "../../../../sass/application";
 
+@import '../../../theme/styles/themes';
+
+@include nb-install-component() {
+  .message-color {
+    background: nb-theme(color-primary-600);
+    color: nb-theme(chat-message-text-color);
+  }
+}
+
+
 .r-16l9doz {
   height: auto;
 }
@@ -214,8 +224,6 @@
   position: absolute;
   z-index: 1;
 }
-
-
 
 
 

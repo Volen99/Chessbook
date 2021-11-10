@@ -21,6 +21,7 @@ import {UserRole} from "../../../../shared/models/users/user-role";
 import {UserStore} from "../../../stores/user.store";
 import {InitUserService} from "../../../../theme/services/init-user.service";
 import {UserLocalStorageKeys} from "../../../../../root-helpers/users/user-local-storage-keys";
+import {ComponentPaginationLight} from "../../../rest/component-pagination.model";
 
 @Injectable()
 export class UsersService extends UserData {
@@ -171,11 +172,15 @@ export class UsersService extends UserData {
     });
   }
 
-  getUsers(pageNumber: number, pageSize: number) {
-    let params = new HttpParams();
+  getUsers(parameters: {
+    pagination: ComponentPaginationLight
+  }) {
+    const {pagination} = parameters;
 
-    params = this.restService.addParameterToQuery(params, 'pageNumber', pageNumber);
-    params = this.restService.addParameterToQuery(params, 'pageSize', pageSize);
+    const restPagination = this.restService.componentPaginationToRestPagination(pagination);
+
+    let params = new HttpParams();
+    params = this.restService.addRestGetParams(params, restPagination);
 
     return this.api.getUsers('who_to_follow', params);
   }
@@ -325,6 +330,7 @@ export class UsersService extends UserData {
   private themes: string[] = [];
 
   private themeFromLocalStorage: string;
+
   getAnonymousUserTheme() {
     if (this.themeFromLocalStorage) {
       return this.themeFromLocalStorage;

@@ -30,6 +30,7 @@ export interface AdminVideoCommentAbuse {
     id: number
     name: string
     uuid: string
+    screenName: string
   };
 
   text: string;
@@ -49,7 +50,7 @@ export interface AdminAbuse {
   state: IPostConstant<AbuseState>;
   moderationComment?: string;
 
-  video?: AdminVideoAbuse;
+  post?: AdminVideoAbuse;
   comment?: AdminVideoCommentAbuse;
 
   createdAt: Date;

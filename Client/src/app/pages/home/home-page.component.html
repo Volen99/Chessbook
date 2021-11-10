@@ -3,8 +3,12 @@
         <nb-card style="width: 102.6%"> <!--inner container to fit vertical border-->
             <app-timeline-cards-header></app-timeline-cards-header>
             <div class="sharebook-container ocean-line border-bottom-color border-bottom-style-solid border-bottom-width-1px r-2sztyj r-1efd50x r-5kkj8d">
-                <ng-lottie *ngIf="this.isFishSwimming" [@fadeIn]="fadeIn" [options]="this.lottieOptions" (animationCreated)="animationCreated($event)" [styles]="this.styles"
-                #lottieComponent>
+                <ng-lottie *ngIf="this.isFishSwimming"
+                           [@fadeIn]="fadeIn"
+                           [options]="this.lottieOptions"
+                           (animationCreated)="animationCreated($event)"
+                           [styles]="this.styles"
+                           #lottieComponent>
 
                 </ng-lottie>
             </div>

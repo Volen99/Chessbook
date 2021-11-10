@@ -141,7 +141,6 @@ export class PostsService {
   }
 
 
-
   //
   // // Retweets
   //
@@ -328,7 +327,7 @@ export class PostsService {
     let url = user.screenName + '/posts';
 
     return this.postsApi.getProfilePosts<ResultList<Post>>(url, params)
-      .pipe(                        // @ts-ignore
+      .pipe(
         switchMap(res => this.extractVideos(res)),
         catchError(err => this.restExtractor.handleError(err))
       );
@@ -352,33 +351,40 @@ export class PostsService {
     params = this.restService.addFormattedParameterToQuery(params, parameters.formattedCustomQueryParameters);
 
     return this.timelineApi.getHomeTimelineAsync(params)
-    .pipe(// @ts-ignore
-      switchMap(res => this.extractVideos(res)),                  // switchMap might bug
-      catchError(err => this.restExtractor.handleError(err))
-    );
+      .pipe(// @ts-ignore
+        switchMap(res => this.extractVideos(res)),                  // switchMap might bug
+        catchError(err => this.restExtractor.handleError(err))
+      );
   }
 
-  getUserTimelineQuery(parameters: GetUserTimelineParameters) {
-    const {postPagination, sort, skipCount} = parameters;
+  getUserTimelineQuery(parameters: {
+    videoPagination: ComponentPaginationLight,
+    sort: PostSortField,
+    skipCount?: boolean,
+    userId: number,
+  }): Observable<ResultList<Post>> {
+    const {videoPagination, sort, skipCount, userId} = parameters;
 
-    const pagination = this.restService.componentPaginationToRestPagination(postPagination);
+    const pagination = this.restService.componentPaginationToRestPagination(videoPagination);
 
     let params = new HttpParams();
 
     params = this.restService.addRestGetParams(params, pagination, sort);
 
-    params = this.restService.addFormattedParameterToQuery(params, this.userQueryParameterGeneratorService.generateIdOrScreenNameParameter(parameters.user));
+    // params = this.restService.addFormattedParameterToQuery(params, this.userQueryParameterGeneratorService.generateIdOrScreenNameParameter(parameters.user));
 
     // this._queryParameterGenerator.addTimelineParameters(query, parameters, tweetMode);
 
-    params = this.restService.addParameterToQuery(params, "exclude_replies", parameters.excludeReplies);
-    params = this.restService.addParameterToQuery(params, "include_rts", parameters.includeRetweets);
-    params = this.restService.addFormattedParameterToQuery(params, parameters.formattedCustomQueryParameters);
+    params = this.restService.addParameterToQuery(params, "userId", userId.toString());
+    params = this.restService.addParameterToQuery(params, "excludeReplies", 'false');
+    params = this.restService.addParameterToQuery(params, "includeRts", 'true');
+    // params = this.restService.addFormattedParameterToQuery(params, parameters.formattedCustomQueryParameters);
 
-    return this.timelineApi.getUserTimelineAsync(params).pipe(// @ts-ignore
-      switchMap(res => this.extractVideos(res)),                  // switchMap might bug
-      catchError(err => this.restExtractor.handleError(err))
-    );
+    return this.timelineApi.getUserTimelineAsync(params)
+      .pipe(
+        switchMap(res => this.extractVideos(res)),
+        catchError(err => this.restExtractor.handleError(err))
+      );
   }
 
   extractVideos(result: ResultList<Post>) {
@@ -410,27 +416,27 @@ export class PostsService {
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 
-  private setVideoRate (id: number, rateType: UserVideoRateType) {
+  private setVideoRate(id: number, rateType: UserVideoRateType) {
     const url = 'vote/' + id;
     const body: UserVideoRateUpdate = {
       rating: rateType
     };
 
     return this.authHttp
-        .put(url, body)
-        .pipe(
-            map(this.restExtractor.extractDataBool),
-            catchError(err => this.restExtractor.handleError(err))
-        );
+      .put(url, body)
+      .pipe(
+        map(this.restExtractor.extractDataBool),
+        catchError(err => this.restExtractor.handleError(err))
+      );
   }
 
 
   explainedPrivacyLabels(serverPrivacies?: IPostConstant<PostPrivacy>[], defaultPrivacyId = PostPrivacy.PUBLIC) {
     const descriptions = {
       [PostPrivacy.PRIVATE]: `Only I can see this video`,
-      [PostPrivacy.UNLISTED]: `Only shareable via a private link`,
+      /*[PostPrivacy.UNLISTED]: `Only shareable via a private link`,*/
       [PostPrivacy.PUBLIC]: `Anyone can see this video`,
-      [PostPrivacy.INTERNAL]: `Only users of this instance can see this video`
+      /*[PostPrivacy.INTERNAL]: `Only users of this instance can see this video`*/
     };
 
     const videoPrivacies = serverPrivacies.map(p => {
@@ -448,17 +454,17 @@ export class PostsService {
 
   }
 
-    getHighestAvailablePrivacy (serverPrivacies: IPostConstant<PostPrivacy>[]) {
-        const order = [ PostPrivacy.PRIVATE, PostPrivacy.INTERNAL, PostPrivacy.UNLISTED, PostPrivacy.PUBLIC ];
+  getHighestAvailablePrivacy(serverPrivacies: IPostConstant<PostPrivacy>[]) {
+    const order = [PostPrivacy.PRIVATE, PostPrivacy.PUBLIC];
 
-        for (const privacy of order) {
-            if (serverPrivacies.find(p => p.id === privacy)) {
-                return privacy;
-            }
-        }
-
-        throw new Error('No highest privacy available');
+    for (const privacy of order) {
+      if (serverPrivacies.find(p => p.id === privacy)) {
+        return privacy;
+      }
     }
+
+    throw new Error('No highest privacy available');
+  }
 
   getLikers(postId: number) {
     let url = `likers/${postId}`;

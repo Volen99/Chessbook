@@ -29,7 +29,7 @@ export class ActorBannerEditComponent implements OnInit {
 
   bannerFormat = '';
   maxBannerSize = 1024 * 1024 * 2;
-  bannerExtensions = ['.png', '.jpeg', '.jpg', '.gif', '.webp'];
+  bannerExtensions = ['.png', '.jpeg', '.jpg'];
 
   preview: SafeResourceUrl;
 

@@ -105,6 +105,8 @@ export class User implements IUser {
     this.youtubeLink = hash.youtubeLink;
     this.facebookLink = hash.facebookLink;
 
+    this.unreadPrivateMessages = hash.unreadPrivateMessages;
+
   }
 
   theme: string; // for anonymous user
@@ -185,6 +187,8 @@ export class User implements IUser {
   youtubeLink: string;
 
   facebookLink: string;
+
+  unreadPrivateMessages: number;
 
   hasRight(right: UserRight) {
     return hasUserRight(this.roles, right);

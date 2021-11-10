@@ -36,7 +36,7 @@ $play-overlay-width: 18px;
   overflow: hidden;
   width: $video-thumbnail-width;
   height: $video-thumbnail-height;
-  background-color: #ececec;
+  // background-color: #ececec;
   transition: filter $play-overlay-transition;
 
   .play-overlay {

@@ -1,35 +1,39 @@
 @import '../../../sass/include/variables';
 @import '../../../sass/include/mixins';
 
-a {
-  @include disable-default-a-behaviour;
+@import '../../theme/styles/themes';
 
-  width: 100%;
+@include nb-install-component() {
+  a {
+    @include disable-default-a-behaviour;
 
-  &,
-  &:hover {
-    color: pvar(--mainForegroundColor);
+    width: 100%;
 
-    &.focus-visible {
-      background-color: pvar(--mainHoverColor);
-      color: pvar(--mainBackgroundColor);
+    &,
+    &:hover {
+      color: pvar(--mainForegroundColor);
+
+      &.focus-visible {
+        background-color: pvar(--mainHoverColor);
+        color: pvar(--mainBackgroundColor);
+      }
     }
   }
-}
 
-.bg-gray {
-  background-color: pvar(--mainBackgroundColor);
-}
+  .bg-gray {
+    background-color: pvar(--mainBackgroundColor);
+  }
 
-.text-gray-light {
-  color: pvar(--mainForegroundColor);
-}
+  .text-gray-light {
+    color: nb-theme(text-hint-color); // pvar(--mainForegroundColor);
+  }
 
-fa-icon {
-  @include apply-svg-color(pvar(--mainForegroundColor));
+  fa-icon {
+    @include apply-svg-color(pvar(--mainForegroundColor));
 
-  width: 17px;
-  position: relative;
-  top: -2px;
-  margin: 5px;
+    width: 17px;
+    position: relative;
+    top: -2px;
+    margin: 5px;
+  }
 }

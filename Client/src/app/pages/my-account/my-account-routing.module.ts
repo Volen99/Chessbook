@@ -91,7 +91,7 @@ const myAccountRoutes: Routes = [
         component: MyAccountBlocklistComponent,
         data: {
           meta: {
-            title: `Muted accounts`
+            title: `Blocked accounts`
           }
         }
       },

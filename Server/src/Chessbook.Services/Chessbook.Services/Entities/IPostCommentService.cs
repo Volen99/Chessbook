@@ -15,7 +15,8 @@ namespace Chessbook.Services.Entities
 
         Task<IPagedList<PostComment>> GetPostCommentThreads(int postId, int userId = 0,
              DateTime? fromUtc = null, DateTime? toUtc = null, string commentText = null,
-             bool ascSort = false,  int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false);
+             bool ascSort = false, int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false,
+             string sort = "-createdAt");
 
         Task<IList<PostComment>> GetPostThreadComments(int postId, int threadId, int userId = 0);
 

@@ -17,7 +17,7 @@
 .color-holder {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; // center;
     height: inherit;
     color: rgba(255, 255, 255, 90);
     font-size: 1.5em;
@@ -31,17 +31,19 @@
 .snackbar-container {
     position: absolute;
     width: 100%;
-    bottom: 50px;
+    bottom: 31%;
     text-align: center;
+    line-height: 26px;
 
-    @media screen and (max-width: 1101px) {
-        bottom: 9px;
+    @media screen and (max-width: 1449px) {
+        bottom: 20%;
     }
 }
 
 @include nb-install-component() {
     fa-icon {
         margin: 1rem;
+        color: nb-theme(color-primary-300);
     }
 }
 

@@ -200,7 +200,6 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
       message += ` It is a remote comment, so the deletion will only be effective on your instance.`;
     }
 
-    debugger
     // const res = await this.confirmService.confirm(message, title);
     // if (res === false) {
     //   return false;

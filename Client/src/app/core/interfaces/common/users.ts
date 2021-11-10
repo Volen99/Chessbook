@@ -16,6 +16,7 @@ import {UserRight} from "../../../shared/models/users/user-right.enum";
 import {Avatar} from "primeng/avatar";
 import {User} from "../../../shared/shared-main/user/user.model";
 import {UserNotificationSetting} from "../../../shared/models/users/user-notification-setting.model";
+import {ComponentPaginationLight} from "../../rest/component-pagination.model";
 
 export interface IUser extends IUserIdentifier {
   displayName: string;
@@ -132,6 +133,8 @@ export interface IUser extends IUserIdentifier {
   youtubeLink: string;
 
   facebookLink: string;
+
+  unreadPrivateMessages: number;
 }
 
 export abstract class UserData {
@@ -175,7 +178,7 @@ export abstract class UserData {
 
   // abstract getUsers (parameters: { pagination: RestPagination, sort: SortMeta, search?: string }): Observable<ResultList<IUser>>;
 
-  abstract getUsers(pageNumber: number, pageSize: number);
+  abstract getUsers(parameters: { pagination: ComponentPaginationLight });
 
   abstract getYourBirthday(userId: number);
 

@@ -2,39 +2,36 @@
     <nb-card-header>
         <div class="modal-header">
             <h4 i18n class="modal-title">Share</h4>
-            <fa-icon [icon]="this.faTimes" aria-label="Close" role="button" (click)="this.cancel()"></fa-icon>
+            <div aria-label="Close" role="button" data-focusable="true"
+                 tabindex="0"
+                 class="icon-hover close-button sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
+                 style="margin-left: calc(5px + (-1 * (41px - 1.5em)) / 2);">
+                <div dir="auto"
+                     class="align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
+                     (click)="this.cancel()">
+                    <fa-icon [icon]="this.faTimes" [styles]="this.svgStyles"></fa-icon>
+                    <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
+                </div>
+            </div>
         </div>
     </nb-card-header>
     <nb-card-body>
         <div class="modal-body">
-
             <div class="video" *ngIf="video">
-                <!--<div class="title-page title-page-single" *ngIf="playlist" i18n>Share the video</div>-->
-
-                <div ngbNav #nav="ngbNav" class="nav-tabs" [(activeId)]="activeVideoId">
-                    <ng-container ngbNavItem="url">
-                        <a ngbNavLink i18n>URL</a>
-
-                        <ng-template ngbNavContent>
-                            <div class="nav-content">
-                                <app-input-toggle-hidden [value]="getVideoUrl()" [withToggle]="false" [withCopy]="true"
-                                                         [show]="true" [readonly]="true">
-                                </app-input-toggle-hidden>
-                            </div>
-                        </ng-template>
-                    </ng-container>
-
-                    <ng-container ngbNavItem="embed">
-                        <a ngbNavLink i18n>Embed</a>
-
-                        <ng-template ngbNavContent>
-                            <div class="nav-content">
-                               Coming soon 😎
-                            </div>
-                        </ng-template>
-                    </ng-container>
-                </div>
-                <div [ngbNavOutlet]="nav"></div>
+                <nb-tabset>
+                    <nb-tab tabTitle="URL">
+                        <div class="nav-content">
+                            <app-input-toggle-hidden [value]="getVideoUrl()" [withToggle]="false" [withCopy]="true"
+                                                     [show]="true" [readonly]="true">
+                            </app-input-toggle-hidden>
+                        </div>
+                    </nb-tab>
+                    <nb-tab tabTitle="Embed">
+                        <div class="nav-content">
+                            Coming soon 😎
+                        </div>
+                    </nb-tab>
+                </nb-tabset>
             </div>
         </div>
     </nb-card-body>

@@ -1,5 +1,10 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {faCog} from '@fortawesome/pro-light-svg-icons';
+
+import {
+  faCog,
+  faCheck,
+  faBroom,
+} from '@fortawesome/pro-light-svg-icons';
 
 import {UserNotificationsComponent} from "./user-notifications/user-notifications.component";
 
@@ -14,6 +19,7 @@ export class NotificationsComponent implements OnInit, AfterViewInit {
   @ViewChild('userNotification', {static: true}) userNotification: UserNotificationsComponent;
 
   _notificationSortType: NotificationSortType = 'createdAt';
+  unreadNotifications = 0;
 
   ngOnInit(): void {
 
@@ -42,6 +48,13 @@ export class NotificationsComponent implements OnInit, AfterViewInit {
     this.userNotification.markAllAsRead();
   }
 
+  clearAll(event: any) {
+    event.preventDefault();
+
+    this.userNotification.clearAll();
+
+  }
+
   hasUnreadNotifications() {
     return this.userNotification.notifications.filter(n => n.read === false).length !== 0;
   }
@@ -51,6 +64,8 @@ export class NotificationsComponent implements OnInit, AfterViewInit {
   }
 
   faCog = faCog;
+  faCheck = faCheck;
+  faBroom = faBroom;
 
   tabs: any[] = [
     {

@@ -295,6 +295,16 @@
         /// </summary>
         public static string CloseConfigurationStepsAttribute => "CloseConfigurationSteps";
 
+        /// <summary>
+        /// Gets a name of generic attribute to store the value of 'ClipPictureUrl'
+        /// </summary>
+        public static string ClipPictureUrlAttribute => "ClipPictureUrl";
+
+        /// <summary>
+        /// Gets a name of generic attribute to store the value of 'VideoPictureUrl'
+        /// </summary>
+        public static string VideoPictureUrlAttribute => "VideoPictureUrl";
+
         #endregion
     }
 }

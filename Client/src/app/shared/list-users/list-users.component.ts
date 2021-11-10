@@ -11,6 +11,8 @@ import {
 import {IUser} from "../../core/interfaces/common/users";
 import {ComponentPaginationLight} from "../../core/rest/component-pagination.model";
 import {UsersService} from "../../core/backend/common/services/users.service";
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {UserStore} from '../../core/stores/user.store';
 
 @Component({
   selector: 'app-list-users',
@@ -26,43 +28,44 @@ export class ListUsersComponent implements OnInit {
   // Subjects are like EventEmitters: they maintain a registry of many listeners.
   onDataSubject = new Subject<any[]>();
 
-  constructor(private router: Router, private userService: UsersService) { }
+  constructor(private router: Router, private userService: UsersService,
+              private notifier: NbToastrService, private userStore: UserStore) {
+  }
 
   ngOnInit(): void {
-
+   this.loadMoreUsers(true);
   }
 
   faCog = faCog;
 
   pagination: ComponentPaginationLight = {
     currentPage: 1,
-    itemsPerPage: 40,
+    itemsPerPage: 3,
   };
 
   hasDoneFirstQuery = false;
   disabled = false;
 
 
-  loadMoreVideos(reset = false) {
-    this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage).
-    subscribe(({data}) => {
-          this.hasDoneFirstQuery = true;
-          this.lastQueryLength = data;
+  loadMoreUsers(reset = false) {
+    this.userService.getUsers({pagination: this.pagination})
+      .subscribe(res => {
 
-          if (reset) {
-            this.users = [];
-          }
+        this.hasDoneFirstQuery = true;
+        this.lastQueryLength = res.data.length;
 
-          this.users = this.users.concat(data);
-
-          this.onDataSubject.next(data);
-        },
-
-        error => {
-          const message = `Cannot load more posts. 😞 Try again later.`;
-
-          console.error(message, {error});
+        if (reset) {
+          this.users = [];
         }
+
+        this.users = this.users.concat(res.data);
+
+        this.pagination.totalItems = res.total;
+
+        this.loading = false;
+
+        // this.onDataSubject.next(data);
+      }, error => this.notifier.danger(error.message, 'Error')
     );
   }
 
@@ -71,20 +74,26 @@ export class ListUsersComponent implements OnInit {
       return 670;
     }
 
-    return usersCount * 670;
+    return usersCount * 270;
   }
 
   setTransform(i: number): number {
     return i * 100; // 😁
   }
 
+  loading = false;
   onNearOfBottom() {
+    debugger
     if (this.disabled) {
       return;
     }
 
-    // No more results
-    if (this.lastQueryLength !== undefined && this.lastQueryLength < this.pagination.itemsPerPage) {
+    if (this.loading) {
+      return;
+    }
+
+    // // No more results
+    if (this.lastQueryLength !== undefined && this.lastQueryLength <= 0) { // < this.pagination.itemsPerPage
       return;
     }
 
@@ -92,11 +101,20 @@ export class ListUsersComponent implements OnInit {
 
     // this.setScrollRouteParams();
 
-    this.loadMoreVideos();
+    this.loading = true;
+    this.loadMoreUsers();
   }
 
   userClickHandler(screenName: string) {
     this.router.navigate([`/${screenName}`]);
+  }
+
+  isManageable(user: IUser) {
+    if (!this.userStore.isLoggedIn()) {
+      return false;
+    }
+
+    return user?.id === this.userStore.getUser().id;
   }
 
 }

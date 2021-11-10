@@ -31,6 +31,10 @@
       color: nb-theme(button-outline-primary-hover-text-color);
     }
   }
+
+  .action-button-border-color {
+    border-color: nb-theme(color-primary-400);
+  }
 }
 
 .link-icon {
@@ -440,7 +444,9 @@ nb-card {
 
 
 
-
+my-top-menu-dropdown {
+  flex-grow: 1;
+}
 
 
 

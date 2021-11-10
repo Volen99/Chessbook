@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-using Chessbook.Core.Domain.Abuse;
 using Chessbook.Services.Abuses;
 using Chessbook.Services;
 using Chessbook.Web.Api.Areas.Admin.Web.Models;
 using Chessbook.Web.Api.Factories;
-using Chessbook.Web.Api.Identity;
 using Chessbook.Web.Api.Models.Abuses;
-using Chessbook.Web.Models.Inputs;
 
 namespace Chessbook.Web.Api.Areas.Admin.Controllers
 {
@@ -54,47 +50,6 @@ namespace Chessbook.Web.Api.Areas.Admin.Controllers
                 total = abuses.TotalCount,
                 data = abuses,
             });
-        }
-
-        [HttpPost]
-        [Route("report")]
-        public async Task<IActionResult> ReportAbuse([FromBody] AbuseCreateInputModel input)
-        {
-            var reporterAccount = await this.userService.GetCustomerByIdAsync(User.GetUserId());
-            var flaggedAccount = await this.userService.GetCustomerByIdAsync(input.Account.Id);
-
-            var temp = new List<int>();
-            foreach (var predefinedReason in input.PredefinedReasons)
-            {
-                var number = (int)((AbusePredefinedReasons)Enum.Parse(typeof(AbusePredefinedReasons), predefinedReason));
-                temp.Add(number);
-            }
-
-
-            var predefinedReasons = string.Join(", ", temp);
-
-            var baseAbuse = new BaseAbuse
-            {
-                ReporterAccountId = reporterAccount.Id,
-                Reason = input.Reason,
-                State = AbuseState.PENDING,
-                PredefinedReasons = predefinedReasons,
-            };
-
-            // check if body has post or comment kk
-            // ...
-
-            var id = await this.abuseService.CreateAccountAbuse(baseAbuse.ReporterAccountId, baseAbuse.Reason, baseAbuse.State, baseAbuse.PredefinedReasons, flaggedAccount.Id);
-
-            return this.Ok(id);
-        }
-
-        private class BaseAbuse
-        {
-            public int ReporterAccountId { get; set; }
-            public string Reason { get; set; }
-            public AbuseState State { get; set; }
-            public string PredefinedReasons { get; set; }
         }
     }
 }

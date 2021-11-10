@@ -135,6 +135,22 @@ export class UserNotificationsComponent implements OnInit {
       );
   }
 
+  clearAll() {
+    this.userNotificationService.clearAll()
+      .subscribe(
+        () => {
+          for (const notification of this.notifications) {
+            notification.read = true;
+          }
+
+          this.notifications = [];
+          this.toasterService.success('', 'All cleared ✔');
+        },
+
+        err => this.toasterService.danger(err.message)
+      );
+  }
+
   changeSortColumn(column: string) {
     this.componentPagination = {
       currentPage: 1,

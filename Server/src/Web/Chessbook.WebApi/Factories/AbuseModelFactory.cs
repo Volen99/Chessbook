@@ -8,6 +8,8 @@ using Chessbook.Services;
 using Chessbook.Web.Api.Models.Abuses;
 using Chessbook.Services.Helpers;
 using Chessbook.Web.Areas.Admin.Models.Customers;
+using Chessbook.Services.Data.Services.Entities;
+using Chessbook.Services.Entities;
 
 namespace Chessbook.Web.Api.Factories
 {
@@ -17,14 +19,18 @@ namespace Chessbook.Web.Api.Factories
         private readonly IUserModelFactory userModelFactory;
         private readonly IAbuseService abuseService;
         private readonly IDateTimeHelper dateTimeHelper;
+        private readonly IPostsService postService;
+        private readonly IPostCommentService postCommentService;
 
         public AbuseModelFactory(IUserService userService, IUserModelFactory userModelFactory, IAbuseService abuseService,
-            IDateTimeHelper dateTimeHelper)
+            IDateTimeHelper dateTimeHelper, IPostsService postService, IPostCommentService postCommentService)
         {
             this.userService = userService;
             this.userModelFactory = userModelFactory;
             this.abuseService = abuseService;
             this.dateTimeHelper = dateTimeHelper;
+            this.postService = postService;
+            this.postCommentService = postCommentService;
         }
 
         public async Task<AbuseModel> PrepareAbuseModel(Abuse abuse)
@@ -55,7 +61,15 @@ namespace Chessbook.Web.Api.Factories
 
                 model.ReporterAccount = reporterAccountModel;
 
-                if (abuse.FlaggedAccountId.HasValue)
+                if (abuse.PostAbuseId.HasValue)
+                {
+                    model.Post = await this.PrepareAdminPostAbuse(abuse, model);
+                } 
+                else if (abuse.PostCommentAbuseId.HasValue)
+                {
+                    model.Comment = await this.PrepareAdminPostCommentAbuse(abuse, model);
+                }
+                else if (abuse.FlaggedAccountId.HasValue)
                 {
                     var flaggedAccount = await this.userService.GetCustomerByIdAsync(abuse.FlaggedAccountId.Value);
                     var flaggedAccountModel = await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), flaggedAccount);
@@ -65,6 +79,41 @@ namespace Chessbook.Web.Api.Factories
             }
 
             return model;
+        }
+
+        public async Task<AdminPostAbuse> PrepareAdminPostAbuse(Abuse abuse, AbuseModel model)
+        {
+            var post = await this.postService.GetPostByIdAsync(abuse.PostAbuseId.Value);
+            var postCreator = await this.userService.GetCustomerByIdAsync(post.UserId);
+
+            var abusePostModel = new AdminPostAbuse
+            {
+                Id = post.Id,
+                Name = post.Status,
+                Channel = await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), postCreator),
+                Deleted = post.Deleted,
+                CountReports = this.abuseService.CountReportsForPost(post.Id),
+             };
+
+            return abusePostModel;
+        }
+
+        public async Task<AdminPostCommentAbuse> PrepareAdminPostCommentAbuse(Abuse abuse, AbuseModel model)
+        {
+            var comment = await this.postCommentService.GetById(abuse.PostCommentAbuseId.Value);
+            var post = await this.postService.GetPostByIdAsync(comment.PostId);
+            var postCreator = await this.userService.GetCustomerByIdAsync(post.UserId);
+
+            var abusePostCommentAbuse = new AdminPostCommentAbuse
+            {
+                Id = comment.Id,
+                Text = comment.Text,
+                ThreadId = comment.OriginCommentId != null ? comment.OriginCommentId.Value : comment.Id,
+                Video = new CommentVideo { Id = post.Id, Name = post.Status, ScreenName = postCreator.ScreenName },
+                Deleted = comment.Deleted,
+            };
+
+            return abusePostCommentAbuse;
         }
     }
 }

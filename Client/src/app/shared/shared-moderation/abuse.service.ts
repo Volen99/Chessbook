@@ -35,7 +35,7 @@ export class AbuseService {
     search?: string
   }): Observable<ResultList<AdminAbuse>> {
     const {pagination, sort, search} = options;
-    const url = AbuseService.BASE_ABUSE_URL;
+    const url = 'admin/' + AbuseService.BASE_ABUSE_URL;
 
     let params = new HttpParams();
     params = this.restService.addRestGetParams(params, pagination, sort);
@@ -72,7 +72,6 @@ export class AbuseService {
   }
 
   reportVideo(parameters: AbuseCreate) {
-    debugger
     const url = AbuseService.BASE_ABUSE_URL + '/report';
 
     const body = omit(parameters, ['id']);
@@ -148,12 +147,12 @@ export class AbuseService {
       {
         id: 'spamOrMisleading',
         label: `Spam, ad or false news`,
-        help: `Contains marketing, spam, purposefully deceitful news, or otherwise misleading thumbnail/text/tags. Please provide reputable sources to report hoaxes.`
+        help: `Contains marketing, spam, purposefully deceitful news, or otherwise misleading <br/> thumbnail/text/tags. Please provide reputable sources to report hoaxes.`
       },
       {
         id: 'privacy',
         label: `Privacy breach or doxxing`,
-        help: `Contains personal information that could be used to track, identify, contact or impersonate someone (e.g. name, address, phone number, email, or credit card details).`
+        help: `Contains personal information that could be used to track, identify, contact or impersonate <br/> someone (e.g. name, address, phone number, email, or credit card details).`
       },
       {
         id: 'rights',
@@ -164,7 +163,7 @@ export class AbuseService {
         id: 'serverRules',
         label: `Breaks server rules`,
         // was description
-        help: `Anything not included in the above that breaks the terms of service, code of conduct, or general rules in place on the server.`
+        help: `Anything not included in the above that breaks the terms of service, <br/> code of conduct, or general rules in place on the server.`
       }
     ];
 

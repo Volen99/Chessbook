@@ -81,6 +81,12 @@ namespace Chessbook.Services.Chat
                 {
                     query = query.Where(pm => isDeletedByRecipient.Value == pm.IsDeletedByRecipient);
                 }
+
+                if (!isDeletedByAuthor.HasValue && !isDeletedByRecipient.HasValue)
+                {
+                    query = query.Where(pm => pm.IsDeletedByAuthor == false && pm.IsDeletedByRecipient == false);
+                }
+
                 if (!string.IsNullOrEmpty(keywords))
                 {
                     query = query.Where(pm => pm.Subject.Contains(keywords));

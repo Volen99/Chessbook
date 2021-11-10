@@ -1,6 +1,6 @@
-<h1>
+<h1 style="padding: 5px 0 5px 15px">
     <fa-icon [icon]="this.faUserTimes" aria-hidden="true"></fa-icon>
-    <ng-container i18n>Muted accounts</ng-container>
+    <ng-container i18n>Blocked accounts</ng-container>
 </h1>
 
 <p-table
@@ -8,7 +8,7 @@
         [rows]="rowsPerPage" [rowsPerPageOptions]="rowsPerPageOptions"
         [sortField]="sort.field" [sortOrder]="sort.order" (onLazyLoad)="loadLazy($event)" (onPage)="onPage($event)"
         [showCurrentPageReport]="true" i18n-currentPageReportTemplate
-        currentPageReportTemplate="Showing {{'{first}'}} to {{'{last}'}} of {{'{totalRecords}'}} muted accounts"
+        currentPageReportTemplate="Showing {{'{first}'}} to {{'{last}'}} of {{'{totalRecords}'}} blocked accounts"
 >
     <ng-template pTemplate="caption">
         <div class="caption">
@@ -22,7 +22,7 @@
         <tr>
             <th style="width: 150px;" i18n>Action</th> <!-- column for action buttons -->
             <th style="width: calc(100% - 300px);" i18n>Account</th>
-            <th style="width: 150px;" i18n pSortableColumn="createdAt">Muted at
+            <th style="width: 150px;" i18n pSortableColumn="createdAt">Blocked at
                 <p-sortIcon field="createdAt"></p-sortIcon>
             </th>
         </tr>
@@ -31,7 +31,7 @@
     <ng-template pTemplate="body" let-accountBlock>
         <tr>
             <td class="action-cell">
-                <button nbButton status="warning" class="unblock-button" (click)="unblockAccount(accountBlock)" i18n>Unmute</button>
+                <button nbButton status="danger" class="unblock-button" (click)="unblockAccount(accountBlock)" i18n>Unblock</button>
             </td>
             <td>
                 <a [href]="accountBlock.blockedAccount.screenName.substring(1)" i18n-title title="Open user in a new tab" target="_blank"

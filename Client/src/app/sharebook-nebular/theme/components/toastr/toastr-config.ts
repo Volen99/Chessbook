@@ -25,7 +25,7 @@ export class NbToastrConfig {
   /**
    * Determines where on the screen toast have to be rendered.
    * */
-  position: NbGlobalPosition = NbGlobalLogicalPosition.TOP_END;
+  position: NbGlobalPosition = NbGlobalLogicalPosition.BOTTOM_END;
   /**
    * Status chooses color scheme for the toast.
    * */

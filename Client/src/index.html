@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!--<link rel="icon" type="image/x-icon" href="favicon.ico">-->
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpVhQiwAllg1RAFaxMWSpQruuGARy0Y1k&libraries=places"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
@@ -35,31 +35,27 @@
     </ul>
 </noscript>
 
-<div id="incompatible-browser" class="alert alert-light" role="alert" style="display: none">
-    <h1 class="alert-heading">PeerTube</h1>
-    <h2 class="mb-3">Incompatible browser</h2>
-
-    <p>We are sorry but it seems that Chessbook is not compatible with your web browser.</p>
-
-    <hr>
-    <p>Please try with the latest version of <a class="alert-link" href="https://www.mozilla.org" target="_blank">Mozilla Firefox</a>.</p>
-    <p class="mb-0">If you think this is a mistake, please <a class="alert-link" href="https://github.com/Volen99/Chessbook/issues/new" target="_blank">report it</a>.</p>
-</div>
-
 <script type="text/javascript">
-    function displayIncompatibleBrowser () {
-        var elem = document.getElementById('incompatible-browser');
-        if (elem.className.indexOf('browser-ok') === -1) {
-            elem.style.display = 'block'
-        }
+
+    /* Suppported browser version taken from the following requirements:
+    Grid: Edge 16, FF 54, Chrome 58, Safari 10.1
+    Pointer Events: Edge 12, FF 59, Chrome 55, Safari 13
+    replaceAll: Chrome 85, Firefox 77, Edge 85, Opera 71
+    ES2018: Chrome 85, Firefox 78, Edge 85, Opera 51
+    TODO: Enable Safari support when authentication cross-domain issue is solved by IS.
+    */
+    var supportedBrowsers = {
+        'Chrome': 85,
+        'Firefox': 78,
+        'Edge': 85,
+        'Safari': false,
+        'Mobile Safari': false,
+        'Opera': 71,
+        'IE': false
     }
 
-    window.onerror = function () {
-        displayIncompatibleBrowser()
-    };
-
-    if (/MSIE|Trident/.test(window.navigator.userAgent) ) {
-        displayIncompatibleBrowser()
+    if (isBrowserOutOfDate(supportedBrowsers)) {
+        window.location.replace("/assets/pages/unsupported/index.html");
     }
 </script>
 

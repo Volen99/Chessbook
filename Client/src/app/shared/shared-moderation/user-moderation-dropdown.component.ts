@@ -228,11 +228,11 @@ export class UserModerationDropdownComponent implements OnInit, OnChanges {
             isDisplayed: ({account}) => account.mutedByUser === true || account.blocked === true,
             handler: ({account}) => this.unblockAccountByUser(account)
           },
-          {
-            label: `Remove comments from your videos`,
-            description: `Remove comments made by this account on your videos.`,
-            handler: ({account}) => this.bulkRemoveCommentsOf({accountName: account.screenName, scope: 'my-videos'})
-          }
+          // {
+          //   label: `Remove comments from your videos`,
+          //   description: `Remove comments made by this account on your videos.`,
+          //   handler: ({account}) => this.bulkRemoveCommentsOf({accountName: account.screenName, scope: 'my-videos'})
+          // }
         ]);
       }
     }

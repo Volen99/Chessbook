@@ -20,6 +20,7 @@ import {
   faCircle,
   faExpand,
   faSignInAlt,
+  faEllipsisH,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {
@@ -171,6 +172,7 @@ export class PostComponent implements OnInit {
   faHeart = faHeart;
   faLockAlt = faLockAlt;
   faSatelliteDish = faSatelliteDish;
+  faEllipsisH = faEllipsisH;
 
   // meatballs menu
   faUserTimes = faUserTimes;
@@ -200,6 +202,21 @@ export class PostComponent implements OnInit {
 
   autoPlayGif: boolean = true;
 
+  svgStyles = {
+    'display': 'inline-block',
+    'fill': 'currentcolor',
+    'flex-shrink': '0',
+    'width': '1.5em',
+    'height': '1.5em',
+    'max-width': '100% ',
+    'position': 'relative',
+    'vertical-align': 'text-bottom',
+    '-moz-user-select': 'none',
+    '-ms-user-select': 'none',
+    '-webkit-user-select': 'none',
+    'user-select': 'none',
+  };
+
   handleMouseEnter() {
     if (this.autoPlayGif) {
       return;
@@ -211,15 +228,18 @@ export class PostComponent implements OnInit {
 
     if (!userCurrent) {
       return [
-        {icon: this.faSignInAlt, title: `You need to log in`, link: '#'},
+        {icon: this.faSignInAlt, title: `You need to log in`, link: '/auth/login'},
       ];
     }
+
+    let expandPost: any = {icon: this.faExpand, title: `Expand this post`, link: '#'};
 
     if (this.post?.user?.id === userCurrent.id) {
       let pinOrUnpinText = !this.post.pinned ? 'Pin to your profile' : 'Unpin from profile';
       return [
         {icon: this.faTrashAlt, title: `Delete`, link: '#'},
-        {icon: faThumbtack, title: pinOrUnpinText, link: '#'}
+        {icon: faThumbtack, title: pinOrUnpinText, link: '#'},
+        expandPost,
       ];
     }
 
@@ -237,7 +257,7 @@ export class PostComponent implements OnInit {
     return [
       {icon: this.faUserPlus, title: `Follow ${screenName}`, link: userLink, queryParams: {profile: true}},
       blockOrUnblock,
-      {icon: this.faExpand, title: `Expand this post`, link: '#'},
+      expandPost,
       {icon: this.faCode, title: `Embed Post`, link: '#'},
       {icon: this.faFlag, title: `Report Post`, link: '#'},
     ];
@@ -338,20 +358,6 @@ export class PostComponent implements OnInit {
     // return [ '/videos/watch', this.post.uuid ];
   }
 
-  async deletePost(postId: number, unshare: boolean) {
-    if (!this.userStore.isLoggedIn()) {
-      this.notifier.warning('', 'You need to be logged in to delete this post');
-      return;
-    }
-
-    await this.postService.destroyTweetAsync(postId, unshare)
-      .then((data) => {
-      });
-
-    this.notifier.success(`Post ${this.post.id} deleted.`, 'Success');
-    this.removeVideoFromArray(this.post);
-  }
-
   handleOpenMedia(media, index) {
     if (!this.dialogService) {
       this.dialogService = AppInjector.get(NbDialogService);
@@ -417,7 +423,6 @@ export class PostComponent implements OnInit {
       this.transform += 30;
     }
 
-    debugger
     let statusCharCount = lastPost.status ? lastPost.status.length : 0;
     if (lastPost.hasMedia) {
       this.transform += (399.7 + (statusCharCount / 2) ?? 0); // 😁
@@ -431,7 +436,7 @@ export class PostComponent implements OnInit {
       } else if (IsVideoPipe.isYoutube(lastPost.status) || IsVideoPipe.isTwitch(lastPost.status) || IsVideoPipe.isTwitchClip(lastPost.status)) {
         this.transform += (409.7 + (statusCharCount / 2) ?? 0);
       } else {
-        this.transform += (110.7 + (statusCharCount / 2) ?? 0);
+        this.transform += (120.7 + (statusCharCount / 2) ?? 0);
       }
 
     }

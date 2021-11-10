@@ -1,15 +1,36 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 import {Observable, Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
+import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
+import {Hotkey, HotkeysService} from "angular2-hotkeys";
 
-import {faHeart as faHeartSolid, faLock} from "@fortawesome/pro-solid-svg-icons";
+import {IconDefinition} from "@fortawesome/fontawesome-common-types";
+
 import {
   faComment,
   faShare,
   faHeart,
+  faSatelliteDish,
   faLongArrowLeft,
+  faUserTimes,
+  faUserPlus,
+  faVolumeSlash,
+  faCode,
+  faFlag,
+  faTrashAlt,
+  faThumbtack,
+  faBan,
+  faCircle,
+  faExpand,
+  faSignInAlt,
 } from '@fortawesome/pro-light-svg-icons';
+
+import {
+  faHeart as faHeartSolid,
+  faLock, faShare as faShareSolid,
+} from "@fortawesome/pro-solid-svg-icons";
 
 import {PostDetails} from "../../../shared-main/post/post-details.model";
 import {UserStore} from "../../../../core/stores/user.store";
@@ -18,15 +39,15 @@ import {NbDialogService} from "../../../../sharebook-nebular/theme/components/di
 import {MarkdownService} from "../../../../core/renderer/markdown.service";
 import {IUser} from "../../../../core/interfaces/common/users";
 import {UserVideoRateType} from "../../models/rate/user-video-rate.type";
-import {UploadComponent} from "../../../../pages/modal-overlays/dialog/compose/upload/upload.component";
 import {LikesComponent} from "../likes/likes.component";
 import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {AppInjector} from "../../../../app-injector";
 import {MediaContainerComponent} from "../../../../features/media-container/media-container.component";
 import {NbLayoutScrollService} from "../../../../sharebook-nebular/theme/services/scroll.service";
-import {ActivatedRoute} from "@angular/router";
 import {IsVideoPipe} from "../../../shared-main/angular/pipes/is-video.pipe";
-import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
+import {Post} from "../../../shared-main/post/post.model";
+import {VideoShareComponent} from "../../../shared-share-modal/video-share.component";
+import {PopoverMoreComponent} from "../../../shared-main/components/post/popover-more-component/popover-more.component";
 
 
 @Component({
@@ -36,10 +57,10 @@ import {animate, query, stagger, style, transition, trigger} from "@angular/anim
   animations: [
     trigger('likeAnimation', [
       transition('inactive => active', [
-        query(':self', style({ transform: 'scale(1.0)'})),
+        query(':self', style({transform: 'scale(1.0)'})),
         query(':self',
           stagger('0ms linear', [
-            animate('150ms linear', style({ transform: 'scale(1.9)'}))
+            animate('150ms linear', style({transform: 'scale(1.9)'}))
           ]))
       ])
     ])
@@ -52,15 +73,17 @@ export class PostThreadComponent implements OnInit {
 
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private domSanitizer: DomSanitizer,
+  constructor(private router: Router,
+              private domSanitizer: DomSanitizer,
               private userStore: UserStore,
               private postService: PostsService,
               private dialogService: NbDialogService,
               private markdownService: MarkdownService,
               private notifier: NbToastrService,
               private scrollService: NbLayoutScrollService,
-              private route: ActivatedRoute
-              ) {
+              private route: ActivatedRoute,
+              private hotkeysService: HotkeysService
+  ) {
     this.tooltipLike = `Like`;
     this.tooltipDislike = `Dislike`;
   }
@@ -72,13 +95,19 @@ export class PostThreadComponent implements OnInit {
         takeUntil(this.destroy$),
       )
       .subscribe((user: IUser) => {
-        // this.user = user;
-        this.meatballsMenu = this.getMenuItems();
+        // // this.user = user;
+        // this.meatballsMenu = this.getMenuItems();
       });
 
     this.checkUserRating();
+    this.updateRepostStuff(this.post.reposted);
+
+    this.tooltipShare = 'Share';
+    this.tooltipComment = 'Comment';
 
     this.svgLikeStyles.color = this.userRating === 'like' ? 'blue' : 'inherit';
+
+    this.meatballsMenu = this.getMenuItems();
 
     this.setStatusTextHTML();
 
@@ -93,7 +122,15 @@ export class PostThreadComponent implements OnInit {
         }
       });
 
+    this.hotkeysService.add([
+      new Hotkey('l', (event: KeyboardEvent): boolean => {
+        this.setLike();
+        return false; // Prevent bubbling
+      }, undefined, undefined)]);
+
   }
+
+  popoverMoreComponent = PopoverMoreComponent;
 
   getSaveStyle(value: string) {
     return this.imageBackgroundStyle = value ? this.domSanitizer.bypassSecurityTrustStyle(`url(${value})`) : null;
@@ -116,20 +153,37 @@ export class PostThreadComponent implements OnInit {
   faShare = faShare;
   faHeart = faHeart;
   faLock = faLock;
+  faSatelliteDish = faSatelliteDish;
   faLongArrowLeft = faLongArrowLeft;
 
   style = {height: 0};
 
   sanitizedCommentHTML = '';
 
+  // meatballs menu
+  faUserTimes = faUserTimes;
+  faUserPlus = faUserPlus;
+  faVolumeSlash = faVolumeSlash;
+  faCode = faCode;
+  faFlag = faFlag;
+  faTrashAlt = faTrashAlt;
+  faBan = faBan;
+  faCircle = faCircle;
+  faExpand = faExpand;
+  faSignInAlt = faSignInAlt;
+
   svgLikeStyles = {
     'color': 'inherit',    // blue is such a beautiful color 💙
   };
 
   statusHTMLText = '';
-  meatballsMenu = this.getMenuItems();
+  meatballsMenu: any;
 
   imageBackgroundStyle: SafeStyle;
+
+  tooltipRepost = '';
+  tooltipShare = '';
+  tooltipComment = '';
 
   public userRating: UserVideoRateType = null;
 
@@ -137,9 +191,38 @@ export class PostThreadComponent implements OnInit {
   public tooltipDislike = '';
 
   getMenuItems() {
+    let userCurrent = this.userStore.getUser();
+
+    if (!userCurrent) {
+      return [
+        {icon: this.faSignInAlt, title: `You need to log in`, link: '#'},
+      ];
+    }
+
+    if (this.post?.user?.id === userCurrent.id) {
+      let pinOrUnpinText = !this.post.pinned ? 'Pin to your profile' : 'Unpin from profile';
+      return [
+        {icon: this.faTrashAlt, title: `Delete`, link: '#'},
+        {icon: faThumbtack, title: pinOrUnpinText, link: '#'},
+      ];
+    }
+
+    const screenName = this.post?.user?.screenName;
+    const userLink = this.post?.user ? `/${screenName.substring(1)}` : '';
+
+    const isDisplayed = this.post?.user.blocking === true;
+    let blockOrUnblock;
+    if (isDisplayed) {
+      blockOrUnblock = {icon: this.faCircle, title: `Unblock ${screenName}`, link: '#'};
+    } else {
+      blockOrUnblock = {icon: this.faBan, title: `Block ${screenName}`, link: '#'};
+    }
+
     return [
-      {title: `Embed Post`, link: '/auth/logout'},
-      {title: `Report Post`, link: '/auth/logout'},
+      {icon: this.faUserPlus, title: `Follow ${screenName}`, link: userLink, queryParams: {profile: true}},
+      blockOrUnblock,
+      {icon: this.faCode, title: `Embed Post`, link: '#'},
+      {icon: this.faFlag, title: `Report Post`, link: '#'},
     ];
   }
 
@@ -149,7 +232,8 @@ export class PostThreadComponent implements OnInit {
   }
 
   setLike() {
-    if (this.isUserLoggedIn() === false) {
+    if (!this.isUserLoggedIn()) {
+      this.notifier.warning('', 'You need to be logged in to like');
       return;
     }
 
@@ -180,9 +264,9 @@ export class PostThreadComponent implements OnInit {
 
   videoRouterLink: any[] = [];
 
-  buildVideoLink () {
+  buildVideoLink() {
     if (!this.post.url) {
-      this.videoRouterLink = [ `/${this.post.user.screenName}/post`, this.post.id ];
+      this.videoRouterLink = [`/${this.post.user.screenName}/post`, this.post.id];
 
       return;
     }
@@ -198,12 +282,12 @@ export class PostThreadComponent implements OnInit {
     // this.videoRouterLink = [ '/search/lazy-load-video', { url: this.video.url } ]
   }
 
-  getVideoRouterLink () {
+  getVideoRouterLink() {
     if (this.videoRouterLink) {
       return this.videoRouterLink;
     }
 
-    return [ '/posts/watch', this.post.id ];
+    return ['/posts/watch', this.post.id];
   }
 
   open(type: 'likes' | 'reposts') {
@@ -216,6 +300,62 @@ export class PostThreadComponent implements OnInit {
       closeOnEsc: true,
       closeOnBackdropClick: true,
     });
+  }
+
+  @ViewChild('container', {static: true}) containerElement: ElementRef;
+  handleReplyButton(post: Post) {
+    if (!this.userStore.isLoggedIn()) {
+      this.notifier.warning('', 'You need to be logged in to reply'); // TODO: GroupBy them kk
+      return;
+    }
+
+    // Scroll to textarea
+    this.containerElement.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+  }
+
+  async handleRepostClick(post: Post) {
+    if (!this.userStore.isLoggedIn()) {
+      this.notifier.warning('', 'You need to be logged in to repost');
+      return;
+    }
+
+    if (this.post.reposted) {
+      this.postService.unrepost(this.post.id)
+        .subscribe((data) => {
+          this.post.repostCount -= 1;
+          this.post.reposted = false;
+
+          this.updateRepostStuff(this.post.reposted);
+        });
+    } else {
+      this.postService.repost(this.post.id)
+        .subscribe((data: Post) => {
+          // The reblog API method returns a new status wrapped around the original. In this case we are only
+          // interested in how the original is modified, hence passing it skipping the wrapper
+
+          this.post.repostCount += 1;
+          this.post.reposted = true;
+          this.updateRepostStuff(this.post.reposted);
+        });
+    }
+
+  }
+
+  showShareModal() {
+    this.dialogService.open(VideoShareComponent, {
+      context: {
+        // @ts-ignore
+        video: this.post,
+        playlistPosition: 0,
+        videoCaptions: [{language: null, captionPath: ''}],
+      }
+    });
+    /*this.videoShareModal.show(0, 0);*/
+  }
+
+  preventDefault(event: any) {
+    event.preventDefault();
+    return;
   }
 
   private checkUserRating() {
@@ -281,7 +421,7 @@ export class PostThreadComponent implements OnInit {
     // this.setVideoLikesBarTooltipText();
   }
 
-  private async setStatusTextHTML () {
+  private async setStatusTextHTML() {
     if (!this.post.status) {
       return;
     }
@@ -302,8 +442,19 @@ export class PostThreadComponent implements OnInit {
     }
   }
 
+  private updateRepostStuff(reposted: boolean) {
+    if (reposted) {
+      this.faShare = faShareSolid;
+      this.tooltipRepost = 'Undo Repost';
+    } else {
+      this.faShare = faShare;
+      this.tooltipRepost = 'Repost';
+    }
+  }
+
   videoId: string;
   embedUrl: string;
+
   public getVideoEmbedLink() {
     if (IsVideoPipe.isYoutube(this.post.status)) {
       const parts = IsVideoPipe._youtubeRegEx.exec(this.post.status);

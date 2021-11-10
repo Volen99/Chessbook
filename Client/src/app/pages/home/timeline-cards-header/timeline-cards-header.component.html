@@ -1,4 +1,8 @@
 <nb-card-header>
     <span>Home</span>
-    <nb-icon icon="radio-outline" style="margin-right: calc(0px + (-1 * (124px - 1.5em)) / 2);"></nb-icon>
+    <fa-icon
+            [icon]="this.faStars" size="lg" style="margin-right: calc(0px + (-1 * (124px - 1.5em)) / 2);"
+            ngbTooltip="Home shows you newest Posts first"
+            placement="bottom" [openDelay]="700">
+    </fa-icon>
 </nb-card-header>

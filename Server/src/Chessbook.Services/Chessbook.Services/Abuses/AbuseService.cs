@@ -13,21 +13,62 @@ namespace Chessbook.Services.Abuses
     public class AbuseService : IAbuseService
     {
         private readonly IRepository<Abuse> abuseRepository;
+        private readonly IRepository<PostAbuseModel> postAbuseRepository;
+        private readonly IRepository<PostCommentAbuseModel> postCommentAbuseRepository;
 
-        public AbuseService(IRepository<Abuse> abuseRepository)
+        public AbuseService(IRepository<Abuse> abuseRepository, IRepository<PostAbuseModel> postAbuseRepository,
+            IRepository<PostCommentAbuseModel> postCommentAbuseRepository)
         {
             this.abuseRepository = abuseRepository;
+            this.postAbuseRepository = postAbuseRepository;
+            this.postCommentAbuseRepository = postCommentAbuseRepository;
         }
 
-        public async Task<int> CreateAccountAbuse(int reporterAccountId, string reason, AbuseState state, string predefinedReasons, int flaggedAccountId)
+        public async Task<int> CreatePostAbuse(Abuse baseAbuse, int postId)
+        {
+            var abuseNew = new PostAbuseModel
+            {
+                AbuseId = baseAbuse.Id,
+                PostId = postId,
+                CreatedAt = DateTime.UtcNow,
+            };
+
+            baseAbuse.PostAbuseId = abuseNew.PostId;
+            await this.abuseRepository.InsertAsync(baseAbuse);
+
+            abuseNew.AbuseId = baseAbuse.Id;
+            await this.postAbuseRepository.InsertAsync(abuseNew);
+
+            return abuseNew.Id;
+        }
+
+        public async Task<int> CreateCommentAbuse(Abuse baseAbuse, int commentId)
+        {
+            var abuseNew = new PostCommentAbuseModel
+            {
+                PostCommentId = commentId,
+                CreatedAt = DateTime.UtcNow,
+            };
+
+            baseAbuse.PostCommentAbuseId = abuseNew.PostCommentId;
+
+            await this.abuseRepository.InsertAsync(baseAbuse);
+
+            abuseNew.AbuseId = baseAbuse.Id;
+            await this.postCommentAbuseRepository.InsertAsync(abuseNew);
+
+            return abuseNew.Id;
+        }
+
+        public async Task<int> CreateAccountAbuse(Abuse baseAbuse, int reporterAccountId, int flaggedAccountId)
         {
             var abuseNew = new Abuse
             {
                 ReporterAccountId = reporterAccountId,
                 FlaggedAccountId = flaggedAccountId,
-                Reason = reason,
-                PredefinedReasons = predefinedReasons,
-                State = state,
+                Reason = baseAbuse.Reason,
+                PredefinedReasons = baseAbuse.PredefinedReasons,
+                State = baseAbuse.State,
                 CreatedAt = DateTime.UtcNow,
             };
 
@@ -106,21 +147,15 @@ namespace Chessbook.Services.Abuses
             return ids.ToArray();
         }
 
-        public async Task<int> CreatePostAbuse(int reporterAccountId, string reason, AbuseState state, string predefinedReasons, int postId)
+        public int CountReportsForPost(int postId)
         {
-            var abuseNew = new Abuse
-            {
-                ReporterAccountId = reporterAccountId,
-                PostId = postId,
-                Reason = reason,
-                PredefinedReasons = predefinedReasons,
-                State = state,
-                CreatedAt = DateTime.UtcNow,
-            };
+            var result = from tbl in postAbuseRepository.Table
+                         where tbl.PostId == postId                                     // AND "videoId" IS NOT NULL'
+                         select postAbuseRepository.Table;
 
-            await this.abuseRepository.InsertAsync(abuseNew);
+            var count = result.Count();
 
-            return abuseNew.Id;
+            return count;
         }
     }
 }

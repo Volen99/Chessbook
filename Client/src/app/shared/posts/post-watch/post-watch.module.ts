@@ -31,6 +31,7 @@ import { PostAttributesComponent } from './shared/metadata/post-attributes/post-
 import {NbTagModule} from "../../../sharebook-nebular/theme/components/tag/tag.module";
 import {SharedShareModal} from "../../shared-share-modal/shared-share-modal.module";
 import {ComponentsModule} from "../../../components/components.module";
+import {NbPopoverModule} from "../../../sharebook-nebular/theme/components/popover/popover.module";
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import {ComponentsModule} from "../../../components/components.module";
     NbTagModule,
     SharedShareModal,
     ComponentsModule,
+    NbPopoverModule,
   ],
 
   exports: [

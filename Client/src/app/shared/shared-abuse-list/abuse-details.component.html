@@ -69,10 +69,10 @@
       </span>
     </div>
 
-    <div *ngIf="abuse.video?.startAt" class="mt-2 d-flex">
+    <div *ngIf="abuse.post?.startAt" class="mt-2 d-flex">
       <span class="col-3 moderation-expanded-label" i18n>Reported part</span>
       <span class="col-9">
-        {{ startAt }}<ng-container *ngIf="abuse.video.endAt"> - {{ endAt }}</ng-container>
+        {{ startAt }}<ng-container *ngIf="abuse.post.endAt"> - {{ endAt }}</ng-container>
       </span>
     </div>
 
@@ -85,9 +85,9 @@
 
   <!-- report right part (video/comment details) -->
   <div class="col-4">
-    <div *ngIf="abuse.video" class="screenratio">
-      <div *ngIf="abuse.video.deleted" i18n>The video was deleted</div>
-      <div *ngIf="!abuse.video.deleted" [innerHTML]="abuse.embedHtml"></div>
+    <div *ngIf="abuse.post" class="screenratio">
+      <div *ngIf="abuse.post.deleted" i18n>The video was deleted</div>
+      <div *ngIf="!abuse.post.deleted" [innerHTML]="abuse.embedHtml"></div>
     </div>
 
     <div *ngIf="abuse.comment" class="comment-html">

@@ -56,7 +56,7 @@
       </div>
 
         <nb-list nbInfiniteList>
-          <nb-list-item *ngFor="let comment of comments; index as i">
+          <nb-list-item *ngFor="let comment of comments; index as i" style="display: initial"> <!--WARNING!! THIS REMOVES DISPLAY: FLEX, SO REPLY TEXTAREA GETS FULL WIDTH AAA-->
             <div >
               <my-video-comment
                       *ngIf="!highlightedThread || comment.id !== highlightedThread.id"

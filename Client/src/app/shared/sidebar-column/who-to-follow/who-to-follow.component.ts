@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import {IUser} from "../../../core/interfaces/common/users";
 import {UsersService} from "../../../core/backend/common/services/users.service";
+import {ComponentPaginationLight} from "../../../core/rest/component-pagination.model";
 
 @Component({
   selector: 'app-who-to-follow',
@@ -12,10 +13,15 @@ export class WhoToFollowComponent implements OnInit {
 
   constructor(private userService: UsersService) { }
 
+  pagination: ComponentPaginationLight = {
+    currentPage: 1,
+    itemsPerPage: 2,
+  };
+
   ngOnInit(): void {
-    this.userService.getUsers(1, 40)
+    this.userService.getUsers({pagination: this.pagination})
         .subscribe((data) => {
-          this.users = data;
+          this.users = data.data;
         });
   }
 

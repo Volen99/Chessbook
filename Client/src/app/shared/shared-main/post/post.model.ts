@@ -56,6 +56,7 @@ export class Post /*implements IPost*/ {
     this.commentsEnabled = hash.commentsEnabled;
     this.card = hash.card;
     this.hasMedia = hash.hasMedia;
+    this.clipThumbnail = hash.clipThumbnail;
   }
 
   privacy: IPostConstant<PostPrivacy>;
@@ -86,13 +87,14 @@ export class Post /*implements IPost*/ {
   poll: IPoll;
   commentsEnabled: boolean;
   card: ICard;
+  clipThumbnail: string;
 
   get url(): string {
     return `/${this.user?.screenName}/post/${this.id.toLocaleString().toLocaleLowerCase()}`;
   }
 
-  static buildClientUrl(videoUUID: string) {
-    return '/videos/watch/' + videoUUID;
+  static buildClientUrl(screenName: string, postId: number) {
+    return `/${screenName}/post/${postId}`;
   }
 
 

@@ -53,6 +53,13 @@ namespace Chessbook.Web.Api.Factories
             if (notification.PostId.HasValue)
             {
                 var notificationPost = await this.postService.GetPostByIdAsync(notification.PostId.Value);
+
+                if (notificationPost == null)
+                {
+                    model.Type = 99;
+                    return model;
+                }
+
                 var notificationSenderUser = await this.userService.GetCustomerByIdAsync(notificationPost.UserId);
 
                 var avatarUrl = await this.userModelFactory.PrepareCustomerAvatarModelAsync(notificationSenderUser.Id);
@@ -79,6 +86,12 @@ namespace Chessbook.Web.Api.Factories
             {
                 var notificationComment = await this.postCommentService.GetById(notification.CommentId.Value);
 
+                if (notificationComment == null)
+                {
+                    model.Type = 99;
+                    return model;
+                }
+
                 var notificationSenderUser = await this.userService.GetCustomerByIdAsync(notificationComment.UserId);
                 var avatarUrl = await this.userModelFactory.PrepareCustomerAvatarModelAsync(notificationSenderUser.Id);
 
@@ -97,10 +110,11 @@ namespace Chessbook.Web.Api.Factories
                     Name = post.Status,
                 };
 
+                var commentId = notificationComment.OriginCommentId != null ? notificationComment.OriginCommentId.Value : notificationComment.Id;
                 var comment = new PostCommentNotificationModel
                 {
                     Id = notificationComment.Id,
-                    ThreadId = notificationComment.OriginCommentId.Value,
+                    ThreadId = commentId,
                     Account = userInfo,
                     Post = postInfo,
                 };
@@ -113,21 +127,29 @@ namespace Chessbook.Web.Api.Factories
                 // relationship
                 var userFollow = await this.followService.GetByIdAsync(notification.UserFollowId.Value);
 
-                var follower = await this.userService.GetCustomerByIdAsync(userFollow.UserId);
-                var avatarUrl = await this.userModelFactory.PrepareCustomerAvatarModelAsync(follower.Id);
-                var follow = new FollowInfoModel
+                if (userFollow == null)
                 {
-                    Id = userFollow.Id,
-                    Follower = new UserInfoModel
+                    model.Type = 99; // so that the client shows Blunder!
+                    return model;
+                } 
+                else
+                {
+                    var follower = await this.userService.GetCustomerByIdAsync(userFollow.UserId);
+                    var avatarUrl = await this.userModelFactory.PrepareCustomerAvatarModelAsync(follower.Id);
+                    var follow = new FollowInfoModel
                     {
-                        Id = follower.Id,
-                        DisplayName = follower.DisplayName,
-                        ScreenName = follower.ScreenName,
-                        AvatarUrl = avatarUrl,
-                    }
-                };
+                        Id = userFollow.Id,
+                        Follower = new UserInfoModel
+                        {
+                            Id = follower.Id,
+                            DisplayName = follower.DisplayName,
+                            ScreenName = follower.ScreenName,
+                            AvatarUrl = avatarUrl,
+                        }
+                    };
 
-                model.ActorFollow = follow;
+                    model.ActorFollow = follow;
+                }
             }
             else if (notification.PostVoteId.HasValue) // notification.UserId userId is the user who is receiving the notification
             {
@@ -135,6 +157,7 @@ namespace Chessbook.Web.Api.Factories
 
                 if (notificationPostLike == null)
                 {
+                    model.Type = 99;
                     return model;
                 }
 
@@ -145,7 +168,7 @@ namespace Chessbook.Web.Api.Factories
                 var postInfo = new PostInfoModel
                 {
                     Id = notificationPostLike.PostId,
-                    Name = post.Status,
+                    Name = post?.Status,
                 };
 
                 var like = new PostLikeNotificationModel

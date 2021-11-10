@@ -10,7 +10,7 @@
                 <div role="progressbar" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0"
                      class="sharebook-container r-kicko2 r-notknq progress-bar-height overflow-hidden position-absolute users-select-none width-100-per header-z-index">
                     <div class="sharebook-container sharebook-background-color-blue height-100-per r-1joz4e6 r-11iat2r r-1c4c958 z-index-minus-1"
-                         style="width: 0%;">
+                         [style.width.%]="this.uploader.progress">
                     </div>
                 </div>
                 <div class="sharebook-container height-53px z-index-plus-2">
@@ -115,7 +115,6 @@
                                                                                                                 </div>
                                                                                                                 <div class="DraftEditor-editorContainer">
                                                                                                                     <div
-                                                                                                                            aria-activedescendant="typeaheadFocus-0.9546519414997272"
                                                                                                                             aria-autocomplete="list"
                                                                                                                             aria-controls="typeaheadDropdownWrapped-3"
                                                                                                                             aria-describedby="placeholder-4cop6"
@@ -123,7 +122,7 @@
                                                                                                                             aria-multiline="true"
                                                                                                                             class="notranslate public-DraftEditor-content"
                                                                                                                             contenteditable="true"
-                                                                                                                            data-testid="tweetTextarea_0"
+                                                                                                                            data-testid="postTextarea_0"
                                                                                                                             role="textbox"
                                                                                                                             spellcheck="true"
                                                                                                                             tabindex="0"
@@ -282,7 +281,7 @@
 <!--                                                                </div>-->
 
                                                                 <nb-select [selected]="firstStepPrivacyId" (selectedChange)="changePrivacy($event)" size="small" status="primary">
-                                                                    <nb-option *ngFor="let videoPrivacy of videoPrivacies" [value]="videoPrivacy.id"> {{ videoPrivacy.label }}</nb-option>
+                                                                    <nb-option *ngFor="let videoPrivacy of videoPrivacies" [value]="videoPrivacy.id" [disabled]="videoPrivacy.label === 'Private'"> {{ videoPrivacy.label }}</nb-option>
                                                                 </nb-select>
 
                                                                 <div class="form-group" style="margin-top: 0.5rem;">
@@ -323,21 +322,24 @@
                                                                                  tabindex="0"
                                                                                  class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty  border-height-0px add-photos-or-video-margin upload-svg-margin-left-right add-photos-or-video-margin-left element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"> <!--border-width-1px-->
                                                                                 <div dir="auto" class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
-                                                                                title="Media">
+                                                                                     ngbTooltip="Media"
+                                                                                     placement="auto" [openDelay]="700">
                                                                                     <fa-icon size="1" [styles]="this.svgStyles" [icon]="this.faImagePolaroid"></fa-icon>
                                                                                     <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
                                                                                 </div>
                                                                             </div>
-                                                                            <input  style="width: 19px; height: 19px; z-index: 1"
+                                                                            <input  #fileInput
+                                                                                    style="width: 19px; height: 19px; z-index: 1"
                                                                                     title="Media"
-                                                                                    accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/quicktime,video/webm"
-                                                                                    multiple=""
+                                                                                    [accept]="this.imageFileExtensions"
                                                                                     tabindex="-1"
                                                                                     type="file"
                                                                                     data-focusable="true"
                                                                                     class="add-photos-or-video-default-input-height opacity-0 overflow-hidden position-absolute add-photos-or-video-default-input-width z-index-minus-1"
                                                                                     data-testid="fileInput"
-                                                                                    appFileSelect [uploader]="this.uploader">
+                                                                                    appFileSelect
+                                                                                    [uploader]="this.uploader"
+                                                                                    [multiple]="true">
                                                                             <div aria-label="Add poll"
                                                                                  role="button"
                                                                                  data-focusable="true"
@@ -347,7 +349,8 @@
                                                                                  (click)="this.pollButtonHandler()">
                                                                                 <div dir="auto"
                                                                                      class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
-                                                                                     title="Poll">
+                                                                                     ngbTooltip="Poll"
+                                                                                     placement="auto" [openDelay]="700">
                                                                                     <fa-icon [icon]="this.faPoll" [styles]="this.svgStyles"></fa-icon>
                                                                                     <span
                                                                                             class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
@@ -359,9 +362,10 @@
                                                                                      role="button"
                                                                                      data-focusable="true"
                                                                                      tabindex="0"
-                                                                                     title="Emoji"
+                                                                                     ngbTooltip="Emoji"
+                                                                                     placement="auto" [openDelay]="700"
                                                                                      class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty  border-height-0px upload-svg-margin-left-right element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none z-index-plus-2"
-                                                                                     (click)="this.emojiButtonHandler()">
+                                                                                     (click)="this.openEmojiModal($event)">
                                                                                     <div dir="auto"
                                                                                          class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
                                                                                     >
@@ -381,7 +385,8 @@
                                                                                  (click)="this.scheduleButtonHandler()">
                                                                                 <div dir="auto"
                                                                                      class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
-                                                                                title="Schedule">
+                                                                                     ngbTooltip="Schedule"
+                                                                                     placement="auto" [openDelay]="700">
                                                                                     <fa-icon [icon]="this.faCalendarDay" [styles]="this.svgStyles"></fa-icon>
                                                                                     <span
                                                                                             class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
@@ -425,3 +430,31 @@
         </div>
 </nb-card>
     </div>
+
+
+    <ng-template #emojiModal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title" i18n>Markdown Emoji List</h4>
+            <!--<fa-icon [icon]="this.faTimes" aria-label="Close" role="button" (click)="hideModals()"></fa-icon>-->
+            <div style="color: white" class="sharebook-container align-items-flex-start align-self-stretch justify-content-center min-height-30px header-left-icon-min-width-59px">
+                <div aria-label="Close" role="button" data-focusable="true"
+                     tabindex="0"
+                     class="icon-hover close-button sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
+                     style="margin-left: calc(5px + (-1 * (41px - 1.5em)) / 2);">
+                    <div dir="auto" class="align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
+                         (click)="this.hideModals()">
+                        <fa-icon [icon]="this.faTimes" style="top: 0px;" [styles]="this.svgStyles"></fa-icon>
+                        <span
+                                class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="emoji-flex">
+                <div class="emoji-flex-item" *ngFor="let emojiMarkup of emojiMarkupList">
+                    {{ emojiMarkup[0] }} <code>:{{ emojiMarkup[1] }}:</code>
+                </div>
+            </div>
+        </div>
+    </ng-template>

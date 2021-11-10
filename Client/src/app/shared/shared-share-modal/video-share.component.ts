@@ -86,6 +86,21 @@ export class VideoShareComponent {
 
   faTimes = faTimes;
 
+  svgStyles = {
+    'display': 'inline-block',
+    'fill': 'currentcolor',
+    'flex-shrink': '0',
+    'width': '1.5em',
+    'height': '1.5em',
+    'max-width': '100% ',
+    'position': 'relative',
+    'vertical-align': 'text-bottom',
+    '-moz-user-select': 'none',
+    '-ms-user-select': 'none',
+    '-webkit-user-select': 'none',
+    'user-select': 'none',
+  };
+
   // show(currentVideoTimestamp?: number, currentPlaylistPosition?: number) {
   //   let subtitle: string;
   //   if (this.videoCaptions && this.videoCaptions.length !== 0) {

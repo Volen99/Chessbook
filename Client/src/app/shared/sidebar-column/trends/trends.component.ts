@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {TagsService} from "../../services/tags.service";
 import {IPostTag} from "../../shared-main/post/post-details.model";
 
 import {
   faPawClaws,
+  faCog
 } from '@fortawesome/pro-solid-svg-icons';
 
 
@@ -13,11 +14,12 @@ import {
   styleUrls: ['../sidebar-column.component.scss', './trends.component.scss']
 })
 export class TrendsComponent implements OnInit {
+  @Input() hideWhoToFollow = false;
 
   constructor(private tagsService: TagsService) { }
 
   ngOnInit(): void {
-    this.tagsService.getPostTags(2)
+    this.tagsService.getPostTags(this.hideWhoToFollow ? 5 : 2)
       .subscribe((data) => {
         this.tags = data.tags;
       });
@@ -26,5 +28,6 @@ export class TrendsComponent implements OnInit {
   tags: IPostTag[];
 
   faPawClaws = faPawClaws;
+  faCog = faCog;
 
 }

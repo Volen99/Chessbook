@@ -32,7 +32,7 @@ export class ActorAvatarEditComponent implements OnInit {
 
   avatarFormat = '';
   maxAvatarSize = 1024 * 1024 * 2;
-  avatarExtensions = ['.png', '.jpeg', '.jpg', '.gif'];
+  avatarExtensions = ['.png', '.jpeg', '.jpg'];
 
   preview: SafeResourceUrl;
 

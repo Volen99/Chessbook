@@ -82,7 +82,8 @@ namespace Chessbook.Services.Entities
         /// </returns>
         public async Task<IPagedList<PostComment>> GetPostCommentThreads(int postId, int userId = 0,
             DateTime? fromUtc = null, DateTime? toUtc = null, string commentText = null,
-            bool ascSort = false, int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false)
+            bool ascSort = false, int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false,
+            string sort = "-createdAt")
         {
             return await this.postCommentRepositoy.GetAllPagedAsync(query =>
             {
@@ -90,9 +91,6 @@ namespace Chessbook.Services.Entities
                     query = query.Where(comment => comment.PostId == postId);
 
                 query = query.Where(comment => comment.OriginCommentId == null);
-
-                //if (userId > 0)
-                //    query = query.Where(comment => comment.UserId == userId);
 
                 if (fromUtc.HasValue)
                     query = query.Where(comment => fromUtc.Value <= comment.CreatedAt);
@@ -169,7 +167,7 @@ namespace Chessbook.Services.Entities
             var query = from replies in this.postCommentRepositoy.Table
                         where replies.OriginCommentId == commentId
                         && replies.DeletedAt.Equals(null)
-                        && blocklistQuery.Contains(replies.UserId) == false
+                        && blocklistQuery.Contains(replies.UserId) == false // debug it. This is buggy without Union
                         select replies.Id;
 
             var totalReplies = await query.CountAsyncExt();
@@ -208,8 +206,6 @@ namespace Chessbook.Services.Entities
             var firstMentionRegex = new Regex($"^{mentionRegex} ").ToString();
             var endMentionRegex = new Regex($" {mentionRegex}$").ToString();
 
-            var t = firstMentionRegex.ToString();
-
             MatchCollection matchesFirst = Regex.Matches(text, firstMentionRegex);
             MatchCollection matchesEnd = Regex.Matches(text, endMentionRegex);
 
@@ -224,9 +220,6 @@ namespace Chessbook.Services.Entities
                 GroupCollection groups = match.Groups;
                 result.Add(groups[1].Value);
             }
-
-            // Include local mentions
-            // ..
 
             return result.Distinct().ToArray();
         }

@@ -174,7 +174,7 @@
     background-color: #C6C6C6;
   }
 
-  my-global-icon {
+  fa-icon {
     @include apply-svg-color(pvar(--mainColor))
   }
 }
@@ -209,7 +209,7 @@
     cursor: default;
   }
 
-  my-global-icon {
+  fa-icon {
     @include apply-svg-color(pvar(--greyForegroundColor))
   }
 }
@@ -665,7 +665,7 @@
 @mixin dropdown-with-icon-item {
   padding: 6px 15px;
 
-  my-global-icon {
+  fa-icon {
     width: 22px;
     opacity: .7;
 

@@ -32,9 +32,9 @@ export abstract class PostSend extends FormReactive implements OnInit {
 
     let privacies = {
       "1": "Public",
-      "2": "Unlisted",
-      "3": "Private",
-      "4": "Internal"
+      "2": "Private",
+     // "2": "Unlisted",
+     // "4": "Internal"
     };
 
     const hashToPopulate: IPostConstant<PostPrivacy>[] = Object.keys(privacies)

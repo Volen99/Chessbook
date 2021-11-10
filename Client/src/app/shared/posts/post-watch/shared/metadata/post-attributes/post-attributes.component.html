@@ -2,7 +2,7 @@
     <span class="attribute-label">Tags</span>
     <a *ngFor="let tag of this.getPostTags()" class="attribute-value" [routerLink]="[ '/search' ]" [queryParams]="{ tagsOneOf: [ tag.name ] }">
     <nb-tag-list>
-        <nb-tag status="basic" appearance="filled" text="{{ tag.name }}">
+        <nb-tag status="basic" appearance="filled" text="{{ tag.name }}" style="cursor: pointer">
         </nb-tag>
     </nb-tag-list>
     </a>

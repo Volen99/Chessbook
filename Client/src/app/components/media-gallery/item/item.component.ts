@@ -37,7 +37,6 @@ export class ItemComponent implements OnInit {
     // let bottom = 'auto';
     // let right  = 'auto';
 
-    debugger
     if (this.size === 1) {
       this.width = 100;
     }
@@ -83,7 +82,7 @@ export class ItemComponent implements OnInit {
     let thumbnail = '';
 
     if (true) { // this.attachment.get('type') === 'image'
-      this.previewUrl   = this.attachment.imageUrl;
+      this.previewUrl   = !this.attachment.imageUrl.endsWith('.gif') ? this.attachment.imageUrl : this.attachment.fullSizeImageUrl;
       this.previewWidth = this.attachment.meta['small'].width;       // this.attachment.getIn(['meta', 'small', 'width']);
 
       this.originalUrl   = this.attachment.fullSizeImageUrl;

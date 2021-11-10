@@ -3,15 +3,16 @@ using System.Threading.Tasks;
 
 using Chessbook.Core;
 using Chessbook.Core.Domain.Abuse;
-using Chessbook.Core.Domain.Posts;
 
 namespace Chessbook.Services.Abuses
 {
     public interface IAbuseService
     {
-        Task<int> CreateAccountAbuse(int reporterAccountId, string reason, AbuseState state, string predefinedReasons, int flaggedAccountId);
+        Task<int> CreatePostAbuse(Abuse baseAbuse, int postId);
 
-        Task<int> CreatePostAbuse(int reporterAccountId, string reason, AbuseState state, string predefinedReasons, int postId);
+        Task<int> CreateCommentAbuse(Abuse baseAbuse, int commentId);
+
+        Task<int> CreateAccountAbuse(Abuse baseAbuse, int reporterAccountId, int flaggedAccountId);
 
         Task<Abuse> LoadByIdWithReporter(int number);
 
@@ -21,6 +22,9 @@ namespace Chessbook.Services.Abuses
             AbuseState? abuseState = default(AbuseState), string videoIs = null, string search = null, string searchReporter = null, string searchReportee = null,
             string searchVideo = null);
 
+        int CountReportsForPost(int postId);
+
         int[] ParsePredefinedReasonsIds(Abuse abuse);
+
     }
 }

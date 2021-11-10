@@ -17,7 +17,7 @@ export class KeyboardShortcutsComponent implements OnInit, OnDestroy {
   helpVisible = false;
   subscription: Subscription;
 
-  hotkeys: Hotkey[];
+  hotkeys: Hotkey[] = [];
 
   constructor(private hotkeysService: HotkeysService) {
   }
@@ -32,8 +32,8 @@ export class KeyboardShortcutsComponent implements OnInit, OnDestroy {
       }
 
       // TODO: remove magic number 💫
-      this.navigationalHotkeys = this.hotkeys.filter((u, i) => i < 17);
-      this.actionsHotkeys = this.hotkeys.filter((u, i) => i >= 17);
+      this.navigationalHotkeys = this.hotkeys.filter((u, i) => i < 13);
+      this.actionsHotkeys = this.hotkeys.filter((u, i) => i >= 13);
 
       if (isOpen === false) {
         this.helpVisible = false;

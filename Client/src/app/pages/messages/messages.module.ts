@@ -8,7 +8,6 @@ import { DetailHeaderMessageSelectedComponent } from './detail-header-message-se
 import {SharedMainModule} from "../../shared/shared-main/shared-main.module";
 import {DetailHeaderNoMessageSelectedComponent} from "./detail-header-no-message-selected/detail-header-no-message-selected.component";
 import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";
-import {ContactsComponent} from "./contacts/contacts.component";
 import {NbTabsetModule} from "../../sharebook-nebular/theme/components/tabset/tabset.module";
 import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.module";
 import {NbUserModule} from "../../sharebook-nebular/theme/components/user/user.module";
@@ -23,7 +22,6 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 @NgModule({
   declarations: [
     MessagesComponent,
-    ContactsComponent,
     DetailHeaderMessageSelectedComponent,
     DetailHeaderNoMessageSelectedComponent,
     ChatComponent,

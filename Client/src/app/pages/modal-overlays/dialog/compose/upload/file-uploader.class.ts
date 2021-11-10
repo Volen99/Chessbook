@@ -7,6 +7,7 @@ import {UploadService} from "./upload.service";
 import {AppInjector} from "../../../../../app-injector";
 import {NbToastrService} from "../../../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {NbGlobalPhysicalPosition} from "../../../../../sharebook-nebular/theme/components/cdk/overlay/position-helper";
+import {AssetsPanelService, IMAGE_FILE_EXTENSIONS} from "./assets-panel.service";
 
 function isFile(value: any): boolean {
   return (File && value instanceof File);
@@ -23,6 +24,8 @@ export type FilterFunction = {
   name: string,
   fn: (item?: FileLikeObject, options?: FileUploaderOptions) => boolean
 };
+
+type Size = { width: number; height: number };
 
 export interface FileUploaderOptions {
   allowedMimeType?: string[];
@@ -49,6 +52,10 @@ export interface FileUploaderOptions {
 export class FileUploader {
   protected _failFilterIndex: number;
 
+  private maxSize = 5242880; // 5MB
+  private maxHeight = 4096; // px
+  private maxWidth = 4096;
+
   public constructor(options: FileUploaderOptions) {
     this.setOptions(options);
     this.response = new EventEmitter<any>();
@@ -72,8 +79,6 @@ export class FileUploader {
     formatDataFunction: (item: FileItem) => item._file,
     formatDataFunctionIsAsync: false
   };
-
-
 
   public setOptions(options: FileUploaderOptions): void {
     this.options = Object.assign(this.options, options);
@@ -100,18 +105,71 @@ export class FileUploader {
     }
   }
 
-  public addToQueue(files: File[], options?: FileUploaderOptions, filters?: FilterFunction[] | string): void {
+  public async addToQueue(filesList: File[], options?: FileUploaderOptions, filters?: FilterFunction[] | string): Promise<void> {
+    let notifier = AppInjector.get(NbToastrService);
+
+    if (this.queue.length >= 4) {
+      notifier.warning('', 'Sorry, you cannot upload more than 4 photos or gifs.',
+        {
+          position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
+          duration: 0,
+        });
+
+      return;
+    }
+
     let list: File[] = [];
-    for (let file of files) {
+    for (let file of filesList) {
       if (file.type.includes('video') || this.isAudioFile(file.name)) {
-        let notifier = AppInjector.get(NbToastrService);
-        notifier.warning('Currently Chessbook does not support uploading videos on its servers, but you can share videos from Youtube, Twitch or Twitter.', 'Not supported — yet',
+        notifier.warning('Currently Chessbook does not support uploading videos on its servers, but you can share videos from Youtube, Twitch or Twitter via url', 'Not supported — yet',
           {
             position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
             duration: 0,
           });
         return;
       }
+    }
+
+    let files = this.validateFileType(filesList);
+
+    if (!files.length) {
+      notifier.danger('Only GIF, JPG, JPEG, PNG files are supported.', 'Upload failed');
+      return;
+    }
+
+    if (files.length > 4) {
+      notifier.warning('', 'Sorry, you cannot upload more than 4 photos or gifs.', {
+        position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
+        duration: 4000,
+      });
+      return;
+    }
+
+    const validFiles: File[] = [];
+    const invalidFiles: string[] = files.filter(f => f.size > this.maxSize).map(fl => fl.name);
+    files = files.filter(f => f.size <= this.maxSize);
+    if (!files.length) {
+      notifier.danger('Sorry! We only support images that are less than 5MB and have a max dimension of' +
+        ' 4096 x 4096 per image. Please reduce your image size/dimensions, and try uploading again.', 'Some images were not uploaded', {
+        duration: 0,
+      });
+      return;
+    }
+    for (const file of files) {
+      try {
+        const size: Size = await this.getImageSize(file);
+        if (size.height <= this.maxHeight && size.width <= this.maxWidth) {
+          validFiles.push(file);
+        } else {
+          invalidFiles.push(file.name);
+        }
+      } catch (err) {
+        // this.assetService.handleFailedAssetsUpload(file.name);
+        return;
+      }
+    }
+
+    for (let file of files) {
       list.push(file);
     }
 
@@ -142,9 +200,41 @@ export class FileUploader {
     if (this.options.autoUpload) {
       this.uploadAll();
     }
+
   }
 
-  private isAudioFile (filename: string) {;
+  async getImageSize(file: File) {
+    const url = window.URL.createObjectURL(file);
+    try {
+      return await new Promise<Size>((resolve, reject) => {
+        const image = new Image();
+        image.src = url;
+        image.onload = (progressEvent: Event) => {
+          resolve({height: image.height, width: image.width});
+        };
+        image.onerror = reject;
+      });
+    } finally {
+      window.URL.revokeObjectURL(url);
+    }
+  }
+
+  private validateFileType(fileList: File[] | undefined): File[] {
+    const files: File[] = [];
+    if (!fileList) {
+      return files;
+    }
+    const extensions = IMAGE_FILE_EXTENSIONS.split(',');
+    for (let i = 0; i < fileList.length; i++) {
+      const file = fileList[i];
+      if (file && extensions.some(ext => file.name.toLowerCase().endsWith(ext))) {
+        files.push(file);
+      }
+    }
+    return files;
+  }
+
+  private isAudioFile (filename: string) {
     const extensions = [ '.mp3', '.flac', '.ogg', '.wma', '.wav' ];
 
     return extensions.some(e => filename.endsWith(e));

@@ -29,6 +29,7 @@ import {NbInputModule} from "../../../../sharebook-nebular/theme/components/inpu
 import {NbSelectModule} from "../../../../sharebook-nebular/theme/components/select/select.module";
 import { ReplyCommentComponent } from './upload/reply-comment/reply-comment.component';
 import {SharedFormModule} from "../../../../shared/shared-forms/shared-form.module";
+import {AssetsPanelService} from "./upload/assets-panel.service";
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import {SharedFormModule} from "../../../../shared/shared-forms/shared-form.modu
         UploadRequesterService,
         ChunkedUploaderService,
         UploadClientRequiredParametersValidatorService,
+        AssetsPanelService,
     ],
 })
 export class ComposeModule {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-sidebar-column',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar-column.component.scss']
 })
 export class SidebarColumnComponent implements OnInit {
+  @Input() hideWhoToFollow = false;
 
   constructor() { }
 
@@ -22,7 +23,7 @@ export class SidebarColumnComponent implements OnInit {
     return [
       { title: 'About', link: '/about' },
       { title: 'Chessbook for Business', link: '/about' },
-      { title: 'Developers', link: '/about' },
+      { title: 'Developers', link: '/about', fragment: 'developers' },
     ];
   }
 

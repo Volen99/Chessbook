@@ -48,6 +48,7 @@
     using Chessbook.Core.Domain.Gdpr;
     using Chessbook.Services.Gdpr;
     using Chessbook.Services.ExportImport;
+    using Chessbook.Services.Chat;
 
     [Route("users")]
     public class UsersController : BaseApiController
@@ -77,6 +78,7 @@
         private readonly ILocaleStringResourceService localeStringResourceService;
         private readonly IGdprService gdprService;
         private readonly IExportManager exportManager;
+        private readonly IChatService chatService;
 
         public UsersController(IUserService userService, JwtManager jwtManager, IAuthenticationService authService, IPostsService postsService,
             IPictureService pictureService, IGenericAttributeService genericAttributeService, IRelationshipService relationshipService, IUserModelFactory userModelFactory,
@@ -85,7 +87,7 @@
             ICustomerRegistrationService customerRegistrationService, IAbuseService abuseService, IAbuseModelFactory abuseModelFactory,
             IFollowService followService, IBlocklistService blocklistService, IUserBlocklistFactory userBlocklistFactory, IWorkContext workContext,
             ICountryService countryService, IDateTimeHelper dateTimeHelper, ILocaleStringResourceService localeStringResourceService,
-            IGdprService gdprService, IExportManager exportManager)
+            IGdprService gdprService, IExportManager exportManager, IChatService chatService)
         {
             this.userService = userService;
             this.jwtManager = jwtManager;
@@ -112,6 +114,7 @@
             this.localeStringResourceService = localeStringResourceService;
             this.gdprService = gdprService;
             this.exportManager = exportManager;
+            this.chatService = chatService;
         }
 
         //[HttpGet]
@@ -151,15 +154,15 @@
 
         [HttpGet]
         [Route("who_to_follow")]
-        public async Task<IActionResult> GetWhoToFollowUsers(int pageNumber = 0, int pageSize = 3)
+        public async Task<IActionResult> GetWhoToFollowUsers(int start = 0, int count = 3)
         {
             var filter = new UsersGridFilter
             {
-                PageNumber = pageNumber,
-                PageSize = pageSize,
+                PageNumber = start,
+                PageSize = count,
             };
 
-            var users = await this.userService.GetWhoToFollowUsers(filter, User.GetUserId(), new int[] { 3, }, false);
+            var users = await this.userService.GetWhoToFollowUsers(filter, User.GetUserId(), new int[] { 1, 2, 3, }, false);
 
             var model = new List<CustomerModel>();
             foreach (var user in users)
@@ -167,7 +170,11 @@
                 model.Add(await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), user));
             }
 
-            return this.Ok(model);
+            return this.Ok(new
+            {
+                total = users.Count,
+                data = model,
+            }); ;
         }
 
         [HttpGet]
@@ -193,11 +200,16 @@
 
                 var model = await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), user);
 
+                if (model == null)
+                {
+                    return this.BadRequest();
+                }
+
+                model.UnreadPrivateMessages = await GetUnreadPrivateMessagesAsync();
                 return this.Ok(model);
             }
 
             return this.Ok();
-            return Unauthorized();
         }
 
         [HttpPost]
@@ -607,8 +619,7 @@
                     var notificationModel = await this.userNotificationModelFactory.PrepareUserNotificationModelAsync(notification);
 
                     return notificationModel;
-                })
-                    .ToListAsync();
+                }).ToListAsync();
 
                 return this.Ok(new
                 {
@@ -624,14 +635,26 @@
             });
         }
 
-        [Authorize]
         [HttpPost]
+        [Authorize]
         [Route("me/notifications/read-all")]
         public async Task<IActionResult> ReadAll()
         {
             var userId = User.GetUserId();
 
             await this.notificationsService.ReadAll(userId);
+
+            return this.NoContent();
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("me/notifications/clear-all")]
+        public async Task<IActionResult> ClearAll()
+        {
+            var userId = User.GetUserId();
+
+            await this.notificationsService.ClearAll(userId);
 
             return this.NoContent();
         }
@@ -730,10 +753,20 @@
         {
             var blockedAccounts = await this.blocklistService.GetUserBlocklistAccounts(input.Start, input.Count, input.Sort, User.GetUserId(), input.Search);
 
+            if (blockedAccounts == null)
+            {
+                return this.NoContent();
+            }
+
             var models = new List<UserBlocklistModel>();
             foreach (var blockedAccount in blockedAccounts)
             {
                 models.Add(await this.userBlocklistFactory.PrepareUserBlocklistModel(blockedAccount));
+            }
+
+            if (input.Search != null)
+            {
+                models = models.Where(b => b.BlockedAccount.ScreenName.Contains(input.Search)).ToList();
             }
 
             return this.Ok(new
@@ -748,6 +781,11 @@
         [Authorize]
         public async Task<IActionResult> PostBlockListAccounts([FromBody] ScreenNameBody body)
         {
+            if (body == null)
+            {
+                return this.BadRequest();
+            }
+
             await this.blocklistService.Block(User.GetUserId(), body.ScreenName);
 
             return this.NoContent();
@@ -758,6 +796,11 @@
         [Authorize]
         public async Task<IActionResult> DeleteBlockListAccounts(string screenName)
         {
+            if (screenName == null)
+            {
+                return this.BadRequest();
+            }
+
             await this.blocklistService.UnBlock(User.GetUserId(), screenName);
 
             return this.NoContent();
@@ -859,7 +902,6 @@
 
             await this.PrepareDefaultItemAsync(timeZonesModel, true, text, timeZoneId);
 
-
             var model = new UtcStuffModel
             {
                 Countries = countriesModel,
@@ -878,12 +920,6 @@
             {
                 return Challenge();
             }
-
-            if (false) // !_gdprSettings.GdprEnabled
-            {
-                return RedirectToRoute("CustomerInfo");
-            } 
-                
 
             // log
             await this.gdprService.InsertLogAsync(await this.workContext.GetCurrentCustomerAsync(), 0, GdprRequestType.ExportData, "Exported personal data");
@@ -986,6 +1022,30 @@
             var customers = await this.userService.GetAllCustomersAsync(customerRoleIds: new[] { (await this.userService.GetCustomerRoleBySystemNameAsync(NopCustomerDefaults.AdministratorsRoleName)).Id });
 
             return customers.Any(c => c.Active && c.Id != customer.Id);
+        }
+
+        /// <summary>
+        /// Get the number of unread private messages
+        /// </summary>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the number of private messages
+        /// </returns>
+        private async Task<int> GetUnreadPrivateMessagesAsync()
+        {
+            var result = 0;
+            var customer = await this.workContext.GetCurrentCustomerAsync();
+            if (!await this.userService.IsGuestAsync(customer))
+            {
+                var privateMessages = await this.chatService.GetAllPrivateMessagesAsync(1, 0, customer.Id, false, false, false, string.Empty, 0, 1);
+
+                if (privateMessages.TotalCount > 0)
+                {
+                    result = privateMessages.TotalCount;
+                }
+            }
+
+            return result;
         }
     }
 

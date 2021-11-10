@@ -1,5 +1,4 @@
-<div class="infinite-cards row" appInfiniteScroller (nearOfBottom)="this.onNearOfBottom()" [autoInit]="true"
-     [dataObservable]="this.onDataSubject.asObservable()" style="margin: 0px">
+<div class="infinite-cards row" style="margin: 0px" nbInfiniteList [listenWindowScroll]="true" [threshold]="500" (bottomThreshold)="this.onNearOfBottom()">
     <div class="col-md-12 col-lg-7 col-xxxl-6 r-yfoy6g r-18bvks7 main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1 main-left-right-vertical-border-color"
          style="padding-left: 0px">
         <nb-card style="width: 102.6%">
@@ -63,7 +62,7 @@
                                                 aria-level="1" dir="auto" role="heading"
                                                 class="sharebook-link css-901oao border-width-0px r-1xk2f4g height-1px overflow-hidden r-wwvuq4 position-absolute width-1px"
                                                 id="accessible-list-10">Explore</h1>
-                                            <div aria-label="Timeline: Explore" class="sharebook-container">
+                                            <div *ngIf="this.users.length > 0" aria-label="Timeline: Explore" class="sharebook-container">
                                                 <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.users.length) + 'px'}">
                                                     <div *ngFor="let user of this.users; let i = index"
                                                          style="position: absolute; width: 100%; transform: translateY({{this.setTransform(i)}}px); transition: opacity 0.3s ease-out 0s;">
@@ -154,7 +153,7 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </a></div>
-                                                                            <app-follow-button [account]="user"
+                                                                            <app-follow-button *ngIf="!this.isManageable(user)" [account]="user"
                                                                                                [users]="[user]"></app-follow-button>
                                                                         </div>
                                                                         <div dir="auto"

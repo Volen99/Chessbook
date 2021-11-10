@@ -87,7 +87,6 @@ export class UserUpdateComponent extends UserEdit implements OnInit, OnDestroy {
 
     this.userService.updateUserAsAdmin(userUpdate).subscribe(
       () => {
-        debugger
         this.notifier.success(`User ${this.user.screenName} updated.`, 'Success');
         this.router.navigate(['/admin/users/list']);
       },

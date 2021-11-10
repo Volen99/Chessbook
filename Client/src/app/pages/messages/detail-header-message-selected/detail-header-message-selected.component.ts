@@ -13,6 +13,9 @@ import {
 import {ContactAdminModalComponent} from "../../../shared/shared-messages/contact-admin-modal.component";
 import {NbDialogService} from "../../../sharebook-nebular/theme/components/dialog/dialog.service";
 import {UserStore} from "../../../core/stores/user.store";
+import {NbToastrService} from "../../../sharebook-nebular/theme/components/toastr/toastr.service";
+import {MarkdownService} from "../../../core/renderer/markdown.service";
+import {IUser} from "../../../core/interfaces/common/users";
 
 @Component({
   selector: 'app-detail-header-message-selected',
@@ -25,7 +28,9 @@ export class DetailHeaderMessageSelectedComponent implements OnInit {
 
   constructor(private chatService: ChatService, private route: ActivatedRoute,
               private dialogService: NbDialogService, private router: Router,
-              private userStore: UserStore) {
+              private userStore: UserStore,
+              private notifier: NbToastrService,
+              private markdownService: MarkdownService) {
   }
 
   ngOnInit(): void {
@@ -34,6 +39,7 @@ export class DetailHeaderMessageSelectedComponent implements OnInit {
       if (messageId) {
         this.setMessageId(messageId);
         this.getPrivateMessageById();
+        this.userCurrent = this.userStore.getUser();
       }
     });
   }
@@ -42,12 +48,15 @@ export class DetailHeaderMessageSelectedComponent implements OnInit {
   faReply = faReply;
   faTrash = faTrash;
 
+  userCurrent: IUser;
   message: PrivateMessage;
+  statusHTMLText = '';
 
   getPrivateMessageById() {
     this.chatService.loadMessage(this.messageId)
       .subscribe((data) => {
         this.message = data;
+        this.setMessageTextHTML();
       });
   }
 
@@ -77,8 +86,21 @@ export class DetailHeaderMessageSelectedComponent implements OnInit {
     let tab = this.userStore.getUser().id === this.message.fromUser.id ? 'sent' : 'inbox';
     this.chatService.delete(this.messageId, tab)
       .subscribe((data) => {
+        this.notifier.success('Message successfully deleted', 'Success');
+
         this.router.navigate(['/messages']);
       });
+  }
+
+  private async setMessageTextHTML() {
+    if (!this.message?.message) {
+      return;
+    }
+
+    // Before HTML rendering restore line feed for markdown list compatibility
+    const commentText = this.message.message.replace(/<br.?\/?>/g, '\r\n');
+    const html = await this.markdownService.textMarkdownToHTML(commentText, true, true);
+    this.statusHTMLText = this.markdownService.processVideoTimestamps(this.message.fromUser.screenName, this.message.id, html);
   }
 
 }

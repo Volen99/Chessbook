@@ -14,6 +14,7 @@ import {
 } from '@fortawesome/pro-light-svg-icons';
 import {NbToastrService} from "../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {PostComment} from "../../shared-post-comment/post-comment-model";
+import {NbDialogRef} from '../../../sharebook-nebular/theme/components/dialog/dialog-ref';
 
 @Component({
   selector: 'app-comment-report',
@@ -35,7 +36,8 @@ export class CommentReportComponent extends FormReactive implements OnInit {
     protected formValidatorService: FormValidatorService,
     private modalService: NgbModal,
     private abuseService: AbuseService,
-    private notifier: NbToastrService) {
+    private notifier: NbToastrService,
+    private ref: NbDialogRef<CommentReportComponent>) {
     super();
   }
 
@@ -69,12 +71,12 @@ export class CommentReportComponent extends FormReactive implements OnInit {
   }
 
   hide() {
-    this.openedModal.close();
-    this.openedModal = null;
+    this.ref.close();
+    // this.openedModal.close();
+    // this.openedModal = null;
   }
 
   report() {
-    debugger
     const reason = this.form.get('reason').value;
     const predefinedReasons = Object.keys(pickBy(this.form.get('predefinedReasons').value)) as AbusePredefinedReasonsString[];
 

@@ -1,5 +1,4 @@
-﻿using Chessbook.Core.Domain.Posts;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Chessbook.Web.Models.Inputs
 {
@@ -11,10 +10,23 @@ namespace Chessbook.Web.Models.Inputs
 
         public Account Account { get; set; }
 
-        public Post Post { get; set; }
+        public PostInput Post { get; set; }
+
+        public CommentInput Comment { get; set; }
     }
 
     public class Account
+    {
+        public int Id { get; set; }
+    }
+
+    public class PostInput
+    {
+        public int Id { get; set; }
+
+    }
+
+    public class CommentInput
     {
         public int Id { get; set; }
     }

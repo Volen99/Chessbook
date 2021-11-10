@@ -114,7 +114,7 @@ $icon-font-path: '~@neos21/bootstrap3-glyphicons/assets/fonts/';
   text-align: center;
 
   .modal-content {
-    background-color: pvar(--mainBackgroundColor);
+    background-color: #000000; // pvar(--mainBackgroundColor);
   }
 
   .modal-header {
@@ -303,8 +303,8 @@ ngb-tooltip-window {
 // input box-shadow on focus
 .form-control {
   font-size: 15px;
-  color: pvar(--mainForegroundColor);
-  background-color: pvar(--inputBackgroundColor);
+  //color: pvar(--mainForegroundColor);
+  //background-color: pvar(--inputBackgroundColor);
   outline: none;
 
   &:focus-within,

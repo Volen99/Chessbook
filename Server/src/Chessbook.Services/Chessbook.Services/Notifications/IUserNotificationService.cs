@@ -12,5 +12,7 @@ namespace Chessbook.Services.Notifications
         Task<IPagedList<UserNotification>> List(int userId, int start, int count, string sort, bool? unread);
 
         Task ReadAll(int userI);
+
+        Task ClearAll(int userId);
     }
 }

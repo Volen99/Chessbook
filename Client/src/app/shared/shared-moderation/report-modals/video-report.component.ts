@@ -24,7 +24,7 @@ import {NbDialogRef} from "../../../sharebook-nebular/theme/components/dialog/di
   styleUrls: ['./report.component.scss']
 })
 export class VideoReportComponent extends FormReactive implements OnInit {
-  @Input() video: Post = null;
+  @Input() post: Post = null;
 
   @ViewChild('modal', {static: true}) modal: NgbModal;
 
@@ -91,6 +91,21 @@ export class VideoReportComponent extends FormReactive implements OnInit {
     // this.embedHtml = this.getVideoEmbed()
   }
 
+  svgStyles = {
+    'display': 'inline-block',
+    'fill': 'currentcolor',
+    'flex-shrink': '0',
+    'width': '1.5em',
+    'height': '1.5em',
+    'max-width': '100% ',
+    'position': 'relative',
+    'vertical-align': 'text-bottom',
+    '-moz-user-select': 'none',
+    '-ms-user-select': 'none',
+    '-webkit-user-select': 'none',
+    'user-select': 'none',
+  };
+
   show() {
     this.openedModal = this.modalService.open(this.modal, {centered: true, keyboard: false, size: 'lg'});
   }
@@ -109,8 +124,8 @@ export class VideoReportComponent extends FormReactive implements OnInit {
     this.abuseService.reportVideo({
       reason,
       predefinedReasons,
-      video: {
-        id: this.video.id,
+      post: {
+        id: this.post.id,
         startAt: hasStart && startAt ? startAt : undefined,
         endAt: hasEnd && endAt ? endAt : undefined
       }

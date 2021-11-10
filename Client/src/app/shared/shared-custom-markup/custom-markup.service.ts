@@ -1,7 +1,9 @@
 import {ComponentRef, Injectable} from '@angular/core';
 import {DynamicElementService} from './dynamic-element.service';
 import {MarkdownService} from "../../core/renderer/markdown.service";
-import {ContainerMarkupData} from "../models/custom-markup/custom-markup-data.model";
+import {ButtonMarkupData, ContainerMarkupData} from "../models/custom-markup/custom-markup-data.model";
+/*import {firstValueFrom} from 'rxjs';*/ // when you update rxjs, then you will get this dude.
+import {ButtonMarkupComponent} from "./chessbook-custom-tags/button-markup.component";
 
 
 type AngularBuilderFunction = (el: HTMLElement) => ComponentRef<any>;
@@ -9,6 +11,10 @@ type HTMLBuilderFunction = (el: HTMLElement) => HTMLElement;
 
 @Injectable()
 export class CustomMarkupService {
+  private angularBuilders: { [selector: string]: AngularBuilderFunction } = {
+    'peertube-button': el => this.buttonBuilder(el),
+  };
+
   private htmlBuilders: { [selector: string]: HTMLBuilderFunction } = {
     'peertube-container': el => this.containerBuilder(el)
   };
@@ -42,7 +48,28 @@ export class CustomMarkupService {
         });
     }
 
-    return rootElement;
+    const loadedPromises: Promise<boolean>[] = [];
+
+    // for (const selector of Object.keys(this.angularBuilders)) {
+    //   rootElement.querySelectorAll(selector)
+    //     .forEach((e: HTMLElement) => {
+    //       try {
+    //         const component = this.execAngularBuilder(selector, e);
+    //
+    //         if (component.instance.loaded) {
+    //           const p = firstValueFrom(component.instance.loaded);
+    //           // @ts-ignore
+    //           loadedPromises.push(p);
+    //         }
+    //
+    //         this.dynamicElementService.injectElement(e, component);
+    //       } catch (err) {
+    //         console.error('Cannot inject component %s.', selector, err);
+    //       }
+    //     });
+    // }
+
+    return {rootElement, componentsLoaded: Promise.all(loadedPromises)};
   }
 
   private getSupportedTags() {
@@ -95,6 +122,10 @@ export class CustomMarkupService {
     return root;
   }
 
+  private execAngularBuilder(selector: string, el: HTMLElement) {
+    return this.angularBuilders[selector](el);
+  }
+
   private buildNumber(value: string) {
     if (!value) return undefined;
 
@@ -118,5 +149,20 @@ export class CustomMarkupService {
     if (!value) return undefined;
 
     return value.split(',');
+  }
+
+  private buttonBuilder(el: HTMLElement) {
+    const data = el.dataset as ButtonMarkupData;
+    const component = this.dynamicElementService.createElement(ButtonMarkupComponent);
+
+    const model = {
+      theme: data.theme ?? 'primary',
+      href: data.href,
+      label: data.label,
+      blankTarget: this.buildBoolean(data.blankTarget) ?? false
+    };
+    this.dynamicElementService.setModel(component, model);
+
+    return component;
   }
 }

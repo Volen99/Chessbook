@@ -22,13 +22,18 @@ export class IsVideoPipe implements PipeTransform {
 
   public static getYoutubeEmbedLink(url: string): string {
     const parts = this._youtubeRegEx.exec(url);
-    debugger
     return `https://www.youtube.com/embed/${parts[5]?.split(' ')[0]}`;
+  }
+
+  public static getYoutubeIdFromLink(url: string): string {
+    debugger
+    const parts = this._youtubeRegEx.exec(url);
+
+    return parts[5];
   }
 
   public static getTwitchEmbedLink(url: string): string {
     const parts = this._twitchRegEx.exec(url);
-    debugger
     return `https://player.twitch.tv/?autoplay=false&parent=localhost&video=v${parts[3]?.split(' ')[0]}`;
   }
 

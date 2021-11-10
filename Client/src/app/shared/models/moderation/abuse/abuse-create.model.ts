@@ -9,7 +9,7 @@ export interface AbuseCreate {
     id: number
   };
 
-  video?: {
+  post?: {
     id: number
     startAt?: number
     endAt?: number

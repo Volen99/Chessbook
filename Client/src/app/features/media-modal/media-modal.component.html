@@ -24,12 +24,12 @@
 
         <button *ngIf="this.media.length > 1" tabIndex='0' class="media-modal__nav media-modal__nav--left"
                 (click)="this.handlePrevClick()"
-                aria-label={intl.formatMessage(messages.previous)}>
+                aria-label="Previous">
             <fa-icon id="chevron-left" [icon]="this.faChevronLeft" size="2x" fixedWidth></fa-icon>
         </button>
         <button *ngIf="this.media.length > 1" tabIndex='0' class="media-modal__nav  media-modal__nav--right"
                 (click)="this.handleNextClick()"
-                aria-label={intl.formatMessage(messages.previous)}>
+                aria-label="Next">
             <fa-icon id="chevron-right" [icon]="this.faChevronRight" size="2x" fixedWidth></fa-icon>
         </button>
 

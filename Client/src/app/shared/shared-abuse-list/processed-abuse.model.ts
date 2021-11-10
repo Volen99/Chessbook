@@ -18,9 +18,9 @@ export type ProcessedAbuse = AdminAbuse & {
   truncatedCommentHtml?: string
   commentHtml?: string
 
-  video: AdminAbuse['video'] & {
-    channel: AdminAbuse['video']['channel'] & {
+  post: AdminAbuse['post'] & {
+    channel: AdminAbuse['post']['channel'] /*& {
       ownerAccount: User
-    }
+    }*/
   }
 };

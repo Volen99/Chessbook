@@ -106,6 +106,8 @@ namespace Chessbook.Web.Areas.Admin.Models.Customers
 
         public string LastVisitedPage { get; set; }
 
+        public int UnreadPrivateMessages { get; set; }
+
         public DateTime? LastLoginDate { get; set; }
 
         public NotificationSettingsModel NotificationSettings { get; set; }

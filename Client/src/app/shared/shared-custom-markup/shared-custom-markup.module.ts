@@ -6,6 +6,7 @@ import {CustomMarkupHelpComponent} from './custom-markup-help.component';
 import {CustomMarkupService} from './custom-markup.service';
 import {DynamicElementService} from './dynamic-element.service';
 import {SharedMainModule} from "../shared-main/shared-main.module";
+import {ButtonMarkupComponent} from "./chessbook-custom-tags/button-markup.component";
 
 @NgModule({
   imports: [
@@ -18,11 +19,13 @@ import {SharedMainModule} from "../shared-main/shared-main.module";
   declarations: [
     CustomMarkupHelpComponent,
     CustomMarkupContainerComponent,
+    ButtonMarkupComponent,
   ],
 
   exports: [
     CustomMarkupHelpComponent,
     CustomMarkupContainerComponent,
+    ButtonMarkupComponent,
   ],
 
   providers: [

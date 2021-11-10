@@ -44,6 +44,9 @@ export class PollComponent implements OnInit, OnChanges, OnDestroy {
       return null;
     }
 
+    this.poll.expired = (new Date(this.poll.expiresAt)).getTime() < Date.now();
+    this.expired = this.poll.expired;
+
     this.timeRemaining = this.expired ? 'Closed' : this.poll.expiresAt;
     this.showResults = this.poll.alreadyVoted || this.expired;
 
@@ -90,6 +93,7 @@ export class PollComponent implements OnInit, OnChanges, OnDestroy {
 
         this.poll.startDateUtc = new Date(data.startDateUtc);
         this.showResults = true;
+        this.votesCount = this.poll.totalVotes;
 
         this.cd.detectChanges(); // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
       });

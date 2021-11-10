@@ -6,6 +6,7 @@ import { DataSource } from 'ng2-smart-table/lib/lib/data-source/data-source';
 import { IUser, UserData } from '../../interfaces/common/users';
 import { UserCreate } from 'app/shared/models/users/user-create.model';
 import { UserUpdate } from 'app/shared/models/users/user-update.model';
+import {ComponentPaginationLight} from "../../rest/component-pagination.model";
 
 @Injectable()
 export class UsersService extends UserData {
@@ -87,7 +88,11 @@ export class UsersService extends UserData {
 
    private data: IUser[];
 
-    getUsers(pageNumber: number, pageSize: number) {
+  pagination: ComponentPaginationLight = {
+    currentPage: 1,
+    itemsPerPage: 3,
+  };
+    getUsers({pagination}) {
     } // = [
   //   {
   //     id: 1,

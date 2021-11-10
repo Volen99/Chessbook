@@ -66,7 +66,7 @@ export class AdminComponent implements OnInit {
     }
     if (this.hasAccountsBlocklistRight()) {
       moderationItems.children.push({
-        label: `Muted accounts`,
+        label: `Blocked accounts`,
         routerLink: '/admin/moderation/blocklist/accounts',
         iconName: this.faTimes,
       });

@@ -1,6 +1,7 @@
 import {AfterViewChecked, Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {fromEvent, Observable, Subscription} from 'rxjs';
 import {distinctUntilChanged, filter, map, share, startWith, throttleTime} from 'rxjs/operators';
+import {ChessbookRouterService, RouterSetting} from '../../../../core/routing/chessbook-router.service';
 
 @Directive({
   selector: '[appInfiniteScroller]'
@@ -20,7 +21,7 @@ export class InfiniteScrollerDirective implements OnInit, OnDestroy, AfterViewCh
 
   private checkScroll = false;
 
-  constructor(private el: ElementRef) {
+  constructor(private el: ElementRef, private chessbookRouter: ChessbookRouterService) {
     this.decimalLimit = this.percentLimit / 100;
   }
 
@@ -95,5 +96,9 @@ export class InfiniteScrollerDirective implements OnInit, OnDestroy, AfterViewCh
 
     this.lastCurrentBottom = current;
     return result;
+  }
+
+  private setScrollRouteParams () {
+    this.chessbookRouter.addRouteSetting(RouterSetting.REUSE_COMPONENT);
   }
 }

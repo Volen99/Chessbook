@@ -30,7 +30,7 @@ namespace Chessbook.Web.Api.Lib
 
         private readonly dynamic notificationModels = new
         {
-            newComment = new List<Type>() { typeof(CommentMention) },
+            newComment = new List<Type>() { typeof(CommentMention), typeof(NewCommentForPostOwner) },
             userFollow = new List<Type>() { typeof(FollowForUser) },
             newPostLike = new List<Type>() { typeof(UserLike) },
         };
@@ -89,7 +89,6 @@ namespace Chessbook.Web.Api.Lib
                 }
                 catch (Exception ex)
                 {
-
                     throw;
                 }
             }

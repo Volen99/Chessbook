@@ -9,7 +9,7 @@ const routes: Routes = [
     component: ChessStuffComponent,
     data: {
       meta: {
-        title: `Misc`
+        title: `Miscellaneous`
       }
     },
   }

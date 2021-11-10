@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 using Chessbook.Common.Extensions;
@@ -10,6 +6,7 @@ using Chessbook.Core.JsonConverters;
 using Chessbook.Services.Data;
 using Chessbook.Web.Api.Identity;
 using Chessbook.Web.Models.APIs;
+using Chessbook.Services.APIs;
 
 namespace Chessbook.Web.Api.Controllers
 {
@@ -19,19 +16,19 @@ namespace Chessbook.Web.Api.Controllers
         private const string TWITCH_CLIEND_ID = "mtkcd657i2m7r9tljz4o5vevhic3it";                   // I am so fucking dumb, omg... 15.04.2021
         private const string TWITCH_CLIENT_SECRET = "rc7a5j15k6bteusibx73dr7yizg986";
 
-        private readonly IJsonObjectConverter jsonObjectConverter;
         private readonly IStreamersService streamersService;
+        private readonly ITwitchService twitchService;
 
-        public StreamersController(IJsonObjectConverter jsonObjectConverter, IStreamersService streamersService)
+        public StreamersController(IStreamersService streamersService, ITwitchService twitchService)
         {
-            this.jsonObjectConverter = jsonObjectConverter;
             this.streamersService = streamersService;
+            this.twitchService = twitchService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAccessToken([FromQuery] string cursor)
         {
-            var accessTokenDTO = await this.ExecuteRequest<CreateTokenResponseDTO>($"https://id.twitch.tv/oauth2/token?client_id={TWITCH_CLIEND_ID}&client_secret={TWITCH_CLIENT_SECRET}&grant_type=client_credentials");
+            var accessTokenDTO = await this.twitchService.ExecuteRequest<CreateTokenResponseDTO>($"https://id.twitch.tv/oauth2/token?client_id={TWITCH_CLIEND_ID}&client_secret={TWITCH_CLIENT_SECRET}&grant_type=client_credentials");
 
             var url = "https://api.twitch.tv/helix/streams?game_id=743&first=50";
 
@@ -40,12 +37,9 @@ namespace Chessbook.Web.Api.Controllers
                 url = url.AddParameterToQuery("after", cursor);
             }
 
-            var streamsDTO = await this.ExecuteRequest<GetStreamsResponseDTO>(url, accessTokenDTO.AccessToken);
-
-            
+            var streamsDTO = await this.twitchService.ExecuteRequest<GetStreamsResponseDTO>(url, accessTokenDTO.AccessToken);
 
             return this.Ok(streamsDTO);
-
         }
 
         [HttpGet]
@@ -71,8 +65,9 @@ namespace Chessbook.Web.Api.Controllers
                 url = url.AddParameterToQuery("after", cursor);
             }
 
-            var accessTokenDTO = await this.ExecuteRequest<CreateTokenResponseDTO>($"https://id.twitch.tv/oauth2/token?client_id={TWITCH_CLIEND_ID}&client_secret={TWITCH_CLIENT_SECRET}&grant_type=client_credentials");
-            var streamsDTO = await this.ExecuteRequest<GetChessbookUsersStreamDTO>(url, accessTokenDTO.AccessToken);
+            var accessTokenDTO = await this.twitchService.ExecuteRequest<CreateTokenResponseDTO>($"https://id.twitch.tv/oauth2/token?client_id={TWITCH_CLIEND_ID}&client_secret={TWITCH_CLIENT_SECRET}&grant_type=client_credentials");
+
+            var streamsDTO = await this.twitchService.ExecuteRequest<GetChessbookUsersStreamDTO>(url, accessTokenDTO.AccessToken);
 
             streamsDTO.TwitchLoginName = await this.streamersService.GetByUserId(User.GetUserId());
 
@@ -84,8 +79,8 @@ namespace Chessbook.Web.Api.Controllers
         [Route("user/{userLogin:length(3, 16)}")]
         public async Task<IActionResult> GetStreamByUserLogin(string userLogin)
         {
-            var accessTokenDTO = await this.ExecuteRequest<CreateTokenResponseDTO>($"https://id.twitch.tv/oauth2/token?client_id={TWITCH_CLIEND_ID}&client_secret={TWITCH_CLIENT_SECRET}&grant_type=client_credentials");
-            var streamsDTO = await this.ExecuteRequest<GetStreamsResponseDTO>($"https://api.twitch.tv/helix/streams?user_login={userLogin}", accessTokenDTO.AccessToken);
+            var accessTokenDTO = await this.twitchService.ExecuteRequest<CreateTokenResponseDTO>($"https://id.twitch.tv/oauth2/token?client_id={TWITCH_CLIEND_ID}&client_secret={TWITCH_CLIENT_SECRET}&grant_type=client_credentials");
+            var streamsDTO = await this.twitchService.ExecuteRequest<GetStreamsResponseDTO>($"https://api.twitch.tv/helix/streams?user_login={userLogin}", accessTokenDTO.AccessToken);
 
             return this.Ok(streamsDTO);
         }
@@ -132,71 +127,7 @@ namespace Chessbook.Web.Api.Controllers
 
             return this.Ok(new { username = res });
         }
-
-        private async Task<TDTO> ExecuteRequest<TDTO>(string url, string accessToken = null)
-        {
-            var httpClient = new HttpClient();
-            var method = HttpMethod.Get;
-
-            httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-            httpClient.DefaultRequestHeaders.Add("Client-ID", TWITCH_CLIEND_ID);
-
-            if (accessToken == null)
-            {
-                httpClient = new HttpClient();
-                method = HttpMethod.Post;
-            }
-
-            var httpResponseMessage = await httpClient.SendAsync(new HttpRequestMessage(method, url));
-
-            if (!httpResponseMessage.IsSuccessStatusCode)
-            {
-                Console.WriteLine(httpResponseMessage.ReasonPhrase);
-                return default(TDTO);
-            }
-
-            var json = "";
-
-            var stream = httpResponseMessage.Content.ReadAsStreamAsync().Result;
-            if (stream != null)
-            {
-                json = Encoding.UTF8.GetString(StreamToBinary(stream));
-            }
-
-            var dto = this.jsonObjectConverter.Deserialize<TDTO>(json, null);
-
-            return dto;
-        }
-
-        private static byte[] StreamToBinary(Stream stream)
-        {
-            if (stream == null)
-            {
-                return null;
-            }
-
-            byte[] binary;
-
-            using (var tempMemStream = new MemoryStream())
-            {
-                byte[] buffer = new byte[128];
-
-                while (true)
-                {
-                    int read = stream.Read(buffer, 0, buffer.Length);
-
-                    if (read <= 0)
-                    {
-                        binary = tempMemStream.ToArray();
-                        break;
-                    }
-
-                    tempMemStream.Write(buffer, 0, read);
-                }
-            }
-
-            return binary;
-        }
+       
     }
 
 }

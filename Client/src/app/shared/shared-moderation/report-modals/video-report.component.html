@@ -2,8 +2,18 @@
 <nb-card style="max-height: 570px;">
     <nb-card-header>
         <div class="modal-header">
-            <h4 i18n class="modal-title">Report post "{{ video.status || video.id }}"</h4>
-            <fa-icon class="icon-hover" [icon]="this.faTimes" aria-label="Close" role="button" (click)="hide()"></fa-icon>
+            <h4 class="modal-title">Report post "{{ post.status || post.id }}"</h4>
+            <div aria-label="Close" role="button" data-focusable="true"
+                 tabindex="0"
+                 class="icon-hover close-button sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
+                 style="margin-left: calc(5px + (-1 * (41px - 1.5em)) / 2);">
+                <div dir="auto"
+                     class="align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
+                     (click)="this.hide()">
+                    <fa-icon [icon]="this.faTimes" [styles]="this.svgStyles"></fa-icon>
+                    <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
+                </div>
+            </div>
         </div>
     </nb-card-header>
     <nb-card-body>
@@ -28,6 +38,13 @@
                                             <div [innerHTML]="reason.description"></div>
                                         </ng-container>
                                     </nb-checkbox>
+                                    <app-help>
+                                        <ng-template appSbTemplate="customHtml">
+                                            <ng-container>
+                                               <span [innerHTML]="reason.help"></span>
+                                            </ng-container>
+                                        </ng-template>
+                                    </app-help>
                                 </div>
                             </ng-container>
                         </div>
@@ -95,8 +112,7 @@
                     <input
                             type="button" nbButton role="button" i18n-value value="Cancel" class="action-button action-button-cancel"
                             style="margin-right: 1rem;"
-                            (click)="hide()" (key.enter)="hide()"
-                    >
+                            (click)="hide()">
                     <input type="submit" nbButton status="primary" i18n-value value="Submit" class="action-button-submit" [disabled]="!form.valid">
                 </div>
 

@@ -11,7 +11,11 @@ export class CustomMarkupContainerComponent implements OnChanges {
 
   @Input() content: string;
 
-  constructor(private customMarkupService: CustomMarkupService) {
+  displayed = false;
+
+  constructor(
+    private customMarkupService: CustomMarkupService
+  ) {
   }
 
   async ngOnChanges() {
@@ -19,8 +23,14 @@ export class CustomMarkupContainerComponent implements OnChanges {
   }
 
   private async buildElement() {
-    const element = await this.customMarkupService.buildElement(this.content);
-    this.contentWrapper.nativeElement.appendChild(element);
+    if (!this.content) return;
+
+    const {rootElement, componentsLoaded} = await this.customMarkupService.buildElement(this.content);
+    this.contentWrapper.nativeElement.appendChild(rootElement);
+
+    await componentsLoaded;
+
+    this.displayed = true;
   }
 
 }

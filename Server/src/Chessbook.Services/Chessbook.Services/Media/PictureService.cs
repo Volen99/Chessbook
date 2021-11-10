@@ -456,7 +456,7 @@ namespace Chessbook.Services.Data.Services.Media
         {
             var defaultImageFileName = defaultPictureType switch
             {
-                PictureType.Avatar => "default-avatar.jpg",
+                PictureType.Avatar => "default-avatar.png",
                 PictureType.Banner => "default-banner.jpg",
                 _ => "await _settingService.GetSettingByKeyAsync('Media.DefaultImageName', NopMediaDefaults.DefaultImageFileName),"
             };

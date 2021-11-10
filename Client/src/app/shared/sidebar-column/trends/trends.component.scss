@@ -2,7 +2,7 @@
 
 @include nb-install-component() {
   .gear-color {
-    color: nb-theme(icon-primary-color);
+    color: nb-theme(text-basic-color);
   }
 
   .show-more-link {

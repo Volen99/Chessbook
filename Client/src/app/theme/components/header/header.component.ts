@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {filter, map, takeUntil} from 'rxjs/operators';
 import {ReplaySubject, Subject} from 'rxjs';
 
-import {faChessPawn, faSignInAlt, faSignOutAlt, faUser, faUserPlus,} from '@fortawesome/pro-light-svg-icons';
+import {faSignInAlt, faSignOutAlt, faUser, faUserPlus,} from '@fortawesome/pro-light-svg-icons';
 import {faUserAlien} from '@fortawesome/pro-solid-svg-icons';
 
 import {IUser} from "../../../core/interfaces/common/users";
@@ -129,7 +129,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
         map(({name}) => name),
         takeUntil(this.destroy$),
       )
-      .subscribe(themeName => this.currentTheme = themeName);
+      .subscribe(themeName => {
+        this.currentTheme = themeName;
+
+        if (themeName !== 'default') {
+          this.currentLogoName = 'icon-white.svg';
+        } else {
+          this.currentLogoName = 'icon-black.svg';
+        }
+      });
   }
 
   ngOnDestroy() {
@@ -154,16 +162,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
       name: 'Cosmic',
     },
     {
-      value: 'material-light',
-      name: 'Material Light',
-    },
-    {
       value: 'material-dark',
       name: 'Material Dark',
+    },
+    {
+      value: 'material-light',
+      name: 'Material Light',
     },
   ];
 
   currentTheme = 'default';
+  currentLogoName = 'default';
   userMenu: any;
   anonymousUserMenu = this.getAnonymousUserMenuItems();
 
@@ -172,10 +181,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   faUser = faUser;
   faSignOutAlt = faSignOutAlt;
-  faSignInAlt = faSignInAlt;
   faUserAlien = faUserAlien;
-  faChessPawn = faChessPawn;
-  faUserPlus = faUserPlus;
 
   poll: IPoll;
 
@@ -195,8 +201,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   getAnonymousUserMenuItems() {
     let menu = [
-      {icon: this.faSignInAlt, title: 'Login', link: '/auth/login'},
-      {icon: this.faUserPlus, title: 'Sign up', link: '/auth/register'},
+      {icon: faSignInAlt, title: 'Login', link: '/auth/login'},
+      {icon: faUserPlus, title: 'Sign up', link: '/auth/register'},
     ];
 
     return menu;

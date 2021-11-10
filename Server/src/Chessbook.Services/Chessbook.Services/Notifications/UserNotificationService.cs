@@ -41,6 +41,10 @@ namespace Chessbook.Services.Notifications
                 // notification.RelationshipId = entityId;
                 notification.UserFollowId = entityId;
             }
+            else if (type == UserNotificationType.NEW_COMMENT_ON_MY_VIDEO)
+            {
+                notification.CommentId = entityId;
+            }
             else if (type == UserNotificationType.COMMENT_MENTION)
             {
                 notification.CommentId = entityId;
@@ -68,9 +72,13 @@ namespace Chessbook.Services.Notifications
                     query = query.Where(n => n.Read == !unread.Value);
                 }
 
+                query = query.Where(n => !n.Cleared);
+
                 //query = ascSort
                 //    ? query.OrderBy(fp => fp.CreatedAt).ThenBy(fp => fp.Id)
                 //    : query.OrderByDescending(fp => fp.CreatedAt).ThenBy(fp => fp.Id);
+
+                query.OrderBy(fp => fp.CreatedAt).ThenBy(fp => fp.Id);
 
                 return query;
 
@@ -89,6 +97,20 @@ namespace Chessbook.Services.Notifications
             foreach (var userNotification in allCurrentUserNotifications)
             {
                 userNotification.Read = true;
+            }
+
+            await this.userNotificationRepository.UpdateAsync(allCurrentUserNotifications);
+        }
+
+        public async Task ClearAll(int userId)
+        {
+            var allCurrentUserNotifications = this.userNotificationRepository.Table
+                .Where(un => un.UserId == userId)
+                .ToList();
+
+            foreach (var userNotification in allCurrentUserNotifications)
+            {
+                userNotification.Cleared = true;
             }
 
             await this.userNotificationRepository.UpdateAsync(allCurrentUserNotifications);

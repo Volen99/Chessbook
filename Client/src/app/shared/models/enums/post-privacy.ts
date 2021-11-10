@@ -1,8 +1,8 @@
 export const enum PostPrivacy {
   PUBLIC = 1,
-  UNLISTED = 2,
-  PRIVATE = 3,
-  INTERNAL = 4,
+  PRIVATE = 2,
+  // UNLISTED = 2,
+  // INTERNAL = 4,
 
 }
 

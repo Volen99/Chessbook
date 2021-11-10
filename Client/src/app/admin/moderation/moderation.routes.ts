@@ -95,7 +95,7 @@ export const ModerationRoutes: Routes = [
         data: {
           userRight: UserRight.MANAGE_ACCOUNTS_BLOCKLIST,
           meta: {
-            title: `Muted accounts`
+            title: `Blocked accounts`
           }
         }
       },

@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit, Optional} from '@angular/core';
-import {Router} from "@angular/router";
+import {GuardsCheckStart, RouteConfigLoadStart, Router} from "@angular/router";
 import {ViewportScroller} from "@angular/common";
 import {Subject} from 'rxjs';
-import {takeUntil, takeWhile} from 'rxjs/operators';
+import {filter, takeUntil, takeWhile} from 'rxjs/operators';
 import {Hotkey, HotkeysService} from "angular2-hotkeys";
 
 import {InitUserService} from './theme/services/init-user.service';
@@ -11,10 +11,13 @@ import {NbTokenService} from "./sharebook-nebular/auth/services/token/token.serv
 import {PagesMenu} from "./pages/pages-menu";
 import {IUser} from "./core/interfaces/common/users";
 import {NbIconLibraries} from "./sharebook-nebular/theme/components/icon/icon-libraries";
-import { NbDialogService } from './sharebook-nebular/theme/components/dialog/dialog.service';
+import {NbDialogService} from './sharebook-nebular/theme/components/dialog/dialog.service';
 import {UploadComponent} from "./pages/modal-overlays/dialog/compose/upload/upload.component";
 import {NbDialogRef} from "./sharebook-nebular/theme/components/dialog/dialog-ref";
 import {User} from "./shared/shared-main/user/user.model";
+import {UserStore} from './core/stores/user.store';
+import {ScrollService} from './core/routing/scroll.service';
+import {ChessbookRouterService} from './core/routing/chessbook-router.service';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +35,9 @@ export class AppComponent implements OnInit, OnDestroy {
               private iconLibraries: NbIconLibraries,
               private hotkeysService: HotkeysService,
               private dialogService: NbDialogService,
+              private userStore: UserStore,
+              private scrollService: ScrollService,
+              private chessbookRouter: ChessbookRouterService,
               @Optional() protected ref: NbDialogRef<UploadComponent>) {
 
     this.iconLibraries.registerFontPack('solid', {packClass: 'fas', iconClassPrefix: 'fa'});
@@ -55,16 +61,16 @@ export class AppComponent implements OnInit, OnDestroy {
   menu: NbMenuItem[];
   alive: boolean = true;
 
-  isUserLoggedIn () {
-   // return this.authService.isLoggedIn();
-  }
-
   ngOnInit(): void {
-    document.getElementById('incompatible-browser').className += ' browser-ok';
-
-    // this.hooks.runAction('action:application.init', 'common');
+    this.initRouteEvents();
+    this.scrollService.enableScrollRestoration();
 
     this.initHotkeys();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   user: IUser;
@@ -81,89 +87,82 @@ export class AppComponent implements OnInit, OnDestroy {
       });
   }
 
-  private onUserFetched (userJson: IUser) {
+  private onUserFetched(userJson: IUser) {
     return new User(userJson);
   }
 
   initMenu() {
-    this.pagesMenu.getMenu(this.user?.screenName)
+    this.pagesMenu.getMenu(this.user?.screenName, this.user?.unreadPrivateMessages)
       .pipe(takeWhile(() => this.alive))
       .subscribe(menu => {
         this.menu = menu;
       });
   }
 
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
+  isUserLoggedIn() {
+    return this.userStore.isLoggedIn();
   }
 
-  private initHotkeys () {
+  private initRouteEvents() {
+    const eventsObs = this.router.events;
+
+    // // Plugin hooks
+    // this.chessbookRouter.getNavigationEndEvents().subscribe(e => {
+    //   this.hooks.runAction('action:router.navigation-end', 'common', {path: e.url});
+    // });
+
+    // // Automatically hide/display the menu
+    // eventsObs.pipe(
+    //   filter((e: Event): e is GuardsCheckStart => e instanceof GuardsCheckStart),
+    //   filter(() => this.screenService.isInSmallView() || this.screenService.isInTouchScreen())
+    // ).subscribe(() => this.menu.setMenuDisplay(false)); // User clicked on a link in the menu, change the page
+
+    // // Handle lazy loaded module
+    // eventsObs.pipe(
+    //   filter((e: Event): e is RouteConfigLoadStart => e instanceof RouteConfigLoadStart)
+    // ).subscribe(() => this.loadingBar.useRef().start());
+    //
+    // eventsObs.pipe(
+    //   filter((e: Event): e is RouteConfigLoadEnd => e instanceof RouteConfigLoadEnd)
+    // ).subscribe(() => this.loadingBar.useRef().complete());
+  }
+
+  private initHotkeys() {
     this.hotkeysService.add([
-      new Hotkey('k', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/overview' ]);
-        return false;
-      }, undefined, `Previous Tweet`),
-
-      new Hotkey('Space', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/trending' ]);
-        return false;
-      }, undefined, `Page down`),
-
-      new Hotkey('.', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/recently-added' ]);
-        return false;
-      }, undefined, `Load new Posts`),
-
       new Hotkey('g h', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/home' ]);
+        this.router.navigate(['/home']);
         return false; // Prevent bubbling
       }, undefined, `Home`),
 
       new Hotkey('g e', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/explore' ]);
+        this.router.navigate(['/explore']);
         return false;
       }, undefined, `Explore`),
 
       new Hotkey('g n', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/notifications' ]);
+        this.router.navigate(['/notifications']);
         return false;
       }, undefined, `Notifications`),
 
-      new Hotkey('g r', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/upload' ]);
-        return false;
-      }, undefined, `Mentions`),
-
-      new Hotkey('g p', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ `/${this.user?.screenName.substring(1)}` ]);
-        return false;
-      }, undefined, `Profile`),
-
-      new Hotkey('g l', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/upload' ]);
-        return false;
-      }, undefined, `Likes`),
-
-      new Hotkey('g i', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/upload' ]);
-        return false;
-      }, undefined, `Lists`),
-
       new Hotkey('g m', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/messages' ]);
+        this.router.navigate(['/messages']);
         return false;
       }, undefined, `Direct Messages`),
 
-      new Hotkey('g s', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/my-account' ]);
+      new Hotkey('g p', (event: KeyboardEvent): boolean => {
+        this.router.navigate([`/${this.user?.screenName.substring(1)}`]);
         return false;
-      }, undefined, `Settings`),
+      }, undefined, `Profile`),
 
       new Hotkey('g t', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/streamers' ]);
+        this.router.navigate(['/streamers']);
         return false;
       }, undefined, `Streamers`),
+
+      new Hotkey('g s', (event: KeyboardEvent): boolean => {
+        this.router.navigate(['/my-account']);
+        return false;
+      }, undefined, `Settings`),
 
       new Hotkey('g u', (event: KeyboardEvent): boolean => {
         let inputElement = document.getElementById('search-video') as HTMLInputElement;
@@ -176,10 +175,20 @@ export class AppComponent implements OnInit, OnDestroy {
         return false;
       }, undefined, `Go to user…`),
 
-      new Hotkey('g c', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/ratings' ]);
+      new Hotkey('g w', (event: KeyboardEvent): boolean => {
+        this.router.navigate(['/events']);
+        return false;
+      }, undefined, `Chess tournaments`),
+
+      new Hotkey('g r', (event: KeyboardEvent): boolean => {
+        this.router.navigate(['/ratings']);
         return false;
       }, undefined, `Chess rankings`),
+
+      new Hotkey('g q', (event: KeyboardEvent): boolean => {
+        this.router.navigate(['/miscellaneous']);
+        return false;
+      }, undefined, `Chess stuff`),
 
       // Actions start 😎
       new Hotkey('n', (event: KeyboardEvent): boolean => {
@@ -194,14 +203,9 @@ export class AppComponent implements OnInit, OnDestroy {
       }, undefined, `New Post`),
 
       new Hotkey('CTRL Enter', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/upload' ]);
+        this.router.navigate(['/videos/upload']);
         return false;
-      }, undefined, `Send Tweet`),
-
-      new Hotkey('m', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/upload' ]);
-        return false;
-      }, undefined, `New Direct Message`),
+      }, undefined, `Send Post`),
 
       new Hotkey('/', (event: KeyboardEvent): boolean => {
         document.getElementById('search-video').focus();
@@ -209,54 +213,40 @@ export class AppComponent implements OnInit, OnDestroy {
       }, undefined, `Focus the search bar`),
 
       new Hotkey('l', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/upload' ]);
+        this.router.navigate(['/videos/upload']);
         return false;
       }, undefined, `Like`),
 
       new Hotkey('r', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/upload' ]);
+        this.router.navigate(['/videos/upload']);
         return false;
       }, undefined, `Reply`),
 
       new Hotkey('t', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/upload' ]);
+        this.router.navigate(['/videos/upload']);
         return false;
-      }, undefined, `Retweet`),
+      }, undefined, `Repost`),
 
       new Hotkey('s', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/upload' ]);
+        this.router.navigate(['/videos/upload']);
         return false;
-      }, undefined, `Share Tweet`),
-
-      new Hotkey('b', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/upload' ]);
-        return false;
-      }, undefined, `Bookmark`),
+      }, undefined, `Share Post`),
 
       new Hotkey('u', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/upload' ]);
+        this.router.navigate(['/videos/upload']);
         return false;
       }, undefined, `Mute account`),
 
       new Hotkey('x', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/upload' ]);
+        this.router.navigate(['/videos/upload']);
         return false;
       }, undefined, `Block account`),
 
-      new Hotkey('Enter', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/upload' ]);
-        return false;
-      }, undefined, `Open Tweet details`),
-
       new Hotkey('o', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/upload' ]);
+        this.router.navigate(['/videos/upload']);
         return false;
       }, undefined, `Expand photo`),
 
-      new Hotkey('i', (event: KeyboardEvent): boolean => {
-        this.router.navigate([ '/videos/upload' ]);
-        return false;
-      }, undefined, `Open/Close Messages dock`),
     ]);
   }
 }

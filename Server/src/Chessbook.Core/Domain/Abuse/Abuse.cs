@@ -1,5 +1,4 @@
 ﻿using System;
-using Chessbook.Core.Domain.Posts;
 using Chessbook.Data.Models;
 
 namespace Chessbook.Core.Domain.Abuse
@@ -25,7 +24,10 @@ namespace Chessbook.Core.Domain.Abuse
         public int? FlaggedAccountId { get; set; }
         public Customer FlaggedAccount { get; set; }
 
-        public int? PostId { get; set; }
-        public Post Post { get; set; }
+        public int? PostAbuseId { get; set; }
+        public PostAbuseModel PostAbuse { get; set; }
+
+        public int? PostCommentAbuseId { get; set; }
+        public PostCommentAbuseModel PostCommentAbuse { get; set; }
     }
 }

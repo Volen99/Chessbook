@@ -6,6 +6,14 @@ $markdown-icon-height: 18px;
 $markdown-icon-width: 30px;
 $peertube-textarea-height: 60px;
 
+.icon-hover {
+  &:hover {
+    background-color: rgba(51, 102, 255, 0.16);
+    border-color: #e91d63;
+    color: #e91d63;
+  }
+}
+
 form {
   margin-bottom: 30px;
 }
@@ -41,45 +49,41 @@ form {
   }
 }
 
-.markdown-guide {
-  position: absolute;
-  top: 5px;
-  right: 9px;
 
-  // inset-inline is not well supported by web browsers
-  &.is-rtl {
-    right: unset;
-    left: 9px;
-  }
+  .markdown-guide {
+    position: absolute;
+    top: 5px;
+    right: 9px;
 
-  ::ng-deep .help-tooltip-button {
-    fa-icon {
-      height: $markdown-icon-height;
-      width: $markdown-icon-width;
-
-      svg {
-        color: #C6C6C6;
-        fill: #C6C6C6;
-        border-radius: 3px;
-      }
+    // inset-inline is not well supported by web browsers
+    &.is-rtl {
+      right: unset;
+      left: 9px;
     }
 
-    &:focus,
-    &:active,
-    &:hover {
-      fa-icon svg {
-        background-color: #C6C6C6;
-        color: pvar(--mainBackgroundColor);
-        fill: pvar(--mainBackgroundColor);
+    ::ng-deep .help-tooltip-button {
+      fa-icon {
+        height: $markdown-icon-height;
+        width: $markdown-icon-width;
+
+        svg {
+          color: #C6C6C6;
+          fill: #C6C6C6;
+          border-radius: 3px;
+        }
+      }
+
+      &:focus,
+      &:active,
+      &:hover {
+        fa-icon svg {
+          background-color: #c6c6c61a;
+          color: #fff;
+          fill: #fff;
+        }
       }
     }
   }
-}
-
-.comment-buttons {
-  display: flex;
-  justify-content: flex-end;
-}
 
 .emoji-flex {
   display: flex;

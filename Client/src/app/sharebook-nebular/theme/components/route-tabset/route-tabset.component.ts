@@ -93,8 +93,9 @@ import { convertToBoolProperty, NbBooleanInput } from '../helpers';
           </a>
         </li>
 
+          <!--[nbContextMenu]="tab.dropdown ? tab.dropdown : []" was in 98 line-->
         <ng-template #enabled>
-          <li (click)="$event.preventDefault(); selectTab(tab)" [nbContextMenu]="tab.dropdown ? tab.dropdown : []"
+          <li (click)="$event.preventDefault(); selectTab(tab)"
               [routerLink]="tab.route"
               routerLinkActive="active"
               [routerLinkActiveOptions]="activeLinkOptions"

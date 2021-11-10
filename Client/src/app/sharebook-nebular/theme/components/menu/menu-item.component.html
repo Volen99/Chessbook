@@ -22,7 +22,11 @@
     <!--<nb-icon class="menu-icon" [config]="menuItem.icon" *ngIf="menuItem.icon"></nb-icon>-->
     <fa-icon *ngIf="menuItem.icon" class="menu-icon" [icon]="menuItem.icon"></fa-icon>
     <span class="menu-title main-menu-title">{{ menuItem.title }}</span>
-    <ng-container *ngIf="badge" [ngTemplateOutlet]="badgeTemplate"></ng-container>
+    <ng-container *ngIf="badge && menuItem.title !== 'Messages'" [ngTemplateOutlet]="badgeTemplate"></ng-container>
+    <ng-container *ngIf="menuItem.title === 'Messages' && badge?.text !== '0'">
+        <nb-badge [text]="badge.text" status="primary" position="top right">
+        </nb-badge>
+    </ng-container>
 </a>
 <a *ngIf="menuItem.url && !menuItem.children && !menuItem.link && !menuItem.group"
    [attr.href]="menuItem.url"

@@ -43,7 +43,7 @@ export class SmartTableService extends SmartTableData {
     rapid: '2778',
     blitz: '2739',
     age: '38',
-    alpha2Code: 'am',
+    alpha2Code: 'us',
   }, {
     rank: 6,
     name: 'Anish Giri',
@@ -115,7 +115,7 @@ export class SmartTableService extends SmartTableData {
     rapid: '2773',
     blitz: '2711',
     age: '28',
-    alpha2Code: 'in',
+    alpha2Code: 'fr',
   }, {
     rank: 15,
     name: 'Leinier Dominguez Perez',

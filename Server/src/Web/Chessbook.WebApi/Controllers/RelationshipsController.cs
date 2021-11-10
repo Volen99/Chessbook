@@ -93,6 +93,13 @@ namespace Chessbook.Web.Api.Controllers
                     return BadRequest(); // throw exception?
                 }
 
+                var followCurrent = await this.followService.GetByUsersId(currentUserId, targetUser.Id);
+
+                if (followCurrent != null)
+                {
+                    return this.BadRequest("You already follow this user");
+                }
+
                 var state = targetUser.Protected ? FollowState.Pending : FollowState.Accepted;
                 var userFollow = await this.followService.Follow(currentUserId, targetUser.Id, state);
 
@@ -123,8 +130,14 @@ namespace Chessbook.Web.Api.Controllers
             }
 
             var currentUserId = User.GetUserId();
-
             var targetUser = await this.userService.GetCustomerByUsernameAsync(screenName);
+
+            var followCurrent = await this.followService.GetByUsersId(currentUserId, targetUser.Id);
+
+            if (followCurrent == null)
+            {
+                return this.NotFound();
+            }
 
             var yourRelationship = await this.followService.UnFollow(currentUserId, targetUser.Id);
 

@@ -144,27 +144,27 @@ export class AbuseListTableComponent extends RestTable implements OnInit {
   }
 
   getVideoUrl(abuse: AdminAbuse) {
-    return Post.buildClientUrl(abuse.video.uuid);
+    return Post.buildClientUrl(abuse.post.channel.screenName, abuse.post.id);
   }
 
   getCommentUrl(abuse: AdminAbuse) {
-    return Post.buildClientUrl(abuse.comment.video.uuid) + ';threadId=' + abuse.comment.threadId;
+    return Post.buildClientUrl(abuse.comment.video.screenName, abuse.comment.video.id) + ';threadId=' + abuse.comment.threadId;
   }
 
   getAccountUrl(abuse: ProcessedAbuse) {
-    return '/a/' + abuse.flaggedAccount.screenName;
+    return '/' + abuse.flaggedAccount.screenName.substring(1);
   }
 
   getVideoEmbed (abuse: AdminAbuse) {
     return buildVideoOrPlaylistEmbed(
       decorateVideoLink({
-        url: buildVideoEmbedLink(abuse.video.channel.screenName, abuse.video.id, environment.apiUrl), // originServerUrl
+        url: buildVideoEmbedLink(abuse.post.channel.screenName, abuse.post.id, environment.apiUrl), // originServerUrl
         title: false,
         warningTitle: false,
-        startTime: abuse.video.startAt,
-        stopTime: abuse.video.endAt
+        startTime: abuse.post.startAt,
+        stopTime: abuse.post.endAt
       }),
-      abuse.video.name
+      abuse.post.name
     );
   }
 
@@ -242,11 +242,11 @@ export class AbuseListTableComponent extends RestTable implements OnInit {
             abuse.moderationCommentHtml = await this.toHtml(abuse.moderationComment);
           }
 
-          if (abuse.video) {
+          if (abuse.post) {
             abuse.embedHtml = this.sanitizer.bypassSecurityTrustHtml(this.getVideoEmbed(abuse));
 
-            if (abuse.video.channel?.ownerAccount) {
-              abuse.video.channel.ownerAccount = new User(abuse.video.channel.ownerAccount);
+            if (abuse.post.channel) {
+              abuse.post.channel = new User(abuse.post.channel);
             }
           }
 
@@ -327,12 +327,12 @@ export class AbuseListTableComponent extends RestTable implements OnInit {
       {
         label: `Actions for the flagged account`,
         isHeader: true,
-        isDisplayed: abuse => abuse.flaggedAccount && !abuse.comment && !abuse.video
+        isDisplayed: abuse => abuse.flaggedAccount && !abuse.comment && !abuse.post
       },
 
       {
         label: `Mute account`,
-        isDisplayed: abuse => abuse.flaggedAccount && !abuse.comment && !abuse.video,
+        isDisplayed: abuse => abuse.flaggedAccount && !abuse.comment && !abuse.post,
         handler: abuse => this.muteAccountHelper(abuse.flaggedAccount)
       },
     ];
@@ -363,13 +363,13 @@ export class AbuseListTableComponent extends RestTable implements OnInit {
       {
         label: $localize`Actions for the video`,
         isHeader: true,
-        isDisplayed: abuse => abuse.video && !abuse.video.deleted
+        isDisplayed: abuse => abuse.post && !abuse.post.deleted
       },
       {
         label: `Block video`,
-        isDisplayed: abuse => abuse.video && !abuse.video.deleted && !abuse.video.blacklisted,
+        isDisplayed: abuse => abuse.post && !abuse.post.deleted && !abuse.post.blacklisted,
         handler: abuse => {
-          this.videoBlocklistService.blockVideo(abuse.video.id, undefined)
+          this.videoBlocklistService.blockVideo(abuse.post.id, undefined)
             .subscribe(
               () => {
                 this.notifier.success(`Video blocked.`);
@@ -383,9 +383,9 @@ export class AbuseListTableComponent extends RestTable implements OnInit {
       },
       {
         label: `Unblock video`,
-        isDisplayed: abuse => abuse.video && !abuse.video.deleted && abuse.video.blacklisted,
+        isDisplayed: abuse => abuse.post && !abuse.post.deleted && abuse.post.blacklisted,
         handler: abuse => {
-          this.videoBlocklistService.unblockVideo(abuse.video.id)
+          this.videoBlocklistService.unblockVideo(abuse.post.id)
             .subscribe(
               () => {
                 this.notifier.success(`Video unblocked.`);
@@ -399,7 +399,7 @@ export class AbuseListTableComponent extends RestTable implements OnInit {
       },
       {
         label: `Delete video`,
-        isDisplayed: abuse => abuse.video && !abuse.video.deleted,
+        isDisplayed: abuse => abuse.post && !abuse.post.deleted,
         handler: async abuse => {
           const res = await this.confirmService.confirm(
             `Do you really want to delete this video?`,
@@ -409,7 +409,7 @@ export class AbuseListTableComponent extends RestTable implements OnInit {
             return;
           }
 
-          this.postService.removePost(abuse.video.id)
+          this.postService.removePost(abuse.post.id)
             .subscribe(
               () => {
                 this.notifier.success(`Video deleted.`);

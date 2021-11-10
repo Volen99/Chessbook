@@ -7,13 +7,13 @@
                 [ngClass]="{ 'input-error': formErrors['text'] }"
                 formControlName="text"
                 placeholder="Add comment..."
-                [readonly]="(user === null) ? true : false"
+                [readonly]="(user == null) ? true : false"
                 (click)="openVisitorModal($event)"
                 (keyup.control.enter)="onValidKey()" (keyup.meta.enter)="onValidKey()" #textarea>
       </textarea>
 
       <app-help
-        [ngClass]="{ 'is-rtl': isRTL() }" class="markdown-guide" helpType="custom" iconName="markdown"
+        [ngClass]="{ 'is-rtl': isRTL() }" class="markdown-guide" helpType="custom" [icon]="this.faText"
         tooltipPlacement="left auto" autoClose="true" i18n-title title="Markdown compatible"
       >
         <ng-template appSbTemplate="customHtml">
@@ -34,7 +34,7 @@
             <li>
               <span i18n>Emoji markup</span>
               <code>:smile:</code>
-              <div><a href="" (click)="openEmojiModal($event)" i18n>See complete list</a></div>
+              <div><a href="" (click)="openEmojiModal($event)" i18n>Open complete list modal</a></div>
             </li>
           </ul>
         </ng-template>
@@ -86,7 +86,20 @@
 <ng-template #emojiModal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title" i18n>Markdown Emoji List</h4>
-    <fa-icon [icon]="this.faTimes" aria-label="Close" role="button" (click)="hideModals()"></fa-icon>
+    <!--<fa-icon [icon]="this.faTimes" aria-label="Close" role="button" (click)="hideModals()"></fa-icon>-->
+    <div style="color: white" class="sharebook-container align-items-flex-start align-self-stretch justify-content-center min-height-30px header-left-icon-min-width-59px">
+      <div aria-label="Close" role="button" data-focusable="true"
+           tabindex="0"
+           class="icon-hover close-button sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
+           style="margin-left: calc(5px + (-1 * (41px - 1.5em)) / 2);">
+        <div dir="auto" class="align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
+             (click)="this.hideModals()">
+          <fa-icon [icon]="this.faTimes" style="top: 0px;" [styles]="this.svgStyles"></fa-icon>
+          <span
+                  class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="modal-body">
     <div class="emoji-flex">

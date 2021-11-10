@@ -20,7 +20,7 @@ import {NbMenuItem} from '../sharebook-nebular/theme/components/menu/menu.servic
 @Injectable()
 export class PagesMenu {
 
-  getMenu(screenName?: string): Observable<NbMenuItem[]> {
+  getMenu(screenName?: string, unreadPrivateMessages?: number): Observable<NbMenuItem[]> {
     const dashboardMenu: NbMenuItem[] = [
       // {
       //   title: 'E-commerce',
@@ -36,6 +36,10 @@ export class PagesMenu {
       //   children: undefined,
       // },
     ];
+
+    if (!unreadPrivateMessages) {
+      unreadPrivateMessages = 0;
+    }
 
     const menu: NbMenuItem[] = [
       {
@@ -62,11 +66,15 @@ export class PagesMenu {
         icon: faEnvelope,
         link: '/messages',
         children: undefined,
+        badge: {
+          text: unreadPrivateMessages + '',
+          status: 'warning',
+        },
       },
       {
         title: 'Profile',
         icon: faUser,
-        link: `/${screenName?.substring(1)}`,
+        link: `/${screenName?.substring(1) ?? 'volencho'}`,
         children: undefined,
       },
       {
@@ -81,7 +89,7 @@ export class PagesMenu {
         children: [
           {icon: faTrophy, title: `Chess Tournaments`, link: '/events'},
           {icon: faChartLine, title: `Chess Rankings`, link: '/ratings'},
-          {icon: faChessClock, title: `Chess stuff`, link: '/misc'},
+          {icon: faChessClock, title: `Chess stuff`, link: '/miscellaneous'},
           {icon: faAlicorn, title: `Keyboard shortcuts`, link: ''},
         ],
 

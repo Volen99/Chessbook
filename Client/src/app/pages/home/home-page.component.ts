@@ -94,6 +94,7 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
 
   ngOnDestroy() {
     super.ngOnDestroy();
+    this.postTransformBuffer = 0;
   }
 
   lottieOptions: AnimationOptions = {
@@ -143,7 +144,7 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
       return 670;
     }
 
-    return postsCount * 670;
+    return postsCount * 470;
   }
 
   postTransformBuffer: number = 0;
@@ -163,7 +164,6 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
   pageSize = 10;
 
   removeVideoFromArray(post: Post) {
-    debugger
     super.removeVideoFromArray(post);
   }
 

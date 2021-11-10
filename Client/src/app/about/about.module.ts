@@ -5,9 +5,7 @@ import {AboutRoutingModule} from './about-routing.module';
 import {AboutComponent} from './about.component';
 import {SharedMainModule} from "../shared/shared-main/shared-main.module";
 import {SharedFormModule} from "../shared/shared-forms/shared-form.module";
-import {AboutInstanceComponent} from "./about-instance/about-instance.component";
-import {AboutPeertubeComponent} from "./about-peertube/about-peertube.component";
-import {AboutPeertubeContributorsComponent} from "./about-peertube/about-peertube-contributors.component";
+import {AboutChessbookContributorsComponent} from "./about-chessbook/about-chessbook-contributors.component";
 import {AboutInstanceResolver} from "./about-instance/about-instance.resolver";
 import {SharedCustomMarkupModule} from "../shared/shared-custom-markup";
 import {SharedInstanceModule} from "../shared/shared-instance/shared-instance.module";
@@ -29,9 +27,7 @@ import {NbCardModule} from "../sharebook-nebular/theme/components/card/card.modu
 
   declarations: [
     AboutComponent,
-    AboutInstanceComponent,
-    AboutPeertubeComponent,
-    AboutPeertubeContributorsComponent,
+    AboutChessbookContributorsComponent,
   ],
 
   exports: [

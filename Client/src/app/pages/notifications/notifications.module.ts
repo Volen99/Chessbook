@@ -12,6 +12,7 @@ import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.m
 import {NbRouteTabsetModule} from "../../sharebook-nebular/theme/components/route-tabset/route-tabset.module";
 import {ComponentsModule} from "../../components/components.module";
 import {UserNotificationsComponent} from "./user-notifications/user-notifications.component";
+import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/button.module";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import {UserNotificationsComponent} from "./user-notifications/user-notification
     NbRouteTabsetModule,
     ComponentsModule,
     FontAwesomeModule,
+    NbButtonModule,
   ]
 })
 export class NotificationsModule {

@@ -162,7 +162,7 @@
 
                             <nb-tab tabTitle="Inbox" [nbSpinner]="!messages">
                                 <nb-list>
-                                    <nb-list-item class="contact" matRipple *ngFor="let m of messages" routerLink="./{{m.id}}">
+                                    <nb-list-item [ngClass]="{'pm-unread': !m.isRead}" class="contact" matRipple *ngFor="let m of messages" routerLink="./{{m.id}}">
                                         <nb-user [picture]="m.fromUser.profileImageUrlHttps | ngxAuthToken | async" [name]="m.fromUser.displayName" [title]="m.subject" size="large"></nb-user>
                                         <span class="caption"><app-date-toggle [date]="this.m.createdOn"></app-date-toggle></span>
                                     </nb-list-item>
@@ -187,7 +187,7 @@
     <div class="col-md-12 col-lg-6 col-xxxl-6">
         <nb-card>
              <!--TODO: plz consider putting <nb-card-body>-->
-            <app-detail-header-no-message-selected *ngIf="this.isMessageSelected()"></app-detail-header-no-message-selected>
+            <app-detail-header-no-message-selected *ngIf="!this.isMessageSelected()"></app-detail-header-no-message-selected>
             <router-outlet></router-outlet>
         </nb-card>
     </div>

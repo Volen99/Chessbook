@@ -15,9 +15,9 @@
 .attribute-label {
   @include padding-right(5px);
 
-  min-width: 142px;
+  // min-width: 142px;
   display: inline-block;
-  color: pvar(--greyForegroundColor);
+  // color: pvar(--greyForegroundColor);
   font-weight: $font-bold;
 }
 

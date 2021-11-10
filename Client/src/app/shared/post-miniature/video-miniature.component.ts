@@ -148,7 +148,7 @@ export class VideoMiniatureComponent implements OnInit {
   }
 
   isUnlistedVideo() {
-    return this.video.privacy.id === PostPrivacy.UNLISTED;
+    return false; // this.video.privacy.id === PostPrivacy.UNLISTED;
   }
 
   isPrivateVideo() {

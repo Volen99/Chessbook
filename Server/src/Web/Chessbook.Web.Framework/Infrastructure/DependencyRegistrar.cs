@@ -46,6 +46,7 @@ using Chessbook.Services.Chat;
 using Chessbook.Services.Messages;
 using Chessbook.Services.Media;
 using Chessbook.Services.Gdpr;
+using Chessbook.Services.APIs;
 
 namespace Chessbook.Web.Framework.Infrastructure
 {
@@ -156,6 +157,7 @@ namespace Chessbook.Web.Framework.Infrastructure
             services.AddScoped<ISettingService, SettingService>();
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<ITwitchService, TwitchService>();
 
             // plugin managers
             // ..

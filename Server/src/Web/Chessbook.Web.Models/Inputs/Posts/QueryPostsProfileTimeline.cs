@@ -4,8 +4,6 @@ namespace Chessbook.Web.Models.Inputs.Posts
 {
     public class QueryPostsProfileTimeline
     {
-        [BindProperty(Name = "user_id")]
-
         public int UserId { get; set; }
 
         public int Start { get; set; }
@@ -16,13 +14,10 @@ namespace Chessbook.Web.Models.Inputs.Posts
 
         public string Sort { get; set; }
 
-        [BindProperty(Name = "skip_count")]
         public bool SkipCount { get; set; }
 
-        [BindProperty(Name = "exclude_replies")]
         public bool ExcludeReplies { get; set; }
 
-        [BindProperty(Name = "include_rts")]
         public bool IncludeRts { get; set; }
 
     }

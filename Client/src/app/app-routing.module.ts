@@ -1,11 +1,13 @@
 import {NgModule} from '@angular/core';
-import {ExtraOptions, RouterModule, Routes} from '@angular/router';
+import {ExtraOptions, RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
 
 import {AuthGuard} from "./auth/auth.guard";
 import {NotFoundComponent} from "./pages/page-not-found/not-found.component";
 import {MetaGuard} from "./core/routing/meta-guard.service";
 import {ModeratorGuard} from "./auth/moderator.guard";
 import {TrendsModule} from "./pages/trends/trends.module";
+import {PreloadSelectedModulesList} from './core/routing/preload-selected-modules-list';
+import {CustomReuseStrategy} from './core/routing/custom-reuse-strategy';
 
 const routes: Routes = [
   {
@@ -91,7 +93,7 @@ const routes: Routes = [
         canActivateChild: [ MetaGuard ],
       },
       {
-        path: 'misc',
+        path: 'miscellaneous',
         loadChildren: () => import('./pages/more/chess-stuff/chess-stuff.module').then(m => m.ChessStuffModule),
         canActivateChild: [ MetaGuard ],
       },
@@ -141,12 +143,19 @@ const routes: Routes = [
 
 
 const config: ExtraOptions = {
-  useHash: false,
+  useHash: Boolean(history.pushState) === false,
   relativeLinkResolution: 'legacy',
+  scrollPositionRestoration: 'disabled',
+  preloadingStrategy: PreloadSelectedModulesList,
+  anchorScrolling: 'enabled',
 };
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, config)],
+  providers: [
+    PreloadSelectedModulesList,
+    { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {

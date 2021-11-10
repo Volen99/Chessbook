@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {Subject} from "rxjs/Subject";
 
 import {
-  faRadio
+  faRadio,
 } from '@fortawesome/pro-light-svg-icons';
+
+import {
+  faBadgeCheck,
+} from '@fortawesome/pro-solid-svg-icons';
 
 import {ExploreService, NewsPost, Pagination} from "./explore.service";
 
@@ -45,6 +49,7 @@ export class ExploreComponent implements OnInit {
   pagination: Pagination;
 
   faRadio = faRadio;
+  faBadgeCheck = faBadgeCheck;
 
   getImageUrl (url: string) {
     if (url) {

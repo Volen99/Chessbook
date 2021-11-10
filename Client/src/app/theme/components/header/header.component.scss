@@ -1,3 +1,6 @@
+@import '_variables';
+@import '_mixins';
+
 @import '../../../../../node_modules/bootstrap/scss/mixins/breakpoints';
 @import '../../../sharebook-nebular/theme/styles/global/breakpoints';
 @import '../../styles/themes';
@@ -24,8 +27,8 @@
   }
 
   ::ng-deep nb-search button {
-    padding: 0!important;
-    color: nb-theme(text-basic-color); // by mi
+    padding: 0 !important;
+    color: nb-theme(actions-icon-color); // by mi
   }
 
   .header-container {
@@ -38,8 +41,14 @@
       @include nb-rtl(padding-left, 1.25rem);
       text-decoration: none;
       color: nb-theme(text-hint-color);
+
       nb-icon {
         font-size: 1.75rem;
+      }
+
+      visibility: hidden;
+      @media screen and (max-width: 575px) {
+        visibility: visible;
       }
     }
 
@@ -67,5 +76,36 @@
     nb-select {
       display: none;
     }
+  }
+
+  .chessbook-title {
+    @include disable-default-a-behaviour;
+
+    font-size: 20px;
+    font-weight: $font-bold;
+    color: inherit !important;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 0 0 0 10px;
+
+    .instance-name {
+      @include ellipsis;
+
+      width: 100%;
+
+      @media screen and (max-width: $mobile-view) {
+        display: none;
+      }
+    }
+
+    .icon-logo {
+      @include margin-right(0.5rem);
+
+      display: inline-block;
+      width: 23px;
+      height: 24px;
+    }
+
   }
 }
