@@ -126,7 +126,7 @@
     "substring-trie": "^1.0.2",
     "swiper": "^6.6.2",
     "tiny-queue": "^0.2.1",
-    "tinymce": "^5.7.1",
+    "tinymce": "^5.10.0",
     "tslib": "^2.0.0",
     "ua-parser-js": "^0.7.21",
     "twitter-text": "^3.1.0",
