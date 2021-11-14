@@ -1,0 +1,27 @@
+@import '../../styles/';
+
+:host {
+    align-self: stretch;
+
+    &.horizontal {
+        display: block;
+        min-height: rem(1px);
+        height: rem(1px);
+    }
+
+    &.vertical {
+        display: inline-block;
+        width: rem(1px);
+        min-width: rem(1px);
+        height: auto;
+    }
+
+    &.theme-light {
+        background-color: $ID_Gray900-15;
+    }
+
+    &.theme-dark,
+    &.theme-indigo {
+        background-color: $ID_Gray900-15;
+    }
+}

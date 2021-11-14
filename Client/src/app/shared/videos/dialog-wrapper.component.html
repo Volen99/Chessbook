@@ -1,0 +1,36 @@
+<igx-dialog
+    #dialog
+    [closeOnOutsideSelect]="closeOnOutsideSelect"
+    [positionSettings]="positionSettings"
+    [closeOnEscape]="closeOnEscape"
+    [isOpen]="this.internalIsOpen"
+    (opening)="this.handleOnOpen($event)"
+    (closing)="this.handleOnClose($event)"
+    (opened)="this.handleOnOpened($event)"
+>
+    <div [ngClass]="['dialog-wrapper', maximized ? 'maximized' : 'size-' + size , dialogClass]">
+        <ng-content select="dialog-wrapper-title"></ng-content>
+        <ng-content select="dialog-wrapper-body"></ng-content>
+        <ng-content select="dialog-wrapper-actions"></ng-content>
+        <div *ngIf="hasCloseButton || canMaximize"
+            class="dialog-wrapper_buttons"
+        >
+            <button
+                iconButton
+                class="dialog-wrapper_maximize-button"
+                *ngIf="canMaximize"
+                (click)="handleMaximizeButtonClick()"
+                [iconName]="maximized ? 'restore' : 'maximize'"
+                iconFontSet="svg-icons">
+            </button>
+            <button
+                iconButton
+                class="dialog-wrapper_close-button"
+                *ngIf="hasCloseButton"
+                (click)="handleCloseButtonClick()"
+                iconName="close"
+                iconFontSet="svg-icons">
+            </button>
+        </div>
+    </div>
+</igx-dialog>

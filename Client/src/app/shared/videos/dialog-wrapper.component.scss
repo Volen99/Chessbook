@@ -1,0 +1,78 @@
+
+@import '../../styles/';
+
+::ng-deep {
+    .igx-dialog__window-content {
+        padding: unset;
+    }
+}
+
+.dialog-wrapper {
+    background-color: $ID_White;
+    border-radius: rem(10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: rem(24px);
+    box-shadow: 0 0 rem(16px) 0 $ID_Gray900-40;
+    overflow: hidden;
+
+    &.size-small { width: rem(400px); }
+    &.size-medium { width: rem(512px); }
+    &.size-large { width: rem(800px); }
+    &.size-extra-large { width: rem(1000px); }
+    &.size-full-screen {
+        $full-screen-margin: rem(64px);
+        width: calc(100vw - #{$full-screen-margin});
+        height: calc(100vh - #{$full-screen-margin});
+    }
+    &.maximized {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    ::ng-deep {
+        .dialog-wrapper_title {
+            flex: none;
+            color: $ID_Gray900;
+            font-size: $ID_font-size-16;
+            font-weight: $ID-font-weight-semibold;
+            line-height: rem(22px);
+            margin-bottom: rem(16px);
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .dialog-wrapper_body {
+            flex: auto;
+            color: $ID_Gray700;
+            font-size: $ID_font-size-12;
+            line-height: rem(20px);
+        }
+
+        .dialog-wrapper_actions {
+            flex: none;
+            margin-top: rem(24px);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            > :not(:last-child) {
+                margin-right: rem(16px);
+            }
+        }
+    }
+
+    .dialog-wrapper_buttons {
+        position: absolute;
+        right: rem(16px);
+        top: rem(16px);
+        display: grid;
+        column-gap: rem(16px);
+        grid-auto-columns: auto;
+        grid-auto-flow: column;
+    }
+}
