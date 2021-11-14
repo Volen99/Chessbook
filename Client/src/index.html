@@ -35,6 +35,12 @@
     </ul>
 </noscript>
 
+<!--
+    Order of js references is needed for browser-check script to work
+    TODO: use require and bundle everything in one .js at build time.
+-->
+<script src="/assets/js/ua-parser.min.js"></script>
+<script src="/assets/js/browser-check.js"></script>
 <script type="text/javascript">
 
     /* Suppported browser version taken from the following requirements:

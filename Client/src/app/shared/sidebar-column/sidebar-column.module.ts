@@ -18,6 +18,12 @@ import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.m
 import {UserFollowModule} from "../user-follow/user-follow.module";
 import {SharedSearchModule} from "../shared-search/shared-search.module";
 import {MatRippleModule} from "@angular/material/core";
+import {FeedbackFormComponent} from './feedback/feedback-form.component';
+import {NbSpinnerModule} from '../../sharebook-nebular/theme/components/spinner/spinner.module';
+import {NbCheckboxModule} from '../../sharebook-nebular/theme/components/checkbox/checkbox.module';
+import {NbRadioModule} from '../../sharebook-nebular/theme/components/radio/radio.module';
+import {NbPopoverModule} from '../../sharebook-nebular/theme/components/popover/popover.module';
+import {NbTooltipModule} from '../../sharebook-nebular/theme/components/tooltip/tooltip.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +31,7 @@ import {MatRippleModule} from "@angular/material/core";
     TrendsComponent,
     WhoToFollowComponent,
     SearchComponent,
+    FeedbackFormComponent
   ],
   imports: [
     SharedMainModule,
@@ -41,6 +48,11 @@ import {MatRippleModule} from "@angular/material/core";
     UserFollowModule,
     SharedSearchModule,
     MatRippleModule,
+    NbSpinnerModule,
+    NbCheckboxModule,
+    NbRadioModule,
+    NbPopoverModule,
+    NbTooltipModule,
   ],
   exports: [
     SidebarColumnComponent,

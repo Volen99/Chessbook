@@ -1025,8 +1025,8 @@ export class ChessStuffComponent implements OnInit, OnDestroy {
         three: 'hint',
       },
       {
-        name: 'XXXXXX',
-        text: 'YYYYYY.',
+        name: 'Viktor Korchnoi',
+        text: 'No Chess Grandmaster is normal; they only differ in the extent of their madness.',
         one: 'link',
         two: 'link',
         three: 'link',

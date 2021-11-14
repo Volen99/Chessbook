@@ -15,6 +15,7 @@
     using Ordering.SignalrHub;
     using Chessbook.Web.Api.Setup;
     using Chessbook.Web.Framework.Infrastructure.Extensions;
+    using Chessbook.Common.Feedback;
 
     public class Startup
     {
@@ -74,6 +75,9 @@
                     options.SerializerSettings.Converters.Add(new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() });
                     options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
                 });
+
+            // Using Options pattern to configure services
+            services.Configure<FeedbackFormSettings>(Configuration.GetSection("FeedbackFormSettings"));
         }
 
         public void Configure(IApplicationBuilder app, IHostEnvironment env) // IDataBaseInitializer dataBaseInitializer

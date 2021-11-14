@@ -8,7 +8,7 @@
                     [ngStyle]="this.backgroundColorStyles"
                     (click)="changeColor()"
                 > <!--[style.backgroundColor]="color"-->
-                    <div>
+                    <div class="pieces">
                         <fa-icon *ngFor="let icon of this.pieces" [icon]="icon" size="3x" style=""></fa-icon>
                     </div>
                     <div class="snackbar-container" [innerHTML]="this.fact">

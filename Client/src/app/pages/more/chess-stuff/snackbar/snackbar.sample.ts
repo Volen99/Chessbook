@@ -48,6 +48,7 @@ export class SnackbarSampleComponent implements OnInit {
 
   faTrophy = faTrophy;
   pieces: IconDefinition[] = [faChessPawnAlt, faChessKnightAlt, faChessBishopAlt, faChessRookAlt, faChessQueenAlt, faChessKingAlt];
+  isVisible = true;
 
   public changeColor() {
     const characters = '0123456789ABCDEF';

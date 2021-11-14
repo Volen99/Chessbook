@@ -37,6 +37,16 @@
 
     @media screen and (max-width: 1449px) {
         bottom: 20%;
+
+        @media screen and (max-width: 575px) {
+            bottom: 31% !important;
+        }
+    }
+}
+
+.pieces {
+    @media screen and (max-width: 575px) {
+        display: none;
     }
 }
 

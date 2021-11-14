@@ -1,36 +1,23 @@
-<igx-dialog
-    #dialog
-    [closeOnOutsideSelect]="closeOnOutsideSelect"
-    [positionSettings]="positionSettings"
-    [closeOnEscape]="closeOnEscape"
-    [isOpen]="this.internalIsOpen"
-    (opening)="this.handleOnOpen($event)"
-    (closing)="this.handleOnClose($event)"
-    (opened)="this.handleOnOpened($event)"
->
-    <div [ngClass]="['dialog-wrapper', maximized ? 'maximized' : 'size-' + size , dialogClass]">
-        <ng-content select="dialog-wrapper-title"></ng-content>
-        <ng-content select="dialog-wrapper-body"></ng-content>
-        <ng-content select="dialog-wrapper-actions"></ng-content>
-        <div *ngIf="hasCloseButton || canMaximize"
-            class="dialog-wrapper_buttons"
-        >
-            <button
-                iconButton
+<!--<igx-dialog></igx-dialog>-->
+<div [ngClass]="['dialog-wrapper', maximized ? 'maximized' : 'size-' + size , dialogClass]">
+    <ng-content select="nb-card-header"></ng-content>
+    <ng-content select="nb-card-body"></ng-content>
+    <ng-content select="nb-card-footer"></ng-content>
+    <div *ngIf="hasCloseButton || canMaximize" class="dialog-wrapper_buttons">
+        <button
+                nbButton
+                ghost
                 class="dialog-wrapper_maximize-button"
                 *ngIf="canMaximize"
-                (click)="handleMaximizeButtonClick()"
-                [iconName]="maximized ? 'restore' : 'maximize'"
-                iconFontSet="svg-icons">
-            </button>
-            <button
-                iconButton
+                (click)="handleMaximizeButtonClick()">
+            <fa-icon [icon]="this.maximized ? this.faWindowRestore : this.faWindowMaximize" size="2x"></fa-icon>
+        </button>
+        <button
+                nbButton
+                ghost
                 class="dialog-wrapper_close-button"
-                *ngIf="hasCloseButton"
-                (click)="handleCloseButtonClick()"
-                iconName="close"
-                iconFontSet="svg-icons">
-            </button>
-        </div>
+                (click)="handleCloseButtonClick()">
+            <fa-icon [icon]="this.faTimes"></fa-icon>
+        </button>
     </div>
-</igx-dialog>
+</div>

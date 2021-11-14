@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {FeedbackFormComponent} from './feedback/feedback-form.component';
 
 @Component({
   selector: 'app-sidebar-column',
@@ -7,6 +8,8 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class SidebarColumnComponent implements OnInit {
   @Input() hideWhoToFollow = false;
+
+  feedbackFormComponent = FeedbackFormComponent;
 
   constructor() { }
 
@@ -25,6 +28,10 @@ export class SidebarColumnComponent implements OnInit {
       { title: 'Chessbook for Business', link: '/about' },
       { title: 'Developers', link: '/about', fragment: 'developers' },
     ];
+  }
+
+  toggleFeedbackForm() {
+
   }
 
 }

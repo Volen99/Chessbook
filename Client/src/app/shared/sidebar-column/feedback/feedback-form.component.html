@@ -1,0 +1,74 @@
+<ng-container *ngIf="mode === 'form'">
+    <span class="feedback-form_title">Send us your feedback!</span>
+    <span class="feedback-form_subtitle">How would you rate your experience?</span>
+
+    <!--[customTooltipTarget]="feedbackTooltip"-->
+    <div class="feedback-form_rating">
+<!--        <button nbButton *ngFor="let item of ratingItems"-->
+<!--                [value]="item"-->
+<!--                [selected]="feedbackRate === item"-->
+<!--                [iconName]="item.icon"-->
+<!--                title="setTooltipText(item.name)"-->
+<!--                (itemSelect)="setRate($event)">-->
+<!--            <fa-icon [icon]="item.icon"></fa-icon>-->
+<!--        </button>-->
+
+        <nb-radio-group [(ngModel)]="feedbackRate">
+            <nb-radio
+                    *ngFor="let item of ratingItems"
+                    [value]="item"
+                    [checked]="feedbackRate === item"
+                    [nbTooltip]="item.name">
+                <fa-icon [icon]="item.icon"></fa-icon>
+            </nb-radio>
+        </nb-radio-group>
+    </div>
+
+    <div class="feedback-form_feedback-field">
+        <textarea nbInput
+                  fullWidth
+                  class="feedback-form_feedback-field-input"
+                  #messageInput
+                  type="text"
+                  [placeholder]="'Enter your feedback'"
+                  [ngModel]="feedbackMessage"
+                  (keydownSubmit)="handleSubmit($event)"
+                  (blur)="updateFeedbackMessage($event)"
+        ></textarea>
+    </div>
+
+    <div class="feedback-form_footer">
+<!--        <custom-checkbox-->
+<!--                [checked]="includeScreenshot"-->
+<!--                [text]="'includeScreenshot'"-->
+<!--                (checkedChange)="handleIncludeScreenshotChange($event)"-->
+<!--        ></custom-checkbox>-->
+        <nb-checkbox (checkedChange)="this.handleIncludeScreenshotChange($event)">Include a screenshot</nb-checkbox>
+        <button nbButton status="primary" shape="round" class="feedback-form_send-btn" (click)="handleSubmit($event)">
+            Send Feedback
+        </button>
+    </div>
+</ng-container>
+
+<div *ngIf="mode === 'sending'" class="feedback-form_sending">
+    <span [nbSpinner]="true" nbSpinnerStatus="primary" class="feedback-form_sending-indicator"></span>
+    <span class="feedback-form_sending-message">Sending feedback</span>
+</div>
+
+<div *ngIf="mode === 'sent'" class="feedback-form_sent">
+    <img class="feedback-form_sent-image" src="/assets/images/feedback-sent.svg" />
+    <span class="feedback-form_sent-title">Checkmate!</span>
+    <span class="feedback-form_sent-description">We really appreciate your feedback. We'll look at it ASAP.</span>
+</div>
+
+<div *ngIf="mode === 'failed'" class="feedback-form_failed">
+    <img class="feedback-form_failed-image" src="/assets/images/feedback-failed.svg" />
+    <span class="feedback-form_failed-title">Blunder!</span>
+    <span class="feedback-form_failed-description">Couldn't send your message. Please try again later</span>
+</div>
+
+<!--<div #feedbackTooltip="tooltip" igxTooltip>{{ tooltipText }}</div>-->
+
+<button class="feedback-form_close-btn" (click)="closeForm($event)" disabled>
+    <fa-icon [icon]="this.faTimes" nbTooltip="Click on screen to close"></fa-icon>
+</button>

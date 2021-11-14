@@ -1,0 +1,13 @@
+﻿using Chessbook.Common.Feedback;
+using System.Threading.Tasks;
+
+namespace Chessbook.Services.Feedback
+{
+    /// <summary>
+    /// Defines the methods to be implemented by the CustomerFeedbackService.
+    /// </summary>
+    public interface IUserFeedbackService
+    {
+        Task SendFeedback(UserFeedback feedback);
+    }
+}

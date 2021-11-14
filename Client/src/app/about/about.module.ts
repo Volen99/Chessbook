@@ -11,6 +11,7 @@ import {SharedCustomMarkupModule} from "../shared/shared-custom-markup";
 import {SharedInstanceModule} from "../shared/shared-instance/shared-instance.module";
 import {NbButtonModule} from "../sharebook-nebular/theme/components/button/button.module";
 import {NbCardModule} from "../sharebook-nebular/theme/components/card/card.module";
+import {VideosDialogModule} from '../shared/videos/videos-dialog.module';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import {NbCardModule} from "../sharebook-nebular/theme/components/card/card.modu
     SharedInstanceModule,
     NbButtonModule,
     NbCardModule,
+    VideosDialogModule
   ],
 
   declarations: [

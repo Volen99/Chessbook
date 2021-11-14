@@ -38,9 +38,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <a i18n target="_blank" rel="noopener noreferrer"
-                                       href="https://docs.joinpeertube.org/use-setup-account">Short introduction video
-                                    to Chessbook</a>
+                                    <a rel="noopener noreferrer"
+                                       href="javascript:void(0)"
+                                       (click)="this.openVideoModal()">Short introduction video to Chessbook</a>
                                 </div>
 
                                 <div i18n class="card-text">
@@ -212,7 +212,7 @@
                                             <p>Today is <span class="date-color">{{this.today | date}}</span>. Chessbook was founded in <span class="date-color">{{this.chessbookFounded | date}}</span>.
                                                 So doing the math <span class="date-color">{{this.today | date}}</span> - <span class="date-color">{{this.chessbookFounded | date}}</span> = <span class="date-color">{{this.differenceInDays}}</span>
                                             </p>
-                                            <p>So chess is only <span class="date-color">{{this.differenceInDays}}</span> days old! Chessbook is constantly being worked on and new features are coming
+                                            <p>So Chessbook is only <span class="date-color">{{this.differenceInDays}}</span> days old! Chessbook is constantly being worked on and new features are coming
                                             left and right, so stay tuned! 👀</p>
                                         </li>
                                     </ul>

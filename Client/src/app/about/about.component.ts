@@ -8,6 +8,8 @@ import {InstanceService} from '../shared/shared-instance/instance.service';
 import {About} from '../shared/models/server/about.model';
 import {copyToClipboard} from '../../root-helpers/utils';
 import {NbGlobalPhysicalPosition} from '../sharebook-nebular/theme/components/cdk/overlay/position-helper';
+import {NbDialogService} from '../sharebook-nebular/theme/components/dialog/dialog.service';
+import {VideosDialogComponent} from '../shared/videos/videos-dialog.component';
 
 @Component({
   selector: 'app-about',
@@ -51,7 +53,8 @@ export class AboutComponent implements OnInit, AfterViewChecked {
     private route: ActivatedRoute,
     private notifier: NbToastrService,
     private serverService: ServerService,
-    private instanceService: InstanceService
+    private instanceService: InstanceService,
+    private dialogService: NbDialogService,
   ) {
   }
 
@@ -94,7 +97,8 @@ export class AboutComponent implements OnInit, AfterViewChecked {
           However, we need to balance this with our our legal and moral obligations. 
           Below is a summary of rules you need to follow:`,
         administrator: 'My name is Volen but friends call me Volencho. I am a developer from Bulgaria, ' +
-          'with love for the game of chess. I made this website all by myself. Apart from spending time with family, I love Music, Astronomy, Science, Artificial Intelligence, Physics, Traveling, Video Games and the list goes on :D. I am also a stargaze lover 🌟🌠',
+          'with love for the game of chess. I made this website all by myself. Apart from spending time with family, ' +
+          'I love Music, Astronomy, Science, Artificial Intelligence, Physics, Traveling, Video Games and the list goes on :D. I am also a stargaze lover 🌟🌠',
         creationReason: '',
         maintenanceLifetime: '',
         businessModel: 'Currently, the website is financed using my own money. However, I welcome support to help covering my ' +
@@ -133,6 +137,16 @@ export class AboutComponent implements OnInit, AfterViewChecked {
 
     this.notifier.success(`Link copied`, 'Success', {
       position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
+    });
+  }
+
+  openVideoModal() {
+    this.dialogService.open(VideosDialogComponent, {
+      context: {
+        isOpen: true,
+      },
+      closeOnEsc: true,
+      closeOnBackdropClick: false,
     });
   }
 

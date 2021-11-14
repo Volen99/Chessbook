@@ -1,27 +1,27 @@
-@import '../../styles/';
-
 :host {
     align-self: stretch;
 
     &.horizontal {
         display: block;
-        min-height: rem(1px);
-        height: rem(1px);
+        min-height: 0.063rem;
+        height: 0.063rem;
     }
 
     &.vertical {
         display: inline-block;
-        width: rem(1px);
-        min-width: rem(1px);
+        width: 0.063rem;
+        min-width: 0.063rem;
         height: auto;
     }
 
-    &.theme-light {
-        background-color: $ID_Gray900-15;
+    &.theme-default,
+    &.theme-material-light,
+    &.theme-corporate {
+        background-color: rgba(rgb(36, 37, 44), 15%);
     }
 
-    &.theme-dark,
-    &.theme-indigo {
-        background-color: $ID_Gray900-15;
+    &.theme-cosmic,
+    &.theme-dark {
+        background-color: rgba(rgb(36, 37, 44), 15%);
     }
 }

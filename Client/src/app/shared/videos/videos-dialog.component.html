@@ -1,0 +1,60 @@
+<!--<nb-card>-->
+    <dialog-wrapper dialogClass="videos_dialog">
+        <nb-card-header class="dialog-wrapper_title">Watch Introduction Video to Chessbook</nb-card-header>
+        <nb-card-body *ngIf="isOpen" class="dialog-wrapper_body">
+            <!--<custom-divider class="divider-top"></custom-divider>-->
+            <div class="detail">
+                <iframe
+                        class="detail-video"
+                        [src]="selectedVideoPath"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                ></iframe>
+                <div class="detail-content">
+                    <span class="detail-video-index"> SHOWING {{index}} of {{total}}</span>
+                    <span class="detail-title">{{selectedVideo.title}}</span>
+                    <span class="detail-description">{{selectedVideo.description}}</span>
+                    <ng-container *ngIf="videosData[videosData.indexOf(selectedVideo) + 1] as nextVideo">
+                        <span class="detail-up-next">Up next</span>
+                        <div class="detail-next-video-button" (click)="handleVideoItemClick(nextVideo)">
+                            <fa-icon [icon]="this.faPlayCircle" size="2x" class="detail-next-video-icon"></fa-icon>
+                            <span class="detail-next-video-title">{{nextVideo.title}}</span>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </nb-card-body>
+        <!--<custom-divider class="divider-bottom"></custom-divider>-->
+        <nb-card-footer>
+            <div class="video-items-container">
+                <div class="video-items" [style.margin-left.rem]="-12.875 * scrollPosition">
+                    <div *ngFor="let video of videosData"
+                         class="video-item"
+                         [class.selected]="video === selectedVideo"
+                         [attr.data-action]="'video-item-' + video.id"
+                         (click)="handleVideoItemClick(video)"
+                    >
+                        <div class="video-item-thumb-container">
+                            <img class="video-item-thumb" [src]="video.thumbUrl"/>
+                            <div class="video-item-overlay">
+                                <div class="video-item-play">
+                                    <fa-icon [icon]="this.faPlay"></fa-icon>
+                                </div>
+                            </div>
+                            <div *ngIf="video === selectedVideo" class="video-item-now-playing">Now playing</div>
+                        </div>
+                        <span class="video-item-title">{{ video.title }}</span>
+                    </div>
+                </div>
+                <button *ngIf="scrollPosition > 0" class="scroll-left" (click)="handleScrollLeftClick()">
+                    <fa-icon [icon]="this.faAngleLeft" size="2x"></fa-icon>
+                </button>
+                <button *ngIf="scrollPosition < videosData.length - scrollVisibleItems" class="scroll-right"
+                        (click)="handleScrollRightClick()">
+                    <fa-icon [icon]="this.faAngleRight" size="2x"></fa-icon>
+                </button>
+            </div>
+        </nb-card-footer>
+    </dialog-wrapper>
+<!--</nb-card>-->

@@ -24,14 +24,19 @@
               ]
             },
             "assets": [
-              "src/assets",
               "src/favicon.png",
+              "src/assets",
               "src/web.config",
               "src/manifest.webmanifest",
               {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
                 "output": "/assets/img/markers"
+              },
+              {
+                "glob": "ua-parser.min.js",
+                "input": "node_modules/ua-parser-js/dist/",
+                "output": "/assets/js/"
               }
             ],
             "styles": [
