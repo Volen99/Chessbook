@@ -1,0 +1,51 @@
+<nb-card *ngIf="this.isEdit != null">
+    <nb-card-header>
+        <p>
+            {{!this.isEdit ? 'Add New Youtube Video' : 'Edit Your Youtube Video'}} <span style="visibility: hidden">Hey hacker, hows life? :)</span>
+        </p>
+    </nb-card-header>
+    <nb-card-body>
+        <label>Id</label>
+        <app-help>
+            <ng-template appSbTemplate="customHtml">
+                <ng-container>
+                    <span [innerHTML]="'<img src=\'/assets/images/videos/yt-id-hint.png\'>'"></span>
+                </ng-container>
+            </ng-template>
+        </app-help>
+        <input #id nbInput fullWidth id="inputWebsiteLink" class="form-control" placeholder="video id"
+        [value]="this.video?.videoId">
+
+        <label>Title</label>
+        <app-help>
+            <ng-template appSbTemplate="customHtml">
+                <ng-container>
+                <span>
+                    <img src="/assets/images/videos/yt-title-hint.png" alt="youtube title">
+                </span>
+                </ng-container>
+            </ng-template>
+        </app-help>
+        <input #title nbInput fullWidth id="title" class="form-control" placeholder="video title"
+        [value]="this.video?.title">
+
+        <label>Description</label>
+        <app-help>
+            <ng-template appSbTemplate="customHtml">
+                <ng-container>
+                <span>
+                    <img src="/assets/images/videos/yt-desc-hint.png" alt="youtube description">
+                </span>
+                </ng-container>
+            </ng-template>
+        </app-help>
+        <textarea #description nbInput fullWidth id="description" class="form-control" placeholder="video description"
+        [value]="this.video?.description">
+        </textarea>
+    </nb-card-body>
+    <nb-card-footer>
+        <button style="margin-right: 1rem;" class="cancel" nbButton status="warning" (click)="this.cancel()">Cancel
+        </button>
+        <button nbButton status="success" (click)="this.submit({videoId: id.value, title: title.value, description: description.value})">{{!this.isEdit ? 'Submit' : 'Edit'}}</button>
+    </nb-card-footer>
+</nb-card>

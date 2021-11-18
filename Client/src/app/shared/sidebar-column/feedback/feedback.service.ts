@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from '../../../../environments/environment';
 import {ICustomerFeedback} from './feedback.model';
 import {HttpService} from '../../../core/backend/common/api/http.service';
@@ -25,19 +25,19 @@ const SEND_FEEDBACK_API_ENDPOINT = 'feedback/send';
 
 export type FeedbackFormMode = 'form' | 'failed' | 'sending' | 'sent';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class CustomerFeedbackService {
 
   public feedbackAlreadyHighlighted = false;
 
-  public defaultRateItem: IActionItem = { id: 0, name: 'very satisfied', icon: faGrinHearts };
+  public defaultRateItem: IActionItem = {id: 2, name: 'neutral', icon: faMeh};
 
   public ratingItems: IActionItem[] = [
+    {id: 0, name: 'very satisfied', icon: faGrinHearts},
+    {id: 1, name: 'satisfied', icon: faSmile},
     this.defaultRateItem,
-    { id: 1, name: 'satisfied', icon: faSmile },
-    { id: 2, name: 'neutral', icon: faMeh },
-    { id: 3, name: 'dissatisfied', icon: faFrown },
-    { id: 4, name: 'very dissatisfied', icon: faMehRollingEyes },
+    {id: 3, name: 'dissatisfied', icon: faFrown},
+    {id: 4, name: 'very dissatisfied', icon: faMehRollingEyes},
   ];
 
   public feedbackRate: IActionItem = this.defaultRateItem;
@@ -49,7 +49,8 @@ export class CustomerFeedbackService {
     return true; // this._feedbackDiscovered;
   }
 
-  constructor(private hrs: HttpService) { }
+  constructor(private hrs: HttpService) {
+  }
 
   public async sendFeedback(feedback: ICustomerFeedback): Promise<ICustomerFeedback> {
     const url = `${SEND_FEEDBACK_API_ENDPOINT}`;

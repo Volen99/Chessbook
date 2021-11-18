@@ -43,7 +43,7 @@ import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.m
         SharedActorImageModule,
         SharedModerationModule,
         UserFollowModule,
-        NbListModule
+        NbListModule,
     ],
 
   declarations: [

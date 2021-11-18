@@ -7,17 +7,31 @@
         <button
                 nbButton
                 ghost
+                class="dialog-wrapper_close-button"
+                ngbTooltip="Add"
+                placement="auto" [openDelay]="700"
+                [ngStyle]="{'visibility': !this.isManageable() ? 'hidden' : 'visible'}"
+                (click)="this.openVideosCrudModal()">
+            <fa-icon [icon]="this.faVideoPlus" size="lg"></fa-icon>
+        </button>
+        <button
+                nbButton
+                ghost
                 class="dialog-wrapper_maximize-button"
+                [ngbTooltip]="this.maximized ? 'unmaximize' : 'maximize'"
+                placement="auto" [openDelay]="700"
                 *ngIf="canMaximize"
                 (click)="handleMaximizeButtonClick()">
-            <fa-icon [icon]="this.maximized ? this.faWindowRestore : this.faWindowMaximize" size="2x"></fa-icon>
+            <fa-icon [icon]="this.maximized ? this.faWindowRestore : this.faWindowMaximize" size="lg"></fa-icon>
         </button>
         <button
                 nbButton
                 ghost
                 class="dialog-wrapper_close-button"
+                ngbTooltip="Close"
+                placement="auto" [openDelay]="1700"
                 (click)="handleCloseButtonClick()">
-            <fa-icon [icon]="this.faTimes"></fa-icon>
+            <fa-icon [icon]="this.faTimes" size="lg"></fa-icon>
         </button>
     </div>
 </div>

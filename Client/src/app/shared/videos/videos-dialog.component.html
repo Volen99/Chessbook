@@ -1,6 +1,6 @@
 <!--<nb-card>-->
-    <dialog-wrapper dialogClass="videos_dialog">
-        <nb-card-header class="dialog-wrapper_title">Watch Introduction Video to Chessbook</nb-card-header>
+    <dialog-wrapper dialogClass="videos_dialog" [videosData]="this.videosData" [userId]="this.userId">
+        <nb-card-header class="dialog-wrapper_title" style="padding: 1rem 0.5rem;">{{this.title}}</nb-card-header>
         <nb-card-body *ngIf="isOpen" class="dialog-wrapper_body">
             <!--<custom-divider class="divider-top"></custom-divider>-->
             <div class="detail">
@@ -12,14 +12,14 @@
                         allowfullscreen
                 ></iframe>
                 <div class="detail-content">
-                    <span class="detail-video-index"> SHOWING {{index}} of {{total}}</span>
-                    <span class="detail-title">{{selectedVideo.title}}</span>
-                    <span class="detail-description">{{selectedVideo.description}}</span>
+                    <span class="detail-video-index text-info"> SHOWING {{index}} of {{total}}</span>
+                    <span class="detail-title h6">{{selectedVideo.title}}</span>
+                    <span class="detail-description text-basic">{{selectedVideo.description}}</span>
                     <ng-container *ngIf="videosData[videosData.indexOf(selectedVideo) + 1] as nextVideo">
-                        <span class="detail-up-next">Up next</span>
+                        <span class="detail-up-next text-info">Up next</span>
                         <div class="detail-next-video-button" (click)="handleVideoItemClick(nextVideo)">
                             <fa-icon [icon]="this.faPlayCircle" size="2x" class="detail-next-video-icon"></fa-icon>
-                            <span class="detail-next-video-title">{{nextVideo.title}}</span>
+                            <span class="detail-next-video-title h6">{{nextVideo.title}}</span>
                         </div>
                     </ng-container>
                 </div>
@@ -32,19 +32,25 @@
                     <div *ngFor="let video of videosData"
                          class="video-item"
                          [class.selected]="video === selectedVideo"
-                         [attr.data-action]="'video-item-' + video.id"
+                         [attr.data-action]="'video-item-' + video.videoId"
                          (click)="handleVideoItemClick(video)"
                     >
                         <div class="video-item-thumb-container">
                             <img class="video-item-thumb" [src]="video.thumbUrl"/>
-                            <div class="video-item-overlay">
+                            <div class="video-item-overlay" [ngStyle]="{'justify-content': this.isManageable() ? 'space-between' : 'center'}">
+                                <div *ngIf="this.isManageable()" class="video-item-crud" (click)="this.editVideo($event, video.id)">
+                                    <fa-icon [icon]="this.faPen"></fa-icon>
+                                </div>
                                 <div class="video-item-play">
                                     <fa-icon [icon]="this.faPlay"></fa-icon>
+                                </div>
+                                <div *ngIf="this.isManageable()" class="video-item-crud" (click)="this.deleteVideo($event, video.id)">
+                                    <fa-icon [icon]="this.faTrashAlt"></fa-icon>
                                 </div>
                             </div>
                             <div *ngIf="video === selectedVideo" class="video-item-now-playing">Now playing</div>
                         </div>
-                        <span class="video-item-title">{{ video.title }}</span>
+                        <span class="video-item-title h6">{{ video.title }}</span>
                     </div>
                 </div>
                 <button *ngIf="scrollPosition > 0" class="scroll-left" (click)="handleScrollLeftClick()">

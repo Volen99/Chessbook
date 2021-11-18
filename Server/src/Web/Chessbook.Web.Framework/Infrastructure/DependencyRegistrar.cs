@@ -160,6 +160,7 @@ namespace Chessbook.Web.Framework.Infrastructure
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<ITwitchService, TwitchService>();
             services.AddScoped<IUserFeedbackService, UserFeedbackService>();
+            services.AddScoped<IYoutubeService, YoutubeService>();
 
             // plugin managers
             // ..

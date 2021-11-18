@@ -43,6 +43,7 @@ import {AuthModule} from "../auth/auth.module";
 import {NbThemeModule} from "../sharebook-nebular/theme/theme.module";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {SharedModule} from "../shared/shared.module";
+import {CameraButtonModule} from '../shared/camera-button/camera-button.module';
 
 
 const NB_MODULES = [
@@ -81,7 +82,7 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, MatRippleModule, AuthModule, ...NB_MODULES, FontAwesomeModule, SharedModule],
+  imports: [CommonModule, MatRippleModule, AuthModule, ...NB_MODULES, FontAwesomeModule, SharedModule, CameraButtonModule],
   exports: [CommonModule, MatRippleModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })

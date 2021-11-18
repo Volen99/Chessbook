@@ -1,0 +1,35 @@
+.help-resources-button_button.iconButton {
+  border-radius: 1.125rem;
+}
+
+.help-resources-button_menu {
+  display: none;
+}
+
+.help-resources-button_overlay-outlet {
+  position:absolute;
+  width: 0;
+  height: 0;
+}
+
+.quicktips::before {
+  content: ' ';
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  width: 14px;
+  height: 14px;
+  background: rgb(255, 255, 255);
+  border-radius: 50%;
+}
+
+.quicktips::after {
+  content: ' ';
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 10px;
+  height: 10px;
+  background: rgb(250, 123, 14);
+  border-radius: 50%;
+}

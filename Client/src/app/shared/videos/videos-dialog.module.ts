@@ -11,28 +11,41 @@ import {
 } from './dialog-wrapper.component';
 import {NbButtonModule} from '../../sharebook-nebular/theme/components/button/button.module';
 import {CustomDividerModule} from '../custom-divider/custom-divider.module';
+import { VideosDialogCrudComponent } from './video-crud/videos-dialog-crud.component';
+import {NbInputModule} from '../../sharebook-nebular/theme/components/input/input.module';
+import {SharedMainModule} from '../shared-main/shared-main.module';
+import {YoutubeVideosService} from './youtube-videos.service';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    CustomDividerModule,
-    NbCardModule,
-    FontAwesomeModule,
-    NbButtonModule
-  ],
   declarations: [
     VideosDialogComponent,
     DialogWrapperComponent,
     DialogWrapperTitleComponent,
     DialogWrapperBodyComponent,
-    DialogWrapperActionsComponent
+    DialogWrapperActionsComponent,
+    VideosDialogCrudComponent
   ],
+
+  imports: [
+    CommonModule,
+    CustomDividerModule,
+    NbCardModule,
+    FontAwesomeModule,
+    NbButtonModule,
+    NbInputModule,
+    SharedMainModule
+  ],
+
   exports: [
     VideosDialogComponent,
     DialogWrapperComponent,
     DialogWrapperTitleComponent,
     DialogWrapperBodyComponent,
     DialogWrapperActionsComponent
+  ],
+
+  providers: [
+    YoutubeVideosService,
   ]
 })
 export class VideosDialogModule {

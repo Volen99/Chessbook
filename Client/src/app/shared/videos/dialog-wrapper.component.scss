@@ -1,75 +1,114 @@
+@import './src/app/theme/styles/themes';
+
 ::ng-deep {
     .div__window-content {
         padding: unset;
     }
 }
 
-.dialog-wrapper {
-    background-color: rgb(255, 255, 255);
-    border-radius: 0.625rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 1.5rem;
-    box-shadow: 0 0 1rem 0 rgba(rgb(36, 37, 44), 40%);
-    overflow: hidden;
+@include nb-install-component() {
+    .dialog-wrapper {
+        background-color: nb-theme(card-background-color); //rgb(255, 255, 255);
+        border-radius: 0.625rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1.5rem;
+        box-shadow: 0 0 1rem 0 rgba(rgb(36, 37, 44), 40%);
+        overflow: hidden;
 
-    &.size-small { width: 25rem; }
-    &.size-medium { width: 32rem; }
-    &.size-large { width: 50rem; }
-    &.size-extra-large { width: 62.5rem; }
-    &.size-full-screen {
-        $full-screen-margin: 4rem;
-        width: calc(100vw - #{$full-screen-margin});
-        height: calc(100vh - #{$full-screen-margin});
-    }
-    &.maximized {
-        width: 100vw;
-        height: 100vh;
-        border-radius: 0;
-    }
-
-    ::ng-deep {
-        .dialog-wrapper_title {
-            flex: none;
-            color: rgb(36, 37, 44);
-            font-size: 1rem;
-            font-weight: 600;
-            line-height: 1.375rem;
-            margin-bottom: 1rem;
-
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
+        &.size-small {
+            width: 25rem;
         }
 
-        .dialog-wrapper_body {
-            flex: auto;
-            color: rgb(84, 87, 98);
-            font-size: 0.75rem;
-            line-height: 1.25rem;
+        &.size-medium {
+            width: 32rem;
         }
 
-        .dialog-wrapper_actions {
-            flex: none;
-            margin-top: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
+        &.size-large {
+            width: 50rem;
+        }
 
-            > :not(:last-child) {
-                margin-right: 1rem;
+        &.size-extra-large {
+            width: 62.5rem;
+        }
+
+        &.size-full-screen {
+            $full-screen-margin: 4rem;
+            width: calc(100vw - #{$full-screen-margin});
+            height: calc(100vh - #{$full-screen-margin});
+        }
+
+        &.maximized {
+            width: 100vw;
+            height: 100vh;
+            border-radius: 0;
+
+            .dialog-wrapper_buttons {
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
+                margin-left: 0;
+                display: grid;
+                column-gap: 1rem;
+                grid-auto-columns: auto;
+                grid-auto-flow: column;
             }
         }
-    }
 
-    .dialog-wrapper_buttons {
-        position: absolute;
-        right: 1rem;
-        top: 1rem;
-        display: grid;
-        column-gap: 1rem;
-        grid-auto-columns: auto;
-        grid-auto-flow: column;
+        ::ng-deep {
+            .dialog-wrapper_title {
+                flex: none;
+                // color: rgb(36, 37, 44);
+                font-size: 1rem;
+                font-weight: 600;
+                line-height: 1.375rem;
+                margin-bottom: 1rem;
+
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+
+            .dialog-wrapper_body {
+                flex: auto;
+                color: rgb(84, 87, 98);
+                font-size: 0.75rem;
+                line-height: 1.25rem;
+            }
+
+            .dialog-wrapper_actions {
+                flex: none;
+                margin-top: 1.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+
+                > :not(:last-child) {
+                    margin-right: 1rem;
+                }
+            }
+        }
+
+        .dialog-wrapper_buttons {
+            position: absolute;
+            margin-left: 607px;
+            display: grid;
+            column-gap: 1rem;
+            grid-auto-columns: auto;
+            grid-auto-flow: column;
+
+            @media (max-width: 818px) {
+                margin-left: 500px;
+            }
+
+            @media (max-width: 712px) {
+                margin-left: 393px;
+            }
+
+            @media (max-width: 600px) {
+                margin-left: 286px;
+            }
+        }
     }
 }

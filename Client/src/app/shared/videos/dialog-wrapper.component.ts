@@ -12,10 +12,18 @@ import {
 import {
   faTimes,
   faWindowMaximize,
-  faWindowRestore
+  faWindowRestore,
+  faVideoPlus
 } from '@fortawesome/pro-light-svg-icons';
 import {NbDialogRef} from '../../sharebook-nebular/theme/components/dialog/dialog-ref';
 import {VideosDialogComponent} from './videos-dialog.component';
+import {NbDialogService} from '../../sharebook-nebular/theme/components/dialog/dialog.service';
+import {VideosDialogCrudComponent} from './video-crud/videos-dialog-crud.component';
+import {IVideoItem} from './models/video-item.model';
+import {YoutubeVideosService} from './youtube-videos.service';
+import {NbToastrService} from '../../sharebook-nebular/theme/components/toastr/toastr.service';
+import {UserStore} from '../../core/stores/user.store';
+import {UserRight} from '../models/users/user-right.enum';
 
 @Component({
   selector: 'dialog-wrapper-title',
@@ -52,6 +60,9 @@ export type DialogWrapperSize = 'auto' | 'small' | 'medium' | 'large' | 'extra-l
   styleUrls: ['./dialog-wrapper.component.scss']
 })
 export class DialogWrapperComponent implements AfterContentInit {
+  @Input() videosData: IVideoItem[];
+  @Input() userId: number;
+
 
   private _isOpen = false;
   private _contentInit = false;
@@ -105,7 +116,9 @@ export class DialogWrapperComponent implements AfterContentInit {
     return this._contentInit && this._isOpen;
   }
 
-  constructor(private changeDetection: ChangeDetectorRef, private ref: NbDialogRef<VideosDialogComponent>) {
+  constructor(private changeDetection: ChangeDetectorRef, private ref: NbDialogRef<VideosDialogComponent>,
+              private dialogService: NbDialogService, private youtubeVideosService: YoutubeVideosService,
+              private notifier: NbToastrService, private userStore: UserStore) {
   }
 
   ngAfterContentInit(): void {
@@ -118,6 +131,7 @@ export class DialogWrapperComponent implements AfterContentInit {
   faTimes = faTimes;
   faWindowMaximize = faWindowMaximize;
   faWindowRestore = faWindowRestore;
+  faVideoPlus = faVideoPlus;
 
   open() {
     this.isOpen = true;
@@ -140,5 +154,44 @@ export class DialogWrapperComponent implements AfterContentInit {
   handleMaximizeButtonClick() {
     this.maximized = !this.maximized;
     this.maximizedChange.emit(this.maximized);
+  }
+
+  openVideosCrudModal() {
+    if (!this.isManageable()) {
+      alert('I always wanted to become a hacker and use my hacking skills to hack NASA and finally find the secret about Aliens, ' + 'but unfortunately, I am not smart for that but you, yes you, can still achieve this :))');
+      return;
+    }
+
+    this.dialogService.open(VideosDialogCrudComponent, {
+      context: {
+        isEdit: false,
+      },
+      closeOnBackdropClick: false,
+    }).onClose.subscribe((data: IVideoItem) => {
+      if (!data) {
+        return;
+      }
+
+      this.youtubeVideosService.addVideo(data)
+        .subscribe((data: IVideoItem) => {
+          this.videosData.push(data);
+          this.changeDetection.markForCheck(); // TODO: emit an event!? 🤔
+
+          this.notifier.success('Video added', 'Success');
+        });
+
+    });
+  }
+
+  isManageable() {
+    if (!this.isUserLoggedIn()) {
+      return false;
+    }
+
+    return this.userId === this.userStore.getUser().id;
+  }
+
+  isUserLoggedIn() {
+    return !!this.userStore.getUser();
   }
 }

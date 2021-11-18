@@ -20,7 +20,7 @@
     </nb-card-body>
     <nb-card-footer>
         <button *ngIf="!this.isEdit" nbButton hero status="primary" (click)="this.dismiss()">Close</button>
-        <button *ngIf="this.isEdit" nbButton hero status="primary" style="margin-right: 1rem;" (click)="this.edit()">Edit</button>
-        <button *ngIf="this.isEdit" nbButton hero status="warning" (click)="this.back()">Back</button>
+        <button *ngIf="this.isEdit" nbButton hero status="warning" style="margin-right: 1rem;" (click)="this.back()">Back</button>
+        <button *ngIf="this.isEdit" nbButton hero status="primary" (click)="this.edit()">Edit</button>
     </nb-card-footer>
 </nb-card>

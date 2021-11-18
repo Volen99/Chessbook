@@ -14,6 +14,7 @@ import {
   faBan,
   faFlag,
   faCircle,
+  faBookHeart,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {IUser} from "../../core/interfaces/common/users";
@@ -42,6 +43,7 @@ import {HttpParams} from "@angular/common/http";
 import {RestService} from "../../core/rest/rest.service";
 import {ContactAdminModalComponent} from "../../shared/shared-messages/contact-admin-modal.component";
 import {BlocklistService} from '../../shared/shared-moderation/blocklist.service';
+import {VideosDialogComponent} from '../../shared/videos/videos-dialog.component';
 
 @Component({
   templateUrl: './user-profile.component.html',
@@ -150,6 +152,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   profileCurrent: IUser;
 
   faEnvelope = faEnvelope;
+  faBookHeart = faBookHeart;
 
   // snapshot only gets the initial value of the parameter map with this technique.
   // Use the observable paramMap approach if there's a possibility that the router
@@ -396,6 +399,18 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         screenName: this.profileCurrent.screenName,
       },
       closeOnEsc: false,
+      closeOnBackdropClick: false,
+    });
+  }
+
+  showVideosModal() {
+    this.dialogService.open(VideosDialogComponent, {
+      context: {
+        isOpen: true,
+        userId: this.profileCurrent.id,
+        title: `${this.profileCurrent.displayName}'s Favorite Youtube Videos`,
+      },
+      closeOnEsc: true,
       closeOnBackdropClick: false,
     });
   }
