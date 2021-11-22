@@ -9,6 +9,7 @@ import {
 import {GdprService} from "../../../shared/services/gdpr.service";
 import {NbDialogService} from "../../../sharebook-nebular/theme/components/dialog/dialog.service";
 import {DialogAreYouSureComponent} from "./dialog-are-u-sure/dialog-are-u-sure.component";
+import {UserStore} from '../../../core/stores/user.store';
 
 @Component({
   selector: 'app-my-data',
@@ -18,7 +19,8 @@ import {DialogAreYouSureComponent} from "./dialog-are-u-sure/dialog-are-u-sure.c
 })
 export class MyDataComponent implements OnInit {
 
-  constructor(private gdprService: GdprService, private dialogService: NbDialogService) {
+  constructor(private gdprService: GdprService, private dialogService: NbDialogService,
+              private userStore: UserStore) {
   }
 
   ngOnInit(): void {
@@ -45,7 +47,7 @@ export class MyDataComponent implements OnInit {
     })
       .onClose.subscribe(uSure => {
       if (uSure) {
-        this.gdprService.delete()
+        this.gdprService.delete(this.userStore.getUser().id)
           .subscribe((data) => {
           });
       }

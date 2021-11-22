@@ -48,7 +48,7 @@
             [attr.aria-invalid]="username.invalid && username.touched ? true : null"
             placeholder="Login">
     <div class="name-information text-hint" i18n>
-      The account name is a unique identifier of your account. It's as unique as an email address, which makes it easy for other people to interact with it.
+      The account username is a unique identifier of your account. It's as unique as an email address, which makes it easy for other people to interact with it.
     </div>
     <ngx-validation-message label="Login"
                             [showMinLength]="username?.hasError('minlength') && username.touched"

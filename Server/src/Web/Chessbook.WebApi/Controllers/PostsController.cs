@@ -150,6 +150,18 @@
                 models.Add(model);
             }
 
+            // I the worst programmer the world has ever seen. I am literally burn out right now... 11/22/2021, Monday, 20:22 | Дикий кайф, с кем же я летал
+            if (query.Start == 0)
+            {
+                var pinnedPost = await this.postService.GetPinnedPost(query.UserId);
+
+                if (pinnedPost != null)
+                {
+                    var model = await this.postModelFactory.PreparePostModelAsync(pinnedPost);
+                    models.Insert(0, model);
+                }
+            }
+
             return this.Ok(new
             {
                 data = models,

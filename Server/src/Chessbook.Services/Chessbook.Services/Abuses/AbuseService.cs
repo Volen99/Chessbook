@@ -77,6 +77,11 @@ namespace Chessbook.Services.Abuses
             return abuseNew.Id;
         }
 
+        public async Task<Abuse> GetById(int id)
+        {
+            return await this.abuseRepository.GetByIdAsync(id, cache => default);
+        }
+
         public async Task<Abuse> LoadByIdWithReporter(int id)
         {
             var abuse = await this.abuseRepository.Table.Where(a => a.ReporterAccountId == id)
@@ -119,6 +124,11 @@ namespace Chessbook.Services.Abuses
             return abuses;
         }
 
+        public async Task DeleteAbuse(Abuse abuse)
+        {
+            await this.abuseRepository.DeleteAsync(abuse);
+        }
+
         /// <summary>
         /// Parse "predefinedReasons enum Ids" property
         /// </summary>
@@ -157,5 +167,7 @@ namespace Chessbook.Services.Abuses
 
             return count;
         }
+
+       
     }
 }

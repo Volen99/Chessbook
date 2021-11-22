@@ -100,6 +100,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    debugger
     if (this.accountSub) {
       this.accountSub.unsubscribe();
     }

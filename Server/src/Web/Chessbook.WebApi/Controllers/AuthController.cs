@@ -94,12 +94,12 @@
         {
             if (!string.IsNullOrWhiteSpace(signUpDto.Email) && await this.userService.GetCustomerByEmailAsync(signUpDto.Email) != null)
             {
-                ModelState.AddModelError(string.Empty, "Email is already registered");
+                return this.BadRequest("Email is already registered");
             }
 
-            if (!string.IsNullOrWhiteSpace(signUpDto.Username) && await this.userService.GetCustomerByUsernameAsync(signUpDto.Username) != null)
+            if (!string.IsNullOrWhiteSpace(signUpDto.Username) && await this.userService.GetCustomerByUsernameAsync('@' + signUpDto.Username) != null)
             {
-                ModelState.AddModelError(string.Empty, "Username is already registered");
+                return this.BadRequest("Username is already registered");
             }
 
             if (signUpDto == null ||
@@ -115,8 +115,8 @@
 
             var newUser = new Customer
             {
-                DisplayName = signUpDto.DisplayName,
-                ScreenName = "@" + signUpDto.Username,
+                DisplayName = CommonHelper.EnsureMaximumLength(signUpDto.DisplayName, 40),
+                ScreenName = "@" + CommonHelper.EnsureMaximumLength(signUpDto.Username, 15),
                 Email = signUpDto.Email,
                 CustomerGuid = Guid.NewGuid(),
                 CreatedOn = DateTime.UtcNow,
@@ -178,15 +178,15 @@
             if (newCustomerRoles.Any() && newCustomerRoles.FirstOrDefault(c => c.SystemName == NopCustomerDefaults.RegisteredRoleName) != null &&
                 !CommonHelper.IsValidEmail(newUser.Email))
             {
-                ModelState.AddModelError(string.Empty, await this.localeStringResourceService.GetResourceAsync("Admin.Customers.Customers.ValidEmailRequiredRegisteredRole"));
-
+                return this.BadRequest("Valid Email Required Registered Role");
+                // ModelState.AddModelError(string.Empty, await this.localeStringResourceService.GetResourceAsync("Admin.Customers.Customers.ValidEmailRequiredRegisteredRole"));
                 // _notificationService.ErrorNotification(await this.localeStringResourceService.GetResourceAsync("Admin.Customers.Customers.ValidEmailRequiredRegisteredRole"));
             }
 
             // custom customer attributes
             // await _genericAttributeService.SaveAttributeAsync(newUser, NopCustomerDefaults.CustomCustomerAttributes, customerAttributesXml);
 
-            //password
+            // password
             if (!string.IsNullOrWhiteSpace(signUpDto.Password))
             {
                 var changePassRequest = new ChangePasswordRequest(signUpDto.Email, false, this.customerSettings.DefaultPasswordFormat, signUpDto.Password);
@@ -200,7 +200,7 @@
                 }
             }
 
-            //customer roles
+            // customer roles
             foreach (var customerRole in newCustomerRoles)
             {
                 // ensure that the current customer cannot add to "Administrators" system role if he's not an admin himself
@@ -250,7 +250,7 @@
         //}
 
         [HttpPost]
-        [Authorize]
+        // [Authorize]          // having this guy: Logging out, please wait...
         [Route("sign-out")]
         public async Task<IActionResult> SignOut()
         {

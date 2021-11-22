@@ -94,7 +94,7 @@ export class AbuseService {
   }
 
   removeAbuse(abuse: AdminAbuse) {
-    const url = AbuseService.BASE_ABUSE_URL + '/' + abuse.id;
+    const url = 'admin/' + AbuseService.BASE_ABUSE_URL + '/delete/' + abuse.id;
 
     return this.authHttp.delete(url)
       .pipe(

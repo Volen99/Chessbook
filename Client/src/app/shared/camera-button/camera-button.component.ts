@@ -7,6 +7,7 @@ import {VideosDialogComponent} from '../videos/videos-dialog.component';
 import {NbDialogService} from '../../sharebook-nebular/theme/components/dialog/dialog.service';
 import {SizeProp} from '@fortawesome/fontawesome-svg-core';
 import {NbComponentSize} from '../../sharebook-nebular/theme/components/component-size';
+import {NbComponentOrCustomStatus} from '../../sharebook-nebular/theme/components/component-status';
 
 @Component({
   selector: 'app-camera-button',
@@ -18,6 +19,8 @@ export class CameraButtonComponent implements AfterViewInit {
 
   @Input() btnSize: NbComponentSize;
   @Input() iconSize: SizeProp = 'lg';
+  @Input() appearance: string = 'filled';
+  @Input() status: NbComponentOrCustomStatus = 'primary';
 
   constructor(private dialogService: NbDialogService) {
 

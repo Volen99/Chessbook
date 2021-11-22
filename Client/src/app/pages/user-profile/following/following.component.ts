@@ -56,6 +56,7 @@ export class FollowingComponent implements OnInit, OnDestroy {
   users: User[] = [];
 
   private loadSubscriptions(screenName: string, following: boolean, more = true) {
+    debugger
     this.userFollowService.listSubscriptions({pagination: this.pagination}, screenName, following)
       .subscribe(
         res => {

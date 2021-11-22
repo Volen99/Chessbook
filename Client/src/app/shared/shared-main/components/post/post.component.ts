@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
 import {Observable, Subject} from "rxjs";
 import {debounce} from 'lodash';
@@ -90,6 +90,7 @@ export class PostComponent implements OnInit {
   @Input() featured: boolean = false;
   @Input() posts: Post[];
   @Input() i: number;
+  @Input() pinnedPost: Post;
 
   @Input()
   set picture(value: string) {
@@ -105,13 +106,20 @@ export class PostComponent implements OnInit {
               private dialogService: NbDialogService,
               private markdownService: MarkdownService,
               protected notifier: NbToastrService,
-              private surveyService: SurveyService) {
+              private surveyService: SurveyService,
+              private cdr: ChangeDetectorRef) {
     this.tooltipDislike = `Dislike`;
 
     this.faAlarmExclamation = faAlarmExclamation;
   }
 
   ngOnInit(): void {
+    debugger
+    // if (this.i === 0 && this.pinnedPost) {
+    //   this.posts.unshift(this.pinnedPost);
+    //   this.post = this.pinnedPost;
+    // }
+
     if (this.isARepost(this.post)) {
       this.socialContextProps = {
         screenName: this.post.user.screenName,
@@ -123,7 +131,7 @@ export class PostComponent implements OnInit {
       this.featured = true;
 
       this.post = this.post.repost;
-    } else if (this.post.pinned) {
+    } else if (this.post.pinned && !this.router.url.includes('home')) {
       this.socialContextProps = {
         screenName: this.post.user.screenName,
         displayName: this.post.user.displayName,
@@ -409,13 +417,20 @@ export class PostComponent implements OnInit {
 
   // wish i was never born, Wednesday, 11:14 AM, 9/22/2021 | I can't say goodbye
   setTransform(i: number, post: Post): number {
+    debugger
     if (i === 0) {
       return 0;
     }
 
     let lastPost = this.posts[i - 1];
+    if (i === 1) {
+      if (this.pinnedPost) {
+        lastPost = this.pinnedPost;
+      }
+    }
+
     if (!lastPost) {
-      return;
+     return;
     }
 
     if (lastPost.repost) {

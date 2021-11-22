@@ -157,8 +157,8 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
 
   initUserForm() {
     this.userForm = this.fb.group({
-      displayName: USER_DISPLAY_NAME_REQUIRED_VALIDATOR,
-      description: USER_DESCRIPTION_VALIDATOR,
+      displayName: this.fb.control('', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]), // USER_DISPLAY_NAME_REQUIRED_VALIDATOR,
+      description: this.fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(160)]), // USER_DESCRIPTION_VALIDATOR,
       websiteLink: this.fb.control('', [Validators.pattern(/^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)]),
       twitterLink: this.fb.control('', [Validators.pattern(/http(?:s)?:\/\/(?:www)?twitter\.com\/([a-zA-Z0-9_]+)/)]),
       twitchLink: this.fb.control('', [Validators.pattern(/^(?:http(s)?:\/\/)[\w.-]+(twitch\.tv\/)([^\?&"'>]+)/)]),

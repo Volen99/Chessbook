@@ -125,7 +125,7 @@ export class FactsService {
     'Most AI bots are female. Studies show that males and females are more attracted to a woman\'s voice',
     'Olaus Roemer was the first astronomer to measure the speed of light successfully. This happened in 1676 when he observed a time interval between successive eclipses of the moons of Jupiter 🔦',
     'Some theories, suggest that suitable geometries of spacetime or specific types of motion in space might allow time travel into the past and future if these geometries or motions were possible',
-    'Time travel to the past is theoretically possible in certain general relativity spacetime geometries that permit traveling faster than the speed of light, such as cosmic strings, traversable wormholes, and Alcubierre drives',
+    'Time travel to the past is theoretically possible in certain general relativity spacetime geometries that permit traveling faster than the speed of light',
     'When Neil Armstrong landed the lunar module, there were only 30 seconds of fuel left 🚀🌚',
     'An amazing woman called Katherine Johnson carried out the calculations that made the mission to the moon possible and got the astronauts home again',
     'Your cellphone is more powerful than Apollo 11’s computers 📱',

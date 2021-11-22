@@ -35,6 +35,17 @@ namespace Chessbook.Services.APIs
             return videoNew;
         }
 
+        public async Task<IList<YoutubeVideo>> GetAllVideos(int userId = 0)
+        {
+            return await this.youtubeVideoRepository.GetAllAsync(query =>
+            {
+                if (userId > 0)
+                    query = query.Where(comment => comment.UserId == userId);
+
+                return query;
+            });
+        }
+
         public async Task<YoutubeVideo> GetById(int id)
         {
             return await youtubeVideoRepository.GetByIdAsync(id, cache => default);
@@ -61,6 +72,11 @@ namespace Chessbook.Services.APIs
         public async Task Delete(YoutubeVideo video)
         {
             await this.youtubeVideoRepository.DeleteAsync(video);
+        }
+
+        public async Task DeleteVideosAsync(IList<YoutubeVideo> posts)
+        {
+            await this.youtubeVideoRepository.DeleteAsync(posts);
         }
     }
 }

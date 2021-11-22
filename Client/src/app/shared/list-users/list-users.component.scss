@@ -1,5 +1,11 @@
 @import "../../../sass/application";
 
+$auth-layout-padding: 2.5rem;
+
+nb-card {
+  height: calc(111vh - 2 * #{$auth-layout-padding});
+}
+
 a {
   text-decoration: none;
 

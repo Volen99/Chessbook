@@ -84,9 +84,12 @@ export class VideosDialogComponent implements OnInit {
     if (this.userId) {
       this.youtubeVideosService.getVideos(this.userId)
         .subscribe((videos: IVideoItem[]) => {
-          this.videosData = videos;
-          this.selectedVideo = this.videosData[0];
-          this.cdr.markForCheck();
+          if (videos.length >= 1) {
+            this.videosData = videos;
+            this.selectedVideo = this.videosData[0];
+            this.cdr.markForCheck();
+          }
+
         });
     }
 

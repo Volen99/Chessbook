@@ -5,6 +5,8 @@ using Chessbook.Web.Api.Factories;
 using Chessbook.Web.Api.Models.Common;
 using Chessbook.Core;
 using Chessbook.Services.Messages;
+using Chessbook.Services.Common;
+using Chessbook.Common;
 
 namespace Chessbook.Web.Api.Controllers
 {
@@ -14,12 +16,15 @@ namespace Chessbook.Web.Api.Controllers
         private readonly ICommonModelFactory commonModelFactory;
         private readonly IWorkContext workContext;
         private readonly IWorkflowMessageService workflowMessageService;
+        private readonly IGenericAttributeService genericAttributeService;
 
-        public CommonController(ICommonModelFactory commonModelFactory, IWorkContext workContext, IWorkflowMessageService workflowMessageService)
+        public CommonController(ICommonModelFactory commonModelFactory, IWorkContext workContext, IWorkflowMessageService workflowMessageService,
+            IGenericAttributeService genericAttributeService)
         {
             this.commonModelFactory = commonModelFactory;
             this.workContext = workContext;
             this.workflowMessageService = workflowMessageService;
+            this.genericAttributeService = genericAttributeService;
         }
 
         [HttpPost]
@@ -37,6 +42,23 @@ namespace Chessbook.Web.Api.Controllers
             model.Result = "Your enquiry has been successfully sent.";
 
             return this.Ok(model);
+        }
+
+        [HttpPost]
+        [IgnoreAntiforgeryToken]
+        public async Task<IActionResult> EuCookieLawAccept()
+        {
+            // save setting
+            await this.genericAttributeService.SaveAttributeAsync(await this.workContext.GetCurrentCustomerAsync(), NopCustomerDefaults.EuCookieLawAcceptedAttribute, true, 1);
+            return this.Ok(new { stored = true });
+        }
+
+        // robots.txt file
+        public async Task<IActionResult> RobotsTextFile()
+        {
+            var robotsFileContent = await this.commonModelFactory.PrepareRobotsTextFileAsync();
+
+            return Content(robotsFileContent, MimeTypes.TextPlain);
         }
 
     }

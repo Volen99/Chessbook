@@ -65,8 +65,8 @@ export const authOptions = {
     validation: {
       displayName: {
         required: true,
-        minLength: 6,
-        maxLength: 20,
+        minLength: 4,
+        maxLength: 40,
       },
     },
   },

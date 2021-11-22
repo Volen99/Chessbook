@@ -73,6 +73,7 @@ export class NgxLoginComponent implements OnInit {
     this.service.authenticate(this.strategy, this.user).subscribe((result: NbAuthResult) => {
       this.submitted = false;
 
+      debugger
       if (result.isSuccess()) {
         this.messages = result.getMessages();
         this.initUserService.initCurrentUser().subscribe();
@@ -83,7 +84,8 @@ export class NgxLoginComponent implements OnInit {
       const redirect = result.getRedirect();
       if (redirect) {
         setTimeout(() => {
-          return this.router.navigateByUrl(redirect);
+          return this.router.navigateByUrl('home');
+          // return this.router.navigateByUrl(redirect);
         }, this.redirectDelay);
       }
       this.cd.detectChanges();

@@ -69,15 +69,17 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.postTransformBuffer = 0;
+    this.pinnedPost = null;
     // so user posts change when profile changes kk
     this.reloadVideos();
   }
 
   ngOnInit() {
-    this.postService.getPinnedPost(this.profileCurrent.id)
-      .subscribe((data) => {
-        this.pinnedPost = data;
-      }, err => this.notifier.danger(err.message, 'Error'));
+    // this.postService.getPinnedPost(this.profileCurrent.id)
+    //   .subscribe((data) => {
+    //     this.pinnedPost = data;
+    //   }, err => this.notifier.danger(err.message, 'Error'));
 
     super.ngOnInit();
 
@@ -93,6 +95,10 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
     //   this.reloadVideos();
     //   this.generateSyndicationList();
     // });
+
+      if (this.pinnedPost) {
+        this.posts.unshift(this.pinnedPost);
+      }
   }
 
   ngOnDestroy() {
@@ -102,6 +108,7 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
 
     super.ngOnDestroy();
     this.postTransformBuffer = 0;
+    this.pinnedPost = null;
   }
 
   pinnedPost: Post;
@@ -112,11 +119,6 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
   }
 
   getPostsObservable(page: number) {
-    // const newPagination = immutableAssign(this.pagination, {currentPage: page});
-    //
-    // let parameters = new GetUserTimelineParameters(newPagination, this.sort, true, this.profileCurrent.id);
-    // return this.postService.getUserTimelineQuery(parameters);
-
     const newPagination = immutableAssign(this.pagination, { currentPage: page });
     const params = {
       videoPagination: newPagination,
@@ -124,6 +126,11 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
       skipCount: true,
       userId: this.profileCurrent.id,
     };
+
+    // this.postService.getPinnedPost(this.profileCurrent.id)
+    //   .subscribe((data) => {
+    //     this.pinnedPost = data;
+    //   }, err => this.notifier.danger(err.message, 'Error'));
 
     return this.postService.getUserTimelineQuery(params);
 
@@ -160,5 +167,9 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
     }
 
     return postsCount * 470;
+  }
+
+  hack() {
+    this.posts.unshift(this.pinnedPost);
   }
 }

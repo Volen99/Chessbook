@@ -14,10 +14,6 @@ namespace Chessbook.Core.Domain.Abuse
         // enum int's array (comma separated)
         public string PredefinedReasons { get; set; }
 
-        public DateTime CreatedAt { get; set; }
-
-        public DateTime UpdatedAt { get; set; }
-
         public int? ReporterAccountId { get; set; }
         public Customer ReporterAccount { get; set; }
 
@@ -29,5 +25,8 @@ namespace Chessbook.Core.Domain.Abuse
 
         public int? PostCommentAbuseId { get; set; }
         public PostCommentAbuseModel PostCommentAbuse { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

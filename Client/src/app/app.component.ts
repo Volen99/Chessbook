@@ -76,15 +76,13 @@ export class AppComponent implements OnInit, OnDestroy {
   user: IUser;
 
   initUser() {
-    this.initUserService.initCurrentUser()
+    this.userStore.onUserStateChange()
       .pipe(
         takeUntil(this.destroy$),
-      )
-      .subscribe((data) => {
-        this.user = this.onUserFetched(data);
+      ).subscribe((user: User) => {
+        this.user = this.onUserFetched(user);
         this.initMenu();
-
-      });
+    });
   }
 
   private onUserFetched(userJson: IUser) {

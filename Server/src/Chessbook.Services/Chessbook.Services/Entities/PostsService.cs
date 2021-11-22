@@ -531,9 +531,9 @@
         /// A task that represents the asynchronous operation
         /// The task result contains the product
         /// </returns>
-        public virtual async Task<Post> GetPostByIdAsync(int postId)
+        public virtual async Task<Post> GetPostByIdAsync(int postId, bool includeDeleted = false)
         {
-            return await this.postsRepository.GetByIdAsync(postId, cache => default);
+            return await this.postsRepository.GetByIdAsync(postId, cache => default, includeDeleted: includeDeleted);
         }
 
         /// <summary>

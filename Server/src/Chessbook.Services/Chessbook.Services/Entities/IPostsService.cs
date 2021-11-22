@@ -79,7 +79,7 @@
         /// A task that represents the asynchronous operation
         /// The task result contains the product
         /// </returns>
-        Task<Post> GetPostByIdAsync(int productId);
+        Task<Post> GetPostByIdAsync(int productId, bool includeDeleted = false);
 
         /// <summary>
         /// Gets products by identifier

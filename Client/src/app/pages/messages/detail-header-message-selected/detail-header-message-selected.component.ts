@@ -31,6 +31,7 @@ export class DetailHeaderMessageSelectedComponent implements OnInit {
               private userStore: UserStore,
               private notifier: NbToastrService,
               private markdownService: MarkdownService) {
+    this.userCurrent = this.userStore.getUser();
   }
 
   ngOnInit(): void {
@@ -39,7 +40,6 @@ export class DetailHeaderMessageSelectedComponent implements OnInit {
       if (messageId) {
         this.setMessageId(messageId);
         this.getPrivateMessageById();
-        this.userCurrent = this.userStore.getUser();
       }
     });
   }
@@ -52,10 +52,17 @@ export class DetailHeaderMessageSelectedComponent implements OnInit {
   message: PrivateMessage;
   statusHTMLText = '';
 
+  isSent: boolean = false;
+
   getPrivateMessageById() {
     this.chatService.loadMessage(this.messageId)
       .subscribe((data) => {
         this.message = data;
+        if (!this.message || !this.userCurrent) {
+          return ;
+        }
+        this.isSent = this.message.fromUser.id === this.userCurrent.id;
+
         this.setMessageTextHTML();
       });
   }

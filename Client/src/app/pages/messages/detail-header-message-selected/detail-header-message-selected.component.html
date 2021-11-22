@@ -1,6 +1,6 @@
 <!--// YOU COMMENTED IT COZ OF <app-global-icon></app-global-icon>!!!-->
 
-<section aria-labelledby="detail-header" aria-label="Section details" role="region"
+<section *ngIf="this.message" aria-labelledby="detail-header" aria-label="Section details" role="region"
          class="sharebook-container main-left-right-vertical-border-color main-right-vertical-border-right-width border-style-solid main-primary-column-max-width-600px overflow-hidden width-100-per"
          style="height: 641px;"> <!--had margin-left-right-auto class kk-->
     <div class="sharebook-container backface-visibility-hidden position-sticky top-0px z-index-1">
@@ -14,7 +14,7 @@
                                     <div class="sharebook-container border-radius-9999px display-block overflow-hidden">
                                         <div class="display-block width-100-per" style="padding-bottom: 100%;"></div>
                                         <div class="bottom-0px height-100-per left-0px position-absolute top-0px width-100-per"><a
-                                                [routerLink]="'/' + this.message?.fromUser.screenName"
+                                                [routerLink]="'/' + (!this.isSent ? this.message?.fromUser.screenName.substring(1) : this.message?.toUser.screenName.substring(1))"
                                                 role="link"
                                                  data-focusable="true"
                                                 class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer outline-style-none">
@@ -29,9 +29,9 @@
                                                                  class="sharebook-container border-radius-9999px bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">
                                                                 <div
                                                                         class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
-                                                                        [style.background-image]="'url(' + this.message?.fromUser.profileImageUrlHttps +')'"></div>
+                                                                        [style.background-image]="'url(' + (!this.isSent ? this.message?.fromUser.profileImageUrlHttps : this.message.toUser.profileImageUrlHttps) +')'"></div>
                                                                 <img alt="" draggable="true"
-                                                                     [src]="this.message?.fromUser.profileImageUrlHttps"
+                                                                     [src]="!this.isSent ? this.message?.fromUser.profileImageUrlHttps : this.message.toUser.profileImageUrlHttps"
                                                                      class="sharebook-image"></div>
                                                         </div>
                                                     </div>
@@ -52,7 +52,7 @@
                                                     <div class="sharebook-container align-items-center display-inline-flex flex-direction-row max-width-100-per"><span
                                                             class="css-901oao sharebook-text-inherit sharebook-text font-family font-weight-800 inside-element-container-line-height min-width-0px white-space-nowrap text-overflow-wrap"><span
                                                             class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span
-                                                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.message?.fromUser.displayName}}</span></span></span><span
+                                                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{!this.isSent ? this.message?.fromUser.displayName : this.message.toUser.displayName}}</span></span></span><span
                                                             class="css-901oao sharebook-text-inherit flex-direction-row svg-flex-shrink-0 font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
                                                     </div>
                                                 </div>
@@ -60,7 +60,7 @@
                                         </h2>
                                         <div dir="auto"
                                              class="css-901oao sharebook-text third-wheel-color font-family third-wheel-text-font-size font-weight-400 line-height-calc min-width-0px text-overflow-wrap">
-                                            <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.message?.fromUser.screenName}}</span>
+                                            <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{!this.isSent ? this.message?.fromUser.screenName: this.message.toUser.screenName}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@
 <!--                                                    d="M12 22.75C6.072 22.75 1.25 17.928 1.25 12S6.072 1.25 12 1.25 22.75 6.072 22.75 12 17.928 22.75 12 22.75zm0-20C6.9 2.75 2.75 6.9 2.75 12S6.9 21.25 12 21.25s9.25-4.15 9.25-9.25S17.1 2.75 12 2.75z"></path>-->
 <!--                                        </g>-->
 <!--                                    </svg>-->
-                                    <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span class="text-hint caption">Last activity: <app-date-toggle [date]="this.message?.fromUser.lastLoginDate"></app-date-toggle></span></span>
+                                    <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span class="text-hint caption">Last activity: <app-date-toggle [date]="!this.isSent ? this.message?.fromUser.lastLoginDate : this.message.toUser.lastLoginDate"></app-date-toggle></span></span>
                                 </div>
                             </a></div>
                         </div>
@@ -108,7 +108,7 @@
                                                 <div data-focusable="true" tabindex="0"
                                                      class="sharebook-container align-items-center border-bottom-color border-bottom-style-solid border-bottom-width-1px r-1jkafct cursor-pointer flex-direction-column r-ku1wi2 outline-style-none left-right-padding-15px r-tvv088 transition-duration transition-property"
                                                      role="link">
-                                                    <div class="sharebook-container flex-shrink max-width-100-per"><a [routerLink]="'/' + this.message?.fromUser.screenName"
+                                                    <div class="sharebook-container flex-shrink max-width-100-per"><a [routerLink]="'/' + (!this.isSent ? this.message?.fromUser.screenName.substring(1) : this.message.toUser.screenName.substring(1))"
                                                                                                                       role="link"
                                                                                                                       data-focusable="true"
                                                                                                                       class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer flex-shrink max-width-100-per outline-style-none">
@@ -117,7 +117,7 @@
                                                                 <div dir="auto"
                                                                      class="css-901oao sharebook-text font-family font-size-15px font-weight-700 inside-element-container-line-height min-width-0px white-space-nowrap text-overflow-wrap">
                                   <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span
-                                          class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.message?.fromUser.displayName}}</span></span>
+                                          class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{!this.isSent ? this.message?.fromUser.displayName : this.message.toUser.displayName}}</span></span>
                                                                 </div>
                                                                 <div dir="auto"
                                                                      class="css-901oao flex-direction-row svg-flex-shrink-0 font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"></div>
@@ -126,13 +126,13 @@
                                                                 <div dir="ltr"
                                                                      class="css-901oao sharebook-text third-wheel-color flex-direction-row font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
                                   <span
-                                          class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.message?.fromUser.screenName}}</span>
+                                          class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{!this.isSent ? this.message?.fromUser.screenName : this.message.toUser.screenName}}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </a></div>
                                                     <div dir="auto" class="sharebook-container flex-shrink max-width-100-per text-overflow-wrap">
-                                                        <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap"> {{this.message?.fromUser.description}}</span>
+                                                        <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap"> {{!this.isSent ? this.message?.fromUser.description : this.message.toUser.description}}</span>
                                                     </div>
                                                     <div class="sharebook-container flex-expand flex-direction-row flex-wrap margin-bottom-5px">
                                                         <div class="sharebook-container margin-right-20px">
@@ -140,7 +140,7 @@
                                                                  class="css-901oao font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"
                                                                  title="616"><span
                                                                     class="css-901oao sharebook-text-inherit font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap"><span style="margin-right: 2px"
-                                                                    class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.message?.fromUser.followingCount}}</span></span>
+                                                                    class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{!this.isSent ? this.message?.fromUser.followingCount : this.message.toUser.followingCount}}</span></span>
                                                                 <span class="css-901oao sharebook-text-inherit third-wheel-color font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                     <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Following</span>
                                                                 </span>
@@ -151,7 +151,7 @@
                                                                  class="css-901oao font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"
                                                                  title="397"><span
                                                                     class="css-901oao sharebook-text-inherit font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap"><span style="margin-right: 2px"
-                                                                    class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.message?.fromUser.followersCount}}</span></span>
+                                                                    class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{!this.isSent ? this.message?.fromUser.followersCount : this.message.toUser.followersCount}}</span></span>
                                                                 <span class="css-901oao sharebook-text-inherit third-wheel-color font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span
                                                                         class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Followers</span></span>
                                                             </div>
@@ -160,7 +160,7 @@
                                                     <div dir="auto"
                                                          class="css-901oao third-wheel-color svg-display-inline-block font-family font-size-15px font-weight-400 inside-element-container-line-height container-left-side-margin-right-10px min-width-0px text-overflow-wrap">
                                                         <fa-icon [icon]="this.faCalendarAlt"></fa-icon>
-                                                        Joined {{this.message?.fromUser.createdOn | date}}
+                                                        Joined {{(!this.isSent ? this.message?.fromUser.createdOn : this.message.toUser.createdOn) | date}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -368,7 +368,7 @@
                             </div>
                             <div class="sharebook-container align-items-flex-end flex-direction-row r-1uu6nss width-100-per">
                                 <div class="sharebook-container flex-direction-row miniature-element-margin-right">
-                                    <div *ngIf="!(this.message?.fromUser.id === this.userCurrent.id)" aria-label="Reply" role="button" data-focusable="true"
+                                    <div *ngIf="!(this.message?.fromUser.id === this.userCurrent?.id)" aria-label="Reply" role="button" data-focusable="true"
                                          tabindex="0"
                                          class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px r-1phboty border-width-1px border-height-0px input-form-margin element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
                                          ngbTooltip="Reply"

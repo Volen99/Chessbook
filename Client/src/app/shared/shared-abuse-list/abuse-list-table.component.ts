@@ -148,7 +148,7 @@ export class AbuseListTableComponent extends RestTable implements OnInit {
   }
 
   getCommentUrl(abuse: AdminAbuse) {
-    return Post.buildClientUrl(abuse.comment.video.screenName, abuse.comment.video.id) + ';threadId=' + abuse.comment.threadId;
+    return Post.buildClientUrl(abuse.comment.video.screenName, abuse.comment.video.id) + ';threadId=' + abuse.comment?.threadId;
   }
 
   getAccountUrl(abuse: ProcessedAbuse) {
@@ -169,12 +169,12 @@ export class AbuseListTableComponent extends RestTable implements OnInit {
   }
 
   async removeAbuse(abuse: AdminAbuse) {
-    const res = await this.confirmService.confirm(`Do you really want to delete this abuse report?`, `Delete`);
-    if (res === false) return;
+    // const res = await this.confirmService.confirm(`Do you really want to delete this abuse report?`, `Delete`);
+    // if (res === false) return;
 
     this.abuseService.removeAbuse(abuse).subscribe(
       () => {
-        this.notifier.success(`Abuse deleted.`);
+        this.notifier.success(`Abuse deleted.`, 'Success');
         this.reloadData();
       },
 
@@ -242,7 +242,7 @@ export class AbuseListTableComponent extends RestTable implements OnInit {
             abuse.moderationCommentHtml = await this.toHtml(abuse.moderationComment);
           }
 
-          if (abuse.post) {
+          if (abuse.post && !abuse.post.deleted) {
             abuse.embedHtml = this.sanitizer.bypassSecurityTrustHtml(this.getVideoEmbed(abuse));
 
             if (abuse.post.channel) {

@@ -5,7 +5,6 @@ import {AuthGuard} from "./auth/auth.guard";
 import {NotFoundComponent} from "./pages/page-not-found/not-found.component";
 import {MetaGuard} from "./core/routing/meta-guard.service";
 import {ModeratorGuard} from "./auth/moderator.guard";
-import {TrendsModule} from "./pages/trends/trends.module";
 import {PreloadSelectedModulesList} from './core/routing/preload-selected-modules-list';
 import {CustomReuseStrategy} from './core/routing/custom-reuse-strategy';
 

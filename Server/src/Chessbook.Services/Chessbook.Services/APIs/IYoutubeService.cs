@@ -9,6 +9,8 @@ namespace Chessbook.Services.APIs
     {
         Task<YoutubeVideo> AddVideo(string id, string title, string description, int userId);
 
+        Task<IList<YoutubeVideo>> GetAllVideos(int userId = 0);
+
         Task<YoutubeVideo> GetById(int id);
 
         Task<IList<YoutubeVideo>> GetVideosByUserId(int userId);
@@ -16,5 +18,12 @@ namespace Chessbook.Services.APIs
         Task Edit(YoutubeVideo video);
 
         Task Delete(YoutubeVideo video);
+
+        /// <summary>
+        /// Delete videos
+        /// </summary>
+        /// <param name="posts">Videos</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        Task DeleteVideosAsync(IList<YoutubeVideo> posts);
     }
 }

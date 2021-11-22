@@ -9,6 +9,7 @@ using Chessbook.Core.Domain.Gdpr;
 using Chessbook.Core.Events;
 using Chessbook.Data;
 using Chessbook.Data.Models;
+using Chessbook.Services.APIs;
 using Chessbook.Services.Chat;
 using Chessbook.Services.Common;
 using Chessbook.Services.Data.Services.Entities;
@@ -33,6 +34,7 @@ namespace Chessbook.Services.Gdpr
         private readonly IStoreService _storeService;
         private readonly IPostCommentService postCommentService;
         private readonly IChatService chatService;
+        private readonly IYoutubeService youtubeService;
 
         #endregion
 
@@ -46,7 +48,8 @@ namespace Chessbook.Services.Gdpr
             IStoreService storeService,
             IPostsService postService,
             IPostCommentService postCommentService,
-            IChatService chatService)
+            IChatService chatService,
+            IYoutubeService youtubeService)
         {
             _customerService = customerService;
             _eventPublisher = eventPublisher;
@@ -57,6 +60,7 @@ namespace Chessbook.Services.Gdpr
             this.postService = postService;
             this.postCommentService = postCommentService;
             this.chatService = chatService;
+            this.youtubeService = youtubeService;
         }
 
         #endregion
@@ -257,28 +261,9 @@ namespace Chessbook.Services.Gdpr
             var postComments = await this.postService.GetAllCommentsAsync(customerId: customer.Id);
             await this.postService.DeleteBlogCommentsAsync(postComments);
 
-            //news comments
-
-            ////back in stock subscriptions
-            //var backInStockSubscriptions = await _backInStockSubscriptionService.GetAllSubscriptionsByCustomerIdAsync(customer.Id);
-            //foreach (var backInStockSubscription in backInStockSubscriptions)
-            //    await _backInStockSubscriptionService.DeleteSubscriptionAsync(backInStockSubscription);
-
-            ////product review
-            //var productReviews = await _productService.GetAllProductReviewsAsync(customer.Id);
-            //var reviewedProducts = await _productService.GetProductsByIdsAsync(productReviews.Select(p => p.ProductId).Distinct().ToArray());
-            //await _productService.DeleteProductReviewsAsync(productReviews);
-            ////update product totals
-            //foreach (var product in reviewedProducts) 
-            //    await _productService.UpdateProductReviewTotalsAsync(product);
-
             // posts
             var posts = await this.postService.GetPostsByUserId(customer.Id);
             await this.postService.DeletePostsAsync(posts);
-
-            //shopping cart items
-            //foreach (var sci in await _shoppingCartService.GetShoppingCartAsync(customer))
-            //    await _shoppingCartService.DeleteShoppingCartItemAsync(sci);
 
             // private messages (sent)
             foreach (var pm in await this.chatService.GetAllPrivateMessagesAsync(0, customer.Id, 0, null, null, null, null))
@@ -292,9 +277,9 @@ namespace Chessbook.Services.Gdpr
                 await this.chatService.DeletePrivateMessageAsync(pm);
             }
 
-            //newsletter
-
-            //addresses
+            // favorite videos
+            var videos = await this.youtubeService.GetAllVideos(customer.Id);
+            await this.youtubeService.DeleteVideosAsync(videos);
 
             // generic attributes
             var keyGroup = customer.GetType().Name;
@@ -332,6 +317,11 @@ namespace Chessbook.Services.Gdpr
             customer.DisplayName = string.Empty;            // Username
             customer.Active = false;
             customer.Deleted = true;
+            customer.WebsiteLink = string.Empty;
+            customer.TwitterLink = string.Empty;
+            customer.TwitchLink = string.Empty;
+            customer.YoutubeLink = string.Empty;
+            customer.FacebookLink = string.Empty;
             
             await _customerService.UpdateCustomerAsync(customer);
 

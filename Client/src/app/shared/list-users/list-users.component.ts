@@ -5,7 +5,7 @@ import {Router} from "@angular/router";
 import {Subject} from "rxjs/Subject";
 
 import {
-  faCog,
+  faUsers,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {IUser} from "../../core/interfaces/common/users";
@@ -21,6 +21,7 @@ import {UserStore} from '../../core/stores/user.store';
 })
 export class ListUsersComponent implements OnInit {
   @Input() users: User[] = [];
+  @Input() more: boolean = false;
 
   private lastQueryLength: number;
 
@@ -33,10 +34,12 @@ export class ListUsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   this.loadMoreUsers(true);
+    if (this.more) {
+      this.loadMoreUsers(true);
+    }
   }
 
-  faCog = faCog;
+  faUsers = faUsers;
 
   pagination: ComponentPaginationLight = {
     currentPage: 1,
@@ -83,7 +86,6 @@ export class ListUsersComponent implements OnInit {
 
   loading = false;
   onNearOfBottom() {
-    debugger
     if (this.disabled) {
       return;
     }

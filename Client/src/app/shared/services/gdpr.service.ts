@@ -29,8 +29,8 @@ export class GdprService {
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 
-  delete() {
-    return this.http.post('users/delete-account', {})
+  delete(id: number) {
+    return this.http.post(`users/delete-account/${id}`, {})
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 }

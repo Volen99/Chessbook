@@ -26,22 +26,23 @@
              class="sharebook-container">
             <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.pinnedPost ? this.posts.length + 1 : this.posts.length) + 'px'}">
                 <ng-container *ngIf="this.pinnedPost">
-                    <app-post
-                            [i]="0"
-                            [transform]="this.postTransformBuffer"
-                            (transformBuffer)="this.setTransformBuffer($event)"
-                            [post]="this.pinnedPost"
-                            [posts]="this.posts"
-                            [removeVideoFromArray]="this.removeVideoFromArray">
-                    </app-post>
+<!--                    <app-post-->
+<!--                            [i]="0"-->
+<!--                            [transform]="this.postTransformBuffer"-->
+<!--                            (transformBuffer)="this.setTransformBuffer($event)"-->
+<!--                            [post]="this.pinnedPost"-->
+<!--                            [posts]="this.posts"-->
+<!--                            [removeVideoFromArray]="this.removeVideoFromArray">-->
+<!--                    </app-post>-->
                 </ng-container>
-                <ng-container *ngIf="this.posts?.length > 0;">
+                <ng-container *ngIf="this.posts?.length > 0;"> <!--this.pinnedPost ? i + 1 :-->
                     <app-post *ngFor="let post of this.posts; let i = index"
                               [transform]="this.postTransformBuffer"
                               (transformBuffer)="this.setTransformBuffer($event)"
                               [post]="post"
                               [posts]="this.posts"
-                              [i]="this.pinnedPost ? i + 1 : i"
+                              [pinnedPost]="this.pinnedPost"
+                              [i]="i"
                               [removeVideoFromArray]="this.removeVideoFromArray">
                     </app-post>
                 </ng-container>

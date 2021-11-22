@@ -118,7 +118,8 @@ export class PostThreadComponent implements OnInit {
         const scroll = params.withScroll || '';
 
         if (scroll === 'true') {
-          this.scrollService.scrollTo(0, document.body.scrollHeight);
+          // this.scrollService.scrollTo(0, document.body.scrollHeight);
+          this.containerElement.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
         }
       });
 

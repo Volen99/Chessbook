@@ -116,8 +116,8 @@ export const USER_DISPLAY_NAME_REQUIRED_VALIDATOR = buildDisplayNameValidator(tr
 
 export const USER_DESCRIPTION_VALIDATOR: BuildFormValidator = {
   VALIDATORS: [
-    Validators.minLength(3),
-    Validators.maxLength(1000)
+    Validators.minLength(2),
+    Validators.maxLength(160)
   ],
   MESSAGES: {
     'minlength': `Description must be at least 3 characters long.`,

@@ -49,6 +49,7 @@
     using Chessbook.Services.Gdpr;
     using Chessbook.Services.ExportImport;
     using Chessbook.Services.Chat;
+    using Chessbook.Services.Security;
 
     [Route("users")]
     public class UsersController : BaseApiController
@@ -79,6 +80,7 @@
         private readonly IGdprService gdprService;
         private readonly IExportManager exportManager;
         private readonly IChatService chatService;
+        private readonly IPermissionService permissionService;
 
         public UsersController(IUserService userService, JwtManager jwtManager, IAuthenticationService authService, IPostsService postsService,
             IPictureService pictureService, IGenericAttributeService genericAttributeService, IRelationshipService relationshipService, IUserModelFactory userModelFactory,
@@ -87,7 +89,7 @@
             ICustomerRegistrationService customerRegistrationService, IAbuseService abuseService, IAbuseModelFactory abuseModelFactory,
             IFollowService followService, IBlocklistService blocklistService, IUserBlocklistFactory userBlocklistFactory, IWorkContext workContext,
             ICountryService countryService, IDateTimeHelper dateTimeHelper, ILocaleStringResourceService localeStringResourceService,
-            IGdprService gdprService, IExportManager exportManager, IChatService chatService)
+            IGdprService gdprService, IExportManager exportManager, IChatService chatService, IPermissionService permissionService)
         {
             this.userService = userService;
             this.jwtManager = jwtManager;
@@ -115,6 +117,7 @@
             this.gdprService = gdprService;
             this.exportManager = exportManager;
             this.chatService = chatService;
+            this.permissionService = permissionService;
         }
 
         //[HttpGet]
@@ -549,8 +552,8 @@
             var currentUserId = User.GetUserId();
             var customer = await userService.GetCustomerByIdAsync(currentUserId);
 
-            customer.Description = input.Description;
-            customer.DisplayName = input.DisplayName;
+            customer.Description = CommonHelper.EnsureMaximumLength(input.Description, 160);
+            customer.DisplayName = CommonHelper.EnsureMaximumLength(input.DisplayName, 40);
 
             // social pages
             customer.WebsiteLink = input.WebsiteLink;
@@ -930,10 +933,15 @@
             return File(bytes, MimeTypes.TextXlsx, "customerdata.xlsx");
         }
 
-        [HttpPost, ActionName("GdprTools")]
-        [Route("delete-account")]
-        public virtual async Task<IActionResult> GdprDelete(int id)
+        [HttpPost]
+        [Route("delete-account/{id:int}")]
+        public async Task<IActionResult> GdprDelete(int id)
         {
+            if (!await this.userService.IsRegisteredAsync(await this.workContext.GetCurrentCustomerAsync()))
+            {
+                return Challenge();
+            }
+
             // try to get a customer with the specified id
             var customer = await this.userService.GetCustomerByIdAsync(id);
             if (customer == null)

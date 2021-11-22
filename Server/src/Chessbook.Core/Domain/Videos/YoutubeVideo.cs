@@ -1,5 +1,5 @@
-﻿using Chessbook.Data.Models;
-using System;
+﻿using System;
+using Chessbook.Data.Models;
 
 namespace Chessbook.Core.Domain.Videos
 {

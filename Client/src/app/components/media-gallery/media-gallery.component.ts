@@ -1,5 +1,5 @@
 import {
-  AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit,
+  AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
@@ -27,7 +27,7 @@ export class MediaGalleryComponent implements OnInit, AfterViewInit, OnChanges, 
   @Input() autoplay: boolean;
   @Input() onToggleVisibility: () => any;
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -60,6 +60,9 @@ export class MediaGalleryComponent implements OnInit, AfterViewInit, OnChanges, 
     } else {
       this.style.height = this.height;
     }
+
+    // this fix: Expression has changed after it was checked. Previous value for 'height': 'undefined'. Current value: '285.1875'..
+    this.cdr.detectChanges();
 
     this.uncached = this.media.every(attachment => attachment.mediaType === 'unknown');
   }

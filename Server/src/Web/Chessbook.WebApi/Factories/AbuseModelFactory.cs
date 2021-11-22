@@ -57,10 +57,17 @@ namespace Chessbook.Web.Api.Factories
             if (abuse.ReporterAccountId.HasValue)
             {
                 var reporterAccount = await this.userService.GetCustomerByIdAsync(abuse.ReporterAccountId.Value);
-                var reporterAccountModel = await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), reporterAccount);
 
-                model.ReporterAccount = reporterAccountModel;
-
+                if (reporterAccount != null)
+                {
+                    var reporterAccountModel = await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), reporterAccount);
+                    model.ReporterAccount = reporterAccountModel;
+                } 
+                else
+                {
+                    model.ReporterAccount = null;
+                }
+                
                 if (abuse.PostAbuseId.HasValue)
                 {
                     model.Post = await this.PrepareAdminPostAbuse(abuse, model);
@@ -84,24 +91,34 @@ namespace Chessbook.Web.Api.Factories
         public async Task<AdminPostAbuse> PrepareAdminPostAbuse(Abuse abuse, AbuseModel model)
         {
             var post = await this.postService.GetPostByIdAsync(abuse.PostAbuseId.Value);
-            var postCreator = await this.userService.GetCustomerByIdAsync(post.UserId);
-
-            var abusePostModel = new AdminPostAbuse
+            if (post != null)
             {
-                Id = post.Id,
-                Name = post.Status,
-                Channel = await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), postCreator),
-                Deleted = post.Deleted,
-                CountReports = this.abuseService.CountReportsForPost(post.Id),
-             };
+                var postCreator = await this.userService.GetCustomerByIdAsync(post.UserId);
 
-            return abusePostModel;
+                var abusePostModel = new AdminPostAbuse
+                {
+                    Id = post.Id,
+                    Name = post.Status,
+                    Channel = await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), postCreator),
+                    Deleted = post.Deleted,
+                    CountReports = this.abuseService.CountReportsForPost(post.Id),
+                };
+
+                return abusePostModel;
+
+            }
+
+            return new AdminPostAbuse
+            {
+                Deleted = true,
+            };
+
         }
 
         public async Task<AdminPostCommentAbuse> PrepareAdminPostCommentAbuse(Abuse abuse, AbuseModel model)
         {
-            var comment = await this.postCommentService.GetById(abuse.PostCommentAbuseId.Value);
-            var post = await this.postService.GetPostByIdAsync(comment.PostId);
+            var comment = await this.postCommentService.GetById(abuse.PostCommentAbuseId.Value, true);
+            var post = await this.postService.GetPostByIdAsync(comment.PostId, true);
             var postCreator = await this.userService.GetCustomerByIdAsync(post.UserId);
 
             var abusePostCommentAbuse = new AdminPostCommentAbuse

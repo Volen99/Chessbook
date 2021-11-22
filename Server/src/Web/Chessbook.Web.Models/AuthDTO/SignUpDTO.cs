@@ -7,5 +7,7 @@
         public string Username { get; set; }
 
         public string ConfirmPassword { get; set; }
+
+        public bool Terms { get; set; }
     }
 }

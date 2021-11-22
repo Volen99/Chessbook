@@ -57,7 +57,6 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
   fadeIn = {value: '', params: {direction: ''}};
 
   animationCreated(animationItem: AnimationItem): void {
-    console.log(animationItem);
     this.anim = animationItem;
   }
 
@@ -84,7 +83,7 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
       setTimeout(() => {
         this.isFishSwimming = false;
       }, 5000);
-    }, 4000);
+    }, 12000);
 
     // const user = this.userStore.getUser();
     let feedUrl = environment.apiUrl;
@@ -95,6 +94,8 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
   ngOnDestroy() {
     super.ngOnDestroy();
     this.postTransformBuffer = 0;
+
+    this.posts = []; // by mi
   }
 
   lottieOptions: AnimationOptions = {

@@ -51,5 +51,21 @@ namespace Chessbook.Web.Api.Areas.Admin.Controllers
                 data = abuses,
             });
         }
+
+        [HttpDelete]
+        [Route("delete/{id:int}")]
+        public async Task<IActionResult> DeleteAbuse(int id)
+        {
+            var abuseCurrent = await this.abuseService.GetById(id);
+            if (abuseCurrent == null)
+            {
+                return this.NotFound();
+            }
+
+            await this.abuseService.DeleteAbuse(abuseCurrent);
+
+            return this.NoContent();
+        }
+
     }
 }

@@ -93,6 +93,13 @@ namespace Chessbook.Web.Api.Factories
                 }
 
                 var notificationSenderUser = await this.userService.GetCustomerByIdAsync(notificationComment.UserId);
+
+                if (notificationSenderUser == null)
+                {
+                    model.Type = 99;
+                    return model;
+                }
+
                 var avatarUrl = await this.userModelFactory.PrepareCustomerAvatarModelAsync(notificationSenderUser.Id);
 
                 var userInfo = new UserInfoModel
@@ -104,6 +111,12 @@ namespace Chessbook.Web.Api.Factories
                 };
 
                 var post = await this.postService.GetPostByIdAsync(notificationComment.PostId);
+                if (post == null)
+                {
+                    model.Type = 99;
+                    return model;
+                }
+
                 var postInfo = new PostInfoModel
                 {
                     Id = notificationComment.PostId,
@@ -126,7 +139,6 @@ namespace Chessbook.Web.Api.Factories
             {
                 // relationship
                 var userFollow = await this.followService.GetByIdAsync(notification.UserFollowId.Value);
-
                 if (userFollow == null)
                 {
                     model.Type = 99; // so that the client shows Blunder!
@@ -135,6 +147,13 @@ namespace Chessbook.Web.Api.Factories
                 else
                 {
                     var follower = await this.userService.GetCustomerByIdAsync(userFollow.UserId);
+
+                    if (follower == null)
+                    {
+                        model.Type = 99;
+                        return model;
+                    }
+
                     var avatarUrl = await this.userModelFactory.PrepareCustomerAvatarModelAsync(follower.Id);
                     var follow = new FollowInfoModel
                     {
@@ -162,9 +181,21 @@ namespace Chessbook.Web.Api.Factories
                 }
 
                 var liker = await this.userService.GetCustomerByIdAsync(notificationPostLike.UserId);
+                if (liker == null)
+                {
+                    model.Type = 99;
+                    return model;
+                }
+
                 var avatarUrl = await this.userModelFactory.PrepareCustomerAvatarModelAsync(liker.Id);
 
                 var post = await this.postService.GetPostByIdAsync(notificationPostLike.PostId);
+                if (post == null)
+                {
+                    model.Type = 99;
+                    return model;
+                }
+
                 var postInfo = new PostInfoModel
                 {
                     Id = notificationPostLike.PostId,
