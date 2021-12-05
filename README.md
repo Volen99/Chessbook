@@ -1,6 +1,6 @@
 <h1 align="center">
   <a href="https://chessbook.com">
-    <img width src="https://user-images.githubusercontent.com/41373491/137958045-35fa3afd-428d-4794-9f1f-68fab858998c.png" alt="Chessbook"
+    <img width src="https://user-images.githubusercontent.com/41373491/143767317-c61944a4-623e-4778-9d76-c99d19898d53.png" alt="Chessbook logo"
          style="width: 214px"/>
   </a>
 </h1>
