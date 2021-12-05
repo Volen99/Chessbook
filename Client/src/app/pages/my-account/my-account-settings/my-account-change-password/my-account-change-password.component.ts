@@ -2,7 +2,6 @@ import {filter} from 'rxjs/operators';
 import {Component, OnInit} from '@angular/core';
 import {FormReactive} from "../../../../shared/shared-forms/form-reactive";
 import {FormValidatorService} from "../../../../shared/shared-forms/form-validator.service";
-import {Notifier} from "../../../../core/notification/notifier.service";
 import {IUser} from "../../../../core/interfaces/common/users";
 import {UsersService} from "../../../../core/backend/common/services/users.service";
 import {
@@ -11,6 +10,7 @@ import {
   USER_PASSWORD_VALIDATOR
 } from "../../../../shared/shared-forms/form-validators/user-validators";
 import {UserStore} from "../../../../core/stores/user.store";
+import {NbToastrService} from '../../../../sharebook-nebular/theme/components/toastr/toastr.service';
 
 @Component({
   selector: 'my-account-change-password',
@@ -23,7 +23,7 @@ export class MyAccountChangePasswordComponent extends FormReactive implements On
 
   constructor(
     protected formValidatorService: FormValidatorService,
-    private notifier: Notifier,
+    private notifier: NbToastrService,
     private userStore: UserStore,
     private userService: UsersService
   ) {

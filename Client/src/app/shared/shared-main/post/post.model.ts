@@ -1,16 +1,8 @@
 import {IPost} from "../../posts/models/post.model";
 import {IUser} from "../../../core/interfaces/common/users";
 import {ITweetEntities} from "../../post-object/Entities/interfaces/ITweetEntities";
-import {ICoordinates} from "../../posts/models/properties/ICoordinates";
-import {ITweetIdentifier} from "../../posts/models/tweet-identifier";
-import {IPlace} from "../../posts/models/properties/IPlace";
-import {IHashtagEntity} from "../../post-object/Entities/interfaces/IHashTagEntity";
-import {IUrlEntity} from "../../post-object/Entities/interfaces/IUrlEntity";
-import {IMediaEntity} from "../../post-object/Entities/interfaces/IMediaEntity";
-import {IUserMentionEntity} from "../../post-object/Entities/interfaces/IUserMentionEntity";
 import {IPoll} from "../../posts/models/poll/poll";
 import {IPostTag} from "./post-details.model";
-import {User} from "../user/user.model";
 import {UserRight} from "../../models/users/user-right.enum";
 import {PostPrivacy} from "../../models/enums/post-privacy";
 import {IPostConstant} from "../../posts/models/post-constant.model";
@@ -74,7 +66,6 @@ export class Post /*implements IPost*/ {
   createdAt: Date;
   replyCount: number;
   inReplyToStatusId: number;
-  inReplyToUserId: number;
   inReplyToScreenName: string;
   repostCount: number;
   reposted: boolean;
@@ -128,13 +119,4 @@ export class Post /*implements IPost*/ {
     return user /*&& this.isLocal === false*/ && user.hasRight(UserRight.MANAGE_VIDEOS_REDUNDANCIES);
   }
 
-  // getExactNumberOfViews() {
-  //   if (this.views < 1000) return '';
-  //
-  //   if (this.isLive) {
-  //     return $localize`${this.views} viewers`;
-  //   }
-  //
-  //   return $localize`${this.views} views`;
-  // }
 }

@@ -21,7 +21,7 @@
             <span class="views" [title]="video.viewer_count">
               <ng-container *ngIf="displayOptions.date && displayOptions.views"> • </ng-container>
 
-              <my-video-views-counter *ngIf="displayOptions.views" [video]="video"></my-video-views-counter>
+              <app-video-views-counter *ngIf="displayOptions.views" [video]="video"></app-video-views-counter>
             </span>
           </span>
 
@@ -29,17 +29,11 @@
             {{ video.user_login }}
           </a>
 
-
         </div>
       </div>
     </div>
 
     <div class="video-actions">
-      <!-- FIXME: remove bottom placement when overflow is fixed in bootstrap dropdown: https://github.com/ng-bootstrap/ng-bootstrap/issues/3495 -->
-<!--      <my-video-actions-dropdown-->
-<!--        *ngIf="showActions" [video]="video" [displayOptions]="videoActionsDisplayOptions" placement="bottom-left bottom-right left auto"-->
-<!--        (videoRemoved)="onVideoRemoved()" (videoBlocked)="onVideoBlocked()" (videoUnblocked)="onVideoUnblocked()" (videoAccountMuted)="onVideoAccountMuted()"-->
-<!--      ></my-video-actions-dropdown>-->
     </div>
   </div>
 </div>

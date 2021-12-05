@@ -101,21 +101,9 @@ noscript,
   backface-visibility: hidden;
 }
 
-//.r-12vffkv {
-//  pointer-events: none!important;
-//}
-//
-//.r-12vffkv > * {
-//  pointer-events: auto;
-//}
-
 .r-12vffkv > * {
   pointer-events: auto;
 }
-
-//.r-1xcajam {
-//  position: fixed;
-//}
 
 // Align Self:
 // Aligns a grid item inside a cell along the block (column) axis (as opposed to justify-self which aligns along the inline (row) axis)
@@ -137,19 +125,6 @@ noscript,
 
 .margin-right-20px {
   margin-right: 20px;
-}
-
-.max-width-400px {
-  max-width: 400px;
-}
-
-.min-width-350px {
-  min-width: 350px;
-}
-
-
-.r-11u3ssh {
-  background-color: rgba(110, 118, 125, 0.4);
 }
 
 .border-radius-16px {
@@ -308,10 +283,6 @@ noscript,
 @import './src/app/theme/styles/themes';
 
 @include nb-install-component() {
-  //.element-background-color-rgba {
-  //  background-color: rgba(0, 0, 0, 0);
-  //}
-
   .r-13gxpu9 {
     color: nb-theme(color-primary-default);
   }
@@ -960,16 +931,6 @@ noscript,
   padding-top: 10px;
 }
 
-.sharebook-link {
-  //background-color: rgba(0, 0, 0, 0);
-  //color: inherit;
-  //font: inherit;
-  //list-style: none;
-  //margin: 0px;
-  //text-align: inherit;
-  //text-decoration: none;
-}
-
 .align-self-flex-start {
   align-self: flex-start;
 }
@@ -1036,7 +997,6 @@ noscript,
   width: 1.25em;
 }
 
-
 .button-border-color {
   border-color: rgb(29, 161, 242);
 }
@@ -1064,12 +1024,6 @@ noscript,
   position: sticky;
 }
 
-
-//.sidebar-background-color {
-//  background-color: rgb(48, 51, 84); // nb-theme(layout-background-color);
-//}
-
-
 .main-left-right-vertical-border-color {
   border-color: rgb(47, 51, 54);
 }
@@ -1085,11 +1039,6 @@ noscript,
 .stacked-elements-padding-bottom-top {
   padding-bottom: 10px;
   padding-top: 10px;
-}
-
-// TODO: 🤔
-.r-eia128 {
-  min-height: calc(44.9375px);
 }
 
 .menu-text-container-margin-right {
@@ -1261,9 +1210,3 @@ noscript,
   margin: 0 15px;
   flex-grow: 1;
 }
-
-
-
-
-
-

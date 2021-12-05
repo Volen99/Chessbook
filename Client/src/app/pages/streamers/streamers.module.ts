@@ -15,7 +15,6 @@ import {VideoThumbnailComponent} from "./stream-list/shared-thumbnail/video-thum
 import {VideoViewsCounterComponent} from "./stream-list/video-views-counter.component";
 import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/button.module";
 import {NbActionsModule} from "../../sharebook-nebular/theme/components/actions/actions.module";
-import {VideoTrendingHeaderComponent} from "./stream-list/stream-list-header/video-trending-header.component";
 import {NbIconModule} from "../../sharebook-nebular/theme/components/icon/icon.module";
 import {NbTooltipModule} from "../../sharebook-nebular/theme/components/tooltip/tooltip.module";
 import {DialogUsernamePromptComponent} from "./stream-list/stream-list-chessbook-users/dialog-username-prompt-component/dialog-username-prompt.component";
@@ -35,7 +34,6 @@ import {NbDialogModule} from "../../sharebook-nebular/theme/components/dialog/di
     VideoMiniatureComponent,
     VideoThumbnailComponent,
     VideoViewsCounterComponent,
-    VideoTrendingHeaderComponent,
     DialogUsernamePromptComponent,
     DialogUsernameEditPromptComponent,
     ChessbookUsersStreamComponent,

@@ -1,5 +1,4 @@
 <ng-container *ngIf="this.card !== null">
-
     <ng-container *ngIf="this.interactive; else link">
         <div [ngClass]="this.className" [attr.role]="this.revealed ? 'button' : null" (click)="this.revealed ? null : this.handleReveal($event)" #nodeRef>
             <ng-container *ngIf="this.embedded; else notVideo" >
@@ -68,5 +67,4 @@
            </div>
        </a>
    </ng-template>
-
 </ng-container>

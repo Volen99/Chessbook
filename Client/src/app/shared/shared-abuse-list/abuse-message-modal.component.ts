@@ -7,13 +7,14 @@ import {UserAbuse} from "../models/moderation/abuse/abuse.model";
 import {HtmlRendererService} from "../../core/renderer/html-renderer.service";
 import {ABUSE_MESSAGE_VALIDATOR} from "../shared-forms/form-validators/abuse-validators";
 import {AbuseService} from "../shared-moderation/abuse.service";
-import {Notifier} from "../../core/notification/notifier.service";
 import {FormValidatorService} from "../shared-forms/form-validator.service";
 
 import {
   faTimes,
 } from '@fortawesome/pro-light-svg-icons';
+
 import {UserStore} from "../../core/stores/user.store";
+import {NbToastrService} from '../../sharebook-nebular/theme/components/toastr/toastr.service';
 
 @Component({
   selector: 'my-abuse-message-modal',
@@ -40,7 +41,7 @@ export class AbuseMessageModalComponent extends FormReactive implements OnInit {
     private modalService: NgbModal,
     private htmlRenderer: HtmlRendererService,
     private userStore: UserStore,
-    private notifier: Notifier,
+    private notifier: NbToastrService,
     private abuseService: AbuseService
   ) {
     super();
@@ -83,7 +84,7 @@ export class AbuseMessageModalComponent extends FormReactive implements OnInit {
         err => {
           this.sendingMessage = false;
           console.error(err);
-          this.notifier.error('Sorry but you cannot send this message. Please retry later');
+          this.notifier.danger('Sorry but you cannot send this message. Please retry later', 'Error');
         }
       );
   }
@@ -97,7 +98,7 @@ export class AbuseMessageModalComponent extends FormReactive implements OnInit {
           this.abuseMessages = this.abuseMessages.filter(m => m.id !== abuseMessage.id);
         },
 
-        err => this.notifier.error(err.message)
+        err => this.notifier.danger(err.message)
       );
   }
 
@@ -134,7 +135,7 @@ export class AbuseMessageModalComponent extends FormReactive implements OnInit {
           });
         },
 
-        err => this.notifier.error(err.message)
+        err => this.notifier.danger(err.message)
       );
   }
 

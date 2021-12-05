@@ -1,34 +1,26 @@
 <nb-card>
     <div class="row">
-        <nb-card-header>
-            <div class="sub-menu" [ngClass]="{ 'sub-menu-fixed': !isBroadcastMessageDisplayed }">
-                <!--                <div class="links">-->
-                <!--                    <a routerLink="peertube" routerLinkActive="active" class="title-page title-page-about">Chessbook</a>-->
-                <!--                </div>-->
-            </div>
-        </nb-card-header>
         <nb-card-body>
             <div class="margin-content" [ngClass]="{ 'offset-content': !isBroadcastMessageDisplayed }">
-                <!--<router-outlet></router-outlet>-->
                 <div class="root">
-                    <h1 i18n class="about-chessbook-title">
+                    <h1 class="about-chessbook-title">
                         What is Chessbook?
                     </h1>
 
                     <img class="planet" width="121px" height="147px"
-                         src="/assets/images/icons/chessbook-purple-blue-icon.svg" alt="chessbook logo"/>
+                         src="/assets/images/icons/icon-main.png" alt="chessbook logo"/>
 
                     <div class="description">
-                        <p i18n>
+                        <p>
                             Chessbook is what's happening in the chess world and what people are talking about right
                             now.
                         </p>
 
-                        <p i18n>
+                        <p>
                             It is free and ads free.
                         </p>
 
-                        <p i18n>
+                        <p>
                             For more information, please check our <a routerLink="/terms" rel="noopener noreferrer"
                                                                       href="https://chessbook.com">Privacy Policy</a>.
                         </p>
@@ -40,10 +32,11 @@
                                 <div class="card-title">
                                     <a rel="noopener noreferrer"
                                        href="javascript:void(0)"
+                                       style="text-decoration: none"
                                        (click)="this.openVideoModal()">Short introduction video to Chessbook</a>
                                 </div>
 
-                                <div i18n class="card-text">
+                                <div class="card-text">
                                     Discover what is Chessbook, what it offers and much more!
                                 </div>
                             </div>
@@ -52,24 +45,30 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <a i18n target="_blank" rel="noopener noreferrer"
-                                       href="https://docs.joinpeertube.org/use-third-party-application">Chessbook
-                                        Applications</a>
+                                    <a rel="noopener noreferrer" href="javascript:void(0)" style="text-decoration: none"
+                                       [nbPopover]="cbAppRef" nbPopoverTrigger="click" nbPopoverPlacement="top">
+                                        Chessbook Applications
+                                    </a>
                                 </div>
 
-                                <div i18n class="card-text">
-                                    Discover unofficial Android applications or browser addons!
+                                <div class="card-text">
+                                    Chessbook goal is to be supported both in iOS and Android.
                                 </div>
                             </div>
                         </div>
 
+                        <ng-template #cbAppRef>
+                            <img src="/assets/images/chessbook-app.png" alt="chessbook app">
+                        </ng-template>
+
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <a rel="noopener noreferrer" href="javascript:void(0)">Contribute on Chessbook</a>
+                                    <a rel="noopener noreferrer" href="javascript:void(0)"
+                                       style="text-decoration: none">Contribute on Chessbook</a>
                                 </div>
 
-                                <div i18n class="card-text">
+                                <div class="card-text">
                                     Want to help to improve Chessbook? You can <a rel="noopener noreferrer"
                                                                                   routerLink="/contact">contact</a>
                                     the creator of this website and walk the walk together! :)
@@ -78,32 +77,15 @@
                         </div>
                     </div>
 
-                    <!--<my-about-instance></my-about-instance>-->
                     <div class="row">
                         <div class="col-md-12 col-xl-12">
 
                             <div class="about-instance-title">
-                                <h1 i18n class="title">About {{ instanceName }}</h1>
-
-                                <!--            <a nbButton routerLink="/about/contact" i18n *ngIf="isContactFormEnabled" class="contact-admin">Contact-->
-                                <!--                administrator</a>-->
-                            </div>
-
-                            <div class="instance-badges" *ngIf="categories.length !== 0 || languages.length !== 0">
-                                <span *ngFor="let category of categories"
-                                      class="badge badge-primary category">{{ category }}</span>
-
-                                <span *ngFor="let language of languages"
-                                      class="badge badge-secondary language">{{ language }}</span>
+                                <h1 class="title">About Chessbook</h1>
                             </div>
 
                             <div class="short-description">
                                 <div class="block short-description">{{ shortDescription }}</div>
-
-                                <div i18n *ngIf="isNSFW" class="block dedicated-to-nsfw">This instance is dedicated to
-                                    sensitive/NSFW
-                                    content.
-                                </div>
                             </div>
 
                             <div class="anchor" id="administrators-and-sustainability"></div>
@@ -115,7 +97,7 @@
                                     #anchorLink
                                     (click)="onClickCopyLink(anchorLink)"
                             >
-                                <h2 i18n class="middle-title">
+                                <h2 class="middle-title">
                                     ADMINISTRATORS & SUSTAINABILITY
                                 </h2>
                             </a>
@@ -128,7 +110,7 @@
                                         fragment="administrators"
                                         #anchorLink
                                         (click)="onClickCopyLink(anchorLink)">
-                                    <h2 i18n class="section-title">Who we are</h2>
+                                    <h2 class="section-title">Who we are</h2>
                                 </a>
 
                                 <div [innerHTML]="html.administrator"></div>
@@ -142,7 +124,7 @@
                                         fragment="creation-reason"
                                         #anchorLink
                                         (click)="onClickCopyLink(anchorLink)">
-                                    <h2 i18n class="section-title">Why we created this instance</h2>
+                                    <h2 class="section-title">Why we created this instance</h2>
                                 </a>
 
                                 <div [innerHTML]="html.creationReason"></div>
@@ -156,7 +138,7 @@
                                         fragment="maintenance-lifetime"
                                         #anchorLink
                                         (click)="onClickCopyLink(anchorLink)">
-                                    <h2 i18n class="section-title">How long we plan to maintain this instance</h2>
+                                    <h2 class="section-title">How long we plan to maintain this instance</h2>
                                 </a>
 
                                 <div [innerHTML]="html.maintenanceLifetime"></div>
@@ -170,7 +152,7 @@
                                         fragment="business-model"
                                         #anchorLink
                                         (click)="onClickCopyLink(anchorLink)">
-                                    <h2 i18n class="section-title">How we will pay for keeping our website running</h2>
+                                    <h2 class="section-title">How we will pay for keeping our website running</h2>
                                 </a>
 
                                 <div [innerHTML]="html.businessModel"></div>
@@ -184,7 +166,7 @@
                                     fragment="information"
                                     #anchorLink
                                     (click)="onClickCopyLink(anchorLink)">
-                                <h2 i18n class="middle-title">
+                                <h2 class="middle-title">
                                     INFORMATION
                                 </h2>
                             </a>
@@ -197,23 +179,29 @@
                                         fragment="description"
                                         #anchorLink
                                         (click)="onClickCopyLink(anchorLink)">
-                                    <h2 i18n class="section-title">Description</h2>
+                                    <h2 class="section-title">Description</h2>
                                 </a>
 
-                                <!--<my-custom-markup-container [content]="descriptionContent"></my-custom-markup-container>-->
                                 <div>
-                                    <p>I created Chessbook to provide a <strong>free</strong> social media for (not only) chess users.</p>
+                                    <p>I created Chessbook to provide a <strong>free</strong> social media for chess
+                                        players.</p>
                                     <ul>
                                         <li>
                                             <p>Ads free. I plan to keep it that way forever but can't promise since
-                                            legends say that money corrupt people.</p>
+                                                legends say that money corrupt people.</p>
                                         </li>
                                         <li>
-                                            <p>Today is <span class="date-color">{{this.today | date}}</span>. Chessbook was founded in <span class="date-color">{{this.chessbookFounded | date}}</span>.
-                                                So doing the math <span class="date-color">{{this.today | date}}</span> - <span class="date-color">{{this.chessbookFounded | date}}</span> = <span class="date-color">{{this.differenceInDays}}</span>
+                                            <p>Today is <span class="date-color">{{this.today | date}}</span>. Chessbook
+                                                was founded in <span
+                                                        class="date-color">{{this.chessbookFounded | date}}</span>.
+                                                So doing the math <span class="date-color">{{this.today | date}}</span>
+                                                - <span class="date-color">{{this.chessbookFounded | date}}</span> =
+                                                <span class="date-color">{{this.differenceInDays}}</span>
                                             </p>
-                                            <p>So Chessbook is only <span class="date-color">{{this.differenceInDays}}</span> days old! Chessbook is constantly being worked on and new features are coming
-                                            left and right, so stay tuned! 👀</p>
+                                            <p>So Chessbook is only <span
+                                                    class="date-color">{{this.differenceInDays}}</span> days old!
+                                                Chessbook is constantly being worked on and new features are coming
+                                                left and right, so stay tuned! 👀</p>
                                         </li>
                                     </ul>
                                     <p>
@@ -223,101 +211,17 @@
                                         <br>
                                         You can help support Chessbook using any of the methods below. Any help is much
                                         appreciated ♥</p>
-                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
-                                        <div role="button" data-button="" data-funding-source="paypal"
-                                             class="patreon paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
-                                             tabindex="0" aria-label="PayPal">
+                                    <div *ngFor="let button of this.donateButtons"
+                                         class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
+                                        <a [href]="button.href" role="button"
+                                           class="{{button.class}} paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
+                                           tabindex="0" [attr.aria-label]="button.ariaLabel" target="_blank">
                                             <div class="paypal-button-label-container">
-                                                <img src="assets/images/patreon.png"
-                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
+                                                <img [src]="button.src"
+                                                     [alt]="button.alt" [attr.aria-label]="button.ariaLabel"
                                                      class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
                                             </div>
-                                            <div class="paypal-button-spinner"></div>
-                                        </div>
-                                    </div>
-                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
-                                        <div role="button" data-button="" data-funding-source="paypal"
-                                             class="ko-fi paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
-                                             tabindex="0" aria-label="PayPal">
-                                            <div class="paypal-button-label-container">
-                                                <img src="assets/images/ko-fi.png"
-                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
-                                                     class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
-                                            </div>
-                                            <div class="paypal-button-spinner"></div>
-                                        </div>
-                                    </div>
-                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
-                                        <div role="button" data-button="" data-funding-source="paypal"
-                                             class="streamlabs paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
-                                             tabindex="0" aria-label="PayPal">
-                                            <div class="paypal-button-label-container">
-                                                <img src="assets/images/streamlabs.png"
-                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
-                                                     class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
-                                            </div>
-                                            <div class="paypal-button-spinner"></div>
-                                        </div>
-                                    </div>
-                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
-                                        <div role="button" data-button="" data-funding-source="paypal"
-                                             class="paypal paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
-                                             tabindex="0" aria-label="PayPal">
-                                            <div class="paypal-button-label-container">
-                                                <img src="assets/images/paypal.svg"
-                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
-                                                     class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
-                                            </div>
-                                            <div class="paypal-button-spinner"></div>
-                                        </div>
-                                    </div>
-                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
-                                        <div role="button" data-button="" data-funding-source="paypal"
-                                             class="google-pay paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
-                                             tabindex="0" aria-label="PayPal">
-                                            <div class="paypal-button-label-container">
-                                                <img src="assets/images/google-pay.svg"
-                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
-                                                     class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
-                                            </div>
-                                            <div class="paypal-button-spinner"></div>
-                                        </div>
-                                    </div>
-                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
-                                        <div role="button" data-button="" data-funding-source="paypal"
-                                             class="bitcoin-btc paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
-                                             tabindex="0" aria-label="PayPal">
-                                            <div class="paypal-button-label-container">
-                                                <img src="assets/images/bitcoin-btc.png"
-                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
-                                                     class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
-                                            </div>
-                                            <div class="paypal-button-spinner"></div>
-                                        </div>
-                                    </div>
-                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
-                                        <div role="button" data-button="" data-funding-source="paypal"
-                                             class="bitcoin-cash paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
-                                             tabindex="0" aria-label="PayPal">
-                                            <div class="paypal-button-label-container">
-                                                <img src="assets/images/bitcoin-cash.png"
-                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
-                                                     class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
-                                            </div>
-                                            <div class="paypal-button-spinner"></div>
-                                        </div>
-                                    </div>
-                                    <div class="paypal-button-row paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue  ">
-                                        <div role="button" data-button="" data-funding-source="paypal"
-                                             class="dogecoin paypal-button paypal-button-number-0 paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production paypal-button-color-gold paypal-button-text-color-black paypal-logo-color-blue "
-                                             tabindex="0" aria-label="PayPal">
-                                            <div class="paypal-button-label-container">
-                                                <img src="assets/images/dogecoin.png"
-                                                     data-v-fd53f700="" alt="" aria-label="PayPal"
-                                                     class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
-                                            </div>
-                                            <div class="paypal-button-spinner"></div>
-                                        </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -330,7 +234,7 @@
                                     fragment="moderation"
                                     #anchorLink
                                     (click)="onClickCopyLink(anchorLink)">
-                                <h2 i18n class="middle-title">
+                                <h2 class="middle-title">
                                     MODERATION
                                 </h2>
                             </a>
@@ -343,7 +247,7 @@
                                         fragment="moderation-information"
                                         #anchorLink
                                         (click)="onClickCopyLink(anchorLink)">
-                                    <h2 i18n class="section-title">Website rules</h2>
+                                    <h2 class="section-title">Website rules</h2>
                                 </a>
 
                                 <div [innerHTML]="html.moderationInformation"></div>
@@ -354,12 +258,12 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="rules-list__text">No spam or advertising</div>
-                                    </li>
-                                    <li>
                                         <div class="rules-list__text">No incitement of violence or promotion of violent
                                             ideologies
                                         </div>
+                                    </li>
+                                    <li>
+                                        <div class="rules-list__text">No illegal content</div>
                                     </li>
                                     <li>
                                         <div class="rules-list__text">No harassment, dogpiling or doxxing of other
@@ -367,11 +271,12 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="rules-list__text">No illegal content</div>
+                                        <div class="rules-list__text">No right-wing conspiracy theories, misinformation
+                                            or anti-vaccination spam
+                                        </div>
                                     </li>
                                     <li>
-                                        <div class="rules-list__text">No right-wing conspiracy theories, misinformation or anti-vaccination spam
-                                        </div>
+                                        <div class="rules-list__text">No spam or advertising</div>
                                     </li>
                                     <li>
                                         <div class="rules-list__text">Political content is generally fine, but personal
@@ -390,13 +295,11 @@
                                         fragment="code-of-conduct"
                                         #anchorLink
                                         (click)="onClickCopyLink(anchorLink)">
-                                    <h2 i18n class="section-title">Code of conduct</h2>
+                                    <h2 class="section-title">Code of conduct</h2>
                                 </a>
-
-                                <!--<div [innerHTML]="html.codeOfConduct"></div>-->
                                 <div>
                                     <ul>
-                                        <li><strong>Be friendly and patient.</strong></li>
+                                        <li><strong>Be friendly, understanding and patient.</strong></li>
                                         <li><strong>Be welcoming.</strong> We strive to be a community that welcomes and
                                             supports people of
                                             all backgrounds and identities. This includes, but is not limited to members
@@ -559,12 +462,14 @@
                                         fragment="terms"
                                         #anchorLink
                                         (click)="onClickCopyLink(anchorLink)">
-                                    <h2 i18n class="section-title">Terms</h2>
+                                    <h2 class="section-title">Terms</h2>
                                 </a>
 
-                                <!--<div [innerHTML]="html.terms"></div>-->
                                 <div>
-                                    <p i18n> For more information, please check our <a routerLink="/terms" rel="noopener noreferrer" href="https://chessbook.com">Privacy Policy</a>. </p>
+                                    <p> For more information, please check our <a routerLink="/terms"
+                                                                                       rel="noopener noreferrer"
+                                                                                       href="https://chessbook.com">Privacy
+                                        Policy</a>. </p>
                                 </div>
                             </div>
 
@@ -576,7 +481,7 @@
                                     fragment="other-information"
                                     #anchorLink
                                     (click)="onClickCopyLink(anchorLink)">
-                                <h2 i18n class="middle-title">
+                                <h2 class="middle-title">
                                     OTHER INFORMATION
                                 </h2>
                             </a>
@@ -589,17 +494,12 @@
                                         fragment="hardware-information"
                                         #anchorLink
                                         (click)="onClickCopyLink(anchorLink)">
-                                    <h2 i18n class="section-title">Hardware information</h2>
+                                    <h2 class="section-title">Hardware information</h2>
                                 </a>
 
                                 <div [innerHTML]="html.hardwareInformation"></div>
                             </div>
                         </div>
-
-                        <!--  <div class="col-md-12 col-xl-6">-->
-                        <!--    <h2 class="sr-only" i18n>FEATURES</h2>-->
-                        <!--    &lt;!&ndash;<my-instance-features-table></my-instance-features-table>&ndash;&gt;-->
-                        <!--  </div>-->
 
                         <div class="col">
                             <div class="anchor" id="developers"></div>
@@ -609,35 +509,34 @@
                                     fragment="developers"
                                     #anchorLink
                                     (click)="onClickCopyLink(anchorLink)">
-                                <h2 i18n class="middle-title">DEVELOPERS</h2>
+                                <h2 class="middle-title">DEVELOPERS</h2>
                             </a>
-                            <!--<my-instance-statistics></my-instance-statistics>-->
                         </div>
                     </div>
-
-                    <!--<my-contact-admin-modal #contactAdminModal></my-contact-admin-modal>-->
-
 
                     <div class="privacy-contributors">
                         <app-about-chessbook-contributors></app-about-chessbook-contributors>
 
-                        <div class="p2p-privacy">
+                        <div class="cb-privacy">
                             <h2 class="section-title">
                                 <div class="anchor" id="privacy"></div> <!-- privacy anchor -->
                                 <ng-container>Chessbook & Privacy</ng-container>
                             </h2>
 
                             <p>
-                                We Chessbook, welcome your interest in our website. Protecting your private sphere is very important to us.
+                                We Chessbook, welcome your interest in our website. Protecting your private sphere is
+                                very important to us.
                             </p>
 
                             <p>
-                                We take very seriously the protection of your personal data and the way we handle it confidentially.
+                                We take very seriously the protection of your personal data and the way we handle it
+                                confidentially.
                             </p>
 
                             <p>
                                 For more information, please check our <a routerLink="/terms" rel="noopener noreferrer"
-                                                                          href="https://chessbook.com">Privacy Policy</a>.
+                                                                          href="https://chessbook.com">Privacy
+                                Policy</a>.
                             </p>
                         </div>
                     </div>
@@ -647,5 +546,3 @@
         </nb-card-body>
     </div>
 </nb-card>
-
-

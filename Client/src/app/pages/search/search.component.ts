@@ -16,7 +16,6 @@ import {NbToastrService} from '../../sharebook-nebular/theme/components/toastr/t
 import {MetaService} from "../../core/routing/meta.service";
 import {SearchService} from "../../shared/shared-search/search.service";
 import {ServerService} from "../../core/server/server.service";
-import {HooksService} from "../../core/plugins";
 import {LinkType} from "../../../types/link.type";
 import {immutableAssign} from "../../helpers/utils";
 import {validateHost} from "../../shared/shared-forms/form-validators/host";
@@ -78,7 +77,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     private searchService: SearchService,
     private authService: UserStore,
     private userService: UsersService,
-    private hooks: HooksService,
     private serverService: ServerService
   ) {
   }
@@ -123,8 +121,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.userService.getAnonymousOrLoggedUser()
       // @ts-ignore
       .subscribe(user => this.userMiniature = user);
-
-    this.hooks.runAction('action:search.init', 'search');
   }
 
   ngOnDestroy() {

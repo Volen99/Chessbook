@@ -1,5 +1,4 @@
 import {Injectable} from "@angular/core";
-import {HttpParams} from "@angular/common/http";
 
 import {HttpService} from "../../../../core/backend/common/api/http.service";
 import {RestExtractor} from "../../../../core/rest/rest-extractor";

@@ -1,35 +1,3 @@
-<!--<nb-card>-->
-
-
-    <!-- We need the video container for videojs so we just hide it -->
-
-<!--<nb-card>-->
-<!--    <nb-card-body style="padding: 0">-->
-<!--        <div id="player"></div>-->
-<!--    </nb-card-body>-->
-
-<!--        <div id="video-wrapper">-->
-<!--            <div *ngIf="false" class="remote-server-down">-->
-<!--                Sorry, but this video is not available because the the live stream is not responding.-->
-<!--                <br />-->
-<!--                Please try again later.-->
-<!--            </div>-->
-
-<!--            <div id="videojs-wrapper">-->
-<!--                <div id="player"></div>-->
-<!--                &lt;!&ndash;<img class="placeholder-image" *ngIf="playerPlaceholderImgSrc" [src]="playerPlaceholderImgSrc" alt="Placeholder image" i18n-alt>&ndash;&gt;-->
-<!--            </div>-->
-
-<!--&lt;!&ndash;            <my-video-watch-playlist&ndash;&gt;-->
-<!--&lt;!&ndash;                #videoWatchPlaylist&ndash;&gt;-->
-<!--&lt;!&ndash;                [playlist]="playlist" class="playlist"&ndash;&gt;-->
-<!--&lt;!&ndash;                (videoFound)="onPlaylistVideoFound($event)"&ndash;&gt;-->
-<!--&lt;!&ndash;            ></my-video-watch-playlist>&ndash;&gt;-->
-
-<!--&lt;!&ndash;            <my-plugin-placeholder pluginId="player-next"></my-plugin-placeholder>&ndash;&gt;-->
-<!--        </div>-->
-
-
 <div class="row">
     <div class="cell cell-12 twitch">
         <div class="twitch-video">
@@ -43,8 +11,6 @@
     </div>
 </div>
 <div class="root" [ngClass]="{ 'theater-enabled': false }">
-    <!--<nb-card-footer style="padding: 0">-->
-        <!-- Video information -->
         <div *ngIf="this.stream" class="margin-content video-bottom">
             <div class="video-info">
                 <div class="video-info-first-row">
@@ -53,11 +19,11 @@
                             <!-- only shown on medium devices, has its counterpart for larger viewports below -->
                             <h1 class="video-info-name"> {{this.stream.title}} </h1>
                             <div class="video-info-date-views">
-                                <ng-container i18n>Started
+                                <ng-container>Started
                                     <app-date-toggle [date]="this.stream.started_at"></app-date-toggle>
                                 </ng-container>
                                 •
-                                <my-video-views-counter [video]="this.stream"></my-video-views-counter>
+                                <app-video-views-counter [video]="this.stream"></app-video-views-counter>
                             </div>
 
                             <div class="video-actions-rates">
@@ -69,45 +35,9 @@
                                     </nb-actions>
                                 </div>
                             </div>
-
                         </div>
-<!--                        <div class="pt-3 border-top video-info-channel d-flex">-->
-<!--                            <div class="video-info-channel-left d-flex">-->
-<!--                                &lt;!&ndash;<my-video-nb-channel [video]="this.stream" [genericChannel]="isChannelDisplayNameGeneric()"></my-video-nb-channel>&ndash;&gt;-->
-
-<!--                                <div class="video-info-channel-left-links ml-1">-->
-
-
-<!--                                </div>-->
-<!--                            </div>-->
-
-<!--                            &lt;!&ndash;<button nbButton size="small" status="warning">Follow</button>&ndash;&gt;-->
-<!--                        </div>-->
                     </div>
                 </div>
-
-                <!--<div class="video-info-description">
-                    <div
-                            class="video-info-description-html"
-                            [innerHTML]="this.stream.title"
-                            (timestampClicked)="handleTimestampClicked($event)"
-                            timestampRouteTransformer
-                    ></div>
-
-                    <div class="video-info-description-more" *ngIf="completeDescriptionShown === false && video.description?.length >= 250" (click)="showMoreDescription()">
-                        <ng-container i18n>Show more</ng-container>
-                        <span *ngIf="descriptionLoading === false" class="glyphicon glyphicon-menu-down"></span>
-                        <my-small-loader class="description-loading" [loading]="descriptionLoading"></my-small-loader>
-                    </div>
-
-                    <div *ngIf="completeDescriptionShown === true" (click)="showLessDescription()" class="video-info-description-more">
-                        <ng-container i18n>Show less</ng-container>
-                        <span *ngIf="descriptionLoading === false" class="glyphicon glyphicon-menu-up"></span>
-                    </div>
-                </div>-->
             </div>
         </div>
-<!--    </nb-card-footer>
-</nb-card>-->
 </div>
-<!--</nb-card>-->

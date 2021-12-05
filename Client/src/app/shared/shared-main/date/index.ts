@@ -1,1 +1,1 @@
-export * from './date-toggle.component'
+export * from './date-toggle.component';

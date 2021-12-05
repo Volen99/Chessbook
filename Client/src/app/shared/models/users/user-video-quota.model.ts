@@ -1,4 +1,4 @@
 export interface UserVideoQuota {
-  videoQuotaUsed: number
-  videoQuotaUsedDaily: number
+  videoQuotaUsed: number;
+  videoQuotaUsedDaily: number;
 }

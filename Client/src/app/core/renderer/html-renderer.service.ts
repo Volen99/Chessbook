@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 
 import {LinkifierService} from './linkifier.service';
-import {SANITIZE_OPTIONS} from "../utils/html";
 import {getCustomMarkupSanitizeOptions, getSanitizeOptions} from "../../shared/core-utils/renderer/html";
 
 @Injectable()

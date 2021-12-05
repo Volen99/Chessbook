@@ -2,7 +2,6 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 
 import {
   faCog,
-  faCheck,
   faBroom,
 } from '@fortawesome/pro-light-svg-icons';
 
@@ -64,7 +63,6 @@ export class NotificationsComponent implements OnInit, AfterViewInit {
   }
 
   faCog = faCog;
-  faCheck = faCheck;
   faBroom = faBroom;
 
   tabs: any[] = [

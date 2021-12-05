@@ -1,5 +1,5 @@
 /*
-import { isMobile } from '../is_mobile';
+import { isMobile } from '../is_mobile'; // comes from mastodon
 */
 
 /** @type {number | null} */

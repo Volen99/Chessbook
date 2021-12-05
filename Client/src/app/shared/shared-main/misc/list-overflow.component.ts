@@ -17,8 +17,8 @@ import {NgbDropdown, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ScreenService} from "../../../core/wrappers/screen.service";
 
 export interface ListOverflowItem {
-  label: string
-  routerLink: string | any[]
+  label: string;
+  routerLink: string | any[];
 }
 
 @Component({

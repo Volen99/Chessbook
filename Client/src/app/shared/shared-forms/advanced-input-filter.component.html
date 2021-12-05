@@ -5,7 +5,7 @@
     </div>
 
     <div role="menu" ngbDropdownMenu>
-      <h6 class="dropdown-header" i18n>Advanced filters</h6>
+      <h6 class="dropdown-header">Advanced filters</h6>
 
       <a *ngFor="let filter of filters" [routerLink]="[ '.' ]" [queryParams]="filter.queryParams" class="dropdown-item">
         {{ filter.label }}
@@ -14,11 +14,11 @@
   </div>
 
   <input
-    type="text" name="table-filter" id="table-filter" i18n-placeholder placeholder="Filter..."
+    type="text" name="table-filter" id="table-filter" placeholder="Filter..."
     [(ngModel)]="searchValue"
     (keyup)="onInputSearch($event)"
   >
 
   <a class="glyphicon glyphicon-remove-sign form-control-feedback form-control-clear" (click)="onResetTableFilter()"></a>
-  <span class="sr-only" i18n>Clear filters</span>
+  <span class="sr-only">Clear filters</span>
 </div>

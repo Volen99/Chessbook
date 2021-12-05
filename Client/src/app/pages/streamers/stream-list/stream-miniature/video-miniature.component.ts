@@ -2,12 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   Inject,
   Input,
   LOCALE_ID,
   OnInit,
-  Output
 } from '@angular/core';
 
 import {IStreamsData} from "../../models/streams-model";
@@ -34,11 +32,6 @@ export type VideoLinkType = 'internal' | 'lazy-load' | 'external';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VideoMiniatureComponent implements OnInit {
-  @Output() videoBlocked = new EventEmitter();
-  @Output() videoUnblocked = new EventEmitter();
-  @Output() videoRemoved = new EventEmitter();
-  @Output() videoAccountMuted = new EventEmitter();
-
   @Input() user: User;
   @Input() video: IStreamsData;
   @Input() displayOptions: MiniatureDisplayOptions = {
@@ -64,14 +57,7 @@ export class VideoMiniatureComponent implements OnInit {
   ngOnInit() {
     this.buildVideoLink();
 
-    this.setUpBy();
-
-    this.channelLinkTitle = $localize`${this.video.user_login} (user profile)`;
-
-    // // We rely on mouseenter to lazy load actions
-    // if (this.screenService.isInTouchScreen()) {
-    //   this.loadActions();
-    // }
+    this.channelLinkTitle = `${this.video.user_login} (user profile)`;
   }
 
   showActions = false;
@@ -93,42 +79,10 @@ export class VideoMiniatureComponent implements OnInit {
     return this.ownerDisplayType === 'account';
   }
 
-  displayOwnerVideoChannel() {
-    return this.ownerDisplayType === 'videoChannel';
-  }
-
-  // getAvatarUrl() {
-  //   if (this.displayOwnerAccount()) {
-  //     return this.video.account.avatar?.url;
-  //   }
-  //
-  //   return this.video.videoChannelAvatarUrl;
-  // }
-
   loadActions() {
     if (this.displayVideoActions) {
       this.showActions = true;
     }
-  }
-
-  onVideoBlocked() {
-    this.videoBlocked.emit();
-  }
-
-  onVideoUnblocked() {
-    this.videoUnblocked.emit();
-  }
-
-  onVideoRemoved() {
-    this.videoRemoved.emit();
-  }
-
-  onVideoAccountMuted() {
-    this.videoAccountMuted.emit();
-  }
-
-  isUserLoggedIn() {
-    // return this.authService.isLoggedIn();
   }
 
   getClasses() {
@@ -137,7 +91,4 @@ export class VideoMiniatureComponent implements OnInit {
     };
   }
 
-  private setUpBy() {
-    const accountName = this.video.user_login;
-  }
 }

@@ -1,7 +1,5 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {mapValues, pickBy} from 'lodash-es';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
 
 import {
   faTimes,
@@ -11,7 +9,6 @@ import {AbuseService} from '../abuse.service';
 import {FormReactive} from "../../shared-forms/form-reactive";
 import {AbusePredefinedReasonsString} from "../../models/moderation/abuse/abuse-reason.model";
 import {FormValidatorService} from "../../shared-forms/form-validator.service";
-import {Notifier} from "../../../core/notification/notifier.service";
 import {ABUSE_REASON_VALIDATOR} from "../../shared-forms/form-validators/abuse-validators";
 import {abusePredefinedReasonsMap} from "../../../core/utils/abuse/abuse-predefined-reasons";
 import {User} from "../../shared-main/user/user.model";
@@ -26,17 +23,12 @@ import {NbToastrService} from "../../../sharebook-nebular/theme/components/toast
 export class AccountReportComponent extends FormReactive implements OnInit {
   @Input() account: User = null;
 
-  @ViewChild('modal', {static: true}) modal: NgbModal;
-
   error: string = null;
   predefinedReasons: { id: AbusePredefinedReasonsString, label: string, description?: string, help?: string }[] = [];
   modalTitle: string;
 
-  private openedModal: NgbModalRef;
-
   constructor(
     protected formValidatorService: FormValidatorService,
-    private modalService: NgbModal,
     private abuseService: AbuseService,
     private notifier: NbToastrService,
     protected ref: NbDialogRef<AccountReportComponent>) {
@@ -48,10 +40,6 @@ export class AccountReportComponent extends FormReactive implements OnInit {
   }
 
   get originHost() {
-    // if (this.isRemote()) {
-    //   return this.account.host;
-    // }
-
     return '';
   }
 
@@ -68,14 +56,8 @@ export class AccountReportComponent extends FormReactive implements OnInit {
 
   faTimes = faTimes;
 
-  show() {
-    this.openedModal = this.modalService.open(this.modal, {centered: true, keyboard: false, size: 'lg'});
-  }
-
   hide() {
     this.ref.close();
-    /*this.openedModal.close();
-    this.openedModal = null;*/
   }
 
   report() {
@@ -98,7 +80,4 @@ export class AccountReportComponent extends FormReactive implements OnInit {
     );
   }
 
-  isRemote() {
-    return true; // !this.account.isLocal;
-  }
 }

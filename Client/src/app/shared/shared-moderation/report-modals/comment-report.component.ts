@@ -1,6 +1,5 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { mapValues, pickBy } from 'lodash-es';
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 
 import {FormReactive} from "../../shared-forms/form-reactive";
 import {FormValidatorService} from "../../shared-forms/form-validator.service";
@@ -24,17 +23,12 @@ import {NbDialogRef} from '../../../sharebook-nebular/theme/components/dialog/di
 export class CommentReportComponent extends FormReactive implements OnInit {
   @Input() comment: PostComment = null;
 
-  @ViewChild('modal', {static: true}) modal: NgbModal;
-
   modalTitle: string;
   error: string = null;
   predefinedReasons: { id: AbusePredefinedReasonsString, label: string, description?: string, help?: string }[] = [];
 
-  private openedModal: NgbModalRef;
-
   constructor(
     protected formValidatorService: FormValidatorService,
-    private modalService: NgbModal,
     private abuseService: AbuseService,
     private notifier: NbToastrService,
     private ref: NbDialogRef<CommentReportComponent>) {
@@ -46,10 +40,6 @@ export class CommentReportComponent extends FormReactive implements OnInit {
   }
 
   get originHost() {
-    // if (this.isRemote()) {
-    //   return this.reply-comment.user.host;
-    // }
-
     return '';
   }
 
@@ -67,13 +57,10 @@ export class CommentReportComponent extends FormReactive implements OnInit {
   faTimes = faTimes;
 
   show() {
-    this.openedModal = this.modalService.open(this.modal, {centered: true, keyboard: false, size: 'lg'});
   }
 
   hide() {
     this.ref.close();
-    // this.openedModal.close();
-    // this.openedModal = null;
   }
 
   report() {
@@ -96,7 +83,4 @@ export class CommentReportComponent extends FormReactive implements OnInit {
     );
   }
 
-  isRemote() {
-    return !this.comment.isLocal;
-  }
 }

@@ -2,7 +2,7 @@
         [value]="abuses" [paginator]="totalRecords > 0" [totalRecords]="totalRecords" [rows]="rowsPerPage" [rowsPerPageOptions]="rowsPerPageOptions"
         [sortField]="sort.field" [sortOrder]="sort.order" dataKey="id" [resizableColumns]="true"
         [lazy]="true" (onLazyLoad)="loadLazy($event)" [lazyLoadOnInit]="false"
-        [showCurrentPageReport]="true" i18n-currentPageReportTemplate
+        [showCurrentPageReport]="true"
         currentPageReportTemplate="Showing {{'{first}'}} to {{'{last}'}} of {{'{totalRecords}'}} reports"
         (onPage)="onPage($event)" [expandedRowKeys]="expandedRows"
 >
@@ -18,18 +18,18 @@
     <tr> <!-- header -->
       <th style="width: 40px;"></th>
       <th style="width: 150px;"></th>
-      <th *ngIf="isAdminView()" style="width: 20%;" pResizableColumn i18n>Reporter</th>
-      <th i18n>Post/Comment/Account</th>
-      <th style="width: 150px;" i18n pSortableColumn="createdAt">Created <p-sortIcon field="createdAt"></p-sortIcon></th>
-      <th i18n pSortableColumn="state" style="width: 80px;">State <p-sortIcon field="state"></p-sortIcon></th>
-      <th i18n style="width: 80px;">Messages</th>
-      <th i18n *ngIf="isAdminView()" style="width: 100px;">Internal note</th>
+      <th *ngIf="isAdminView()" style="width: 20%;" pResizableColumn>Reporter</th>
+      <th>Post/Comment/Account</th>
+      <th style="width: 150px;" pSortableColumn="createdAt">Created <p-sortIcon field="createdAt"></p-sortIcon></th>
+      <th pSortableColumn="state" style="width: 80px;">State <p-sortIcon field="state"></p-sortIcon></th>
+      <th style="width: 80px;">Messages</th>
+      <th *ngIf="isAdminView()" style="width: 100px;">Internal note</th>
     </tr>
   </ng-template>
 
   <ng-template pTemplate="body" let-expanded="expanded" let-abuse>
     <tr>
-      <td class="expand-cell c-hand" [pRowToggler]="abuse" i18n-ngbTooltip ngbTooltip="More information" placement="top-left" container="body">
+      <td class="expand-cell c-hand" [pRowToggler]="abuse" ngbTooltip="More information" placement="top-left" container="body">
         <span class="expander">
           <fa-icon [icon]="expanded ? this.faChevronDown : this.faChevronRight"></fa-icon>
         </span>
@@ -38,12 +38,12 @@
       <td class="action-cell">
         <app-action-dropdown
                 [ngClass]="{ 'show': expanded }" placement="bottom-right top-right left auto" container="body"
-                i18n-label label="Actions" [actions]="abuseActions" [entry]="abuse"
+                label="Actions" [actions]="abuseActions" [entry]="abuse"
         ></app-action-dropdown>
       </td>
 
       <td *ngIf="isAdminView()">
-        <a *ngIf="abuse.reporterAccount" [href]="abuse.reporterAccount.screenName" i18n-title title="Open account in a new tab" target="_blank" rel="noopener noreferrer">
+        <a *ngIf="abuse.reporterAccount" [href]="abuse.reporterAccount.screenName" title="Open account in a new tab" target="_blank" rel="noopener noreferrer">
           <div class="chip two-lines">
             <my-actor-avatar [account]="abuse.reporterAccount"></my-actor-avatar>
             <div>
@@ -53,7 +53,7 @@
           </div>
         </a>
 
-        <span i18n *ngIf="!abuse.reporterAccount">
+        <span *ngIf="!abuse.reporterAccount">
           Deleted account
         </span>
       </td>
@@ -67,7 +67,7 @@
                 <img [src]="abuse.post.thumbnailPath">
                 <span
                         class="table-video-image-label" *ngIf="abuse.count > 1"
-                        i18n-title title="This video has been reported multiple times."
+                        title="This video has been reported multiple times."
                 >
                   {{ abuse.nth }}/{{ abuse.count }}
                 </span>
@@ -76,19 +76,19 @@
               <div class="table-video-text">
                 <div>
                   <span *ngIf="!abuse.post.blacklisted" class="glyphicon glyphicon-new-window"></span>
-                  <span *ngIf="abuse.post.blacklisted" i18n-title title="The video was blocked" class="glyphicon glyphicon-ban-circle"></span>
+                  <span *ngIf="abuse.post.blacklisted" title="The video was blocked" class="glyphicon glyphicon-ban-circle"></span>
                   {{ abuse.post.name }}
                 </div>
-                <div i18n>by {{ abuse.post.channel?.displayName }} on {{ abuse.post.channel?.host }} </div>
+                <div>by {{ abuse.post.channel?.displayName }} on {{ abuse.post.channel?.host }} </div>
               </div>
             </div>
           </a>
         </td>
 
         <td *ngIf="abuse.post.deleted" class="c-hand" [pRowToggler]="abuse">
-          <div class="table-video" i18n-title title="Video was deleted">
+          <div class="table-video" title="Video was deleted">
             <div class="table-video-image">
-              <span i18n>Deleted</span>
+              <span>Deleted</span>
             </div>
 
             <div class="table-video-text">
@@ -96,7 +96,7 @@
                 {{ abuse.post.name }}
                 <span class="glyphicon glyphicon-trash"></span>
               </div>
-              <div i18n>by {{ abuse.post.channel?.displayName }} on {{ abuse.post.channel?.host }} </div>
+              <div>by {{ abuse.post.channel?.displayName }} on {{ abuse.post.channel?.host }} </div>
             </div>
           </div>
         </td>
@@ -121,7 +121,7 @@
           </a>
         </td>
 
-        <td i18n *ngIf="!abuse.flaggedAccount">
+        <td *ngIf="!abuse.flaggedAccount">
           Account deleted
         </td>
 
@@ -164,8 +164,8 @@
     <tr>
       <td colspan="6">
         <div class="no-results">
-          <ng-container *ngIf="search" i18n>No abuses found matching current filters.</ng-container>
-          <ng-container *ngIf="!search" i18n>No abuses found.</ng-container>
+          <ng-container *ngIf="search">No abuses found matching current filters.</ng-container>
+          <ng-container *ngIf="!search">No abuses found.</ng-container>
         </div>
       </td>
     </tr>

@@ -5,15 +5,12 @@ import { catchError, map, tap } from 'rxjs/operators';
 import {RestExtractor} from "../../core/rest/rest-extractor";
 import {User} from "../../shared/shared-main/user/user.model";
 import {UsersApi} from "../../core/backend/common/api/users.api";
-import {RestService} from "../../core/rest/rest.service";
 
 @Injectable()
 export class UserProfileService {
-  // private BASE_ACCOUNT_URL = environment.apiUrl + '/profiles';
-
   accountLoaded = new ReplaySubject<User>(1);
 
-  constructor (private api: UsersApi, private restExtractor: RestExtractor, private restService: RestService,) {
+  constructor (private api: UsersApi, private restExtractor: RestExtractor) {
 
   }
 

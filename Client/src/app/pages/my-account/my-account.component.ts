@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 
 import {
     faUserTimes,
-    faTimes,
-    faFlag,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {ScreenService} from "../../core/wrappers/screen.service";

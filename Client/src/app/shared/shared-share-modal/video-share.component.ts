@@ -1,12 +1,10 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {
   faTimes,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {PostDetails} from '../shared-main/post/post-details.model';
-import {VideoCaption} from "../models/posts/caption/video-caption.model";
 import {buildVideoLink, decorateVideoLink} from "../../core/utils/common/url";
 import {NbDialogRef} from "../../sharebook-nebular/theme/components/dialog/dialog-ref";
 
@@ -41,22 +39,14 @@ export class VideoShareComponent {
   @ViewChild('modal', {static: true}) modal: ElementRef;
 
   @Input() video: PostDetails = null;
-  @Input() videoCaptions: VideoCaption[] = [];
   @Input() playlistPosition: number = null;
 
   activeVideoId: TabId = 'url';
-  activePlaylistId: TabId = 'url';
 
   customizations: Customizations;
   isAdvancedCustomizationCollapsed = true;
-  includeVideoInPlaylist = false;
 
   constructor(protected ref: NbDialogRef<VideoShareComponent>) {
-    let subtitle: string;
-    if (this.videoCaptions && this.videoCaptions.length !== 0) {
-      subtitle = this.videoCaptions[0].language.id;
-    }
-
     this.customizations = {
       startAtCheckbox: false,
       startAt: 0 ? Math.floor(0) : 0,
@@ -65,7 +55,7 @@ export class VideoShareComponent {
       stopAt: 2, // this.video?.duration,
 
       subtitleCheckbox: false,
-      subtitle,
+      subtitle: 'nope',
 
       loop: false,
       originUrl: false,
@@ -80,8 +70,6 @@ export class VideoShareComponent {
     };
 
     this.playlistPosition = 0;
-
-    // this.modalService.open(this.modal, { centered: true })
   }
 
   faTimes = faTimes;
@@ -101,43 +89,8 @@ export class VideoShareComponent {
     'user-select': 'none',
   };
 
-  // show(currentVideoTimestamp?: number, currentPlaylistPosition?: number) {
-  //   let subtitle: string;
-  //   if (this.videoCaptions && this.videoCaptions.length !== 0) {
-  //     subtitle = this.videoCaptions[0].language.id;
-  //   }
-  //
-  //   this.customizations = {
-  //     startAtCheckbox: false,
-  //     startAt: currentVideoTimestamp ? Math.floor(currentVideoTimestamp) : 0,
-  //
-  //     stopAtCheckbox: false,
-  //     stopAt: 0,
-  //
-  //     subtitleCheckbox: false,
-  //     subtitle,
-  //
-  //     loop: false,
-  //     originUrl: false,
-  //     autoplay: false,
-  //     muted: false,
-  //
-  //     // Embed options
-  //     title: true,
-  //     warningTitle: true,
-  //     controls: true,
-  //     peertubeLink: true
-  //   };
-  //
-  //   this.playlistPosition = currentPlaylistPosition;
-  //
-  //   this.modalService.open(this.modal, {centered: true});
-  // }
-
   getVideoUrl() {
-    const baseUrl = window.location.origin; /*this.customizations.originUrl
-      ? this.video.originInstanceUrl
-      : window.location.origin;*/
+    const baseUrl = window.location.origin;
 
     return decorateVideoLink({
       url: buildVideoLink(this.video.user.screenName, this.video.id, baseUrl),
@@ -150,12 +103,8 @@ export class VideoShareComponent {
     return window.location.protocol === 'http:';
   }
 
-  isVideoInEmbedTab() {
-    return this.activeVideoId === 'embed';
-  }
-
   isLocalVideo() {
-    return true; // this.video.isLocal;
+    return true;
   }
 
   cancel() {

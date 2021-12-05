@@ -8,7 +8,7 @@
 
   <div ngbNav #nav="ngbNav" class="nav-pills nav-preview">
     <ng-container ngbNavItem *ngIf="truncate !== undefined">
-      <a ngbNavLink i18n>Truncated preview</a>
+      <a ngbNavLink>Truncated preview</a>
 
       <ng-template ngbNavContent>
         <div [innerHTML]="truncatedPreviewHTML"></div>
@@ -16,7 +16,7 @@
     </ng-container>
 
     <ng-container ngbNavItem>
-      <a ngbNavLink i18n>Complete preview</a>
+      <a ngbNavLink>Complete preview</a>
 
       <ng-template ngbNavContent>
         <div [innerHTML]="previewHTML"></div>

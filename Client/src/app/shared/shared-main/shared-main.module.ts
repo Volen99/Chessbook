@@ -4,8 +4,6 @@ import {RouterModule} from "@angular/router";
 import {OverlayModule} from '@angular/cdk/overlay';
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {PickerModule} from "@ctrl/ngx-emoji-mart";
-import {EmojiModule} from "@ctrl/ngx-emoji-mart/ngx-emoji";
 import {
   NgbCollapseModule,
   NgbDropdownModule,
@@ -15,7 +13,6 @@ import {
   NgbTooltipModule,
 } from '@ng-bootstrap/ng-bootstrap';
 
-import {BootstrapToggleDirective} from "./angular/directives/bootstrap-toggle.directive";
 import {PostComponent} from "./components/post/post.component";
 import {ProfilePicture49x49Component} from "./components/profile-picture-49x49/profile-picture49x49.component";
 import {FromNowPipe} from "./angular/pipes/from-now.pipe";
@@ -24,7 +21,6 @@ import {InfiniteScrollerDirective} from "./angular/directives/infinite-scroller.
 import {SharebookTemplateDirective} from "./angular/directives/sharebook-template.directive";
 import {BytesPipe} from "./angular/pipes/bytes.pipe";
 import {ActionDropdownComponent} from "./buttons/action-dropdown.component";
-import {FeedComponent} from "./feeds/feed.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {HelpComponent} from "./misc/help.component";
@@ -39,13 +35,7 @@ import {NumberFormatterPipe} from "./angular/pipes/number-formatter.pipe";
 import {SocialContextComponent} from "./components/post/social-context/social-context.component";
 import {EnumToArrayPipe} from "./angular/pipes/enum-to-array.pipe";
 import {CharacterCounterComponent} from "./components/compose/character-counter/character-counter.component";
-import {
-  EmojiPickerDropdownComponent, EmojiPickerMenuComponent,
-  ModifierPickerComponent,
-  ModifierPickerMenuComponent
-} from './components/compose/emoji-picker-dropdown/emoji-picker-dropdown.component';
 
-import { AnimatedNumberComponent } from './components/animated-number/animated-number.component';
 import {NbPopoverModule} from "../../sharebook-nebular/theme/components/popover/popover.module";
 import { PopoverMoreComponent } from './components/post/popover-more-component/popover-more.component';
 import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/button.module";
@@ -85,8 +75,6 @@ import {MatRippleModule} from "@angular/material/core";
     ComponentsModule,
     FontAwesomeModule,
     OverlayModule,
-    PickerModule,
-    EmojiModule,
     NbPopoverModule,
     NbButtonModule,
     MatRippleModule,
@@ -113,8 +101,6 @@ import {MatRippleModule} from "@angular/material/core";
     //
     DateToggleComponent,
     //
-    FeedComponent,
-    //
     LoaderComponent,
     SmallLoaderComponent,
     //
@@ -123,7 +109,6 @@ import {MatRippleModule} from "@angular/material/core";
     TopMenuDropdownComponent,
     //
     // UserQuotaComponent,
-    BootstrapToggleDirective,
     PostComponent,
     ProfilePicture49x49Component,
     // EnumToArrayPipe,
@@ -132,15 +117,9 @@ import {MatRippleModule} from "@angular/material/core";
     // CheckboxDirective,
     // DisableDirective,
     // GroupByPipe,
-    // BootstrapToggleDirective,
 
     SocialContextComponent,
     CharacterCounterComponent,
-    ModifierPickerMenuComponent,
-    ModifierPickerComponent,
-    EmojiPickerDropdownComponent,
-    EmojiPickerMenuComponent,
-    AnimatedNumberComponent,
     PopoverMoreComponent,
 
     LinkComponent,
@@ -184,8 +163,6 @@ import {MatRippleModule} from "@angular/material/core";
     //
     DateToggleComponent,
     //
-    FeedComponent,
-    //
     LoaderComponent,
     SmallLoaderComponent,
     //
@@ -194,19 +171,16 @@ import {MatRippleModule} from "@angular/material/core";
     TopMenuDropdownComponent,
     //
     // UserQuotaComponent,
-    BootstrapToggleDirective,
     PostComponent,
     ProfilePicture49x49Component,
     EnumToArrayPipe,
     CharacterCounterComponent,
-    EmojiPickerDropdownComponent,
     // EnumToArrayPipe,
     // FormDirective,
     // NextBtnDirective,
     // CheckboxDirective,
     // DisableDirective,
     // GroupByPipe,
-    // BootstrapToggleDirective,
 
     LinkComponent,
   ],

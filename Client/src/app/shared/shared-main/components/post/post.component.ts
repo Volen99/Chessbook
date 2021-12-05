@@ -1,5 +1,7 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
+import {Router} from "@angular/router";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {animate, query, stagger, style, transition, trigger, useAnimation} from "@angular/animations";
 import {Observable, Subject} from "rxjs";
 import {debounce} from 'lodash';
 
@@ -8,9 +10,7 @@ import {
   faComment,
   faShare,
   faHeart,
-  faUserTimes,
   faUserPlus,
-  faVolumeSlash,
   faCode,
   faFlag,
   faTrashAlt,
@@ -33,27 +33,19 @@ import {
 import {UserStore} from "../../../../core/stores/user.store";
 import {UserVideoRateType} from "../../../posts/models/rate/user-video-rate.type";
 import {PostsService} from "../../../posts/posts.service";
-import {PostDetails} from "../../post/post-details.model";
 import {NbDialogService} from "../../../../sharebook-nebular/theme/components/dialog/dialog.service";
-import {UploadComponent} from "../../../../pages/modal-overlays/dialog/compose/upload/upload.component";
 import {MarkdownService} from "../../../../core/renderer/markdown.service";
 
 import {Post} from "../../post/post.model";
 import {MediaContainerComponent} from "../../../../features/media-container/media-container.component";
-import {Router} from "@angular/router";
-import {PeerTubeSocket} from "../../../../core/notification/sharebook-socket.service";
 import {PopoverMoreComponent} from "./popover-more-component/popover-more.component";
-import {AccountReportComponent} from "../../../shared-moderation/report-modals/account-report.component";
 import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";
-import {VideoReportComponent} from "../../../shared-moderation/report-modals/video-report.component";
-import {IPost} from "../../../posts/models/post.model";
 import {VideoShareComponent} from "../../../shared-share-modal/video-share.component";
 import {AppInjector} from "../../../../app-injector";
 import {SurveyService} from "../../../services/survey.service";
-import {IPoll} from 'app/shared/posts/models/poll/poll';
 import {IsVideoPipe} from "../../angular/pipes/is-video.pipe";
-import {animate, query, stagger, style, transition, trigger, useAnimation} from "@angular/animations";
 import {slideInTop} from "../../animations/slide";
+import {IPoll} from '../../../posts/models/poll/poll';
 
 export interface ISocialContextProps {
   screenName: string;
@@ -80,8 +72,6 @@ export interface ISocialContextProps {
   ]
 })
 export class PostComponent implements OnInit {
-  static MAX_HEIGHT = 642; // 20px * 32 (+ 2px padding at the top)
-
   @Output() transformBuffer = new EventEmitter();
 
   @Input() transform: number = 0;
@@ -97,8 +87,6 @@ export class PostComponent implements OnInit {
     this.imageBackgroundStyle = value ? this.domSanitizer.bypassSecurityTrustStyle(`url(${value})`) : null;
   }
 
-  private destroy$: Subject<void> = new Subject<void>();
-
   constructor(private router: Router,
               private domSanitizer: DomSanitizer,
               private userStore: UserStore,
@@ -106,20 +94,13 @@ export class PostComponent implements OnInit {
               private dialogService: NbDialogService,
               private markdownService: MarkdownService,
               protected notifier: NbToastrService,
-              private surveyService: SurveyService,
-              private cdr: ChangeDetectorRef) {
+              private surveyService: SurveyService) {
     this.tooltipDislike = `Dislike`;
 
     this.faAlarmExclamation = faAlarmExclamation;
   }
 
   ngOnInit(): void {
-    debugger
-    // if (this.i === 0 && this.pinnedPost) {
-    //   this.posts.unshift(this.pinnedPost);
-    //   this.post = this.pinnedPost;
-    // }
-
     if (this.isARepost(this.post)) {
       this.socialContextProps = {
         screenName: this.post.user.screenName,
@@ -170,7 +151,6 @@ export class PostComponent implements OnInit {
 
   socialContextProps: ISocialContextProps;
 
-  sanitizedCommentHTML = '';
   statusHTMLText = '';
 
   faThumbtack = faThumbtack;
@@ -183,9 +163,7 @@ export class PostComponent implements OnInit {
   faEllipsisH = faEllipsisH;
 
   // meatballs menu
-  faUserTimes = faUserTimes;
   faUserPlus = faUserPlus;
-  faVolumeSlash = faVolumeSlash;
   faCode = faCode;
   faFlag = faFlag;
   faTrashAlt = faTrashAlt;
@@ -356,16 +334,6 @@ export class PostComponent implements OnInit {
 
   }
 
-  getVideoRouterLink() {
-    if (this.videoRouterLink) {
-      return this.videoRouterLink;
-    }
-
-    return this.post.url;
-
-    // return [ '/videos/watch', this.post.uuid ];
-  }
-
   handleOpenMedia(media, index) {
     if (!this.dialogService) {
       this.dialogService = AppInjector.get(NbDialogService);
@@ -389,14 +357,8 @@ export class PostComponent implements OnInit {
         // @ts-ignore
         video: this.post,
         playlistPosition: 0,
-        videoCaptions: [{language: null, captionPath: ''}],
       }
     });
-    /*this.videoShareModal.show(0, 0);*/
-  }
-
-  onContecxtItemSelection(title) {
-    console.log('click', title);
   }
 
   handleRefresh(pollId: number) {
@@ -417,7 +379,6 @@ export class PostComponent implements OnInit {
 
   // wish i was never born, Wednesday, 11:14 AM, 9/22/2021 | I can't say goodbye
   setTransform(i: number, post: Post): number {
-    debugger
     if (i === 0) {
       return 0;
     }
@@ -471,19 +432,6 @@ export class PostComponent implements OnInit {
 
     this.userRating = this.post.favorited ? 'like' : 'none';
     this.updateLikeStuff(this.userRating);
-
-    // this.postService.getUserVideoRating(this.post.id)
-    //   .subscribe(
-    //     ratingObject => {
-    //       if (ratingObject) {
-    //         this.userRating = ratingObject.type === true ? 'like' : 'none';
-    //
-    //         this.updateLikeStuff(this.userRating);
-    //       }
-    //     },
-    //
-    //      err => this.notifier.danger(err.message, 'Error')
-    //   );
   }
 
   private setRating(nextRating: UserVideoRateType) {

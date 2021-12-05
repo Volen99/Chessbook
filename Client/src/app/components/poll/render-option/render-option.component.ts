@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+
 import {IPoll} from "../../../shared/posts/models/poll/poll";
 import {IPollOption} from "../../../shared/posts/models/poll/poll-option";
 

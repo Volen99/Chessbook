@@ -1,6 +1,4 @@
-import {AfterViewInit,
-  ChangeDetectionStrategy,
-  Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {decode} from "blurhash";
 
 @Component({
@@ -51,6 +49,4 @@ export class BlurhashComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   canvas = null;
-
 }
-

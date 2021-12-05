@@ -158,10 +158,7 @@ export class RelativeTimestampComponent implements OnInit, OnChanges, AfterViewI
 
   // state
   now = Date.now();
-
-
   relativeTime: any;
-
 
   private _scheduleNextUpdate () {
     clearTimeout(this._timer);

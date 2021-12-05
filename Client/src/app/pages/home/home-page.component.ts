@@ -11,15 +11,13 @@ import {LocalStorageService} from "../../core/wrappers/storage.service";
 import {PostsService} from "../../shared/posts/posts.service";
 import {Post} from "../../shared/shared-main/post/post.model";
 import {immutableAssign, scrollToTop} from "../../helpers/utils";
-import {GetHomeTimelineParameters} from "../../shared/models/timeline/get-home-timeline-parameters";
 import {AbstractPostList} from "../../shared/post-miniature/abstract-post-list";
 import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
-import {UserStore} from 'app/core/stores/user.store';
-import {InitUserService} from 'app/theme/services/init-user.service';
 import {PostFilter} from "../../shared/posts/models/post-query.type";
 import {PostSortField} from "../../shared/posts/models/post-sort-field.type";
-import {environment} from "../../../environments/environment";
 import {UserFollowService} from "../../shared/user-follow/user-follow.service";
+import {UserStore} from '../../core/stores/user.store';
+import {InitUserService} from '../../theme/services/init-user.service';
 
 const voidState = style({
   transform: 'translateX({{ direction }}110%)',
@@ -85,9 +83,6 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
       }, 5000);
     }, 12000);
 
-    // const user = this.userStore.getUser();
-    let feedUrl = environment.apiUrl;
-
     this.enableAllFilterIfPossible();
   }
 
@@ -122,10 +117,6 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
   }
 
   getPostsObservable(page: number): Observable<{ data: Post[] }> {
-    // const newPagination = immutableAssign(this.pagination, {currentPage: page});
-    //
-    // return this.postsService.getHomeTimelinePosts(new GetHomeTimelineParameters(newPagination, this.sort, true));
-
     const newPagination = immutableAssign(this.pagination, { currentPage: page });
     const params = {
       videoPagination: newPagination,
@@ -176,7 +167,6 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
 
   setTransformBuffer = buffer => {
     this.postTransformBuffer = buffer;
-    // this.cdr.detectChanges();
   }
 
 }

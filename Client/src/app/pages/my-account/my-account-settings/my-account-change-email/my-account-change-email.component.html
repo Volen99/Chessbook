@@ -1,12 +1,12 @@
 <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 <div *ngIf="success" class="alert alert-success">{{ success }}</div>
 
-<div i18n class="current-email text-hint caption">
+<div class="current-email text-hint caption">
     Your current email is <span class="email">{{ user.email }}</span>.
     It is never shown to the public.
 </div>
 
-<div i18n class="pending-email" *ngIf="user.pendingEmail">
+<div class="pending-email" *ngIf="user.pendingEmail">
     <span class="email">{{ user.pendingEmail }}</span> is awaiting email verification
 </div>
 
@@ -14,7 +14,7 @@
     <!--*ngIf="user.pluginAuth === null-->
 
     <div class="form-group">
-        <input nbInput type="email" id="new-email" i18n-placeholder placeholder="New email" class="form-control"
+        <input nbInput type="email" id="new-email" placeholder="New email" class="form-control"
                 formControlName="new-email" [ngClass]="{ 'input-error': formErrors['new-email'] }"
         >
         <div *ngIf="formErrors['new-email']" class="form-error">
@@ -25,12 +25,12 @@
     <div class="form-group">
         <input nbInput formControlName="password"
                                 id="password"
-                                i18n-placeholder placeholder="Current password"
+                                placeholder="Current password"
                                 [ngClass]="{ 'input-error': formErrors['password'] }"
                                 autocomplete="current-password">
         <div *ngIf="formErrors['password']" class="form-error">
             {{ formErrors['password'] }}
         </div>
     </div>
-        <input nbButton status="primary" type="submit" i18n-value value="Change email" [disabled]="!form.valid" >
+        <input nbButton status="primary" type="submit" value="Change email" [disabled]="!form.valid" >
 </form>

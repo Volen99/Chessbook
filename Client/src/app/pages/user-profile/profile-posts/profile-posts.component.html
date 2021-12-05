@@ -2,7 +2,7 @@
     <app-empty-state *ngIf="this.profileCurrent?.suspended"
                      [title]="'Account suspended'">
         Chessbook suspends accounts which violate the <a class="link"
-                                                         href="https://en.wikipedia.org/wiki/Love">Chessbook
+                                                         href="https://en.wikipedia.org/wiki/Love" target="_blank">Chessbook
         Rules</a>
     </app-empty-state>
 
@@ -10,7 +10,7 @@
                      [title]="'These Posts are protected'">
         Only approved followers can see {{this.profileCurrent?.screenName}}'s
         Posts. To request access, click Follow. <a class="link"
-                                                   href="https://en.wikipedia.org/wiki/Love">Learn
+                                                   href="https://en.wikipedia.org/wiki/Love" target="_blank">Learn
         more</a>
     </app-empty-state>
 
@@ -26,16 +26,8 @@
              class="sharebook-container">
             <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.pinnedPost ? this.posts.length + 1 : this.posts.length) + 'px'}">
                 <ng-container *ngIf="this.pinnedPost">
-<!--                    <app-post-->
-<!--                            [i]="0"-->
-<!--                            [transform]="this.postTransformBuffer"-->
-<!--                            (transformBuffer)="this.setTransformBuffer($event)"-->
-<!--                            [post]="this.pinnedPost"-->
-<!--                            [posts]="this.posts"-->
-<!--                            [removeVideoFromArray]="this.removeVideoFromArray">-->
-<!--                    </app-post>-->
                 </ng-container>
-                <ng-container *ngIf="this.posts?.length > 0;"> <!--this.pinnedPost ? i + 1 :-->
+                <ng-container *ngIf="this.posts?.length > 0;">
                     <app-post *ngFor="let post of this.posts; let i = index"
                               [transform]="this.postTransformBuffer"
                               (transformBuffer)="this.setTransformBuffer($event)"

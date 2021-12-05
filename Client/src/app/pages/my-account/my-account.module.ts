@@ -1,6 +1,4 @@
 import {NgModule} from '@angular/core';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {AutoCompleteModule} from 'primeng/autocomplete';
 import {TableModule} from 'primeng/table';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
@@ -29,28 +27,24 @@ import {NbToggleModule} from "../../sharebook-nebular/theme/components/toggle/to
 import { MyAccountThemeComponent } from './my-account-settings/my-account-theme/my-account-theme.component';
 import {NbSelectModule} from "../../sharebook-nebular/theme/components/select/select.module";
 import {AuthModule} from "../../auth/auth.module";
-import {DialogUsernamePromptComponent} from "./my-account-settings/my-account-danger-zone/dialog-username-prompt/dialog-username-prompt.component";
 import {NbRadioModule} from "../../sharebook-nebular/theme/components/radio/radio.module";
-import {NotificationsModule} from "../notifications/notifications.module";
 import {SharedActorImageEditModule} from "../../shared/shared-actor-image-edit/shared-actor-image-edit.module";
 import {SharedActorImageModule} from "../../shared/shared-actor-image/shared-actor-image.module";
 import { MyDataComponent } from './my-data/my-data.component';
 import {DialogAreYouSureComponent} from "./my-data/dialog-are-u-sure/dialog-are-u-sure.component";
+import {ShowcaseDialogComponent} from './my-account-settings/my-account-danger-zone/showcase-dialog/showcase-dialog.component';
 
 @NgModule({
   imports: [
     MyAccountRoutingModule,
 
-    AutoCompleteModule,
     TableModule,
-    DragDropModule,
+    // DragDropModule,
 
     SharedMainModule,
     SharedFormModule,
     SharedModerationModule,
-    // SharedUserInterfaceSettingsModule,
     SharedAbuseListModule,
-    // SharedShareModal,
     NbTabsetModule,
     NbRouteTabsetModule,
     NbCardModule,
@@ -62,7 +56,7 @@ import {DialogAreYouSureComponent} from "./my-data/dialog-are-u-sure/dialog-are-
     AuthModule,
     FontAwesomeModule,
     NbRadioModule,
-    NotificationsModule,
+    // NotificationsModule,
     SharedActorImageEditModule,
     SharedActorImageModule,
   ],
@@ -80,9 +74,9 @@ import {DialogAreYouSureComponent} from "./my-data/dialog-are-u-sure/dialog-are-
     MyAccountNotificationsComponent,
     MyAccountNotificationPreferencesComponent,
     MyAccountThemeComponent,
-    DialogUsernamePromptComponent,
     DialogAreYouSureComponent,
     MyDataComponent,
+    ShowcaseDialogComponent,
   ],
 
   exports: [

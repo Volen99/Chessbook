@@ -825,7 +825,20 @@
                         .Distinct();
                 }
 
-                query = query.OrderByDescending(c => c.CreatedOn);
+                var random = CommonHelper.GenerateRandomInteger(0, 100);
+                if (random >= 80)
+                {
+                    query = query.OrderByDescending(c => c.FollowersCount);
+                }
+                else if (random % 2 == 0)
+                {
+                    query = query.OrderBy(c => c.CreatedOn);
+                }
+                else
+                {
+                    query = query.OrderByDescending(c => c.CreatedOn);
+                }
+
 
                 return query;
             }, filter.PageNumber, filter.PageSize, getOnlyTotalCount);

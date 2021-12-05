@@ -5,7 +5,6 @@ import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
 import {FormReactive} from "../shared-forms/form-reactive";
 import {HTMLServerConfig} from "../models/server/server-config.model";
 import {FormValidatorService} from "../shared-forms/form-validator.service";
-import {InstanceService} from "../shared-instance/instance.service";
 import {ServerService} from "../../core/server/server.service";
 import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {
@@ -89,8 +88,6 @@ export class ContactAdminModalComponent extends FormReactive implements OnInit {
     this.error = undefined;
 
     this.ref.close();
-    // this.openedModal.close();
-    // this.openedModal = null;
   }
 
   sendForm() {

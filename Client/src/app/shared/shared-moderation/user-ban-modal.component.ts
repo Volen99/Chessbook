@@ -2,10 +2,9 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
 import {FormReactive} from "../shared-forms/form-reactive";
-import {IUser, UserData} from "../../core/interfaces/common/users";
+import {IUser} from "../../core/interfaces/common/users";
 import {FormValidatorService} from "../shared-forms/form-validator.service";
 import {USER_BAN_REASON_VALIDATOR} from "../shared-forms/form-validators/user-validators";
-import {Notifier} from 'app/core/notification/notifier.service';
 
 import {
   faTimes,

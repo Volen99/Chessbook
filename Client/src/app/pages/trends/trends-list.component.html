@@ -1,19 +1,5 @@
 <div class="row" style.background-image="url('./assets/images/tags-wallpaper-{{currentTheme}}.jpg')" style="overflow-x: hidden">
     <div class="col-md-12">
-<!--            <div *ngIf="this.tags" class="page post-tags-all-page">-->
-
-<!--                <div class="page-body">-->
-<!--                    <ul *ngIf="this.tags.length > 0" class="post-tags-list">-->
-<!--                        <li *ngFor="let item of this.tags">-->
-<!--                            <a [routerLink]="[ '/search' ]" [queryParams]="{ tagsOneOf: [ item.name ] }" class="posttag"-->
-<!--                               [ngStyle]="{'font-size': (this.getFontSize(item)) + '%'}">-->
-<!--                                {{item.name}} ({{item.postCount}})-->
-<!--                            </a>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--            </div>-->
-
         <h1 class="grid-h">All post tags</h1>
         <ng-container *ngIf="this.tags">
             <ng-container *ngFor="let item of this.tags; let i = index;">
@@ -37,26 +23,5 @@
                 </div>
             </ng-container>
         </ng-container>
-<!--        <div class="row show-grid">-->
-<!--            <div class="col-md-4">-->
-<!--                <div>.col-md-4</div>-->
-<!--            </div>-->
-<!--            <div class="col-md-4 offset-md-4">-->
-<!--                <div>.col-md-4 .offset-md-4</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="row show-grid">-->
-<!--            <div class="col-md-3 offset-md-3">-->
-<!--                <div>.col-md-3 .offset-md-3</div>-->
-<!--            </div>-->
-<!--            <div class="col-md-3 offset-md-3">-->
-<!--                <div>.col-md-3 .offset-md-3</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="row show-grid">-->
-<!--            <div class="col-md-6 offset-md-3">-->
-<!--                <div>.col-md-6 .offset-md-3</div>-->
-<!--            </div>-->
-<!--        </div>-->
     </div>
 </div>

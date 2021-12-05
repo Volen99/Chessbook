@@ -361,7 +361,7 @@ export class AbuseListTableComponent extends RestTable implements OnInit {
 
     return [
       {
-        label: $localize`Actions for the video`,
+        label: `Actions for the video`,
         isHeader: true,
         isDisplayed: abuse => abuse.post && !abuse.post.deleted
       },

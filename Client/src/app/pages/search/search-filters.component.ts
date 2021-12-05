@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+
 import {HTMLServerConfig} from "../../shared/models/server/server-config.model";
 import {ServerService} from "../../core/server/server.service";
 import {IPostConstant} from "../../shared/posts/models/post-constant.model";
@@ -97,10 +98,6 @@ export class SearchFiltersComponent implements OnInit {
 
   ngOnInit() {
     this.serverConfig = this.serverService.getHTMLConfig();
-
-    // this.serverService.getVideoCategories().subscribe(categories => this.videoCategories = categories);
-    // this.serverService.getVideoLicences().subscribe(licences => this.videoLicences = licences);
-    // this.serverService.getVideoLanguages().subscribe(languages => this.videoLanguages = languages);
 
     this.loadFromDurationRange();
     this.loadFromPublishedRange();

@@ -16,10 +16,7 @@ import {PostsModule} from "../posts/posts.module";
     SharedMainModule,
     SharedFormModule,
     SharedModerationModule,
-    // SharedVideoPlaylistModule,
     SharedThumbnailModule,
-    // SharedGlobalIconModule,
-    // SharedVideoLiveModule,
     PostsModule,
     SharedActorImageModule
   ],

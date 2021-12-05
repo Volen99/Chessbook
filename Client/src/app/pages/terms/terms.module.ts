@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import {TermsRoutingModule} from "./terms-routing.module";
 import {TermsComponent} from "./terms.component";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -13,7 +12,6 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
   imports: [
     CommonModule,
     TermsRoutingModule,
-    FontAwesomeModule,
   ],
 
   providers: [

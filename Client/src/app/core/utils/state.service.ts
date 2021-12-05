@@ -1,6 +1,7 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {of as observableOf, Observable, BehaviorSubject} from 'rxjs';
+import {Observable, BehaviorSubject} from 'rxjs';
 import {takeWhile} from 'rxjs/operators';
+
 import {NbLayoutDirection, NbLayoutDirectionService} from "../../sharebook-nebular/theme/services/direction.service";
 
 
@@ -40,7 +41,6 @@ export class StateService implements OnDestroy {
     },
   ];
 
-  protected layoutState$ = new BehaviorSubject(this.layouts[0]);
   protected sidebarState$ = new BehaviorSubject(this.sidebars[0]);
 
   alive = true;
@@ -64,26 +64,6 @@ export class StateService implements OnDestroy {
     const endIconClass = isLtr ? 'nb-layout-sidebar-right' : 'nb-layout-sidebar-left';
     startSidebar.icon = startIconClass;
     endSidebar.icon = endIconClass;
-  }
-
-  setLayoutState(state: any): any {
-    this.layoutState$.next(state);
-  }
-
-  getLayoutStates(): Observable<any[]> {
-    return observableOf(this.layouts);
-  }
-
-  onLayoutState(): Observable<any> {
-    return this.layoutState$.asObservable();
-  }
-
-  setSidebarState(state: any): any {
-    this.sidebarState$.next(state);
-  }
-
-  getSidebarStates(): Observable<any[]> {
-    return observableOf(this.sidebars);
   }
 
   onSidebarState(): Observable<any> {

@@ -1,6 +1,6 @@
 <ng-template #modal>
   <div class="modal-header">
-    <h4 i18n class="modal-title">Moderation comment</h4>
+    <h4 class="modal-title">Moderation comment</h4>
 
     <fa-icon [icon]="this.faTimes" aria-label="Close" role="button" (click)="hide()"></fa-icon>
   </div>
@@ -9,7 +9,7 @@
     <form novalidate [formGroup]="form" (ngSubmit)="banUser()">
       <div class="form-group">
         <textarea nbInput
-                formControlName="moderationComment" ngbAutofocus i18-placeholder placeholder="Comment this report…"
+                formControlName="moderationComment" ngbAutofocus placeholder="Comment this report…"
                 [ngClass]="{ 'input-error': formErrors['moderationComment'] }" class="form-control">
         </textarea>
         <div *ngIf="formErrors.moderationComment" class="form-error">
@@ -17,17 +17,17 @@
         </div>
       </div>
 
-      <div class="form-group" i18n>
+      <div class="form-group">
         This comment can only be seen by you or the other moderators.
       </div>
 
       <div class="form-group inputs">
         <input
-                type="button" role="button" i18n-value value="Cancel" class="peertube-button grey-button"
+                type="button" role="button" value="Cancel" class="peertube-button grey-button"
                 (click)="hide()" (key.enter)="hide()"
         >
 
-        <input type="submit" i18n-value value="Update this comment" class="peertube-button orange-button" [disabled]="!form.valid" />
+        <input type="submit" value="Update this comment" class="peertube-button orange-button" [disabled]="!form.valid" />
       </div>
     </form>
   </div>

@@ -5,9 +5,9 @@ import {NavigationEnd, Router} from '@angular/router';
 import {NgbPopover} from '@ng-bootstrap/ng-bootstrap';
 import {UserNotificationService} from "../../../../shared/shared-main/users/user-notification.service";
 import {ScreenService} from "../../../../core/wrappers/screen.service";
-import {Notifier} from "../../../../core/notification/notifier.service";
 import {PeerTubeSocket} from "../../../../core/notification/sharebook-socket.service";
 import {UserStore} from "../../../../core/stores/user.store";
+import {NbToastrService} from '../toastr/toastr.service';
 
 @Component({
   selector: 'app-notification',
@@ -32,7 +32,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     private userNotificationService: UserNotificationService,
     private screenService: ScreenService,
     private peertubeSocket: PeerTubeSocket,
-    private notifier: Notifier,
+    private notifier: NbToastrService,
     private router: Router,
     private userStore: UserStore,
   ) {
@@ -47,7 +47,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
             this.subscribeToNotifications();
           },
 
-          err => this.notifier.error(err.message)
+          err => this.notifier.danger(err.message)
         );
 
       this.routeSub = this.router.events

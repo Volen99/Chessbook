@@ -8,7 +8,6 @@ import {
   faChessRookAlt,
   faChessQueenAlt,
   faChessKingAlt,
-  faTrophy,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {FactsService} from "./facts.service";
@@ -46,7 +45,6 @@ export class SnackbarSampleComponent implements OnInit {
 
   backgroundColorStyles: {};
 
-  faTrophy = faTrophy;
   pieces: IconDefinition[] = [faChessPawnAlt, faChessKnightAlt, faChessBishopAlt, faChessRookAlt, faChessQueenAlt, faChessKingAlt];
   isVisible = true;
 
@@ -87,10 +85,6 @@ export class SnackbarSampleComponent implements OnInit {
 
   public onAnimationDone() {
     console.log('animation ended');
-  }
-
-  public toggleSnackbar() {
-    // this.snackbar.toggle();
   }
 
   public close(element) {

@@ -2,7 +2,6 @@ import {Component, Input} from '@angular/core';
 import {ProcessedAbuse} from './processed-abuse.model';
 import {AbusePredefinedReasonsString} from "../models/moderation/abuse/abuse-reason.model";
 import {durationToString} from "../../helpers/utils";
-import {User} from "../shared-main/user/user.model";
 
 @Component({
   selector: 'my-abuse-details',

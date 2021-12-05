@@ -4,7 +4,7 @@ export type TokenOptions = {
   accessToken: string
   refreshToken: string
   tokenType: string
-}
+};
 
 // Private class only used by User
 export class Tokens {

@@ -12,7 +12,7 @@
 
     <button
       *ngIf="withCopy" [cdkCopyToClipboard]="input.value" (click)="activateCopiedMessage()" type="button"
-      class="btn btn-outline-secondary" i18n-title title="Copy"
+      class="btn btn-outline-secondary" title="Copy"
     >
       <!--<span class="glyphicon glyphicon-copy"></span>-->
       <fa-icon [icon]="this.faWalkieTalkie" class="glyphicon glyphicon-copy"></fa-icon>

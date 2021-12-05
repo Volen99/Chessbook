@@ -1,7 +1,7 @@
 <div class="header-container">
   <div class="logo-container">
     <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
-      <nb-icon icon="menu-2-outline"></nb-icon>
+      <fa-icon [icon]="this.faBars" size="lg"></fa-icon>
     </a>
     <a class="chessbook-title c-hand" href="#" (click)="this.navigateHome()">
       <img class="icon-logo" src="assets/images/icons/{{this.currentLogoName}}" alt="logo">

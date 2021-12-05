@@ -30,7 +30,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="sharebook-container bottom-0px flex-direction-row justify-content-center left-0px r-12vffkv position-absolute right-0px z-index-minus-1">
+
+                                <div *ngIf="this.users.length > 0; else noUsers" class="sharebook-container bottom-0px flex-direction-row justify-content-center left-0px r-12vffkv position-absolute right-0px z-index-minus-1">
                                     <div role="status" class="sharebook-container">
                                         <div aria-label="New Tweets are available. Push period to go to the beginning of your timeline and view them"
                                              role="button" aria-hidden="true"
@@ -70,31 +71,6 @@
                                                             <div role="button" tabindex="0"
                                                                  class="sharebook-cursor-pointer sharebook-container outline-style-none r-ymttw5 r-1f1sjgu transition-duration transition-property"
                                                                  data-testid="UserCell">
-                                                                <!--<div class="sharebook-container r-15zivkp">
-                                                                    <div class="sharebook-container flex-direction-row">
-                                                                        <div class="sharebook-container align-items-flex-end r-1hwvwag container-left-side-flex-expand justify-content-center r-1b7u577">
-&lt;!&ndash;                                                                            <svg viewBox="0 0 24 24"&ndash;&gt;
-&lt;!&ndash;                                                                                 class="r-9ilb82 r-4qtqp9 r-yyyyoo r-10ptun7 r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-1janqcz">&ndash;&gt;
-&lt;!&ndash;                                                                                <g>&ndash;&gt;
-&lt;!&ndash;                                                                                    <path d="M12.225 12.165c-1.356 0-2.872-.15-3.84-1.256-.814-.93-1.077-2.368-.805-4.392.38-2.826 2.116-4.513 4.646-4.513s4.267 1.687 4.646 4.513c.272 2.024.008 3.46-.806 4.392-.97 1.106-2.485 1.255-3.84 1.255zm5.849 9.85H6.376c-.663 0-1.25-.28-1.65-.786-.422-.534-.576-1.27-.41-1.968.834-3.53 4.086-5.997 7.908-5.997s7.074 2.466 7.91 5.997c.164.698.01 1.434-.412 1.967-.4.505-.985.785-1.648.785z"></path>&ndash;&gt;
-&lt;!&ndash;                                                                                </g>&ndash;&gt;
-&lt;!&ndash;                                                                            </svg>&ndash;&gt;
-                                                                        </div>
-                                                                        <div class="sharebook-container open-space-container-flex-expand flex-grow-expand">
-                                                                            <div class="sharebook-container flex-direction-row">
-                                                                                <div class="sharebook-container align-items-flex-start flex-shrink justify-content-center">
-                                                                                    <div dir="auto"
-                                                                                         class="css-901oao css-cens5h r-9ilb82 r-1qd0xha r-n6v787 r-b88u0q r-1cwl3u0 r-bcqeeo r-qvutc0"
-                                                                                         style="-webkit-line-clamp: 2;">
-                                                                                       <span dir="ltr" class="sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">
-                                                                                           <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Gaming Gems and 2 others follow</span>
-                                                                                      </span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
                                                                 <div class="sharebook-container flex-direction-row">
                                                                     <div class="sharebook-container r-1hwvwag container-left-side-flex-expand justify-content-flex-start r-1b7u577">
                                                                         <div class="sharebook-container flex-shrink max-width-100-per">
@@ -165,28 +141,20 @@
                                                             </div>
                                                         </div>
                                                     </div>
-<!--                                                    <div style="position: absolute; width: 100%; transform: translateY(1417.6px); transition: opacity 0.3s ease-out 0s;">-->
-<!--                                                        <div class="sharebook-container border-bottom-color border-bottom-width-1px display-block outline-style-none">-->
-<!--                                                            <a-->
-<!--                                                                    href="/i/timeline" role="link" data-focusable="true"-->
-<!--                                                                    class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer outline-style-none left-right-padding-15px padding-bottom-top-15px transition-duration transition-property">-->
-<!--                                                                <div dir="auto"-->
-<!--                                                                     class="css-901oao r-13gxpu9 font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">-->
-<!--                                                                    <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Show more</span>-->
-<!--                                                                </div>-->
-<!--                                                            </a></div>-->
-<!--                                                    </div>-->
-<!--                                                    <div style="position: absolute; width: 100%; transform: translateY(1468px); transition: opacity 0.3s ease-out 0s;">-->
-<!--                                                        <div class="sharebook-container r-1bxhq7s">-->
-<!--                                                            <div class="sharebook-container r-1omma8c"></div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
                                                 </div>
                                             </div>
                                         </section>
                                     </div>
                                 </div>
                             </div>
+                            <ng-template #noUsers>
+                                <nb-card class="no-users">
+                                    <div class="details text-center">
+                                        <h4>No users found</h4>
+                                        <span class="text-hint text-sm-center">Try <span class="text-primary" style="cursor: pointer" ngbTooltip="g + u" [openDelay]="1700"  (click)="this.searchUser()">searching</span> for a specific user.</span>
+                                    </div>
+                                </nb-card>
+                            </ng-template>
                         </div>
                     </div>
                 </div>

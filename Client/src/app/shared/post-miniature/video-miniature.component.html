@@ -1,7 +1,7 @@
 <div class="video-miniature" [ngClass]="getClasses()" (mouseenter)="loadActions()">
   <my-video-thumbnail [video]="video" [nsfw]="isVideoBlur" [videoRouterLink]="videoRouterLink" [videoHref]="videoHref" [videoTarget]="videoTarget">
-    <ng-container ngProjectAs="label-warning" *ngIf="displayOptions.privacyLabel && isUnlistedVideo()" i18n>Unlisted</ng-container>
-    <ng-container ngProjectAs="label-danger" *ngIf="displayOptions.privacyLabel && isPrivateVideo()" i18n>Private</ng-container>
+    <ng-container ngProjectAs="label-warning" *ngIf="displayOptions.privacyLabel && isUnlistedVideo()">Unlisted</ng-container>
+    <ng-container ngProjectAs="label-danger" *ngIf="displayOptions.privacyLabel && isPrivateVideo()">Private</ng-container>
   </my-video-thumbnail>
 
   <div class="video-bottom">
@@ -51,11 +51,11 @@
       </div>
 
       <div *ngIf="displayOptions.blacklistInfo && video.blacklisted" class="video-info-blocked">
-        <span class="blocked-label" i18n>Blocked</span>
+        <span class="blocked-label">Blocked</span>
         <span class="blocked-reason" *ngIf="video.blockedReason">{{ video.blockedReason }}</span>
       </div>
 
-      <div i18n *ngIf="displayOptions.nsfw && video.nsfw" class="video-info-nsfw">
+      <div *ngIf="displayOptions.nsfw && video.nsfw" class="video-info-nsfw">
         Sensitive
       </div>
     </div>

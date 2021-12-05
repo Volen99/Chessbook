@@ -6,7 +6,7 @@
 
       <div *ngIf="editable && !hasAvatar()" class="actor-img-edit-button" style="font-size: 20px"  [ngbTooltip]="avatarFormat" placement="right" container="body">
         <fa-icon [icon]="this.faCamera"></fa-icon>
-        <label class="sr-only" for="avatarfile" i18n>Upload a new avatar</label>
+        <label class="sr-only" for="avatarfile">Upload a new avatar</label>
         <input #avatarfileInput type="file" name="avatarfile" id="avatarfile" title=" " [accept]="avatarExtensions" (change)="onAvatarChange(avatarfileInput)"/>
       </div>
 
@@ -15,7 +15,7 @@
         #avatarPopover="ngbPopover" [ngbPopover]="avatarEditContent" popoverClass="popover-image-info" autoClose="outside" placement="right"
       >
         <fa-icon [icon]="this.faPen"></fa-icon>
-        <label class="sr-only" for="avatarMenu" i18n>Change your avatar</label>
+        <label class="sr-only" for="avatarMenu">Change your avatar</label>
       </div>
 
     </div>
@@ -24,19 +24,19 @@
   <div class="actor-info">
     <div class="actor-info-display-name">{{ actor.displayName }}</div>
     <div *ngIf="displayUsername" class="actor-info-username">{{ actor.screenName }}</div>
-    <div i18n class="actor-info-followers">{this.actor?.followingCount, plural, =1 {1 follower} other {{{ this.actor?.followingCount | myNumberFormatter }} followers}}</div>
+    <div class="actor-info-followers">{this.actor?.followersCount, plural, =1 {1 follower} other {{{ this.actor?.followersCount | myNumberFormatter }} followers}}</div>
   </div>
 </div>
 
 <ng-template #avatarEditContent>
   <div class="dropdown-item c-hand" [ngbTooltip]="avatarFormat" placement="right" container="body">
     <fa-icon [icon]="this.faFileImport" style="margin-right: 2px"></fa-icon>
-    <span for="avatarfile" i18n>Upload a new avatar</span>
+    <span for="avatarfile">Upload a new avatar</span>
     <input #avatarfileInput type="file" name="avatarfile" id="avatarfile" title=" " [accept]="avatarExtensions" (change)="onAvatarChange(avatarfileInput)"/>
   </div>
 
 <!--  <div class="dropdown-item c-hand" (click)="deleteAvatar()" (key.enter)="deleteAvatar()">-->
 <!--    <fa-icon [icon]="this.faTrashAlt" style="margin-right: 2px"></fa-icon>-->
-<!--    <span i18n>Remove avatar</span>-->
+<!--    <span>Remove avatar</span>-->
 <!--  </div>-->
 </ng-template>

@@ -4,12 +4,28 @@ import {SortMeta} from 'primeng/api';
 
 import {ComponentPaginationLight} from './component-pagination.model';
 import {RestPagination} from './rest-pagination';
-import {ICursorQueryParameters} from "../../shared/models/query/cursor-query-parameters";
-import {SharebookConsts} from "../../helpers/sharebook-consts";
-import {ITimelineRequestParameters} from "../../shared/models/timeline/timeline-request-parameters";
-import {IMinMaxQueryParameters} from "../../shared/models/query/min-max-query-parameters";
-import {OEmbedTweetAlignment, OEmbedTweetTheme} from "../../shared/posts/parameters/get-OEmbed-tweet-parameters";
+import {ChessbookConsts} from "../../helpers/chessbook-consts";
 import {ITweetIdentifier} from "../../shared/posts/models/tweet-identifier";
+
+export interface ICursorQueryParameters {
+// The cursor value to start the operation with
+  cursor: string;
+
+  // The maximum number of objects to return
+  pageSize: number;
+
+  // Collection of custom query parameters
+  customQueryParameters: Array<[string, string]>;
+
+  // Formatted string containing all the query parameters to append to a query.
+  formattedCustomQueryParameters: string;
+
+  // Add a custom query parameter.
+  addCustomQueryParameter(name: string, value: string): void;
+
+  // Clear the query parameters of the query.
+  clearCustomQueryParameters(): void;
+}
 
 interface QueryStringFilterPrefixes {
   [key: string]: {
@@ -140,7 +156,7 @@ export class RestService {
 
   public generateCountParameter(count: number): string {
     if (count === -1) {
-      return SharebookConsts.EMPTY;
+      return ChessbookConsts.EMPTY;
     }
 
     return `&count=${count}`;
@@ -148,7 +164,7 @@ export class RestService {
 
   public generateTrimUserParameter(trimUser?: boolean): string {
     if (trimUser == null) {
-      return SharebookConsts.EMPTY;
+      return ChessbookConsts.EMPTY;
     }
 
     return `&trim_user=${trimUser}`;
@@ -156,7 +172,7 @@ export class RestService {
 
   public generateSinceIdParameter(sinceId?: number): string {
     if (sinceId == null || sinceId <= 0) {
-      return SharebookConsts.EMPTY;
+      return ChessbookConsts.EMPTY;
     }
 
     return `&since_id=${sinceId}`;
@@ -164,47 +180,19 @@ export class RestService {
 
   public generateMaxIdParameter(maxId?: number): string {
     if (maxId == null || maxId <= 0) {
-      return SharebookConsts.EMPTY;
+      return ChessbookConsts.EMPTY;
     }
 
     return `&max_id=${maxId}`;
   }
 
-  public generateIncludeEntitiesParameter(includeEntities?: boolean): string {
-    if (includeEntities == null) {
-      return SharebookConsts.EMPTY;
-    }
-
-    return `&include_entities=${includeEntities}`;
-  }
-
-  public generateSkipStatusParameter(skipStatus: boolean): string {
-    return `&skip_status=${skipStatus}`;
-  }
-
   public generatePageNumberParameter(pageNumber?: number): string {
     if (pageNumber == null) {
-      return SharebookConsts.EMPTY;
+      return ChessbookConsts.EMPTY;
     }
 
     return `&page_number=${pageNumber}`;
   }
-
-  public generateIncludeRetweetsParameter(includeRetweets: boolean): string {
-    return `&include_rts=${includeRetweets}`;
-  }
-
-  // public generateLanguageParameter(language: Language): string {
-  //   let languageParameter = SharebookConsts.EMPTY;
-  //   if (language != null && language !== Languages.Undefined) {
-  //     let languageCode = language.getLanguageCode();
-  //     if (languageCode) {
-  //       languageParameter = `lang=${languageCode}`;
-  //     }
-  //   }
-  //
-  //   return languageParameter;
-  // }
 
   public generateCursorParameter(cursor: string): string {
     return !(cursor) ? "" : `&cursor=${cursor}`;
@@ -216,29 +204,26 @@ export class RestService {
 
   public generateAdditionalRequestParameters(additionalParameters: string, existingParameters: boolean = true): string {
     if (!additionalParameters) {
-      return SharebookConsts.EMPTY;
+      return ChessbookConsts.EMPTY;
     }
 
     return `${(existingParameters ? "&" : "?")}${additionalParameters}`;
   }
 
-  addMinMaxQueryParameters(params: HttpParams, parameters: IMinMaxQueryParameters): HttpParams {
+  addMinMaxQueryParameters(params: HttpParams, parameters: any): HttpParams {
     let paramsNew = params;
 
     paramsNew = paramsNew.set('count', parameters.pageSize.toString());
     paramsNew = paramsNew.set('since_id', parameters.sinceId.toString());
-    /*paramsNew = paramsNew.set('max_id', parameters.maxId.toString());*/
 
     return paramsNew;
   }
 
-  public addTimelineParameters(params: HttpParams, parameters: ITimelineRequestParameters): HttpParams {
-    /*this.addMinMaxQueryParameters(query, parameters);*/
+  public addTimelineParameters(params: HttpParams, parameters: any): HttpParams {
     let paramsNew = params;
 
     paramsNew = paramsNew.set('count', parameters.includeEntities?.toString());
     paramsNew = paramsNew.set('since_id', parameters.trimUser?.toString());
-    // paramsNew = paramsNew.set('max_id', 'Extended');
 
     return paramsNew;
   }
@@ -268,18 +253,6 @@ export class RestService {
       parameter = parameter.substr(1);
     }
 
-    // let query = paramsNew.toString();
-
-    // if (query.includes("?") && query[query.length - 1] !== '?' && query[query.length - 1] !== '&' && parameter[0] !== '&') {
-    //   query += "&";
-    // }
-    //
-    // if (!query.includes("?")) {
-    //   query += ("?");
-    // }
-    //
-    // query += parameter;
-
     let tokens = parameter.split('=');
     let name = tokens[0];
     let value = tokens[1];
@@ -306,40 +279,5 @@ export class RestService {
 
     return paramsNew;
   }
-
-  public generateOEmbedAlignmentParameter(alignment?: OEmbedTweetAlignment): string {
-    if (alignment == null) {
-      return null;
-    }
-
-    switch (alignment) {
-      case OEmbedTweetAlignment.None:
-        return "none";
-      case OEmbedTweetAlignment.Left:
-        return "left";
-      case OEmbedTweetAlignment.Center:
-        return "center";
-      case OEmbedTweetAlignment.Right:
-        return "right";
-      default:
-        return null;
-    }
-  }
-
-  public generateOEmbedThemeParameter(theme?: OEmbedTweetTheme): string {
-    if (theme == null) {
-      return null;
-    }
-
-    switch (theme) {
-      case OEmbedTweetTheme.Light:
-        return "light";
-      case OEmbedTweetTheme.Dark:
-        return "dark";
-      default:
-        return null;
-    }
-  }
-
 
 }

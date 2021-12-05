@@ -2,7 +2,7 @@ import {Directive, EventEmitter, ElementRef, HostListener, Input, Output} from '
 
 import {FileUploader, FileUploaderOptions} from './file-uploader.class';
 import {UploadService} from "./upload.service";
-import {SharebookConsts} from "../../../../../helpers/sharebook-consts";
+import {ChessbookConsts} from "../../../../../helpers/chessbook-consts";
 
 @Directive({selector: '[appFileDrop]'})
 export class FileDropDirective {

@@ -2,12 +2,20 @@
   <div class="col-md-12">
     <nb-card>
       <nb-card-body>
-        <div class="flex-centered col-xl-4 col-lg-6 col-md-8 col-sm-12">
+        <div class="col-12">
           <h2 class="title">404 Oops, that's a blunder!</h2>
-          <small class="sub-title">The page you were looking for doesn't exist</small>
+          <small class="sub-title text-hint">The page you were looking for doesn't exist.</small>
+          <div style="text-align: center;">
+            <span class="title">Unless..</span>
+            <small class="sub-title text-hint">You were looking for this error page, in which case: Congrats! You totally found it.</small>
+          </div>
           <button nbButton fullWidth (click)="goToHome()" type="button" class="home-button">
-            Take me home
+            Take me to my castle
           </button>
+          <div class="astronaut">
+            <img src="/assets/images/astronaut.png" alt="" class="src">
+          </div>
+          <div *ngFor="let star of this.stars" class="star" [style]="{top: star.top + 'px', right: star.right + 'px'}"></div>
         </div>
       </nb-card-body>
     </nb-card>

@@ -9,7 +9,6 @@ import {NbTokenLocalStorage} from "../../sharebook-nebular/auth/services/token/t
 import {IPost} from "../../shared/posts/models/post.model";
 import {takeUntil} from "rxjs/operators";
 import {IUser} from "../interfaces/common/users";
-import {User} from "../../shared/shared-main/user/user.model";
 import {UserStore} from "../stores/user.store";
 
 export type NotificationEvent = 'new' | 'read' | 'read-all';
@@ -108,15 +107,6 @@ export class PeerTubeSocket {
     this._hubConnection.on("newNotification", (n: UserNotification) => {
       this.ngZone.run(() => this.dispatchNotificationEvent('new', n));
     });
-  }
-
-  newPostAdded(post: IPost) {
-    // Only notify on public and published posts which are not blacklisted
-    if (!post) {
-      return;
-    }
-
-    this._hubConnection.invoke('SendNotification', {post});
   }
 
 }

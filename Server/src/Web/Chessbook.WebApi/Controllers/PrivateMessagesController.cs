@@ -223,7 +223,7 @@ namespace Chessbook.Web.Api.Controllers
             {
                 if (pm.ToCustomerId != (await _workContext.GetCurrentCustomerAsync()).Id && pm.FromCustomerId != (await _workContext.GetCurrentCustomerAsync()).Id)
                 {
-                    return RedirectToRoute("PrivateMessages");
+                    return this.Unauthorized("You can't view someone else message that you are not part of it :)");
                 }
 
                 if (!pm.IsRead && pm.ToCustomerId == (await _workContext.GetCurrentCustomerAsync()).Id)

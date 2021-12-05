@@ -10,7 +10,6 @@ import {
 
 import {faHeart as faHeartSolid} from "@fortawesome/pro-solid-svg-icons";
 
-
 import {HttpStatusCode} from "../../core-utils/miscs";
 import {PostDetails} from "../../shared-main/post/post-details.model";
 import {PostsService} from "../posts.service";
@@ -18,17 +17,14 @@ import {RestExtractor} from "../../../core/rest/rest-extractor";
 import {MarkdownService} from "../../../core/renderer/markdown.service";
 import {UserVideoRateType} from "../models/rate/user-video-rate.type";
 import {UserStore} from "../../../core/stores/user.store";
-import {Notifier} from "../../../core/notification/notifier.service";
 import {scrollToTop} from "../../../helpers/utils";
 import {NbToastrService} from "../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {MetaService} from "../../../core/routing/meta.service";
-import {NbLayoutScrollService} from "../../../sharebook-nebular/theme/services/scroll.service";
 import {Post} from "../../shared-main/post/post.model";
 import {Location} from "@angular/common";
 import {IsVideoPipe} from "../../shared-main/angular/pipes/is-video.pipe";
 import {NbMediaBreakpointsService} from "../../../sharebook-nebular/theme/services/breakpoints.service";
 import {NbThemeService} from "../../../sharebook-nebular/theme/services/theme.service";
-
 
 @Component({
   selector: 'app-post-watch',
@@ -51,10 +47,6 @@ export class PostWatchComponent implements OnInit, OnDestroy {
   get user() {
     return this.userStore.getUser();
   }
-
-  // get anonymousUser () {
-  //   return this.userService.getAnonymousUser();
-  // }
 
   ngOnInit(): void {
     this.paramsSub = this.route.params.subscribe(routeParams => {
@@ -131,14 +123,6 @@ export class PostWatchComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // const videoObs = this.hooks.wrapObsFun(
-    //   this.videoService.getVideo.bind(this.videoService),
-    //   {videoId},
-    //   'video-watch',
-    //   'filter:api.video-watch.video.get.params',
-    //   'filter:api.video-watch.video.get.result'
-    // );
-
     const post = this.postService.getPost(videoId);
 
     // Video did change
@@ -177,24 +161,8 @@ export class PostWatchComponent implements OnInit, OnDestroy {
 
     this.commentsTransform = this.getCommentsTransform();
 
-    // Re init attributes
-    // this.descriptionLoading = false;
-    // this.completeDescriptionShown = false;
-    // this.completeVideoDescription = undefined;
-
-    // if (this.isVideoBlur(this.video)) {
-    //   const res = await this.confirmService.confirm(
-    //     $localize`This video contains mature or explicit content. Are you sure you want to watch it?`,
-    //     $localize`Mature or explicit content`
-    //   );
-    //   if (res === false) return this.location.back();
-    // }
-
-    // this.setVideoDescriptionHTML();
     this.checkUserRating();
     this.setOpenGraphTags();
-
-    // this.hooks.runAction('action:video-watch.video.loaded', 'video-watch', {videojs});
   }
 
   private async setVideoDescriptionHTML() {
@@ -210,16 +178,6 @@ export class PostWatchComponent implements OnInit, OnDestroy {
 
     this.userRating = this.post.favorited ? 'like' : 'none';
     this.updateLikeStuff(this.userRating);
-
-    // this.postService.getUserVideoRating(this.post.id)
-    //   .subscribe(
-    //     ratingObject => {
-    //       if (ratingObject) {
-    //         this.userRating = ratingObject.rating;
-    //       }
-    //     },
-    //     err => this.notifier.error(err.message)
-    //   );
   }
 
   calcMinHeight(commentsCount?: number): number {
@@ -291,7 +249,5 @@ export class PostWatchComponent implements OnInit, OnDestroy {
     this.metaService.setTag('og:url', window.location.href);
     this.metaService.setTag('url', window.location.href);
   }
-
-
 
 }

@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {ExtraOptions, RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
 
 import {AuthGuard} from "./auth/auth.guard";
-import {NotFoundComponent} from "./pages/page-not-found/not-found.component";
 import {MetaGuard} from "./core/routing/meta-guard.service";
 import {ModeratorGuard} from "./auth/moderator.guard";
 import {PreloadSelectedModulesList} from './core/routing/preload-selected-modules-list';
@@ -32,12 +31,6 @@ const routes: Routes = [
         path: 'messages',
         canActivate: [AuthGuard],
         loadChildren: () => import('./pages/messages/messages.module').then(m => m.MessagesModule),
-        canActivateChild: [ MetaGuard ],
-      },
-      {
-        path: 'users',
-        canActivate: [AuthGuard],
-        loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule),
         canActivateChild: [ MetaGuard ],
       },
       {
@@ -112,6 +105,16 @@ const routes: Routes = [
         canActivateChild: [ MetaGuard ],
       },
       {
+        path: '404',
+        pathMatch: 'full',
+        loadChildren: () => import('./pages/page-not-found/not-found.module').then(m => m.NotFoundModule),
+        data: {
+          meta: {
+            title: `Page not found`
+          }
+        },
+      },
+      {
         path: ':screenName',
         loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule),
         canActivateChild: [ MetaGuard ],
@@ -123,7 +126,12 @@ const routes: Routes = [
       },
       {
         path: '**',
-        component: NotFoundComponent,
+        loadChildren: () => import('./pages/page-not-found/not-found.module').then(m => m.NotFoundModule),
+        data: {
+          meta: {
+            title: `Page not found`
+          }
+        },
       },
     ]
   },

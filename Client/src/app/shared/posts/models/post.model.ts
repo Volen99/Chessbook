@@ -1,7 +1,4 @@
 ﻿import {ITweetIdentifier} from "./tweet-identifier";
-import {ICoordinates} from "./properties/ICoordinates";
-import {IPlace} from "./properties/IPlace";
-import {IOEmbedTweet} from "./properties/OEmbed-tweet";
 import {IUser} from "../../../core/interfaces/common/users";
 import {ITweetEntities} from "../../post-object/Entities/interfaces/ITweetEntities";
 import {ITweetDTO} from "./DTO/tweet-dto";
@@ -12,33 +9,30 @@ import {IPoll} from "./poll/poll";
 export interface IPost extends ITweetIdentifier {
   // #region Twitter API Properties
 
-  // UTC time when this Tweet was created
+  // UTC time when this Post was created
   createdAt: Date; // DateTimeOffset;
 
-  // Formatted text of the tweet.
+  // Formatted text of the post.
   status: string;
 
-  // Prefix of an extended tweet.
+  // Prefix of an extended post.
   prefix: string;
 
-  // Suffix of an extended tweet.
+  // Suffix of an extended post.
   suffix: string;
 
-  // Full text of an extended tweet.
+  // Full text of an extended post.
   fullText: string;
 
   // Content display text range for FullText.
   displayTextRange: number[];
 
   /// <summary>
-  /// The range of text to be displayed for any Tweet.
+  /// The range of text to be displayed for any Post.
   /// If this is an Extended Tweet, this will be the range supplied by Twitter.
   /// If this is an old-style 140 character Tweet, the range will be 0 - Length.
   /// </summary>
   safeDisplayTextRange: number[];
-
-  // Coordinates of the location from where the tweet has been sent
-  coordinates: ICoordinates;
 
   // Utility used to post the Tweet, as an HTML-formatted string. Tweets from the Twitter website have a source value of web
   source: string;
@@ -101,9 +95,6 @@ export interface IPost extends ITweetIdentifier {
 
   // Main language used in the tweet
   language?: any; // Language;
-
-  // Geographic details concerning the location where the tweet has been published
-  place: IPlace;
 
   // Informed whether a tweet is displayed or not in a specific type of scope. This property is most of the time null.
   scopes: Map<string, object>;
@@ -193,6 +184,4 @@ export interface IPost extends ITweetIdentifier {
   // Delete a tweet from Twitter
   destroyAsync(): Promise<void>;
 
-  // Generate an OEmbedTweet.
-  generateOEmbedTweetAsync(): Promise<IOEmbedTweet>;
 }

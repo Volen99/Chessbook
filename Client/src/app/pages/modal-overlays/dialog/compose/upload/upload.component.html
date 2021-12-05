@@ -46,7 +46,7 @@
                     <div class="sharebook-container flex-grow-expand flex-shrink modal-overflow-auto">
                         <div class="sharebook-container upload-padding-bottom-5px">
                             <div class="sharebook-container background-color-lights-out padding-bottom-top-5px">
-                                <app-reply-comment *ngIf="this.replyPost" [post]="this.replyPost"></app-reply-comment>
+                                <!--<app-reply-comment *ngIf="this.replyPost" [post]="this.replyPost"></app-reply-comment>-->
                                 <div>
                                     <div class="sharebook-container">
                                         <div class="sharebook-container">
@@ -103,7 +103,7 @@
                                                                                                             class="sharebook-container display-inline-flex padding-10px element-left-right-padding-0px width-100-per">
                                                                                                         <div
                                                                                                                 class="element-background-color-rgba input-form-border-radius-0px input-form-border-width input-form-box-sizing input-form-text-color text-font-family input-form-text-font-size outline-style-none input-form-padding upload-text-align"
-                                                                                                                style="max-height: 38.0625em; min-height: 7.875em;">
+                                                                                                                style="max-height: 38.0625em; min-height: 4.875em;">
                                                                                                             <div class="DraftEditor-root">
                                                                                                                 <div class="public-DraftEditorPlaceholder-root">
                                                                                                                     <div class="public-DraftEditorPlaceholder-inner"
@@ -147,9 +147,6 @@
                                                                                                 </div>
                                                                                                 <div class="sharebook-container display-flex justify-content-center"></div>
                                                                                             </div>
-
-                                                                                            <!--<app-inserted-media *ngIf="this.uploader.queue?.length >= 1"
-                                                                                                                [uploader]="this.uploader"></app-inserted-media>-->
                                                                                             <div *ngIf="this.uploader.queue?.length >= 1"
                                                                                                  class="sharebook-container margin-bottom-5px margin-top-5px z-index-1"
                                                                                                  data-testid="attachments">
@@ -191,10 +188,7 @@
                                                                                                                          role="button"
                                                                                                                          data-focusable="true"
                                                                                                                          tabindex="0"
-                                                                                                                         class="sharebook-cursor-pointer sharebook-container r-42olwf border-radius-9999px r-1phboty border-width-1px border-height-0px r-1n430bm min-height-30px edge-element-min-width outline-style-none element-left-right-padding-0px position-absolute r-12pp1o0 transition-duration transition-property users-select-none"
-                                                                                                                         [ngClass]="{'r-loe9s5': !this.isCloseIconHovered, 'r-1p4wkip': this.isCloseIconHovered}"
-                                                                                                                         (mouseenter)="this.handleCloseIconHover($event)"
-                                                                                                                         (mouseleave)="handleCloseIconHover($event)"
+                                                                                                                         class="r-loe9s5 sharebook-cursor-pointer sharebook-container r-42olwf border-radius-9999px r-1phboty border-width-1px border-height-0px r-1n430bm min-height-30px edge-element-min-width outline-style-none element-left-right-padding-0px position-absolute r-12pp1o0 transition-duration transition-property users-select-none"
                                                                                                                          (click)="media.remove()">
                                                                                                                         <div dir="auto"
                                                                                                                              class="css-901oao align-items-center share-button-text-color display-flex flex-direction-row flex-grow-expand font-family third-wheel-text-font-size font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
@@ -204,12 +198,12 @@
             </span>
                                                                                                                         </div>
                                                                                                                     </div>
-                                                                                                                    <div aria-label="Edit media"
+                                                                                                                    <div aria-label="Edit media" title="Coming soon"
                                                                                                                          role="button"
                                                                                                                          data-focusable="true"
                                                                                                                          tabindex="0"
                                                                                                                          class="sharebook-cursor-pointer sharebook-container r-loe9s5 r-42olwf border-radius-9999px r-1phboty border-width-1px border-height-0px min-height-30px r-aj3cln outline-style-none share-button-padding-left-right position-absolute r-inbvtb r-12pp1o0 transition-duration transition-property users-select-none">
-                                                                                                                        <div dir="auto"
+                                                                                                                        <div dir="auto"  title="Coming soon"
                                                                                                                              class="css-901oao align-items-center share-button-text-color display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
                                                                         <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                             <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Edit</span>
@@ -221,7 +215,7 @@
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                    <div class="sharebook-container align-items-center flex-direction-row flex-wrap margin-top-5px">
+                                                                                                    <!--<div class="sharebook-container align-items-center flex-direction-row flex-wrap margin-top-5px">
                                                                                                         <a href="/compose/tweet/tags"
                                                                                                            dir="auto"
                                                                                                            aria-label="Tag people"
@@ -244,7 +238,7 @@
                                                                                                             class="svg-display-inline-block svg-fill-currentcolor miniature-element-height r-a5pmau max-width-100-per svg-position-relative svg-vertical-align users-select-none"><g><path
                                                                                                             d="M19.75 22H4.25C3.01 22 2 20.99 2 19.75V4.25C2 3.01 3.01 2 4.25 2h15.5C20.99 2 22 3.01 22 4.25v15.5c0 1.24-1.01 2.25-2.25 2.25zM4.25 3.5c-.414 0-.75.337-.75.75v15.5c0 .413.336.75.75.75h15.5c.414 0 .75-.337.75-.75V4.25c0-.413-.336-.75-.75-.75H4.25z"></path><path
                                                                                                             d="M17 8.64H7c-.414 0-.75-.337-.75-.75s.336-.75.75-.75h10c.414 0 .75.335.75.75s-.336.75-.75.75zm0 4.11H7c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h10c.414 0 .75.336.75.75s-.336.75-.75.75zm-5 4.11H7c-.414 0-.75-.335-.75-.75s.336-.75.75-.75h5c.414 0 .75.337.75.75s-.336.75-.75.75z"></path></g></svg>Add description</span></a>
-                                                                                                    </div>
+                                                                                                    </div>-->
                                                                                                 </div>
                                                                                             </div>
                                                                                             <iframe *ngIf="this.getVideoEmbedLink()" class="video-frame" [src]="this.embedUrl | safeVideoLink" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -260,36 +254,16 @@
                                                         </div>
                                                         <div class="sharebook-container display-inline-flex flex-direction-row post-padding-bottom">
                                                             <div class="sharebook-container" [formGroup]="this.form">
-<!--                                                                <div role="button"-->
-<!--                                                                     data-focusable="true"-->
-<!--                                                                     tabindex="0"-->
-<!--                                                                     class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty border-height-0px min-height-30px r-aj3cln outline-style-none created-at-dot transition-duration transition-property users-select-none"-->
-<!--                                                                     [nbPopover]="this.whoCanReplyComponent">-->
-<!--                                                                    <div dir="auto"-->
-<!--                                                                         class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">-->
-<!--                                                                        <fa-icon [icon]="this.globeCurrent" style="font-size: 18px; margin-right: 0.5em;" ></fa-icon>-->
-<!--                                                                        <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap">-->
-<!--                                                                            <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{this.privacyClient}}</span>-->
-<!--                                                                        </span>-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
-<!--                                                                <div class="form-group">-->
-<!--                                                                    <label i18n for="first-step-privacy">Privacy</label>-->
-<!--                                                                    <app-select-options-->
-<!--                                                                            labelForId="first-step-privacy" [items]="videoPrivacies" [(ngModel)]="firstStepPrivacyId"-->
-<!--                                                                    ></app-select-options>-->
-<!--                                                                </div>-->
-
                                                                 <nb-select [selected]="firstStepPrivacyId" (selectedChange)="changePrivacy($event)" size="small" status="primary">
                                                                     <nb-option *ngFor="let videoPrivacy of videoPrivacies" [value]="videoPrivacy.id" [disabled]="videoPrivacy.label === 'Private'"> {{ videoPrivacy.label }}</nb-option>
                                                                 </nb-select>
 
                                                                 <div class="form-group" style="margin-top: 0.5rem;">
-                                                                    <label i18n class="label-tags">Tags</label>
+                                                                    <label class="label-tags">Tags</label>
 
                                                                     <app-help>
                                                                         <ng-template appSbTemplate="customHtml">
-                                                                            <ng-container i18n>
+                                                                            <ng-container>
                                                                                 Tags could be used to suggest relevant recommendations. <br />
                                                                                 There is a maximum of 5 tags. <br />
                                                                                 Press <kbd>Enter</kbd> to add a new tag.
@@ -434,7 +408,7 @@
 
     <ng-template #emojiModal>
         <div class="modal-header">
-            <h4 class="modal-title" id="modal-basic-title" i18n>Markdown Emoji List</h4>
+            <h4 class="modal-title" id="modal-basic-title">Markdown Emoji List</h4>
             <!--<fa-icon [icon]="this.faTimes" aria-label="Close" role="button" (click)="hideModals()"></fa-icon>-->
             <div style="color: white" class="sharebook-container align-items-flex-start align-self-stretch justify-content-center min-height-30px header-left-icon-min-width-59px">
                 <div aria-label="Close" role="button" data-focusable="true"

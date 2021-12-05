@@ -10,6 +10,7 @@ import {GdprService} from "../../../shared/services/gdpr.service";
 import {NbDialogService} from "../../../sharebook-nebular/theme/components/dialog/dialog.service";
 import {DialogAreYouSureComponent} from "./dialog-are-u-sure/dialog-are-u-sure.component";
 import {UserStore} from '../../../core/stores/user.store';
+import {NbToastrService} from '../../../sharebook-nebular/theme/components/toastr/toastr.service';
 
 @Component({
   selector: 'app-my-data',
@@ -20,7 +21,7 @@ import {UserStore} from '../../../core/stores/user.store';
 export class MyDataComponent implements OnInit {
 
   constructor(private gdprService: GdprService, private dialogService: NbDialogService,
-              private userStore: UserStore) {
+              private userStore: UserStore, private notifier: NbToastrService) {
   }
 
   ngOnInit(): void {
@@ -49,7 +50,9 @@ export class MyDataComponent implements OnInit {
       if (uSure) {
         this.gdprService.delete(this.userStore.getUser().id)
           .subscribe((data) => {
-          });
+            this.notifier.success('Godspeed my friend! I hope our paths cross again.');
+          },
+            err => this.notifier.danger(err.message, 'Error'));
       }
     });
 

@@ -1,10 +1,8 @@
-import {ClientScript} from '../plugins';
-
 export interface ServerConfigPlugin {
   name: string;
   version: string;
   description: string;
-  clientScripts: { [name: string]: ClientScript };
+  clientScripts: { [name: string]: null };
 }
 
 export interface ServerConfigTheme extends ServerConfigPlugin {

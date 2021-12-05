@@ -2,11 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
-import {TweetQueryGeneratorService} from "./tweet-query-generator.service";
 import {PostsApi} from "./backend/posts.api";
-import {TweetControllerService} from "./tweet-controller.service";
-import {TweetQueryExecutorService} from "./tweet-query-executor.service.";
-import {TweetsRequesterService} from "./tweets-requester.service";
 import {PostsService} from "./posts.service";
 import {TimelineApi} from "../timeline/backend/timeline.api";
 import {SharedVideoCommentModule} from "../shared-post-comment/shared-video-comment.module";
@@ -34,10 +30,6 @@ import {ComponentsModule} from "../../components/components.module";
 
   providers: [
     PostsService,
-    TweetQueryGeneratorService,
-    TweetControllerService,
-    TweetQueryExecutorService,
-    TweetsRequesterService,
     PostsApi,
     TimelineApi,
   ],

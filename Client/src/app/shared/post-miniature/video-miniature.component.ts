@@ -159,24 +159,24 @@ export class VideoMiniatureComponent implements OnInit {
     // if (!video.state) return '';
 
     // if (video.privacy.id !== PostPrivacy.PRIVATE && video.state.id === VideoState.PUBLISHED) {
-    //   return $localize`Published`;
+    //   return `Published`;
     // }
 
     // if (video.scheduledUpdate) {
     //   const updateAt = new Date(video.scheduledUpdate.updateAt.toString()).toLocaleString(this.localeId);
-    //   return $localize`Publication scheduled on ` + updateAt;
+    //   return `Publication scheduled on ` + updateAt;
     // }
     //
     // if (video.state.id === VideoState.TO_TRANSCODE && video.waitTranscoding === true) {
-    //   return $localize`Waiting transcoding`;
+    //   return `Waiting transcoding`;
     // }
     //
     // if (video.state.id === VideoState.TO_TRANSCODE) {
-    //   return $localize`To transcode`;
+    //   return `To transcode`;
     // }
     //
     // if (video.state.id === VideoState.TO_IMPORT) {
-    //   return $localize`To import`;
+    //   return `To import`;
     // }
 
     return '';

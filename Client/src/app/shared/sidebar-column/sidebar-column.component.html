@@ -1,134 +1,73 @@
-        <div class="sharebook-container backface-visibility-hidden container-left-side-margin-right-10px r-1hycxz"
-             data-testid="sidebarColumn" style="width: 80.8%; margin-left: 10px; height: 100vh;"> <!--style by mi!!-->
-            <div class="sharebook-container height-100-per" style="min-height: 730.222px;">
-                <div class="sharebook-container" style="margin-top: 0px;"></div>
-                <div class="sharebook-container position-sticky r-1hycxz" style="bottom: -420px">
-                    <div class="sharebook-container display-block">
-                        <div class="sharebook-container">
-                            <div class="sharebook-container r-1l5qxre component-padding-top">
-                                <!--<app-search></app-search>-->
-                                <my-search-typeahead class="w-100 d-flex"></my-search-typeahead> <!--justify-content-end-->
-                                <app-trends [hideWhoToFollow]="this.hideWhoToFollow"></app-trends>
-                                <app-who-to-follow *ngIf="!this.hideWhoToFollow"></app-who-to-follow>
-                                <div class="sharebook-container element-background-color-rgba main-left-right-vertical-border-color border-radius-16px border-style-solid input-form-border-width r-ku1wi2 overflow-hidden">
-                                    <nav aria-label="Footer" role="navigation"
-                                         class="sharebook-container flex-direction-row flex-wrap left-right-padding-15px">
-                                        <a
-                                                routerLink="/terms" dir="auto" role="link"
-                                                data-focusable="true"
-                                                class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"
-                                                rel=" noopener noreferrer"><span
-                                                class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Terms of Service</span>
-                                        </a>
-                                        <a
-                                            routerLink="/contact"
-                                            dir="auto" role="link" data-focusable="true"
-                                            class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"
-                                            rel=" noopener noreferrer"><span
-                                            class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Contact us</span>
-                                        </a>
-                                        <a
-                                                routerLink="/about"
-                                                dir="auto" role="link" data-focusable="true"
-                                                class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"
-                                                rel=" noopener noreferrer"><span
-                                                class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">About</span>
-                                        </a>
-                                        <a
-                                                [nbPopover]="this.feedbackFormComponent" nbPopoverTrigger="click"
-                                                href="javascript:void(0)"
-                                                dir="auto" role="link" data-focusable="true"
-                                                class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"
-                                                rel=" noopener noreferrer"><span
-                                                class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Send Feedback</span>
-                                        </a>
-                                        <nb-actions size="small">
-                                            <nb-action class="user-action">
-                                                <div [nbContextMenu]="this.moreMenu" aria-expanded="false"
-                                                     aria-haspopup="true" aria-label="More" role="button"
-                                                     data-focusable="true"
-                                                     tabindex="0"
-                                                     class="sharebook-cursor-pointer sharebook-container r-hrzydr footer-padding-right">
-                                                    <div dir="auto"
-                                                         class="css-901oao third-wheel-color font-family third-wheel-text-font-size font-weight-400 line-height-calc min-width-0px text-overflow-wrap">
-                                                        More
-                                                        <svg viewBox="0 0 24 24"
-                                                             class="svg-display-inline-block svg-fill-currentcolor meatballs-menu-height max-width-100-per r-1p4rafz svg-position-relative svg-vertical-align users-select-none">
-                                                            <g>
-                                                                <path d="M19.39 14.882c-1.58 0-2.862-1.283-2.862-2.86s1.283-2.862 2.86-2.862 2.862 1.283 2.862 2.86-1.284 2.862-2.86 2.862zm0-4.223c-.75 0-1.362.61-1.362 1.36s.61 1.36 1.36 1.36 1.362-.61 1.362-1.36-.61-1.36-1.36-1.36zM12 14.882c-1.578 0-2.86-1.283-2.86-2.86S10.42 9.158 12 9.158s2.86 1.282 2.86 2.86S13.578 14.88 12 14.88zm0-4.223c-.75 0-1.36.61-1.36 1.36s.61 1.362 1.36 1.362 1.36-.61 1.36-1.36-.61-1.363-1.36-1.363zm-7.39 4.223c-1.577 0-2.86-1.283-2.86-2.86S3.034 9.16 4.61 9.16s2.862 1.283 2.862 2.86-1.283 2.862-2.86 2.862zm0-4.223c-.75 0-1.36.61-1.36 1.36s.61 1.36 1.36 1.36 1.362-.61 1.362-1.36-.61-1.36-1.36-1.36z"></path>
-                                                            </g>
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                            </nb-action>
-                                        </nb-actions>
-                                        <div dir="auto"
-                                             class="css-901oao third-wheel-color font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap">
+<div class="sharebook-container backface-visibility-hidden container-left-side-margin-right-10px r-1hycxz"
+     data-testid="sidebarColumn" style="width: 80.8%; margin-left: 10px; height: 100vh;"> <!--style by mi!!-->
+    <div class="sharebook-container height-100-per" style="min-height: 730.222px;">
+        <div class="sharebook-container" style="margin-top: 0px;"></div>
+        <div class="sharebook-container position-sticky r-1hycxz" style="bottom: -420px">
+            <div class="sharebook-container display-block">
+                <div class="sharebook-container">
+                    <div class="sharebook-container r-1l5qxre component-padding-top">
+                        <!--<app-search></app-search>-->
+                        <my-search-typeahead class="w-100 d-flex"></my-search-typeahead> <!--justify-content-end-->
+                        <app-trends [hideWhoToFollow]="this.hideWhoToFollow"></app-trends>
+                        <app-who-to-follow *ngIf="!this.hideWhoToFollow"></app-who-to-follow>
+                        <div class="sharebook-container element-background-color-rgba main-left-right-vertical-border-color border-radius-16px border-style-solid input-form-border-width r-ku1wi2 overflow-hidden">
+                            <nav aria-label="Footer" role="navigation"
+                                 class="sharebook-container flex-direction-row flex-wrap left-right-padding-15px">
+                                <a
+                                        routerLink="/terms" dir="auto" role="link"
+                                        data-focusable="true"
+                                        class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"
+                                        rel=" noopener noreferrer"><span
+                                        class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Terms of Service</span>
+                                </a>
+                                <a
+                                        routerLink="/contact"
+                                        dir="auto" role="link" data-focusable="true"
+                                        class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"
+                                        rel=" noopener noreferrer"><span
+                                        class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Contact us</span>
+                                </a>
+                                <a
+                                        routerLink="/about"
+                                        dir="auto" role="link" data-focusable="true"
+                                        class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"
+                                        rel=" noopener noreferrer"><span
+                                        class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">About</span>
+                                </a>
+                                <a
+                                        [nbPopover]="this.feedbackFormComponent" nbPopoverTrigger="click"
+                                        href="javascript:void(0)"
+                                        dir="auto" role="link" data-focusable="true"
+                                        class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"
+                                        rel=" noopener noreferrer"><span
+                                        class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Send Feedback</span>
+                                </a>
+                                <nb-actions size="small">
+                                    <nb-action class="user-action">
+                                        <div [nbContextMenu]="this.moreMenu" aria-expanded="false"
+                                             aria-haspopup="true" aria-label="More" role="button"
+                                             data-focusable="true"
+                                             tabindex="0"
+                                             class="sharebook-cursor-pointer sharebook-container r-hrzydr footer-padding-right">
+                                            <div dir="auto"
+                                                 class="css-901oao third-wheel-color font-family third-wheel-text-font-size font-weight-400 line-height-calc min-width-0px text-overflow-wrap">
+                                                More
+                                                <fa-icon [icon]="this.faEllipsisH" size="lg" class="svg-display-inline-block svg-fill-currentcolor meatballs-menu-height max-width-100-per r-1p4rafz svg-position-relative svg-vertical-align users-select-none" style="margin-bottom: 4px;"></fa-icon>
+                                            </div>
+                                        </div>
+                                    </nb-action>
+                                </nb-actions>
+                                <div dir="auto"
+                                     class="css-901oao third-wheel-color font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap">
                   <span
                           class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">© {{ this.currentYear }}
                       Chessbook</span>
-                                        </div>
-                                    </nav>
                                 </div>
-                            </div>
+                            </nav>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-<!--<div class="sharebook-container backface-visibility-hidden container-left-side-margin-right-10px r-1hycxz" data-testid="sidebarColumn" style="width: 80.8%; margin-left: 10px"> &lt;!&ndash;style by mi!!&ndash;&gt;-->
-<!--  <div class="sharebook-container height-100-per" style="min-height: 730.222px;">-->
-<!--    <div class="sharebook-container" style="margin-top: 0px;"></div>-->
-<!--    <div class="sharebook-container position-sticky r-1hycxz" style="bottom: -420px">-->
-<!--      <div class="sharebook-container display-block">-->
-<!--        <div class="sharebook-container">-->
-<!--          <div class="sharebook-container r-1l5qxre component-padding-top">-->
-<!--            <app-search></app-search>-->
-<!--            <app-trends></app-trends>-->
-<!--            <app-who-to-follow></app-who-to-follow>-->
-<!--            <div class="sharebook-container element-background-color-rgba main-left-right-vertical-border-color border-radius-16px border-style-solid input-form-border-width r-ku1wi2 overflow-hidden">-->
-<!--              <nav aria-label="Footer" role="navigation" class="sharebook-container flex-direction-row flex-wrap left-right-padding-15px"><a-->
-<!--                href="https://twitter.com/tos" target="_blank" dir="auto" role="link" data-focusable="true"-->
-<!--                class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"-->
-<!--                rel=" noopener noreferrer"><span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Terms of Service</span></a><a-->
-<!--                href="https://twitter.com/privacy" target="_blank" dir="auto" role="link" data-focusable="true"-->
-<!--                class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"-->
-<!--                rel=" noopener noreferrer"><span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Privacy Policy</span></a><a-->
-<!--                href="https://support.twitter.com/articles/20170514" target="_blank" dir="auto" role="link"-->
-<!--                data-focusable="true"-->
-<!--                class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"-->
-<!--                rel=" noopener noreferrer"><span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Cookie Policy</span></a><a-->
-<!--                href="https://business.twitter.com/en/help/troubleshooting/how-twitter-ads-work.html" target="_blank"-->
-<!--                dir="auto" role="link" data-focusable="true"-->
-<!--                class="sharebook-link sharebook-cursor-pointer css-901oao third-wheel-color cursor-pointer font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap"-->
-<!--                rel=" noopener noreferrer"><span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">Ads info</span></a>-->
-<!--                <nb-actions size="small">-->
-<!--                  <nb-action class="user-action">-->
-<!--                    <div [nbContextMenu]="this.moreMenu" aria-expanded="false" aria-haspopup="true" aria-label="More" role="button" data-focusable="true"-->
-<!--                         tabindex="0" class="sharebook-cursor-pointer sharebook-container r-hrzydr footer-padding-right">-->
-<!--                      <div dir="auto" class="css-901oao third-wheel-color font-family third-wheel-text-font-size font-weight-400 line-height-calc min-width-0px text-overflow-wrap">More-->
-<!--                        <svg viewBox="0 0 24 24" class="svg-display-inline-block svg-fill-currentcolor meatballs-menu-height max-width-100-per r-1p4rafz svg-position-relative svg-vertical-align users-select-none">-->
-<!--                          <g>-->
-<!--                            <path d="M19.39 14.882c-1.58 0-2.862-1.283-2.862-2.86s1.283-2.862 2.86-2.862 2.862 1.283 2.862 2.86-1.284 2.862-2.86 2.862zm0-4.223c-.75 0-1.362.61-1.362 1.36s.61 1.36 1.36 1.36 1.362-.61 1.362-1.36-.61-1.36-1.36-1.36zM12 14.882c-1.578 0-2.86-1.283-2.86-2.86S10.42 9.158 12 9.158s2.86 1.282 2.86 2.86S13.578 14.88 12 14.88zm0-4.223c-.75 0-1.36.61-1.36 1.36s.61 1.362 1.36 1.362 1.36-.61 1.36-1.36-.61-1.363-1.36-1.363zm-7.39 4.223c-1.577 0-2.86-1.283-2.86-2.86S3.034 9.16 4.61 9.16s2.862 1.283 2.862 2.86-1.283 2.862-2.86 2.862zm0-4.223c-.75 0-1.36.61-1.36 1.36s.61 1.36 1.36 1.36 1.362-.61 1.362-1.36-.61-1.36-1.36-1.36z"></path>-->
-<!--                          </g>-->
-<!--                        </svg>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </nb-action>-->
-<!--                </nb-actions>-->
-<!--                <div dir="auto"-->
-<!--                     class="css-901oao third-wheel-color font-family third-wheel-text-font-size font-weight-400 line-height-calc r-hrzydr min-width-0px footer-padding-right text-overflow-wrap">-->
-<!--                  <span-->
-<!--                    class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">© {{ this.currentYear }} Sharebook, Inc.</span>-->
-<!--                </div>-->
-<!--              </nav>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+    </div>
+</div>

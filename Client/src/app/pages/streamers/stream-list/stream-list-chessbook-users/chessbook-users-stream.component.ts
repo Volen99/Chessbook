@@ -74,11 +74,11 @@ export class ChessbookUsersStreamComponent implements OnInit {
             } else {
               this.twitchLoginName = name;
 
-              this.toasterService.success('Username successfully added!', '', {
+              this.toasterService.success('Username successfully added!', 'Success', {
                 position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
               });
             }
-          });
+          }, err => this.toasterService.danger(err.message, 'Error'));
       }
     });
   }
@@ -101,19 +101,19 @@ export class ChessbookUsersStreamComponent implements OnInit {
           .subscribe((data) => {
             this.twitchLoginName = '';
 
-            this.toasterService.success('Username successfully deleted!', '', {
+            this.toasterService.success('Username successfully deleted!', 'Success', {
               position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
             });
-          });
+          }, err => this.toasterService.danger(err.message, 'Error'));
       } else if (username !== this.twitchLoginName) {
         this.streamersService.editTwitchLoginName(username, user.id)
           .subscribe((data) => {
             this.twitchLoginName = data.username;
 
-            this.toasterService.success('Username Updated!', '', {
+            this.toasterService.success('Username updated!', 'Success', {
               position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
             });
-          });
+          }, err => this.toasterService.danger(err.message, 'Error'));
       }
     });
   }

@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {environment} from '../../../../environments/environment';
 import {ICustomerFeedback} from './feedback.model';
 import {HttpService} from '../../../core/backend/common/api/http.service';
 
@@ -27,9 +26,6 @@ export type FeedbackFormMode = 'form' | 'failed' | 'sending' | 'sent';
 
 @Injectable({providedIn: 'root'})
 export class CustomerFeedbackService {
-
-  public feedbackAlreadyHighlighted = false;
-
   public defaultRateItem: IActionItem = {id: 2, name: 'neutral', icon: faMeh};
 
   public ratingItems: IActionItem[] = [

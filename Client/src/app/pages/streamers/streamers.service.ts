@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpParams} from "@angular/common/http";
+import {catchError} from "rxjs/operators";
 
 import {HttpService} from "../../core/backend/common/api/http.service";
-import {catchError} from "rxjs/operators";
 import {RestExtractor} from "../../core/rest/rest-extractor";
 
 @Injectable()

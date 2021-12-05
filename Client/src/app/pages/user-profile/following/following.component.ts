@@ -1,14 +1,14 @@
+import {ActivatedRoute} from "@angular/router";
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from "rxjs";
+import {catchError, distinctUntilChanged, map, switchMap, tap} from "rxjs/operators";
 
 import {User} from "../../../shared/shared-main/user/user.model";
 import {UserFollowService} from "../../../shared/user-follow/user-follow.service";
 import {NbToastrService} from "../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {ComponentPaginationLight} from "../../../core/rest/component-pagination.model";
-import {Subscription} from "rxjs";
-import {catchError, distinctUntilChanged, map, switchMap, tap} from "rxjs/operators";
 import {HttpStatusCode} from "../../../shared/core-utils/miscs";
 import {UserProfileService} from "../user-profile.service";
-import {ActivatedRoute} from "@angular/router";
 import {RestExtractor} from "../../../core/rest/rest-extractor";
 
 @Component({
@@ -56,7 +56,6 @@ export class FollowingComponent implements OnInit, OnDestroy {
   users: User[] = [];
 
   private loadSubscriptions(screenName: string, following: boolean, more = true) {
-    debugger
     this.userFollowService.listSubscriptions({pagination: this.pagination}, screenName, following)
       .subscribe(
         res => {

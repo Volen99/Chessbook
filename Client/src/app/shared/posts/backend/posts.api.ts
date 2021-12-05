@@ -13,16 +13,8 @@ export class PostsApi {
     constructor(private api: HttpService) {
     }
 
-    getTweetAsync(params: HttpParams): Observable<any> { // Promise<ITwitterResult<ITweetDTO>>;
-        return this.api.get(this.apiController, {params}); // '{ params }' omg I want to kill myself! 11.04.2021, Sunday, 16:18 | Cigarettes After Sex - Falling in Love (lyrics) I 1 Hour Loop
-    }
-
     getPost(id): Observable<any> {
         return this.api.get(`${this.apiController}/${id}`);
-    }
-
-    getTweetsAsync(params: HttpParams): Observable<any[]> {
-        return this.api.get(this.apiController, {params});
     }
 
     publishTweetAsync(params: HttpParams, body?: {}): Observable<any> {

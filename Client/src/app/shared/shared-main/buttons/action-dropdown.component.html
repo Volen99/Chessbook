@@ -1,5 +1,5 @@
 <div class="dropdown-root" ngbDropdown [placement]="placement" [container]="container" *ngIf="areActionsDisplayed(actions, entry)">
-  <button nbButton ghost class="action-button" status="primary" size="small" ngbDropdownToggle role="button" aria-label="Open actions" i18n-aria-label>
+  <button nbButton ghost class="action-button" status="primary" size="small" ngbDropdownToggle role="button" aria-label="Open actions">
     <fa-icon *ngIf="!label && buttonDirection === 'horizontal'" class="more-icon" [icon]="this.faEllipsisH"></fa-icon>
     <fa-icon *ngIf="!label && buttonDirection === 'vertical'" class="more-icon" [icon]="this.faEllipsisH"></fa-icon>
 
@@ -16,7 +16,7 @@
             <fa-icon *ngIf="action.iconName" [icon]="action.iconName" [ngClass]="'icon-' + action.iconName" aria-hidden="true"></fa-icon>
 
             <div class="d-flex flex-column">
-              <span i18n>{{ action.label }}</span>
+              <span>{{ action.label }}</span>
               <small class="text-muted" *ngIf="action.description">{{ action.description }}</small>
             </div>
           </ng-template>

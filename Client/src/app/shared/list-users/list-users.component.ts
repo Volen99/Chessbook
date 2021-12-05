@@ -1,8 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {User} from "../shared-main/user/user.model";
-
 import {Router} from "@angular/router";
-import {Subject} from "rxjs/Subject";
+import {Component, Input, OnInit} from '@angular/core';
+
+import {User} from "../shared-main/user/user.model";
 
 import {
   faUsers,
@@ -22,12 +21,9 @@ import {UserStore} from '../../core/stores/user.store';
 export class ListUsersComponent implements OnInit {
   @Input() users: User[] = [];
   @Input() more: boolean = false;
+  @Input() url: 'who_to_follow' | 'following' | 'followers' = 'who_to_follow';
 
   private lastQueryLength: number;
-
-  // A Subject is like an Observable, but can multicast to many Observers.
-  // Subjects are like EventEmitters: they maintain a registry of many listeners.
-  onDataSubject = new Subject<any[]>();
 
   constructor(private router: Router, private userService: UsersService,
               private notifier: NbToastrService, private userStore: UserStore) {
@@ -35,6 +31,11 @@ export class ListUsersComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.more) {
+      this.pagination = {
+        currentPage: 1,
+        itemsPerPage: 25,
+      };
+
       this.loadMoreUsers(true);
     }
   }
@@ -94,17 +95,19 @@ export class ListUsersComponent implements OnInit {
       return;
     }
 
-    // // No more results
+    // No more results
     if (this.lastQueryLength !== undefined && this.lastQueryLength <= 0) { // < this.pagination.itemsPerPage
       return;
     }
 
     this.pagination.currentPage += 1;
 
-    // this.setScrollRouteParams();
-
     this.loading = true;
-    this.loadMoreUsers();
+
+    if (this.more && this.url === 'who_to_follow') {
+      this.loadMoreUsers();
+    }
+
   }
 
   userClickHandler(screenName: string) {
@@ -117,6 +120,16 @@ export class ListUsersComponent implements OnInit {
     }
 
     return user?.id === this.userStore.getUser().id;
+  }
+
+  searchUser() {
+    let inputElement = document.getElementById('search-video') as HTMLInputElement;
+    if (!inputElement) {
+      return;
+    }
+
+    inputElement.focus();
+    inputElement.value = '@';
   }
 
 }

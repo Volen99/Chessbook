@@ -1,6 +1,4 @@
-﻿import {IRelationshipStateDTO} from "./IRelationshipStateDTO";
-
-export interface IRelationshipState {
+﻿export interface IRelationshipState {
   // User id of the relationship target.
   targetId: number;
 
@@ -24,7 +22,4 @@ export interface IRelationshipState {
 
   // Has a following request been received by the source.
   followingRequestReceived: boolean;
-
-  // DTO
-  relationshipStateDTO: IRelationshipStateDTO;
 }

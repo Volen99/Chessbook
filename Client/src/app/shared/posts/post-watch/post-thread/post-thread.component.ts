@@ -6,8 +6,6 @@ import {takeUntil} from "rxjs/operators";
 import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
 import {Hotkey, HotkeysService} from "angular2-hotkeys";
 
-import {IconDefinition} from "@fortawesome/fontawesome-common-types";
-
 import {
   faComment,
   faShare,
@@ -159,12 +157,9 @@ export class PostThreadComponent implements OnInit {
 
   style = {height: 0};
 
-  sanitizedCommentHTML = '';
-
   // meatballs menu
   faUserTimes = faUserTimes;
   faUserPlus = faUserPlus;
-  faVolumeSlash = faVolumeSlash;
   faCode = faCode;
   faFlag = faFlag;
   faTrashAlt = faTrashAlt;
@@ -271,16 +266,6 @@ export class PostThreadComponent implements OnInit {
 
       return;
     }
-
-    // if (this.videoLinkType === 'external') {
-    //   this.videoRouterLink = null;
-    //   this.videoHref = this.video.url;
-    //   this.videoTarget = '_blank';
-    //   return
-    // }
-    //
-    // // Lazy load
-    // this.videoRouterLink = [ '/search/lazy-load-video', { url: this.video.url } ]
   }
 
   getVideoRouterLink() {
@@ -348,7 +333,6 @@ export class PostThreadComponent implements OnInit {
         // @ts-ignore
         video: this.post,
         playlistPosition: 0,
-        videoCaptions: [{language: null, captionPath: ''}],
       }
     });
     /*this.videoShareModal.show(0, 0);*/

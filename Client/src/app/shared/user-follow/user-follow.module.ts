@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 
 import {UserFollowService} from "./user-follow.service";
-import {SharedMainModule} from "../shared-main/shared-main.module";
 import {FollowButtonComponent} from "./follow-button.component";
 import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/button.module";
-
-
+import {CommonModule} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -13,7 +11,7 @@ import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/bu
   ],
 
   imports: [
-    SharedMainModule,
+    CommonModule,
     NbButtonModule,
   ],
   exports: [

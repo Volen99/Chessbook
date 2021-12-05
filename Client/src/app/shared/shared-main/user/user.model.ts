@@ -4,10 +4,10 @@ import {IUser, UserData} from "../../../core/interfaces/common/users";
 import {IUserEntities} from "../../post-object/Entities/interfaces/IUserEntities";
 import {UserRight} from "../../models/users/user-right.enum";
 import {UserRole} from "../../models/users/user-role";
-import {UserAdminFlag} from "app/shared/models/users/user-flag.model";
 import {UserNotificationSetting} from "../../models/users/user-notification-setting.model";
 import {hasUserRight} from "../../../core/utils/users/user-role";
 import {ResultList} from "../../models";
+import {UserAdminFlag} from '../../models/users/user-flag.model';
 
 // Sharebook User 😎
 export class User implements IUser {
@@ -213,23 +213,4 @@ export class User implements IUser {
 // // added 22.03.2021, Monday, 20:09 PM | songs i listen to at 3am on a school night when it's raining.
 // set displayName(value: string) {
 //   this.userDTO.displayName = value;
-// }
-
-
-// get profileImageUrlFullSize(): string {
-//   let profileImageURL = this.profileImageUrl;
-//   if (!profileImageURL) {
-//     return null;
-//   }
-//
-//   return profileImageURL.replace(this.REGEX_PROFILE_IMAGE_SIZE, SharebookConsts.EMPTY);
-// }
-//
-// get profileImageUrl400x400(): string {
-//   let profileImageURL = this.profileImageUrl;
-//   if (!profileImageURL) {
-//     return null;
-//   }
-//
-//   return profileImageURL.replace(this.REGEX_PROFILE_IMAGE_SIZE, "_400x400");
 // }

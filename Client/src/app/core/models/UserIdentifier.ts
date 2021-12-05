@@ -26,27 +26,4 @@ export class UserIdentifier implements IUserIdentifier {
     return this.id.toString();
   }
 
-        // public static implicit operator UserIdentifier (userId: number) {
-        //     return new UserIdentifier(userId);
-        // }
-        //
-        // public static implicit operator UserIdentifier (username: string) {
-        //     return new UserIdentifier(username);
-        // }
-    }
-
-
-// public UserIdentifier()
-// {
-// }
-//
-// public UserIdentifier(long userId) : this()
-// {
-//   Id = userId;
-//   IdStr = userId.ToString(CultureInfo.InvariantCulture);
-// }
-//
-// public UserIdentifier(string userScreenName) : this()
-// {
-//   ScreenName = userScreenName;
-// }
+}

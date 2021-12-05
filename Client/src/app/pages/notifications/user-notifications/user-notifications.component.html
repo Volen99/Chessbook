@@ -1,4 +1,4 @@
-<div *ngIf="componentPagination.totalItems === 0" class="no-notification" i18n>You don't have notifications.</div>
+<div *ngIf="componentPagination.totalItems === 0" class="no-notification">You don't have notifications.</div>
 
 <div class="notifications" appInfiniteScroller [autoInit]="true" (nearOfBottom)="onNearOfBottom()" [dataObservable]="onDataSubject.asObservable()">
   <div *ngFor="let notification of notifications" class="notification" [ngClass]="{ unread: !notification.read }" (click)="markAsRead(notification)">
@@ -12,7 +12,7 @@
             <img alt="" aria-labelledby="avatar" class="avatar" [src]="notification.post.user.avatarUrl" />
           </a>
 
-          <div class="message" i18n>
+          <div class="message">
             {{ notification.post.user.displayName }} published a new video: <a (click)="markAsRead(notification)" [routerLink]="notification.videoUrl">{{ notification.post.name }}</a>
           </div>
         </ng-template>
@@ -20,7 +20,7 @@
         <ng-template #noVideo>
           <fa-icon [icon]="this.faExclamationTriangle" aria-hidden="true"></fa-icon>
 
-          <div class="message" i18n>
+          <div class="message">
             The notification concerns a video now unavailable
           </div>
         </ng-template>
@@ -29,7 +29,7 @@
       <ng-container *ngSwitchCase="5"> <!-- UserNotificationType.UNBLACKLIST_ON_MY_VIDEO -->
         <fa-icon [icon]="this.faUndo" aria-hidden="true"></fa-icon>
 
-        <div class="message" i18n>
+        <div class="message">
           Your video <a (click)="markAsRead(notification)" [routerLink]="notification.videoUrl">{{ notification.post.name }}</a> has been unblocked
         </div>
       </ng-container>
@@ -37,7 +37,7 @@
       <ng-container *ngSwitchCase="4"> <!-- UserNotificationType.BLACKLIST_ON_MY_VIDEO -->
         <fa-icon [icon]="this.faBan" aria-hidden="true"></fa-icon>
 
-        <div class="message" i18n>
+        <div class="message">
           Your video <a (click)="markAsRead(notification)" [routerLink]="notification.videoUrl">{{ notification.videoBlacklist.video.name }}</a> has been blocked
         </div>
       </ng-container>
@@ -45,20 +45,20 @@
       <ng-container *ngSwitchCase="3"> <!-- UserNotificationType.NEW_ABUSE_FOR_MODERATORS -->
         <fa-icon [icon]="this.faFlag" aria-hidden="true"></fa-icon>
 
-        <div class="message" *ngIf="notification.videoUrl" i18n>
+        <div class="message" *ngIf="notification.videoUrl">
           <a (click)="markAsRead(notification)" [routerLink]="notification.abuseUrl" [queryParams]="notification.abuseQueryParams">A new video abuse</a> has been created on video <a (click)="markAsRead(notification)" [routerLink]="notification.videoUrl">{{ notification.abuse.post.name }}</a>
         </div>
 
-        <div class="message" *ngIf="notification.commentUrl" i18n>
+        <div class="message" *ngIf="notification.commentUrl">
           <a (click)="markAsRead(notification)" [routerLink]="notification.abuseUrl" [queryParams]="notification.abuseQueryParams">A new comment abuse</a> has been created on video <a (click)="markAsRead(notification)" [routerLink]="notification.commentUrl">{{ notification.abuse.comment.post.name }}</a>
         </div>
 
-        <div class="message" *ngIf="notification.accountUrl" i18n>
+        <div class="message" *ngIf="notification.accountUrl">
           <a (click)="markAsRead(notification)" [routerLink]="notification.abuseUrl" [queryParams]="notification.abuseQueryParams">A new account abuse</a> has been created on account <a (click)="markAsRead(notification)" [routerLink]="notification.accountUrl">{{ notification.abuse.account.displayName }}</a>
         </div>
 
         <!-- Deleted entity associated to the abuse -->
-        <div class="message" *ngIf="!notification.videoUrl && !notification.commentUrl && !notification.accountUrl" i18n>
+        <div class="message" *ngIf="!notification.videoUrl && !notification.commentUrl && !notification.accountUrl">
           <a (click)="markAsRead(notification)" [routerLink]="notification.abuseUrl" [queryParams]="notification.abuseQueryParams">A new abuse</a> has been created
         </div>
       </ng-container>
@@ -66,7 +66,7 @@
       <ng-container *ngSwitchCase="15"> <!-- UserNotificationType.ABUSE_STATE_CHANGE -->
         <fa-icon [icon]="this.faFlag" aria-hidden="true"></fa-icon>
 
-        <div class="message" i18n>
+        <div class="message">
           <a (click)="markAsRead(notification)" [routerLink]="notification.abuseUrl" [queryParams]="notification.abuseQueryParams">Your abuse {{ notification.abuse.id }}</a> has been
           <ng-container *ngIf="isAccepted(notification)">accepted</ng-container>
           <ng-container *ngIf="!isAccepted(notification)">rejected</ng-container>
@@ -76,7 +76,7 @@
       <ng-container *ngSwitchCase="16"> <!-- UserNotificationType.ABUSE_NEW_MESSAGE -->
         <fa-icon [icon]="this.faFlag" aria-hidden="true"></fa-icon>
 
-        <div class="message" i18n>
+        <div class="message">
           <a (click)="markAsRead(notification)" [routerLink]="notification.abuseUrl" [queryParams]="notification.abuseQueryParams">Abuse {{ notification.abuse.id }}</a> has a new message
         </div>
       </ng-container>
@@ -87,7 +87,7 @@
             <img alt="" aria-labelledby="avatar" class="avatar" [src]="notification.comment.account.avatarUrl" />
           </a>
 
-          <div class="message" i18n>
+          <div class="message">
             <a (click)="markAsRead(notification)" [routerLink]="notification.accountUrl">{{ notification.comment.account.displayName }}</a> commented your post <a (click)="markAsRead(notification)" [routerLink]="notification.commentUrl">{{ notification.comment.post.name }}</a>
           </div>
         </ng-container>
@@ -95,7 +95,7 @@
         <ng-container *ngIf="!notification.comment">
           <fa-icon [icon]="this.faCommentExclamation" aria-hidden="true"></fa-icon>
 
-          <div class="message" i18n>
+          <div class="message">
             The notification concerns a comment now unavailable
           </div>
         </ng-container>
@@ -104,7 +104,7 @@
       <ng-container *ngSwitchCase="9"> <!-- UserNotificationType.NEW_USER_REGISTRATION -->
         <fa-icon [icon]="this.faUserSolid" aria-hidden="true"></fa-icon>
 
-        <div class="message" i18n>
+        <div class="message">
           User <a (click)="markAsRead(notification)" [routerLink]="notification.accountUrl">{{ notification.account.displayName }}</a> registered on your instance
         </div>
       </ng-container>
@@ -114,7 +114,7 @@
           <img alt="" aria-labelledby="avatar" class="avatar" [src]="notification.actorFollow.follower.avatarUrl" />
         </a>
 
-        <div class="message" i18n>
+        <div class="message">
           <a (click)="markAsRead(notification)" [routerLink]="notification.accountUrl">{{ notification.actorFollow.follower.displayName }}</a> started following you
         </div>
       </ng-container>
@@ -125,7 +125,7 @@
             <img alt="" aria-labelledby="avatar" class="avatar" [src]="notification.comment.account.avatarUrl" />
           </a>
 
-          <div class="message" i18n>
+          <div class="message">
             <a (click)="markAsRead(notification)" [routerLink]="notification.accountUrl">{{ notification.comment.account.displayName }}</a> mentioned you on <a (click)="markAsRead(notification)" [routerLink]="notification.commentUrl">post {{ notification.comment.post.name }}</a>
           </div>
         </ng-container>
@@ -133,7 +133,7 @@
         <ng-container *ngIf="!notification.comment">
           <fa-icon [icon]="this.faSensorAlert" aria-hidden="true"></fa-icon>
 
-          <div class="message" i18n>
+          <div class="message">
             The notification concerns a comment now unavailable
           </div>
         </ng-container>
@@ -144,7 +144,7 @@
           <img alt="" aria-labelledby="avatar" class="avatar" [src]="notification.postLike.account.avatarUrl" />
         </a>
 
-        <div class="message" i18n>
+        <div class="message">
           <a (click)="markAsRead(notification)" [routerLink]="notification.accountUrl">{{ notification.postLike.account.displayName }}</a> liked your <a (click)="markAsRead(notification)" [routerLink]="notification.videoUrl">post {{ notification.postLike.post.name }}</a>
           <fa-icon [icon]="this.faHeartCircle" aria-hidden="true"></fa-icon>
         </div>
@@ -153,14 +153,14 @@
       <ng-container *ngSwitchCase="18"> <!-- UserNotificationType.NEW_PEERTUBE_VERSION -->
         <fa-icon [icon]="this.faCog" aria-hidden="true"></fa-icon>
 
-        <div class="message" i18n>
+        <div class="message">
         </div>
       </ng-container>
 
       <ng-container *ngSwitchDefault>
         <fa-icon [icon]="this.faSensorAlert" aria-hidden="true"></fa-icon>
 
-        <div class="message" i18n>
+        <div class="message">
           Blunder! The notification points to content now unavailable
         </div>
       </ng-container>

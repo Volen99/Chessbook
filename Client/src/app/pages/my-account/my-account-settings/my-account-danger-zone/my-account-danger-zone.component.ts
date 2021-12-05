@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 
-import {Notifier} from "../../../../core/notification/notifier.service";
 import {ConfirmService} from "../../../../core/confirm/confirm.service";
 import {UsersService} from "../../../../core/backend/common/services/users.service";
 import {RedirectService} from "../../../../core/routing/redirect.service";
 import {NbDialogService} from "../../../../sharebook-nebular/theme/components/dialog/dialog.service";
-import {ShowcaseDialogComponent} from "../../../modal-overlays/dialog/showcase-dialog/showcase-dialog.component";
+import {ShowcaseDialogComponent} from "./showcase-dialog/showcase-dialog.component";
+import {NbToastrService} from '../../../../sharebook-nebular/theme/components/toastr/toastr.service';
 
 @Component({
   selector: 'my-account-danger-zone',
@@ -16,7 +16,7 @@ export class MyAccountDangerZoneComponent implements OnInit {
   @Input() screenName: string;
 
   constructor(
-    private notifier: Notifier,
+    private notifier: NbToastrService,
     private userService: UsersService,
     private confirmService: ConfirmService,
     private redirectService: RedirectService,

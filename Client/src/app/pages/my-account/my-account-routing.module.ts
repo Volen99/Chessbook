@@ -38,54 +38,6 @@ const myAccountRoutes: Routes = [
           }
         }
       },
-
-      {
-        path: 'video-channels',
-        redirectTo: '/my-library/video-channels',
-        pathMatch: 'full'
-      },
-
-      {
-        path: 'video-playlists',
-        redirectTo: '/my-library/video-playlists',
-        pathMatch: 'full'
-      },
-      {
-        path: 'video-playlists/create',
-        redirectTo: '/my-library/video-playlists/create',
-        pathMatch: 'full'
-      },
-      {
-        path: 'video-playlists/:videoPlaylistId',
-        redirectTo: '/my-library/video-playlists/:videoPlaylistId',
-        pathMatch: 'full'
-      },
-      {
-        path: 'video-playlists/update/:videoPlaylistId',
-        redirectTo: '/my-library/video-playlists/update/:videoPlaylistId',
-        pathMatch: 'full'
-      },
-
-      {
-        path: 'videos',
-        redirectTo: '/my-library/videos',
-        pathMatch: 'full'
-      },
-      {
-        path: 'video-imports',
-        redirectTo: '/my-library/video-imports',
-        pathMatch: 'full'
-      },
-      {
-        path: 'subscriptions',
-        redirectTo: '/my-library/subscriptions',
-        pathMatch: 'full'
-      },
-      {
-        path: 'ownership',
-        redirectTo: '/my-library/ownership',
-        pathMatch: 'full'
-      },
       {
         path: 'blocklist/accounts',
         component: MyAccountBlocklistComponent,
@@ -94,11 +46,6 @@ const myAccountRoutes: Routes = [
             title: `Blocked accounts`
           }
         }
-      },
-      {
-        path: 'history/videos',
-        redirectTo: '/my-library/history/videos',
-        pathMatch: 'full'
       },
       {
         path: 'notifications',

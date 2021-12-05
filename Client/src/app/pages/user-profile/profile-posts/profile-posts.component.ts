@@ -1,5 +1,5 @@
+import {ActivatedRoute, Router} from "@angular/router";
 import {
-  ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
   Input,
@@ -8,13 +8,11 @@ import {
   OnInit,
   SimpleChanges
 } from '@angular/core';
-import {forkJoin, Subscription} from 'rxjs';
-import {first, tap} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 
 import {AbstractPostList} from "../../../shared/post-miniature/abstract-post-list";
 import {immutableAssign} from "../../../helpers/utils";
 import {PostFilter} from "../../../shared/posts/models/post-query.type";
-import {ActivatedRoute, Router} from "@angular/router";
 import {ServerService} from "../../../core/server/server.service";
 import {NbToastrService} from "../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {ConfirmService} from "../../../core/confirm/confirm.service";
@@ -27,7 +25,6 @@ import {UserProfileService} from "../user-profile.service";
 import {PostsService} from "../../../shared/posts/posts.service";
 import {IUser} from "../../../core/interfaces/common/users";
 import {InitUserService} from "../../../theme/services/init-user.service";
-import {GetUserTimelineParameters} from "../../../shared/models/timeline/get-user-timeline-parameters";
 import {Post} from "../../../shared/shared-main/post/post.model";
 
 @Component({
@@ -76,11 +73,6 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
   }
 
   ngOnInit() {
-    // this.postService.getPinnedPost(this.profileCurrent.id)
-    //   .subscribe((data) => {
-    //     this.pinnedPost = data;
-    //   }, err => this.notifier.danger(err.message, 'Error'));
-
     super.ngOnInit();
 
     this.enableAllFilterIfPossible();
@@ -127,24 +119,7 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
       userId: this.profileCurrent.id,
     };
 
-    // this.postService.getPinnedPost(this.profileCurrent.id)
-    //   .subscribe((data) => {
-    //     this.pinnedPost = data;
-    //   }, err => this.notifier.danger(err.message, 'Error'));
-
     return this.postService.getUserTimelineQuery(params);
-
-
-    // const newPagination = immutableAssign(this.pagination, {currentPage: page});
-    // const options = {
-    //   user: this.profileCurrent,
-    //   videoPagination: newPagination,
-    //   sort: this.sort,
-    //   videoFilter: this.filter
-    // };
-    //
-    // // @ts-ignore
-    // return this.postService.getProfilePosts(options);
   }
 
   toggleModerationDisplay() {
@@ -169,7 +144,4 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
     return postsCount * 470;
   }
 
-  hack() {
-    this.posts.unshift(this.pinnedPost);
-  }
 }

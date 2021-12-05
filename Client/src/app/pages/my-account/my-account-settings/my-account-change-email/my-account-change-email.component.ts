@@ -9,7 +9,6 @@ import {ServerService} from "../../../../core/server/server.service";
 import {UsersService} from "../../../../core/backend/common/services/users.service";
 import {NbTokenService} from "../../../../sharebook-nebular/auth/services/token/token.service";
 import {UserStore} from "../../../../core/stores/user.store";
-import {EMAIL_PATTERN, NUMBERS_PATTERN} from "../../../../auth/components";
 import {NbAuthOAuth2JWTToken} from "../../../../sharebook-nebular/auth/services/token/token";
 
 @Component({

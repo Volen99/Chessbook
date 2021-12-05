@@ -1,6 +1,7 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MessageService} from 'primeng/api';
+import {HotkeyModule} from "angular2-hotkeys";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 import {CommonMockModule} from "./mock/common/common-mock.module";
@@ -16,19 +17,15 @@ import {RestService} from "./rest/rest.service";
 import {RestExtractor} from "./rest/rest-extractor";
 import {ScreenService} from "./wrappers/screen.service";
 import {LocalStorageService, SessionStorageService} from "./wrappers/storage.service";
-import {HooksService, PluginService} from "./plugins";
 import {HtmlRendererService} from "./renderer/html-renderer.service";
 import {LinkifierService} from "./renderer/linkifier.service";
 import {MarkdownService} from "./renderer/markdown.service";
 import {ConfirmService} from "./confirm/confirm.service";
-import {Notifier} from "./notification/notifier.service";
-import {IotBackendModule} from "./backend/iot/iot-backend.module";
 import {PeerTubeSocket} from "./notification/sharebook-socket.service";
 import {ServerService} from "./server/server.service";
 import {RedirectService} from "./routing/redirect.service";
 import {MetaService} from "./routing/meta.service";
 import {MetaGuard} from "./routing/meta-guard.service";
-import {HotkeyModule} from "angular2-hotkeys";
 import {ServerConfigResolver} from "./routing/server-config-resolver.service";
 import {UserRightGuard} from "./routing/user-right-guard.service";
 import {CanDeactivateGuard} from "./routing/can-deactivate-guard.service";
@@ -38,9 +35,6 @@ import {ChessbookRouterService} from './routing/chessbook-router.service';
 export const NB_CORE_PROVIDERS = [
   ...CommonMockModule.forRoot().providers,
   ...CommonBackendModule.forRoot().providers,
-
-  // ...EcommerceMockModule.forRoot().providers,
-  ...IotBackendModule.forRoot().providers,
 
   LayoutService,
   StateService,
@@ -64,7 +58,6 @@ export const NB_CORE_PROVIDERS = [
   declarations: [],
   exports: [
     NbAuthModule,
-    // KeyboardShortcutsComponent, // You don't use it here, coz you can't import 2 Core Modules :(
   ],
 })
 export class CoreModule {
@@ -82,10 +75,7 @@ export class CoreModule {
         InitUserService,
         SettingsService,
 
-
         ServerService,
-        PluginService,
-        HooksService,
 
         HtmlRendererService,
         LinkifierService,
@@ -94,7 +84,6 @@ export class CoreModule {
         ConfirmService,
         MessageService,
         RedirectService,
-        Notifier,
         PeerTubeSocket,
         CanDeactivateGuard,
         ChessbookRouterService,

@@ -1,8 +1,8 @@
 <ng-template #modal>
   <div class="modal-header">
     <h4 class="modal-title">
-      <ng-container i18n *ngIf="isAdminView">Messages with the reporter</ng-container>
-      <ng-container i18n *ngIf="!isAdminView">Messages with the moderation team</ng-container>
+      <ng-container *ngIf="isAdminView">Messages with the reporter</ng-container>
+      <ng-container *ngIf="!isAdminView">Messages with the moderation team</ng-container>
     </h4>
 
     <fa-icon [icon]="this.faTimes" aria-label="Close" role="button" (click)="hide()"></fa-icon>
@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div class="no-messages" *ngIf="noResults" i18n>
+    <div class="no-messages" *ngIf="noResults">
       No messages for now.
     </div>
 
@@ -41,7 +41,7 @@
       </div>
 
       <div class="form-group inputs">
-        <input type="submit" i18n-value value="Add a message" class="action-button-submit" [disabled]="!form.valid || sendingMessage">
+        <input type="submit" value="Add a message" class="action-button-submit" [disabled]="!form.valid || sendingMessage">
       </div>
     </form>
 

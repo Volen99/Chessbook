@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import * as MarkdownIt from 'markdown-it';
 
 import {
   COMPLETE_RULES,
@@ -8,7 +9,6 @@ import {
   TEXT_WITH_HTML_RULES
 } from "../utils/markdown";
 
-import * as MarkdownIt from 'markdown-it';
 import {HtmlRendererService} from "./html-renderer.service";
 import {buildVideoLink, decorateVideoLink} from '../utils/common/url';
 

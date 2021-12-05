@@ -1,15 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpParams} from "@angular/common/http";
+import {Subject} from "rxjs";
 
 import {faUserPlus, faUserCheck, faUsers} from '@fortawesome/pro-light-svg-icons';
-import {faFire as faFireSolid, faUsers as faUsersSolid} from '@fortawesome/pro-solid-svg-icons';
+import {faFire as faFireSolid} from '@fortawesome/pro-solid-svg-icons';
 
 import {IStreams} from "../models/streams-model";
 import {StreamersService} from "../streamers.service";
 import {NbDialogService} from "../../../sharebook-nebular/theme/components/dialog/dialog.service";
 import {UserStore} from "../../../core/stores/user.store";
-import {Subject, Subscription} from "rxjs";
 import {RestService} from "../../../core/rest/rest.service";
 import {Animations} from "../../../core/animations";
 
@@ -20,8 +20,6 @@ import {Animations} from "../../../core/animations";
   animations: [Animations.listItemLoadAnimation],
 })
 export class StreamListComponent implements OnInit, OnDestroy {
-  private routeSub: Subscription;
-
   private destroy$ = new Subject<void>();
 
   constructor(private streamersService: StreamersService, private dialogService: NbDialogService,
@@ -49,7 +47,6 @@ export class StreamListComponent implements OnInit, OnDestroy {
 
   faFireSolid = faFireSolid;
   faUsers = faUsers;
-  faUsersSolid = faUsersSolid;
   faUserPlus = faUserPlus;
   faUserCheck = faUserCheck;
 
@@ -57,7 +54,7 @@ export class StreamListComponent implements OnInit, OnDestroy {
     this.streamersService.getLiveStreams(null)
         .subscribe((data: IStreams) => {
           this.streams = data;
-        });
+        }, err => console.log(err.message));
   }
 
   loadMoreStreams() {
@@ -79,7 +76,7 @@ export class StreamListComponent implements OnInit, OnDestroy {
           this.streams.data.push(...data.data);
 
           this.loading = false;
-        });
+        }, err => console.log(err.message));
   }
 
 }

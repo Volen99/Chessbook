@@ -1,14 +1,15 @@
 import {Component, EventEmitter, Output, ViewChild, ElementRef, HostBinding} from '@angular/core';
 import html2canvas, {Options} from '@indigo/html2canvas';
 import {HttpErrorResponse} from '@angular/common/http';
-import {ICustomerFeedback} from './feedback.model';
-import {CustomerFeedbackService, FeedbackFormMode, IActionItem} from './feedback.service';
-import {UserStore} from '../../../core/stores/user.store';
 
 import {
   faTimes,
 } from '@fortawesome/pro-light-svg-icons';
+
 import {NbInputDirective} from '../../../sharebook-nebular/theme/components/input/input.directive';
+import {ICustomerFeedback} from './feedback.model';
+import {CustomerFeedbackService, FeedbackFormMode, IActionItem} from './feedback.service';
+import {UserStore} from '../../../core/stores/user.store';
 
 @Component({
   selector: 'app-feedback-form',

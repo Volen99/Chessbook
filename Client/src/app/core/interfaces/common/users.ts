@@ -1,5 +1,6 @@
 import {Observable} from 'rxjs';
 import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
+
 import {Settings} from './settings';
 import {getAbsoluteAPIUrl} from "../../../helpers/utils";
 import {IPost} from "../../../shared/posts/models/post.model";
@@ -9,12 +10,7 @@ import {UserUpdate} from "../../../shared/models/users/user-update.model";
 import {UserCreate} from "../../../shared/models/users/user-create.model";
 import {UserAdminFlag} from "../../../shared/models/users/user-flag.model";
 import {UserRole} from "../../../shared/models/users/user-role";
-import {RestPagination} from "../../rest/rest-pagination";
-import {SortMeta} from "primeng/api";
-import {ResultList} from "../../../shared/models";
 import {UserRight} from "../../../shared/models/users/user-right.enum";
-import {Avatar} from "primeng/avatar";
-import {User} from "../../../shared/shared-main/user/user.model";
 import {UserNotificationSetting} from "../../../shared/models/users/user-notification-setting.model";
 import {ComponentPaginationLight} from "../../rest/component-pagination.model";
 
@@ -176,15 +172,11 @@ export abstract class UserData {
 
   abstract getAnonymousUser();
 
-  // abstract getUsers (parameters: { pagination: RestPagination, sort: SortMeta, search?: string }): Observable<ResultList<IUser>>;
-
   abstract getUsers(parameters: { pagination: ComponentPaginationLight });
 
   abstract getYourBirthday(userId: number);
 
-
   // end
-
 
   static GET_ACTOR_AVATAR_URL(actor: { avatar?: { url?: string, path: string } }) {
     if (actor?.avatar?.url) return actor.avatar.url;
@@ -196,21 +188,8 @@ export abstract class UserData {
     }
   }
 
-  static CREATE_BY_STRING(screenName: string /*host: string, forceHostname = false*/) {
-    const absoluteAPIUrl = getAbsoluteAPIUrl();
-    const thisHost = new URL(absoluteAPIUrl).host;
-
-    // if (host.trim() === thisHost && !forceHostname) {
-    //   return accountName;
-    // }
-
-    return screenName.substring(1);  // accountName + '@' + host
+  static CREATE_BY_STRING(screenName: string) {
+    return screenName.substring(1);
   }
 
-  static IS_LOCAL(host: string) {
-    const absoluteAPIUrl = getAbsoluteAPIUrl();
-    const thisHost = new URL(absoluteAPIUrl).host;
-
-    return host.trim() === thisHost;
-  }
 }

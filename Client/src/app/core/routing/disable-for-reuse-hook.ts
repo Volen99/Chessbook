@@ -1,7 +1,4 @@
 export interface DisableForReuseHook {
-
-  disableForReuse (): void
-
-  enabledForReuse (): void
-
+  disableForReuse(): void;
+  enabledForReuse(): void;
 }

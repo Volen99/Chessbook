@@ -2,17 +2,7 @@
     <span class="feedback-form_title">Send us your feedback!</span>
     <span class="feedback-form_subtitle">How would you rate your experience?</span>
 
-    <!--[customTooltipTarget]="feedbackTooltip"-->
     <div class="feedback-form_rating">
-<!--        <button nbButton *ngFor="let item of ratingItems"-->
-<!--                [value]="item"-->
-<!--                [selected]="feedbackRate === item"-->
-<!--                [iconName]="item.icon"-->
-<!--                title="setTooltipText(item.name)"-->
-<!--                (itemSelect)="setRate($event)">-->
-<!--            <fa-icon [icon]="item.icon"></fa-icon>-->
-<!--        </button>-->
-
         <nb-radio-group [(ngModel)]="feedbackRate">
             <nb-radio
                     *ngFor="let item of ratingItems"
@@ -38,11 +28,6 @@
     </div>
 
     <div class="feedback-form_footer">
-<!--        <custom-checkbox-->
-<!--                [checked]="includeScreenshot"-->
-<!--                [text]="'includeScreenshot'"-->
-<!--                (checkedChange)="handleIncludeScreenshotChange($event)"-->
-<!--        ></custom-checkbox>-->
         <nb-checkbox (checkedChange)="this.handleIncludeScreenshotChange($event)">Include a screenshot</nb-checkbox>
         <button nbButton status="primary" shape="round" class="feedback-form_send-btn" (click)="handleSubmit($event)">
             Send Feedback
@@ -66,8 +51,6 @@
     <span class="feedback-form_failed-title">Blunder!</span>
     <span class="feedback-form_failed-description">Couldn't send your message. Please try again later</span>
 </div>
-
-<!--<div #feedbackTooltip="tooltip" igxTooltip>{{ tooltipText }}</div>-->
 
 <button class="feedback-form_close-btn" (click)="closeForm($event)" disabled>
     <fa-icon [icon]="this.faTimes" nbTooltip="Click on screen to close"></fa-icon>

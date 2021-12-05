@@ -85,7 +85,7 @@ export class ActorAvatarEditComponent implements OnInit {
 
   getChannel(): User { // VideoChannel
     if (this.isChannel()) {
-      return this.actor as User;
+      return this.actor;
     }
 
     return undefined;
@@ -96,6 +96,6 @@ export class ActorAvatarEditComponent implements OnInit {
       return undefined;
     }
 
-    return this.actor as User;
+    return this.actor;
   }
 }

@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
   Input,
@@ -8,10 +7,11 @@ import {
   OnInit,
   SimpleChanges
 } from '@angular/core';
-import {IPoll} from "../../shared/posts/models/poll/poll";
 import {HttpClient} from "@angular/common/http";
-import {SurveyService} from "../../shared/services/survey.service";
 import { debounce } from 'lodash';
+
+import {IPoll} from "../../shared/posts/models/poll/poll";
+import {SurveyService} from "../../shared/services/survey.service";
 
 @Component({
   selector: 'app-poll',

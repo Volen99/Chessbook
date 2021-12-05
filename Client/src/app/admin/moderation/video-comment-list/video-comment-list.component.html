@@ -1,17 +1,16 @@
 <h1>
   <fa-icon [icon]="this.faCommentSmile" aria-hidden="true"></fa-icon>
-  <ng-container i18n>Video comments</ng-container>
+  <ng-container>Video comments</ng-container>
 
-  <app-feed [syndicationItems]="syndicationItems"></app-feed>
 </h1>
 
-<em i18n>This view also shows comments from blocked accounts.</em>
+<em>This view also shows comments from blocked accounts.</em>
 
 <p-table
   [value]="comments" [paginator]="totalRecords > 0" [totalRecords]="totalRecords" [rows]="rowsPerPage" [rowsPerPageOptions]="rowsPerPageOptions"
   [sortField]="sort.field" [sortOrder]="sort.order" dataKey="id"
   [lazy]="true" (onLazyLoad)="loadLazy($event)" [lazyLoadOnInit]="false"
-  [showCurrentPageReport]="true" i18n-currentPageReportTemplate
+  [showCurrentPageReport]="true"
   currentPageReportTemplate="Showing {{'{first}'}} to {{'{last}'}} of {{'{totalRecords}'}} comments"
   (onPage)="onPage($event)" [expandedRowKeys]="expandedRows"
   [(selection)]="selectedComments"
@@ -20,7 +19,7 @@
     <div class="caption">
       <div>
         <app-action-dropdown
-          *ngIf="isInSelectionMode()" i18n-label label="Batch actions" theme="orange"
+          *ngIf="isInSelectionMode()" label="Batch actions" theme="orange"
           [actions]="bulkCommentActions" [entry]="selectedComments">
         </app-action-dropdown>
       </div>
@@ -34,14 +33,14 @@
   <ng-template pTemplate="header">
     <tr>
       <th style="width: 40px">
-        <p-tableHeaderCheckbox ariaLabel="Select all rows" i18n-ariaLabel></p-tableHeaderCheckbox>
+        <p-tableHeaderCheckbox ariaLabel="Select all rows"></p-tableHeaderCheckbox>
       </th>
       <th style="width: 40px"></th>
       <th style="width: 150px;"></th>
-      <th style="width: 300px" i18n>Account</th>
-      <th style="width: 300px" i18n>Video</th>
-      <th i18n>Comment</th>
-      <th style="width: 150px;" i18n pSortableColumn="createdAt">Date <p-sortIcon field="createdAt"></p-sortIcon></th>
+      <th style="width: 300px">Account</th>
+      <th style="width: 300px">Video</th>
+      <th>Comment</th>
+      <th style="width: 150px;" pSortableColumn="createdAt">Date <p-sortIcon field="createdAt"></p-sortIcon></th>
     </tr>
   </ng-template>
 
@@ -49,10 +48,10 @@
     <tr [pSelectableRow]="videoComment">
 
       <td class="checkbox-cell">
-        <p-tableCheckbox [value]="videoComment" ariaLabel="Select this row" i18n-ariaLabel></p-tableCheckbox>
+        <p-tableCheckbox [value]="videoComment" ariaLabel="Select this row"></p-tableCheckbox>
       </td>
 
-      <td class="expand-cell c-hand" [pRowToggler]="videoComment" i18n-ngbTooltip ngbTooltip="More information" placement="top-left" container="body">
+      <td class="expand-cell c-hand" [pRowToggler]="videoComment" ngbTooltip="More information" placement="top-left" container="body">
         <span class="expander">
           <i [ngClass]="expanded ? 'glyphicon glyphicon-menu-down' : 'glyphicon glyphicon-menu-right'"></i>
         </span>
@@ -61,12 +60,12 @@
       <td class="action-cell">
         <app-action-dropdown
           [ngClass]="{ 'show': expanded }" placement="bottom-right" container="body"
-          i18n-label label="Actions" [actions]="videoCommentActions" [entry]="videoComment"
+          label="Actions" [actions]="videoCommentActions" [entry]="videoComment"
         ></app-action-dropdown>
       </td>
 
       <td>
-        <a [href]="videoComment.account.localUrl" i18n-title title="Open account in a new tab" target="_blank" rel="noopener noreferrer">
+        <a [href]="videoComment.account.localUrl" title="Open account in a new tab" target="_blank" rel="noopener noreferrer">
           <div class="chip two-lines">
             <my-actor-avatar [account]="videoComment.account"></my-actor-avatar>
           <div>
@@ -78,7 +77,7 @@
       </td>
 
       <td class="video">
-        <em i18n>Commented video</em>
+        <em>Commented post</em>
 
         <a [href]="videoComment.localUrl" target="_blank" rel="noopener noreferrer">{{ videoComment.video.name }}</a>
       </td>
@@ -103,8 +102,8 @@
     <tr>
       <td colspan="7">
         <div class="no-results">
-          <ng-container *ngIf="search" i18n>No comments found matching current filters.</ng-container>
-          <ng-container *ngIf="!search" i18n>No comments found.</ng-container>
+          <ng-container *ngIf="search">No comments found matching current filters.</ng-container>
+          <ng-container *ngIf="!search">No comments found.</ng-container>
         </div>
       </td>
     </tr>

@@ -2,12 +2,12 @@
   <div class="results-header">
     <div class="first-line">
       <div class="results-counter" *ngIf="pagination.totalItems">
-        <span class="mr-1" i18n>{{ pagination.totalItems | myNumberFormatter }} {pagination.totalItems, plural, =1 {result} other {results}}</span>
+        <span class="mr-1">{{ pagination.totalItems | myNumberFormatter }} {pagination.totalItems, plural, =1 {result} other {results}}</span>
 
-        <span class="mr-1" i18n *ngIf="advancedSearch.searchTarget === 'local'">found</span>
-        <span class="mr-1" i18n *ngIf="advancedSearch.searchTarget === 'search-index'">on the vidiverse</span>
+        <span class="mr-1" *ngIf="advancedSearch.searchTarget === 'local'">found</span>
+        <span class="mr-1" *ngIf="advancedSearch.searchTarget === 'search-index'">on the vidiverse</span>
 
-        <span *ngIf="currentSearch" i18n>for <span class="search-value"><em>{{ currentSearch }}</em></span></span>
+        <span *ngIf="currentSearch">for <span class="search-value"><em>{{ currentSearch }}</em></span></span>
       </div>
 
       <div
@@ -16,7 +16,7 @@
       >
         <!--<span class="icon icon-filter"></span>-->
         <fa-icon class="icon icon-filter" [icon]="this.faFilter"></fa-icon>
-        <ng-container i18n>
+        <ng-container>
           Filters
           <span *ngIf="numberOfFilters() > 0" class="badge badge-secondary">{{ numberOfFilters() }}</span>
         </ng-container>
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <div i18n *ngIf="pagination.totalItems === 0 && results.length === 0" class="no-results">
+  <div *ngIf="pagination.totalItems === 0 && results.length === 0" class="no-results">
     No results found
   </div>
 
@@ -53,7 +53,7 @@
           <div class="video-channel-name">{{ result.screenName }}</div>
         </ng-template>
 
-        <div i18n class="video-channel-followers">{{ result.followersCount }} followers</div>
+        <div class="video-channel-followers">{{ result.followersCount }} followers</div>
       </div>
 
       <app-follow-button *ngIf="!hideActions()" [users]="[result]"></app-follow-button>
@@ -66,13 +66,6 @@
         (videoBlocked)="removeVideoFromArray(result)" (videoRemoved)="removeVideoFromArray(result)"
       ></my-video-miniature>
     </div>
-
-<!--    <div *ngIf="isPlaylist(result)" class="entry video-playlist">-->
-<!--      <my-video-playlist-miniature-->
-<!--        [playlist]="result" [displayAsRow]="true" [displayChannel]="true"-->
-<!--        [linkType]="getLinkType()"-->
-<!--      ></my-video-playlist-miniature>-->
-<!--    </div>-->
   </ng-container>
 
 </div>

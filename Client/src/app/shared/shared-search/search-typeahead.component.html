@@ -1,19 +1,19 @@
 <div class="d-inline-flex position-relative" id="typeahead-container" style="margin-left: 0px; margin-bottom: 10px;">
 <!--  <input-->
-<!--    type="text" id="search-video" name="search-video" #searchVideo i18n-placeholder placeholder="Search videos, playlists, channels…"-->
+<!--    type="text" id="search-video" name="search-video" #searchVideo placeholder="Search videos, playlists, channels…"-->
 <!--    [(ngModel)]="search" (ngModelChange)="onSearchChange()" (keydown)="handleKey($event)" (keydown.enter)="doSearch()"-->
 <!--    aria-label="Search" autocomplete="off"-->
 <!--  >-->
 <!--  <fa-icon-->
-<!--    title="Search" i18n-title role="button"-->
+<!--    title="Search" role="button"-->
 <!--    [icon]="this.faSearch" class="icon icon-search" (click)="doSearch()" (keydown.enter)="doSearch()"-->
 <!--  ></fa-icon>-->
 
   <nb-form-field>
-    <fa-icon nbPrefix [icon]="this.faSearch" title="Search" i18n-title role="button"
+    <fa-icon nbPrefix [icon]="this.faSearch" title="Search" role="button"
              (click)="doSearch()" (keydown.enter)="doSearch()"></fa-icon>
     <input  nbInput shape="round" data-focusable="true" fullWidth
-            type="text" id="search-video" name="search-video" #searchVideo i18n-placeholder placeholder="Search Chessbook"
+            type="text" id="search-video" name="search-video" #searchVideo placeholder="Search Chessbook"
             [(ngModel)]="search" (ngModelChange)="onSearchChange()" (keydown)="handleKey($event)" (keydown.enter)="doSearch()"
             aria-label="Search" autocomplete="off"
     >
@@ -33,18 +33,18 @@
     <!-- suggestion help, not shown until one of the suggestions is selected and specific to that suggestion -->
     <div *ngIf="showSearchGlobalHelp()" id="typeahead-help" class="overflow-hidden">
       <div class="d-flex justify-content-between">
-        <label class="small-title" i18n>GLOBAL SEARCH</label>
+        <label class="small-title">GLOBAL SEARCH</label>
         <div class="advanced-search-status text-muted">
-          <span *ngIf="serverConfig" class="mr-1" i18n>using {{ serverConfig.search.searchIndex.url }}</span>
+          <span *ngIf="serverConfig" class="mr-1">using {{ serverConfig.search.searchIndex.url }}</span>
           <i class="glyphicon glyphicon-globe"></i>
         </div>
       </div>
-      <div class="text-muted" i18n>Results will be augmented with those of a third-party index. Only data necessary to make the query will be sent.</div>
+      <div class="text-muted">Results will be augmented with those of a third-party index. Only data necessary to make the query will be sent.</div>
     </div>
 
     <!-- search instructions, when search input is empty -->
     <div *ngIf="areInstructionsDisplayed()" id="typeahead-instructions" class="overflow-hidden">
-      <span class="text-muted" i18n>Your query will be matched against username or post tags.</span>
+      <span class="text-muted">Your query will be matched against username or post tags.</span>
       <div class="d-flex justify-content-between mt-3">
         <div class="advanced-search-status c-help">
 
@@ -52,10 +52,10 @@
       </div>
       <ul>
         <li>
-          <em><span class="text-control">@username</span></em> <span class="flex-auto text-muted" i18n>will list the matching user</span>
+          <em><span class="text-control">@username</span></em> <span class="flex-auto text-muted">will list the matching user</span>
         </li>
         <li>
-          <em><span class="text-control">stockfish</span></em> <span class="text-muted" i18n>will list posts matching the tag</span>
+          <em><span class="text-control">stockfish</span></em> <span class="text-muted">will list posts matching the tag</span>
         </li>
       </ul>
     </div>

@@ -2,6 +2,8 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+
 import {NgxValidationMessageComponent} from './validation-message/validation-message.component';
 import {
   NgxFilterByNumberComponent,
@@ -21,7 +23,6 @@ import {BlurhashComponent} from './blurhash/blurhash.component';
 import {ItemComponent} from './media-gallery/item/item.component';
 import {RelativeTimestampComponent} from './relative-timestamp/relative-timestamp.component';
 import {CardComponent} from "./card/card.component";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 const COMPONENTS = [
   NgxValidationMessageComponent,

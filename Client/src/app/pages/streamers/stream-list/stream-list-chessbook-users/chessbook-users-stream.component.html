@@ -31,7 +31,7 @@
         </nb-actions>
     </div>
 
-    <div class="no-results" i18n *ngIf="this.streams?.data.length <= 0">
+    <div class="no-results" *ngIf="this.streams?.data.length <= 0">
         No chessbook user is streaming at the moment :(
         <p>
             <a routerLink="/streamers/list" style="cursor: pointer">View Stream List</a>

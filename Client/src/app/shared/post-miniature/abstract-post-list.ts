@@ -64,7 +64,6 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
   defaultSort: PostSortField = '-publishedAt';
 
   loadOnInit = true;
-  useUserVideoPreferences = false;
   displayModerationBlock = false;
   titleTooltip: string;
   displayVideoActions = true;

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import {ChessStuffComponent} from "./chess-stuff.component";
 import {ChessStuffRoutingModule} from "./chess-stuff-routing.module";
 import {NbCardModule} from "../../../sharebook-nebular/theme/components/card/card.module";
-import {NbAlertModule} from "../../../sharebook-nebular/theme/components/alert/alert.module";
 import {WorldChampionsComponent} from "./world-champions/world-champions.component";
 import {WorldChampionsService} from "./world-champions/world-champions.service";
 import {NbTabsetModule} from "../../../sharebook-nebular/theme/components/tabset/tabset.module";
@@ -27,7 +26,6 @@ import {SnackbarSampleComponent} from "./snackbar/snackbar.sample";
     CommonModule,
     ChessStuffRoutingModule,
     NbCardModule,
-    NbAlertModule,
     NbTabsetModule,
     NbListModule,
     NbUserModule,

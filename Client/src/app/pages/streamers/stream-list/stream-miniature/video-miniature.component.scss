@@ -12,15 +12,6 @@ $more-button-width: 40px;
   width: calc(100% - #{$more-button-width});
 }
 
-//my-account-avatar,
-//.channel-avatar {
-//  margin: 10px 10px 0 0;
-//}
-//
-//.channel-avatar img{
-//  @include channel-avatar(40px);
-//}
-
 .video-miniature-created-at-views {
   font-size: 13px;
 }
@@ -35,27 +26,12 @@ $more-button-width: 40px;
   color: pvar(--greyForegroundColor);
   text-decoration: none;
 
-  //&:hover {
-  //  color: $grey-foreground-hover-color;
-  //}
 }
 
 .video-info-privacy,
 .video-info-blocked .blocked-label,
 .video-info-nsfw {
   font-weight: $font-semibold;
-}
-
-.video-info-blocked {
-  color: red;
-
-  .blocked-reason::before {
-    content: ' - ';
-  }
-}
-
-.video-info-nsfw {
-  color: red;
 }
 
 .video-actions {
@@ -166,7 +142,7 @@ $more-button-width: 40px;
   }
 
   .video-miniature-name {
-    //@include ellipsis-multiline($video-miniature-row-name-font-size, 2);
+    @include ellipsis-multiline($video-miniature-row-name-font-size, 2);
   }
 
   .video-miniature-created-at-views,

@@ -18,77 +18,10 @@
   }
 }
 
-.sub-menu {
-  background-color: pvar(--submenuBackgroundColor);
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 0 pvar(--horizontalMarginContent);
-  height: $sub-menu-height;
-  margin-bottom: $sub-menu-margin-bottom;
-  overflow-x: auto;
-
-  &.sub-menu-fixed {
-    position: fixed;
-    z-index: #{z('sub-menu') - 1};
-    max-width: pvar(--mainColWidth);
-  }
-}
-
 .links {
-    a {
-      text-decoration: none;
-    }
-}
-
-.title-page {
-  @include disable-default-a-behaviour;
-  @include margin-right(55px);
-
-  opacity: 0.6;
-  color: pvar(--mainForegroundColor);
-  font-size: 16px;
-  display: inline-block;
-  font-weight: $font-semibold;
-  border-bottom: 2px solid transparent;
-
-  &.title-page-single {
-    margin-top: 30px;
-    margin-bottom: 25px;
+  a {
+    text-decoration: none;
   }
-
-  &.active {
-    border-bottom-color: pvar(--mainColor);
-  }
-
-  &.title-page-single {
-    font-size: 125%;
-  }
-
-  &:hover,
-  &:active,
-  &:focus {
-    color: pvar(--mainForegroundColor);
-  }
-
-  &.active,
-  &:hover,
-  &:active,
-  &:focus,
-  &.title-page-single {
-    opacity: 1;
-    outline: 0 hidden !important;
-  }
-
-  @media screen and (max-width: $mobile-view) {
-    @include margin-left(15px);
-  }
-}
-
-.title-page-about,
-.title-page-settings {
-  white-space: nowrap;
-  font-size: 115%;
 }
 
 .margin-content {
@@ -153,8 +86,8 @@ a {
 }
 
 .description,
-.p2p-privacy,
-my-about-peertube-contributors {
+.cb-privacy,
+app-about-chessbook-contributors {
   ::ng-deep {
     p,
     li {
@@ -167,7 +100,7 @@ my-about-peertube-contributors {
   display: flex;
   flex-direction: column;
 
-  .p2p-privacy {
+  .cb-privacy {
     .section-title {
       margin: 50px 0 20px;
       text-align: center;
@@ -184,7 +117,7 @@ my-about-peertube-contributors {
   font-size: 1.25rem;
 }
 
-.p2p-privacy-title {
+.cb-privacy-title {
   font-size: 20px;
 }
 
@@ -192,40 +125,36 @@ my-about-peertube-contributors {
 
 
 // about instance
+.patreon {
+  background-color: #580c10;
+}
 
-@include nb-install-component() {
-  .patreon {
-    background-color: #580c10;
-  }
+.ko-fi {
+  background-color: #86a9fb;
+}
 
-  .ko-fi {
-    background-color: #86a9fb;
-  }
+.streamlabs {
+  background-color: #80f5d1;
+}
 
-  .streamlabs {
-    background-color: #80f5d1;
-  }
+.paypal {
+  background-color: #0069ae;
+}
 
-  .paypal {
-    background-color: #0069ae;
-  }
+.google-pay {
+  background-color: #ca4a43;
+}
 
-  .google-pay {
-    background-color: #ca4a43;
-  }
+.bitcoin-btc {
+  background-color: #994f0f;
+}
 
-  .bitcoin-btc {
-    background-color: #994f0f;
-  }
+.bitcoin-cash {
+  background-color: #087a5b;
+}
 
-  .bitcoin-cash {
-    background-color: #087a5b;
-  }
-
-  .dogecoin {
-    background-color: #a88730;
-  }
-
+.dogecoin {
+  background-color: #a88730;
 }
 
 
@@ -238,28 +167,6 @@ my-about-peertube-contributors {
     font-weight: $font-semibold;
   }
 
-  .contact-admin {
-    //@include peertube-button-link;
-    //@include orange-button;
-
-    height: fit-content;
-  }
-}
-
-.instance-badges {
-  font-size: 16px;
-  margin-bottom: 20px;
-
-  .badge {
-    @include margin-right(5px);
-
-    font-size: 12px;
-    font-weight: $font-semibold;
-
-    &.category {
-      background-color: pvar(--mainColor);
-    }
-  }
 }
 
 .section-title {
@@ -287,7 +194,7 @@ my-about-peertube-contributors {
   margin-top: 10px;
 }
 
-.short-description .dedicated-to-nsfw {
+.short-description {
   margin-top: 20px;
   font-weight: $font-semibold;
 }
@@ -312,14 +219,10 @@ my-about-peertube-contributors {
     display: inline-block;
   }
 
-  .section-title {
-    // color: #000; // var(--mainForegroundColor);
-  }
 }
 
 
 .rules-list {
-  /*background: darken(#000, 2%);*/
   border: 1px solid darken(#000, 8%);
   border-radius: 4px;
   padding: 0.5em 2.5em !important;
@@ -327,7 +230,6 @@ my-about-peertube-contributors {
 
   li {
     border-bottom: 1px solid lighten(#000, 4%);
-    /*color: #000;*/
     padding: 1em;
 
     &:last-child {
@@ -335,21 +237,10 @@ my-about-peertube-contributors {
     }
   }
 
-  //&__text {
-  //  color: white;
-  //}
 }
 
 
-
-
-
-
-
-
-
 // donation
-
 
 body {
   display: inline-block;
@@ -376,7 +267,6 @@ span {
 .hidden * {
   visibility: hidden !important;
 }
-
 
 
 .paypal-button-container {
@@ -414,8 +304,8 @@ span {
 .paypal-button-container.paypal-button-env-test .paypal-button-text {
   font-family: Arial !important;
   background: rgba(0, 0, 0, 0.5) !important;
-  color: transparent  !important;
-  text-shadow: none  !important;
+  color: transparent !important;
+  text-shadow: none !important;
 }
 
 .paypal-button-card {
@@ -500,14 +390,12 @@ span {
   .menu-button {
     display: none;
   }
-  .paypal-button-container .paypal-button-row.paypal-button-wallet.paypal-button-wallet-menu .paypal-button  {
+  .paypal-button-container .paypal-button-row.paypal-button-wallet.paypal-button-wallet-menu .paypal-button {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
     width: 100%;
   }
 }
-
-
 
 
 .paypal-button.paypal-button-text-color-black {
@@ -540,6 +428,7 @@ span {
 .paypal-button.paypal-button-color-gold:focus {
   outline: none;
 }
+
 .paypal-button.paypal-button-color-gold:focus::after {
   content: '';
   position: absolute;
@@ -570,6 +459,7 @@ span {
 .paypal-button.paypal-button-color-blue:focus {
   outline: none;
 }
+
 .paypal-button.paypal-button-color-blue:focus::after {
   content: '';
   position: absolute;
@@ -595,6 +485,7 @@ span {
 .paypal-button.paypal-button-color-silver:focus {
   outline: none;
 }
+
 .paypal-button.paypal-button-color-silver:focus::after {
   content: '';
   position: absolute;
@@ -620,6 +511,7 @@ span {
 .paypal-button.paypal-button-color-darkblue:focus {
   outline: none;
 }
+
 .paypal-button.paypal-button-color-darkblue:focus::after {
   content: '';
   position: absolute;
@@ -634,7 +526,6 @@ span {
 }
 
 
-
 .paypal-button.paypal-button-color-black,
 .paypal-button-row.paypal-button-color-black .menu-button {
   background: #2C2E2F;
@@ -647,6 +538,7 @@ span {
 .paypal-button.paypal-button-color-black:focus {
   outline: none;
 }
+
 .paypal-button.paypal-button-color-black:focus::after {
   content: '';
   position: absolute;
@@ -673,6 +565,7 @@ span {
 .paypal-button.paypal-button-color-white:focus {
   outline: none;
 }
+
 .paypal-button.paypal-button-color-white:focus::after {
   content: '';
   position: absolute;
@@ -713,7 +606,6 @@ span {
 }
 
 
-
 .paypal-button .paypal-button-text {
   height: 100%;
 
@@ -723,7 +615,6 @@ span {
 }
 
 .paypal-button .paypal-button-text.immediate:not(.paypal-personalization-text):not(.hidden) {
-
   position: static;
   visibility: visible;
 
@@ -741,7 +632,6 @@ span {
 }
 
 .dom-ready .paypal-button .paypal-button-text:not(.immediate):not(.paypal-personalization-text):not(.hidden) {
-
   position: static;
   visibility: visible;
 
@@ -767,7 +657,6 @@ span {
 
 
 @media only screen and (min-width: 75px) {
-
   .paypal-button-container {
     min-width: 75px;
     max-width: 150px;
@@ -814,26 +703,6 @@ span {
     height: 20px;
   }
 
-  .paypal-button[data-funding-source=applepay] .paypal-button-label-container {
-    height: 39px;
-  }
-
-  .paypal-button[data-funding-source=applepay] .paypal-button-label-container .paypal-button-text {
-    line-height: 39px;
-  }
-
-  .paypal-button[data-funding-source=eps] .paypal-button-label-container,
-  .paypal-button[data-funding-source=mybank] .paypal-button-label-container {
-    height: 27px;
-  }
-
-  .paypal-button[data-funding-source=eps] .paypal-button-label-container .paypal-button-text,
-  .paypal-button[data-funding-source=eps] .paypal-button-label-container .paypal-button-space,
-  .paypal-button[data-funding-source=mybank] .paypal-button-label-container .paypal-button-text,
-  .paypal-button[data-funding-source=mybank] .paypal-button-label-container .paypal-button-space {
-    line-height: 27px;
-  }
-
   .paypal-button.paypal-button-shape-rect {
     border-radius: 4px;
   }
@@ -875,7 +744,6 @@ span {
 }
 
 @media only screen and (min-width: 75px) and (max-width: 320px) {
-
   .paypal-button-container .paypal-button-row .paypal-button-text, .paypal-button-container .paypal-button-row .paypal-button-space {
     font-size: 15px;
     margin-top: -2px;
@@ -894,7 +762,6 @@ span {
 }
 
 @media only screen and (min-width: 75px) and (max-width: 300px) {
-
   .paypal-button-row.paypal-button-layout-horizontal.paypal-button-number-multiple.paypal-button-number-0 {
     width: 100%;
     margin-right: 0;
@@ -910,7 +777,6 @@ span {
 }
 
 @media only screen and (min-width: 300px) {
-
   .paypal-button-row.paypal-button-layout-horizontal.paypal-button-number-multiple.paypal-button-number-0 {
     display: inline-block;
     width: calc(50% - 3px);
@@ -936,9 +802,7 @@ span {
 }
 
 
-
 @media only screen and (min-width: 150px) {
-
   .paypal-button-container {
     min-width: 150px;
     max-width: 200px;
@@ -985,26 +849,6 @@ span {
     height: 20px;
   }
 
-  .paypal-button[data-funding-source=applepay] .paypal-button-label-container {
-    height: 39px;
-  }
-
-  .paypal-button[data-funding-source=applepay] .paypal-button-label-container .paypal-button-text {
-    line-height: 39px;
-  }
-
-  .paypal-button[data-funding-source=eps] .paypal-button-label-container,
-  .paypal-button[data-funding-source=mybank] .paypal-button-label-container {
-    height: 27px;
-  }
-
-  .paypal-button[data-funding-source=eps] .paypal-button-label-container .paypal-button-text,
-  .paypal-button[data-funding-source=eps] .paypal-button-label-container .paypal-button-space,
-  .paypal-button[data-funding-source=mybank] .paypal-button-label-container .paypal-button-text,
-  .paypal-button[data-funding-source=mybank] .paypal-button-label-container .paypal-button-space {
-    line-height: 27px;
-  }
-
   .paypal-button.paypal-button-shape-rect {
     border-radius: 4px;
   }
@@ -1046,13 +890,11 @@ span {
 }
 
 @media only screen and (min-width: 150px) and (max-width: 320px) {
-
   .paypal-button-container .paypal-button-row .paypal-button-text, .paypal-button-container .paypal-button-row .paypal-button-space {
     font-size: 15px;
     margin-top: -2px;
     line-height: 20px;
   }
-
 
   .paypal-button-container .paypal-button-row .paypal-button-text * {
     margin-top: 2px;
@@ -1065,7 +907,6 @@ span {
 }
 
 @media only screen and (min-width: 150px) and (max-width: 300px) {
-
   .paypal-button-row.paypal-button-layout-horizontal.paypal-button-number-multiple.paypal-button-number-0 {
     width: 100%;
     margin-right: 0;
@@ -1081,7 +922,6 @@ span {
 }
 
 @media only screen and (min-width: 300px) {
-
   .paypal-button-row.paypal-button-layout-horizontal.paypal-button-number-multiple.paypal-button-number-0 {
     display: inline-block;
     width: calc(50% - 3px);
@@ -1107,9 +947,7 @@ span {
 }
 
 
-
 @media only screen and (min-width: 200px) {
-
   .paypal-button-container {
     min-width: 200px;
     max-width: 300px;
@@ -1156,26 +994,6 @@ span {
     height: 20px;
   }
 
-  .paypal-button[data-funding-source=applepay] .paypal-button-label-container {
-    height: 39px;
-  }
-
-  .paypal-button[data-funding-source=applepay] .paypal-button-label-container .paypal-button-text {
-    line-height: 39px;
-  }
-
-  .paypal-button[data-funding-source=eps] .paypal-button-label-container,
-  .paypal-button[data-funding-source=mybank] .paypal-button-label-container {
-    height: 27px;
-  }
-
-  .paypal-button[data-funding-source=eps] .paypal-button-label-container .paypal-button-text,
-  .paypal-button[data-funding-source=eps] .paypal-button-label-container .paypal-button-space,
-  .paypal-button[data-funding-source=mybank] .paypal-button-label-container .paypal-button-text,
-  .paypal-button[data-funding-source=mybank] .paypal-button-label-container .paypal-button-space {
-    line-height: 27px;
-  }
-
   .paypal-button.paypal-button-shape-rect {
     border-radius: 4px;
   }
@@ -1217,7 +1035,6 @@ span {
 }
 
 @media only screen and (min-width: 200px) and (max-width: 320px) {
-
   .paypal-button-container .paypal-button-row .paypal-button-text, .paypal-button-container .paypal-button-row .paypal-button-space {
     font-size: 15px;
     margin-top: -2px;
@@ -1236,7 +1053,6 @@ span {
 }
 
 @media only screen and (min-width: 200px) and (max-width: 300px) {
-
   .paypal-button-row.paypal-button-layout-horizontal.paypal-button-number-multiple.paypal-button-number-0 {
     width: 100%;
     margin-right: 0;
@@ -1252,7 +1068,6 @@ span {
 }
 
 @media only screen and (min-width: 300px) {
-
   .paypal-button-row.paypal-button-layout-horizontal.paypal-button-number-multiple.paypal-button-number-0 {
     display: inline-block;
     width: calc(50% - 3px);
@@ -1278,9 +1093,7 @@ span {
 }
 
 
-
 @media only screen and (min-width: 300px) {
-
   .paypal-button-container {
     min-width: 300px;
     max-width: 500px;
@@ -1327,26 +1140,6 @@ span {
     height: 20px;
   }
 
-  .paypal-button[data-funding-source=applepay] .paypal-button-label-container {
-    height: 39px;
-  }
-
-  .paypal-button[data-funding-source=applepay] .paypal-button-label-container .paypal-button-text {
-    line-height: 39px;
-  }
-
-  .paypal-button[data-funding-source=eps] .paypal-button-label-container,
-  .paypal-button[data-funding-source=mybank] .paypal-button-label-container {
-    height: 27px;
-  }
-
-  .paypal-button[data-funding-source=eps] .paypal-button-label-container .paypal-button-text,
-  .paypal-button[data-funding-source=eps] .paypal-button-label-container .paypal-button-space,
-  .paypal-button[data-funding-source=mybank] .paypal-button-label-container .paypal-button-text,
-  .paypal-button[data-funding-source=mybank] .paypal-button-label-container .paypal-button-space {
-    line-height: 27px;
-  }
-
   .paypal-button.paypal-button-shape-rect {
     border-radius: 4px;
   }
@@ -1388,7 +1181,6 @@ span {
 }
 
 @media only screen and (min-width: 300px) and (max-width: 320px) {
-
   .paypal-button-container .paypal-button-row .paypal-button-text, .paypal-button-container .paypal-button-row .paypal-button-space {
     font-size: 15px;
     margin-top: -2px;
@@ -1407,7 +1199,6 @@ span {
 }
 
 @media only screen and (min-width: 300px) and (max-width: 300px) {
-
   .paypal-button-row.paypal-button-layout-horizontal.paypal-button-number-multiple.paypal-button-number-0 {
     width: 100%;
     margin-right: 0;
@@ -1423,7 +1214,6 @@ span {
 }
 
 @media only screen and (min-width: 300px) {
-
   .paypal-button-row.paypal-button-layout-horizontal.paypal-button-number-multiple.paypal-button-number-0 {
     display: inline-block;
     width: calc(50% - 3px);
@@ -1449,9 +1239,7 @@ span {
 }
 
 
-
 @media only screen and (min-width: 500px) {
-
   .paypal-button-container {
     min-width: 500px;
     max-width: 750px;
@@ -1496,26 +1284,6 @@ span {
   .paypal-button > .paypal-button-label-container {
     margin: 0px 4vw;
     height: 20px;
-  }
-
-  .paypal-button[data-funding-source=applepay] .paypal-button-label-container {
-    height: 39px;
-  }
-
-  .paypal-button[data-funding-source=applepay] .paypal-button-label-container .paypal-button-text {
-    line-height: 39px;
-  }
-
-  .paypal-button[data-funding-source=eps] .paypal-button-label-container,
-  .paypal-button[data-funding-source=mybank] .paypal-button-label-container {
-    height: 27px;
-  }
-
-  .paypal-button[data-funding-source=eps] .paypal-button-label-container .paypal-button-text,
-  .paypal-button[data-funding-source=eps] .paypal-button-label-container .paypal-button-space,
-  .paypal-button[data-funding-source=mybank] .paypal-button-label-container .paypal-button-text,
-  .paypal-button[data-funding-source=mybank] .paypal-button-label-container .paypal-button-space {
-    line-height: 27px;
   }
 
   .paypal-button.paypal-button-shape-rect {
@@ -1618,4 +1386,3 @@ span {
     display: block;
   }
 }
-

@@ -1,9 +1,5 @@
 <span [title]="video.viewer_count">
-<!--  <ng-container i18n *ngIf="!video.isLive">-->
-<!--    {video.views, plural, =1 {1 view} other {{{ video.views | myNumberFormatter }} views}}-->
-<!--  </ng-container>-->
-
-  <ng-container i18n *ngIf="video">
+  <ng-container *ngIf="video">
     {video.viewer_count, plural, =1 {1 viewer} other {{{ video.viewer_count | myNumberFormatter }} viewers}}
   </ng-container>
 </span>

@@ -28,15 +28,6 @@ export class ItemComponent implements OnInit {
   right  = 'auto';
 
   ngOnInit(): void {
-    // const { attachment, index, size, standalone, displayWidth, visible } = this.props;
-
-    // let width  = 50;
-    // let height = 100;
-    // let top    = 'auto';
-    // let left   = 'auto';
-    // let bottom = 'auto';
-    // let right  = 'auto';
-
     if (this.size === 1) {
       this.width = 100;
     }
@@ -78,8 +69,6 @@ export class ItemComponent implements OnInit {
         this.top = '2px';
       }
     }
-
-    let thumbnail = '';
 
     if (true) { // this.attachment.get('type') === 'image'
       this.previewUrl   = !this.attachment.imageUrl.endsWith('.gif') ? this.attachment.imageUrl : this.attachment.fullSizeImageUrl;
@@ -135,13 +124,7 @@ export class ItemComponent implements OnInit {
     }
   }
 
-  getAutoPlay() {
-    // return this.autoplay || autoPlayGif;
-  }
-
   hoverToPlay() {
-    // return !this.getAutoPlay() && this.attachment.get('type') === 'gifv';
-
     return null;
   }
 

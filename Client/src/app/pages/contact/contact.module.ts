@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 import {ContactComponent} from "./contact.component";
 import {ContactRoutingModule} from "./contact-routing.module";
@@ -9,7 +10,6 @@ import {ContactService} from "./contact.service";
 import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/button.module";
 import {NbInputModule} from "../../sharebook-nebular/theme/components/input/input.module";
 import {ComponentsModule} from "../../components/components.module";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [

@@ -216,18 +216,18 @@ function uploadErrorHandler(parameters: {
   sticky?: boolean
 }) {
   const {err, name, notifier, sticky} = {sticky: false, ...parameters};
-  const title = $localize`The upload failed`;
+  const title = `The upload failed`;
   let message = err.message;
 
   if (err instanceof ErrorEvent) { // network error
-    message = $localize`The connection was interrupted`;
+    message = `The connection was interrupted`;
     notifier.danger(message, title, null); // sticky
   } else if (err.status === HttpStatusCode.REQUEST_TIMEOUT_408) {
-    message = $localize`Your ${name} file couldn't be transferred before the set timeout (usually 10min)`;
+    message = `Your ${name} file couldn't be transferred before the set timeout (usually 10min)`;
     notifier.danger(message, title, null);
   } else if (err.status === HttpStatusCode.PAYLOAD_TOO_LARGE_413) {
     const maxFileSize = err.headers?.get('X-File-Maximum-Size') || '8G';
-    message = $localize`Your ${name} file was too large (max. size: ${maxFileSize})`;
+    message = `Your ${name} file was too large (max. size: ${maxFileSize})`;
     notifier.danger(message, title, null);
   } else {
     notifier.danger(err.message, title);

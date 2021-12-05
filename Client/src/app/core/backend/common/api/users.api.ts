@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { HttpService } from './http.service';
 import { map } from 'rxjs/operators';
 import { DataSource } from 'ng2-smart-table/lib/lib/data-source/data-source';
+
+import { HttpService } from './http.service';
 import {IUser} from "../../../interfaces/common/users";
 import {UserUpdateMe} from "../../../../shared/models/users/user-update-me.model";
 import {Avatar} from "../../../../shared/models/users/avatars/avatar.model";

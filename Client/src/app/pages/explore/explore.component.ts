@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {Subject} from "rxjs/Subject";
 
 import {
   faRadio,
@@ -17,10 +16,6 @@ import {ExploreService, NewsPost, Pagination} from "./explore.service";
   styleUrls: ['./explore.component.scss']
 })
 export class ExploreComponent implements OnInit {
-  private lastQueryLength: number;
-
-  onDataSubject = new Subject<any[]>();
-
   constructor(private exploreService: ExploreService) {
 
   }
@@ -99,5 +94,9 @@ export class ExploreComponent implements OnInit {
     this.translateY = this.translateY + 100; // 😁
 
     return this.translateY;
+  }
+
+  dateClick(event: any) {
+    event.preventDefault();
   }
 }

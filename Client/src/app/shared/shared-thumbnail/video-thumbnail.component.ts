@@ -31,12 +31,6 @@ export class VideoThumbnailComponent {
     this.addedToWatchLaterText = `Remove from watch later`;
   }
 
-  // isLiveEnded() {
-  //   if (!this.video.state) return;
-  //
-  //   return this.video.state.id === VideoState.LIVE_ENDED;
-  // }
-
   getImageUrl() {
     if (!this.video) {
       return '';
@@ -61,14 +55,6 @@ export class VideoThumbnailComponent {
     return this.video.entities.medias[0].imageUrl; // // consider to be thumbUrl kk
   }
 
-  // getProgressPercent() {
-  //   if (!this.video.userHistory) return 0;
-  //
-  //   const currentTime = this.video.userHistory.currentTime;
-  //
-  //   return (currentTime / this.video.duration) * 100;
-  // }
-
   getVideoRouterLink() {
     if (this.videoRouterLink) {
       return this.videoRouterLink;
@@ -77,10 +63,4 @@ export class VideoThumbnailComponent {
     return Post.buildWatchUrl(this.video);
   }
 
-  onWatchLaterClick(event: Event) {
-    this.watchLaterClick.emit(this.inWatchLaterPlaylist);
-
-    event.stopPropagation();
-    return false;
-  }
 }

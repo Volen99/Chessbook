@@ -7,7 +7,7 @@
   <div class="right" [ngClass]="{ 'mb-3': firstInThread }">
     <div class="comment">
       <ng-container *ngIf="!comment.isDeleted">
-        <div *ngIf="highlightedComment === true" class="highlighted-comment" i18n>Highlighted comment</div>
+        <div *ngIf="highlightedComment === true" class="highlighted-comment">Highlighted comment</div>
 
         <div class="comment-account-date">
           <div class="comment-account">
@@ -33,24 +33,24 @@
         ></div>
 
         <div class="comment-actions">
-          <div tabindex=0 (click)="onWantToReply()" class="comment-action-reply" i18n>Reply</div>
+          <div tabindex=0 (click)="onWantToReply()" class="comment-action-reply">Reply</div>
 
           <app-user-moderation-dropdown
             [prependActions]="prependModerationActions" tabindex=0 [buttonStyled]="false"
-            buttonSize="small" [account]="commentAccount" [user]="commentUser" i18n-label label="Options" placement="auto"
+            buttonSize="small" [account]="commentAccount" [user]="commentUser" label="Options" placement="auto"
           ></app-user-moderation-dropdown>
         </div>
       </ng-container>
 
       <ng-container *ngIf="comment.isDeleted">
         <div class="comment-account-date">
-          <span class="comment-account" i18n>Deleted</span>
+          <span class="comment-account">Deleted</span>
           <a [routerLink]="['/', comment.account.screenName.substring(1), 'post', video.id, { 'threadId': comment.threadId }]"
              class="comment-date">{{ comment.createdAt | myFromNow }}</a>
         </div>
 
         <div class="comment-html comment-html-deleted">
-          <i i18n>This comment has been deleted</i>
+          <i>This comment has been deleted</i>
         </div>
       </ng-container>
 

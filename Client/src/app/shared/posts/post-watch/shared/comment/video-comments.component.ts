@@ -18,12 +18,10 @@ import {User} from "../../../../shared-main/user/user.model";
 import {PostComment} from "../../../../shared-post-comment/post-comment-model";
 import {ComponentPagination, hasMoreItems} from "../../../../../core/rest/component-pagination.model";
 import {PostCommentThreadTree} from "../../../../shared-post-comment/video-comment-thread-tree.model";
-import {Syndication} from "../../../../shared-main/feeds/syndication.model";
 import {UserStore} from "../../../../../core/stores/user.store";
 import {NbToastrService} from "../../../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {ConfirmService} from "../../../../../core/confirm/confirm.service";
 import {VideoCommentService} from "../../../../shared-post-comment/video-comment.service";
-import {HooksService} from "../../../../../core/plugins";
 
 @Component({
   selector: 'my-video-comments',
@@ -56,8 +54,6 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
   threadComments: { [id: number]: PostCommentThreadTree } = {};
   threadLoading: { [id: number]: boolean } = {};
 
-  syndicationItems: Syndication[] = [];
-
   onDataSubject = new Subject<any[]>();
 
   private sub: Subscription;
@@ -67,8 +63,7 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
     private notifier: NbToastrService,
     private confirmService: ConfirmService,
     private videoCommentService: VideoCommentService,
-    private activatedRoute: ActivatedRoute,
-    private hooks: HooksService) {
+    private activatedRoute: ActivatedRoute) {
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -103,19 +98,10 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
       threadId: commentId
     };
 
-    // const obs = this.hooks.wrapObsFun(
-    //   this.videoCommentService.getVideoThreadComments.bind(this.videoCommentService),
-    //   params,
-    //   'video-watch',
-    //   'filter:api.video-watch.video-thread-replies.list.params',
-    //   'filter:api.video-watch.video-thread-replies.list.result'
-    // );
-
     this.videoCommentService.getVideoThreadComments(params).subscribe(
       res => {
         this.threadComments[commentId] = res;
         this.threadLoading[commentId] = false;
-        // this.hooks.runAction('action:video-watch.video-thread-replies.loaded', 'video-watch', {data: res});
 
         if (highlightThread) {
           this.highlightedThread = new PostComment(res.comment);
@@ -125,7 +111,6 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
         }
 
       },
-
 
       err => this.notifier.danger(err.message, 'Error in this.videoCommentService.getVideoThreadComments(params).subscribe')
     );
@@ -137,14 +122,6 @@ export class VideoCommentsComponent implements OnInit, OnChanges, OnDestroy {
       componentPagination: this.componentPagination,
       sort: this.sort
     };
-
-    // const obs = this.hooks.wrapObsFun(
-    //   this.videoCommentService.getVideoCommentThreads.bind(this.videoCommentService),
-    //   params,
-    //   'video-watch',
-    //   'filter:api.video-watch.video-threads.list.params',
-    //   'filter:api.video-watch.video-threads.list.result'
-    // );
 
     this.videoCommentService.getVideoCommentThreads(params).subscribe(
       res => {

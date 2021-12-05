@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpParams} from "@angular/common/http";
-import {from, Observable, of} from 'rxjs';
+import {from, of, Observable} from 'rxjs';
 import {catchError, concatMap, filter, first, map, shareReplay, throttleTime, toArray} from 'rxjs/operators';
+import {SortMeta} from "primeng/api";
 import {DataSource} from 'ng2-smart-table/lib/lib/data-source/data-source';
 
 import {UsersApi} from '../api/users.api';
@@ -13,13 +14,10 @@ import {UserUpdate} from "../../../../shared/models/users/user-update.model";
 import {UserCreate} from "../../../../shared/models/users/user-create.model";
 import {UserUpdateMe} from "../../../../shared/models/users/user-update-me.model";
 import {RestPagination} from "../../../rest/rest-pagination";
-import {SortMeta} from "primeng/api";
 import {ResultList} from "../../../../shared/models";
 import {User} from "../../../../shared/shared-main/user/user.model";
-import {getBytes} from "../../../../../root-helpers/bytes";
 import {UserRole} from "../../../../shared/models/users/user-role";
 import {UserStore} from "../../../stores/user.store";
-import {InitUserService} from "../../../../theme/services/init-user.service";
 import {UserLocalStorageKeys} from "../../../../../root-helpers/users/user-local-storage-keys";
 import {ComponentPaginationLight} from "../../../rest/component-pagination.model";
 
@@ -36,6 +34,16 @@ export class UsersService extends UserData {
   }
 
   private userCache: { [id: number]: Observable<IUser> } = {};
+  private themes: string[] = [];
+  private themeFromLocalStorage: string;
+
+  get gridDataSource(): DataSource {
+    return this.api.usersDataSource;
+  }
+
+  get(id: number): Observable<IUser> {
+    return this.api.get(id);
+  }
 
   constructor(private restExtractor: RestExtractor,
               private restService: RestService,
@@ -44,10 +52,6 @@ export class UsersService extends UserData {
               private userStore: UserStore,
               private api: UsersApi) {
     super();
-  }
-
-  get gridDataSource(): DataSource {
-    return this.api.usersDataSource;
   }
 
   list(pageNumber: number = 1, pageSize: number = 10): Observable<IUser[]> {
@@ -63,10 +67,6 @@ export class UsersService extends UserData {
           }
           return u;
         }));
-  }
-
-  get(id: number): Observable<IUser> {
-    return this.api.get(id);
   }
 
   create(user: any): Observable<IUser> {
@@ -112,7 +112,6 @@ export class UsersService extends UserData {
       );
   }
 
-
   removeUser(usersArg: IUser | IUser[]) {
     const users = Array.isArray(usersArg) ? usersArg : [usersArg];
 
@@ -147,10 +146,6 @@ export class UsersService extends UserData {
       );
   }
 
-  // You generally want to use shareReplay when you have side-effects or taxing computations that you do not wish to be
-  // executed amongst multiple subscribers. It may also be valuable in situations where you know you will have late
-  // subscribers to a stream that need access to previously emitted values. This ability to replay values on
-  // subscription is what differentiates share and shareReplay.
   getUserWithCache(userId: number) {
     if (!this.userCache[userId]) {
       this.userCache[userId] = this.getUser(userId).pipe(shareReplay());
@@ -215,12 +210,8 @@ export class UsersService extends UserData {
       );
   }
 
-  getUserFollowers() {
-
-  }
-
   changeEmail(password: string, newEmail: string) {
-    const url = /*UsersService.BASE_USERS_URL +*/ 'me/edit-email';
+    const url = 'me/edit-email';
     const body: UserUpdateMe = {
       currentPassword: password,
       email: newEmail
@@ -325,12 +316,6 @@ export class UsersService extends UserData {
     return this.api.updateUserAsAdmin(body);
   }
 
-
-  private oldThemeName: string;
-  private themes: string[] = [];
-
-  private themeFromLocalStorage: string;
-
   getAnonymousUserTheme() {
     if (this.themeFromLocalStorage) {
       return this.themeFromLocalStorage;
@@ -358,25 +343,6 @@ export class UsersService extends UserData {
   }
 
   private formatUser(user: IUser) {
-    // let videoQuota;
-    // if (user.videoQuota === -1) {
-    //   videoQuota = '∞';
-    // } else {
-    //   videoQuota = getBytes(user.videoQuota, 0);
-    // }
-    //
-    // const videoQuotaUsed = getBytes(user.videoQuotaUsed, 0);
-    //
-    // let videoQuotaDaily: string;
-    // let videoQuotaUsedDaily: string;
-    // if (user.videoQuotaDaily === -1) {
-    //   videoQuotaDaily = '∞';
-    //   videoQuotaUsedDaily = getBytes(0, 0) + '';
-    // } else {
-    //   videoQuotaDaily = getBytes(user.videoQuotaDaily, 0) + '';
-    //   videoQuotaUsedDaily = getBytes(user.videoQuotaUsedDaily || 0, 0) + '';
-    // }
-
     const roleLabels: { [id in UserRole]: string } = {
       [UserRole.REGISTERED]: `Registered`,
       [UserRole.ADMINISTRATOR]: `Administrator`,

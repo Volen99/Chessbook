@@ -12,7 +12,6 @@ import {ScreenService} from "../../core/wrappers/screen.service";
 import {VideoBlockService} from "../shared-moderation/video-block.service";
 import {PostsService} from "../posts/posts.service";
 import { RedundancyService } from '../shared-main/post/redundancy.service';
-import {VideoCaption} from "../models/posts/caption/video-caption.model";
 import {UserStore} from "../../core/stores/user.store";
 
 import {
@@ -44,7 +43,6 @@ export class VideoActionsDropdownComponent implements OnChanges {
   @ViewChild('videoBlockModal') videoBlockModal: VideoBlockComponent;
 
   @Input() video: Post | PostDetails;
-  @Input() videoCaptions: VideoCaption[] = [];
 
   @Input() displayOptions: VideoActionsDisplayType = {
     playlist: false,

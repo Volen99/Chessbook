@@ -31,7 +31,6 @@ import {NbContextMenuModule} from "../sharebook-nebular/theme/components/context
 import {NbSecurityModule} from "../sharebook-nebular/security/security.module";
 import {NbButtonModule} from "../sharebook-nebular/theme/components/button/button.module";
 import {NbSelectModule} from "../sharebook-nebular/theme/components/select/select.module";
-import {NbIconModule} from "../sharebook-nebular/theme/components/icon/icon.module";
 import {NbSpinnerModule} from "../sharebook-nebular/theme/components/spinner/spinner.module";
 import {NbEvaIconsModule} from "../sharebook-nebular/eva-icons/eva-icons.module";
 import {NbSearchModule} from "../sharebook-nebular/theme/components/search/search.module";
@@ -57,7 +56,6 @@ const NB_MODULES = [
   NbSecurityModule,
   NbButtonModule,
   NbSelectModule,
-  NbIconModule,
   NbSpinnerModule,
   NbEvaIconsModule,
 ];

@@ -8,9 +8,6 @@ import {
 import {LocalDataSource} from "ng2-smart-table";
 import {SmartTableData} from "../../../core/interfaces/common/smart-table";
 
-
-
-
 @Component({
   selector: 'app-chess-rankings',
   templateUrl: './chess-rankings.component.html',

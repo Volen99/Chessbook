@@ -4,10 +4,6 @@
                [value]="this.optionIndex" [checked]="this.active" (change)="this.handleOptionChange($event)"
                [disabled]="this.disabled"/>
 
-<!--        <nb-radio-group [disabled]="this.disabled" [(value)]="this.selected">-->
-<!--            <nb-radio [checked]="this.active" [value]="this.optionIndex" (valueChange)="this.handleOptionChange($event)">{{option.label}}</nb-radio>-->
-<!--        </nb-radio-group>-->
-
         <span *ngIf="!this.showResults" class="poll__input" tabIndex='0'
               [attr.role]="this.poll.multiple ? 'checkbox' : 'radio'"
               (keypress)="this.handleOptionKeyPress($event)"
@@ -16,7 +12,6 @@
               [attr.data-index]="optionIndex">
         </span>
 
-        <!--this.math.round(this.percent)%-->
         <span *ngIf="this.showResults" class='poll__number'>{{this.getOptionPercentage(option.percentOfTotalVotes)}}%</span>
 
         <span class="poll__option__text translate">{{this.option.label}}</span>

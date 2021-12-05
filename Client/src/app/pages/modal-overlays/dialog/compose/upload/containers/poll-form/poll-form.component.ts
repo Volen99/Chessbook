@@ -99,7 +99,6 @@ export class OptionComponent implements OnInit {
 
 }
 
-
 @Component({
   selector: 'app-poll-form',
   templateUrl: './poll-form.component.html',
@@ -163,17 +162,5 @@ export class PollFormComponent implements OnInit {
     this.expiresIn = expiresIn;
     this.isMultiple = isMultiple;
   }
-
-  // onClearSuggestions () {
-  //   dispatch(clearComposeSuggestions());
-  // },
-  //
-  // onFetchSuggestions (token) {
-  //   dispatch(fetchComposeSuggestions(token));
-  // },
-  //
-  // onSuggestionSelected (position, token, accountId, path) {
-  //   dispatch(selectComposeSuggestion(position, token, accountId, path));
-  // },
 
 }

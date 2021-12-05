@@ -1,17 +1,10 @@
-import { of as observableOf, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { of as observableOf, Observable } from 'rxjs';
+
 import {Champion, FemaleChampion} from "../../../../core/interfaces/iot/champion";
 
 @Injectable()
 export class WorldChampionsService {
-  private time: Date = new Date();
-
-  private types = {
-    mobile: 'mobile',
-    home: 'home',
-    work: 'work',
-  };
-
   private contacts: Champion[] = [
     { name: 'Magnus Carlsen', picture: 'assets/images/magnus-carlsen.png', year: '2013–present', alpha2Code: 'no', title: 'Norway' },
     { name: 'Viswanathan Anand', picture: 'assets/images/vishy.jpg', year: '2007–2013', alpha2Code: 'in', title: 'India' },

@@ -7,7 +7,6 @@ import {ServerConfig} from "../models/server/server-config.model";
 import {ServerService} from "../../core/server/server.service";
 import {UserRight} from "../models/users/user-right.enum";
 import {ConfirmService} from "../../core/confirm/confirm.service";
-import {Notifier} from 'app/core/notification/notifier.service';
 import {DropdownAction} from "../shared-main/buttons/action-dropdown.component";
 import {User} from "../shared-main/user/user.model";
 import {BulkRemoveCommentsOfBody} from "../models/bulk/bulk-remove-comments-of-body.model";

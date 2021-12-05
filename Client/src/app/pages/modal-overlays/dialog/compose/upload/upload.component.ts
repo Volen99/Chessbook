@@ -15,12 +15,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {map} from "rxjs/operators";
 import {length} from 'stringz';
 
-import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 import {
-  faGlobeAfrica,
-  faGlobeAmericas,
-  faGlobeAsia,
-  faGlobeEurope,
   faImagePolaroid,
   faPoll,
   faTimes,
@@ -31,10 +26,7 @@ import {
 import {FileUploader} from "./file-uploader.class";
 import {UploadService} from "./upload.service";
 import {PostsService} from "../../../../../shared/posts/posts.service";
-import {PublishTweetParameters} from "../../../../../shared/posts/parameters/publish-tweet-parameters";
 import {NbDialogRef} from "../../../../../sharebook-nebular/theme/components/dialog/dialog-ref";
-import {ShowcaseDialogComponent} from "../../showcase-dialog/showcase-dialog.component";
-import {WhoCanReplyComponent} from "../../../popovers/components/who-can-reply/who-can-reply.component";
 import {PostPrivacy} from "../../../../../shared/models/enums/post-privacy";
 import {countableText} from "../../../../../features/compose/util/counter";
 import {UserStore} from "../../../../../core/stores/user.store";
@@ -51,6 +43,150 @@ import {
 import { FormReactiveValidationMessages } from 'app/shared/shared-forms/form-reactive';
 import {IsVideoPipe} from "../../../../../shared/shared-main/angular/pipes/is-video.pipe";
 import {IMAGE_FILE_EXTENSIONS} from "./assets-panel.service";
+import {IMedia} from '../../../../../shared/models/upload/media/media';
+import {TweetIdentifier} from '../../../../../shared/models/TweetIdentifier';
+import {IPost} from '../../../../../shared/posts/models/post.model';
+import {ITweetIdentifier} from '../../../../../shared/posts/models/tweet-identifier';
+import {IPoll} from '../../../../../shared/posts/models/poll/poll';
+
+// For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-show-id
+export interface IPublishTweetParameters {
+  // Message to publish as a tweet
+  text: string;
+
+  // The ID of an existing status that the update is in reply to.
+  inReplyToTweetId?: number;
+
+  // Quote a specific tweet
+  quotedTweet: IPost;
+
+  // An existing status that the update is in reply to.
+  inReplyToTweet: ITweetIdentifier;
+
+  /// <summary>
+  /// In order for a URL to not be counted in the status body of an extended Tweet, provide a URL as a Tweet attachment.
+  /// This URL must be a Tweet permalink, or Direct Message deep link.
+  /// Arbitrary, non-Twitter URLs must remain in the status text.
+  /// URLs passed to the attachment_url parameter not matching either a Tweet permalink or
+  /// Direct Message deep link will fail at Tweet creation and cause an exception.
+  /// </summary>
+  quotedTweetUrl: string;
+
+  // A <a href="https://dev.twitter.com/overview/api/places">place</a> in the world.
+  placeId: string;
+
+  // Whether or not to put a pin on the exact coordinates a tweet has been sent from.
+  displayExactCoordinates?: boolean;
+
+  // A list of media_ids to associate with the Tweet. You may include up to 4 photos or 1 animated GIF or 1 video in a Tweet.
+  mediaIds: Array<number>;
+
+  // A list of media (uploaded or not) that need to be displayed within the tweet.
+  medias: Array<IMedia>;
+
+
+  // Whether this Tweet will be published with any media attached
+  hasMedia: boolean;
+
+  hasPoll: boolean;
+  poll: IPoll;
+
+  // If you upload Tweet media that might be considered sensitive content such as
+  // nudity, violence, or medical procedures, you should set this value to true.
+  possiblySensitive?: boolean;
+
+  // If set to true, the creator property (IUser) will only contain the id.
+  trimUser?: boolean;
+
+  /// Twitter will auto-populate the @mentions in the extended tweet prefix from the Tweet
+  /// being replied to, plus a mention of the screen name that posted the Tweet being replied to.
+  /// i.e. This auto-populates a "reply all".
+  /// Must be used with InReplyToTweetId or InReplyToTweet.
+  /// Use ExcludeReplyUserIds to specify accounts to not mention in the prefix.
+  /// Also note that there can be a maximum of 50 mentions in the prefix, any more will error.
+  autoPopulateReplyMetadata?: boolean;
+
+  /// Twitter User IDs to not include in the auto-populated extended Tweet prefix.
+  /// Cannot exclude the User who is directly being replied to, only the additional mentions.
+  /// Must be used with AutoPopulateReplyMetadata.
+  excludeReplyUserIds: Array<number>;
+
+  // Associate an ads card with the Tweet using the card_uri value from any ads card response.
+  cardUri: string;
+}
+
+export class PublishTweetParameters implements IPublishTweetParameters {
+  // @ts-ignore
+  constructor(textOrSource?: string | IPublishTweetParameters) {
+    if (!textOrSource) {
+    } else if (typeof textOrSource === 'string') {
+
+      this.text = textOrSource;
+    } else if (PublishTweetParameters.isIPublishTweetParameters(textOrSource)) {
+      this.text = textOrSource.text;
+      this.inReplyToTweet = textOrSource.inReplyToTweet;
+      this.quotedTweet = textOrSource.quotedTweet;
+
+      if (this.inReplyToTweet == null) {
+        this.inReplyToTweetId = textOrSource.inReplyToTweetId;
+      }
+
+      this.mediaIds = textOrSource.mediaIds;
+      this.medias = textOrSource.medias;
+      this.placeId = textOrSource.placeId;
+      this.displayExactCoordinates = textOrSource.displayExactCoordinates;
+      this.possiblySensitive = textOrSource.possiblySensitive;
+      this.trimUser = textOrSource.trimUser;
+      this.autoPopulateReplyMetadata = textOrSource.autoPopulateReplyMetadata;
+      this.excludeReplyUserIds = textOrSource.excludeReplyUserIds;
+      // this.tweetMode = textOrSource.tweetMode;
+    }
+
+    this.mediaIds = new Array<number>();
+    this.medias = new Array<IMedia>();
+  }
+
+  poll: IPoll;
+  tags: string;
+
+
+  public text: string;
+
+  public inReplyToTweet: ITweetIdentifier;
+
+  public quotedTweetUrl: string;
+
+  public quotedTweet: IPost;
+
+  get inReplyToTweetId(): number {  // long?
+    return this.inReplyToTweet?.id;
+  }
+
+  set inReplyToTweetId(value: number) {
+    this.inReplyToTweet = value != null ? new TweetIdentifier(value as number) : null;
+  }
+
+  public mediaIds: Array<number>; /*{ get; set; }*//* = new Array<number>();*/
+  public medias: Array<IMedia>; /*{ get; set; }*/ /*= new Array<IMedia>();*/
+
+  get hasMedia(): boolean {
+    return this.mediaIds?.length > 0 || this.medias?.length > 0;
+  }
+
+  hasPoll: boolean;
+
+  public placeId: string;
+  public displayExactCoordinates?: boolean;
+  public possiblySensitive?: boolean;
+  public trimUser?: boolean;
+  public autoPopulateReplyMetadata?: boolean;
+  public excludeReplyUserIds: Array<number>;
+  public cardUri: string;
+
+  private static isIPublishTweetParameters(textOrSource?: string | IPublishTweetParameters): textOrSource is IPublishTweetParameters {
+    return (textOrSource as IPublishTweetParameters).text !== undefined;
+  }
+}
 
 @Component({
   selector: 'app-upload',
@@ -69,12 +205,11 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
   @Input() formErrors: { [id: string]: string } = {};
   @Input() validationMessages: FormReactiveValidationMessages = {};
 
-  private globes: IconDefinition[] = [faGlobeEurope, faGlobeAsia, faGlobeAmericas, faGlobeAfrica];
   private firstPatchDone = false;
 
   constructor(private uploadService: UploadService,
               protected postsService: PostsService,
-              protected ref: NbDialogRef<ShowcaseDialogComponent>,
+              private ref: NbDialogRef<UploadComponent>,
               private userStore: UserStore,
               protected notifier: NbToastrService,
               protected formValidatorService: FormValidatorService,
@@ -148,13 +283,11 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
     this.textPlaceholder = this.isPoll ? 'Ask a question...' : this.replyPost ? 'Post your reply' : `What's happening?`;
 
 
-    this.uploader.response.subscribe(res => {
-      // setTimeout(() => {
-      //   this.uploader.progress = 0;
-      // }, 1000);
-    });
-
-    this.getGlobe();
+    // this.uploader.response.subscribe(res => {
+    //   setTimeout(() => {
+    //     this.uploader.progress = 0;
+    //   }, 1000);
+    // });
   }
 
   ngOnDestroy(): void {
@@ -174,11 +307,7 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
   textPlaceholder: string;
   privacy: PostPrivacy = PostPrivacy.PUBLIC;
 
-  public whoCanReplyComponent = WhoCanReplyComponent;
-
   anyMedia: boolean;
-
-  globeCurrent: IconDefinition;
 
   faPoll = faPoll;
   faTimes = faTimes;
@@ -293,11 +422,6 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
 
       }
 
-      if (this.replyPost) {
-        publishPostParameters.inReplyToTweet = this.replyPost;
-        publishPostParameters.addCustomQueryParameter('in_reply_to_screen_name', this.replyPost.user.screenName);
-      }
-
       publishPostParameters.medias = medias;
 
       let postWithImage = await this.postsService.publishTweetAsync(publishPostParameters, publishPostBody);
@@ -330,11 +454,6 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
   scheduleButtonHandler() {
     this.notifier.warning('', 'Coming out soon');
     return;
-  }
-
-
-  getGlobe() {
-    this.globeCurrent = this.globes[this.globes.length * Math.random() | 0];
   }
 
   get emojiMarkupList() {

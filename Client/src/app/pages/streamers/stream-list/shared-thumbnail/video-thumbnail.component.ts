@@ -25,17 +25,12 @@ export class VideoThumbnailComponent {
     this.addedToWatchLaterText = `Remove from watch later`;
   }
 
-  // isLiveEnded() {
-  //   if (!this.video.state) return;
-  //
-  //   return this.video.state.id === VideoState.LIVE_ENDED;
-  // }
-
   getImageUrl() {
     if (!this.video) {
       return '';
     }
 
+    // TODO: fix kk
     if (this.screenService.isInMobileView()) {
       let thumb = this.video.thumbnail_url.replace('{width}', '850');
       thumb = thumb.replace('{height}', '480');

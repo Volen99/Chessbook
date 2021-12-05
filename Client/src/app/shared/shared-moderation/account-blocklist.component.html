@@ -1,13 +1,13 @@
 <h1 style="padding: 5px 0 5px 15px">
     <fa-icon [icon]="this.faUserTimes" aria-hidden="true"></fa-icon>
-    <ng-container i18n>Blocked accounts</ng-container>
+    <ng-container>Blocked accounts</ng-container>
 </h1>
 
 <p-table
         [value]="blockedAccounts" [lazy]="true" [paginator]="totalRecords > 0" [totalRecords]="totalRecords"
         [rows]="rowsPerPage" [rowsPerPageOptions]="rowsPerPageOptions"
         [sortField]="sort.field" [sortOrder]="sort.order" (onLazyLoad)="loadLazy($event)" (onPage)="onPage($event)"
-        [showCurrentPageReport]="true" i18n-currentPageReportTemplate
+        [showCurrentPageReport]="true"
         currentPageReportTemplate="Showing {{'{first}'}} to {{'{last}'}} of {{'{totalRecords}'}} blocked accounts"
 >
     <ng-template pTemplate="caption">
@@ -20,9 +20,9 @@
 
     <ng-template pTemplate="header">
         <tr>
-            <th style="width: 150px;" i18n>Action</th> <!-- column for action buttons -->
-            <th style="width: calc(100% - 300px);" i18n>Account</th>
-            <th style="width: 150px;" i18n pSortableColumn="createdAt">Blocked at
+            <th style="width: 150px;">Action</th> <!-- column for action buttons -->
+            <th style="width: calc(100% - 300px);">Account</th>
+            <th style="width: 150px;" pSortableColumn="createdAt">Blocked at
                 <p-sortIcon field="createdAt"></p-sortIcon>
             </th>
         </tr>
@@ -31,10 +31,10 @@
     <ng-template pTemplate="body" let-accountBlock>
         <tr>
             <td class="action-cell">
-                <button nbButton status="danger" class="unblock-button" (click)="unblockAccount(accountBlock)" i18n>Unblock</button>
+                <button nbButton status="danger" class="unblock-button" (click)="unblockAccount(accountBlock)">Unblock</button>
             </td>
             <td>
-                <a [href]="accountBlock.blockedAccount.screenName.substring(1)" i18n-title title="Open user in a new tab" target="_blank"
+                <a [href]="accountBlock.blockedAccount.screenName.substring(1)" title="Open user in a new tab" target="_blank"
                    rel="noopener noreferrer">
                     <div class="chip two-lines">
                         <my-actor-avatar [account]="accountBlock.blockedAccount"></my-actor-avatar>
@@ -54,8 +54,8 @@
         <tr>
             <td colspan="6">
                 <div class="no-results">
-                    <ng-container *ngIf="search" i18n>No account found matching current filters.</ng-container>
-                    <ng-container *ngIf="!search" i18n>No account found.</ng-container>
+                    <ng-container *ngIf="search">No account found matching current filters.</ng-container>
+                    <ng-container *ngIf="!search">No account found.</ng-container>
                 </div>
             </td>
         </tr>

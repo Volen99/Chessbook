@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {filter, map, takeUntil} from 'rxjs/operators';
 import {ReplaySubject, Subject} from 'rxjs';
 
-import {faSignInAlt, faSignOutAlt, faUser, faUserPlus,} from '@fortawesome/pro-light-svg-icons';
+import {faSignInAlt, faSignOutAlt, faUser, faUserPlus, faBars} from '@fortawesome/pro-light-svg-icons';
 import {faUserAlien} from '@fortawesome/pro-solid-svg-icons';
 
 import {IUser} from "../../../core/interfaces/common/users";
@@ -134,9 +134,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.currentTheme = themeName;
 
         if (themeName !== 'default') {
-          this.currentLogoName = 'icon-white.svg';
+          this.currentLogoName = 'icon-white.png';
         } else {
-          this.currentLogoName = 'icon-black.svg';
+          this.currentLogoName = 'icon-main.png';
         }
       });
   }
@@ -183,6 +183,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   faUser = faUser;
   faSignOutAlt = faSignOutAlt;
   faUserAlien = faUserAlien;
+  faBars = faBars;
 
   poll: IPoll;
 

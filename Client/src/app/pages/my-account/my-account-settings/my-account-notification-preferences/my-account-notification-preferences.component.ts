@@ -10,7 +10,6 @@ import {
 } from "../../../../shared/models/users/user-notification-setting.model";
 import {UserRight} from "../../../../shared/models/users/user-right.enum";
 import {ServerService} from "../../../../core/server/server.service";
-import {Notifier} from "../../../../core/notification/notifier.service";
 import {UserNotificationService} from "../../../../shared/shared-main/users/user-notification.service";
 import {IUser} from "../../../../core/interfaces/common/users";
 import {UserStore} from "../../../../core/stores/user.store";
@@ -35,8 +34,8 @@ export class MyAccountNotificationPreferencesComponent implements OnInit, OnDest
 
   private savePreferences = debounce(this.savePreferencesImpl.bind(this), 500);
 
-  constructor(private userNotificationService: UserNotificationService, private serverService: ServerService, private notifier: Notifier,
-              private userStore: UserStore, private toasterService: NbToastrService) {
+  constructor(private userNotificationService: UserNotificationService, private serverService: ServerService,
+              private userStore: UserStore, private notifier: NbToastrService) {
     this.labelNotifications = {
       newVideoFromSubscription: `New post from your subscriptions`,
       newCommentOnMyVideo: `New comment on your post`,
@@ -58,11 +57,6 @@ export class MyAccountNotificationPreferencesComponent implements OnInit, OnDest
   private destroy$: Subject<void> = new Subject<void>();
 
   ngOnInit() {
-    // this.serverService.getConfig()
-    //   .subscribe(config => {
-    //     this.emailEnabled = config.email.enabled;
-    //   });
-
     // this.userInformationLoaded.subscribe(() => this.loadNotificationSettings());
 
     this.userStore.onUserStateChange()
@@ -85,10 +79,7 @@ export class MyAccountNotificationPreferencesComponent implements OnInit, OnDest
       return true; // No rights needed
     }
 
-    /*debugger
-    return this.user?.hasRight(rightToHave);*/
-
-    return true;
+    return this.user?.hasRight(rightToHave);
   }
 
   updateEmailSetting(field: keyof UserNotificationSetting, value: boolean) {
@@ -115,9 +106,7 @@ export class MyAccountNotificationPreferencesComponent implements OnInit, OnDest
     this.userNotificationService.updateNotificationSettings(this.user.notificationSettings)
       .subscribe(
         () => {
-          this.toasterService.success('Preferences saved', 'Success', {
-            position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
-          });
+          this.notifier.success('Preferences saved', 'Success');
         },
 
         err => console.error(err.message)

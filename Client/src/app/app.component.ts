@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit, Optional} from '@angular/core';
-import {GuardsCheckStart, RouteConfigLoadStart, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {ViewportScroller} from "@angular/common";
-import {Subject} from 'rxjs';
-import {filter, takeUntil, takeWhile} from 'rxjs/operators';
 import {Hotkey, HotkeysService} from "angular2-hotkeys";
+import {Subject} from 'rxjs';
+import {takeUntil, takeWhile} from 'rxjs/operators';
 
 import {InitUserService} from './theme/services/init-user.service';
 import {NbMenuItem} from "./sharebook-nebular/theme/components/menu/menu.service";
@@ -17,7 +17,6 @@ import {NbDialogRef} from "./sharebook-nebular/theme/components/dialog/dialog-re
 import {User} from "./shared/shared-main/user/user.model";
 import {UserStore} from './core/stores/user.store';
 import {ScrollService} from './core/routing/scroll.service';
-import {ChessbookRouterService} from './core/routing/chessbook-router.service';
 
 @Component({
   selector: 'app-root',
@@ -37,16 +36,12 @@ export class AppComponent implements OnInit, OnDestroy {
               private dialogService: NbDialogService,
               private userStore: UserStore,
               private scrollService: ScrollService,
-              private chessbookRouter: ChessbookRouterService,
               @Optional() protected ref: NbDialogRef<UploadComponent>) {
 
     this.iconLibraries.registerFontPack('solid', {packClass: 'fas', iconClassPrefix: 'fa'});
     this.iconLibraries.registerFontPack('regular', {packClass: 'far', iconClassPrefix: 'fa'});
     this.iconLibraries.registerFontPack('light', {packClass: 'fal', iconClassPrefix: 'fa'});
-    // this.iconLibraries.registerFontPack('duotone', {packClass: 'fad', iconClassPrefix: 'fa'});
     this.iconLibraries.registerFontPack('brands', {packClass: 'fab', iconClassPrefix: 'fa'});
-
-    // this.iconLibraries.setDefaultPack('duotone');
 
     this.initMenu();
 
@@ -62,7 +57,6 @@ export class AppComponent implements OnInit, OnDestroy {
   alive: boolean = true;
 
   ngOnInit(): void {
-    this.initRouteEvents();
     this.scrollService.enableScrollRestoration();
 
     this.initHotkeys();
@@ -76,13 +70,23 @@ export class AppComponent implements OnInit, OnDestroy {
   user: IUser;
 
   initUser() {
-    this.userStore.onUserStateChange()
+    // this.userStore.onUserStateChange()
+    //   .pipe(
+    //     takeUntil(this.destroy$),
+    //   ).subscribe((user: User) => {
+    //     this.user = this.onUserFetched(user);
+    //     this.initMenu();
+    // });
+
+    this.initUserService.initCurrentUser()
       .pipe(
         takeUntil(this.destroy$),
-      ).subscribe((user: User) => {
-        this.user = this.onUserFetched(user);
+      )
+      .subscribe((data) => {
+        this.user = this.onUserFetched(data);
         this.initMenu();
-    });
+
+      });
   }
 
   private onUserFetched(userJson: IUser) {
@@ -99,30 +103,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   isUserLoggedIn() {
     return this.userStore.isLoggedIn();
-  }
-
-  private initRouteEvents() {
-    const eventsObs = this.router.events;
-
-    // // Plugin hooks
-    // this.chessbookRouter.getNavigationEndEvents().subscribe(e => {
-    //   this.hooks.runAction('action:router.navigation-end', 'common', {path: e.url});
-    // });
-
-    // // Automatically hide/display the menu
-    // eventsObs.pipe(
-    //   filter((e: Event): e is GuardsCheckStart => e instanceof GuardsCheckStart),
-    //   filter(() => this.screenService.isInSmallView() || this.screenService.isInTouchScreen())
-    // ).subscribe(() => this.menu.setMenuDisplay(false)); // User clicked on a link in the menu, change the page
-
-    // // Handle lazy loaded module
-    // eventsObs.pipe(
-    //   filter((e: Event): e is RouteConfigLoadStart => e instanceof RouteConfigLoadStart)
-    // ).subscribe(() => this.loadingBar.useRef().start());
-    //
-    // eventsObs.pipe(
-    //   filter((e: Event): e is RouteConfigLoadEnd => e instanceof RouteConfigLoadEnd)
-    // ).subscribe(() => this.loadingBar.useRef().complete());
   }
 
   private initHotkeys() {

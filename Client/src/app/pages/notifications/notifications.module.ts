@@ -2,7 +2,6 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
-import { TimelineModule } from '../../shared/timeline/timeline.module';
 import { SidebarColumnModule } from '../../shared/sidebar-column/sidebar-column.module';
 import { NotificationsRoutingModule } from './notifications-routing.module';
 import { NotificationsComponent } from './notifications.component';
@@ -26,7 +25,6 @@ import {NbButtonModule} from "../../sharebook-nebular/theme/components/button/bu
   imports: [
     NotificationsRoutingModule,
     CommonModule,
-    TimelineModule,
     SidebarColumnModule,
     SharedMainModule,
     NbCardModule,

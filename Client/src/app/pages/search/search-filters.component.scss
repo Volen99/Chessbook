@@ -33,8 +33,8 @@ input[type=text] {
 }
 
 input[type=submit] {
-  @include peertube-button-link;
-  @include orange-button;
+ // @include peertube-button-link;
+  // @include orange-button;
 }
 
 .submit-button {
@@ -42,7 +42,7 @@ input[type=submit] {
 }
 
 .reset-button {
-  @include peertube-button;
+ // @include peertube-button;
   @include margin-right(1rem);
 
   font-weight: $font-semibold;

@@ -37,14 +37,11 @@ export class MediaModalComponent implements OnInit, OnChanges, AfterViewInit, On
   @Input() postId: number;
   @Input() index: number;
   @Input() onClose: () => any;
-  // @Input() onChangeBackgroundColor: (backgroundColor: any) => any;
   @Output() backgroundColorChange = new EventEmitter<any>();
 
   constructor() {
   }
 
-  // componentDidUpdate
-  // https://stackoverflow.com/questions/44811723/ngonchanges-tracking-previous-value-and-new-value ♥
   ngOnChanges(changes: SimpleChanges): void {
     let {index} = changes;
     if (index) {
@@ -60,16 +57,6 @@ export class MediaModalComponent implements OnInit, OnChanges, AfterViewInit, On
   ngAfterViewInit(): void {
     window.addEventListener('keydown', this.handleKeyDown, false);
 
-    // if (this.context.router) {
-    //   const history = this.context.router.history;
-    //
-    //   history.push(history.location.pathname, previewState);
-    //
-    //   this.unlistenHistory = history.listen(() => {
-    //     this.props.onClose();
-    //   });
-    // }
-
     if (this.componentRef) {
       // TODO: :(
       let swiper = document.querySelector('swiper');
@@ -83,16 +70,6 @@ export class MediaModalComponent implements OnInit, OnChanges, AfterViewInit, On
 
   ngOnDestroy(): void {
     window.removeEventListener('keydown', this.handleKeyDown);
-
-    // if (this.context.router) {
-    //   this.unlistenHistory();
-    //
-    //   if (this.context.router.history.location.state === previewState) {
-    //     this.context.router.history.goBack();
-    //   }
-    // }
-
-    // this.onChangeBackgroundColor(null);
 
     this.backgroundColorChange.emit(null);
   }
@@ -194,13 +171,6 @@ export class MediaModalComponent implements OnInit, OnChanges, AfterViewInit, On
     this.navigationHidden = !this.navigationHidden;
   }
 
-  handleStatusClick = e => {
-    if (e.button === 0 && !(e.ctrlKey || e.metaKey)) {
-      e.preventDefault();
-      // this.context.router.history.push(`/statuses/${this.props.statusId}`);
-    }
-  }
-
   _sendBackgroundColor() {
     const index = this.getIndex();
     const blurhash = this.media[index].blurhash;
@@ -211,6 +181,5 @@ export class MediaModalComponent implements OnInit, OnChanges, AfterViewInit, On
       this.backgroundColorChange.emit(backgroundColor);
     }
   }
-
 
 }

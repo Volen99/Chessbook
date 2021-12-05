@@ -64,17 +64,6 @@ export class HelpComponent implements OnInit, OnChanges, AfterContentInit {
     }
   }
 
-
-  faQuestion = faQuestion;
-
-  onPopoverHidden() {
-    this.isPopoverOpened = false;
-  }
-
-  onPopoverShown() {
-    this.isPopoverOpened = true;
-  }
-
   private init() {
     if (this.helpType === 'markdownText') {
       this.mainHtml = this.formatMarkdownSupport(TEXT_RULES);

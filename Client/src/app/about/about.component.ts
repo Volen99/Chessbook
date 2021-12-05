@@ -1,15 +1,23 @@
-import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {HTMLServerConfig} from '../shared/models/server/server-config.model';
-import {ViewportScroller} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
+import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ViewportScroller} from '@angular/common';
+
 import {NbToastrService} from '../sharebook-nebular/theme/components/toastr/toastr.service';
 import {ServerService} from '../core/server/server.service';
-import {InstanceService} from '../shared/shared-instance/instance.service';
 import {About} from '../shared/models/server/about.model';
 import {copyToClipboard} from '../../root-helpers/utils';
 import {NbGlobalPhysicalPosition} from '../sharebook-nebular/theme/components/cdk/overlay/position-helper';
 import {NbDialogService} from '../sharebook-nebular/theme/components/dialog/dialog.service';
 import {VideosDialogComponent} from '../shared/videos/videos-dialog.component';
+import {MarkdownService} from '../core/renderer/markdown.service';
+
+export interface IDonateButton {
+  class: 'patreon' | 'ko-fi' | 'streamlabs' | 'paypal' | 'google-pay' | 'bitcoin-btc' | 'bitcoin-cash' | 'dogecoin';
+  ariaLabel: 'patreon' | 'ko-fi' | 'streamlabs' | 'paypal' | 'google pay' | 'bitcoin btc' | 'bitcoin cash' | 'dogecoin';
+  src: string;
+  alt: string;
+  href: string;
+}
 
 @Component({
   selector: 'app-about',
@@ -19,10 +27,11 @@ import {VideosDialogComponent} from '../shared/videos/videos-dialog.component';
 
 export class AboutComponent implements OnInit, AfterViewChecked {
   @ViewChild('descriptionWrapper') descriptionWrapper: ElementRef<HTMLInputElement>;
-  //  @ViewChild('contactAdminModal', {static: true}) contactAdminModal: ContactAdminModalComponent;
 
   shortDescription = '';
   descriptionContent: string;
+
+  donateButtons: IDonateButton[];
 
   html = {
     terms: '',
@@ -44,8 +53,6 @@ export class AboutComponent implements OnInit, AfterViewChecked {
   chessbookFounded: Date = new Date('11/1/2021');
   differenceInDays: number;
 
-  private serverConfig: HTMLServerConfig;
-
   private lastScrollHash: string;
 
   constructor(
@@ -53,38 +60,69 @@ export class AboutComponent implements OnInit, AfterViewChecked {
     private route: ActivatedRoute,
     private notifier: NbToastrService,
     private serverService: ServerService,
-    private instanceService: InstanceService,
     private dialogService: NbDialogService,
-  ) {
-  }
-
-  get instanceName() {
-    return 'Chessbook';
-  }
-
-  get isContactFormEnabled() {
-    return true; // this.serverConfig.email.enabled && this.serverConfig.contactForm.enabled;
-  }
-
-  get isNSFW() {
-    return false; //  this.serverConfig.instance.isNSFW;
+    private markdownService: MarkdownService) {
   }
 
   async ngOnInit() {
-    // const {about, languages, categories}: ResolverData = this.route.snapshot.data.instanceData;
-
-    // // this.serverConfig = this.serverService.getHTMLConfig();
-    //
-    // this.route.data.subscribe(data => {
-    //   if (!data?.isContact) return;
-    //
-    //   const prefill = this.route.snapshot.queryParams;
-    //
-    //   // this.contactAdminModal.show(prefill);
-    // });
-    //
-    // this.languages = languages;
-    // this.categories = categories;
+    this.donateButtons = [
+      {
+        ariaLabel: 'patreon',
+        src: '/assets/images/patreon.png',
+        alt: 'patreon',
+        class: 'patreon',
+        href: 'https://www.nasa.gov/',
+      },
+      {
+        ariaLabel: 'ko-fi',
+        src: '/assets/images/ko-fi.png',
+        alt: 'ko-fi',
+        class: 'ko-fi',
+        href: 'https://www.nasa.gov/'
+      },
+      {
+        ariaLabel: 'streamlabs',
+        src: '/assets/images/streamlabs.png',
+        alt: 'streamlabs',
+        class: 'streamlabs',
+        href: 'https://streamlabs.com/no_talent_guy/tip'
+      },
+      {
+        ariaLabel: 'paypal',
+        src: '/assets/images/paypal.svg',
+        alt: 'paypal',
+        class: 'paypal',
+        href: 'https://www.nasa.gov/'
+      },
+      {
+        ariaLabel: 'google pay',
+        src: '/assets/images/google-pay.svg',
+        alt: 'google pay',
+        class: 'google-pay',
+        href: 'https://www.nasa.gov/'
+      },
+      {
+        ariaLabel: 'bitcoin btc',
+        src: '/assets/images/bitcoin-btc.png',
+        alt: 'bitcoin btc',
+        class: 'bitcoin-btc',
+        href: 'https://www.nasa.gov/'
+      },
+      {
+        ariaLabel: 'bitcoin cash',
+        src: '/assets/images/bitcoin-cash.png',
+        alt: 'bitcoin cash',
+        class: 'bitcoin-cash',
+        href: 'https://www.nasa.gov/'
+      },
+      {
+        ariaLabel: 'dogecoin',
+        src: '/assets/images/dogecoin.png',
+        alt: 'dogecoin',
+        class: 'dogecoin',
+        href: 'https://www.nasa.gov/'
+      },
+    ];
 
     let about: About = {
       instance: {
@@ -98,7 +136,7 @@ export class AboutComponent implements OnInit, AfterViewChecked {
           Below is a summary of rules you need to follow:`,
         administrator: 'My name is Volen but friends call me Volencho. I am a developer from Bulgaria, ' +
           'with love for the game of chess. I made this website all by myself. Apart from spending time with family, ' +
-          'I love Music, Astronomy, Science, Artificial Intelligence, Physics, Traveling, Video Games and the list goes on :D. I am also a stargaze lover 🌟🌠',
+          'I love Music, Reading, Astronomy, Science, Artificial Intelligence, Physics, Traveling, Video Games, Movies and the list goes on :D. I am also a stargaze lover 🌟🌠',
         creationReason: '',
         maintenanceLifetime: '',
         businessModel: 'Currently, the website is financed using my own money. However, I welcome support to help covering my ' +
@@ -113,7 +151,7 @@ export class AboutComponent implements OnInit, AfterViewChecked {
     this.shortDescription = about.instance.shortDescription;
     this.descriptionContent = about.instance.description;
 
-    this.html = await this.instanceService.buildHtml(about);
+    this.html = await this.buildHtml(about);
 
     this.today = new Date();
 
@@ -150,8 +188,26 @@ export class AboutComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  async buildHtml(about: About) {
+    const html = {
+      terms: '',
+      codeOfConduct: '',
+      moderationInformation: '',
+      administrator: '',
+      creationReason: '',
+      maintenanceLifetime: '',
+      businessModel: '',
+      hardwareInformation: ''
+    };
+
+    for (const key of Object.keys(html)) {
+      html[key] = await this.markdownService.textMarkdownToHTML(about.instance[key]);
+    }
+
+    return html;
+  }
+
   get isBroadcastMessageDisplayed() {
     return false;
-    // return this.screenService.isBroadcastMessageDisplayed;
   }
 }

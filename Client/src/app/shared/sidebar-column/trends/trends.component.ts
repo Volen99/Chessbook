@@ -1,12 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TagsService} from "../../services/tags.service";
-import {IPostTag} from "../../shared-main/post/post-details.model";
 
 import {
   faPawClaws,
   faCog
 } from '@fortawesome/pro-solid-svg-icons';
 
+import {TagsService} from "../../services/tags.service";
+import {IPostTag} from "../../shared-main/post/post-details.model";
 
 @Component({
   selector: 'app-trends',

@@ -1,4 +1,4 @@
-import {Directive, Renderer2, OnInit, Input, ElementRef} from '@angular/core';
+import {Directive, OnInit, Input} from '@angular/core';
 
 @Directive({
   selector: '[appMediaSplit]'
@@ -37,5 +37,3 @@ export class MediaSplitDirective implements OnInit {
     mediaSplitContainer.style.display = '';
   }
 }
-
-

@@ -1,27 +1,22 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
-import {takeUntil, tap} from "rxjs/operators";
-
-import {
-  USER_DESCRIPTION_VALIDATOR,
-  USER_DISPLAY_NAME_REQUIRED_VALIDATOR
-} from "../../../../shared/shared-forms/form-validators/user-validators";
-
-import {
-  faChessKingAlt,
-  faChessQueenAlt,
-} from '@fortawesome/pro-solid-svg-icons';
-
+import {takeUntil} from "rxjs/operators";
 
 import {IUser, UserData} from "../../../../core/interfaces/common/users";
 import {UserStore} from "../../../../core/stores/user.store";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserFormMode} from "../../../users/user/user.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NbTokenService} from "../../../../sharebook-nebular/auth/services/token/token.service";
 import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {NbAuthOAuth2JWTToken} from "../../../../sharebook-nebular/auth/services/token/token";
 import {HttpService} from "../../../../core/backend/common/api/http.service";
+
+export enum UserFormMode {
+  VIEW = 'View',
+  EDIT = 'Edit',
+  ADD = 'Add',
+  EDIT_SELF = 'EditSelf',
+}
 
 export enum Month {
   Jan = 1,
@@ -136,15 +131,11 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
     this.loadUserData();
   }
 
-
   genderSelected = '';
 
   monthSelected: number;
   daySelected: number;
   yearSelected: number;
-
-  faChessKingAlt = faChessKingAlt;
-  faChessQueenAlt = faChessQueenAlt;
 
   public months = Month;
   public days: number[] = [];
@@ -284,8 +275,7 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['/', this.userStore.getUser().screenName.substring(1)]);
-    // this.router.navigate(['/pages/users/list']);
+    this.router.navigate(['/', this.userStore.getUser()?.screenName.substring(1)]);
   }
 
   ngOnDestroy(): void {

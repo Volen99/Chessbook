@@ -19,13 +19,9 @@
                 </div>
     </div>
 
-    <div class="no-results" i18n *ngIf="this.streams?.data.length <= 0">Loading...</div>
+    <div class="no-results" *ngIf="this.streams?.data.length <= 0">Loading...</div>
     <div class="videos" style="padding-left: 6px"> <!--[ngClass]="{ 'display-as-row': displayAsRow() }"-->
         <ng-container *ngFor="let video of this.streams?.data;"> <!--trackBy: videoById;-->
-            <!--            <h2 class="date-title" *ngIf="getCurrentGroupedDateLabel(video)">-->
-            <!--                {{ getCurrentGroupedDateLabel(video) }}-->
-            <!--            </h2>-->
-
             <div class="video-wrapper" [@listAnimation]="this.streams?.data.length">
                 <my-video-miniature [video]="video"></my-video-miniature>
             </div>

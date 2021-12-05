@@ -7,7 +7,6 @@ import {FormReactive} from "../shared-forms/form-reactive";
 import {Post} from "../shared-main/post/post.model";
 import {FormValidatorService} from "../shared-forms/form-validator.service";
 import {VIDEO_BLOCK_REASON_VALIDATOR} from "../shared-forms/form-validators/video-block-validators";
-import { Notifier } from 'app/core/notification/notifier.service';
 import {
   faTimes,
 } from '@fortawesome/pro-light-svg-icons';

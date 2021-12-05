@@ -13,6 +13,8 @@ import {SearchService} from "../../shared/shared-search/search.service";
 import {UserFollowModule} from "../../shared/user-follow/user-follow.module";
 import {SharedVideoMiniatureModule} from "../../shared/post-miniature/shared-video-miniature.module";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {NbButtonModule} from '../../sharebook-nebular/theme/components/button/button.module';
+import {NbInputModule} from '../../sharebook-nebular/theme/components/input/input.module';
 
 @NgModule({
   imports: [
@@ -25,6 +27,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     UserFollowModule,
     SharedVideoMiniatureModule,
     FontAwesomeModule,
+    NbButtonModule,
+    NbInputModule,
   ],
 
   declarations: [

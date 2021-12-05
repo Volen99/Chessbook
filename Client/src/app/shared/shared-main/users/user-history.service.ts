@@ -1,6 +1,7 @@
-import {catchError, map, switchMap} from 'rxjs/operators';
-import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {catchError, map, switchMap} from 'rxjs/operators';
+
 import {environment} from '../../../../environments/environment';
 import {RestExtractor} from "../../../core/rest/rest-extractor";
 import {RestService} from "../../../core/rest/rest.service";
@@ -31,7 +32,7 @@ export class UserHistoryService {
 
     return this.authHttp
       .get<ResultList<Post>>(UserHistoryService.BASE_USER_VIDEOS_HISTORY_URL, {params})
-      .pipe(                    // @ts-ignore
+      .pipe(
         switchMap(res => this.postService.extractVideos(res)),
         catchError(err => this.restExtractor.handleError(err))
       );

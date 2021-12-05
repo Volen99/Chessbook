@@ -15,8 +15,6 @@ import {NbComponentOrCustomStatus} from '../../sharebook-nebular/theme/component
   styleUrls: ['./camera-button.component.scss']
 })
 export class CameraButtonComponent implements AfterViewInit {
-//  public quickTipsCount$ = this.quickTipsService.newQuickTips$.pipe(map(l => l.length));
-
   @Input() btnSize: NbComponentSize;
   @Input() iconSize: SizeProp = 'lg';
   @Input() appearance: string = 'filled';

@@ -1,40 +1,16 @@
 import {Injectable} from "@angular/core";
 import {catchError, map, switchMap} from "rxjs/operators";
+import {HttpParams} from "@angular/common/http";
 
-import {GetTweetParameters, IGetTweetParameters} from "./parameters/get-tweet-parameters";
-import {IPost} from "./models/post.model";
-import {GetTweetsParameters, IGetTweetsParameters} from "./parameters/get-tweets-parameters";
-import {IPublishTweetParameters, PublishTweetParameters} from "./parameters/publish-tweet-parameters";
-import {DestroyTweetParameters, IDestroyTweetParameters} from "./parameters/destroy-tweet-parameters";
-import {ITweetIdentifier} from "./models/tweet-identifier";
-import {GetRetweetsParameters, IGetRetweetsParameters} from "./parameters/get-retweets-parameters";
-import {IPublishRetweetParameters, PublishRetweetParameters} from "./parameters/publish-retweet-parameters";
-import {DestroyRetweetParameters, IDestroyRetweetParameters} from "./parameters/destroy-retweet-parameters";
-import {GetRetweeterIdsParameters, IGetRetweeterIdsParameters} from "./parameters/get-retweeter-ids-parameters";
-import {
-  GetUserFavoriteTweetsParameters,
-  IGetUserFavoriteTweetsParameters
-} from "./parameters/get-favorite-tweets-Parameters";
-import {IUserIdentifier} from "../models/users/user-identifier";
-import {FavoriteTweetParameters, IFavoriteTweetParameters} from "./parameters/favorite-tweet-parameters";
-import {IUnfavoriteTweetParameters, UnfavoriteTweetParameters} from "./parameters/unfavorite-tweet-parameters";
-import {GetOEmbedTweetParameters, IGetOEmbedTweetParameters} from "./parameters/get-OEmbed-tweet-parameters";
-import {TweetsRequesterService} from "./tweets-requester.service";
-import {ITweetDTO} from "./models/DTO/tweet-dto";
-import {ITweetsClientParametersValidator} from "./validators/tweets-client-parameters-validator";
 import {UserVideoRateType} from "./models/rate/user-video-rate.type";
 import {UserVideoRateUpdate} from "./models/rate/user-video-rate-update.model";
-import {TweetQueryGeneratorService} from "./tweet-query-generator.service";
 import {PostsApi} from "./backend/posts.api";
 import {RestExtractor} from "../../core/rest/rest-extractor";
 import {ResultList} from "../models";
 import {Post} from "../shared-main/post/post.model";
-import {GetHomeTimelineParameters} from "../models/timeline/get-home-timeline-parameters";
-import {HttpParams} from "@angular/common/http";
 import {RestService} from "../../core/rest/rest.service";
 import {TimelineApi} from "../timeline/backend/timeline.api";
 import {Observable, of as observableOf} from "rxjs";
-import {UserVideoRate} from "./models/rate/user-video-rate.model";
 import {IPostConstant} from "./models/post-constant.model";
 import {PostPrivacy} from "../models/enums/post-privacy";
 import {PostDetails} from "../shared-main/post/post-details.model";
@@ -42,204 +18,88 @@ import {ComponentPaginationLight} from "../../core/rest/component-pagination.mod
 import {PostSortField} from "./models/post-sort-field.type";
 import {PostFilter} from "./models/post-query.type";
 import {User} from "../shared-main/user/user.model";
-import {GetUserTimelineParameters, IGetUserTimelineParameters} from "../models/timeline/get-user-timeline-parameters";
-import {UserQueryParameterGeneratorService} from "../services/user-query-parameter-generator.service";
 import {IMediaEntity} from "../post-object/Entities/interfaces/IMediaEntity";
 import {HttpService} from "../../core/backend/common/api/http.service";
+import {
+  IPublishTweetParameters,
+  PublishTweetParameters
+} from '../../pages/modal-overlays/dialog/compose/upload/upload.component';
+import {IPost} from './models/post.model';
+import {objectToFormData} from '../../helpers/utils';
+import {NbToastrService} from '../../sharebook-nebular/theme/components/toastr/toastr.service';
 
 @Injectable()
 export class PostsService {
-  constructor(private tweetQueryGeneratorService: TweetQueryGeneratorService,
+  constructor(
               private postsApi: PostsApi,
               private restExtractor: RestExtractor,
               private restService: RestService,
               private timelineApi: TimelineApi,
               private authHttp: HttpService,
-              private userQueryParameterGeneratorService: UserQueryParameterGeneratorService,
-              private tweetsRequesterService?: TweetsRequesterService,
-  ) {
+              private notifier: NbToastrService) {
   }
 
-  // get parametersValidator(): ITweetsClientParametersValidator {
-  //     return this._client.parametersValidator;
-  // }
+  public async publishTweetAsync(textOrParameters: IPublishTweetParameters, body: {}) {
+    let parameters = textOrParameters;
+    // @ts-ignore
+    parameters.mediaIds = parameters.mediaIds.concat(parameters.medias.map(x => x.mediaId));
 
-  // Tweets
+    let params = this.getPublishTweetQuery(parameters);
 
-  // public async getTweetAsync(tweetIdOrParameters: number | IGetTweetParameters): Promise<ITweet> {
-  //     let parameters: IGetTweetParameters;
-  //     if (this.isIGetTweetParameters(tweetIdOrParameters)) {
-  //         parameters = tweetIdOrParameters;
-  //     } else {
-  //         parameters = new GetTweetParameters(tweetIdOrParameters);
-  //     }
-  //
-  //     let twitterResult = await this.tweetsRequesterService.getTweetAsync(parameters);
-  //     return twitterResult;
-  //     // return this._client.factories.createTweet(twitterResult?.model);
-  // }
+    const data = objectToFormData(body);
 
-  // public async getTweetsAsync(tweetIdsOrTweetsOrParameters: number[] | ITweetIdentifier[] | IGetTweetsParameters): Promise<ITweet[]> {
-  //     let parameters: IGetTweetsParameters;
-  //     if (this.isIGetTweetsParameters(tweetIdsOrTweetsOrParameters)) {
-  //         parameters = tweetIdsOrTweetsOrParameters;
-  //     } else {
-  //         parameters = new GetTweetsParameters(tweetIdsOrTweetsOrParameters);
-  //     }
-  //
-  //     if (parameters.tweets == null || parameters.tweets.length === 0) {
-  //         return new Array<ITweet>(0);    // new Tweet[0];
-  //     }
-  //
-  //     let requestResult = await this.tweetsRequesterService.getTweetsAsync(parameters);
-  //     return requestResult;
-  //     // return this._client.factories.createTweets(requestResult?.model);
-  // }
+    return this.postsApi.publishTweetAsync(params, data)
+      .subscribe((post) => {
+        this.notifier.success('Your post has been uploaded.', 'Success');
+      }, err => this.notifier.danger(err.error, 'Error', {duration: 5000}));
+  }
 
+  private getPublishTweetQuery(parameters: IPublishTweetParameters): HttpParams {
+    let text = parameters.text;
 
-  // Tweets - Publish
+    let attachmentUrl = parameters.quotedTweetUrl;
 
-  public async publishTweetAsync(textOrParameters: string | IPublishTweetParameters, body: {}): Promise<IPost> {
-    let parameters: IPublishTweetParameters;
-    if (this.isIPublishTweetParameters(textOrParameters)) {
-      parameters = textOrParameters;
-    } else {
-      parameters = new PublishTweetParameters(textOrParameters);
+    let params = new HttpParams();
+
+    params = this.restService.addParameterToQuery(params, "status", text);
+    params = this.restService.addParameterToQuery(params, "auto_populate_reply_metadata", parameters.autoPopulateReplyMetadata);
+    params = this.restService.addParameterToQuery(params, "attachment_url", attachmentUrl);
+    params = this.restService.addParameterToQuery(params, "card_uri", parameters.cardUri);
+    params = this.restService.addParameterToQuery(params, "display_coordinates", parameters.displayExactCoordinates);
+
+    if (parameters.excludeReplyUserIds != null) {
+      params = this.restService.addParameterToQuery(params, "exclude_reply_user_ids", parameters.excludeReplyUserIds.join(',')); // string.Join(",", parameters.excludeReplyUserIds));
     }
 
-    let requestResult = await this.tweetsRequesterService.publishTweetAsync(parameters, body);
-    return null;
+    if (parameters.mediaIds.length > 0) {
+      // let mediaIdsParameter = parameters.mediaIds.map(x => x.toString(/*CultureInfo.InvariantCulture*/)).join(', ');
+      let media_ids = parameters.mediaIds.map(x => x.toString());
+      // params = this.restService.addParameterToQuery(params, "media_ids", mediaIdsParameter);
+      params = this.restService.addObjectParams(params, { media_ids });
+    }
 
-    // return this._client.factories.createTweet(requestResult?.model);
+    params = this.restService.addParameterToQuery(params, "place_id", parameters.placeId);
+    params = this.restService.addParameterToQuery(params, "possibly_sensitive", parameters.possiblySensitive);
+    params = this.restService.addParameterToQuery(params, "trim_user", parameters.trimUser);
+    // params = this.restService.addParameterToQuery(params, "tweet_mode", tweetMode);
+
+    // params = this.restService.addFormattedParameterToQuery(params, parameters.formattedCustomQueryParameters);
+
+
+    // for poll
+    if (parameters.hasPoll) {
+      params = this.restService.addParameterToQuery(params, 'has_poll', 'true');
+    }
+
+    return params;
   }
 
   getPost(videoId: string): Observable<PostDetails> {
-    // return this.serverService.getServerLocale()
-    //   .pipe(
-    //     switchMap(translations => {
-    //       return this.authHttp.get<PostDetails>(VideoService.BASE_VIDEO_URL + options.videoId)
-    //     //   .pipe(map(videoHash => ({ videoHash, translations })))
-    //     }),
-    //     map(({ videoHash, translations }) => new VideoDetails(videoHash, translations)),
-    //     catchError(err => this.restExtractor.handleError(err))
-    //   );
-
     return this.postsApi.getPost(videoId)
       .pipe(map(videoHash => ({videoHash})))
       .pipe(map(({videoHash}) => new PostDetails(videoHash)),
         catchError(err => this.restExtractor.handleError(err)));
-
-
   }
-
-  // Tweets - Destroy
-
-  public async destroyTweetAsync(postId: number | ITweetIdentifier, unshare = false): Promise<any> {
-    let parameters = new DestroyTweetParameters(postId);
-
-    return await this.tweetsRequesterService.destroyTweetAsync(parameters, unshare); // .ConfigureAwait(false);
-  }
-
-
-  //
-  // // Retweets
-  //
-  // public async getRetweetsAsync(tweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IGetRetweetsParameters): Promise<ITweet[]> {
-  //     let parameters: IGetRetweetsParameters;
-  //     if (this.isIGetRetweetsParameters(tweetIdOrTweetIdentifierOrParameters)) {
-  //         parameters = tweetIdOrTweetIdentifierOrParameters;
-  //     } else {
-  //         parameters = new GetRetweetsParameters(tweetIdOrTweetIdentifierOrParameters);
-  //     }
-  //
-  //     let requestResult = await this.tweetsRequesterService.getRetweetsAsync(parameters); // .ConfigureAwait(false);
-  //     return this._client.factories.createTweets(requestResult?.model);
-  // }
-  //
-  public async publishRetweetAsync(tweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IPublishRetweetParameters): Promise<IPost> {
-
-    let parameters: IPublishRetweetParameters;
-    if (this.isIPublishRetweetParameters(tweetIdOrTweetIdentifierOrParameters)) {
-      parameters = tweetIdOrTweetIdentifierOrParameters;
-    } else {
-      parameters = new PublishRetweetParameters(tweetIdOrTweetIdentifierOrParameters);
-    }
-
-    let requestResult = await this.tweetsRequesterService.publishRetweetAsync(parameters);
-    return null;
-  }
-
-  //
-  // public async destroyRetweetAsync(retweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IDestroyRetweetParameters): Promise<void> {
-  //     let parameters: IDestroyRetweetParameters;
-  //     if (this.isIDestroyRetweetParameters(retweetIdOrTweetIdentifierOrParameters)) {
-  //         parameters = retweetIdOrTweetIdentifierOrParameters;
-  //     } else {
-  //         parameters = new DestroyRetweetParameters(retweetIdOrTweetIdentifierOrParameters);
-  //     }
-  //
-  //     await this.tweetsRequesterService.destroyRetweetAsync(parameters);
-  // }
-  //
-  // public async getRetweeterIdsAsync(tweetIdOrTweetIdentifierOrParametersOr: number | ITweetIdentifier | IGetRetweeterIdsParameters): Promise<number[]> {
-  //     let parameters: IGetRetweeterIdsParameters;
-  //     if (this.isIGetRetweeterIdsParameters(tweetIdOrTweetIdentifierOrParametersOr)) {
-  //         parameters = tweetIdOrTweetIdentifierOrParametersOr;
-  //     } else {
-  //         parameters = new GetRetweeterIdsParameters(tweetIdOrTweetIdentifierOrParametersOr);
-  //     }
-  //
-  //     let iterator = this.getRetweeterIdsIterator(parameters);
-  //     return [...(await iterator.nextPageAsync())];
-  // }
-  //
-  // public getRetweeterIdsIterator(tweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IGetRetweeterIdsParameters): ITwitterIterator<number> {
-  //     let parameters: IGetRetweeterIdsParameters;
-  //     if (this.isIGetRetweeterIdsParameters(tweetIdOrTweetIdentifierOrParameters)) {
-  //         parameters = tweetIdOrTweetIdentifierOrParameters;
-  //     } else {
-  //         parameters = new GetRetweeterIdsParameters(tweetIdOrTweetIdentifierOrParameters);
-  //     }
-  //
-  //     let twitterResultIterator = this.tweetsRequesterService.getRetweeterIdsIterator(parameters);
-  //     return new TwitterIteratorProxy<ITwitterResult<IIdsCursorQueryResultDTO>, number>(twitterResultIterator, dto => dto.model.ids);
-  // }
-  //
-  // public async getUserFavoriteTweetsAsync(userIdOrUsernameOrUserIdentifierOrParameters: number | string
-  //     | IUserIdentifier | IGetUserFavoriteTweetsParameters): Promise<ITweet[]> {
-  //     let parameters: IGetUserFavoriteTweetsParameters;
-  //     if (this.isIGetUserFavoriteTweetsParameters(userIdOrUsernameOrUserIdentifierOrParameters)) {
-  //         parameters = userIdOrUsernameOrUserIdentifierOrParameters;
-  //     } else {
-  //         parameters = new GetUserFavoriteTweetsParameters(userIdOrUsernameOrUserIdentifierOrParameters);
-  //     }
-  //
-  //     let iterator = this.getUserFavoriteTweetsIterator(parameters);
-  //     return [...(await iterator.nextPageAsync())]; // .ConfigureAwait(false)).ToArray();
-  // }
-  //
-  // // #region Favorite Tweets
-  // public getUserFavoriteTweetsIterator(userIdOrUsernameOrUserIdentifierOrParameters: number | string
-  //     | IUserIdentifier | IGetUserFavoriteTweetsParameters): ITwitterIterator<ITweet, number> {   // long?
-  //     let parameters: IGetUserFavoriteTweetsParameters;
-  //     if (this.isIGetUserFavoriteTweetsParameters(userIdOrUsernameOrUserIdentifierOrParameters)) {
-  //         parameters = userIdOrUsernameOrUserIdentifierOrParameters;
-  //     } else {
-  //         parameters = new GetUserFavoriteTweetsParameters(userIdOrUsernameOrUserIdentifierOrParameters);
-  //     }
-  //
-  //     let favoriteTweetsIterator = this.tweetsRequesterService.getUserFavoriteTweetsIterator(parameters);
-  //     return new TwitterIteratorProxy<ITwitterResult<ITweetDTO[]>, ITweet, number>(favoriteTweetsIterator,            // long?
-  //         twitterResult => {
-  //             return twitterResult.model.map(x => this._client.factories.createTweet(x));
-  //         });
-  // }
-  //
-  // public async favoriteTweetAsync(postId: number): Promise<void> {
-  //   let parameters: IFavoriteTweetParameters = new FavoriteTweetParameters(postId);
-  //
-  //   await this.tweetsRequesterService.favoriteTweetAsync(parameters);
-  // }
 
   setVideoLike(id: number) {
     return this.setVideoRate(id, 'like');
@@ -253,52 +113,9 @@ export class PostsService {
     return this.setVideoRate(id, 'none');
   }
 
-
-  //
-  // public async unfavoriteTweetAsync(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters: number
-  //     | ITweetIdentifier | ITweet | ITweetDTO | IUnfavoriteTweetParameters): Promise<void> {
-  //     let parameters: IUnfavoriteTweetParameters;
-  //     if (this.isIUnfavoriteTweetParameters(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters)) {
-  //         parameters = tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters;
-  //     } else if (this.isTweet(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters) || this.isTweetDTO(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters)) {
-  //         let tweetDTOCurrent: ITweetDTO;
-  //         if (this.isTweet(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters)) {
-  //             tweetDTOCurrent = tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters.tweetDTO;
-  //         } else {
-  //             tweetDTOCurrent = tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters;
-  //         }
-  //
-  //         parameters = new UnfavoriteTweetParameters(tweetDTOCurrent);
-  //         await this.tweetsRequesterService.unfavoriteTweetAsync(parameters); // .ConfigureAwait(false);
-  //         tweetDTOCurrent.favorited = false;
-  //
-  //         return;
-  //     } else {
-  //         parameters = new DestroyTweetParameters(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters);
-  //     }
-  //
-  //     await this.tweetsRequesterService.unfavoriteTweetAsync(parameters); // .ConfigureAwait(false);
-  // }
-  //
-  // public async getOEmbedTweetAsync(tweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IGetOEmbedTweetParameters): Promise<IOEmbedTweet> {
-  //     let parameters: IGetOEmbedTweetParameters;
-  //     if (this.isIGetOEmbedTweetParameters(tweetIdOrTweetIdentifierOrParameters)) {
-  //         parameters = tweetIdOrTweetIdentifierOrParameters;
-  //     } else {
-  //         parameters = new GetOEmbedTweetParameters(tweetIdOrTweetIdentifierOrParameters);
-  //     }
-  //
-  //     let twitterResult = await this.tweetsRequesterService.getOEmbedTweetAsync(parameters); // .ConfigureAwait(false);
-  //     return this._client.factories.createOEmbedTweet(twitterResult?.model);
-  // }
-
   // 04.02.2021, Thursday, 10:40 AM | Dark Space Ambient - Abandoned Space Station
 
   getMyPosts() {
-
-  }
-
-  getUserPosts() {
 
   }
 
@@ -335,26 +152,6 @@ export class PostsService {
 
   getPosts() {
 
-  }
-
-  getHomeTimelinePosts(parameters: GetHomeTimelineParameters) {
-    const {postPagination, sort, skipCount} = parameters;
-
-    const pagination = this.restService.componentPaginationToRestPagination(postPagination);
-
-    let params = new HttpParams();
-
-    params = this.restService.addRestGetParams(params, pagination, sort);
-
-    params = this.restService.addParameterToQuery(params, "exclude_replies", parameters.excludeReplies);
-    params = this.restService.addParameterToQuery(params, "skip_count", skipCount.toString());
-    params = this.restService.addFormattedParameterToQuery(params, parameters.formattedCustomQueryParameters);
-
-    return this.timelineApi.getHomeTimelineAsync(params)
-      .pipe(// @ts-ignore
-        switchMap(res => this.extractVideos(res)),                  // switchMap might bug
-        catchError(err => this.restExtractor.handleError(err))
-      );
   }
 
   getUserTimelineQuery(parameters: {
@@ -530,66 +327,4 @@ export class PostsService {
   }
 
   // #endregion
-
-  private isIGetTweetParameters(tweetIdOrParameters: number | IGetTweetParameters): tweetIdOrParameters is IGetTweetParameters {
-    return (tweetIdOrParameters as IGetTweetParameters).includeCardUri !== undefined;
-  }
-
-  private isIGetTweetsParameters(tweetIdsOrTweetsOrParameters: number[] | ITweetIdentifier[] | IGetTweetsParameters): tweetIdsOrTweetsOrParameters is IGetTweetsParameters {
-    return (tweetIdsOrTweetsOrParameters as IGetTweetsParameters).includeCardUri !== undefined;
-  }
-
-  private isIPublishTweetParameters(textOrParameters: string | IPublishTweetParameters): textOrParameters is IPublishTweetParameters {
-    return (textOrParameters as IPublishTweetParameters).medias !== undefined;
-  }
-
-  private isTweet(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters: any): tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters is IPost {
-    return (tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters as IPost).contributors !== undefined;
-  }
-
-  private isTweetDTO(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters: any): tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters is ITweetDTO {
-    return (tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters as ITweetDTO).contributors !== undefined;
-  }
-
-  private isIDestroyTweetParameters(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters: number
-    | ITweetIdentifier | IPost | ITweetDTO | IDestroyTweetParameters): tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters is IDestroyTweetParameters {
-    return (tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters as IDestroyTweetParameters).tweet !== undefined;
-  }
-
-  private isIGetRetweetsParameters(tweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IGetRetweetsParameters): tweetIdOrTweetIdentifierOrParameters is IGetRetweetsParameters {
-    return (tweetIdOrTweetIdentifierOrParameters as IGetRetweetsParameters).pageSize !== undefined;
-  }
-
-  private isIPublishRetweetParameters(tweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IPublishRetweetParameters):
-    tweetIdOrTweetIdentifierOrParameters is IPublishRetweetParameters {
-    return (tweetIdOrTweetIdentifierOrParameters as IPublishRetweetParameters).trimUser !== undefined;
-  }
-
-  private isIDestroyRetweetParameters(retweetIdOrTweetIdentifierOrParameters: number | ITweetIdentifier | IDestroyRetweetParameters):
-    retweetIdOrTweetIdentifierOrParameters is IDestroyRetweetParameters {
-    return (retweetIdOrTweetIdentifierOrParameters as IDestroyRetweetParameters).trimUser !== undefined;
-  }
-
-  private isIGetRetweeterIdsParameters(tweetIdOrTweetIdentifierOrParametersOr: number | ITweetIdentifier | IGetRetweeterIdsParameters):
-    tweetIdOrTweetIdentifierOrParametersOr is IGetRetweeterIdsParameters {
-    return (tweetIdOrTweetIdentifierOrParametersOr as IGetRetweeterIdsParameters).tweet !== undefined;
-  }
-
-  private isIGetUserFavoriteTweetsParameters(userIdOrUsernameOrUserIdentifierOrParameters: number | string
-    | IUserIdentifier | IGetUserFavoriteTweetsParameters): userIdOrUsernameOrUserIdentifierOrParameters is IGetUserFavoriteTweetsParameters {
-    return (userIdOrUsernameOrUserIdentifierOrParameters as IGetUserFavoriteTweetsParameters).user !== undefined;
-  }
-
-  private isIFavoriteTweetParameters(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters: number
-    | ITweetIdentifier | IPost | ITweetDTO | IFavoriteTweetParameters): tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters is IFavoriteTweetParameters {
-    return (tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters as IFavoriteTweetParameters).includeEntities !== undefined;
-  }
-
-  private isIUnfavoriteTweetParameters(tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters: any): tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters is IUnfavoriteTweetParameters {
-    return (tweetIdOrTweetIdentifierOrTweetOrTweetDTOOrParameters as IUnfavoriteTweetParameters).includeEntities !== undefined;
-  }
-
-  private isIGetOEmbedTweetParameters(tweetIdOrTweetIdentifierOrParameters: any): tweetIdOrTweetIdentifierOrParameters is IGetOEmbedTweetParameters {
-    return (tweetIdOrTweetIdentifierOrParameters as IGetOEmbedTweetParameters).alignment !== undefined;
-  }
 }

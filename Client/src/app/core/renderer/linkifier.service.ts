@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {getAbsoluteAPIUrl} from "../../helpers/utils";
 
 @Injectable()
 export class LinkifierService {
@@ -15,7 +14,7 @@ export class LinkifierService {
     },
     formatHref: {
       mention: (href: string) => {
-        return `/${href.substr(1)}`; // getAbsoluteAPIUrl() + '/services/redirect/accounts/' + href.substr(1);
+        return `/${href.substr(1)}`;
       }
     }
   };

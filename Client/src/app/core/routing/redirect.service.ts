@@ -27,16 +27,6 @@ export class RedirectService {
       this.defaultTrendingAlgorithm = tmpConfig.trending.videos.algorithms.default;
     }
 
-    // Load default route
-    // this.serverService.getConfig()
-    //   .subscribe(config => {
-    //     const defaultRouteConfig = config.instance.defaultClientRoute;
-    //     const defaultTrendingConfig = config.trending.videos.algorithms.default;
-    //
-    //     if (defaultRouteConfig) this.defaultRoute = defaultRouteConfig;
-    //     if (defaultTrendingConfig) this.defaultTrendingAlgorithm = defaultTrendingConfig;
-    //   });
-
     // Track previous url
     this.currentUrl = this.router.url;
     router.events.subscribe(event => {

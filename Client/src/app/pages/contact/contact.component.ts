@@ -1,27 +1,21 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-
-import {FormReactive} from "../../shared/shared-forms/form-reactive";
-import {FormValidatorService} from "../../shared/shared-forms/form-validator.service";
-import {Router} from "@angular/router";
+import {Location} from "@angular/common";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Router} from "@angular/router";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Subject} from "rxjs";
+import {map, takeUntil} from "rxjs/operators";
+
+import {FormValidatorService} from "../../shared/shared-forms/form-validator.service";
 import {ChatService} from "../../shared/shared-messages/chat.service";
 import {ServerService} from "../../core/server/server.service";
 import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
-import {
-    BODY_VALIDATOR,
-    FROM_EMAIL_VALIDATOR, FROM_NAME_VALIDATOR,
-    SUBJECT_VALIDATOR
-} from "../../shared/shared-forms/form-validators/instance-validators";
 import {HttpStatusCode} from "../../shared/core-utils/miscs";
 import {ContactService} from "./contact.service";
-import {Location} from "@angular/common";
 import {UserStore} from "../../core/stores/user.store";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {EMAIL_PATTERN} from "../../auth/components";
-import {map, takeUntil} from "rxjs/operators";
 import {NbMediaBreakpointsService} from "../../sharebook-nebular/theme/services/breakpoints.service";
 import {NbThemeService} from "../../sharebook-nebular/theme/services/theme.service";
-import {Subject} from "rxjs";
 
 import {
     faTimes,

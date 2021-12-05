@@ -1,20 +1,19 @@
-import {mapValues, pickBy} from 'lodash-es';
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
+import {mapValues, pickBy} from 'lodash-es';
+
+import {
+  faTimes,
+} from '@fortawesome/pro-light-svg-icons';
+
 import {AbuseService} from '../abuse.service';
 import {Post} from "../../shared-main/post/post.model";
 import {FormReactive} from "../../shared-forms/form-reactive";
 import {AbusePredefinedReasonsString} from "../../models/moderation/abuse/abuse-reason.model";
 import {FormValidatorService} from "../../shared-forms/form-validator.service";
-import {Notifier} from "../../../core/notification/notifier.service";
 import {ABUSE_REASON_VALIDATOR} from "../../shared-forms/form-validators/abuse-validators";
 import {abusePredefinedReasonsMap} from "../../../core/utils/abuse/abuse-predefined-reasons";
 
-import {
-  faTimes,
-} from '@fortawesome/pro-light-svg-icons';
+
 import {NbToastrService} from "../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {NbDialogRef} from "../../../sharebook-nebular/theme/components/dialog/dialog-ref";
 
@@ -26,20 +25,13 @@ import {NbDialogRef} from "../../../sharebook-nebular/theme/components/dialog/di
 export class VideoReportComponent extends FormReactive implements OnInit {
   @Input() post: Post = null;
 
-  @ViewChild('modal', {static: true}) modal: NgbModal;
-
   error: string = null;
   predefinedReasons: { id: AbusePredefinedReasonsString, label: string, description?: string, help?: string }[] = [];
-  embedHtml: SafeHtml;
-
-  private openedModal: NgbModalRef;
 
   constructor(
     protected formValidatorService: FormValidatorService,
-    private modalService: NgbModal,
     private abuseService: AbuseService,
     private notifier: NbToastrService,
-    private sanitizer: DomSanitizer,
     protected ref: NbDialogRef<VideoReportComponent>) {
     super();
   }
@@ -50,29 +42,9 @@ export class VideoReportComponent extends FormReactive implements OnInit {
     return window.location.host;
   }
 
-  // get originHost() {
-  //   if (this.isRemote()) {
-  //     return this.video.account.host;
-  //   }
-  //
-  //   return '';
-  // }
-
   get timestamp() {
     return this.form.get('timestamp').value;
   }
-
-  // getVideoEmbed() {
-  //   return this.sanitizer.bypassSecurityTrustHtml(
-  //     buildVideoOrPlaylistEmbed(
-  //       buildVideoLink({
-  //         baseUrl: this.video.embedUrl,
-  //         title: false,
-  //         warningTitle: false
-  //       })
-  //     )
-  //   );
-  // }
 
   ngOnInit() {
     this.buildForm({
@@ -87,8 +59,6 @@ export class VideoReportComponent extends FormReactive implements OnInit {
     });
 
     this.predefinedReasons = this.abuseService.getPrefefinedReasons('video');
-
-    // this.embedHtml = this.getVideoEmbed()
   }
 
   svgStyles = {
@@ -107,13 +77,10 @@ export class VideoReportComponent extends FormReactive implements OnInit {
   };
 
   show() {
-    this.openedModal = this.modalService.open(this.modal, {centered: true, keyboard: false, size: 'lg'});
   }
 
   hide() {
     this.ref.close();
-    // this.openedModal.close();
-    // this.openedModal = null;
   }
 
   report() {
@@ -139,7 +106,4 @@ export class VideoReportComponent extends FormReactive implements OnInit {
     );
   }
 
-  // isRemote() {
-  //   return !this.video.isLocal;
-  // }
 }

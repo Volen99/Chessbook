@@ -7,7 +7,6 @@ export interface IPostTag {
 }
 
 export class PostDetails extends Post {
-  descriptionPath: string;
   support: string;
   account: Account;
   commentsEnabled: boolean = true;
@@ -17,8 +16,6 @@ export class PostDetails extends Post {
 
   likesPercent: number;
   dislikesPercent: number;
-
-  trackerUrls: string[];
 
   constructor(hash: Post) {
     super(hash);

@@ -11,6 +11,7 @@ import {ABUSE_MODERATION_COMMENT_VALIDATOR} from "../shared-forms/form-validator
 import {
   faTimes,
 } from '@fortawesome/pro-light-svg-icons';
+
 import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
 
 @Component({

@@ -26,10 +26,6 @@ import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.m
         UserProfileRoutingModule,
 
         SharedMainModule,
-        // SharedFormModule,
-        // SharedUserSubscriptionModule,
-        // SharedModerationModule,
-        // SharedVideoMiniatureModule,
         SidebarColumnModule,
         NbCardModule,
         NbTabsetModule,
@@ -48,7 +44,6 @@ import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.m
 
   declarations: [
     UserProfileComponent,
-    /*UserProfileAboutComponent,*/
     FollowingComponent,
     ProfilePostsComponent,
   ],

@@ -7,7 +7,6 @@ import {
   SimpleChanges
 } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import { debounce } from 'lodash';
 
 import {IPoll} from "../../shared/posts/models/poll/poll";
 import {environment} from "../../../environments/environment";
@@ -15,7 +14,7 @@ import {IPollOption} from "../../shared/posts/models/poll/poll-option";
 import {SurveyService} from "../../shared/services/survey.service";
 import {UserStore} from "../../core/stores/user.store";
 import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
-import {ActivatedRoute} from "@angular/router";
+import {NbGlobalPhysicalPosition} from '../../sharebook-nebular/theme/components/cdk/overlay/position-helper';
 
 @Component({
   selector: 'app-survey',
@@ -55,8 +54,6 @@ export class SurveyComponent implements OnInit, OnChanges {
     return Math.round(this.percent);
   }
 
-  // componentWillReceiveProps (deprecated), getDerivedStateFromProps, componentWillUpdate, componentDidUpdate
-  // can all be replaced by ngOnChanges in Angular.
   ngOnChanges(changes: SimpleChanges): any {
   }
 
@@ -65,8 +62,6 @@ export class SurveyComponent implements OnInit, OnChanges {
   selected: {};
   expired: any = null;
 
-
-  pollVotesCount: number;
   percent: number;
   leading: any;
   active: boolean;
@@ -76,7 +71,9 @@ export class SurveyComponent implements OnInit, OnChanges {
 
   handleVote = () => {
     if (!this.userStore.isLoggedIn()) {
-      this.notifier.warning('', 'You need to be logged in to vote');
+      this.notifier.warning('', 'You need to be logged in to vote', {
+        position: NbGlobalPhysicalPosition.TOP_RIGHT,
+      });
       return;
     }
 
@@ -104,23 +101,10 @@ export class SurveyComponent implements OnInit, OnChanges {
     return environment.apiUrl;
   }
 
-  handleRefresh = () => {
-    debounce(
-      () => {
-        this.surveyService.getPoll(this.poll.id)
-          .subscribe((data: IPoll) => {
-            this.poll = data;
-          });
-      },
-      1000,
-      { leading: true },
-    );
-  }
-
   timeRemaining: any;
   showResults: boolean;
 
-  handleOptionChange = (value) => {  // { target: { value } }
+  handleOptionChange = (value) => {
     this._toggleOption(value);
   }
 

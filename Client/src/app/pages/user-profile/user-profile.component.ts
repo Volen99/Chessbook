@@ -1,9 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Title} from "@angular/platform-browser";
 import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
+import {HttpParams} from "@angular/common/http";
 import {Subscription} from 'rxjs';
-import {Subject} from "rxjs/Subject";
 import {catchError, distinctUntilChanged, map, switchMap, takeUntil, tap} from 'rxjs/operators';
+import {Subject} from "rxjs/Subject";
 
 import {
   faBirthdayCake,
@@ -36,10 +38,8 @@ import {InitUserService} from "../../theme/services/init-user.service";
 import {NbDialogService} from "../../sharebook-nebular/theme/components/dialog/dialog.service";
 import {AccountReportComponent} from "../../shared/shared-moderation/report-modals/account-report.component";
 import {MediaContainerComponent} from "../../features/media-container/media-container.component";
-import {Title} from "@angular/platform-browser";
 import {MarkdownService} from 'app/core/renderer/markdown.service';
 import {HttpService} from "../../core/backend/common/api/http.service";
-import {HttpParams} from "@angular/common/http";
 import {RestService} from "../../core/rest/rest.service";
 import {ContactAdminModalComponent} from "../../shared/shared-messages/contact-admin-modal.component";
 import {BlocklistService} from '../../shared/shared-moderation/blocklist.service';
@@ -83,11 +83,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         switchMap(screenName => this.userProfileService.getProfile(screenName)),
         tap(profile => this.onAccount(profile)),
-        /*switchMap(user => this.postService.getProfilePosts({ user })),*/
-        catchError(err => this.restExtractor.redirectTo404IfNotFound(err, 'other', [
-          HttpStatusCode.BAD_REQUEST_400,
-          HttpStatusCode.NOT_FOUND_404
-        ]))
+        // catchError(err => this.restExtractor.redirectTo404IfNotFound(err, 'other', [
+        //   HttpStatusCode.BAD_REQUEST_400,
+        //   HttpStatusCode.NOT_FOUND_404
+        // ]))
       )
       .subscribe((data) => {
           // videoChannels => this.videoChannels = videoChannels.data,
@@ -125,8 +124,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   faLongArrowLeft = faLongArrowLeft;
   faBirthdayCake = faBirthdayCake;
   faCalendarAlt = faCalendarAlt;
-
-  titlePage: string;
 
   month: string;
   day: number;
@@ -243,7 +240,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       });
 
 
-    // this.accountFollowerTitle = $localize`${account.followersCount} direct account following`;
+    // this.accountFollowerTitle = `${account.followersCount} direct account following`;
     //
     this.prependModerationActions = undefined;
     //
@@ -414,6 +411,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       closeOnEsc: true,
       closeOnBackdropClick: false,
     });
+  }
+
+  searchUser() {
+    let inputElement = document.getElementById('search-video') as HTMLInputElement;
+    if (!inputElement) {
+      return;
+    }
+
+    inputElement.focus();
+    inputElement.value = '@';
   }
 
   private getTabs() {

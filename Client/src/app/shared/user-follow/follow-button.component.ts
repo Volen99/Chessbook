@@ -8,7 +8,6 @@ import {IUser} from "../../core/interfaces/common/users";
 import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {BlocklistService} from "../shared-moderation/blocklist.service";
 
-
 @Component({
   selector: 'app-follow-button',
   templateUrl: './follow-button.component.html',

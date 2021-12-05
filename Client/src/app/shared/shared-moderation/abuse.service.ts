@@ -1,9 +1,8 @@
 import {omit} from 'lodash-es';
 import {Observable} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {environment} from '../../../environments/environment';
 import {RestService} from "../../core/rest/rest.service";
 import {RestExtractor} from "../../core/rest/rest-extractor";
 import {RestPagination} from "../../core/rest/rest-pagination";

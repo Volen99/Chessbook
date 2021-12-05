@@ -1,8 +1,6 @@
 import {ITweetIdentifier} from "../tweet-identifier";
-import {ICoordinates} from "../properties/ICoordinates";
 import {IUser} from "../../../../core/interfaces/common/users";
 import {ITweetEntities} from "../../../post-object/Entities/interfaces/ITweetEntities";
-import {IPlace} from "../properties/IPlace";
 
 export interface ITweetDTO extends ITweetIdentifier {
     text: string;
@@ -20,8 +18,6 @@ export interface ITweetDTO extends ITweetIdentifier {
     createdBy: IUser;
 
     currentUserRetweetIdentifier: ITweetIdentifier;
-
-    coordinates: ICoordinates;
 
     entities: ITweetEntities;
 
@@ -79,5 +75,4 @@ export interface ITweetDTO extends ITweetIdentifier {
 
     withheldScope: string;
 
-    place: IPlace;
 }

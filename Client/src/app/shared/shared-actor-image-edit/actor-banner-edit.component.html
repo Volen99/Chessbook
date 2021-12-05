@@ -6,7 +6,7 @@
 
     <div *ngIf="!hasBanner()" class="actor-img-edit-button" style="font-size: 20px" [ngbTooltip]="bannerFormat" placement="right" container="body">
       <fa-icon [icon]="this.faCamera"></fa-icon>
-      <label for="bannerfile" i18n>Upload a new banner</label>
+      <label for="bannerfile">Upload a new banner</label>
       <input id="bannerfile" type="file" name="bannerfile" title=" " #bannerfileInput [accept]="bannerExtensions" (change)="onBannerChange(bannerfileInput)"/>
     </div>
 
@@ -14,7 +14,7 @@
       *ngIf="hasBanner()" class="actor-img-edit-button"
       #bannerPopover="ngbPopover" [ngbPopover]="bannerEditContent" popoverClass="popover-image-info" autoClose="outside" placement="left">
       <fa-icon [icon]="this.faPen"></fa-icon>
-      <label for="bannerMenu" i18n>Change your banner</label>
+      <label for="bannerMenu">Change your banner</label>
     </div>
   </div>
 </div>
@@ -22,12 +22,12 @@
 <ng-template #bannerEditContent>
   <div class="dropdown-item c-hand" [ngbTooltip]="bannerFormat" placement="right" container="body">
     <fa-icon [icon]="this.faFileImport" style="margin-right: 2px"></fa-icon>
-    <span for="bannerfile" i18n>Upload a new banner</span>
+    <span for="bannerfile">Upload a new banner</span>
     <input #bannerfileInput type="file" name="bannerfile" id="bannerfile" title=" " [accept]="bannerExtensions" (change)="onBannerChange(bannerfileInput)"/>
   </div>
 
 <!--  <div class="dropdown-item c-hand" (click)="deleteBanner()" (key.enter)="deleteBanner()">-->
 <!--    <fa-icon [icon]="this.faTrashAlt" style="margin-right: 2px"></fa-icon>-->
-<!--    <span i18n>Remove banner</span>-->
+<!--    <span>Remove banner</span>-->
 <!--  </div>-->
 </ng-template>
