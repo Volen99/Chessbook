@@ -1,8 +1,9 @@
 # Code & Translators contributors
 
- * [Volencho99](https://www.facebook.com/people/NM-Volencho/100010730917900)
+ * [Volencho99](https://twitter.com/volencho)
+ * I would like to thank Google, Stackoverflow, Wikipedia and the awesome Open source projects for their invaluable help
 
 # Design
 
- * [Volencho99](https://twitter.com/volencho)
+ * [Volencho99](https://www.instagram.com/volencho99/)
 
