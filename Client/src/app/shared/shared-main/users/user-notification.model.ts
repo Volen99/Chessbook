@@ -185,7 +185,18 @@ export class UserNotification implements IUserNotification {
       this.videoBlacklist = hash.videoBlacklist;
 
       this.account = hash.account;
-      if (this.account) this.setAccountAvatarUrl(this.account);
+      if (hash.postLike) {
+        this.account = hash.postLike.account;
+      } else if (hash.type === 1) {
+        // @ts-ignore
+        this.account = hash.post.user;
+      } else if (hash.comment) {
+        this.account = hash.comment.account;
+      }
+
+      if (this.account) {
+        this.setAccountAvatarUrl(this.account);
+      }
 
       this.actorFollow = hash.actorFollow;
       if (this.actorFollow) this.setAccountAvatarUrl(this.actorFollow.follower);
@@ -196,6 +207,7 @@ export class UserNotification implements IUserNotification {
       switch (this.type) {
         case UserNotificationType.NEW_VIDEO_FROM_SUBSCRIPTION:
           this.videoUrl = this.buildVideoUrl(this.post, this.account.screenName);
+          this.accountUrl = this.buildAccountUrl(this.account);
           break;
 
         case UserNotificationType.UNBLACKLIST_ON_MY_VIDEO:
@@ -286,7 +298,7 @@ export class UserNotification implements IUserNotification {
   }
 
   private buildVideoUrl(post: { id: number }, screenName: string) {
-    return '/' + screenName + '/post/' + post.id;
+    return '/' + screenName.substring(1) + '/post/' + post.id;
   }
 
   private buildAccountUrl(account: { screenName: string }) {

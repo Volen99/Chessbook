@@ -14,17 +14,16 @@
         class="results-filter-button ml-auto" (click)="isSearchFilterCollapsed = !isSearchFilterCollapsed" role="button"
         [attr.aria-expanded]="!isSearchFilterCollapsed" aria-controls="collapseBasic"
       >
-        <!--<span class="icon icon-filter"></span>-->
-        <fa-icon class="icon icon-filter" [icon]="this.faFilter"></fa-icon>
+        <fa-icon [icon]="this.faFilter"></fa-icon>
         <ng-container>
           Filters
-          <span *ngIf="numberOfFilters() > 0" class="badge badge-secondary">{{ numberOfFilters() }}</span>
+          <nb-badge *ngIf="numberOfFilters()" style="position: inherit" text="{{ numberOfFilters() }}" status="primary" position="bottom right"></nb-badge>
         </ng-container>
       </div>
     </div>
 
-    <div class="results-filter collapse-transition" [ngbCollapse]="isSearchFilterCollapsed">
-      <my-search-filters [advancedSearch]="advancedSearch" (filtered)="onFiltered()"></my-search-filters>
+    <div class="results-filter" [ngbCollapse]="isSearchFilterCollapsed">
+      <my-search-filters  [@toggle]="toggleState"  [advancedSearch]="advancedSearch" (filtered)="onFiltered()"></my-search-filters>
 
       <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
     </div>
@@ -56,12 +55,12 @@
         <div class="video-channel-followers">{{ result.followersCount }} followers</div>
       </div>
 
-      <app-follow-button *ngIf="!hideActions()" [users]="[result]"></app-follow-button>
+      <app-follow-button *ngIf="!hideActions() && !this.isManageable(result)" [users]="[result]"></app-follow-button>
     </div>
 
     <div *ngIf="isVideo(result)" class="entry video">
       <my-video-miniature
-        [video]="result" [user]="userMiniature" [displayAsRow]="true" [displayVideoActions]="!hideActions()"
+        [video]="result" [user]="userMiniature" [displayAsRow]="true" [displayVideoActions]="false"
         [displayOptions]="videoDisplayOptions" [videoLinkType]="getLinkType()"
         (videoBlocked)="removeVideoFromArray(result)" (videoRemoved)="removeVideoFromArray(result)"
       ></my-video-miniature>

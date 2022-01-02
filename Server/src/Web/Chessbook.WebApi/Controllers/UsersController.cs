@@ -19,7 +19,6 @@
     using Chessbook.Services.Common;
     using Chessbook.Common;
     using Chessbook.Web.Models.Inputs;
-    using Chessbook.Services.Data;
     using Chessbook.Web.Models.Outputs;
     using Chessbook.Data.Models;
     using Chessbook.Data.Models.Media;
@@ -50,6 +49,11 @@
     using Chessbook.Services.ExportImport;
     using Chessbook.Services.Chat;
     using Chessbook.Services.Security;
+    using Chessbook.Web.Api.Models.User;
+    using Chessbook.Core.Domain.Customers;
+    using Chessbook.Services.Messages;
+    using Chessbook.Core.Events;
+    using Chessbook.Core.Infrastructure;
 
     [Route("users")]
     public class UsersController : BaseApiController
@@ -60,12 +64,10 @@
         protected readonly IPostsService postsService;
         protected readonly IPictureService pictureService;
         private readonly IGenericAttributeService genericAttributeService;
-        private readonly IRelationshipService relationshipService;
         private readonly IUserModelFactory userModelFactory;
         private readonly ICustomerActivityService _customerActivityService;
         private readonly IUserNotificationService notificationsService;
         private readonly INotificationsSettingsService notificationsSettingsService;
-        private readonly IUserNotificationSettingModelFactory userNotificationSettingModelFactory;
         private readonly IUserNotificationModelFactory userNotificationModelFactory;
         private readonly ICustomerRegistrationService customerRegistrationService;
         private readonly IAbuseService abuseService;
@@ -81,15 +83,18 @@
         private readonly IExportManager exportManager;
         private readonly IChatService chatService;
         private readonly IPermissionService permissionService;
+        private readonly IWorkflowMessageService workflowMessageService;
+        private readonly IEventPublisher eventPublisher;
+        private readonly INopFileProvider fileProvider;
 
         public UsersController(IUserService userService, JwtManager jwtManager, IAuthenticationService authService, IPostsService postsService,
-            IPictureService pictureService, IGenericAttributeService genericAttributeService, IRelationshipService relationshipService, IUserModelFactory userModelFactory,
+            IPictureService pictureService, IGenericAttributeService genericAttributeService, IUserModelFactory userModelFactory,
             ICustomerActivityService customerActivityService, IUserNotificationService notificationsService, INotificationsSettingsService notificationsSettingsService,
-            IUserNotificationSettingModelFactory userNotificationSettingModelFactory, IUserNotificationModelFactory userNotificationModelFactory,
-            ICustomerRegistrationService customerRegistrationService, IAbuseService abuseService, IAbuseModelFactory abuseModelFactory,
-            IFollowService followService, IBlocklistService blocklistService, IUserBlocklistFactory userBlocklistFactory, IWorkContext workContext,
-            ICountryService countryService, IDateTimeHelper dateTimeHelper, ILocaleStringResourceService localeStringResourceService,
-            IGdprService gdprService, IExportManager exportManager, IChatService chatService, IPermissionService permissionService)
+            IUserNotificationModelFactory userNotificationModelFactory, ICustomerRegistrationService customerRegistrationService, IAbuseService abuseService,
+            IAbuseModelFactory abuseModelFactory, IFollowService followService, IBlocklistService blocklistService, IUserBlocklistFactory userBlocklistFactory,
+            IWorkContext workContext, ICountryService countryService, IDateTimeHelper dateTimeHelper, ILocaleStringResourceService localeStringResourceService,
+            IGdprService gdprService, IExportManager exportManager, IChatService chatService, IPermissionService permissionService,
+            IWorkflowMessageService workflowMessageService, IEventPublisher eventPublisher, INopFileProvider fileProvider)
         {
             this.userService = userService;
             this.jwtManager = jwtManager;
@@ -97,12 +102,10 @@
             this.postsService = postsService;
             this.pictureService = pictureService;
             this.genericAttributeService = genericAttributeService;
-            this.relationshipService = relationshipService;
             this.userModelFactory = userModelFactory;
             this._customerActivityService = customerActivityService;
             this.notificationsService = notificationsService;
             this.notificationsSettingsService = notificationsSettingsService;
-            this.userNotificationSettingModelFactory = userNotificationSettingModelFactory;
             this.userNotificationModelFactory = userNotificationModelFactory;
             this.customerRegistrationService = customerRegistrationService;
             this.abuseService = abuseService;
@@ -118,17 +121,10 @@
             this.exportManager = exportManager;
             this.chatService = chatService;
             this.permissionService = permissionService;
+            this.workflowMessageService = workflowMessageService;
+            this.eventPublisher = eventPublisher;
+            this.fileProvider = fileProvider;
         }
-
-        //[HttpGet]
-        //[Route("")]
-        //// [Authorize(Policy = "AdminOnly")]
-        //public async Task<IActionResult> GetDataForGrid([FromQuery] UsersGridFilter filter)
-        //{
-        //    filter = filter ?? new UsersGridFilter();
-        //    var users = await userService.GetDataForGrid(filter);
-        //    return Ok(users);
-        //}
 
         [HttpGet]
         [Route("all")]
@@ -215,34 +211,6 @@
             return this.Ok();
         }
 
-        [HttpPost]
-        [Route("")]
-        [Authorize(Policy = "AdminOnly")]
-        public async Task<IActionResult> Create(UserDTO userDto)
-        {
-            if (userDto.Id != 0)
-            {
-                return BadRequest();
-            }
-
-            // var result = await userService.Edit(userDto);
-            return Ok(new object());
-        }
-
-        [HttpPut]
-        [Route("{id:int}")]
-        [Authorize(Policy = "AdminOnly")]
-        public async Task<IActionResult> Edit(int id, UserDTO userDto)
-        {
-            if (id != userDto.Id)
-            {
-                return BadRequest();
-            }
-
-            // var result = await userService.Edit(userDto);
-            return Ok(new object());
-        }
-
         [HttpPut]
         [Route("current")]
         public async Task<IActionResult> EditCurrent(UserDTO userDto)
@@ -268,10 +236,20 @@
             var customer = await this.userService.GetCustomerByIdAsync(User.GetUserId());
             if (customer == null || customer.Deleted)
             {
-                return this.BadRequest("List");
+                return this.BadRequest("No user found");
             }
 
-            //email
+            // email
+            if (!CommonHelper.IsValidEmail(input.Email))
+            {
+                return this.BadRequest("The email you have enterted is incorrect");
+            }
+
+            if (!string.IsNullOrWhiteSpace(input.Email) && await this.userService.GetCustomerByEmailAsync(input.Email) != null)
+            {
+                return this.BadRequest("Email already exists. Please try again with a new email");
+            }
+
             if (!string.IsNullOrWhiteSpace(input.Email))
             {
                 await this.customerRegistrationService.SetEmailAsync(customer, input.Email, false);
@@ -323,18 +301,8 @@
                 // delete
                 await this.userService.DeleteCustomerAsync(customer);
 
-                //// remove newsletter subscription (if exists)
-                //foreach (var store in await _storeService.GetAllStoresAsync())
-                //{
-                //    var subscription = await _newsLetterSubscriptionService.GetNewsLetterSubscriptionByEmailAndStoreIdAsync(customer.Email, store.Id);
-                //    if (subscription != null)
-                //        await _newsLetterSubscriptionService.DeleteNewsLetterSubscriptionAsync(subscription);
-                //}
-
                 // activity log
                 await _customerActivityService.InsertActivityAsync("DeleteCustomer", string.Format("Deleted a customer (ID = {0})", customer.Id), customer);
-
-                // _notificationService.SuccessNotification(await _localizationService.GetResourceAsync("Admin.Customers.Customers.Deleted"));
 
                 return this.NoContent();
             }
@@ -344,26 +312,31 @@
             }
         }
 
-        //[HttpGet]
-        //[Route("{userId:int}/photo")]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> UserPhoto(int userId, string token)
-        //{
-        //    var user = jwtManager.GetPrincipal(token);
-        //    if (user == null || !user.Identity.IsAuthenticated)
-        //    {
-        //        return Unauthorized();
-        //    }
+        #region My account / Change password
 
-        //    var photoContent = await userService.GetUserPhoto(userId);
+        [HttpPost]
+        [Route("reset-pass")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel model)
+        {
+            if (!await this.userService.IsRegisteredAsync(await this.workContext.GetCurrentCustomerAsync()))
+            {
+                return Challenge();
+            }
 
-        //    if (photoContent == null)
-        //    {
-        //        return NoContent();
-        //    }
+            var customer = await this.workContext.GetCurrentCustomerAsync();
 
-        //    return File(photoContent, contentType: "image/png");
-        //}
+            var changePasswordRequest = new ChangePasswordRequest(customer.Email, true, PasswordFormat.Hashed, model.Password, model.OldPassword);
+            var changePasswordResult = await this.customerRegistrationService.ChangePasswordAsync(changePasswordRequest);
+            if (changePasswordResult.Success)
+            {
+                return this.Ok(model);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return this.Ok(model);
+        }
+
+        #endregion
 
         [HttpPost]
         [Route("avatar")]
@@ -532,7 +505,8 @@
 
             if (user == null)
             {
-                return this.NotFound();
+                //return this.NotFound();
+                return this.NoContent();
             }
 
             var model = await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), user);
@@ -837,8 +811,8 @@
             string fullSizeImageUrl, imageUrl, thumbImageUrl;
             (imageUrl, defaultPicture) = await this.pictureService.GetPictureUrlAsync(defaultPicture, imgSize, true, defaultPictureType: picType);
 
-            // TODO: you know what to do kk
-            using var image = SKBitmap.Decode(@"C:\Users\volen\OneDrive\Desktop\Chessbook\Server\src\Web\Chessbook.WebApi\wwwroot" + imageUrl);
+            var imgFilePath = this.fileProvider.Combine(this.fileProvider.MapPath("~/wwwroot"), imageUrl);
+            using var image = SKBitmap.Decode(imgFilePath);
 
             var defaultPictureModel = new PictureModel
             {
@@ -926,7 +900,7 @@
 
             // log
             await this.gdprService.InsertLogAsync(await this.workContext.GetCurrentCustomerAsync(), 0, GdprRequestType.ExportData, "Exported personal data");
-                
+
             // export
             var bytes = await this.exportManager.ExportCustomerGdprInfoToXlsxAsync(await this.workContext.GetCurrentCustomerAsync(), 1);
 
@@ -949,7 +923,7 @@
                 return this.NotFound();
             }
             try
-            {  
+            {
                 // prevent attempts to delete the user, if it is the last active administrator
                 if (await this.userService.IsAdminAsync(customer) && !await SecondAdminAccountExistsAsync(customer))
                 {
@@ -976,6 +950,52 @@
                 //_notificationService.ErrorNotification(exc.Message);
                 //return RedirectToAction("Edit", new { id = customer.Id });
             }
+        }
+
+        /// <returns>A task that represents the asynchronous operation</returns>
+        [HttpGet] // should be Post?
+        [Route("activation")]
+        public async Task<IActionResult> AccountActivation(string token, Guid guid, string email)
+        {
+            // For backward compatibility with previous versions where email was used as a parameter in the URL
+            var customer = await this.userService.GetCustomerByEmailAsync(email)
+                ?? await this.userService.GetCustomerByGuidAsync(guid);
+
+            if (customer == null)
+            {
+                return RedirectToRoute("Homepage");
+            }
+
+            var model = new AccountActivationModel { ReturnUrl = Url.RouteUrl("Homepage") };
+            var cToken = await this.genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.AccountActivationTokenAttribute);
+            if (string.IsNullOrEmpty(cToken))
+            {
+                //model.Result = "Your account already has been activated :)";
+                //return this.Ok(model);
+
+                return this.Content("<div> <div style=\"text-align: center;\"> <h3 style=\"color: #6200ee\"> Your account already has been activated :) </h3> <div> <a href=\"https://www.chessbook.me/\">Continue to chessbook.me</a> </div> </div> </div>", "text/html");
+            }
+
+            if (!cToken.Equals(token, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return RedirectToRoute("Homepage");
+            }
+
+            // activate user account
+            customer.Active = true;
+            await this.userService.UpdateCustomerAsync(customer);
+            await this.genericAttributeService.SaveAttributeAsync(customer, NopCustomerDefaults.AccountActivationTokenAttribute, "");
+
+            // send welcome message
+            await this.workflowMessageService.SendCustomerWelcomeMessageAsync(customer, 1);
+
+            // raise event       
+            await this.eventPublisher.PublishAsync(new CustomerActivatedEvent(customer));
+
+            // authenticate customer after activation
+            await this.customerRegistrationService.SignInCustomerAsync(customer, null, true);
+
+            return this.Content("<div> <div style=\"text-align: center;\"> <h3 style=\"color: #6200ee\"> Checkmate! Your account has been activated </h3> <div> <a href=\"https://www.chessbook.me/\">Continue to chessbook.me</a> </div> </div> </div>", "text/html");
         }
 
         /// <summary>

@@ -1,4 +1,7 @@
 ﻿using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.Generic;
+using System;
 using Microsoft.AspNetCore.Mvc;
 
 using Chessbook.Data.Models;
@@ -6,12 +9,9 @@ using Chessbook.Services;
 using Chessbook.Web.Api.Areas.Admin.Models.Users;
 using Chessbook.Web.Api.Factories;
 using Chessbook.Services.Security;
-using System.Linq;
-using System.Collections.Generic;
-using System;
+
 using Chessbook.Common;
 using Chessbook.Services.ExportImport;
-using Chessbook.Web.Areas.Admin.Models.Customers;
 using Chessbook.Core.Domain.Customers;
 using Chessbook.Core;
 

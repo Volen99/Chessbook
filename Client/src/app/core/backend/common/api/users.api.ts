@@ -107,7 +107,7 @@ export class UsersApi {
   }
 
   changePassword(url: string, body: UserUpdateMe) {
-    return this.api.put(`${this.apiController}/${url}`, body);
+    return this.api.post(`${this.apiController}/${url}`, body);
   }
 
   changeAvatar(url, avatarForm: FormData) {

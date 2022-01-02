@@ -24,6 +24,11 @@ const routes: Routes = [{
     {
       path: 'register',
       component: NgxRegisterComponent,
+      data: {
+        meta: {
+          title: `Sign up for Chessbook`
+        }
+      },
     },
     {
       path: 'logout',

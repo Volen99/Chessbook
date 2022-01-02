@@ -30,14 +30,11 @@
     [Route("posts")]
     public class PostsController : BaseApiController
     {
-        private const int ITEM_PER_PAGE = 3;
-
         private IPostsService postService;
         private IPollService pollService;
         private IUserService userService;
 
 
-        private readonly IPictureService pictureService;
         private readonly IUserModelFactory userModelFactory;
         private readonly IPostModelFactory postModelFactory;
         private readonly ICustomerActivityService customerActivityService;
@@ -56,7 +53,6 @@
             this.postService = postService;
             this.userService = userService;
             this.pollService = pollService;
-            this.pictureService = pictureService;
             this.userModelFactory = userModelFactory;
             this.postModelFactory = productModelFactory;
             this.customerActivityService = customerActivityService;
@@ -85,42 +81,7 @@
 
                 var model = (await postModelFactory.PreparePostModelAsync(postCurrent));
 
-                models.Add(model);
-
-                //if (postDTO.Reshared)
-                //{
-                //    postDTO = postDTO.ResharedStatus = await this.postService.GetResharedOriginal<PostModel>(postDTO.Id);
-                //}
-
-                if (postCurrent.HasMedia)
-                {
-                    //var picture = (await this.pictureService.GetPicturesByProductIdAsync(postDTO.Id)).FirstOrDefault();
-
-                    //var pictureSize = 480;
-
-                    //string displayUrl;
-                    //string expandUrl;
-
-                    //(expandUrl, picture) = await this.pictureService.GetPictureUrlAsync(picture);
-                    //(displayUrl, _) = await this.pictureService.GetPictureUrlAsync(picture, pictureSize);
-
-                    //var pictureModel = new MediaEntityDTO
-                    //{
-                    //    Id = picture.Id,
-                    //    IdStr = picture.Id.ToString(),
-                    //    DisplayURL = ChessbookConstants.SiteHttps + displayUrl,
-                    //    ExpandedURL = ChessbookConstants.SiteHttps + expandUrl,
-                    //    MediaURL = picture.VirtualPath,
-                    //};
-
-                    //if (picture != null)
-                    //{
-                    //    postDTO.Entities.Medias.Add(pictureModel);
-                    //}
-                }
-
-                //postDTO.Reshared = await this.postService.GetReshareStatus(postDTO.Id, User.GetUserId());
-                //postDTO.ReshareCount = await this.postService.GetReshareCount(postDTO.Id);
+                models.Add(model);                   
             }
 
             return this.Ok(new
@@ -270,18 +231,22 @@
             //}
 
             // try to get a product with the specified id
-            var product = await this.postService.GetPostByIdAsync(id);
-            if (product == null)
+            var post = await this.postService.GetPostByIdAsync(id);
+            if (post == null)
             {
-                return this.NotFound("List");
+                return this.NotFound("Post not found");
             }
 
-            await this.postService.DeleteProductAsync(product);
+            if (post.Pinned)
+            {
+                post.Pinned = false;
+                await this.postService.UpdatePostAsync(post);
+            }
+
+            await this.postService.DeleteProductAsync(post);
 
             // activity log
-            await this.customerActivityService.InsertActivityAsync("DeleteProduct", string.Format(await this.localeStringResourceService.GetResourceAsync("ActivityLog.DeleteProduct"), product.Id), product);
-
-            // _notificationService.SuccessNotification(await this.localeStringResourceService.GetResourceAsync("Admin.Catalog.Products.Deleted"));
+            await this.customerActivityService.InsertActivityAsync("DeleteProduct", string.Format("Deleted a product ('{0}')", post.Id), post);
 
             return this.Ok();
         }

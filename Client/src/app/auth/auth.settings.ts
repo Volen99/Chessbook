@@ -46,7 +46,7 @@ export const authOptions = {
         method: 'post',
       },
       resetPass: {
-        endpoint: '/auth/reset-pass',
+        endpoint: '/users/reset-pass',
         method: 'post',
       },
       refreshToken: {

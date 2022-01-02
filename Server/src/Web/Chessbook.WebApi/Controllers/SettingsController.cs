@@ -62,7 +62,7 @@
                 settingCurrent.ThemeName = dto.ThemeName;
 
 
-                var result = await settingsService.Edit(settingCurrent);
+                await settingsService.Edit(settingCurrent);
 
                 return Ok(dto);
             }

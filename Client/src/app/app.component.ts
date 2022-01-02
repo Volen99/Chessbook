@@ -70,13 +70,13 @@ export class AppComponent implements OnInit, OnDestroy {
   user: IUser;
 
   initUser() {
-    // this.userStore.onUserStateChange()
-    //   .pipe(
-    //     takeUntil(this.destroy$),
-    //   ).subscribe((user: User) => {
-    //     this.user = this.onUserFetched(user);
-    //     this.initMenu();
-    // });
+    this.userStore.onUserStateChange() // with this, profile page works with screen name :?
+      .pipe(
+        takeUntil(this.destroy$),
+      ).subscribe((user: User) => {
+        this.user = this.onUserFetched(user);
+        this.initMenu();
+    });
 
     this.initUserService.initCurrentUser()
       .pipe(
@@ -84,7 +84,7 @@ export class AppComponent implements OnInit, OnDestroy {
       )
       .subscribe((data) => {
         this.user = this.onUserFetched(data);
-        this.initMenu();
+        // this.initMenu();
 
       });
   }
@@ -94,7 +94,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   initMenu() {
-    this.pagesMenu.getMenu(this.user?.screenName, this.user?.unreadPrivateMessages)
+    this.pagesMenu.getMenu(this.userStore.getUser()?.screenName, this.user?.unreadPrivateMessages)
       .pipe(takeWhile(() => this.alive))
       .subscribe(menu => {
         this.menu = menu;
@@ -128,7 +128,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }, undefined, `Direct Messages`),
 
       new Hotkey('g p', (event: KeyboardEvent): boolean => {
-        this.router.navigate([`/${this.user?.screenName.substring(1)}`]);
+        this.router.navigate([`/${this.user?.screenName?.substring(1)}`]);
         return false;
       }, undefined, `Profile`),
 

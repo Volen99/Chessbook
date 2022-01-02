@@ -1,8 +1,8 @@
 <nb-card size="medium">
-    <div class="picture" [style.background-image]="'url(' + this.tournament.picture +')'"></div>
+    <div class="picture" style="cursor: pointer;" [style.background-image]="'url(' + this.tournament.picture +')'" (click)="this.redirect(this.tournament.site)"></div>
 
     <div class="details">
-        <div class="h4" style="margin-bottom: 0px">{{this.tournament.name}}</div>
+        <div class="h4" style="margin-bottom: 0px; cursor: pointer;" (click)="this.redirect(this.tournament.site)">{{this.tournament.name}}</div>
         <div class="details-date subtitle-2"><span>{{this.tournament.date}}</span>
             <span style="margin-left: 1.5rem" title="Number of players"><fa-icon [icon]="this.faUsers"></fa-icon> {{this.tournament.playerCount}}</span>
         </div>

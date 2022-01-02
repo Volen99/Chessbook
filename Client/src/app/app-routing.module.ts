@@ -50,6 +50,7 @@ const routes: Routes = [
       },
       {
         path: 'my-account',
+        canActivate: [AuthGuard],
         loadChildren: () => import('./pages/my-account/my-account.module').then(m => m.MyAccountModule),
         canActivateChild: [ MetaGuard ],
       },
@@ -102,6 +103,11 @@ const routes: Routes = [
       {
         path: 'terms',
         loadChildren: () => import('./pages/terms/terms.module').then(m => m.TermsModule),
+        canActivateChild: [ MetaGuard ],
+      },
+      {
+        path: 'thank-you',
+        loadChildren: () => import('./pages/thank-you/thank-you.module').then(m => m.ThankYouModule),
         canActivateChild: [ MetaGuard ],
       },
       {

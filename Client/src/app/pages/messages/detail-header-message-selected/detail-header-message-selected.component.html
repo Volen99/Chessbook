@@ -93,7 +93,7 @@
                                     <div style="padding-bottom: 0px;">
                                         <div style="padding-top: 0px; padding-bottom: 0px;">
                                             <div>
-                                                <div data-focusable="true" tabindex="0"
+                                                <div data-focusable="true" tabindex="0" matRipple
                                                      class="sharebook-container align-items-center border-bottom-color border-bottom-style-solid border-bottom-width-1px r-1jkafct cursor-pointer flex-direction-column r-ku1wi2 outline-style-none left-right-padding-15px r-tvv088 transition-duration transition-property"
                                                      role="link">
                                                     <div class="sharebook-container flex-shrink max-width-100-per"><a [routerLink]="'/' + (!this.isSent ? this.message?.fromUser.screenName.substring(1) : this.message.toUser.screenName.substring(1))"
@@ -105,7 +105,7 @@
                                                                 <div dir="auto"
                                                                      class="css-901oao sharebook-text font-family font-size-15px font-weight-700 inside-element-container-line-height min-width-0px white-space-nowrap text-overflow-wrap">
                                   <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span
-                                          class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{!this.isSent ? this.message?.fromUser.displayName : this.message.toUser.displayName}}</span></span>
+                                          class="h6 css-901oao font-family inside-element-container-line-height min-width-0px text-overflow-wrap" style="font: inherit; white-space: inherit;">{{!this.isSent ? this.message?.fromUser.displayName : this.message.toUser.displayName}}</span></span>
                                                                 </div>
                                                                 <div dir="auto"
                                                                      class="css-901oao flex-direction-row svg-flex-shrink-0 font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"></div>
@@ -126,7 +126,7 @@
                                                         <div class="sharebook-container margin-right-20px">
                                                             <div dir="auto"
                                                                  class="css-901oao font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"
-                                                                 title="616"><span
+                                                                 title="{{!this.isSent ? this.message?.fromUser.followingCount : this.message.toUser.followingCount}}"><span
                                                                     class="css-901oao sharebook-text-inherit font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap"><span style="margin-right: 2px"
                                                                     class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{!this.isSent ? this.message?.fromUser.followingCount : this.message.toUser.followingCount}}</span></span>
                                                                 <span class="css-901oao sharebook-text-inherit third-wheel-color font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
@@ -137,7 +137,7 @@
                                                         <div class="sharebook-container">
                                                             <div dir="auto"
                                                                  class="css-901oao font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"
-                                                                 title="397"><span
+                                                                 title="{{!this.isSent ? this.message?.fromUser.followersCount : this.message.toUser.followersCount}}"><span
                                                                     class="css-901oao sharebook-text-inherit font-family font-weight-700 inside-element-container-line-height min-width-0px text-overflow-wrap"><span style="margin-right: 2px"
                                                                     class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap">{{!this.isSent ? this.message?.fromUser.followersCount : this.message.toUser.followersCount}}</span></span>
                                                                 <span class="css-901oao sharebook-text-inherit third-wheel-color font-family inside-element-container-line-height min-width-0px text-overflow-wrap"><span
@@ -155,50 +155,8 @@
                                             <div>
                                                 <div class="sharebook-container flex-direction-column r-k8qxaj">
                                                     <div aria-expanded="false" data-focusable="true" tabindex="0"
-                                                         class="sharebook-container align-items-flex-start r-7q8q6z outline-style-none"
-                                                         data-testid="messageEntry">
+                                                         class="sharebook-container align-items-flex-start r-7q8q6z outline-style-none">
                                                         <div class="sharebook-container r-1euycsn r-17s6mgv footer-padding-right r-1nwbi2h">
-                                                            <div class="sharebook-container align-self-flex-end flex-direction-row justify-content-flex-start opacity-0 r-qhyqy2 r-633pao">
-                                                                <div class="sharebook-container">
-                                                                    <div aria-expanded="false" aria-haspopup="true"
-                                                                         aria-label="Add reaction"
-                                                                         role="button" data-focusable="true"
-                                                                         tabindex="0"
-                                                                         class="sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none">
-                                                                        <div dir="auto"
-                                                                             class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
-                                                                            <svg viewBox="0 0 24 24"
-                                                                                 class="third-wheel-color svg-display-inline-block svg-fill-currentcolor svg-flex-shrink-0 svg-height max-width-100-per svg-position-relative svg-vertical-align users-select-none first-class-svg-width">
-                                                                                <g>
-                                                                                    <path
-                                                                                            d="M22.436 16.92H19.76v-2.673c0-.415-.335-.75-.75-.75s-.75.335-.75.75v2.674h-2.676c-.413 0-.75.337-.75.75s.337.75.75.75h2.677v2.677c0 .413.337.75.75.75s.75-.337.75-.75V18.42h2.676c.414 0 .75-.337.75-.75s-.336-.75-.75-.75z"></path>
-                                                                                    <path
-                                                                                            d="M11.088 21.214c-2.61-.046-10.064-6.778-10.064-13.157 0-3.066 2.525-5.755 5.404-5.755 2.29 0 3.83 1.582 4.646 2.73.816-1.148 2.357-2.73 4.646-2.73 2.878 0 5.403 2.69 5.403 5.755 0 1.13-.232 2.323-.69 3.545-.145.39-.58.584-.966.44-.388-.146-.584-.58-.438-.966.394-1.053.594-2.07.594-3.02 0-2.266-1.824-4.254-3.903-4.254-2.525 0-3.94 2.937-3.952 2.966-.23.562-1.155.562-1.387 0-.01-.03-1.425-2.966-3.952-2.966-2.08 0-3.904 1.988-3.904 4.255 0 5.76 7.076 11.63 8.563 11.657.168-.003.764-.195 1.758-.892.343-.238.81-.154 1.045.184.237.34.155.808-.184 1.045-1.085.76-1.966 1.153-2.618 1.164z"></path>
-                                                                                </g>
-                                                                            </svg>
-                                                                            <span
-                                                                                    class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div aria-expanded="false" aria-haspopup="true"
-                                                                     aria-label="More actions" role="button"
-                                                                     data-focusable="true" tabindex="0"
-                                                                     class="sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px r-1phboty border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none">
-                                                                    <div dir="auto"
-                                                                         class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
-                                                                        <svg viewBox="0 0 24 24"
-                                                                             class="third-wheel-color svg-display-inline-block svg-fill-currentcolor svg-flex-shrink-0 svg-height max-width-100-per svg-position-relative svg-vertical-align users-select-none first-class-svg-width">
-                                                                            <g>
-                                                                                <path
-                                                                                        d="M19.39 14.882c-1.58 0-2.862-1.283-2.862-2.86s1.283-2.862 2.86-2.862 2.862 1.283 2.862 2.86-1.284 2.862-2.86 2.862zm0-4.223c-.75 0-1.362.61-1.362 1.36s.61 1.36 1.36 1.36 1.362-.61 1.362-1.36-.61-1.36-1.36-1.36zM12 14.882c-1.578 0-2.86-1.283-2.86-2.86S10.42 9.158 12 9.158s2.86 1.282 2.86 2.86S13.578 14.88 12 14.88zm0-4.223c-.75 0-1.36.61-1.36 1.36s.61 1.362 1.36 1.362 1.36-.61 1.36-1.36-.61-1.363-1.36-1.363zm-7.39 4.223c-1.577 0-2.86-1.283-2.86-2.86S3.034 9.16 4.61 9.16s2.862 1.283 2.862 2.86-1.283 2.862-2.86 2.862zm0-4.223c-.75 0-1.36.61-1.36 1.36s.61 1.36 1.36 1.36 1.362-.61 1.362-1.36-.61-1.36-1.36-1.36z"></path>
-                                                                            </g>
-                                                                        </svg>
-                                                                        <span
-                                                                                class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap"></span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                             <div class="sharebook-container align-items-flex-start flex-shrink">
                                                                 <div role="presentation"
                                                                      class="message-color sharebook-container align-self-flex-start r-pm2fo main-left-right-vertical-border-color border-radius-16px input-form-box-sizing max-width-100-per outline-style-none left-right-padding-15px stacked-elements-padding-bottom-top transition-duration transition-property">
@@ -212,7 +170,7 @@
                                                                 <div class="sharebook-container r-phn5h3"></div>
                                                                 <div class="sharebook-container left-0px position-absolute" style="width: 40px"> <!--style by mi-->
                                                                     <a
-                                                                        routerLink="/volencho" role="link"
+                                                                            [routerLink]="'/' + this.message?.fromUser.screenName.substring(1)" role="link"
                                                                         data-focusable="true"
                                                                         class="sharebook-link sharebook-cursor-pointer sharebook-container border-radius-9999px cursor-pointer r-j66t93 outline-style-none overflow-hidden transition-duration transition-property r-eu2yb4">
                                                                     <div class="sharebook-container display-block overflow-hidden"
@@ -285,8 +243,7 @@
                                     </div>
                                     <input accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/quicktime,video/webm"
                                            tabindex="-1" type="file" data-focusable="true"
-                                           class="add-photos-or-video-default-input-height opacity-0 overflow-hidden position-absolute add-photos-or-video-default-input-width z-index-minus-1"
-                                           data-testid="fileInput">
+                                           class="add-photos-or-video-default-input-height opacity-0 overflow-hidden position-absolute add-photos-or-video-default-input-width z-index-minus-1">
                                     <div aria-label="Delete" role="button" data-focusable="true" tabindex="0"
                                          class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba r-42olwf border-radius-9999px r-1phboty border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
                                          ngbTooltip="Delete"

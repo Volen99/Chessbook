@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Chessbook.Core.Domain.Posts;
@@ -44,6 +46,18 @@ namespace Chessbook.Services.Entities
 
             originalPost.RepostCount -= 1;
             await this.postsRepository.UpdateAsync(originalPost);
+        }
+
+        public async Task<List<Post>> GetRepostsByPostId(int postId)
+        {
+            var reposts = await this.postsRepository.GetAllAsync(query =>
+            {
+                query = query.Where(pv => pv.RepostId == postId);
+
+                return query;
+            });
+
+            return reposts.ToList();
         }
     }
 }

@@ -37,7 +37,7 @@ export class ChessRankingsComponent implements OnInit {
     actions: false,
     pager: {
       display: true,
-      perPage: 50
+      perPage: 51
     },
     add: {
       addButtonContent: '<i class="nb-plus"></i>',

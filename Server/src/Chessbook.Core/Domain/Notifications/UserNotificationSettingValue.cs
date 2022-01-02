@@ -4,6 +4,7 @@
     {
         NONE = 0,
         WEB = 1 << 0,
-        EMAIL = 1 << 1
+        EMAIL = 1 << 1,
+        BOTH = 3,
     }
 }

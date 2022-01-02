@@ -44,7 +44,7 @@ namespace Chessbook.Services.Messages
         private readonly IEventPublisher _eventPublisher;
         private readonly IGenericAttributeService _genericAttributeService;
         private readonly ILanguageService _languageService;
-        private readonly IPostsService _productService;
+        private readonly IPostsService postService;
         private readonly IStateProvinceService _stateProvinceService;
         private readonly IStoreContext _storeContext;
         private readonly IStoreService _storeService;
@@ -76,7 +76,8 @@ namespace Chessbook.Services.Messages
             IWorkContext workContext,
             MessageTemplatesSettings templatesSettings,
             StoreInformationSettings storeInformationSettings,
-            IPostCommentService postCommentService)
+            IPostCommentService postCommentService,
+            IPostsService postService)
         {
             _actionContextAccessor = actionContextAccessor;
             _countryService = countryService;
@@ -94,6 +95,7 @@ namespace Chessbook.Services.Messages
             _templatesSettings = templatesSettings;
             _storeInformationSettings = storeInformationSettings;
             this.postCommentService = postCommentService;
+            this.postService = postService;
         }
 
         #endregion
@@ -131,8 +133,8 @@ namespace Chessbook.Services.Messages
                 _allowedTokens.Add(TokenGroupNames.CustomerTokens, new[]
                 {
                     "%Customer.Email%",
-                    "%Customer.Username%",
-                    "%Customer.FullName%",
+                    "%Customer.DisplayName%",
+                    "%Customer.ScreenName%",
                     "%Customer.FirstName%",
                     "%Customer.LastName%",
                     "%Customer.VatNumber%",
@@ -323,7 +325,10 @@ namespace Chessbook.Services.Messages
                 //blog comment tokens
                 _allowedTokens.Add(TokenGroupNames.BlogCommentTokens, new[]
                 {
-                    "%BlogComment.BlogPostTitle%"
+                    "%PostComment.Text%",
+                    "%Customer.ScreenName%",
+                    "%PostComment.PostId%",
+                    "%PostComment.OriginCommentId%"
                 });
 
                 //news comment tokens
@@ -394,26 +399,20 @@ namespace Chessbook.Services.Messages
         /// A task that represents the asynchronous operation
         /// The task result contains the generated URL
         /// </returns>
-        protected virtual async Task<string> RouteUrlAsync(int storeId = 0, string routeName = null, object routeValues = null)
+        protected virtual async Task<string> RouteUrlAsync(int storeId = 0, string routeName = null, dynamic routeValues = null, string email = null)
         {
-            //try to get a store by the passed identifier
+            // try to get a store by the passed identifier
             var store = await _storeService.GetStoreByIdAsync(storeId) ?? await _storeContext.GetCurrentStoreAsync()
                 ?? throw new Exception("No store could be loaded");
 
-            //ensure that the store URL is specified
+            // ensure that the store URL is specified
             if (string.IsNullOrEmpty(store.Url))
+            {
                 throw new Exception("URL cannot be null");
+            }
 
-            //generate a URL with an absolute path
-            var urlHelper = _urlHelperFactory.GetUrlHelper(_actionContextAccessor.ActionContext);
-            var url = new PathString(urlHelper.RouteUrl(routeName, routeValues));
-
-            //remove the application path from the generated URL if exists
-            var pathBase = _actionContextAccessor.ActionContext?.HttpContext?.Request?.PathBase ?? PathString.Empty;
-            url.StartsWithSegments(pathBase, out url);
-
-            //compose the result
-            return Uri.EscapeUriString(WebUtility.UrlDecode($"{store.Url.TrimEnd('/')}{url}"));
+            // compose the result
+            return Uri.EscapeUriString(WebUtility.UrlDecode($"{store.Url}api/users/activation?token={routeValues?.token}&guid={routeValues?.guid}&email={email}"));
         }
 
         #endregion
@@ -438,9 +437,7 @@ namespace Chessbook.Services.Messages
             tokens.Add(new Token("Store.URL", store.Url, true));
             tokens.Add(new Token("Store.Email", emailAccount.Email));
             tokens.Add(new Token("Store.CompanyName", store.CompanyName));
-            tokens.Add(new Token("Store.CompanyAddress", store.CompanyAddress));
             tokens.Add(new Token("Store.CompanyPhoneNumber", store.CompanyPhoneNumber));
-            tokens.Add(new Token("Store.CompanyVat", store.CompanyVat));
 
             tokens.Add(new Token("Facebook.URL", _storeInformationSettings.FacebookLink));
             tokens.Add(new Token("Twitter.URL", _storeInformationSettings.TwitterLink));
@@ -474,46 +471,51 @@ namespace Chessbook.Services.Messages
         /// <param name="tokens">List of already added tokens</param>
         /// <param name="customer">Customer</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task AddCustomerTokensAsync(IList<Token> tokens, Customer customer)
+        public async Task AddCustomerTokensAsync(IList<Token> tokens, Customer customer)
         {
             tokens.Add(new Token("Customer.Email", customer.Email));
-            tokens.Add(new Token("Customer.Username", customer.ScreenName)); // customer.Username
-            tokens.Add(new Token("Customer.FullName", customer.DisplayName));
-            tokens.Add(new Token("Customer.FirstName", await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.FirstNameAttribute)));
-            tokens.Add(new Token("Customer.LastName", await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.LastNameAttribute)));
-            tokens.Add(new Token("Customer.VatNumber", await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.VatNumberAttribute)));
+            tokens.Add(new Token("Customer.DisplayName", customer.DisplayName));
+            tokens.Add(new Token("Customer.ScreenName", customer.ScreenName));
 
             var customAttributesXml = await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.CustomCustomerAttributes);
             tokens.Add(new Token("Customer.CustomAttributes", await _customerAttributeFormatter.FormatAttributesAsync(customAttributesXml), true));
 
             // note: we do not use SEO friendly URLS for these links because we can get errors caused by having .(dot) in the URL (from the email address)
-            var passwordRecoveryUrl  = await RouteUrlAsync(routeName: "PasswordRecoveryConfirm", routeValues: new { token = await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.PasswordRecoveryTokenAttribute), guid = customer.CustomerGuid });
-            var accountActivationUrl  = await RouteUrlAsync(routeName: "AccountActivation", routeValues: new { token = await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.AccountActivationTokenAttribute), guid = customer.CustomerGuid });
-            var emailRevalidationUrl  = await RouteUrlAsync(routeName: "EmailRevalidation", routeValues: new { token = await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.EmailRevalidationTokenAttribute), guid = customer.CustomerGuid });
-            var wishlistUrl  = await RouteUrlAsync(routeName: "Wishlist", routeValues: new { customerGuid = customer.CustomerGuid });
+            var passwordRecoveryUrl  = await RouteUrlAsync(routeName: "PasswordRecoveryConfirm", routeValues: new { token = await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.PasswordRecoveryTokenAttribute), guid = customer.CustomerGuid, }, email: customer.Email);
+            var accountActivationUrl  = await RouteUrlAsync(routeName: "AccountActivation", routeValues: new { token = await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.AccountActivationTokenAttribute), guid = customer.CustomerGuid }, email: customer.Email);
+            var emailRevalidationUrl  = await RouteUrlAsync(routeName: "EmailRevalidation", routeValues: new { token = await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.EmailRevalidationTokenAttribute), guid = customer.CustomerGuid }, email: customer.Email);
             tokens.Add(new Token("Customer.PasswordRecoveryURL", passwordRecoveryUrl, true));
             tokens.Add(new Token("Customer.AccountActivationURL", accountActivationUrl, true));
             tokens.Add(new Token("Customer.EmailRevalidationURL", emailRevalidationUrl, true));
-            tokens.Add(new Token("Wishlist.URLForCustomer", wishlistUrl, true));
 
             // event notification
             await _eventPublisher.EntityTokensAddedAsync(customer, tokens);
         }
 
         /// <summary>
-        /// Add blog comment tokens
+        /// Add post comment tokens
         /// </summary>
         /// <param name="tokens">List of already added tokens</param>
-        /// <param name="blogComment">Blog post comment</param>
+        /// <param name="postComment">Post comment</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task AddBlogCommentTokensAsync(IList<Token> tokens, PostComment blogComment)
+        public virtual async Task AddBlogCommentTokensAsync(IList<Token> tokens, PostComment postComment)
         {
-            var blogPost = await this.postCommentService.GetById(blogComment.Id);
+            tokens.Add(new Token("PostComment.Text", postComment.Text));
 
-            tokens.Add(new Token("BlogComment.BlogPostTitle", blogPost.Text));
+            var post = await this.postService.GetPostByIdAsync(postComment.PostId);
+            if (post != null)
+            {
+                var postAuthor = await this._customerService.GetCustomerByIdAsync(post.UserId);
+                if (postAuthor != null)
+                {
+                    tokens.Add(new Token("Customer.ScreenName", postAuthor.ScreenName.Substring(1)));
+                    tokens.Add(new Token("PostComment.PostId", postComment.PostId));
+                    tokens.Add(new Token("PostComment.OriginCommentId", postComment.OriginCommentId ?? postComment.Id));
+                }
+            }
 
             // event notification
-            await _eventPublisher.EntityTokensAddedAsync(blogComment, tokens);
+            await _eventPublisher.EntityTokensAddedAsync(postComment, tokens);
         }
 
         /// <summary>

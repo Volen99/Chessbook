@@ -27,13 +27,11 @@ export class MyAccountSettingsComponent implements OnInit, AfterViewChecked {
   }
 
   get userInformationLoaded() {
-    // return this.authService.userInformationLoaded;
-
     return this.userStore.getUser();
   }
 
   ngOnInit() {
-    this.user = this.userStore.getUser();              // this.authService.getUser();
+    this.user = this.userStore.getUser();
   }
 
   ngAfterViewChecked() {

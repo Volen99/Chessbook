@@ -8,6 +8,6 @@
         /// <summary>
         /// Gets a running schedule task path
         /// </summary>
-        public static string ScheduleTaskPath => "scheduletask/runtask";
+        public static string ScheduleTaskPath => "api/scheduletask/runtask";
     }
 }

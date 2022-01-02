@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 
 using Chessbook.Common.Extensions;
-using Chessbook.Core.JsonConverters;
 using Chessbook.Services.Data;
 using Chessbook.Web.Api.Identity;
 using Chessbook.Web.Models.APIs;

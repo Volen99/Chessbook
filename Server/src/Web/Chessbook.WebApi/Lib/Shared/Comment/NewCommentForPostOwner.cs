@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
@@ -15,6 +14,7 @@ using Chessbook.Web.Api.Lib.Shared.Common;
 using Chessbook.Core;
 using Chessbook.Core.Infrastructure;
 using Chessbook.Services.Data.Services.Entities;
+using Chessbook.Services.Messages;
 
 namespace Chessbook.Web.Api.Lib.Shared.Comment
 {
@@ -28,6 +28,7 @@ namespace Chessbook.Web.Api.Lib.Shared.Comment
         private readonly IBlocklistService blocklistService = EngineContext.Current.Resolve<IBlocklistService>();
         private readonly INotificationsSettingsService notificationsSettingsService = EngineContext.Current.Resolve<INotificationsSettingsService>();
         private readonly IUserNotificationService userNotificationService = EngineContext.Current.Resolve<IUserNotificationService>();
+        private readonly IWorkflowMessageService workflowMessageService = EngineContext.Current.Resolve<IWorkflowMessageService>();
 
         private Customer user;
         private int serverAccountId;
@@ -98,9 +99,9 @@ namespace Chessbook.Web.Api.Lib.Shared.Comment
             return notification;
         }
 
-        public override void CreateEmail(string to)
+        public async override Task CreateEmail(UserNotification userNotification)
         {
-            throw new System.NotImplementedException();
+            await this.workflowMessageService.SendBlogCommentNotificationMessageAsync(userNotification.Comment);
         }
     }
 }

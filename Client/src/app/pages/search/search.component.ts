@@ -1,5 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {animate, state, style, transition, trigger} from "@angular/animations";
 import {forkJoin, Subscription} from 'rxjs';
 
 import {
@@ -21,13 +22,22 @@ import {immutableAssign} from "../../helpers/utils";
 import {validateHost} from "../../shared/shared-forms/form-validators/host";
 import {UserStore} from "../../core/stores/user.store";
 import {UsersService} from 'app/core/backend/common/services/users.service';
+import {IUser} from '../../core/interfaces/common/users';
+import {NbToggleStates} from "../../sharebook-nebular/theme/components/menu/menu.component";
 
 @Component({
   selector: 'my-search',
   styleUrls: ['./search.component.scss'],
-  templateUrl: './search.component.html'
+  templateUrl: './search.component.html',
+  animations: [
+    trigger('toggle', [
+      state(NbToggleStates.Collapsed, style({height: '0', margin: '0'})),
+      state(NbToggleStates.Expanded, style({height: '*'})),
+      transition(`${NbToggleStates.Collapsed} <=> ${NbToggleStates.Expanded}`, animate(300)),
+    ]),
+  ],
 })
-export class SearchComponent implements OnInit, OnDestroy {
+export class SearchComponent implements OnInit, DoCheck, OnDestroy {
   error: string;
 
   results: (Post | User)[] = [];
@@ -68,6 +78,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   private lastSearchTarget: SearchTargetType;
 
   private serverConfig: HTMLServerConfig;
+  toggleState: NbToggleStates;
 
   constructor(
     private route: ActivatedRoute,
@@ -81,8 +92,14 @@ export class SearchComponent implements OnInit, OnDestroy {
   ) {
   }
 
+  ngDoCheck() {
+    this.toggleState = this.isSearchFilterCollapsed ? NbToggleStates.Expanded : NbToggleStates.Collapsed;
+  }
+
   ngOnInit() {
     this.serverConfig = this.serverService.getHTMLConfig();
+
+    this.toggleState = this.isSearchFilterCollapsed ? NbToggleStates.Expanded : NbToggleStates.Collapsed;
 
     this.subActivatedRoute = this.route.queryParams.subscribe(
       async queryParams => {
@@ -102,9 +119,6 @@ export class SearchComponent implements OnInit, OnDestroy {
         }
 
         this.advancedSearch = new AdvancedSearch(queryParams);
-        if (!this.advancedSearch.searchTarget) {
-          this.advancedSearch.searchTarget = this.getDefaultSearchTarget();
-        }
 
         this.error = this.checkFieldsAndGetError();
 
@@ -333,21 +347,19 @@ export class SearchComponent implements OnInit, OnDestroy {
     return this.searchService.searchVideoChannels(params);
   }
 
-  private getDefaultSearchTarget(): SearchTargetType {
-    // const searchIndexConfig = this.serverConfig.search.searchIndex;
-
-    // if (searchIndexConfig.enabled && (searchIndexConfig.isDefaultSearch || searchIndexConfig.disableLocalSearch)) {
-    //   return 'search-index';
-    // }
-
-    return 'local';
-  }
-
   private checkFieldsAndGetError() {
     if (this.advancedSearch.host && !validateHost(this.advancedSearch.host)) {
       return `PeerTube instance host filter is invalid`;
     }
 
     return undefined;
+  }
+
+  isManageable(user: IUser) {
+    if (!this.authService.isLoggedIn()) {
+      return false;
+    }
+
+    return user?.id === this.authService.getUser().id;
   }
 }

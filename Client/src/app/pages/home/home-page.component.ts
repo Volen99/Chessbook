@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {Observable} from "rxjs";
@@ -31,7 +31,6 @@ const voidState = style({
 
 const defaultOptions = {params: {direction: ''}};
 
-
 @Component({
   selector: 'app-homepage',
   templateUrl: './home-page.component.html',
@@ -44,19 +43,6 @@ const defaultOptions = {params: {direction: ''}};
   ],
 })
 export class HomePageComponent extends AbstractPostList implements OnInit, OnDestroy {
-  private loaded = false;
-  private currentPage = 1;
-  private maxPage = 20;
-  private lastWasEmpty = false;
-  private isLoading = false;
-
-
-  public anim: any;
-  fadeIn = {value: '', params: {direction: ''}};
-
-  animationCreated(animationItem: AnimationItem): void {
-    this.anim = animationItem;
-  }
 
   constructor(protected router: Router,
               protected route: ActivatedRoute,
@@ -67,9 +53,7 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
               protected notifier: NbToastrService,
               protected userStore: UserStore,
               private userFollowService: UserFollowService,
-              protected initCurrentUser: InitUserService,
-              private cdr: ChangeDetectorRef,
-) {
+              protected initCurrentUser: InitUserService) {
     super();
   }
 
@@ -80,8 +64,8 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
       this.isFishSwimming = true;
       setTimeout(() => {
         this.isFishSwimming = false;
-      }, 5000);
-    }, 12000);
+      }, 12000);
+    }, 720000);
 
     this.enableAllFilterIfPossible();
   }
@@ -90,8 +74,11 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
     super.ngOnDestroy();
     this.postTransformBuffer = 0;
 
-    this.posts = []; // by mi
+    this.posts = [];
   }
+
+  anim: any;
+  fadeIn = {value: '', params: {direction: ''}};
 
   lottieOptions: AnimationOptions = {
     path: '/assets/animations/fish.json',
@@ -111,6 +98,10 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
     marginTop: '-19px',
     /*margin: '0 auto',*/
   };
+
+  animationCreated(animationItem: AnimationItem): void {
+    this.anim = animationItem;
+  }
 
   generateSyndicationList(): void {
     throw new Error('Method not implemented.');
@@ -135,6 +126,8 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
     if (!postsCount) {
       return 670;
     }
+
+    // TODO: if postsCount === 1, multiply accordingly with testing kk :)
 
     return postsCount * 470;
   }

@@ -2,7 +2,9 @@ import {Component, forwardRef, Input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 import {
-  faWalkieTalkie
+  faWalkieTalkie,
+  faEye,
+  faEyeSlash,
 } from '@fortawesome/pro-light-svg-icons';
 
 import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
@@ -46,6 +48,8 @@ export class InputToggleHiddenComponent implements ControlValueAccessor {
   }
 
   faWalkieTalkie = faWalkieTalkie;
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
 
   toggle() {
     this.show = !this.show;

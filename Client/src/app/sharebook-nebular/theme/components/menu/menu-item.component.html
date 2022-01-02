@@ -35,7 +35,7 @@
    [class.active]="menuItem.selected"
    (mouseenter)="onHoverItem(menuItem)"
    (click)="onSelectItem(menuItem)">
-    <fa-icon class="menu-icon" [icon]="menuItem.icon" *ngIf="menuItem.icon"></fa-icon>
+    <fa-icon *ngIf="menuItem.icon" class="menu-icon" [icon]="menuItem.icon"></fa-icon>
     <span class="menu-title">{{ menuItem.title }}</span>
     <ng-container *ngIf="badge" [ngTemplateOutlet]="badgeTemplate"></ng-container>
 </a>
@@ -45,7 +45,7 @@
    [class.active]="menuItem.selected"
    (mouseenter)="onHoverItem(menuItem)"
    (click)="$event.preventDefault(); onItemClick(menuItem);">
-    <fa-icon class="menu-icon" [icon]="menuItem.icon" *ngIf="menuItem.icon"></fa-icon>
+    <fa-icon *ngIf="menuItem.icon" class="menu-icon" [icon]="menuItem.icon"></fa-icon>
     <span class="menu-title">{{ menuItem.title }}</span>
     <ng-container *ngIf="badge" [ngTemplateOutlet]="badgeTemplate"></ng-container>
 </a>
@@ -68,7 +68,9 @@
     </fa-stack>
     <span class="menu-title">{{ menuItem.title }}</span>
     <ng-container *ngIf="badge" [ngTemplateOutlet]="badgeTemplate"></ng-container>
-    <fa-icon class="expand-state" [icon]="getExpandStateIcon()"></fa-icon>
+    <ng-container *ngIf="(this.menuItem.title !== 'More') && !this.menuItem.title.includes('shortcuts')">
+        <fa-icon class="expand-state" [icon]="getExpandStateIcon()"></fa-icon>
+    </ng-container>
 
 
 </a>

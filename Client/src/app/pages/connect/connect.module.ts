@@ -5,6 +5,7 @@ import { SidebarColumnModule } from '../../shared/sidebar-column/sidebar-column.
 import { ConnectRoutingModule } from './connect-routing.module';
 import {ConnectComponent} from "./connect.component";
 import {SharedModule} from "../../shared/shared.module";
+import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.module";
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import {SharedModule} from "../../shared/shared.module";
     CommonModule,
     SharedModule,
     SidebarColumnModule,
+    NbCardModule,
   ]
 })
 export class ConnectModule {

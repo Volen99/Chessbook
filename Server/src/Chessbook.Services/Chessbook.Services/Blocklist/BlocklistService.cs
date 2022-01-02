@@ -109,6 +109,11 @@ namespace Chessbook.Services.Blocklist
 
             var blockListModel = await this.LoadByUserAndTarget(userId, targetUser.Id);
 
+            if (blockListModel == null)
+            {
+                return;
+            }
+
             await this.userBlocklistRepository.DeleteAsync(blockListModel);
 
             // update relationship

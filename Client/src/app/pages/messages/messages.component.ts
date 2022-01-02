@@ -6,6 +6,7 @@ import {takeWhile} from "rxjs/operators";
 
 import {ChatService} from "../../shared/shared-messages/chat.service";
 import {IUser} from "../../core/interfaces/common/users";
+import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
 
 export interface PrivateMessage {
   id: number;
@@ -31,7 +32,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
   private alive = true;
 
   constructor(private router: Router, private chatService: ChatService,
-              private location: Location) {
+              private location: Location, private notifier: NbToastrService) {
     forkJoin([
       this.chatService.getAllPrivateMessagesAsync('inbox'),
       this.chatService.getAllPrivateMessagesAsync('sent')
@@ -42,7 +43,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
         this.messages = inbox.data;
         // @ts-ignore
         this.sent = sent.data;
-      });
+      }, err => this.notifier.danger(err.message, 'Error'));
   }
 
   ngOnInit(): void {

@@ -1,7 +1,6 @@
 <ng-template #modal>
   <div class="modal-header">
-    <h4 class="modal-title" *ngIf="!post.isLive">Block video "{{ post.name }}"</h4>
-    <h4 class="modal-title" *ngIf="post.isLive">Block live "{{ post.name }}"</h4>
+    <h4 class="modal-title">Block video "{{ post.id }}"</h4>
     <fa-icon [icon]="this.faTimes" aria-label="Close" role="button" (click)="hide()"></fa-icon>
   </div>
 
@@ -17,21 +16,6 @@
           {{ formErrors.reason }}
         </div>
       </div>
-
-      <div class="form-group" *ngIf="post.isLocal">
-        <app-peertube-checkbox
-          inputName="unfederate" formControlName="unfederate"
-          labelText="Unfederate the video"
-        >
-          <ng-container ngProjectAs="description">
-            <span>This will ask remote instances to delete it</span>
-          </ng-container>
-        </app-peertube-checkbox>
-      </div>
-
-      <strong class="live-info" *ngIf="post.isLive">
-        Blocking this live will automatically terminate the live stream.
-      </strong>
 
       <div class="form-group inputs">
         <input

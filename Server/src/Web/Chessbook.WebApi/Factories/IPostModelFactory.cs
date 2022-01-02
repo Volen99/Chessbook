@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Chessbook.Core.Domain.Posts;
@@ -25,7 +26,18 @@ namespace Chessbook.Web.Api.Factories
         /// A task that represents the asynchronous operation
         /// The task result contains the products by tag model
         /// </returns>
-        Task<ProductsByTagModel> PrepareProductsByTagModelAsync(Tag productTag, CatalogProductsCommand command);
+        Task<ProductsByTagModel> PrepareProductsByTagModelAsync(Tag productTag, int start, int count, string search, string tagsOneOf, string sort, DateTime? startDate, DateTime? originallyPublishedStartDate, DateTime? originallyPublishedEndDatem, CatalogProductsCommand command);
+
+        /// <summary>
+        /// Prepare posts by tags models
+        /// </summary>
+        /// <param name="productTag">Post tags</param>
+        /// <param name="command">Model to get the catalog products</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the products by tag model
+        /// </returns>
+        Task<IList<PostModel>> PreparePostsByTagsModelAsync(Tag[] postTags, CatalogProductsCommand command);
 
         /// <summary>
         /// Prepares the tag products model
@@ -36,7 +48,7 @@ namespace Chessbook.Web.Api.Factories
         /// A task that represents the asynchronous operation
         /// The task result contains the ag products model
         /// </returns>
-        Task<CatalogProductsModel> PrepareTagProductsModelAsync(Tag productTag, CatalogProductsCommand command);
+        Task<CatalogProductsModel> PrepareTagProductsModelAsync(Tag productTag, int start, int count, string search, string tagsOneOf, string sort, DateTime? startDate, DateTime? originallyPublishedStartDate, DateTime? originallyPublishedEndDate, CatalogProductsCommand command);
 
         /// <summary>
         /// Prepare the product overview models

@@ -8,6 +8,7 @@ namespace Chessbook.Services.Notifications.Settings
     public interface INotificationsSettingsService
     {
         Task CreateAsync(UserNotificationSettingModel settings);
+
         Task<List<UserNotificationSettingModel>> ListUserSubscribersOf(int userId);
 
         Task<UserNotificationSettingModel> GetByUserId(int userId);

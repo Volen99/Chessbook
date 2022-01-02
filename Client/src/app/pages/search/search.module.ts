@@ -15,6 +15,7 @@ import {SharedVideoMiniatureModule} from "../../shared/post-miniature/shared-vid
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {NbButtonModule} from '../../sharebook-nebular/theme/components/button/button.module';
 import {NbInputModule} from '../../sharebook-nebular/theme/components/input/input.module';
+import {NbBadgeModule} from '../../sharebook-nebular/theme/components/badge/badge.module';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import {NbInputModule} from '../../sharebook-nebular/theme/components/input/inpu
     FontAwesomeModule,
     NbButtonModule,
     NbInputModule,
+    NbBadgeModule,
   ],
 
   declarations: [

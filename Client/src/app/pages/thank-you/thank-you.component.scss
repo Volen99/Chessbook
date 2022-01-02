@@ -1,0 +1,102 @@
+@import '_mixins';
+@import '../../theme/styles/themes';
+
+@include nb-install-component() {
+  nb-card {
+    height: calc(111vh - 2 * 2.5rem);
+  }
+
+  .show-grid {
+    .row {
+      margin: -0.5rem;
+    }
+
+    div[class^=col-] {
+      padding: 0.5rem;
+      box-sizing: border-box;
+
+      div {
+        text-align: center;
+        background-color: nb-theme(background-basic-color-2);
+        padding: 0.75rem 0.25rem;
+        border-radius: 0.25rem;
+      }
+    }
+  }
+
+  .grid-h {
+    margin-top: 1.5rem;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .table-responsive {
+    margin-top: 1rem;
+  }
+
+
+  .patreon {
+    color: #ff424d;
+  }
+
+  .ko-fi {
+    color: #29abe0;
+  }
+
+  .streamlabs {
+    color: #80f5d2;
+  }
+
+  .paypal {
+    color: #0069ae;
+  }
+
+  .google-pay {
+    color: #ca4a43;
+  }
+
+  .a {
+    @include disable-default-a-behaviour;
+  }
+
+  .name {
+    flex: 0 0 auto;
+    font-size: 21px;
+    transition: margin-top 0.5s;
+    cursor: pointer;
+
+    &:hover {
+      text-shadow: 0 0.008em 0.127em #fefcc9, 0.055em -0.066em 0.2em #feec85, -0.111em -0.127em 0.272em #ffae34, 0.111em -0.272em 0.411em #e7740e, -0.111em -0.456em 0.416em #cd4606, 0 -0.533em 0.577em #973716, 0.055em -0.55em 0.533em #451b0e;
+    }
+  }
+
+  .pat-txt {
+    color: #ca4a43;
+  }
+
+  .kof-txt {
+    color: #29abe0;
+
+    &:hover {
+      text-shadow: 0 0.008em 0.127em #c9f8fe, 0.055em -0.066em 0.2em #85fee2, -0.111em -0.127em 0.272em #3aaafd, 0.111em -0.272em 0.411em #0c5aec, -0.111em -0.456em 0.416em #82bdd5, 0 -0.533em 0.577em #3d7e99, 0.055em -0.55em 0.533em #29abe0;
+    }
+  }
+
+  .lab-txt {
+    color: #80f5d2;
+
+    &:hover {
+      text-shadow: 0 0.008em 0.127em #cbfff0, 0.055em -0.066em 0.2em #a1ffdc, -0.111em -0.127em 0.272em #6bffbe, 0.111em -0.272em 0.411em rgba(29, 119, 94, 0.66), -0.111em -0.456em 0.416em #06b581, 0 -0.533em 0.577em #169d74, 0.055em -0.55em 0.533em #0f4c3a;
+    }
+  }
+
+  .pal-txt {
+    color: #0069ae;
+
+    &:hover {
+      text-shadow: 0 0.008em 0.127em #c7e9ff, 0.055em -0.066em 0.2em #8fd3ff, -0.111em -0.127em 0.272em #40b3ff, 0.111em -0.272em 0.411em #0e51e1, -0.111em -0.456em 0.416em #0580d1, 0 -0.533em 0.577em #166395, 0.055em -0.55em 0.533em #0e3148;
+    }
+  }
+}

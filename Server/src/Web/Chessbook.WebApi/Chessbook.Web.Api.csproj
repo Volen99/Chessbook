@@ -11,6 +11,14 @@
     <EmbeddedResource Remove="Areas\Me\**" />
     <None Remove="Areas\Me\**" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include=".ebextensions\01-dependencies.config" />
+    <None Include=".ebextensions\cloudwatch.config" />
+    <None Include=".platform\nginx\conf.d\elasticbeanstalk\00_application.conf" />
+    <None Include=".platform\nginx\conf.d\proxy_cache.conf" />
+  </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\..\Chessbook.Common\Chessbook.Common.csproj" />
     <ProjectReference Include="..\..\Chessbook.Data\Chessbook.Data\Chessbook.Data.csproj" />
@@ -20,6 +28,7 @@
     <ProjectReference Include="..\Chessbook.Web.Framework\Chessbook.Web.Framework.csproj" />
     <ProjectReference Include="..\Chessbook.Web.Models\Chessbook.Web.Models.csproj" />
   </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="Humanizer" Version="2.10.1" />

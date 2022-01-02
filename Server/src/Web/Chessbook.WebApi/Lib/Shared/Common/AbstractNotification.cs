@@ -22,7 +22,7 @@ namespace Chessbook.Web.Api.Lib.Shared.Common
         public abstract List<U> GetTargetUsers();
 
         public abstract Task<UserNotification> CreateNotification(U user);
-        public abstract void CreateEmail(string to);
+        public abstract Task CreateEmail(UserNotification userNotification);
 
         public Task<bool> IsDisabled()
         {

@@ -37,6 +37,15 @@
     margin-right: 10px;
   }
 
+  a {
+    &:hover, &:focus, &:active {
+      text-decoration: underline !important;
+      outline: none !important;
+    }
+
+    text-decoration: none !important;
+  }
+
   .message {
     flex-grow: 1;
 

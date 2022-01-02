@@ -32,15 +32,20 @@
 
       <div class="form-group">
         <div class="label-container">
-          <label for="original-publication-after">Original publication year</label>
+          <label for="original-publication-after">Original publication date</label>
           <button nbButton size="tiny" ghost class="reset-button reset-button-small" (click)="resetOriginalPublicationYears()" *ngIf="originallyPublishedStartYear || originallyPublishedEndYear">
             Reset
           </button>
         </div>
 
         <div class="row">
-          <div class="pl-0 col-sm-6">
-            <input
+          <div class="pl-0 col-sm-6" style="padding-left: 15px !important;">
+<!--            <app-help>-->
+<!--              <ng-template appSbTemplate="customHtml">-->
+<!--                <p [innerHTML]="'The creation from date for the search.'"></p>-->
+<!--              </ng-template>-->
+<!--            </app-help>-->
+            <input nbInput
               (change)="onDurationOrPublishedUpdated()"
               (keydown.enter)="$event.preventDefault()"
               type="text" id="original-publication-after" name="original-publication-after"
@@ -50,7 +55,12 @@
             >
           </div>
           <div class="pr-0 col-sm-6">
-            <input
+<!--            <app-help>-->
+<!--              <ng-template appSbTemplate="customHtml">-->
+<!--                <p [innerHTML]="'The creation from date for the search.'"></p>-->
+<!--              </ng-template>-->
+<!--            </app-help>-->
+            <input nbInput
               (change)="onDurationOrPublishedUpdated()"
               (keydown.enter)="$event.preventDefault()"
               type="text" id="original-publication-before" name="original-publication-before"
@@ -65,6 +75,11 @@
     </div>
 
     <div class="col-lg-4 col-md-6 col-xs-12">
+      <div class="form-group">
+        <img src="/assets/images/crop.png" width="150px;" height="300px" alt="searching" style="margin-left: 30%; cursor: pointer;"
+             [ngbTooltip]="this.tooltip" placement="top" [openDelay]="700" #tool="ngbTooltip" (click)="this.handleImgClick(tool)"
+             [ngStyle]="{'transform': !this.isSearch ? '' : 'scale(-1, 1)'}"/>
+      </div>
     </div>
 
     <div class="col-lg-4 col-md-6 col-xs-12">
@@ -82,30 +97,6 @@
           Reset
         </button>
         <app-select-tags name="tagsOneOf" labelForId="tagsOneOf" id="tagsOneOf" [(ngModel)]="advancedSearch.tagsOneOf"></app-select-tags>
-      </div>
-
-      <div class="form-group">
-        <label for="host">Chessbook instance host</label>
-
-        <input (change)="onDurationOrPublishedUpdated()" (keydown.enter)="$event.preventDefault()" type="text" id="host" name="host"
-          placeholder="example.com" [(ngModel)]="advancedSearch.host" class="form-control"
-        >
-      </div>
-
-      <div class="form-group" *ngIf="isSearchTargetEnabled()">
-        <div class="radio-label label-container">
-          <label>Search target</label>
-        </div>
-
-        <div class="peertube-radio-container">
-          <input type="radio" name="searchTarget" id="searchTargetLocal" value="local" [(ngModel)]="advancedSearch.searchTarget">
-          <label for="searchTargetLocal" class="radio">Instance</label>
-        </div>
-
-        <div class="peertube-radio-container">
-          <input type="radio" name="searchTarget" id="searchTargetSearchIndex" value="search-index" [(ngModel)]="advancedSearch.searchTarget">
-          <label for="searchTargetSearchIndex" class="radio">Vidiverse</label>
-        </div>
       </div>
     </div>
   </div>

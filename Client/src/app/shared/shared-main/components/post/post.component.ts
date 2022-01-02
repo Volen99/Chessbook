@@ -178,7 +178,6 @@ export class PostComponent implements OnInit {
   meatballsMenu: any;
   imageBackgroundStyle: SafeStyle;
   userRating: UserVideoRateType = null;
-  test: boolean;
   tooltipLike = '';
   tooltipDislike = '';
 
@@ -254,9 +253,12 @@ export class PostComponent implements OnInit {
   }
 
   setLike() {
-    this.test = !this.test;
     if (!this.userStore.isLoggedIn()) {
       this.notifier.warning('', 'You need to be logged in to like');
+      return;
+    }
+
+    if (this.notActive()) {
       return;
     }
 
@@ -297,6 +299,10 @@ export class PostComponent implements OnInit {
       return;
     }
 
+    if (this.notActive()) {
+      return;
+    }
+
     if (this.post.reposted) {
       this.postService.unrepost(this.post.id)
         .subscribe((data) => {
@@ -317,6 +323,15 @@ export class PostComponent implements OnInit {
         });
     }
 
+  }
+
+  private notActive() {
+    if (!this.userStore.getUser().active) {
+      alert('You need to active your account from your email');
+      return true;
+    }
+
+    return false;
   }
 
   isUserLoggedIn() {

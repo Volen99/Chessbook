@@ -71,6 +71,11 @@ export class PeerTubeSocket {
   }
 
   dispatchNotificationEvent(type: NotificationEvent, notification?: UserNotification) {
+    if (notification?.comment) {
+      if (notification.comment.account.screenName === this.userStore.getUser().screenName) {
+        return;
+      }
+    }
     this.notificationSubject.next({type, notification});
   }
 

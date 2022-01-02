@@ -326,3 +326,22 @@
   }
 }
 
+a {
+  text-decoration: none;
+  unicode-bidi: isolate;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  //&.mention {
+  //  &:hover {
+  //    text-decoration: none;
+  //
+  //    span {
+  //      text-decoration: underline;
+  //    }
+  //  }
+  //}
+
+}

@@ -106,6 +106,7 @@ export class User implements IUser {
     this.facebookLink = hash.facebookLink;
 
     this.unreadPrivateMessages = hash.unreadPrivateMessages;
+    this.active = hash.active;
 
   }
 
@@ -189,6 +190,8 @@ export class User implements IUser {
   facebookLink: string;
 
   unreadPrivateMessages: number;
+
+  active: boolean;
 
   hasRight(right: UserRight) {
     return hasUserRight(this.roles, right);

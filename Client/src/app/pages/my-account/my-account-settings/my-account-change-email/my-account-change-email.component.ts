@@ -57,15 +57,16 @@ export class MyAccountChangeEmailComponent extends FormReactive implements OnIni
 
           // I want to die.
           this.tokenService.set(new NbAuthOAuth2JWTToken(result, 'email', new Date()));
-          this.success = `Email updated.`;
+          this.success = `Checkmate! Email updated.`;
         },
         err => {
+          debugger
           if (err.status === 401) {
             this.error = `You current password is invalid.`;
             return;
           }
 
-          this.error = err.message;
+          this.error = err.error;
         }
       );
   }

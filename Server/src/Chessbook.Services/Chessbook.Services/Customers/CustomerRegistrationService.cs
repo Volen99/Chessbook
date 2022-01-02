@@ -15,6 +15,7 @@ using Chessbook.Services.Customers;
 using Chessbook.Services.Logging;
 using Chessbook.Services.Security;
 using Chessbook.Services.Stores;
+using Chessbook.Services.Messages;
 
 namespace Chessbook.Services.Authentication
 {
@@ -36,6 +37,8 @@ namespace Chessbook.Services.Authentication
         private readonly IStoreService _storeService;
         private readonly IWorkContext _workContext;
         private readonly ILocaleStringResourceService localeStringResourceService;
+        private readonly IWorkflowMessageService workflowMessageService;
+
 
         #endregion
 
@@ -51,7 +54,8 @@ namespace Chessbook.Services.Authentication
             IStoreContext storeContext,
             IStoreService storeService,
             IWorkContext workContext,
-            ILocaleStringResourceService localeStringResourceService)
+            ILocaleStringResourceService localeStringResourceService,
+            IWorkflowMessageService workflowMessageService)
         {
             _customerSettings = customerSettings;
             _authenticationService = authenticationService;
@@ -64,6 +68,7 @@ namespace Chessbook.Services.Authentication
             _storeService = storeService;
             _workContext = workContext;
             this.localeStringResourceService = localeStringResourceService;
+            this.workflowMessageService = workflowMessageService;
         }
 
         #endregion
@@ -130,10 +135,10 @@ namespace Chessbook.Services.Authentication
             {
                 return CustomerLoginResults.Deleted;
             }
-            if (!customer.Active)
-            {
-                return CustomerLoginResults.NotActive;
-            }
+            //if (!customer.Active)
+            //{
+            //    return CustomerLoginResults.NotActive;
+            //}
             // only registered can login
             if (!await _customerService.IsRegisteredAsync(customer))
             {
@@ -409,7 +414,7 @@ namespace Chessbook.Services.Authentication
         /// A task that represents the asynchronous operation
         /// The task result contains the result of an authentication
         /// </returns>
-        public virtual async Task<AuthResult<Token>> SignInCustomerAsync(Customer customer, string returnUrl, bool isPersist = false)
+        public virtual async Task<AuthResult<Web.Models.AuthDTO.Token>> SignInCustomerAsync(Customer customer, string returnUrl, bool isPersist = false)
         {
             if ((await _workContext.GetCurrentCustomerAsync())?.Id != customer.Id)
             {
@@ -467,20 +472,18 @@ namespace Chessbook.Services.Authentication
             var customer2 = await _customerService.GetCustomerByEmailAsync(newEmail);
             if (customer2 != null && customer.Id != customer2.Id)
             {
-                throw new NopException(await this.localeStringResourceService.GetResourceAsync("Account.EmailUsernameErrors.EmailAlreadyExists"));
+                throw new NopException("Email already exists. Please try again with a new email");
             }
 
-            if (requireValidation) // TODO: look at this before production!!!!!!!!
+            if (/*requireValidation*/ false) // TODO: look at this before production!!!!!!!!
             {
-                throw new NotImplementedException();
+               // re-validate email
+                customer.EmailToRevalidate = newEmail;
+                await _customerService.UpdateCustomerAsync(customer);
 
-                //// re-validate email
-                //customer.EmailToRevalidate = newEmail;
-                //await _customerService.UpdateCustomerAsync(customer);
-
-                //// email re-validation message
-                //await _genericAttributeService.SaveAttributeAsync(customer, NopCustomerDefaults.EmailRevalidationTokenAttribute, Guid.NewGuid().ToString());
-                //await _workflowMessageService.SendCustomerEmailRevalidationMessageAsync(customer, (await _workContext.GetWorkingLanguageAsync()).Id);
+                // email re-validation message
+                await _genericAttributeService.SaveAttributeAsync(customer, NopCustomerDefaults.EmailRevalidationTokenAttribute, Guid.NewGuid().ToString());
+                await this.workflowMessageService.SendCustomerEmailRevalidationMessageAsync(customer, 1);
             }
             else
             {

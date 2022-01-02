@@ -13,7 +13,8 @@
           </a>
 
           <div class="message">
-            {{ notification.post.user.displayName }} published a new video: <a (click)="markAsRead(notification)" [routerLink]="notification.videoUrl">{{ notification.post.name }}</a>
+            <a (click)="markAsRead(notification)" [routerLink]="notification.accountUrl">{{ notification.post.user.displayName }}</a>
+            published a new post: <a (click)="markAsRead(notification)" [routerLink]="notification.videoUrl">{{ notification.post.name }}</a>
           </div>
         </ng-template>
 
@@ -126,7 +127,7 @@
           </a>
 
           <div class="message">
-            <a (click)="markAsRead(notification)" [routerLink]="notification.accountUrl">{{ notification.comment.account.displayName }}</a> mentioned you on <a (click)="markAsRead(notification)" [routerLink]="notification.commentUrl">post {{ notification.comment.post.name }}</a>
+            <a (click)="markAsRead(notification)" [routerLink]="notification.accountUrl">{{ notification.comment.account.displayName }}</a> mentioned you on post <a (click)="markAsRead(notification)" [routerLink]="notification.commentUrl"> {{ notification.comment.post.name }}</a>
           </div>
         </ng-container>
 
@@ -145,7 +146,7 @@
         </a>
 
         <div class="message">
-          <a (click)="markAsRead(notification)" [routerLink]="notification.accountUrl">{{ notification.postLike.account.displayName }}</a> liked your <a (click)="markAsRead(notification)" [routerLink]="notification.videoUrl">post {{ notification.postLike.post.name }}</a>
+          <a (click)="markAsRead(notification)" [routerLink]="notification.accountUrl">{{ notification.postLike.account.displayName }}</a> liked your post <a (click)="markAsRead(notification)" [routerLink]="notification.videoUrl"> {{ notification.postLike.post.name ?? notification.postLike.post.id }}</a>
           <fa-icon [icon]="this.faHeartCircle" aria-hidden="true"></fa-icon>
         </div>
       </ng-container>

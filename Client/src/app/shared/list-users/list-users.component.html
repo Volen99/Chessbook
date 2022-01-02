@@ -4,8 +4,7 @@
         <nb-card style="width: 102.6%">
             <div class="sharebook-container backface-visibility-hidden flex-grow-expand">
                 <div class="sharebook-container align-items-stretch element-background-color-rgba flex-direction-row flex-grow-expand justify-content-space-between r-2llsf width-100-per">
-                    <div class="sharebook-container background-color-lights-out main-left-right-vertical-border-color main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1"
-                         data-testid="primaryColumn">
+                    <div class="sharebook-container background-color-lights-out main-left-right-vertical-border-color main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1">
                         <div class="sharebook-container">
                             <div class="sharebook-container backface-visibility-hidden background-color-lights-out border-bottom-color border-bottom-style-solid border-bottom-width-1px position-sticky top-0px header-z-index">
                                 <div class="sharebook-container z-index-plus-2">
@@ -63,14 +62,13 @@
                                                 aria-level="1" dir="auto" role="heading"
                                                 class="sharebook-link css-901oao border-width-0px r-1xk2f4g height-1px overflow-hidden r-wwvuq4 position-absolute width-1px"
                                                 id="accessible-list-10">Explore</h1>
-                                            <div *ngIf="this.users.length > 0" aria-label="Timeline: Explore" class="sharebook-container">
+                                            <div *ngIf="this.users.length > 0" aria-label="Timeline: Users" class="sharebook-container">
                                                 <div [ngStyle]="{position: 'relative', 'min-height': this.calcMinHeight(this.users.length) + 'px'}">
                                                     <div *ngFor="let user of this.users; let i = index"
                                                          style="position: absolute; width: 100%; transform: translateY({{this.setTransform(i)}}px); transition: opacity 0.3s ease-out 0s;">
                                                         <div class="sharebook-container border-bottom-color border-bottom-width-1px display-block outline-style-none">
                                                             <div role="button" tabindex="0"
-                                                                 class="sharebook-cursor-pointer sharebook-container outline-style-none r-ymttw5 r-1f1sjgu transition-duration transition-property"
-                                                                 data-testid="UserCell">
+                                                                 class="sharebook-cursor-pointer sharebook-container outline-style-none r-ymttw5 r-1f1sjgu transition-duration transition-property">
                                                                 <div class="sharebook-container flex-direction-row">
                                                                     <div class="sharebook-container r-1hwvwag container-left-side-flex-expand justify-content-flex-start r-1b7u577">
                                                                         <div class="sharebook-container flex-shrink max-width-100-per">
@@ -152,6 +150,10 @@
                                     <div class="details text-center">
                                         <h4>No users found</h4>
                                         <span class="text-hint text-sm-center">Try <span class="text-primary" style="cursor: pointer" ngbTooltip="g + u" [openDelay]="1700"  (click)="this.searchUser()">searching</span> for a specific user.</span>
+                                        <div>
+                                            <img src="/assets/images/crop.png" width="150px;" height="300px" alt="searching"
+                                                 [ngStyle]="{'transform': !this.isSearch ? '' : 'scale(-1, 1)'}"/>
+                                        </div>
                                     </div>
                                 </nb-card>
                             </ng-template>

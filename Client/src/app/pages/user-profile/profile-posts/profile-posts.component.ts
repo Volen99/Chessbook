@@ -20,7 +20,6 @@ import {ScreenService} from "../../../core/wrappers/screen.service";
 import {LocalStorageService} from "../../../core/wrappers/storage.service";
 import {UsersService} from "../../../core/backend/common/services/users.service";
 import {UserStore} from "../../../core/stores/user.store";
-import {User} from "../../../shared/shared-main/user/user.model";
 import {UserProfileService} from "../user-profile.service";
 import {PostsService} from "../../../shared/posts/posts.service";
 import {IUser} from "../../../core/interfaces/common/users";
@@ -37,13 +36,10 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
   @Input() tab: string;
 
   // No value because we don't want a page title
-  titlePage: string;
   loadOnInit = false;
-  loadUserVideoPreferences = true;
 
   filter: PostFilter = null;
 
-  private account: User;
   private accountSub: Subscription;
 
   constructor(
@@ -76,17 +72,6 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
     super.ngOnInit();
 
     this.enableAllFilterIfPossible();
-
-    // // Parent get the account for us
-    // this.accountSub = forkJoin([
-    //   this.userProfileService.accountLoaded.pipe(first()),
-    //   this.onUserLoadedSubject.pipe(first())
-    // ]).subscribe(([account]) => {
-    //   this.profileCurrent = account;
-    //
-    //   this.reloadVideos();
-    //   this.generateSyndicationList();
-    // });
 
       if (this.pinnedPost) {
         this.posts.unshift(this.pinnedPost);
@@ -129,7 +114,6 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
   }
 
   generateSyndicationList() {
-    // this.syndicationItems = this.videoService.getAccountFeedUrls(this.account.id);
   }
 
   displayAsRow() {

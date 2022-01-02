@@ -6,6 +6,7 @@ import {RedirectService} from "../../../../core/routing/redirect.service";
 import {NbDialogService} from "../../../../sharebook-nebular/theme/components/dialog/dialog.service";
 import {ShowcaseDialogComponent} from "./showcase-dialog/showcase-dialog.component";
 import {NbToastrService} from '../../../../sharebook-nebular/theme/components/toastr/toastr.service';
+import {UserStore} from "../../../../core/stores/user.store";
 
 @Component({
   selector: 'my-account-danger-zone',
@@ -20,7 +21,8 @@ export class MyAccountDangerZoneComponent implements OnInit {
     private userService: UsersService,
     private confirmService: ConfirmService,
     private redirectService: RedirectService,
-    private dialogService: NbDialogService) {
+    private dialogService: NbDialogService,
+    private userStore: UserStore) {
   }
 
   ngOnInit(): void {
@@ -30,6 +32,11 @@ export class MyAccountDangerZoneComponent implements OnInit {
   }
 
   async deleteMe() {
+    if (!this.userStore.getUser().active) {
+      alert('You need to active your account from your email to delete your account');
+      return;
+    }
+
     this.dialogService.open(ShowcaseDialogComponent, {
       context: {
         title: 'Delete your account',

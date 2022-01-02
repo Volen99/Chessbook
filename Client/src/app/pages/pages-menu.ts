@@ -74,7 +74,7 @@ export class PagesMenu {
       {
         title: 'Profile',
         icon: faUser,
-        link: `/${screenName?.substring(1) ?? 'volencho'}`,
+        link: `/${screenName?.substring(1) ?? 'you-need-to-login'}`,
         children: undefined,
       },
       {
@@ -93,6 +93,11 @@ export class PagesMenu {
           {icon: faAlicorn, title: `Keyboard shortcuts`, link: ''},
         ],
 
+      },
+      {
+        title: '',
+        icon: faCircle,
+        hidden: true,
       }
     ];
 

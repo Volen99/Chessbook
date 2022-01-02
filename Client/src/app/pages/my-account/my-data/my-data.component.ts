@@ -11,6 +11,7 @@ import {NbDialogService} from "../../../sharebook-nebular/theme/components/dialo
 import {DialogAreYouSureComponent} from "./dialog-are-u-sure/dialog-are-u-sure.component";
 import {UserStore} from '../../../core/stores/user.store';
 import {NbToastrService} from '../../../sharebook-nebular/theme/components/toastr/toastr.service';
+import {RedirectService} from "../../../core/routing/redirect.service";
 
 @Component({
   selector: 'app-my-data',
@@ -21,7 +22,8 @@ import {NbToastrService} from '../../../sharebook-nebular/theme/components/toast
 export class MyDataComponent implements OnInit {
 
   constructor(private gdprService: GdprService, private dialogService: NbDialogService,
-              private userStore: UserStore, private notifier: NbToastrService) {
+              private userStore: UserStore, private notifier: NbToastrService,
+              private redirectService: RedirectService) {
   }
 
   ngOnInit(): void {
@@ -38,6 +40,11 @@ export class MyDataComponent implements OnInit {
   }
 
   handleDelete() {
+    if (!this.userStore.getUser().active) {
+      alert('You need to active your account from your email to delete your account');
+      return;
+    }
+
     this.dialogService.open(DialogAreYouSureComponent, {
       context: {
         title: 'Are you sure?',
@@ -50,7 +57,8 @@ export class MyDataComponent implements OnInit {
       if (uSure) {
         this.gdprService.delete(this.userStore.getUser().id)
           .subscribe((data) => {
-            this.notifier.success('Godspeed my friend! I hope our paths cross again.');
+            this.notifier.success('Godspeed my friend! I hope our paths cross again :)');
+            this.redirectService.redirectToLogout();
           },
             err => this.notifier.danger(err.message, 'Error'));
       }

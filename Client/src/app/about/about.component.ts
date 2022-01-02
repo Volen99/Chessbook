@@ -71,56 +71,28 @@ export class AboutComponent implements OnInit, AfterViewChecked {
         src: '/assets/images/patreon.png',
         alt: 'patreon',
         class: 'patreon',
-        href: 'https://www.nasa.gov/',
+        href: 'https://www.patreon.com/volen_dyulgerov',
       },
       {
         ariaLabel: 'ko-fi',
         src: '/assets/images/ko-fi.png',
         alt: 'ko-fi',
         class: 'ko-fi',
-        href: 'https://www.nasa.gov/'
+        href: 'https://ko-fi.com/volen'
       },
       {
         ariaLabel: 'streamlabs',
         src: '/assets/images/streamlabs.png',
         alt: 'streamlabs',
         class: 'streamlabs',
-        href: 'https://streamlabs.com/no_talent_guy/tip'
+        href: 'https://streamlabs.com/volencho/tip'
       },
       {
         ariaLabel: 'paypal',
         src: '/assets/images/paypal.svg',
         alt: 'paypal',
         class: 'paypal',
-        href: 'https://www.nasa.gov/'
-      },
-      {
-        ariaLabel: 'google pay',
-        src: '/assets/images/google-pay.svg',
-        alt: 'google pay',
-        class: 'google-pay',
-        href: 'https://www.nasa.gov/'
-      },
-      {
-        ariaLabel: 'bitcoin btc',
-        src: '/assets/images/bitcoin-btc.png',
-        alt: 'bitcoin btc',
-        class: 'bitcoin-btc',
-        href: 'https://www.nasa.gov/'
-      },
-      {
-        ariaLabel: 'bitcoin cash',
-        src: '/assets/images/bitcoin-cash.png',
-        alt: 'bitcoin cash',
-        class: 'bitcoin-cash',
-        href: 'https://www.nasa.gov/'
-      },
-      {
-        ariaLabel: 'dogecoin',
-        src: '/assets/images/dogecoin.png',
-        alt: 'dogecoin',
-        class: 'dogecoin',
-        href: 'https://www.nasa.gov/'
+        href: 'https://www.paypal.com/donate?hosted_button_id=3WNBVEHBX7UNG'
       },
     ];
 

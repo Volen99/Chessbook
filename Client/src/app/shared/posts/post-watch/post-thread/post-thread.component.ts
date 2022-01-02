@@ -11,10 +11,7 @@ import {
   faShare,
   faHeart,
   faSatelliteDish,
-  faLongArrowLeft,
-  faUserTimes,
   faUserPlus,
-  faVolumeSlash,
   faCode,
   faFlag,
   faTrashAlt,
@@ -93,7 +90,7 @@ export class PostThreadComponent implements OnInit {
         takeUntil(this.destroy$),
       )
       .subscribe((user: IUser) => {
-        // // this.user = user;
+        // this.user = user;
         // this.meatballsMenu = this.getMenuItems();
       });
 
@@ -116,7 +113,6 @@ export class PostThreadComponent implements OnInit {
         const scroll = params.withScroll || '';
 
         if (scroll === 'true') {
-          // this.scrollService.scrollTo(0, document.body.scrollHeight);
           this.containerElement.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
         }
       });
@@ -153,12 +149,10 @@ export class PostThreadComponent implements OnInit {
   faHeart = faHeart;
   faLock = faLock;
   faSatelliteDish = faSatelliteDish;
-  faLongArrowLeft = faLongArrowLeft;
 
   style = {height: 0};
 
   // meatballs menu
-  faUserTimes = faUserTimes;
   faUserPlus = faUserPlus;
   faCode = faCode;
   faFlag = faFlag;
@@ -204,7 +198,6 @@ export class PostThreadComponent implements OnInit {
     }
 
     const screenName = this.post?.user?.screenName;
-    const userLink = this.post?.user ? `/${screenName.substring(1)}` : '';
 
     const isDisplayed = this.post?.user.blocking === true;
     let blockOrUnblock;
@@ -215,7 +208,7 @@ export class PostThreadComponent implements OnInit {
     }
 
     return [
-      {icon: this.faUserPlus, title: `Follow ${screenName}`, link: userLink, queryParams: {profile: true}},
+      {icon: this.faUserPlus, title: `Follow ${screenName}`, link: '#'},
       blockOrUnblock,
       {icon: this.faCode, title: `Embed Post`, link: '#'},
       {icon: this.faFlag, title: `Report Post`, link: '#'},
@@ -266,14 +259,6 @@ export class PostThreadComponent implements OnInit {
 
       return;
     }
-  }
-
-  getVideoRouterLink() {
-    if (this.videoRouterLink) {
-      return this.videoRouterLink;
-    }
-
-    return ['/posts/watch', this.post.id];
   }
 
   open(type: 'likes' | 'reposts') {
@@ -351,19 +336,6 @@ export class PostThreadComponent implements OnInit {
 
     this.userRating = this.post.favorited ? 'like' : 'none';
     this.updateLikeStuff(this.userRating);
-
-    // this.postService.getUserVideoRating(this.post.id)
-    //   .subscribe(
-    //     ratingObject => {
-    //       if (ratingObject) {
-    //         this.userRating = ratingObject.type === true ? 'like' : 'none';
-    //
-    //         this.updateLikeStuff(this.userRating);
-    //       }
-    //     },
-    //
-    //     err => this.notifier.danger(err.message)
-    //   );
   }
 
   private setRating(nextRating: UserVideoRateType) {

@@ -39,8 +39,9 @@ export class GenericAccountBlocklistComponent extends RestTable implements OnIni
       () => {
         this.notifier.success(
           this.mode === BlocklistComponentType.Account
-            ? `Account ${blockedAccount.screenName} unmuted.`
-            : `Account ${blockedAccount.screenName} unmuted by your instance.`
+            ? `User ${blockedAccount.screenName} unblocked`
+            : `User ${blockedAccount.screenName} unblocked`,
+          'Success'
         );
 
         this.reloadData();

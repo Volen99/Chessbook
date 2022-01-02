@@ -134,10 +134,6 @@ export class NbMenuItemComponent implements DoCheck, AfterViewInit, OnDestroy {
   }
 
   getExpandStateIcon(): any /*string*/ {
-    if (this.menuItem.title.includes('More') || this.menuItem.title.includes('shortcuts')) {
-      return;
-    }
-
     if (this.menuItem.expanded) {
       return faChevronDown;
     }

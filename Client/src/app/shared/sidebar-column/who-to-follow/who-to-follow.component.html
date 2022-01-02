@@ -12,11 +12,10 @@
     <div class="sharebook-container">
       <ng-container *ngFor="let user of this.users">
         <div role="button" data-focusable="true" tabindex="0"
-             class="sharebook-cursor-pointer sharebook-container border-bottom-color border-bottom-style-solid border-bottom-width-1px outline-style-none left-right-padding-15px stacked-elements-padding-bottom-top transition-duration transition-property"
-             data-testid="UserCell">
+             class="sharebook-cursor-pointer sharebook-container border-bottom-color border-bottom-style-solid border-bottom-width-1px outline-style-none left-right-padding-15px stacked-elements-padding-bottom-top transition-duration transition-property">
           <div class="sharebook-container flex-direction-row">
             <div class="sharebook-container container-left-side-flex-expand justify-content-center container-left-side-margin-right-10px" style="flex-basis: 49px;">
-              <div class="sharebook-container flex-shrink max-width-100-per"><a [routerLink]="'/' + user.screenName" role="link"
+              <div class="sharebook-container flex-shrink max-width-100-per"><a [routerLink]="'/' + user.screenName.substring(1)" role="link"
                                                                                 data-focusable="true"
                                                                                 class="sharebook-link sharebook-cursor-pointer sharebook-container border-radius-9999px cursor-pointer display-block container-left-side-avatar-height outline-style-none overflow-hidden transition-duration transition-property width-100-per">
                 <div class="sharebook-container display-block overflow-hidden" style="">
@@ -38,7 +37,7 @@
             </div>
             <div class="sharebook-container open-space-container-flex-expand flex-grow-expand justify-content-center">
               <div class="sharebook-container align-items-center flex-direction-row justify-content-space-between">
-                <div class="sharebook-container flex-shrink max-width-100-per"><a [routerLink]="'/' + user.screenName" role="link"
+                <div class="sharebook-container flex-shrink max-width-100-per"><a [routerLink]="'/' + user.screenName.substring(1)" role="link"
                                                                                   data-focusable="true"
                                                                                   class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer flex-shrink max-width-100-per outline-style-none">
                   <div class="sharebook-container flex-shrink max-width-100-per outline-style-none">

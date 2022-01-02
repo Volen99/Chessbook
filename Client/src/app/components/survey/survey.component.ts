@@ -73,6 +73,8 @@ export class SurveyComponent implements OnInit, OnChanges {
     if (!this.userStore.isLoggedIn()) {
       this.notifier.warning('', 'You need to be logged in to vote', {
         position: NbGlobalPhysicalPosition.TOP_RIGHT,
+        preventDuplicates: true,
+        duplicatesBehaviour: 'previous',
       });
       return;
     }

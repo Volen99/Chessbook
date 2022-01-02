@@ -33,10 +33,16 @@ namespace Chessbook.Web.Api.Controllers
         public async Task<IActionResult> Create(int postId)
         {
             var originalPost = await this.postService.GetPostByIdAsync(postId);
-
             if (originalPost == null)
             {
                 return this.NotFound("Original post not found");
+            }
+
+            // try to see if this post has already been reposted by the same user
+            var theRepostedPost = await this.postService.GetRepostStatus(postId, User.GetUserId());
+            if (theRepostedPost != null)
+            {
+                return this.Ok("You have already reposted this post");
             }
 
             var repost = await this.repostService.Create(User.GetUserId(), originalPost);

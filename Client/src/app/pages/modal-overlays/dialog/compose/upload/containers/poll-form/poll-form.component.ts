@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 
 import {
   faPlus,
+  faTimes,
 } from '@fortawesome/pro-light-svg-icons';
 
 @Component({
@@ -36,7 +37,7 @@ import {
               (click)="this.handleOptionRemove()"
               ngbTooltip="Remove this choice"
               [openDelay]="700">
-          <fa-icon [icon]="this.faPlus"></fa-icon>
+          <fa-icon [icon]="this.faTimes"></fa-icon>
       </button>
   </li>
   `,
@@ -60,6 +61,7 @@ export class OptionComponent implements OnInit {
   }
 
   faPlus = faPlus;
+  faTimes = faTimes;
 
 
   handleOptionTitleChange = e => {

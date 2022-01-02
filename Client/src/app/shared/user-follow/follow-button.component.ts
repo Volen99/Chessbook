@@ -109,7 +109,10 @@ export class FollowButtonComponent implements OnInit, OnChanges {
           // );
         },
 
-        err => this.notifier.danger(err.message, 'Error')
+        err => this.notifier.danger(err.message, 'Error', {
+          preventDuplicates: true,
+          duplicatesBehaviour: 'previous'
+        })
       );
   }
 

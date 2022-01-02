@@ -9,7 +9,7 @@ namespace Chessbook.Core.Domain.Notifications
 
         public UserNotificationSettingValue NewCommentOnMyVideo { get; set; }
 
-        public UserNotificationSettingValue AbuseAsModerator { get; set; }
+        public UserNotificationSettingValue AbuseAsModerator { get; set; } // change to NewPrivateMessage
 
         public UserNotificationSettingValue BlacklistOnMyVideo { get; set; }
 

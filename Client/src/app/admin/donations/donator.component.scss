@@ -1,0 +1,23 @@
+@import '../../theme/styles/themes';
+
+$flag-icon-css-path: '~flag-icon-css/flags' !default;
+@import "../../../../node_modules/flag-icon-css/sass/flag-icon";
+
+@include nb-install-component() {
+  nb-card {
+    transform: translate3d(0, 0, 0);
+  }
+
+  ::ng-deep .example-smart-table {
+    .form-control {
+      color: nb-theme(form-control-color);
+    }
+
+  }
+}
+
+a {
+  color: inherit !important; /* blue colors for links too */
+  text-decoration: inherit !important; /* no underline */
+}
+

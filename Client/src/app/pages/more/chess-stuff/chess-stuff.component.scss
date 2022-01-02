@@ -41,6 +41,12 @@
     }
   }
 
+  .org {
+    path:first-child {
+      fill: nb-theme(text-basic-color) !important;
+    }
+  }
+
   .ksp-chess-txt {
     font-size: 1.875rem;
     color: nb-theme(text-basic-color) !important;

@@ -68,9 +68,7 @@ export class ChessbookUsersStreamComponent implements OnInit {
         this.streamersService.saveTwitchLoginName(name)
           .subscribe((data) => {
             if (data.message === 'Username already exists') {
-              this.toasterService.danger(data.message, '', {
-                position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
-              });
+              this.toasterService.danger('', data.message);
             } else {
               this.twitchLoginName = name;
 

@@ -9,9 +9,9 @@
             <nb-card-header >
                 <div role="progressbar" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0"
                      class="sharebook-container r-kicko2 r-notknq progress-bar-height overflow-hidden position-absolute users-select-none width-100-per header-z-index">
-                    <div class="sharebook-container sharebook-background-color-blue height-100-per r-1joz4e6 r-11iat2r r-1c4c958 z-index-minus-1"
-                         [style.width.%]="this.uploader.progress">
-                    </div>
+<!--                    <div class="sharebook-container sharebook-background-color-blue height-100-per r-1joz4e6 r-11iat2r r-1c4c958 z-index-minus-1"-->
+<!--                         [style.width.%]="this.uploader.progress">-->
+<!--                    </div>-->
                 </div>
                 <div class="sharebook-container height-53px z-index-plus-2">
                     <div class="sharebook-container">
@@ -61,12 +61,12 @@
                                                                 <div class="display-block width-100-per"
                                                                      style="padding-bottom: 100%;"></div>
                                                                 <div class="bottom-0px height-100-per left-0px position-absolute top-0px width-100-per">
-                                                                    <div aria-label="WorldFeedTest"
+                                                                    <div [attr.aria-label]="this.user.displayName"
                                                                          class="sharebook-container border-radius-9999px bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">
                                                                         <div
                                                                                 class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
                                                                                 [style.background-image]="'url(' + user.profileImageUrlHttps  +')'"></div>
-                                                                        <img alt="WorldFeedTest"
+                                                                        <img [alt]="this.user.displayName"
                                                                              draggable="true"
                                                                              [src]="this.user.profileImageUrlHttps"
                                                                              class="sharebook-image">
@@ -98,7 +98,7 @@
                                                                                                 class="sharebook-container element-background-color-rgba input-form-border-width flex-direction-column flex-grow-expand flex-shrink justify-content-center">
                                                                                             <div class="sharebook-container flex-direction-row">
                                                                                                 <div dir="auto"
-                                                                                                     class="css-901oao lights-out-text-color display-flex flex-grow-expand font-family heading-font-size font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
+                                                                                                     class="dtc css-901oao display-flex flex-grow-expand font-family heading-font-size font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                                                                     <div
                                                                                                             class="sharebook-container display-inline-flex padding-10px element-left-right-padding-0px width-100-per">
                                                                                                         <div
@@ -122,7 +122,6 @@
                                                                                                                             aria-multiline="true"
                                                                                                                             class="notranslate public-DraftEditor-content"
                                                                                                                             contenteditable="true"
-                                                                                                                            data-testid="postTextarea_0"
                                                                                                                             role="textbox"
                                                                                                                             spellcheck="true"
                                                                                                                             tabindex="0"
@@ -148,8 +147,7 @@
                                                                                                 <div class="sharebook-container display-flex justify-content-center"></div>
                                                                                             </div>
                                                                                             <div *ngIf="this.uploader.queue?.length >= 1"
-                                                                                                 class="sharebook-container margin-bottom-5px margin-top-5px z-index-1"
-                                                                                                 data-testid="attachments">
+                                                                                                 class="sharebook-container margin-bottom-5px margin-top-5px z-index-1">
                                                                                                 <div class="sharebook-container margin-top-5px">
                                                                                                     <div class="sharebook-container display-block overflow-hidden">
                                                                                                         <div class="display-block width-100-per"
@@ -215,30 +213,6 @@
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                    <!--<div class="sharebook-container align-items-center flex-direction-row flex-wrap margin-top-5px">
-                                                                                                        <a href="/compose/tweet/tags"
-                                                                                                           dir="auto"
-                                                                                                           aria-label="Tag people"
-                                                                                                           role="link"
-                                                                                                           data-focusable="true"
-                                                                                                           class="sharebook-link sharebook-cursor-pointer css-901oao align-self-flex-start third-wheel-color cursor-pointer font-family font-size-15px font-weight-400 inside-element-container-line-height r-1sqfjza max-width-100-per min-width-0px overflow-hidden r-1udbk01 white-space-nowrap text-overflow-wrap"><span
-                                                                                                                class="css-901oao sharebook-text-inherit third-wheel-color font-family third-wheel-text-font-size line-height-calc min-width-0px text-overflow-wrap"><svg
-                                                                                                                viewBox="0 0 24 24"
-                                                                                                                class="svg-display-inline-block svg-fill-currentcolor miniature-element-height r-a5pmau max-width-100-per svg-position-relative svg-vertical-align users-select-none"><g><path
-                                                                                                                d="M12 11.816c1.355 0 2.872-.15 3.84-1.256.814-.93 1.078-2.368.806-4.392-.38-2.825-2.117-4.512-4.646-4.512S7.734 3.343 7.354 6.17c-.272 2.022-.008 3.46.806 4.39.968 1.107 2.485 1.256 3.84 1.256zM8.84 6.368c.162-1.2.787-3.212 3.16-3.212s2.998 2.013 3.16 3.212c.207 1.55.057 2.627-.45 3.205-.455.52-1.266.743-2.71.743s-2.255-.223-2.71-.743c-.507-.578-.657-1.656-.45-3.205zm11.44 12.868c-.877-3.526-4.282-5.99-8.28-5.99s-7.403 2.464-8.28 5.99c-.172.692-.028 1.4.395 1.94.408.52 1.04.82 1.733.82h12.304c.693 0 1.325-.3 1.733-.82.424-.54.567-1.247.394-1.94zm-1.576 1.016c-.126.16-.316.246-.552.246H5.848c-.235 0-.426-.085-.552-.246-.137-.174-.18-.412-.12-.654.71-2.855 3.517-4.85 6.824-4.85s6.114 1.994 6.824 4.85c.06.242.017.48-.12.654z"></path></g></svg>Tag people</span></a><a
-                                                                                                            href="/compose/tweet/media"
-                                                                                                            dir="auto"
-                                                                                                            aria-label="Add description"
-                                                                                                            role="link"
-                                                                                                            data-focusable="true"
-                                                                                                            class="sharebook-link sharebook-cursor-pointer css-901oao align-self-flex-start third-wheel-color cursor-pointer font-family font-size-15px font-weight-400 inside-element-container-line-height max-width-100-per min-width-0px overflow-hidden r-1udbk01 white-space-nowrap text-overflow-wrap"><span
-                                                                                                            class="css-901oao sharebook-text-inherit third-wheel-color font-family third-wheel-text-font-size line-height-calc min-width-0px text-overflow-wrap"
-                                                                                                            data-testid="altTextLabel"><svg
-                                                                                                            viewBox="0 0 24 24"
-                                                                                                            class="svg-display-inline-block svg-fill-currentcolor miniature-element-height r-a5pmau max-width-100-per svg-position-relative svg-vertical-align users-select-none"><g><path
-                                                                                                            d="M19.75 22H4.25C3.01 22 2 20.99 2 19.75V4.25C2 3.01 3.01 2 4.25 2h15.5C20.99 2 22 3.01 22 4.25v15.5c0 1.24-1.01 2.25-2.25 2.25zM4.25 3.5c-.414 0-.75.337-.75.75v15.5c0 .413.336.75.75.75h15.5c.414 0 .75-.337.75-.75V4.25c0-.413-.336-.75-.75-.75H4.25z"></path><path
-                                                                                                            d="M17 8.64H7c-.414 0-.75-.337-.75-.75s.336-.75.75-.75h10c.414 0 .75.335.75.75s-.336.75-.75.75zm0 4.11H7c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h10c.414 0 .75.336.75.75s-.336.75-.75.75zm-5 4.11H7c-.414 0-.75-.335-.75-.75s.336-.75.75-.75h5c.414 0 .75.337.75.75s-.336.75-.75.75z"></path></g></svg>Add description</span></a>
-                                                                                                    </div>-->
                                                                                                 </div>
                                                                                             </div>
                                                                                             <iframe *ngIf="this.getVideoEmbedLink()" class="video-frame" [src]="this.embedUrl | safeVideoLink" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -284,13 +258,11 @@
                                                             <app-poll-form [poll]="this.initialPoll" [options]="this.initialPoll.options" [expiresIn]="this.initialPoll.expiresIn" [isMultiple]="this.initialPoll.multiple"></app-poll-form>
                                                         </ng-container>
                                                         <nb-card-footer style="border: none">
-                                                            <!--<button nbButton hero status="primary" (click)="dismiss()">Dismiss Dialog</button>-->
                                                             <div>
                                                                 <div class="sharebook-container">
-                                                                    <div class="sharebook-container align-items-center background-color-lights-out flex-direction-row flex-wrap justify-content-space-between upload-footer-margin z-index-1"
-                                                                         data-testid="toolBar">
+                                                                    <div class="sharebook-container align-items-center background-color-lights-out flex-direction-row flex-wrap justify-content-space-between upload-footer-margin z-index-1">
                                                                         <div class="sharebook-container align-items-center flex-direction-row margin-top-10px">
-                                                                            <div aria-label="Add photos or video"
+                                                                            <div aria-label="Add photos"
                                                                                  role="button"
                                                                                  data-focusable="true"
                                                                                  tabindex="0"
@@ -310,7 +282,6 @@
                                                                                     type="file"
                                                                                     data-focusable="true"
                                                                                     class="add-photos-or-video-default-input-height opacity-0 overflow-hidden position-absolute add-photos-or-video-default-input-width z-index-minus-1"
-                                                                                    data-testid="fileInput"
                                                                                     appFileSelect
                                                                                     [uploader]="this.uploader"
                                                                                     [multiple]="true">
@@ -319,7 +290,6 @@
                                                                                  data-focusable="true"
                                                                                  tabindex="0"
                                                                                  class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty border-height-0px upload-svg-margin-left-right element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
-                                                                                 data-testid="scheduleOption"
                                                                                  (click)="this.pollButtonHandler()">
                                                                                 <div dir="auto"
                                                                                      class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
@@ -331,7 +301,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="sharebook-container">
-                                                                                <div aria-haspopup="true"
+                                                                                <div aria-haspopup="dialog"
                                                                                      aria-label="Add emoji"
                                                                                      role="button"
                                                                                      data-focusable="true"
@@ -350,12 +320,11 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div aria-label="Schedule Tweet"
+                                                                            <div aria-label="Schedule Post"
                                                                                  role="button"
                                                                                  data-focusable="true"
                                                                                  tabindex="0"
                                                                                  class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty border-height-0px upload-svg-margin-left-right element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
-                                                                                 data-testid="scheduleOption"
                                                                                  (click)="this.scheduleButtonHandler()">
                                                                                 <div dir="auto"
                                                                                      class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"

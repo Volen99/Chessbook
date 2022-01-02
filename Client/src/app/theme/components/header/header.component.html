@@ -15,11 +15,14 @@
 
 <div class="header-container">
   <nb-actions size="small">
-    <nb-action *ngIf="!this.isLoggedIn" class="control-item">
+      <nb-action class="shareBtn">
+          <app-share-button [type]="'header'"></app-share-button>
+      </nb-action>
+    <nb-action *ngIf="!this.isLoggedIn" class="control-item" [ngClass]="{ 'survey': !this.borderLeft }">
       <app-camera-button [status]="'info'" [appearance]="'ghost'" [btnSize]="'small'" [iconSize]="'2x'"></app-camera-button>
     </nb-action>
-    <nb-action class="control-item">
-      <nb-search [type]="this.searchType" [poll]="this.poll" (click)="this.handleSurveyClick()"  title="Weekly survey"></nb-search>
+    <nb-action class="control-item"  [ngClass]="{ 'survey': (!this.borderLeft && this.isLoggedIn) }">
+      <nb-search [type]="this.searchType" [poll]="this.poll" [theme]="this.currentTheme" (click)="this.handleSurveyClick()"  title="Weekly survey"></nb-search>
     </nb-action>
     <nb-action class="control-item">
       <a href="https://www.chess.com/" target="_blank" title="chess.com">

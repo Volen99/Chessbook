@@ -6,15 +6,13 @@
   />
 
   <div *ngIf="withToggle || withCopy" class="input-group-append">
-    <button *ngIf="withToggle" (click)="toggle()" type="button" class="btn btn-outline-secondary" [title]="toggleTitle">
-      <span class="glyphicon glyphicon-eye-{{ show ? 'open' : 'close' }}"></span>
+    <button nbButton ghost *ngIf="withToggle" size="tiny" (click)="toggle()" type="button" class="btn btn-outline-secondary" [title]="toggleTitle">
+      <fa-icon [icon]="show ? this.faEye : this.faEyeSlash"></fa-icon>
     </button>
 
     <button
       *ngIf="withCopy" [cdkCopyToClipboard]="input.value" (click)="activateCopiedMessage()" type="button"
-      class="btn btn-outline-secondary" title="Copy"
-    >
-      <!--<span class="glyphicon glyphicon-copy"></span>-->
+      class="btn btn-outline-secondary" title="Copy">
       <fa-icon [icon]="this.faWalkieTalkie" class="glyphicon glyphicon-copy"></fa-icon>
     </button>
   </div>

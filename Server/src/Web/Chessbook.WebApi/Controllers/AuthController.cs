@@ -17,6 +17,10 @@
     using Chessbook.Services;
     using Chessbook.Services.Localization;
     using Chessbook.Data.Models;
+    using Chessbook.Services.Authentication;
+    using Chessbook.Core.Events;
+    using Chessbook.Services.Common;
+    using Chessbook.Services.Messages;
 
     [Route("auth")]
     public class AuthController : BaseApiController
@@ -29,11 +33,16 @@
         private readonly ICustomerActivityService customerActivityService;
         private readonly INotificationsSettingsService notificationsSettingsService;
         private readonly IWorkContext workContext;
+        private readonly IAuthenticationService authenticationService;
+        private readonly IEventPublisher eventPublisher;
+        private readonly IWorkflowMessageService workflowMessageService;
+        private readonly IGenericAttributeService genericAttributeService;
 
         public AuthController(JwtManager jwtManager, ICustomerRegistrationService customerRegistrationService, IUserService customerService,
             ILocaleStringResourceService localeStringResourceService, ICustomerActivityService customerActivityService,
             CustomerSettings customerSettings, INotificationsSettingsService notificationsSettingsService,
-            IWorkContext workContext)
+            IWorkContext workContext, IAuthenticationService authenticationService, IEventPublisher eventPublisher,
+            IWorkflowMessageService workflowMessageService, IGenericAttributeService genericAttributeService)
         {
             this.jwtManager = jwtManager;
             this.customerSettings = customerSettings;
@@ -43,6 +52,10 @@
             this.customerActivityService = customerActivityService;
             this.notificationsSettingsService = notificationsSettingsService;
             this.workContext = workContext;
+            this.authenticationService = authenticationService;
+            this.eventPublisher = eventPublisher;
+            this.workflowMessageService = workflowMessageService;
+            this.genericAttributeService = genericAttributeService;
         }
 
         [HttpPost]
@@ -52,7 +65,8 @@
         {
             var customerEmail = loginDto.Email?.Trim();
 
-            var loginResult = await this.customerRegistrationService.ValidateCustomerAsync(customerEmail, loginDto.Password);
+            var loginResult = await this.customerRegistrationService.ValidateCustomerAsync(customerEmail, loginDto.Password); // checks for IsActive too kk
+            var err = string.Empty;
             switch (loginResult)
             {
                 case CustomerLoginResults.Successful:
@@ -70,7 +84,7 @@
                     ModelState.AddModelError("", await this.localeStringResourceService.GetResourceAsync("Account.Login.WrongCredentials.Deleted"));
                     break;
                 case CustomerLoginResults.NotActive:
-                    ModelState.AddModelError("", await this.localeStringResourceService.GetResourceAsync("Account.Login.WrongCredentials.NotActive"));
+                    err = "Account email has not been activated";
                     break;
                 case CustomerLoginResults.NotRegistered:
                     ModelState.AddModelError("", await this.localeStringResourceService.GetResourceAsync("Account.Login.WrongCredentials.NotRegistered"));
@@ -84,7 +98,7 @@
                     break;
             }
 
-            return BadRequest();
+            return BadRequest(err);
         }
 
         [HttpPost]
@@ -92,6 +106,28 @@
         [Route("sign-up")]
         public async Task<IActionResult> SignUp(SignUpDTO signUpDto)
         {
+            if (await this.userService.IsRegisteredAsync(await this.workContext.GetCurrentCustomerAsync()))
+            {
+                // Already registered customer. 
+                await this.authenticationService.SignOutAsync();
+
+                // raise logged out event       
+                await this.eventPublisher.PublishAsync(new CustomerLoggedOutEvent(await this.workContext.GetCurrentCustomerAsync()));
+
+                // Save a new record
+                await this.workContext.SetCurrentCustomerAsync(await this.userService.InsertGuestCustomerAsync());
+            }
+
+            if (!CommonHelper.IsValidEmail(signUpDto.Email))
+            {
+                return this.BadRequest("The email you have enterted is incorrect");
+            }
+
+            if (string.IsNullOrWhiteSpace(signUpDto.Password))
+            {
+                return this.BadRequest("Password is not provided");
+            }
+
             if (!string.IsNullOrWhiteSpace(signUpDto.Email) && await this.userService.GetCustomerByEmailAsync(signUpDto.Email) != null)
             {
                 return this.BadRequest("Email is already registered");
@@ -117,15 +153,16 @@
             {
                 DisplayName = CommonHelper.EnsureMaximumLength(signUpDto.DisplayName, 40),
                 ScreenName = "@" + CommonHelper.EnsureMaximumLength(signUpDto.Username, 15),
-                Email = signUpDto.Email,
+                Email = signUpDto.Email,            // becuase you want user to be able to use the site even if emial is not validated
                 CustomerGuid = Guid.NewGuid(),
                 CreatedOn = DateTime.UtcNow,
                 LastActivityDateUtc = DateTime.UtcNow,
-                Active = true,
+                Active = this.customerSettings.UserRegistrationType == UserRegistrationType.Standard,
             };
 
-
             await this.userService.InsertCustomerAsync(newUser);
+
+            await this.customerRegistrationService.SetEmailAsync(newUser, signUpDto.Email, false);
 
             // notifications settings
             var settings = new UserNotificationSettingModel
@@ -217,6 +254,37 @@
             // activity log
             await this.customerActivityService.InsertActivityAsync("AddNewCustomer", string.Format(await this.localeStringResourceService.GetResourceAsync("ActivityLog.AddNewCustomer"), newUser.Id), newUser);
             // _notificationService.SuccessNotification(await this.localeStringResourceService.GetResourceAsync("Admin.Customers.Customers.Added"));
+
+
+            switch (this.customerSettings.UserRegistrationType)
+            {
+                case UserRegistrationType.EmailValidation:
+                    // email validation message
+                    await this.genericAttributeService.SaveAttributeAsync(newUser, NopCustomerDefaults.AccountActivationTokenAttribute, Guid.NewGuid().ToString());
+                    await this.workflowMessageService.SendCustomerEmailValidationMessageAsync(newUser, 1);
+
+                    // result
+                    // return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.EmailValidation, returnUrl });
+                    break;
+
+                case UserRegistrationType.AdminApproval:
+                    // return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.AdminApproval, returnUrl });
+                    break;
+
+                case UserRegistrationType.Standard:
+                    // send customer welcome message
+                    await this.workflowMessageService.SendCustomerWelcomeMessageAsync(newUser, 1);
+
+                    // raise event       
+                    // await this.eventPublisher.PublishAsync(new CustomerActivatedEvent(customer));
+
+                    // returnUrl = Url.RouteUrl("RegisterResult", new { resultId = (int)UserRegistrationType.Standard, returnUrl });
+                    // return await _customerRegistrationService.SignInCustomerAsync(customer, returnUrl, true);
+                    return null;
+
+                default:
+                    return RedirectToRoute("Homepage");
+            }
 
             var token = jwtManager.GenerateToken(newUser);
 

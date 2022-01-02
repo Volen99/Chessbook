@@ -1,9 +1,8 @@
-<div class="sharebook-container r-jw8lkh r-e7q0ms">
+<div *ngIf="!this.type; else header" class="sharebook-container r-jw8lkh r-e7q0ms">
     <button nbButton fullWidth status="primary" size="large"
-            aria-label="Share" role="button"
-            class="sharebook-link sharebook-cursor-pointer sharebook-container sharebook-background-color-blue element-border-color-rgba border-radius-9999px border-style-solid border-width-1px r-1waj6vr cursor-pointer border-height-0px min-height-49px r-17bavie outline-style-none r-15bsvpr transition-duration transition-property users-select-none"
+            aria-label="Share"
+            class="sharebook-link sharebook-cursor-pointer sharebook-container element-border-color-rgba border-radius-9999px border-style-solid border-width-1px r-1waj6vr cursor-pointer border-height-0px min-height-49px r-17bavie outline-style-none r-15bsvpr transition-duration transition-property users-select-none"
             data-focusable="true"
-            data-testid="SideNav_NewShare_Button"
             (click)="open()">
         <div dir="auto"
              class="css-901oao align-items-center share-button-text-color display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center inside-element-container-line-height max-width-100-per min-width-0px text-align-center text-overflow-wrap">
@@ -19,3 +18,9 @@
         </div>
     </button>
 </div>
+
+<ng-template #header>
+    <button nbButton status="primary" size="tiny" aria-label="Share" (click)="open()">
+        <fa-icon [icon]="!this.isShareOpen ? this.faComet : this.faCometSolid" size="2x"></fa-icon>
+    </button>
+</ng-template>

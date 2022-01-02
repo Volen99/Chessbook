@@ -102,30 +102,7 @@ namespace Chessbook.Web.Framework.Infrastructure.Extensions
             // further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
             {
-                // initialize and start schedule tasks
-                Services.Tasks.TaskManager.Instance.Initialize();
-                Services.Tasks.TaskManager.Instance.Start();
-
-                //log application start
-                engine.Resolve<ILogger>().InformationAsync("Application started").Wait();
-
-                ////install and update plugins
-                //var pluginService = engine.Resolve<IPluginService>();
-                //pluginService.InstallPluginsAsync().Wait();
-                //pluginService.UpdatePluginsAsync().Wait();
-
-                //update nopCommerce core and db
-                var migrationManager = engine.Resolve<IMigrationManager>();
-                var assembly = Assembly.GetAssembly(typeof(ApplicationBuilderExtensions));
-                migrationManager.ApplyUpMigrations(assembly, true);
-                assembly = Assembly.GetAssembly(typeof(IMigrationManager));
-                migrationManager.ApplyUpMigrations(assembly, true);
-
-#if DEBUG
-                //prevent save the update migrations into the DB during the developing process  
-                var versions = EngineContext.Current.Resolve<IRepository<MigrationVersionInfo>>();
-                versions.DeleteAsync(mvi => mvi.Description.StartsWith(string.Format(NopMigrationDefaults.UpdateMigrationDescriptionPrefix, NopVersion.FULL_VERSION)));
-#endif
+                DbIsOn(engine);
             }
             else
             {
@@ -229,27 +206,6 @@ namespace Chessbook.Web.Framework.Infrastructure.Extensions
                     if (model.InstallSampleData)
                         await installationService.InstallSampleDataAsync(model.AdminEmail);
 
-                    ////prepare plugins to install
-                    //var pluginService = EngineContext.Current.Resolve<IPluginService>();
-                    //pluginService.ClearInstalledPluginsList();
-
-                    //var pluginsIgnoredDuringInstallation = new List<string>();
-                    //if (!string.IsNullOrEmpty(_appSettings.InstallationConfig.DisabledPlugins))
-                    //{
-                    //    pluginsIgnoredDuringInstallation = _appSettings.InstallationConfig.DisabledPlugins
-                    //        .Split(',', StringSplitOptions.RemoveEmptyEntries).Select(pluginName => pluginName.Trim()).ToList();
-                    //}
-
-                    //var plugins = (await pluginService.GetPluginDescriptorsAsync<IPlugin>(LoadPluginsMode.All))
-                    //    .Where(pluginDescriptor => !pluginsIgnoredDuringInstallation.Contains(pluginDescriptor.SystemName))
-                    //    .OrderBy(pluginDescriptor => pluginDescriptor.Group).ThenBy(pluginDescriptor => pluginDescriptor.DisplayOrder)
-                    //    .ToList();
-
-                    //foreach (var plugin in plugins)
-                    //{
-                    //    await pluginService.PreparePluginToInstallAsync(plugin.SystemName, checkDependencies: false);
-                    //}
-
                     //register default permissions
                     //var permissionProviders = EngineContext.Current.Resolve<ITypeFinder>().FindClassesOfType<IPermissionProvider>();
                     var permissionProviders = new List<Type> { typeof(StandardPermissionProvider) };
@@ -259,8 +215,11 @@ namespace Chessbook.Web.Framework.Infrastructure.Extensions
                         await EngineContext.Current.Resolve<IPermissionService>().InstallPermissionsAsync(provider);
                     }
 
-                    // return View(new InstallModel { RestartUrl = Url.RouteUrl("Homepage") });
-
+                    // further actions are performed only when the database is installed
+                    //if (DataSettingsManager.IsDatabaseInstalled())
+                    //{
+                        DbIsOn(engine);
+                    //}
                 }
                 catch (Exception exception)
                 {
@@ -276,6 +235,29 @@ namespace Chessbook.Web.Framework.Infrastructure.Extensions
                     // ModelState.AddModelError(string.Empty, string.Format(_locService.GetResource("SetupFailed"), exception.Message));
                 }
             }
+        }
+
+        private static void DbIsOn(IEngine engine)
+        {
+            // initialize and start schedule tasks
+            Services.Tasks.TaskManager.Instance.Initialize();
+            Services.Tasks.TaskManager.Instance.Start();
+
+            //log application start
+            engine.Resolve<ILogger>().InformationAsync("Application started").Wait();
+
+            //update nopCommerce core and db
+            var migrationManager = engine.Resolve<IMigrationManager>();
+            var assembly = Assembly.GetAssembly(typeof(ApplicationBuilderExtensions));
+            migrationManager.ApplyUpMigrations(assembly, true);
+            assembly = Assembly.GetAssembly(typeof(IMigrationManager));
+            migrationManager.ApplyUpMigrations(assembly, true);
+
+#if DEBUG
+            //prevent save the update migrations into the DB during the developing process  
+            var versions = EngineContext.Current.Resolve<IRepository<MigrationVersionInfo>>();
+            versions.DeleteAsync(mvi => mvi.Description.StartsWith(string.Format(NopMigrationDefaults.UpdateMigrationDescriptionPrefix, NopVersion.FULL_VERSION)));
+#endif
         }
 
         /// <summary>
@@ -402,11 +384,11 @@ namespace Chessbook.Web.Framework.Infrastructure.Extensions
         /// <param name="application">Builder for configuring an application's request pipeline</param>
         public static void UseNopResponseCompression(this IApplicationBuilder application)
         {
-            if (!DataSettingsManager.IsDatabaseInstalled())
-                return;
-            
-            //whether to use compression (gzip by default)
-            if (EngineContext.Current.Resolve<CommonSettings>().UseResponseCompression)
+            //if (!DataSettingsManager.IsDatabaseInstalled())
+            //    return;
+
+            // whether to use compression (gzip by default)
+            if (/*EngineContext.Current.Resolve<CommonSettings>().UseResponseCompression*/true)
                 application.UseResponseCompression();
         }
 

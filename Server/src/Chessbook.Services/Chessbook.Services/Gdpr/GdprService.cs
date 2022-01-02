@@ -12,6 +12,7 @@ using Chessbook.Data.Models;
 using Chessbook.Services.APIs;
 using Chessbook.Services.Chat;
 using Chessbook.Services.Common;
+using Chessbook.Services.Data;
 using Chessbook.Services.Data.Services.Entities;
 using Chessbook.Services.Entities;
 using Chessbook.Services.Stores;
@@ -29,12 +30,15 @@ namespace Chessbook.Services.Gdpr
         private readonly IEventPublisher _eventPublisher;
         private readonly IGenericAttributeService _genericAttributeService;
         private readonly IPostsService postService;
+        private readonly IRepostService repostService;
         private readonly IRepository<GdprConsent> _gdprConsentRepository;
         private readonly IRepository<GdprLog> _gdprLogRepository;
         private readonly IStoreService _storeService;
         private readonly IPostCommentService postCommentService;
         private readonly IChatService chatService;
         private readonly IYoutubeService youtubeService;
+        private readonly IStreamersService streamersService;
+
 
         #endregion
 
@@ -49,7 +53,9 @@ namespace Chessbook.Services.Gdpr
             IPostsService postService,
             IPostCommentService postCommentService,
             IChatService chatService,
-            IYoutubeService youtubeService)
+            IYoutubeService youtubeService,
+            IRepostService repostService,
+            IStreamersService streamersService)
         {
             _customerService = customerService;
             _eventPublisher = eventPublisher;
@@ -61,6 +67,8 @@ namespace Chessbook.Services.Gdpr
             this.postCommentService = postCommentService;
             this.chatService = chatService;
             this.youtubeService = youtubeService;
+            this.repostService = repostService;
+            this.streamersService = streamersService;
         }
 
         #endregion
@@ -257,12 +265,25 @@ namespace Chessbook.Services.Gdpr
                 throw new ArgumentNullException(nameof(customer));
             }
 
-            // blog comments
+            // post comments
             var postComments = await this.postService.GetAllCommentsAsync(customerId: customer.Id);
             await this.postService.DeleteBlogCommentsAsync(postComments);
 
             // posts
             var posts = await this.postService.GetPostsByUserId(customer.Id);
+
+            // reposts
+            foreach (var post in posts)
+            {
+                var reposts = await this.repostService.GetRepostsByPostId(post.Id);
+                if (reposts == null)
+                {
+                    continue;
+                }
+
+                await this.postService.DeletePostsAsync(reposts);
+            }
+
             await this.postService.DeletePostsAsync(posts);
 
             // private messages (sent)
@@ -280,6 +301,10 @@ namespace Chessbook.Services.Gdpr
             // favorite videos
             var videos = await this.youtubeService.GetAllVideos(customer.Id);
             await this.youtubeService.DeleteVideosAsync(videos);
+
+            // twitch username
+            var username = await this.streamersService.GetByUserId(customer.Id);
+            await this.streamersService.DeleteUserLogin(username, customer.Id);
 
             // generic attributes
             var keyGroup = customer.GetType().Name;
@@ -314,7 +339,8 @@ namespace Chessbook.Services.Gdpr
             // clear other information
             customer.Email = string.Empty;
             customer.EmailToRevalidate = string.Empty;
-            customer.DisplayName = string.Empty;            // Username
+            customer.DisplayName = string.Empty;
+            customer.ScreenName = string.Empty;
             customer.Active = false;
             customer.Deleted = true;
             customer.WebsiteLink = string.Empty;

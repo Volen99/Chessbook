@@ -2,7 +2,7 @@
 <nb-card style="max-height: 570px;">
     <nb-card-header>
         <div class="modal-header">
-            <h4 class="modal-title">Report post "{{ post.status || post.id }}"</h4>
+            <h4 class="modal-title">Report {{post.user.displayName}}'s post</h4>
             <div aria-label="Close" role="button" data-focusable="true"
                  tabindex="0"
                  class="icon-hover close-button sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
@@ -83,7 +83,7 @@
           <textarea
                   nbInput
                   placeholder="Please describe the issue..." formControlName="reason" ngbAutofocus
-                  [ngClass]="{ 'input-error': formErrors['reason'] }" class="form-control"
+                  [ngClass]="{ 'input-error': formErrors['reason'] }"
           ></textarea>
                             <div *ngIf="formErrors.reason" class="form-error">
                                 {{ formErrors.reason }}

@@ -1,6 +1,6 @@
 <ng-container *ngIf="mode === 'form'">
     <span class="feedback-form_title">Send us your feedback!</span>
-    <span class="feedback-form_subtitle">How would you rate your experience?</span>
+    <span class="feedback-form_subtitle">How would you rate Chessbook?</span>
 
     <div class="feedback-form_rating">
         <nb-radio-group [(ngModel)]="feedbackRate">
@@ -37,7 +37,7 @@
 
 <div *ngIf="mode === 'sending'" class="feedback-form_sending">
     <span [nbSpinner]="true" nbSpinnerStatus="primary" class="feedback-form_sending-indicator"></span>
-    <span class="feedback-form_sending-message">Sending feedback</span>
+    <span class="feedback-form_sending-message">Offering draw..</span>
 </div>
 
 <div *ngIf="mode === 'sent'" class="feedback-form_sent">

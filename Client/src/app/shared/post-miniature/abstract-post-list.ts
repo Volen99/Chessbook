@@ -4,11 +4,11 @@ import {fromEvent, Observable, ReplaySubject, Subscription} from "rxjs";
 import {debounceTime, first, map, takeUntil, tap} from "rxjs/operators";
 import {Subject} from "rxjs/Subject";
 
+import {isLastMonth, isLastWeek, isThisMonth, isToday, isYesterday} from 'app/core/utils/common/date';
 import {ComponentPaginationLight} from "../../core/rest/component-pagination.model";
 import {PostSortField} from "../posts/models/post-sort-field.type";
 import {Post} from "../shared-main/post/post.model";
 import {IUser} from "../../core/interfaces/common/users";
-import {LocalStorageService} from "../../core/wrappers/storage.service";
 import {ScreenService} from "../../core/wrappers/screen.service";
 import {UsersService} from "../../core/backend/common/services/users.service";
 import {NbToastrService} from "../../sharebook-nebular/theme/components/toastr/toastr.service";
@@ -16,7 +16,6 @@ import {UserRight} from "../models/users/user-right.enum";
 import {UserStore} from "../../core/stores/user.store";
 import {InitUserService} from "../../theme/services/init-user.service";
 import {PostFilter} from "../posts/models/post-query.type";
-import {isLastMonth, isLastWeek, isThisMonth, isToday, isYesterday} from 'app/core/utils/common/date';
 
 enum GroupDate {
   UNKNOWN = 0,
@@ -45,17 +44,14 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
   protected abstract notifier: NbToastrService;
   protected abstract route: ActivatedRoute;
   protected abstract screenService: ScreenService;
-  protected abstract storageService: LocalStorageService;
   protected abstract usersService: UsersService;
   protected abstract router: Router;
   protected abstract userStore: UserStore;
   protected abstract initCurrentUser: InitUserService;
 
-  abstract titlePage: string;
-
   pagination: ComponentPaginationLight = {
     currentPage: 1,
-    itemsPerPage: 3,
+    itemsPerPage: 21,
   };
   sort: PostSortField = '-publishedAt';
 
@@ -65,7 +61,6 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
 
   loadOnInit = true;
   displayModerationBlock = false;
-  titleTooltip: string;
   displayVideoActions = true;
   groupByDate = false;
 

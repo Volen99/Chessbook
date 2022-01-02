@@ -1,7 +1,6 @@
 ﻿using System.Data;
 using FluentMigrator.Builders.Create.Table;
 
-using Chessbook.Data.Mapping.Builders;
 using Chessbook.Data.Extensions;
 using Chessbook.Data.Models;
 using Chessbook.Core.Domain.Customers;

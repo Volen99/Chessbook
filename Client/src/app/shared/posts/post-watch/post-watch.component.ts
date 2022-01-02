@@ -185,7 +185,7 @@ export class PostWatchComponent implements OnInit, OnDestroy {
       return 1660;
     }
 
-    return (commentsCount + 1) * 645;
+    return (commentsCount + 1) * 645; // TODO: according to the post height aka video, or just text, change 645 kk...
   }
 
   setTransform(i: number, post: Post): number {

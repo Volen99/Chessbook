@@ -109,7 +109,7 @@ export class NbSearchFieldComponent implements OnChanges, AfterViewInit {
   }
 
   ngOnChanges({ show }: SimpleChanges) {
-    const becameHidden = !show.isFirstChange() && show.currentValue === false;
+    const becameHidden = !show?.isFirstChange() && show?.currentValue === false;
     if (becameHidden && this.inputElement) {
       this.inputElement.nativeElement.value = '';
     }
@@ -201,7 +201,7 @@ export type NbSearchType = 'modal-zoomin' | 'rotate-layout' | 'modal-move' |
   styleUrls: ['styles/search.component.scss'],
   template: `
     <button #searchButton class="start-search" (click)="emitActivate()">
-      <fa-icon [icon]="this.faPollPeople" [styles]="{'font-size': '1.35rem'}"></fa-icon>
+      <fa-icon [icon]="this.faPollPeople" [styles]="{'font-size': '1.35rem', 'color': this.theme !== 'default' ? 'white' : '#3c404b'}"></fa-icon>
     </button>
     <nb-search-field
       *nbPortal
@@ -233,6 +233,7 @@ export class NbSearchComponent implements OnInit, OnDestroy {
   @Input() tag: string;
 
   @Input() poll: IPoll;
+  @Input() theme: string;
 
   /**
    * Search input placeholder

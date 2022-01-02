@@ -1,5 +1,5 @@
-﻿using Chessbook.Common.Feedback;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Chessbook.Common.Feedback;
 
 namespace Chessbook.Services.Feedback
 {

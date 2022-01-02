@@ -57,8 +57,8 @@ namespace Chessbook.Web.Framework.Infrastructure
         /// <param name="application">Builder for configuring an application's request pipeline</param>
         public void Configure(IApplicationBuilder application)
         {
-            ////use response compression
-            //application.UseNopResponseCompression();
+            //use response compression
+            application.UseNopResponseCompression();
 
             ////use static files feature
             //application.UseNopStaticFiles();

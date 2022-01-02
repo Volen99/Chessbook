@@ -73,6 +73,7 @@ export class NotificationsComponent implements OnInit, AfterViewInit {
     {
       title: 'Mentions',
       route: ['/notifications/mentions'],
+      disabled: true,
     },
   ];
 

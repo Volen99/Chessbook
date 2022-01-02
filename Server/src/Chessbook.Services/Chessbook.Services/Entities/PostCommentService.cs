@@ -10,6 +10,7 @@ using Chessbook.Core.Domain.Posts;
 using Chessbook.Data;
 using Chessbook.Data.Models;
 using Chessbook.Core;
+using Chessbook.Services.Messages;
 
 namespace Chessbook.Services.Entities
 {
@@ -53,7 +54,13 @@ namespace Chessbook.Services.Entities
                 CreatedAt = DateTime.UtcNow,
             };
 
+
             await this.postCommentRepositoy.InsertAsync(commentNew);
+
+            if (true)
+            {
+                // await this.workflowMessageService.SendBlogCommentNotificationMessageAsync(commentNew, _localizationSettings.DefaultAdminLanguageId);
+            }
 
             // broadcast
 

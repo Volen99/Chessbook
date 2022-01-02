@@ -5,15 +5,15 @@
         </p>
     </nb-card-header>
     <nb-card-body>
-        <label>Id</label>
+        <label>Url</label>
         <app-help>
             <ng-template appSbTemplate="customHtml">
                 <ng-container>
-                    <span [innerHTML]="'<img src=\'/assets/images/videos/yt-id-hint.png\'>'"></span>
+                    <span [innerHTML]="'<img src=\'/assets/images/videos/yt-url-hint.png\'>'"></span>
                 </ng-container>
             </ng-template>
         </app-help>
-        <input #id nbInput fullWidth id="inputWebsiteLink" class="form-control" placeholder="video id"
+        <input #id nbInput fullWidth id="inputWebsiteLink" class="form-control" placeholder="video url"
         [value]="this.video?.videoId">
 
         <label>Title</label>

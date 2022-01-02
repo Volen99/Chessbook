@@ -27,6 +27,7 @@
     using Chessbook.Core.Domain.Relationships;
     using Chessbook.Services.Blocklist;
     using Chessbook.Core.Domain.Customers;
+    using Chessbook.Services.Helpers;
 
     public class PostsService : IPostsService
     {
@@ -48,6 +49,8 @@
         private readonly IPreviewCardService previewCardService;
         private readonly IAclService aclService;
         private readonly IBlocklistService blocklistService;
+        private readonly IDateTimeHelper dateTimeHelper;
+        private readonly IPostTagService postTagService;
 
         const string TWITTER_URL_REGEX = @"(?<=^|\s+)" +                      // URL can be prefixed by space or start of line
                    @"\b(?<start>http(?<isSecured>s?)://(?:www\.)?|www\.|)" +  // Start of an url
@@ -71,7 +74,8 @@
             IPollService pollService, IRepository<Relationship> relationshipRepository,
             IWorkContext _workContext, IRepository<PostTag> postTagRepository, IRepository<Tag> tagRepository,
             IAclService aclService, IPictureService pictureService, INopFileProvider fileProvider,
-            IPreviewCardService previewCardService, IBlocklistService blocklistService)
+            IPreviewCardService previewCardService, IBlocklistService blocklistService,
+            IDateTimeHelper dateTimeHelper, IPostTagService postTagService)
         {
             this.postsRepository = postsRepository;
             this.postPictureRepository = postPictureRepository;
@@ -91,6 +95,8 @@
             this.fileProvider = fileProvider;
             this.previewCardService = previewCardService;
             this.blocklistService = blocklistService;
+            this.dateTimeHelper = dateTimeHelper;
+            this.postTagService = postTagService;
         }
 
         public async Task<Post> CreateAsync(QueryPostParams query, int userId, int[] mediaIds = null, int? pollId = null)
@@ -293,15 +299,19 @@
             decimal? priceMin = null,
             decimal? priceMax = null,
             int productTagId = 0,
+            int[] postTagsIds = null,
             string keywords = null,
             bool searchDescriptions = false,
             bool searchManufacturerPartNumber = true,
             bool searchSku = true,
             bool searchProductTags = false,
             int languageId = 0,
-            ProductSortingEnum orderBy = ProductSortingEnum.Position,
+            ProductSortingEnum orderBy = ProductSortingEnum.Match,
             bool showHidden = false,
-            bool? overridePublished = null)
+            bool? overridePublished = null,
+            DateTime? originallyPublishedStartDate = null,
+            DateTime? originallyPublishedEndDate = null,
+            DateTime? startDate = null)
         {
             // some databases don't support int.MaxValue
             if (pageSize == int.MaxValue)
@@ -309,188 +319,53 @@
                 pageSize = int.MaxValue - 1;
             }
 
-            var productsQuery = this.postsRepository.Table;
+            // get parameters to filter posts
+            var startDateValue = originallyPublishedStartDate == null ? null
+                : (DateTime?) this.dateTimeHelper.ConvertToUtcTime(originallyPublishedStartDate.Value, await this.dateTimeHelper.GetCurrentTimeZoneAsync());
+            var endDateValue = originallyPublishedEndDate == null ? null
+                : (DateTime?)this.dateTimeHelper.ConvertToUtcTime(originallyPublishedEndDate.Value, await this.dateTimeHelper.GetCurrentTimeZoneAsync()).AddDays(1);
 
-            //if (!showHidden)
-            //    productsQuery = productsQuery.Where(p => p.Published);
-            //else if (overridePublished.HasValue)
-            //    productsQuery = productsQuery.Where(p => p.Published == overridePublished.Value);
+            var postsQuery = this.postsRepository.Table;
 
-            //apply store mapping constraints
-            // productsQuery = await _storeMappingService.ApplyStoreMapping(productsQuery, storeId);
-
-            //apply ACL constraints
-            //if (!showHidden)
-            //{
-            //    var customer = await _workContext.GetCurrentCustomerAsync();
-            //    productsQuery = await this.aclService.ApplyAcl(productsQuery, customer);
-            //}
-
-            productsQuery =
-                from p in productsQuery
+            postsQuery =
+                from p in postsQuery
                 where !p.Deleted
-                //(vendorId == 0 || p.VendorId == vendorId) &&
-                //(
-                //    warehouseId == 0 ||
-                //    (
-                //        !p.UseMultipleWarehouses ? p.WarehouseId == warehouseId :
-                //            _productWarehouseInventoryRepository.Table.Any(pwi => pwi.Id == warehouseId && pwi.ProductId == p.Id)
-                //    )
-                //) &&
-                //(productType == null || p.ProductTypeId == (int)productType) &&
-                //(showHidden == false || LinqToDB.Sql.Between(DateTime.UtcNow, p.AvailableStartDateTimeUtc ?? DateTime.MinValue, p.AvailableEndDateTimeUtc ?? DateTime.MaxValue)) &&
-                //(priceMin == null || p.Price >= priceMin) &&
-                //(priceMax == null || p.Price <= priceMax)
                 select p;
 
-            //if (!string.IsNullOrEmpty(keywords))
-            //{
-            //    //var langs = await _languageService.GetAllLanguagesAsync(showHidden: true);
+            // filter by creation date
+            if (startDateValue.HasValue)
+                postsQuery = postsQuery.Where(post => startDateValue.Value <= post.CreatedAt);
+            if (endDateValue.HasValue)
+                postsQuery = postsQuery.Where(post => endDateValue.Value >= post.CreatedAt);
 
-            //    ////Set a flag which will to points need to search in localized properties. If showHidden doesn't set to true should be at least two published languages.
-            //    //var searchLocalizedValue = languageId > 0 && langs.Count() >= 2 && (showHidden || langs.Count(l => l.Published) >= 2);
-
-            //    //IQueryable<int> productsByKeywords;
-
-            //    //productsByKeywords =
-            //    //        from p in this.postsRepository.Table
-            //    //        where p.Name.Contains(keywords) ||
-            //    //            (searchDescriptions &&
-            //    //                (p.ShortDescription.Contains(keywords) || p.FullDescription.Contains(keywords))) ||
-            //    //            (searchManufacturerPartNumber && p.ManufacturerPartNumber == keywords) ||
-            //    //            (searchSku && p.Sku == keywords)
-            //    //        select p.Id;
-
-            //    //search by SKU for ProductAttributeCombination
-            //    //if (searchSku)
-            //    //{
-            //    //    productsByKeywords = productsByKeywords.Union(
-            //    //        from pac in _productAttributeCombinationRepository.Table
-            //    //        where pac.Sku == keywords
-            //    //        select pac.ProductId);
-            //    //}
-
-            //    //if (searchProductTags)
-            //    //{
-            //    //    productsByKeywords = productsByKeywords.Union(
-            //    //        from pptm in this.postTagRepository.Table
-            //    //        join pt in this.tagRepository.Table on pptm.TagId equals pt.Id
-            //    //        where pt.Name == keywords
-            //    //        select pptm.PostId
-            //    //    );
-
-            //    //    //if (searchLocalizedValue)
-            //    //    //{
-            //    //    //    productsByKeywords = productsByKeywords.Union(
-            //    //    //    from pptm in _productTagMappingRepository.Table
-            //    //    //    join lp in _localizedPropertyRepository.Table on pptm.ProductTagId equals lp.EntityId
-            //    //    //    where lp.LocaleKeyGroup == nameof(ProductTag) &&
-            //    //    //          lp.LocaleKey == nameof(ProductTag.Name) &&
-            //    //    //          lp.LocaleValue.Contains(keywords)
-            //    //    //    select lp.EntityId);
-            //    //    //}
-            //    //}
-
-            //    //if (searchLocalizedValue)
-            //    //{
-            //    //    productsByKeywords = productsByKeywords.Union(
-            //    //                from lp in _localizedPropertyRepository.Table
-            //    //                let checkName = lp.LocaleKey == nameof(Product.Name) &&
-            //    //                                lp.LocaleValue.Contains(keywords)
-            //    //                let checkShortDesc = searchDescriptions &&
-            //    //                                lp.LocaleKey == nameof(Product.ShortDescription) &&
-            //    //                                lp.LocaleValue.Contains(keywords)
-            //    //                let checkProductTags = searchProductTags &&
-            //    //                                lp.LocaleKeyGroup == nameof(ProductTag) &&
-            //    //                                lp.LocaleKey == nameof(ProductTag.Name) &&
-            //    //                                lp.LocaleValue.Contains(keywords)
-            //    //                where
-            //    //                    (lp.LocaleKeyGroup == nameof(Product) && lp.LanguageId == languageId) && (checkName || checkShortDesc) ||
-            //    //                    checkProductTags
-
-            //    //                select lp.EntityId);
-            //    //}
-
-            //    productsQuery =
-            //        from p in productsQuery
-            //        from pbk in LinqToDB.LinqExtensions.InnerJoin(productsByKeywords, pbk => pbk == p.Id)
-            //        select p;
-            //}
-
-            //if (categoryIds is not null)
-            //{
-            //    if (categoryIds.Contains(0))
-            //        categoryIds.Remove(0);
-
-            //    if (categoryIds.Any())
-            //    {
-            //        var productCategoryQuery =
-            //            from pc in _productCategoryRepository.Table
-            //            where (!excludeFeaturedProducts || !pc.IsFeaturedProduct) &&
-            //                categoryIds.Contains(pc.CategoryId)
-            //            select pc;
-
-            //        productsQuery =
-            //            from p in productsQuery
-            //            where productCategoryQuery.Any(pc => pc.ProductId == p.Id)
-            //            select p;
-            //    }
-            //}
-
-            //if (manufacturerIds is not null)
-            //{
-            //    if (manufacturerIds.Contains(0))
-            //        manufacturerIds.Remove(0);
-
-            //    if (manufacturerIds.Any())
-            //    {
-            //        var productManufacturerQuery =
-            //            from pm in _productManufacturerRepository.Table
-            //            where (!excludeFeaturedProducts || !pm.IsFeaturedProduct) &&
-            //                manufacturerIds.Contains(pm.ManufacturerId)
-            //            select pm;
-
-            //        productsQuery =
-            //            from p in productsQuery
-            //            where productManufacturerQuery.Any(pm => pm.ProductId == p.Id)
-            //            select p;
-            //    }
-            //}
+            if (startDate.HasValue)
+            {
+                var sd = this.dateTimeHelper.ConvertToUtcTime(startDate.Value, await this.dateTimeHelper.GetCurrentTimeZoneAsync()).AddDays(1);
+                postsQuery = postsQuery.Where(post => post.CreatedAt >= sd.Date);
+            }
 
             if (productTagId > 0)
             {
-                productsQuery =
-                    from p in productsQuery
+                postsQuery =
+                    from p in postsQuery
                     join ptm in this.postTagRepository.Table on p.Id equals ptm.PostId
                     where ptm.TagId == productTagId
                     select p;
             }
 
-            //if (filteredSpecOptions?.Count > 0)
-            //{
-            //    var specificationAttributeIds = filteredSpecOptions
-            //        .Select(sao => sao.SpecificationAttributeId)
-            //        .Distinct();
+            // postsQuery = postsQuery.Where(p => p.Tags.All(t => postTagsIds.Contains(t.Id)));
 
-            //    foreach (var specificationAttributeId in specificationAttributeIds)
-            //    {
-            //        var optionIdsBySpecificationAttribute = filteredSpecOptions
-            //            .Where(o => o.SpecificationAttributeId == specificationAttributeId)
-            //            .Select(o => o.Id);
+            else if (postTagsIds != null)
+            {
+                // var test = await postsQuery.WhereAwait(async p => (await this.postTagService.GetAllPostTagsByPostIdAsync(p.Id)).All(t => postTagsIds.Contains(t.Id))).ToListAsync();
+                postsQuery =
+                  from p in postsQuery
+                  join ptm in this.postTagRepository.Table on p.Id equals ptm.PostId
+                  where postTagsIds.Contains(ptm.TagId)
+                  select p;
+            }
 
-            //        var productSpecificationQuery =
-            //            from psa in _productSpecificationAttributeRepository.Table
-            //            where psa.AllowFiltering && optionIdsBySpecificationAttribute.Contains(psa.SpecificationAttributeOptionId)
-            //            select psa;
-
-            //        productsQuery =
-            //            from p in productsQuery
-            //            where productSpecificationQuery.Any(pc => pc.ProductId == p.Id)
-            //            select p;
-            //    }
-            //}
-
-            return await productsQuery.OrderBy(orderBy).ToPagedListAsync(pageIndex, pageSize);
+            return await postsQuery.OrderBy(orderBy).ToPagedListAsync(pageIndex, pageSize);
         }
 
         private static byte[] StreamToBinary(Stream stream)
@@ -537,9 +412,9 @@
         }
 
         /// <summary>
-        /// Get products by identifiers
+        /// Get posts by identifiers
         /// </summary>
-        /// <param name="productIds">Product identifiers</param>
+        /// <param name="productIds">Post identifiers</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the products
@@ -549,18 +424,11 @@
             return await this.postsRepository.GetByIdsAsync(postIds, cache => default, false);
         }
 
-        public virtual async Task<IList<Post>> GetHomeTimeline(bool ascSort = true,
+        public virtual async Task<IList<Post>> GetHomeTimeline(bool ascSort = false,
             int pageIndex = 0, int pageSize = int.MaxValue)
         {
             var currentUser = await this._workContext.GetCurrentCustomerAsync();
             var blockerIds = new List<int>() { currentUser.Id };
-
-            // productsByKeywords = productsByKeywords.Union(
-           //    //        from pptm in this.postTagRepository.Table
-           //    //        join pt in this.tagRepository.Table on pptm.TagId equals pt.Id
-           //    //        where pt.Name == keywords
-           //    //        select pptm.PostId
-           //    //    );
 
            // no way this works... :D | 11/1/2021, 17:29
            var blocklistQuery = (from table in this.userBlocklistRepository.Table
@@ -574,9 +442,11 @@
 
             var posts = await this.postsRepository.GetAllPagedAsync(query =>
             {
-                query = ascSort
-                    ? query.OrderBy(fp => fp.CreatedAt).ThenBy(fp => fp.Id)
-                    : query.OrderByDescending(fp => fp.CreatedAt).ThenBy(fp => fp.Id);
+                //query = ascSort
+                //    ? query.OrderBy(fp => fp.CreatedAt).ThenBy(fp => fp.Id)
+                //    : query.OrderByDescending(fp => fp.CreatedAt);
+
+                query = query.OrderByDescending(p => p.CreatedAt);
 
                 query = query.Where(p => blocklistQuery.Contains(p.UserId) == false);
 
@@ -585,67 +455,7 @@
             }, pageIndex, pageSize);
 
 
-
-
-            //var posts = await this.postsRepository.GetAllAsync(query =>
-            //{
-            //    return from p in query
-            //           where !p.Deleted
-            //           select p;
-            //}, cache => cache.PrepareKeyForDefaultCache(NopCatalogDefaults.ProductsHomepageCacheKey));
-
-            //posts = posts.Skip(skip).ToList();
-            //if (count.HasValue)
-            //{
-            //    posts = posts.Take(count.Value).ToList();
-            //}
-
-            //var notDeletedUsers = await this.userService.GetCustomersByIdsAsync(posts.Select(v => v.UserId).ToArray());
-
-            //foreach (var notDeletedUser in notDeletedUsers)
-            //{
-            //    var currentPost = posts.FirstOrDefault(p => p.UserId != notDeletedUser.Id);
-            //    if (currentPost != null)
-            //    {
-            //        posts.Remove(currentPost);
-            //    }
-            //}
-
             return posts;
-
-            //var posts = await this.postsRepository.Table
-            //    .Where(p => !p.Deleted)
-            //    .ToListAsync();
-
-            //return posts;
-
-
-            //var query = this.postsRepository.Table
-            //    .Include(p => p.User)
-            //    .Include(p => p.Medias)
-            //    .Include(p => p.Poll)
-            //    .ThenInclude(poll => poll.Options)
-            //    .OrderBy(p => p.CreatedAt)
-            //    .Skip(skip);
-
-            //var reshareQuery = this.postReshareRepository.Table;
-            //if (count.HasValue)
-            //{
-            //    query = query.Take(count.Value);
-            //    reshareQuery = reshareQuery.Take(count.Value);
-            //}
-
-
-            //foreach (var post in query)
-            //{
-            //    var resharesCount = reshareQuery.Where(re => re.PostId == post.Id).Count();
-            //    post.RetweetCount = resharesCount;
-            //}
-
-
-
-
-            // return query.To<T>().ToList();
         }
 
         public async Task<IPagedList<Post>> GetUserProfileTimeline(int userId, bool ascSort = false, bool onlyMedia = false,
@@ -662,35 +472,15 @@
                     query = query.Where(p => p.HasMedia);
                 }
 
-                query = ascSort
-                    ? query.OrderBy(fp => fp.CreatedAt).ThenBy(fp => fp.Id)
-                    : query.OrderByDescending(fp => fp.CreatedAt).ThenBy(fp => fp.Id);
+                //query = ascSort
+                //    ? query.OrderBy(fp => fp.CreatedAt).ThenBy(fp => fp.Id)
+                //    : query.OrderByDescending(fp => fp.CreatedAt).ThenBy(fp => fp.Id);
+
+                query = query.OrderByDescending(p => p.CreatedAt);
 
                 return query;
 
             }, pageIndex, pageSize);
-
-            //     profilePosts = profilePosts.Skip(skip).ToList();
-            //if (count.HasValue)
-            //{
-            //    profilePosts = profilePosts.Take(count.Value).ToList();
-            //}
-
-            //var query = this.postsRepository.Table
-            //  .Where(p => p.UserId == userId)
-            //  .Include(p => p.User)
-            //  .Include(p => p.Medias)
-            //  .Include(p => p.Poll)
-            //  .ThenInclude(poll => poll.Options)
-            //  .OrderBy(p => p.CreatedAt)
-            //  .Skip(skip);
-
-            //if (count.HasValue)
-            //{
-            //    query = query.Take(count.Value);
-            //}
-
-            //return query.ToList();
 
             return profilePosts;
         }
@@ -836,20 +626,6 @@
 
             //await this.UpdatePostAsync(post);
         }
-
-        //public async Task<PostRateType> LoadUserPostRate(int userId, int postId)
-        //{
-        //    var ratingObject = await this.postVoteRepository.Table
-        //        .Where(pv => pv.UserId == userId && pv.PostId == postId)
-        //        .FirstOrDefaultAsyncExt();
-
-        //    if (ratingObject == null)
-        //    {
-        //        return default(PostRateType);
-        //    }
-
-        //    return ratingObject.Type;
-        //}
 
         public async Task<IList<Customer>> GetLikers(int postId)
         {
@@ -1115,7 +891,7 @@
 
         public async Task<Post> GetPinnedPost(int userId)
         {
-            var pinnedPost = await this.postsRepository.Table.Where(p => p.UserId == userId && p.Pinned == true)
+            var pinnedPost = await this.postsRepository.Table.Where(p => p.UserId == userId && p.Pinned == true && !p.Deleted)
                 .FirstOrDefaultAsyncExt();
 
             return pinnedPost;

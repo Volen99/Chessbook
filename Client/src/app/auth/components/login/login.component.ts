@@ -9,6 +9,7 @@ import {NB_AUTH_OPTIONS, NbAuthSocialLink} from "../../../sharebook-nebular/auth
 import {NbAuthService} from "../../../sharebook-nebular/auth/services/auth.service";
 import {NbThemeService} from "../../../sharebook-nebular/theme/services/theme.service";
 import {NbAuthResult} from "../../../sharebook-nebular/auth/services/auth-result";
+import {UserStore} from "../../../core/stores/user.store";
 
 @Component({
   selector: 'ngx-login',
@@ -44,11 +45,13 @@ export class NgxLoginComponent implements OnInit {
     protected themeService: NbThemeService,
     private fb: FormBuilder,
     protected router: Router,
-    protected initUserService: InitUserService) { }
+    protected initUserService: InitUserService,
+    protected userStore: UserStore) { }
 
   ngOnInit(): void {
     const emailValidators = [
-      Validators.pattern(EMAIL_PATTERN),
+      // Validators.pattern(EMAIL_PATTERN),
+      Validators.email
     ];
     this.isEmailRequired && emailValidators.push(Validators.required);
 
@@ -84,6 +87,9 @@ export class NgxLoginComponent implements OnInit {
       const redirect = result.getRedirect();
       if (redirect) {
         setTimeout(() => {
+          if (!this.userStore.getUser().active) {
+            alert('You need to activate your account from your gmail to use Chessbook fully');
+          }
           return this.router.navigateByUrl('home');
           // return this.router.navigateByUrl(redirect);
         }, this.redirectDelay);

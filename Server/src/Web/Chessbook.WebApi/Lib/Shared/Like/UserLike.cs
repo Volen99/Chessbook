@@ -77,7 +77,7 @@ namespace Chessbook.Web.Api.Lib.Shared.Like
             return notification;
         }
 
-        public override void CreateEmail(string to)
+        public async override Task CreateEmail(UserNotification to)
         {
             throw new System.NotImplementedException();
         }

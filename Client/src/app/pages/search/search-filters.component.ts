@@ -1,9 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import {HTMLServerConfig} from "../../shared/models/server/server-config.model";
-import {ServerService} from "../../core/server/server.service";
-import {IPostConstant} from "../../shared/posts/models/post-constant.model";
 import {AdvancedSearch} from "../../shared/shared-search/advanced-search.model";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap/tooltip/tooltip";
 
 type FormOption = { id: string, label: string };
 
@@ -17,24 +16,33 @@ export class SearchFiltersComponent implements OnInit {
 
   @Output() filtered = new EventEmitter<AdvancedSearch>();
 
-  videoCategories: IPostConstant<number>[] = [];
-  videoLicences: IPostConstant<number>[] = [];
-  videoLanguages: IPostConstant<string>[] = [];
-
   publishedDateRanges: FormOption[] = [];
   sorts: FormOption[] = [];
   durationRanges: FormOption[] = [];
   videoType: FormOption[] = [];
+  tooltips: string[] = [
+      'querying the tablebase..',
+      '197,742 possible games after move 2..',
+      '121 million possible games after move 3..',
+      'searching..',
+      'awaiting orders..',
+      'searching openings..',
+      'searching middlegames..',
+      'searching endgames..',
+      'There are over 9 million different possible positions after three moveseach..',
+      'There are over 318 billion different possible positions after four moves each..',
+  ];
 
   publishedDateRange: string;
   durationRange: string;
 
   originallyPublishedStartYear: string;
   originallyPublishedEndYear: string;
+  tooltip: string = 'querying the tablebase..';
 
   private serverConfig: HTMLServerConfig;
 
-  constructor(private serverService: ServerService) {
+  constructor() {
     this.publishedDateRanges = [
       {
         id: 'today',
@@ -86,32 +94,91 @@ export class SearchFiltersComponent implements OnInit {
         label: `Relevance`
       },
       {
-        id: '-publishedAt',
+        id: '-createdOn',
         label: `Publish date`
       },
       {
-        id: '-views',
-        label: `Views`
+        id: '-likes',
+        label: `Likes`
       }
     ];
   }
 
+  private htmlConfig = {
+    autoBlacklist: {videos: {ofUsers: {enabled: false}}},
+    avatar: {file: {extensions: [], size: {max: 0}}},
+    banner: {file: {extensions: [], size: {max: 0}}},
+    broadcastMessage: {dismissable: false, enabled: false, level: undefined, message: ""},
+    contactForm: {enabled: false},
+    email: {enabled: false},
+    followings: {instance: {autoFollowIndex: {indexUrl: ""}}},
+    import: {videos: {http: {enabled: false}, torrent: {enabled: false}}},
+    instance: {
+      customizations: {css: "", javascript: ""},
+      defaultClientRoute: "",
+      defaultNSFWPolicy: undefined,
+      isNSFW: false,
+      name: "",
+      shortDescription: ""
+    },
+    live: {
+      allowReplay: false,
+      enabled: false,
+      maxDuration: 0,
+      maxInstanceLives: 0,
+      maxUserLives: 0,
+      rtmp: {port: 0},
+      transcoding: {availableProfiles: [], enabled: false, enabledResolutions: [], profile: ""}
+    },
+    plugin: {registered: [], registeredExternalAuths: [], registeredIdAndPassAuths: []},
+    search: {
+      remoteUri: {
+        users: true,
+        anonymous: false,
+      },
+      searchIndex: {
+        enabled: false,
+        url: '',
+        disableLocalSearch: false,
+        isDefaultSearch: false,
+      }
+    },
+    serverVersion: "",
+    theme: {default: "", registered: []},
+    tracker: {enabled: false},
+    transcoding: {
+      availableProfiles: [],
+      enabledResolutions: [],
+      hls: {enabled: false},
+      profile: "",
+      webtorrent: {enabled: false}
+    },
+    trending: {videos: {algorithms: {default: "", enabled: []}, intervalDays: 0}},
+    user: {videoQuota: 0, videoQuotaDaily: 0},
+    video: {file: {extensions: []}, image: {extensions: [], size: {max: 0}}},
+    videoCaption: {file: {extensions: [], size: {max: 0}}}
+
+  };
+
   ngOnInit() {
-    this.serverConfig = this.serverService.getHTMLConfig();
+    this.serverConfig = this.htmlConfig;
 
     this.loadFromDurationRange();
     this.loadFromPublishedRange();
     this.loadOriginallyPublishedAtYears();
+
+    this.handleImgClick();
+
   }
 
   onDurationOrPublishedUpdated() {
-    this.updateModelFromDurationRange();
     this.updateModelFromPublishedRange();
-    this.updateModelFromOriginallyPublishedAtYears();
   }
 
   formUpdated() {
     this.onDurationOrPublishedUpdated();
+    this.advancedSearch.originallyPublishedStartDate = this.originallyPublishedStartYear;
+    this.advancedSearch.originallyPublishedEndDate = this.originallyPublishedEndYear;
     this.filtered.emit(this.advancedSearch);
   }
 
@@ -139,20 +206,22 @@ export class SearchFiltersComponent implements OnInit {
     this.originallyPublishedStartYear = this.originallyPublishedEndYear = undefined;
   }
 
-  isSearchTargetEnabled() {
-    // return this.serverConfig.search.searchIndex.enabled && this.serverConfig.search.searchIndex.disableLocalSearch !== true;
-
-    return false;
+  isSearch = true;
+  handleImgClick(tooltipEl?: NgbTooltip) {
+    debugger
+    this.isSearch = !this.isSearch;
+    this.tooltip = this.tooltips[Math.floor(Math.random() * this.tooltips.length)];
+    if (tooltipEl) tooltipEl.toggle();
   }
 
   private loadOriginallyPublishedAtYears() {
-    this.originallyPublishedStartYear = this.advancedSearch.originallyPublishedStartDate
-      ? new Date(this.advancedSearch.originallyPublishedStartDate).getFullYear().toString()
-      : null;
+    this.originallyPublishedStartYear = this.advancedSearch.originallyPublishedStartDate;
+      // ? new Date(this.advancedSearch.originallyPublishedStartDate).getFullYear().toString()
+      // : null;
 
-    this.originallyPublishedEndYear = this.advancedSearch.originallyPublishedEndDate
-      ? new Date(this.advancedSearch.originallyPublishedEndDate).getFullYear().toString()
-      : null;
+    this.originallyPublishedEndYear = this.advancedSearch.originallyPublishedEndDate;
+      // ? new Date(this.advancedSearch.originallyPublishedEndDate).getFullYear().toString()
+      // : null;
   }
 
   private loadFromDurationRange() {
@@ -187,56 +256,6 @@ export class SearchFiltersComponent implements OnInit {
     }
   }
 
-  private updateModelFromOriginallyPublishedAtYears() {
-    const baseDate = new Date();
-    baseDate.setHours(0, 0, 0, 0);
-    baseDate.setMonth(0, 1);
-
-    if (this.originallyPublishedStartYear) {
-      const year = parseInt(this.originallyPublishedStartYear, 10);
-      const start = new Date(baseDate);
-      start.setFullYear(year);
-
-      this.advancedSearch.originallyPublishedStartDate = start.toISOString();
-    } else {
-      this.advancedSearch.originallyPublishedStartDate = null;
-    }
-
-    if (this.originallyPublishedEndYear) {
-      const year = parseInt(this.originallyPublishedEndYear, 10);
-      const end = new Date(baseDate);
-      end.setFullYear(year);
-
-      this.advancedSearch.originallyPublishedEndDate = end.toISOString();
-    } else {
-      this.advancedSearch.originallyPublishedEndDate = null;
-    }
-  }
-
-  private updateModelFromDurationRange() {
-    if (!this.durationRange) return;
-
-    const fourMinutes = 60 * 4;
-    const tenMinutes = 60 * 10;
-
-    switch (this.durationRange) {
-      case 'short':
-        this.advancedSearch.durationMin = undefined;
-        this.advancedSearch.durationMax = fourMinutes;
-        break;
-
-      case 'medium':
-        this.advancedSearch.durationMin = fourMinutes;
-        this.advancedSearch.durationMax = tenMinutes;
-        break;
-
-      case 'long':
-        this.advancedSearch.durationMin = tenMinutes;
-        this.advancedSearch.durationMax = undefined;
-        break;
-    }
-  }
-
   private updateModelFromPublishedRange() {
     if (!this.publishedDateRange) return;
 
@@ -258,6 +277,6 @@ export class SearchFiltersComponent implements OnInit {
         break;
     }
 
-    this.advancedSearch.startDate = date.toISOString();
+    this.advancedSearch.startDate = date.toLocaleDateString(); // date.toISOString();
   }
 }

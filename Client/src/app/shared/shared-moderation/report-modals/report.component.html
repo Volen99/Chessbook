@@ -43,7 +43,7 @@
           <textarea
                   nbInput
                   placeholder="Please describe the issue..." formControlName="reason" ngbAutofocus
-                  [ngClass]="{ 'input-error': formErrors['reason'] }" class="form-control">
+                  [ngClass]="{ 'input-error': formErrors['reason'] }">
           </textarea>
                             <div *ngIf="formErrors.reason" class="form-error">
                                 {{ formErrors.reason }}

@@ -12,6 +12,11 @@
     {
         private const string REGEX_PROFILE_IMAGE_SIZE = "_[^\\W_]+(?=(?:\\.[a-zA-Z0-9_]+$))";
 
+        public Customer()
+        {
+            this.CustomerGuid = Guid.NewGuid();
+        }
+
         public string DisplayName { get; set; }
 
         public string ScreenName { get; set; }

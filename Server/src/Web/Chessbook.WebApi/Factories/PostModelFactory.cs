@@ -28,6 +28,7 @@ using Chessbook.Web.Infrastructure.Cache;
 using Chessbook.Web.Models.Catalog;
 using Chessbook.Web.Models.Media;
 using Chessbook.Services.APIs;
+using Chessbook.Core.Infrastructure;
 
 namespace Chessbook.Web.Api.Factories
 {
@@ -54,6 +55,7 @@ namespace Chessbook.Web.Api.Factories
         private readonly IPreviewCardFactory previewCardFactory;
         private readonly IPreviewCardService previewCardService;
         private readonly ITwitchService twitchService;
+        private readonly INopFileProvider fileProvider;
 
         #endregion
 
@@ -63,7 +65,7 @@ namespace Chessbook.Web.Api.Factories
             IStoreContext storeContext, IPictureService pictureService, ILocaleStringResourceService localeStringResourceService, IUserModelFactory userModelFactory,
             IUserService userService, IGenericAttributeService genericAttributeService, IPostCommentService postCommentService, IPostsService postService,
             IPostTagService postTagService, IPollService pollService, IPollModelFactory pollModelFactory, IDateTimeHelper dateTimeHelper,
-            IPreviewCardFactory previewCardFactory, IPreviewCardService previewCardService, ITwitchService twitchService)
+            IPreviewCardFactory previewCardFactory, IPreviewCardService previewCardService, ITwitchService twitchService, INopFileProvider fileProvider)
         {
             this.mediaSettings = mediaSettings;
             this.staticCacheManager = staticCacheManager;
@@ -84,6 +86,7 @@ namespace Chessbook.Web.Api.Factories
             this.previewCardFactory = previewCardFactory;
             this.previewCardService = previewCardService;
             this.twitchService = twitchService;
+            this.fileProvider = fileProvider;
         }
 
         #endregion
@@ -124,9 +127,11 @@ namespace Chessbook.Web.Api.Factories
                 (imageUrl, defaultPicture) = await this.pictureService.GetPictureUrlAsync(defaultPicture, defaultPictureSize, !isAssociatedProduct);
                 (fullSizeImageUrl, defaultPicture) = await this.pictureService.GetPictureUrlAsync(defaultPicture, 0, !isAssociatedProduct);
 
-                // TODO: you know what to do kk
-                using var image = SKBitmap.Decode(@"C:\Users\volen\OneDrive\Desktop\Chessbook\Server\src\Web\Chessbook.WebApi\wwwroot" + fullSizeImageUrl);
-                using var imageSmall = SKBitmap.Decode(@"C:\Users\volen\OneDrive\Desktop\Chessbook\Server\src\Web\Chessbook.WebApi\wwwroot" + imageUrl);
+                var imgPath = this.fileProvider.Combine(this.fileProvider.MapPath("~/wwwroot"), fullSizeImageUrl);
+                var imgSmallPath = this.fileProvider.Combine(this.fileProvider.MapPath("~/wwwroot"), imageUrl);
+
+                using var image = SKBitmap.Decode(imgPath);
+                using var imageSmall = SKBitmap.Decode(imgSmallPath);
 
                 var defaultPictureModel = new PictureModel
                 {
@@ -424,7 +429,7 @@ namespace Chessbook.Web.Api.Factories
         /// A task that represents the asynchronous operation
         /// The task result contains the products by tag model
         /// </returns>
-        public virtual async Task<ProductsByTagModel> PrepareProductsByTagModelAsync(Tag productTag, CatalogProductsCommand command)
+        public virtual async Task<ProductsByTagModel> PrepareProductsByTagModelAsync(Tag productTag, int start, int count, string search, string tagsOneOf, string sort, DateTime? startDate, DateTime? originallyPublishedStartDate, DateTime? originallyPublishedEndDate, CatalogProductsCommand command)
         {
             if (productTag == null)
             {
@@ -440,10 +445,55 @@ namespace Chessbook.Web.Api.Factories
             {
                 Id = productTag.Id,
                 TagName = productTag.Name,
-                CatalogProductsModel = await PrepareTagProductsModelAsync(productTag, command)
+                CatalogProductsModel = await PrepareTagProductsModelAsync(productTag, start, count, search, tagsOneOf, sort, startDate, originallyPublishedStartDate, originallyPublishedEndDate , command)
             };
 
             return model;
+        }
+
+        /// <summary>
+        /// Prepare products by tag model
+        /// </summary>
+        /// <param name="productTag">Product tag</param>
+        /// <param name="command">Model to get the catalog products</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the products by tag model
+        /// </returns>
+        public async Task<IList<PostModel>> PreparePostsByTagsModelAsync(Tag[] postTags, CatalogProductsCommand command)
+        {
+            if (postTags == null)
+            {
+                throw new ArgumentNullException(nameof(postTags));
+            }
+
+            if (command == null)
+            {
+                throw new ArgumentNullException(nameof(command));
+            }
+
+            var model = new CatalogProductsModel
+            {
+                // UseAjaxLoading = _catalogSettings.UseAjaxCatalogProductsLoading
+            };
+
+            // products
+            var products = await this.postService.SearchProductsAsync(
+                command.Start,
+                command.Count,
+                priceMin: null, // selectedPriceRange?.From,
+                priceMax: null, // selectedPriceRange?.To,
+                storeId: 1,     // (await _storeContext.GetCurrentStoreAsync()).Id,
+                postTagsIds: postTags.Select(t => t.Id).ToArray(),
+                visibleIndividuallyOnly: true,
+                orderBy: ProductSortingEnum.Match /*(ProductSortingEnum)command.OrderBy*/);
+
+            // var isFiltering = selectedPriceRange?.From is not null;
+            ;
+
+            await PrepareCatalogProductsAsync(model, products, false);
+
+            return model.Products;
         }
 
         /// <summary>
@@ -455,7 +505,7 @@ namespace Chessbook.Web.Api.Factories
         /// A task that represents the asynchronous operation
         /// The task result contains the ag products model
         /// </returns>
-        public virtual async Task<CatalogProductsModel> PrepareTagProductsModelAsync(Tag productTag, CatalogProductsCommand command)
+        public virtual async Task<CatalogProductsModel> PrepareTagProductsModelAsync(Tag productTag, int start, int count, string search, string tagsOneOf, string sort, DateTime? startDate, DateTime? originallyPublishedStartDate, DateTime? originallyPublishedEndDate, CatalogProductsCommand command)
         {
             if (productTag == null)
             {
@@ -527,7 +577,10 @@ namespace Chessbook.Web.Api.Factories
                 storeId: 1,     // (await _storeContext.GetCurrentStoreAsync()).Id,
                 productTagId: productTag.Id,
                 visibleIndividuallyOnly: true,
-                orderBy: ProductSortingEnum.Position /*(ProductSortingEnum)command.OrderBy*/);
+                orderBy: sort == "-match" ? ProductSortingEnum.Match : sort == "-createdOn" ? ProductSortingEnum.CreatedOn : ProductSortingEnum.Likes,
+                originallyPublishedStartDate: originallyPublishedStartDate,
+                originallyPublishedEndDate: originallyPublishedEndDate,
+                startDate: startDate);
 
             // var isFiltering = selectedPriceRange?.From is not null;
             await PrepareCatalogProductsAsync(model, products, false);

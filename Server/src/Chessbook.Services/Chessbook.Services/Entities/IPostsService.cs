@@ -59,15 +59,19 @@
             decimal? priceMin = null,
             decimal? priceMax = null,
             int productTagId = 0,
+            int[] postTagsIds = null,
             string keywords = null,
             bool searchDescriptions = false,
             bool searchManufacturerPartNumber = true,
             bool searchSku = true,
             bool searchProductTags = false,
             int languageId = 0,
-            ProductSortingEnum orderBy = ProductSortingEnum.Position,
+            ProductSortingEnum orderBy = ProductSortingEnum.Match,
             bool showHidden = false,
-            bool? overridePublished = null);
+            bool? overridePublished = null,
+            DateTime? originallyPublishedStartDate = null,
+            DateTime? originallyPublishedEndDate = null,
+            DateTime? startDate = null);
 
         Task<Post> CreateAsync(QueryPostParams query, int userId, int[] mediaIds = null, int? pollId = null);
 

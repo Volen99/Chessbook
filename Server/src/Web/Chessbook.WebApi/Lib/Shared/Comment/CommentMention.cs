@@ -14,6 +14,7 @@ using Chessbook.Services.Notifications.Settings;
 using Chessbook.Web.Api.Lib.Shared.Common;
 using Chessbook.Core;
 using Chessbook.Core.Infrastructure;
+using Chessbook.Services.Messages;
 
 namespace Chessbook.Web.Api.Lib.Shared.Comment
 {
@@ -26,6 +27,7 @@ namespace Chessbook.Web.Api.Lib.Shared.Comment
         private readonly IBlocklistService blocklistService = EngineContext.Current.Resolve<IBlocklistService>();
         private readonly INotificationsSettingsService notificationsSettingsService = EngineContext.Current.Resolve<INotificationsSettingsService>();
         private readonly IUserNotificationService userNotificationService = EngineContext.Current.Resolve<IUserNotificationService>();
+        private readonly IWorkflowMessageService workflowMessageService = EngineContext.Current.Resolve<IWorkflowMessageService>();
 
         private List<Customer> users;
         private int serverAccountId;
@@ -105,9 +107,9 @@ namespace Chessbook.Web.Api.Lib.Shared.Comment
             return notification;
         }
 
-        public override void CreateEmail(string to)
+        public override async Task CreateEmail(UserNotification userNotification)
         {
-            throw new System.NotImplementedException();
+            await this.workflowMessageService.SendBlogCommentNotificationMessageAsync(userNotification.Comment);
         }
 
     }

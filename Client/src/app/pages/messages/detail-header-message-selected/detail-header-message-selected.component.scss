@@ -4,7 +4,7 @@
 
 @include nb-install-component() {
   .message-color {
-    background: nb-theme(color-primary-600);
+    background: nb-theme(radio-basic-hover-background-color);
     color: nb-theme(chat-message-text-color);
   }
 }

@@ -131,6 +131,8 @@ export interface IUser extends IUserIdentifier {
   facebookLink: string;
 
   unreadPrivateMessages: number;
+
+  active: boolean;
 }
 
 export abstract class UserData {

@@ -125,6 +125,7 @@ export class ContactComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: () => {
                     this.notifier.success('Your message has been sent.', `Success`);
+                    this.back();
                 },
                 error: err => {
                     this.error = err.status === HttpStatusCode.FORBIDDEN_403

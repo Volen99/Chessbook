@@ -224,11 +224,12 @@ export class UsersService extends UserData {
     // );
   }
 
-  changePassword(currentPassword: string, newPassword: string) {
-    const url = 'me';
-    const body: UserUpdateMe = {
-      currentPassword,
-      password: newPassword
+  changePassword(currentPassword: string, newPassword: string, confirmPassword: string) {
+    const url = 'reset-pass';
+    const body = {
+      oldPassword: currentPassword,
+      password: newPassword,
+      confirmPassword: confirmPassword,
     };
 
     return this.api.changePassword(url, body)

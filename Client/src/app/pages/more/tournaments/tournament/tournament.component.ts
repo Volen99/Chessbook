@@ -27,4 +27,8 @@ export class TournamentComponent implements OnInit {
   faGlobe = faGlobe;
   faUsers = faUsers;
 
+  redirect(url: string) {
+    window.open(url, '_blank');
+  }
+
 }

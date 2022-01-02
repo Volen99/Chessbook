@@ -6,9 +6,7 @@ import {ListOverflowItem} from "../shared/shared-main/misc/list-overflow.compone
 import {UserStore} from "../core/stores/user.store";
 
 import {
-  faUserCheck,
   faUserAlien,
-  faBookAlt,
   faFlag,
   faTimes,
 } from '@fortawesome/pro-light-svg-icons';
@@ -81,6 +79,9 @@ export class AdminComponent implements OnInit {
 
     if (this.hasUsersRight()) {
       this.menuEntries.push({label: `Users`, routerLink: '/admin/users'});
+      this.menuEntries.push({label: 'Survey', routerLink: '/admin/survey'});
+      this.menuEntries.push({label: 'Tournaments', routerLink: '/admin/tournaments'});
+      this.menuEntries.push({label: 'Donations', routerLink: '/admin/donators'});
     }
 
     if (this.hasAbusesRight() || this.hasVideoBlocklistRight()) this.menuEntries.push(moderationItems);
@@ -93,18 +94,9 @@ export class AdminComponent implements OnInit {
     //   this.menuEntries.push({label: `System`, routerLink: '/admin/system'});
     // }
 
-    if (this.hasUsersRight()) {
-      this.menuEntries.push({label: 'Survey', routerLink: '/admin/survey'});
-    }
-
-    if (this.hasUsersRight()) {
-      this.menuEntries.push({label: 'Tournaments', routerLink: '/admin/tournaments'});
-    }
   }
 
-  faUserCheck = faUserCheck;
   faUserAlien = faUserAlien;
-  faBookAlt = faBookAlt;
   faFlag = faFlag;
   faTimes = faTimes;
   faCommentSmileSolid = faCommentSmileSolid;

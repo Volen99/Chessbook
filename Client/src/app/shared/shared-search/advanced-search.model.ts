@@ -168,13 +168,6 @@ export class AdvancedSearch {
     };
   }
 
-  toChannelAPIObject(): VideoChannelsSearchQuery {
-    return {
-      host: this.host,
-      searchTarget: this.searchTarget
-    };
-  }
-
   size() {
     let acc = 0;
 

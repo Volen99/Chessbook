@@ -165,16 +165,16 @@ namespace Chessbook.Web.Api.Controllers
                 try
                 {
                     var subject = model.Subject;
-                    //if (_forumSettings.PMSubjectMaxLength > 0 && subject.Length > _forumSettings.PMSubjectMaxLength)
-                    //{
-                    //    subject = subject[0.._forumSettings.PMSubjectMaxLength];
-                    //}
+                    if (subject.Length > 120)
+                    {
+                        subject = subject[0..120];
+                    }
 
                     var text = model.Message;
-                    //if (_forumSettings.PMTextMaxLength > 0 && text.Length > _forumSettings.PMTextMaxLength)
-                    //{
-                    //    text = text[0.._forumSettings.PMTextMaxLength];
-                    //}
+                    if (text.Length > 5000)
+                    {
+                        text = text[0..5000];
+                    }
 
                     var nowUtc = DateTime.UtcNow;
 

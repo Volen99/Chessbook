@@ -2,9 +2,7 @@ import {NgModule} from '@angular/core';
 import {TableModule} from 'primeng/table';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
-import {MyAccountAbusesListComponent} from './my-account-abuses/my-account-abuses-list.component';
 import {MyAccountBlocklistComponent} from './my-account-blocklist/my-account-blocklist.component';
-import {MyAccountNotificationsComponent} from './my-account-notifications/my-account-notifications.component';
 import {MyAccountRoutingModule} from './my-account-routing.module';
 import {MyAccountChangePasswordComponent} from './my-account-settings/my-account-change-password/my-account-change-password.component';
 import {MyAccountProfileComponent} from './my-account-settings/my-account-profile/my-account-profile.component';
@@ -39,7 +37,6 @@ import {ShowcaseDialogComponent} from './my-account-settings/my-account-danger-z
     MyAccountRoutingModule,
 
     TableModule,
-    // DragDropModule,
 
     SharedMainModule,
     SharedFormModule,
@@ -56,7 +53,6 @@ import {ShowcaseDialogComponent} from './my-account-settings/my-account-danger-z
     AuthModule,
     FontAwesomeModule,
     NbRadioModule,
-    // NotificationsModule,
     SharedActorImageEditModule,
     SharedActorImageModule,
   ],
@@ -70,8 +66,6 @@ import {ShowcaseDialogComponent} from './my-account-settings/my-account-danger-z
 
     MyAccountDangerZoneComponent,
     MyAccountBlocklistComponent,
-    MyAccountAbusesListComponent,
-    MyAccountNotificationsComponent,
     MyAccountNotificationPreferencesComponent,
     MyAccountThemeComponent,
     DialogAreYouSureComponent,

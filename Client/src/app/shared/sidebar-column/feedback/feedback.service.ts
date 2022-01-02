@@ -29,11 +29,11 @@ export class CustomerFeedbackService {
   public defaultRateItem: IActionItem = {id: 2, name: 'neutral', icon: faMeh};
 
   public ratingItems: IActionItem[] = [
-    {id: 0, name: 'very satisfied', icon: faGrinHearts},
-    {id: 1, name: 'satisfied', icon: faSmile},
+    {id: 0, name: 'loving it', icon: faGrinHearts},
+    {id: 1, name: 'like it', icon: faSmile},
     this.defaultRateItem,
-    {id: 3, name: 'dissatisfied', icon: faFrown},
-    {id: 4, name: 'very dissatisfied', icon: faMehRollingEyes},
+    {id: 3, name: 'don\'t like it', icon: faFrown},
+    {id: 4, name: 'really don\'t like it', icon: faMehRollingEyes},
   ];
 
   public feedbackRate: IActionItem = this.defaultRateItem;

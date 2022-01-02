@@ -1,16 +1,17 @@
 import {
-  AfterContentInit,
+  AfterContentInit, AfterViewInit, ChangeDetectorRef,
   Component,
   ElementRef,
   Input, OnChanges, OnDestroy,
   OnInit,
-  Renderer2,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
+
 import {
-  faCompress
-} from '@fortawesome/pro-light-svg-icons';
+  faExpandAlt,
+  faCompressAlt,
+} from '@fortawesome/pro-solid-svg-icons';
 
 const MIN_SCALE = 1;
 const MAX_SCALE = 4;
@@ -101,7 +102,7 @@ const normalizeWheel = event => {
   templateUrl: './zoomable-image.component.html',
   styleUrls: ['./zoomable-image.component.scss']
 })
-export class ZoomableImageComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit {
+export class ZoomableImageComponent implements OnInit, OnChanges, AfterContentInit, AfterViewInit, OnDestroy {
   // HAHAHAHAHAHHAHHHHHHHHHHHAHHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHHAHAAAAAAAAAAAAAAAA https://stackoverflow.com/questions/56359504/how-should-i-use-the-new-static-option-for-viewchild-in-angular-8
   @ViewChild('containerRef', {static: true}) containerRef: ElementRef<HTMLDivElement>;
   @ViewChild('imageRef', {static: true}) imageRef: ElementRef<HTMLImageElement>;
@@ -113,7 +114,7 @@ export class ZoomableImageComponent implements OnInit, OnChanges, OnDestroy, Aft
   @Input() onClick: () => any;
   @Input() zoomButtonHidden: boolean;
 
-  constructor(private renderer: Renderer2) {
+  constructor(private cdr: ChangeDetectorRef) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -134,13 +135,18 @@ export class ZoomableImageComponent implements OnInit, OnChanges, OnDestroy, Aft
       this.container.scrollLeft = 0;
       this.container.scrollTop = 0;
     }
+
+    // if (this.image?.offsetHeight !== 0) {
+    //   this.initZoomMatrix();
+    // }
   }
 
+  clicked = false;
   ngOnInit(): void {
 
   }
 
-  ngAfterContentInit(): void {
+  ngAfterViewInit(): void {
     this.container = this.containerRef.nativeElement;
     this.image = this.imageRef.nativeElement;
 
@@ -172,6 +178,41 @@ export class ZoomableImageComponent implements OnInit, OnChanges, OnDestroy, Aft
     this.overflow = this.scale === MIN_SCALE ? 'hidden' : 'scroll';
     this.zoomButtonShouldHide = this.navigationHidden || this.zoomButtonHidden || this.zoomMatrix.rate <= MIN_SCALE ? 'media-modal__zoom-button--hidden' : '';
     this.zoomButtonTitle = this.zoomState === 'compress' ? 'compress' : 'expand';
+    this.cdr.detectChanges();
+  }
+
+  ngAfterContentInit(): void {
+    // this.container = this.containerRef.nativeElement;
+    // this.image = this.imageRef.nativeElement;
+    //
+    // let handler = this.handleTouchStart;
+    // this.container.addEventListener('touchstart', handler);
+    // this.removers.push(() => this.container.removeEventListener('touchstart', handler));
+    // handler = this.handleTouchMove;
+    // // on Chrome 56+, touch event listeners will default to passive
+    // // https://www.chromestatus.com/features/5093566007214080
+    // this.container.addEventListener('touchmove', handler, {passive: false});
+    // this.removers.push(() => this.container.removeEventListener('touchend', handler));
+    //
+    // handler = this.mouseDownHandler;
+    // this.container.addEventListener('mousedown', handler);
+    // this.removers.push(() => this.container.removeEventListener('mousedown', handler));
+    //
+    // handler = this.mouseWheelHandler;
+    // this.container.addEventListener('wheel', handler);
+    // this.removers.push(() => this.container.removeEventListener('wheel', handler));
+    // // Old Chrome
+    // this.container.addEventListener('mousewheel', handler);
+    // this.removers.push(() => this.container.removeEventListener('mousewheel', handler));
+    // // Old Firefox
+    // this.container.addEventListener('DOMMouseScroll', handler);
+    // this.removers.push(() => this.container.removeEventListener('DOMMouseScroll', handler));
+    //
+    // this.initZoomMatrix();
+    //
+    // this.overflow = this.scale === MIN_SCALE ? 'hidden' : 'scroll';
+    // this.zoomButtonShouldHide = this.navigationHidden || this.zoomButtonHidden || this.zoomMatrix.rate <= MIN_SCALE ? 'media-modal__zoom-button--hidden' : '';
+    // this.zoomButtonTitle = this.zoomState === 'compress' ? 'compress' : 'expand';
   }
 
   ngOnDestroy(): void {
@@ -211,7 +252,8 @@ export class ZoomableImageComponent implements OnInit, OnChanges, OnDestroy, Aft
   lastTouchEndTime = 0;
   lastDistance = 0;
 
-  faCompress = faCompress;
+  faExpandAlt = faExpandAlt;
+  faCompressAlt = faCompressAlt;
 
   removeEventListeners() {
     this.removers.forEach(listeners => listeners());
@@ -361,7 +403,6 @@ export class ZoomableImageComponent implements OnInit, OnChanges, OnDestroy, Aft
     const translateX = type === 'width' ? (this.width - offsetWidth) / (2 * rate) : 0;
     const translateY = type === 'height' ? (this.height - offsetHeight) / (2 * rate) : 0;
 
-
     this.zoomMatrix = {
       type,
       fullScreen,
@@ -379,6 +420,7 @@ export class ZoomableImageComponent implements OnInit, OnChanges, OnDestroy, Aft
   };
 
   handleZoomClick = e => {
+    this.clicked = !this.clicked;
     e.preventDefault();
     e.stopPropagation();
 

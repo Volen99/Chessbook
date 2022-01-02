@@ -149,7 +149,6 @@ $icon-font-path: '~@neos21/bootstrap3-glyphicons/assets/fonts/';
     text-align: right;
 
     .action-button-cancel {
-      @include peertube-button;
       @include tertiary-button;
 
       display: inline-block;

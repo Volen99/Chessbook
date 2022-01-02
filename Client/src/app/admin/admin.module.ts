@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
 
 import {OptionComponent, SurveyComponent} from './survey/survey.component';
 import {AdminComponent} from './admin.component';
@@ -10,7 +9,6 @@ import {NbSelectModule} from "../sharebook-nebular/theme/components/select/selec
 import {NbInputModule} from "../sharebook-nebular/theme/components/input/input.module";
 import {NbButtonModule} from "../sharebook-nebular/theme/components/button/button.module";
 import {SurveyService} from "../shared/services/survey.service";
-import {SharedModule} from "../shared/shared.module";
 import {SharedMainModule} from "../shared/shared-main/shared-main.module";
 import {
   UserListComponent,
@@ -36,6 +34,8 @@ import {VideoCommentListComponent} from "./moderation/video-comment-list";
 import {UserPasswordComponent, UserUpdateComponent} from "./users/user-edit";
 import { TournamentComponent } from './tournaments/tournament.component';
 import {Ng2SmartTableModule} from "ng2-smart-table";
+import { DonatorComponent } from './donations/donator.component';
+import {DonationsService} from "./donations/donations-service";
 
 @NgModule({
   declarations: [
@@ -57,6 +57,7 @@ import {Ng2SmartTableModule} from "ng2-smart-table";
 
     InstanceAccountBlocklistComponent,
      TournamentComponent,
+     DonatorComponent,
   ],
   imports: [
     AdminRoutingModule,
@@ -86,7 +87,7 @@ import {Ng2SmartTableModule} from "ng2-smart-table";
     SurveyComponent
   ],
 
-  providers: [SurveyService]
+  providers: [SurveyService, DonationsService]
 })
 export class AdminModule {
 }

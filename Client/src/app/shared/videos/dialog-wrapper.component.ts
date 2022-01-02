@@ -6,7 +6,6 @@ import {
   EventEmitter,
   AfterContentInit,
   ChangeDetectorRef,
-  ViewChild
 } from '@angular/core';
 
 import {
@@ -15,6 +14,11 @@ import {
   faWindowRestore,
   faVideoPlus
 } from '@fortawesome/pro-light-svg-icons';
+
+import {
+  faVideoPlus as faVideoPlusSolid
+} from '@fortawesome/pro-solid-svg-icons';
+
 import {NbDialogRef} from '../../sharebook-nebular/theme/components/dialog/dialog-ref';
 import {VideosDialogComponent} from './videos-dialog.component';
 import {NbDialogService} from '../../sharebook-nebular/theme/components/dialog/dialog.service';
@@ -23,7 +27,7 @@ import {IVideoItem} from './models/video-item.model';
 import {YoutubeVideosService} from './youtube-videos.service';
 import {NbToastrService} from '../../sharebook-nebular/theme/components/toastr/toastr.service';
 import {UserStore} from '../../core/stores/user.store';
-import {UserRight} from '../models/users/user-right.enum';
+import {IconDefinition} from '@fortawesome/fontawesome-common-types';
 
 @Component({
   selector: 'dialog-wrapper-title',
@@ -128,16 +132,21 @@ export class DialogWrapperComponent implements AfterContentInit {
     });
   }
 
+  isVideoSolid = false;
+
   faTimes = faTimes;
   faWindowMaximize = faWindowMaximize;
   faWindowRestore = faWindowRestore;
+
   faVideoPlus = faVideoPlus;
+  faVideoPlusSolid = faVideoPlusSolid;
 
   open() {
     this.isOpen = true;
   }
 
   close() {
+    this.isVideoSolid = false;
     this.isOpen = false;
   }
 
@@ -162,12 +171,15 @@ export class DialogWrapperComponent implements AfterContentInit {
       return;
     }
 
+    this.isVideoSolid = true;
     this.dialogService.open(VideosDialogCrudComponent, {
       context: {
         isEdit: false,
       },
       closeOnBackdropClick: false,
     }).onClose.subscribe((data: IVideoItem) => {
+      this.isVideoSolid = false;
+      this.changeDetection.markForCheck();
       if (!data) {
         return;
       }

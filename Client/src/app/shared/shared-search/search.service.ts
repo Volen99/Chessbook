@@ -51,6 +51,7 @@ export class SearchService {
     if (search) params = params.append('search', search);
     if (uuids) params = this.restService.addArrayParams(params, 'uuids', uuids);
 
+    debugger
     if (advancedSearch) {
       const advancedSearchObject = advancedSearch.toVideosAPIObject();
       params = this.restService.addObjectParams(params, advancedSearchObject);
@@ -58,7 +59,7 @@ export class SearchService {
 
     return this.authHttp
       .get<ResultList<Post>>(url, {params})
-      .pipe(                        // @ts-ignore
+      .pipe(
         switchMap(res => this.videoService.extractVideos(res)),
         catchError(err => this.restExtractor.handleError(err))
       );
@@ -85,10 +86,10 @@ export class SearchService {
     if (search) params = params.append('search', search);
     if (handles) params = this.restService.addArrayParams(params, 'handles', handles);
 
-    if (advancedSearch) {
-      const advancedSearchObject = advancedSearch.toChannelAPIObject();
-      params = this.restService.addObjectParams(params, advancedSearchObject);
-    }
+    // if (advancedSearch) {
+    //   const advancedSearchObject = advancedSearch.toChannelAPIObject();
+    //   params = this.restService.addObjectParams(params, advancedSearchObject);
+    // }
 
     return this.authHttp
       .get<ResultList<User>>(url, {params})

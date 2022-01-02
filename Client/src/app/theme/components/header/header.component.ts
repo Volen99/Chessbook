@@ -120,9 +120,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.userPictureOnly = isLessThanXl;
         if (isLessThanXl) {
           this.searchType = 'curtain';
+          this.borderLeft = true;
         } else {
           this.searchType = 'rotate-layout';
+          this.borderLeft = false;
         }
+
       });
 
     this.themeService.onThemeChange()
@@ -148,6 +151,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isLoggedIn: boolean;
   searchType: 'rotate-layout' | 'curtain' = 'rotate-layout';
+
+  borderLeft = true;
 
   themes = [
     {

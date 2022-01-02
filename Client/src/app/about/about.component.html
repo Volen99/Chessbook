@@ -52,7 +52,7 @@
                                 </div>
 
                                 <div class="card-text">
-                                    Chessbook goal is to be supported both in iOS and Android.
+                                    Chessbook goal is to be supported both for iOS and Android.
                                 </div>
                             </div>
                         </div>
@@ -64,8 +64,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <a rel="noopener noreferrer" href="javascript:void(0)"
-                                       style="text-decoration: none">Contribute on Chessbook</a>
+                                    <a rel="noopener noreferrer" href="javascript:void(0)" style="text-decoration: none"
+                                       [nbPopover]="contributingRef" nbPopoverTrigger="click" nbPopoverPlacement="top">Contribute on Chessbook</a>
                                 </div>
 
                                 <div class="card-text">
@@ -75,6 +75,10 @@
                                 </div>
                             </div>
                         </div>
+
+                        <ng-template #contributingRef>
+                            <img src="/assets/images/contributing.jpg" alt="chessbook app">
+                        </ng-template>
                     </div>
 
                     <div class="row">
@@ -222,6 +226,12 @@
                                                      class="paypal-logo paypal-logo-paypal paypal-logo-color-blue">
                                             </div>
                                         </a>
+                                    </div>
+                                    <div>
+                                        <p class="small-team">We are a small team, so your support makes a huge difference!
+                                            <br>
+                                             Check out the <a routerLink="/thank-you" style="cursor: pointer;">thank you</a> page
+                                        </p>
                                     </div>
                                 </div>
                             </div>

@@ -205,24 +205,43 @@ namespace Chessbook.Web.Api.Lib
 
             @object.Log();
 
-            var toEmails = new List<string>();
+            // var toEmails = new List<string>();
 
             foreach (var user in users)
             {
                 var setting = await @object.GetSetting(user);
 
-                if (this.IsWebNotificationEnabled(setting))
+                var notification = await @object.CreateNotification(user);
+                if (this.IsNotificationBoth(setting))
                 {
-                    var notification = await @object.CreateNotification(user);
-
                     await this.sendNotificationHub(user.Id, notification);
+                    await @object.CreateEmail(notification);
+                }
+                else if (this.IsWebNotificationEnabled(setting))
+                {
+                    await this.sendNotificationHub(user.Id, notification);
+                }
+                else if (this.IsEmailEnabled(setting))
+                {
+                    await @object.CreateEmail(notification);
                 }
             }
         }
 
         private bool IsWebNotificationEnabled(UserNotificationSettingValue value)
         {
-            return true; // value == UserNotificationSettingValue.WEB;
+            return value == UserNotificationSettingValue.WEB;
+        }
+
+        private bool IsEmailEnabled(UserNotificationSettingValue value)
+        {
+            // if (CONFIG.SIGNUP.REQUIRES_EMAIL_VERIFICATION === true && user.emailVerified === false) return false
+            return value == UserNotificationSettingValue.EMAIL;
+        }
+
+        private bool IsNotificationBoth(UserNotificationSettingValue value)
+        {
+            return value == UserNotificationSettingValue.BOTH;
         }
 
         private async Task sendNotificationHub(int userId, UserNotification notification)

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
 using Chessbook.Core.Domain.Posts;
 
 namespace Chessbook.Services.Entities
@@ -8,5 +10,7 @@ namespace Chessbook.Services.Entities
         Task<Post> Create(int userId, Post originalPost);
 
         Task Destroy(Post repostedPost, Post originalPost);
+
+        Task<List<Post>> GetRepostsByPostId(int postId);
     }
 }

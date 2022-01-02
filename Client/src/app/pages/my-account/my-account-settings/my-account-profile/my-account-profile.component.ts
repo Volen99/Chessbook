@@ -1,3 +1,4 @@
+import {ActivatedRoute, Router} from "@angular/router";
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {takeUntil} from "rxjs/operators";
@@ -5,7 +6,6 @@ import {takeUntil} from "rxjs/operators";
 import {IUser, UserData} from "../../../../core/interfaces/common/users";
 import {UserStore} from "../../../../core/stores/user.store";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
 import {NbTokenService} from "../../../../sharebook-nebular/auth/services/token/token.service";
 import {NbToastrService} from "../../../../sharebook-nebular/theme/components/toastr/toastr.service";
 import {NbAuthOAuth2JWTToken} from "../../../../sharebook-nebular/auth/services/token/token";
@@ -14,8 +14,6 @@ import {HttpService} from "../../../../core/backend/common/api/http.service";
 export enum UserFormMode {
   VIEW = 'View',
   EDIT = 'Edit',
-  ADD = 'Add',
-  EDIT_SELF = 'EditSelf',
 }
 
 export enum Month {
@@ -90,8 +88,9 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
     return this.userForm.get('facebookLink');
   }
 
-
-  mode: UserFormMode;
+  get canEdit(): boolean {
+    return this.mode !== UserFormMode.VIEW;
+  }
 
   setViewMode(viewMode: UserFormMode) {
     this.mode = viewMode;
@@ -106,8 +105,6 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
               private fb: FormBuilder,
               private httpService: HttpService) {
   }
-
-  utcStuff: IUtcStuff;
 
   ngOnInit(): void {
     this.httpService.get('users/utc-stuff')
@@ -131,6 +128,14 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
     this.loadUserData();
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
+  mode: UserFormMode;
+
+  utcStuff: IUtcStuff;
   genderSelected = '';
 
   monthSelected: number;
@@ -149,7 +154,7 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
   initUserForm() {
     this.userForm = this.fb.group({
       displayName: this.fb.control('', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]), // USER_DISPLAY_NAME_REQUIRED_VALIDATOR,
-      description: this.fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(160)]), // USER_DESCRIPTION_VALIDATOR,
+      description: this.fb.control('', [Validators.minLength(2), Validators.maxLength(160)]), // USER_DESCRIPTION_VALIDATOR,
       websiteLink: this.fb.control('', [Validators.pattern(/^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)]),
       twitterLink: this.fb.control('', [Validators.pattern(/http(?:s)?:\/\/(?:www)?twitter\.com\/([a-zA-Z0-9_]+)/)]),
       twitchLink: this.fb.control('', [Validators.pattern(/^(?:http(s)?:\/\/)[\w.-]+(twitch\.tv\/)([^\?&"'>]+)/)]),
@@ -169,10 +174,6 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
       youtubeLink: this.user.youtubeLink ?? '',
       facebookLink: this.user.facebookLink ?? '',
     });
-  }
-
-  get canEdit(): boolean {
-    return this.mode !== UserFormMode.VIEW;
   }
 
   changeMonth(month: number) {
@@ -217,12 +218,6 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
         // this is a place for value changes handling
         // this.userForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {   });
       });
-  }
-
-
-  convertToUser(value: any): IUser {
-    const user: IUser = value;
-    return user;
   }
 
   save() {
@@ -276,11 +271,6 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
 
   back() {
     this.router.navigate(['/', this.userStore.getUser()?.screenName.substring(1)]);
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 
   changeCountry(id: string) {

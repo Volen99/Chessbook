@@ -11,9 +11,9 @@
                             <div class="sharebook-container align-items-flex-start flex-shrink justify-content-center">
 
                                 <div *ngIf="this.props.type === 'repost'" class="sharebook-container">
-                                    <a [routerLink]="'/' + this.props.screenName" dir="auto" role="link" class=" css-18t94o4  third-wheel-color r-1loqt21 font-family r-a023e6 font-weight-400 r-rjixqe min-width-0px text-overflow-wrap">
+                                    <a [routerLink]="'/' + this.props.screenName.substring(1)" dir="auto" role="link" class=" css-18t94o4  third-wheel-color r-1loqt21 font-family r-a023e6 font-weight-400 r-rjixqe min-width-0px text-overflow-wrap">
                                         <span class=" sharebook-text-inherit css-cens5h third-wheel-color text-font-family third-wheel-text-font-size font-weight-700 r-1cwl3u0 min-width-0px text-overflow-wrap"
-                                              data-testid="socialContext" style="-webkit-line-clamp: 2;">
+                                              style="-webkit-line-clamp: 2;">
                                             <span dir="ltr" class="sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">
                                                 <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">{{this.props.displayName}}</span>
                                             </span> Reposted</span>
@@ -21,7 +21,7 @@
                                 </div>
                                 <div *ngIf="this.props.type === 'pinned'" dir="auto" (click)="this.handleExpandClick()"
                                      class="css-cens5h third-wheel-color text-font-family r-n6v787 font-weight-700 r-1cwl3u0 min-width-0px text-overflow-wrap"
-                                     id="id__y3ku4ie80vq" data-testid="socialContext"
+                                     id="id__y3ku4ie80vq"
                                      style="-webkit-line-clamp: 2;">
                                     <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Pinned Post</span>
                                 </div>

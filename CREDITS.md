@@ -1,8 +1,14 @@
 # Code & Translators contributors
 
- * [Volencho99](https://www.facebook.com/people/NM-Volencho/100010730917900)
+ * [Volencho99](https://twitter.com/volencho)
+ * [Google](https://www.google.com/)
+ * [Stack Overflow](https://stackoverflow.com/)
+ * [Wikipedia](https://www.wikipedia.org/)
 
 # Design
 
- * [Volencho99](https://twitter.com/volencho)
+ * [Volencho99](https://www.twitch.tv/volencho/)
+ * [Google](https://www.google.com/)
+ * [Stack Overflow](https://stackoverflow.com/)
+ * [Wikipedia](https://www.wikipedia.org/)
 

@@ -59,8 +59,8 @@ namespace Chessbook.Services.Feedback
 
             using (MailMessage mail = new MailMessage())
             {
-                mail.From = email;
-                mail.To.Add(to);
+                mail.From = new MailAddress("e23423@gmail.com"); // email;
+                mail.To.Add(new MailAddress("chessbook.comm@gmail.com")); //mail.To.Add(to);
                 mail.Subject = subject;
                 mail.IsBodyHtml = true;
                 mail.Body = body;
@@ -96,7 +96,7 @@ namespace Chessbook.Services.Feedback
                 smtp.EnableSsl = true;
                 smtp.Credentials = credentials;
 
-               // await smtp.SendMailAsync(mailMessage);
+               await smtp.SendMailAsync(mailMessage);
             }
         }
     }

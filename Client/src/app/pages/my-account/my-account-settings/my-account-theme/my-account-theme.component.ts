@@ -44,10 +44,6 @@ export class MyAccountThemeComponent implements OnInit {
       name: 'Cosmic',
     },
     {
-      value: 'corporate',
-      name: 'Corporate',
-    },
-    {
       value: 'material-light',
       name: 'Material Light',
     },

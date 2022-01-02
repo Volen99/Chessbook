@@ -203,13 +203,13 @@ export class VideoCommentComponent implements OnInit, OnChanges {
       });
     }
 
-    if (this.isRedraftableByUser()) {
-      this.prependModerationActions.push({
-        label: `Remove & re-draft`,
-        iconName: faEdit,
-        handler: () => this.onWantToRedraft()
-      });
-    }
+    // if (this.isRedraftableByUser()) {
+    //   this.prependModerationActions.push({
+    //     label: `Remove & re-draft`,
+    //     iconName: faEdit,
+    //     handler: () => this.onWantToRedraft()
+    //   });
+    // }
 
     if (this.prependModerationActions.length === 0) {
       this.prependModerationActions = undefined;

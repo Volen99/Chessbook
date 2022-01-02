@@ -35,27 +35,16 @@
     </ul>
 </noscript>
 
-<!--
-    Order of js references is needed for browser-check script to work
-    TODO: use require and bundle everything in one .js at build time.
--->
 <script src="/assets/js/ua-parser.min.js"></script>
 <script src="/assets/js/browser-check.js"></script>
 <script type="text/javascript">
 
-    /* Suppported browser version taken from the following requirements:
-    Grid: Edge 16, FF 54, Chrome 58, Safari 10.1
-    Pointer Events: Edge 12, FF 59, Chrome 55, Safari 13
-    replaceAll: Chrome 85, Firefox 77, Edge 85, Opera 71
-    ES2018: Chrome 85, Firefox 78, Edge 85, Opera 51
-    TODO: Enable Safari support when authentication cross-domain issue is solved by IS.
-    */
     var supportedBrowsers = {
         'Chrome': 85,
         'Firefox': 78,
         'Edge': 85,
-        'Safari': false,
-        'Mobile Safari': false,
+        'Safari': true,
+        'Mobile Safari': true,
         'Opera': 71,
         'IE': false
     }

@@ -26,7 +26,6 @@ export class IsVideoPipe implements PipeTransform {
   }
 
   public static getYoutubeIdFromLink(url: string): string {
-    debugger
     const parts = this._youtubeRegEx.exec(url);
 
     return parts[5];

@@ -4,8 +4,7 @@
         <nb-card style="width: 102.6%">
             <div class="sharebook-container backface-visibility-hidden flex-grow-expand">
                 <div class="sharebook-container align-items-stretch element-background-color-rgba flex-direction-row flex-grow-expand justify-content-space-between r-2llsf width-100-per">
-                    <div class="sharebook-container background-color-lights-out main-left-right-vertical-border-color main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1"
-                         data-testid="primaryColumn">
+                    <div class="sharebook-container background-color-lights-out main-left-right-vertical-border-color main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1">
                         <div class="sharebook-container">
                             <nb-card>
                                 <nb-card-header>
@@ -147,12 +146,10 @@
                                                         <div *ngIf="!this.isManageable() && this.isUserLoggedIn()" aria-expanded="false"
                                                              aria-haspopup="menu"
                                                              aria-label="More" role="button" tabindex="0"
-                                                             class="icon-hover sharebook-cursor-pointer sharebook-container border-radius-9999px action-button-border-color border-style-solid border-width-1px border-height-0px r-6gpygo r-1kb76zh r-ero68b r-vkv6oe outline-style-none element-left-right-padding-0px transition-duration transition-property r-lrvibr"
-                                                             data-testid="userActions">
+                                                             class="icon-hover sharebook-cursor-pointer sharebook-container border-radius-9999px action-button-border-color border-style-solid border-width-1px border-height-0px r-6gpygo r-1kb76zh r-ero68b r-vkv6oe outline-style-none element-left-right-padding-0px transition-duration transition-property r-lrvibr">
                                                             <div dir="auto"
-                                                                 class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
-                                                                <!--<fa-icon [icon]="this.faEllipsisH"></fa-icon>-->
-
+                                                                 class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
+                                                                 title="More">
                                                                 <app-user-moderation-dropdown
                                                                         [prependActions]="prependModerationActions"
                                                                         buttonSize="small" [account]="this.profileCurrent" [user]="this.profileCurrent" placement="top-left"
@@ -163,10 +160,9 @@
                                                             </div>
                                                         </div>
                                                         <div aria-expanded="false"
-                                                             aria-haspopup="menu"
+                                                             aria-haspopup="dialog"
                                                              aria-label="Favorite videos" role="button" tabindex="0"
-                                                             class="icon-hover sharebook-cursor-pointer sharebook-container border-radius-9999px action-button-border-color border-style-solid border-width-1px border-height-0px r-6gpygo r-1kb76zh r-ero68b r-vkv6oe outline-style-none element-left-right-padding-0px transition-duration transition-property r-lrvibr"
-                                                             data-testid="FavoriteVideos">
+                                                             class="icon-hover sharebook-cursor-pointer sharebook-container border-radius-9999px action-button-border-color border-style-solid border-width-1px border-height-0px r-6gpygo r-1kb76zh r-ero68b r-vkv6oe outline-style-none element-left-right-padding-0px transition-duration transition-property r-lrvibr">
                                                             <div dir="auto" title="Favorite videos"
                                                                  class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
                                                                  (click)="this.showVideosModal()">
@@ -175,10 +171,9 @@
                                                             </div>
                                                         </div>
                                                         <div *ngIf="!this.isManageable() && !relationshipDetails?.blockedBy && !this.relationshipDetails?.blocking" aria-expanded="false"
-                                                             aria-haspopup="menu"
+                                                             aria-haspopup="dialog"
                                                              aria-label="More" role="button" tabindex="0"
-                                                             class="icon-hover sharebook-cursor-pointer sharebook-container border-radius-9999px action-button-border-color border-style-solid border-width-1px border-height-0px r-6gpygo r-1kb76zh r-ero68b r-vkv6oe outline-style-none element-left-right-padding-0px transition-duration transition-property r-lrvibr"
-                                                             data-testid="userActions">
+                                                             class="icon-hover sharebook-cursor-pointer sharebook-container border-radius-9999px action-button-border-color border-style-solid border-width-1px border-height-0px r-6gpygo r-1kb76zh r-ero68b r-vkv6oe outline-style-none element-left-right-padding-0px transition-duration transition-property r-lrvibr">
                                                             <div dir="auto" title="Message"
                                                                  class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
                                                             (click)="this.showMessageModal()">
@@ -236,30 +231,28 @@
                                                 <div class="sharebook-container display-block r-15d164r">
                                                     <div class="sharebook-container">
                                                         <div dir="auto"
-                                                             class="css-901oao lights-out-text-color font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"
-                                                             data-testid="UserDescription">
+                                                             class="css-901oao lights-out-text-color font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
                                                             <span class="css-901oao sharebook-text-inherit font-family inside-element-container-line-height min-width-0px text-overflow-wrap" [innerHTML]="this.accountDescriptionHTML"></span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div *ngIf="this.hasSocialLink();" class="sharebook-container display-block r-15d164r">
                                                     <div class="sharebook-container">
-                                                        <div dir="auto" [ngStyle]="{ display: 'flex', 'justify-content': this.shouldISpaceAround(), 'align-items': 'center', width: 26 + '%' }"
-                                                             class="css-901oao lights-out-text-color font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap"
-                                                             data-testid="UserDescription">
-                                                            <a *ngIf="this.profileCurrent.websiteLink" [href]="this.profileCurrent.websiteLink" target="_blank">
+                                                        <div dir="auto" [ngStyle]="{ display: 'flex', width: 26 + '%' }"
+                                                             class="css-901oao lights-out-text-color font-family font-size-15px font-weight-400 inside-element-container-line-height min-width-0px text-overflow-wrap">
+                                                            <a *ngIf="this.profileCurrent.websiteLink" [href]="this.profileCurrent.websiteLink" style="margin-right: 1rem;" target="_blank">
                                                                 <fa-icon style="font-size: 0.9rem;" [icon]="this.faGlobe"></fa-icon>
                                                             </a>
-                                                            <a *ngIf="this.profileCurrent.twitterLink" [href]="this.profileCurrent.twitterLink" target="_blank">
+                                                            <a *ngIf="this.profileCurrent.twitterLink" [href]="this.profileCurrent.twitterLink" style="margin-right: 1rem;" target="_blank">
                                                                 <i class="link-icon ion-social-twitter"></i>
                                                             </a>
-                                                            <a *ngIf="this.profileCurrent.twitchLink" [href]="this.profileCurrent.twitchLink" target="_blank">
+                                                            <a *ngIf="this.profileCurrent.twitchLink" [href]="this.profileCurrent.twitchLink" style="margin-right: 1rem;" target="_blank">
                                                                 <i class="link-icon ion-social-twitch"></i>
                                                             </a>
-                                                            <a *ngIf="this.profileCurrent.youtubeLink" [href]="this.profileCurrent.youtubeLink" target="_blank">
+                                                            <a *ngIf="this.profileCurrent.youtubeLink" [href]="this.profileCurrent.youtubeLink" style="margin-right: 1rem;" target="_blank">
                                                                 <i class="link-icon ion-social-youtube"></i>
                                                             </a>
-                                                            <a *ngIf="this.profileCurrent.facebookLink" [href]="this.profileCurrent.facebookLink" target="_blank">
+                                                            <a *ngIf="this.profileCurrent.facebookLink" [href]="this.profileCurrent.facebookLink" style="margin-right: 1rem;" target="_blank">
                                                                 <i class="link-icon ion-social-facebook"></i>
                                                             </a>
                                                         </div>
@@ -267,8 +260,7 @@
                                                 </div>
                                                 <div class="sharebook-container display-block r-15d164r">
                                                     <div dir="auto"
-                                                         class="css-901oao lights-out-text-color font-family font-size-15px font-weight-400 r-1vglu5a min-width-0px text-overflow-wrap"
-                                                         data-testid="UserProfileHeader_Items">
+                                                         class="css-901oao lights-out-text-color font-family font-size-15px font-weight-400 r-1vglu5a min-width-0px text-overflow-wrap">
                                                         <span *ngIf="this.isManageable()" class="css-901oao sharebook-text-inherit third-wheel-color svg-display-inline-block font-family inside-element-container-line-height container-left-side-margin-right-10px min-width-0px text-overflow-wrap">
                                                             <fa-icon [icon]="this.faBirthdayCake"></fa-icon>
                                                             Born {{this.month}} {{this.day}}, {{this.year}}
@@ -365,6 +357,10 @@
                                     <div class="details text-center">
                                         <h4>This account doesn't exist</h4>
                                         <span class="text-hint text-sm-center">Try <span class="text-primary" style="cursor: pointer" ngbTooltip="g + u" [openDelay]="1700"  (click)="this.searchUser()">searching</span> for another.</span>
+                                        <div>
+                                            <img src="/assets/images/crop.png" width="150px;" height="300px" alt="searching"
+                                                 [ngStyle]="{'transform': !this.isSearch ? '' : 'scale(-1, 1)'}"/>
+                                        </div>
                                     </div>
                                 </nb-card>
                             </ng-template>

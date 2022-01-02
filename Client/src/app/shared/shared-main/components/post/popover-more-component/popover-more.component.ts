@@ -90,7 +90,7 @@ export class PopoverMoreComponent implements OnInit {
           this.blocklistService.blockAccountByUser(this.post.user)
             .subscribe(
               () => {
-                this.notifier.success('Successfully blocked.', 'Success');
+                this.notifier.success('', 'Successfully blocked');
 
                 this.post.user.blocking = true;
                 /*this.userChanged.emit();*/
@@ -102,7 +102,7 @@ export class PopoverMoreComponent implements OnInit {
           this.blocklistService.unblockAccountByUser(this.post.user)
             .subscribe(
               () => {
-                this.notifier.success('Successfully unblocked.', 'Success');
+                this.notifier.success('', 'Successfully unblocked');
 
                 this.post.user.blocking = false;
                 // this.userChanged.emit();

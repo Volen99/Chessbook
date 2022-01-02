@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Mail;
+using System.Net;
 using MimeKit;
 using MimeKit.Text;
 
@@ -23,6 +25,8 @@ namespace Chessbook.Services.Messages
         private readonly IDownloadService _downloadService;
         private readonly INopFileProvider _fileProvider;
         private readonly ISmtpBuilder _smtpBuilder;
+
+        private NetworkCredential credentials;
 
         #endregion
 
@@ -109,7 +113,6 @@ namespace Chessbook.Services.Messages
         #endregion
 
         #region Methods
-
         /// <summary>
         /// Sends an email
         /// </summary>
@@ -129,79 +132,94 @@ namespace Chessbook.Services.Messages
         /// <param name="attachedDownloadId">Attachment download ID (another attachment)</param>
         /// <param name="headers">Headers</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task SendEmailAsync(EmailAccount emailAccount, string subject, string body,
+        public async Task SendEmailAsync(EmailAccount emailAccount, string subject, string body,
             string fromAddress, string fromName, string toAddress, string toName,
             string replyTo = null, string replyToName = null,
             IEnumerable<string> bcc = null, IEnumerable<string> cc = null,
             string attachmentFilePath = null, string attachmentFileName = null,
             int attachedDownloadId = 0, IDictionary<string, string> headers = null)
         {
-            var message = new MimeMessage();
+            this.credentials = new NetworkCredential(emailAccount.Email, emailAccount.Password);
 
-            message.From.Add(new MailboxAddress(fromName, fromAddress));
-            message.To.Add(new MailboxAddress(toName, toAddress));
-
-            if (!string.IsNullOrEmpty(replyTo))
+            using (MailMessage message = new MailMessage())
             {
-                message.ReplyTo.Add(new MailboxAddress(replyToName, replyTo));
-            }
+                message.From = new MailAddress(fromAddress ?? emailAccount.Email, fromName ?? emailAccount.DisplayName);
+                message.To.Add(new MailAddress(toAddress));
+                message.IsBodyHtml = true;
 
-            //BCC
-            if (bcc != null)
-            {
-                foreach (var address in bcc.Where(bccValue => !string.IsNullOrWhiteSpace(bccValue)))
+                if (!string.IsNullOrEmpty(replyTo))
                 {
-                    message.Bcc.Add(new MailboxAddress("", address.Trim()));
-                }
-            }
-
-            //CC
-            if (cc != null)
-            {
-                foreach (var address in cc.Where(ccValue => !string.IsNullOrWhiteSpace(ccValue)))
-                {
-                    message.Cc.Add(new MailboxAddress("", address.Trim()));
-                }
-            }
-
-            //content
-            message.Subject = subject;
-
-            //headers
-            if (headers != null)
-                foreach (var header in headers)
-                {
-                    message.Headers.Add(header.Key, header.Value);
+                    message.ReplyTo = (new MailAddress(replyTo, replyToName)); // reverse?
                 }
 
-            var multipart = new Multipart("mixed")
-            {
-                new TextPart(TextFormat.Html) { Text = body }
-            };
-
-            //create the file attachment for this e-mail message
-            if (!string.IsNullOrEmpty(attachmentFilePath) && _fileProvider.FileExists(attachmentFilePath))
-            {
-                multipart.Add(await CreateMimeAttachmentAsync(attachmentFilePath, attachmentFileName));
-            }
-
-            //another attachment?
-            if (attachedDownloadId > 0)
-            {
-                var download = await _downloadService.GetDownloadByIdAsync(attachedDownloadId);
-                //we do not support URLs as attachments
-                if (!download?.UseDownloadUrl ?? false)
+                // BCC
+                if (bcc != null)
                 {
-                    multipart.Add(CreateMimeAttachment(download));
+                    foreach (var address in bcc.Where(bccValue => !string.IsNullOrWhiteSpace(bccValue)))
+                    {
+                        message.Bcc.Add(new MailAddress("", address.Trim()));
+                    }
                 }
+
+                // CC
+                if (cc != null)
+                {
+                    foreach (var address in cc.Where(ccValue => !string.IsNullOrWhiteSpace(ccValue)))
+                    {
+                        message.CC.Add(new MailAddress("", address.Trim()));
+                    }
+                }
+
+                // content
+                message.Subject = subject;
+
+                // headers
+                if (headers != null)
+                    foreach (var header in headers)
+                    {
+                        message.Headers.Add(header.Key, header.Value);
+                    }
+
+                var multipart = new Multipart("mixed")
+                {
+                    new TextPart(TextFormat.Html) { Text = body }
+                };
+
+                // create the file attachment for this e-mail message
+                if (!string.IsNullOrEmpty(attachmentFilePath) && _fileProvider.FileExists(attachmentFilePath))
+                {
+                    multipart.Add(await CreateMimeAttachmentAsync(attachmentFilePath, attachmentFileName));
+                }
+
+                // another attachment?
+                if (attachedDownloadId > 0)
+                {
+                    var download = await _downloadService.GetDownloadByIdAsync(attachedDownloadId);
+                    // we do not support URLs as attachments
+                    if (!download?.UseDownloadUrl ?? false)
+                    {
+                        multipart.Add(CreateMimeAttachment(download));
+                    }
+                }
+
+                message.Body = body;
+
+                await this.SendMail(message, emailAccount);
             }
 
-            message.Body = multipart;
+        }
 
-            //send email
-            using var smtpClient = await _smtpBuilder.BuildAsync(emailAccount);
-            await smtpClient.SendAsync(message);
-            await smtpClient.DisconnectAsync(true);
+        private async Task SendMail(MailMessage mailMessage, EmailAccount emailAccount)
+        {
+            using (SmtpClient smtp = new SmtpClient(emailAccount.Host, emailAccount.Port))
+            {
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.UseDefaultCredentials = false;
+                smtp.EnableSsl = true;
+                smtp.Credentials = credentials;
+
+                await smtp.SendMailAsync(mailMessage);
+            }
         }
 
         #endregion

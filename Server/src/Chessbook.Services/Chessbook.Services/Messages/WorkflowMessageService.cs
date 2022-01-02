@@ -119,6 +119,7 @@ namespace Chessbook.Services.Messages
 
             var emailAccount = (await _emailAccountService.GetEmailAccountByIdAsync(emailAccountId) ?? await _emailAccountService.GetEmailAccountByIdAsync(_emailAccountSettings.DefaultEmailAccountId)) ??
                                (await _emailAccountService.GetAllEmailAccountsAsync()).FirstOrDefault();
+
             return emailAccount;
         }
 
@@ -216,19 +217,22 @@ namespace Chessbook.Services.Messages
         /// A task that represents the asynchronous operation
         /// The task result contains the queued email identifier
         /// </returns>
-        public virtual async Task<IList<int>> SendCustomerWelcomeMessageAsync(Customer customer, int languageId)
+        public async Task<IList<int>> SendCustomerWelcomeMessageAsync(Customer customer, int languageId)
         {
             if (customer == null)
+            {
                 throw new ArgumentNullException(nameof(customer));
+            }
 
             var store = await _storeContext.GetCurrentStoreAsync();
-            languageId = await EnsureLanguageIsActiveAsync(languageId, store.Id);
 
             var messageTemplates = await GetActiveMessageTemplatesAsync(MessageTemplateSystemNames.CustomerWelcomeMessage, store.Id);
             if (!messageTemplates.Any())
+            {
                 return new List<int>();
+            }
 
-            //tokens
+            // tokens
             var commonTokens = new List<Token>();
             await _messageTokenProvider.AddCustomerTokensAsync(commonTokens, customer);
 
@@ -262,16 +266,17 @@ namespace Chessbook.Services.Messages
         public virtual async Task<IList<int>> SendCustomerEmailValidationMessageAsync(Customer customer, int languageId)
         {
             if (customer == null)
+            {
                 throw new ArgumentNullException(nameof(customer));
+            }
 
             var store = await _storeContext.GetCurrentStoreAsync();
-            languageId = await EnsureLanguageIsActiveAsync(languageId, store.Id);
 
             var messageTemplates = await GetActiveMessageTemplatesAsync(MessageTemplateSystemNames.CustomerEmailValidationMessage, store.Id);
             if (!messageTemplates.Any())
                 return new List<int>();
 
-            //tokens
+            // tokens
             var commonTokens = new List<Token>();
             await _messageTokenProvider.AddCustomerTokensAsync(commonTokens, customer);
 
@@ -287,7 +292,7 @@ namespace Chessbook.Services.Messages
                 await _eventPublisher.MessageTokensAddedAsync(messageTemplate, tokens);
 
                 var toEmail = customer.Email;
-                var toName = customer.DisplayName; // await _customerService.GetCustomerFullNameAsync(customer);
+                var toName = customer.DisplayName;
 
                 return await SendNotificationAsync(messageTemplate, emailAccount, tokens, toEmail, toName);
             }).ToListAsync();
@@ -310,9 +315,8 @@ namespace Chessbook.Services.Messages
             }
 
             var store = await _storeContext.GetCurrentStoreAsync();
-            languageId = await EnsureLanguageIsActiveAsync(languageId, store.Id);
 
-            var messageTemplates = await GetActiveMessageTemplatesAsync(MessageTemplateSystemNames.CustomerEmailRevalidationMessage, store.Id);
+            var messageTemplates = await GetActiveMessageTemplatesAsync(MessageTemplateSystemNames.CustomerEmailValidationMessage, store.Id); // was CustomerEmailRevalidationMessage
             if (!messageTemplates.Any())
             {
                 return new List<int>();
@@ -502,36 +506,42 @@ namespace Chessbook.Services.Messages
         /// A task that represents the asynchronous operation
         /// The task result contains the list of queued email identifiers
         /// </returns>
-        public virtual async Task<IList<int>> SendBlogCommentNotificationMessageAsync(PostComment blogComment, int languageId)
+        public async Task<IList<int>> SendBlogCommentNotificationMessageAsync(PostComment blogComment)
         {
             if (blogComment == null)
+            {
                 throw new ArgumentNullException(nameof(blogComment));
+            }
 
             var store = await _storeContext.GetCurrentStoreAsync();
-            languageId = await EnsureLanguageIsActiveAsync(languageId, store.Id);
 
             var messageTemplates = await GetActiveMessageTemplatesAsync(MessageTemplateSystemNames.BlogCommentNotification, store.Id);
             if (!messageTemplates.Any())
+            {
                 return new List<int>();
+            }
 
-            //tokens
+            // tokens
             var commonTokens = new List<Token>();
             await _messageTokenProvider.AddBlogCommentTokensAsync(commonTokens, blogComment);
             await _messageTokenProvider.AddCustomerTokensAsync(commonTokens, blogComment.UserId);
 
             return await messageTemplates.SelectAwait(async messageTemplate =>
             {
-                //email account
+                // email account
                 var emailAccount = await GetEmailAccountOfMessageTemplateAsync(messageTemplate);
 
                 var tokens = new List<Token>(commonTokens);
                 await _messageTokenProvider.AddStoreTokensAsync(tokens, store, emailAccount);
 
-                //event notification
+                // event notification
                 await _eventPublisher.MessageTokensAddedAsync(messageTemplate, tokens);
 
-                var toEmail = emailAccount.Email;
-                var toName = emailAccount.DisplayName;
+                var post = await this._productService.GetPostByIdAsync(blogComment.PostId);
+                var postAuthor = await this._customerService.GetCustomerByIdAsync(post.UserId);
+
+                var toEmail = postAuthor.Email;
+                var toName = postAuthor.DisplayName ?? emailAccount.DisplayName;
 
                 return await SendNotificationAsync(messageTemplate, emailAccount, tokens, toEmail, toName);
             }).ToListAsync();
@@ -552,7 +562,6 @@ namespace Chessbook.Services.Messages
         public virtual async Task<IList<int>> SendContactUsMessageAsync(string senderEmail, string senderName, string subject, string body)
         {
             var store = await _storeContext.GetCurrentStoreAsync();
-            // languageId = await EnsureLanguageIsActiveAsync(languageId, store.Id);
 
             var messageTemplates = await GetActiveMessageTemplatesAsync(MessageTemplateSystemNames.ContactUsMessage, store.Id);
             if (!messageTemplates.Any())

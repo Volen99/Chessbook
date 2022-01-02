@@ -38,8 +38,6 @@ using Chessbook.Services.Relationships;
 using Chessbook.Services.Entities;
 using Chessbook.Services.Tournaments;
 using Chessbook.Services.Data;
-using Chessbook.Services.Data.Services.Contacts;
-using Chessbook.Services.Data.Services.Phone;
 using Chessbook.Services.Blocklist;
 using Chessbook.Services.Cards;
 using Chessbook.Services.Chat;
@@ -48,6 +46,7 @@ using Chessbook.Services.Media;
 using Chessbook.Services.Gdpr;
 using Chessbook.Services.APIs;
 using Chessbook.Services.Feedback;
+using Chessbook.Services.Donations;
 
 namespace Chessbook.Web.Framework.Infrastructure
 {
@@ -145,8 +144,6 @@ namespace Chessbook.Web.Framework.Infrastructure
             services.AddScoped<ITournamentService, TournamentService>();
             services.AddScoped<IStreamersService, StreamersService>();
             services.AddScoped<IRelationshipService, RelationshipService>();
-            services.AddScoped<IContactService, ContactService>();
-            services.AddScoped<IPhoneCallService, PhoneCallService>();
             services.AddScoped<IJsonObjectConverter, JsonObjectConverter>();
             services.AddScoped<IJsonConvertWrapper, JsonConvertWrapper>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
@@ -161,6 +158,7 @@ namespace Chessbook.Web.Framework.Infrastructure
             services.AddScoped<ITwitchService, TwitchService>();
             services.AddScoped<IUserFeedbackService, UserFeedbackService>();
             services.AddScoped<IYoutubeService, YoutubeService>();
+            services.AddScoped<IDonatorService, DonatorService>();
 
             // plugin managers
             // ..

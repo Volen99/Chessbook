@@ -51,6 +51,7 @@ export class NgxResetPasswordComponent implements OnInit {
   get confirmPassword() { return this.resetPasswordForm.get('confirmPassword'); }
 
   resetPass(): void {
+    debugger
     this.errors = this.messages = [];
     this.submitted = true;
     this.user = this.resetPasswordForm.value;

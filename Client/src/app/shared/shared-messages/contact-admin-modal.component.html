@@ -11,7 +11,7 @@
       <div class="form-group">
         <label for="subject">Subject</label>
         <input nbInput
-          type="text" id="subject" class="form-control"
+          type="text" id="subject"
           formControlName="subject" [ngClass]="{ 'input-error': formErrors['subject'] }"
                [(ngModel)]="this.reMessage"
         >
@@ -20,7 +20,7 @@
 
       <div class="form-group">
         <label for="body">Your message</label>
-        <textarea nbInput fullWidth id="body" formControlName="body" class="form-control" [ngClass]="{ 'input-error': formErrors['body'] }">
+        <textarea nbInput fullWidth id="body" formControlName="body"  [ngClass]="{ 'input-error': formErrors['body'] }">
         </textarea>
         <div *ngIf="formErrors.body" class="form-error">{{ formErrors.body }}</div>
       </div>

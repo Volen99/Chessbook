@@ -125,12 +125,12 @@ namespace Chessbook.Services.Installation
                     Name = "Chessbook",
                     Url = storeUrl,
                     SslEnabled = true,            // _webHelper.IsCurrentConnectionSecured(),
-                    Hosts = "chessbok.com,www.chessbook.com",
+                    Hosts = "chessbook.me,www.chessbook.me",
                     DisplayOrder = 1,
                     //should we set some default company info?
                     CompanyName = "Chessbook",
                     CompanyAddress = "your company country, state, zip, street, etc",
-                    CompanyPhoneNumber = "(123) 456-78901",
+                    CompanyPhoneNumber = "0892743797",
                     CompanyVat = null
                 }
             };
@@ -146,7 +146,7 @@ namespace Chessbook.Services.Installation
                 {
                     Name = "Send emails",
                     Seconds = 60,
-                    Type = "Nop.Services.Messages.QueuedMessagesSendTask, Nop.Services",
+                    Type = "Chessbook.Services.Messages.QueuedMessagesSendTask, Chessbook.Services",
                     Enabled = true,
                     StopOnError = false
                 },
@@ -154,7 +154,7 @@ namespace Chessbook.Services.Installation
                 {
                     Name = "Keep alive",
                     Seconds = 300,
-                    Type = "Nop.Services.Common.KeepAliveTask, Nop.Services",
+                    Type = "Chessbook.Services.Common.KeepAliveTask, Chessbook.Services",
                     Enabled = true,
                     StopOnError = false
                 },
@@ -162,7 +162,7 @@ namespace Chessbook.Services.Installation
                 {
                     Name = "Delete guests",
                     Seconds = 600,
-                    Type = "Nop.Services.Customers.DeleteGuestsTask, Nop.Services",
+                    Type = "Chessbook.Services.Customers.DeleteGuestsTask, Chessbook.Services",
                     Enabled = true,
                     StopOnError = false
                 },
@@ -170,7 +170,7 @@ namespace Chessbook.Services.Installation
                 {
                     Name = "Clear cache",
                     Seconds = 600,
-                    Type = "Nop.Services.Caching.ClearCacheTask, Nop.Services",
+                    Type = "Chessbook.Services.Caching.ClearCacheTask, Chessbook.Services",
                     Enabled = false,
                     StopOnError = false
                 },
@@ -179,17 +179,8 @@ namespace Chessbook.Services.Installation
                     Name = "Clear log",
                     //60 minutes
                     Seconds = 3600,
-                    Type = "Nop.Services.Logging.ClearLogTask, Nop.Services",
+                    Type = "Chessbook.Services.Logging.ClearLogTask, Chessbook.Services",
                     Enabled = false,
-                    StopOnError = false
-                },
-                new ScheduleTask
-                {
-                    Name = "Update currency exchange rates",
-                    //60 minutes
-                    Seconds = 3600,
-                    Type = "Nop.Services.Directory.UpdateExchangeRateTask, Nop.Services",
-                    Enabled = true,
                     StopOnError = false
                 }
             };
@@ -512,7 +503,7 @@ namespace Chessbook.Services.Installation
 
             await InsertInstallationDataAsync(customerRoles);
 
-            //default store 
+            // default store 
             var defaultStore = await _storeRepository.Table.FirstOrDefaultAsyncExt();
 
             if (defaultStore == null)
@@ -523,6 +514,7 @@ namespace Chessbook.Services.Installation
             // admin user
             var adminUser = new Customer
             {
+                CustomerGuid = Guid.NewGuid(),
                 DisplayName = "Volencho",
                 ScreenName = "@volencho",
                 Password = "111111",
@@ -571,13 +563,13 @@ namespace Chessbook.Services.Installation
             // notifications settings
             var settings = new UserNotificationSettingModel
             {
-                AbuseAsModerator = UserNotificationSettingValue.EMAIL,
-                AbuseNewMessage = UserNotificationSettingValue.EMAIL,
+                AbuseAsModerator = UserNotificationSettingValue.WEB,
+                AbuseNewMessage = UserNotificationSettingValue.WEB,
                 AbuseStateChange = UserNotificationSettingValue.WEB,
-                BlacklistOnMyVideo = UserNotificationSettingValue.EMAIL,
+                BlacklistOnMyVideo = UserNotificationSettingValue.WEB,
                 CommentMention = UserNotificationSettingValue.WEB,
-                NewCommentOnMyVideo = UserNotificationSettingValue.WEB,
-                NewFollow = UserNotificationSettingValue.EMAIL,
+                NewCommentOnMyVideo = UserNotificationSettingValue.BOTH,
+                NewFollow = UserNotificationSettingValue.BOTH,
                 NewVideoFromSubscription = UserNotificationSettingValue.WEB,
                 CustomerId = adminUser.Id,
                 CreatedAt = DateTime.UtcNow,
@@ -670,14 +662,14 @@ namespace Chessbook.Services.Installation
             {
                 new EmailAccount
                 {
-                    Email = "volen1999@gmail.com",
+                    Email = "chessbook.comm@gmail.com",
                     DisplayName = "Chessbook",
-                    Host = "smtp.mail.com",
-                    Port = 25,
-                    Username = "Volencho",
-                    Password = "lovechess",
-                    EnableSsl = true,
-                    UseDefaultCredentials = false
+                    Host = "smtp-relay.sendinblue.com",
+                    Port = 587,
+                    Username = "support@chessbook.me",
+                    Password = "cCmfb6Yt4vRDB8Ak",
+                    UseDefaultCredentials = false,
+                    EnableSsl = true
                 }
             };
 
@@ -693,45 +685,40 @@ namespace Chessbook.Services.Installation
                 throw new Exception("Default email account cannot be loaded");
             }
 
+            var footer = "<table style=\"margin:0;padding:0\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\"> <tbody><tr> <td style=\"font-size:1px;height:40px;line-height:40px\" valign=\"top\" align=\"left\">&nbsp;</td> </tr> <tr> <td style=\"font-size:1px;height:40px;line-height:40px\" valign=\"top\" align=\"left\">&nbsp;</td> </tr> <tr> <td style=\"color:#b4b4db;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:normal;letter-spacing:0.02em;text-align:center\" valign=\"top\" align=\"left\"> <font face=\"'Open Sans', sans-serif\">Follow us in social media to get the latest Chessbook updates</font> </td> </tr> <tr> <td style=\"font-size:1px;height:30px;line-height:30px\" valign=\"top\" align=\"left\">&nbsp;</td> </tr> <tr> <td valign=\"top\"> <table style=\"margin:0;padding:0\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\"> <tbody><tr> <td style=\"width:40px\" width=\"40\" align=\"left\" valign=\"top\"> <a href=\"https://www.youtube.com/channel/UCAg_7ctWJmQmJDt6SU0AFGw\" style=\"border:none;display:block;font-size:1px;height:35px;line-height:35px;outline:none;text-decoration:none;width:35px\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=https://r.email.nopcommerce.com/tr/cl/JfgtAfqRUbEqyv_rTaBVRibNdyoRoEL27aNf7QlM5JHd2U2v5EH6VKBb4TKM_3NUj0hgGtBP0uoweSHl71EFQUMMifLJ33Opj52gT4EgannWlodX9Cp0DLP9ZgBmibNe_BNGtPTxDV4tPC35nR4BmTsGgBG6qmF2ZkmAkGzxyLha5rrVr5Pj9SOVorCTKLJJoX9Fxku0SV0thwgsofnD7WFoeDWZ42Gu92kXtdNFY2UE37NRCrsQkDtOPHAaa07VTIAg4I2oxIiPVQs6ZA&amp;source=gmail&amp;ust=1640690110011000&amp;usg=AOvVaw0qORx40qhjLwltZITzZBMx\"> <img src=\"https://ci5.googleusercontent.com/proxy/OR1qcNQ743wsw7xq7Y3l2IygHXi1sNT3TjW_1S9QErC2SCpZ2uaaOzDcUqxntrHle4HEpekDUjZxToGn7du9FgdJoZ_XWFY69lqpY1chDofXOUbTudanHighxWuKIQne1pe5kf9L31PsUDieXSU619YtzlSIZtb2jpZZB5xtwEzKo4FujoVwx48GGn7bQF0Og0SNZPWjX--lRfF5Qf8SJfcjnpNfvi0evhdYMJIC1fzuZeKKS675J7cxuGPa1nQjeWbgymGpGAXOl4zC90nlLCoNTyl6fKew5BIcBXVLcx-b1MQRipIFSiGBeYuOOS21Zx6TCHInn_rRclVcvnhLdnzPwVYaciHzGQkkZd06Dt8uefigcia2ROwj6SYyZicllVWrT45_-LB-g5M1w2gdWHrOqN9hcQirM7y3qvofCBRhb5eBncOxpVI_RIu7dx6L0oXxlq0kmnH9RxXuoo6hXzMqB1cnLQCf6oCcXlqKarhTxbHWih6BaCqkIYTQZOG8m2nr=s0-d-e1-ft#https://img.email.nopcommerce.com/im/2292093/99a42a0808303dfc564ec3a94ab615dd843af3081304c661cb471754be934fb1.png?e=fc0bM-537vd9gdsZHqfkHKRv798RYFIC9uhHPLM8vN448Le0GhqaEOhVlY5vTQwn_3vGeOBaLElh_At6FbHfCQh9ni7M1Z_-TwJvgdo7wkWKbVwnbDCGDVMxj8w5Vj2GSBS-TFzS8FRqfgZOO88WwQcBkhwk3ij9jq1uG9kbcO0eAxr8b93WLEkEpWSxq5C8Pxb60_Cs9eqBQBVzgeXQL47c8sG6Lmv-E0vnQkGhL5g2P3Z0miGhhu6HWzc\" alt=\"youtube\" style=\"border:0;display:block;font-size:1px;height:35px;line-height:35px;outline:0;text-decoration:none;width:35px\" width=\"35\" border=\"0\" class=\"CToWUd\"> </a> </td> <td style=\"width:40px\" width=\"40\" align=\"left\" valign=\"top\"> <a href=\"https://www.facebook.com/Chessbook.me/\" style=\"border:none;display:block;font-size:1px;height:35px;line-height:35px;outline:none;text-decoration:none;width:35px\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=https://r.email.nopcommerce.com/tr/cl/XeIL5xKom4-zgehBXxRBZ6i2kaMyFcIepox5X2w67TjqJ3b4wHqiUJTXgJvs5aVEYV77JRgQxQqKT0l7Bk9yMmxEviLEmEvr1JvqLFQTXpA1_zxhkYIie8xggESb8QEt9usVZgKaHDDByVvvmmk4XNenl547Kh9qjTGybMSLzTa9_7XREyvODDrfHwW1nCVhbg8cpXWDQ3Ac-k_iVnmX-l-fXhs4m62aYba_HaHAlV558I9VzCErHBcnncY8SnVT0TLQYgEy&amp;source=gmail&amp;ust=1640690110011000&amp;usg=AOvVaw1qwP4-zAsDAGbaNTrQHpZ2\"> <img src=\"https://ci3.googleusercontent.com/proxy/BKT7KgiCAOsaiK94tbelg6EIiez5PY8wfIMrdW0Q4-ONx5D_KMZ4duVLo23TLO7gZrOk1qW_jQos3s9yA7XPi6bW7mvX6dS7OEJmypIsSivZhDqUNlKQRPh3d4Jjm_5nT0iblfx0ATTp7hBs8tHVytYr0lsB9p5MpFocUXXvUlaBC1aWbVgaZqv00DrT0MHBBBijQd6ksNjUi3j8wAqtdrIO7VmDxg-JHrGzc_12H4hbgJDSBPE0FTio5Vo01hxqKKOVtj48ZPmt_KP-8nqe_S01b1t86RZFwo3rMEh1dunsCRhyGtVFPTpkm2RnLUmYyMZ-XCokzENy3iWM8TF8nndiG3Vl-TGNcaK8yDj_udgNOS6nUnfBg4ac_jWAU_3NQwZLKSijZCQGnnXPHZhSstYOtB2kGRg6htmEJsAJLFfF8vZhPlwhpXzVAHSJoUvzRQ5rp3ag6T7nZO4m2nkzCFI4dHjvQG45VRH2pFQ2bM7f4tGNU2aftg1TDeIAQ5ZCm_iH=s0-d-e1-ft#https://img.email.nopcommerce.com/im/2292093/41c13816d33847ac5ad6158769a6318901462e6dd25b406511a0c2fcf0a10d91.png?e=apuEg2DOGuxbg0tRIMLsCh-mfkt-eko92xl0dnVrK-mnNqhfs_oTO8gq2mHi-KlQ9g_Zj6hdFX2eeOXVcr4ZQ4cNvGiIQKM0VH_960BZTfB685vw4-xX90LtJziY2rb4jXtUnAEU6_3-MN3fvD0Hp5Uau0CUd_CmltxCXp1NjhycxtAcAp5LwdHgUpJDNzy6bYgTHoWGW5htcHnIKR6m44-D2RY5CyDeVGqPmVq12XdmyHb4Y_1SfSHBkYM\" alt=\"fb\" style=\"border:0;display:block;font-size:1px;height:35px;line-height:35px;outline:0;text-decoration:none;width:35px\" width=\"35\" border=\"0\" class=\"CToWUd\"> </a> </td> <td style=\"width:40px\" width=\"40\" align=\"left\" valign=\"top\"> <a href=\"https://www.linkedin.com/in/volen-dyulgerov-88a6321ab/\" style=\"border:none;display:block;font-size:1px;height:35px;line-height:35px;outline:none;text-decoration:none;width:35px\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=https://r.email.nopcommerce.com/tr/cl/oy1pgd2H76TJQZ6K1YJ-43VDnMRb5-8OFRypH4sjzQIdOf3Jpev2pCCCsQn4TWVIo0pLI_qf57WsR9lTDO4O1Ovgnb1aTy0FDV_WKrNd5zM1vZqLMxz4t8-uAcNrAnLyB-gx_H5lSk-meyPPbbTNi-Ox7IIVEze5SdsODy30JYYxdl4FIfmHtjmYozu2M6HPR5HU9rw0FQW9OscF3cgHMqLSTsm_YDkiYIrj4Y1wNCVDyolnq8MIu3uZa9m5lanIAiWYcDqvA6XF-38bfIiqcjzbO3P-lddXaao&amp;source=gmail&amp;ust=1640690110011000&amp;usg=AOvVaw18EC_jcCRiisLTX3sZ9GM3\"> <img src=\"https://ci4.googleusercontent.com/proxy/Z40rnrJmQpvXIHiLZ2GrdixNzUten9_IdT9nuKmWZdaATCXwx4FmQfEgi6h6MQMU_RT3XdwkBFDnvWUhIpsgHbTJ3pjef8n_pITB-TOIsm-5QX45PhV3S7FyWJY1l9aGmRAdA7yfnmAnH4LJNylOpBAv0j7osvSB3W1JQIDyPKzvhW47-yv5D1tW3uFz5BCYCkFxcNd596nsa6GVTjdazB2ROot__p32UAGK4GeH198kBFIOlScfNRjc5Qv_725bAGC1m1_qUuYZesjyQcir-WHTihpt8CsrKBnWwAQVW47MG6n_5lbZiWPKTUOION-f3DunmemjMqg7NAsAY5mtfF5nKkSnjnQYn-r9DWEDDbxxs5RWTNmWxaOOx7PRC3pFnUccKnaPjer9uK_s7SSBCV1CB8_kCtQ8KLNG1GchoNLObiuHGUWqz_qVdzGnK12ky8D9m39iuqtvlfAhPoBFZnSkJh1diHbaDQrGHEBbNDgWtU4X2PjvqCroJin0PU5JMJCX=s0-d-e1-ft#https://img.email.nopcommerce.com/im/2292093/31c11b296f9f0af3e444aa62321a864be070b176cb7855694b9e6f109f4748d2.png?e=UWaHwbdyXUKmbg_ZXVXS8AuDu58pci0a_p1ZdsQNf-X_mggyZqTfbIHiRt8fVSMhXWLLPVvEsBiP_vFT_lIVeXPirO9Ow4rfcpzQYYnTObgjSUr5RsvM09MPuhWj6IazA3q5oMtavRnqzuc2lvclbe73dbYkBIdHz3Jwf5_bPSM7ioD2sLHLo3i6mfBfkdksj0Iz5GeSViuPgoDaft8CYHMWFmdfsRSZ6-YSaTZuBkHgar5KNS3xVAtbV2s\" alt=\"linkedin\" style=\"border:0;display:block;font-size:1px;height:35px;line-height:35px;outline:0;text-decoration:none;width:35px\" width=\"35\" border=\"0\" class=\"CToWUd\"> </a> </td> <td style=\"width:40px\" width=\"40\" align=\"left\" valign=\"top\"> <a href=\"https://twitter.com/chessbook_me\" style=\"border:none;display:block;font-size:1px;height:35px;line-height:35px;outline:none;text-decoration:none;width:35px\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=https://r.email.nopcommerce.com/tr/cl/mZXGfrpCGxi9GkoDRvAmMvTD4MARNuxdaBc4HZV7ef6dCK6y1PTgzIb96qsFAUFIdJ3fV6c4LhOq1bpbrZPiEJ8yuniBPyza0B9ouyqb1cC_sRhj1r-6qV_CrW0wx3ufiskIvDYehC1WTv3gKVU2loo5f58hmMCLHDvezNpxKZDYxBZQTaKSa3DNjJXeOIAYerLcBI-T-gjv-jzJaLr5WDW0o-KxbIwU7oighs1BHO-prVasJ0On0qzl64zA_wnmDFw&amp;source=gmail&amp;ust=1640690110011000&amp;usg=AOvVaw0pS7u8-M8EHefhSH2pwmBL\"> <img src=\"https://ci3.googleusercontent.com/proxy/Ukv3mJ6aI_tKiD0OJjkcTCScRa7WlXFJTCRLAKaDFJexO3hCtQzfL7pDAoW-_4Zrnvvqu5xJYpWFSz3pnuIwVZT9Ka0yfFJ437QyAc9HsLNS_dO6C1-H-8jyYhNCkWc0dm3vMj1DV77iELMjJXMGGiyUjziWF-fo1ClG-hLFgUa0KfGRyORqprnbEhoj1pJ8_GwbUcESoqbvOJu8IIygRy5emb8z8Ua26ik0E4jEIIx4Rfrk3Or6vHsH88y3MBe1kwOWjx2MBoe0EONTAGaLTNekPjnQ3DoefbMSJfrAKhmmgNzwsqstnUgMMD9YVNKfQvcGYoi834O68RT1aNhZm52XCmU-KiunUvUYDodLOQkZlRK2PmkmeU9f-GrBJV3Qt7gkwiu7N08oKdPomkbZ7g-m9KcaqSJFoxHRear_zR9R2lNiyXmsmsN2GGuvYA1vkxbymy1sO37BsGaGz-8Kic47SOUK3w9Oe-txW6e1kFjmOgA1WytPT8T-c9W5iy8hWgIE=s0-d-e1-ft#https://img.email.nopcommerce.com/im/2292093/0f093a045bb195d0f0ff3909d46be062846e75f87d81f2858bba7838f23facf9.png?e=gsX9heUc1GYmXRh9X3vChFDy4w3opqIRpWs0vVA307rELNOv1Q1748Hlv_FdLB7uSVrVGraFEiRfVIcVskM6XMv7eqPeaON0BgxWQpmEMIdlG1cK5S8NhOzg73ZuInxXL_Vi5Mftj8b1Z1juxucLiCrnK4UcdcoNl4yctpQds5MenJrZOENjMLeBkAU77a38QhCYBPvoQelJTi-ujfkHbCno-k97Lqu7O2biHSBuncgAGQtGSW8Z4mptKLw\" alt=\"twitter\" style=\"border:0;display:block;font-size:1px;height:35px;line-height:35px;outline:0;text-decoration:none;width:35px\" width=\"35\" border=\"0\" class=\"CToWUd\"> </a> </td> </tr> </tbody></table> </td> </tr> <tr> <td style=\"font-size:1px;height:60px;line-height:60px\" valign=\"top\" align=\"left\">&nbsp;</td> </tr> </tbody> </table>";
+            var coz = "<div style=\"margin:0;padding:0;width:600px\" width=\"600\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"left\"> <tbody> <tr> <td style=\"font-size:1px;height:20px;line-height:20px\" valign=\"top\" align=\"left\">&nbsp;</td> </tr> <tr> <td style=\"color:#808080;font-family:'Open Sans',sans-serif;letter-spacing:0.02em;line-height:25px\" align=\"left\" valign=\"top\"> <font face=\"'Open Sans', sans-serif\">You are receiving this email because you subscribed to email notifications. You can manage your subscription settings on Chessbook official site (\"<a href=\"https://www.chessbook.me/my-account/settings\" style=\"color:#00c9e2\" target=\"_blank\" data-saferedirecturl=\"https://www.chessbook.me/my-account/settingsf\">My account settings</a>\" page).</font> </td> </tr> <tr> <td style=\"font-size:1px;height:60px;line-height:60px\" valign=\"top\" align=\"left\">&nbsp;</td> </tr> </tbody> </div>";
+
             var messageTemplates = new List<MessageTemplate>
             {
                 new MessageTemplate
                 {
                     Name = MessageTemplateSystemNames.BlogCommentNotification,
-                    Subject = "%Store.Name%. New blog comment.",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}A new blog comment has been created for blog post \"%BlogComment.BlogPostTitle%\".{Environment.NewLine}</p>{Environment.NewLine}",
-                    IsActive = true,
-                    EmailAccountId = eaGeneral.Id
-                },
-                new MessageTemplate
-                {
-                    Name = MessageTemplateSystemNames.BackInStockNotification,
-                    Subject = "%Store.Name%. Back in stock notification",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Hello %Customer.FullName%,{Environment.NewLine}<br />{Environment.NewLine}Product <a target=\"_blank\" href=\"%BackInStockSubscription.ProductUrl%\">%BackInStockSubscription.ProductName%</a> is in stock.{Environment.NewLine}</p>{Environment.NewLine}",
+                    Subject = "%Store.Name%. New Comment on your Post.",
+                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}A new comment has been created for your post. Click <a href=\"http://localhost:4200/%Customer.ScreenName%/post/%PostComment.PostId%;threadId=%PostComment.OriginCommentId%\">here</a> to read it.{Environment.NewLine}</p>{Environment.NewLine}{Environment.NewLine}<br />{Environment.NewLine}{coz}{footer}",
                     IsActive = true,
                     EmailAccountId = eaGeneral.Id
                 },
                 new MessageTemplate
                 {
                     Name = MessageTemplateSystemNames.CustomerEmailValidationMessage,
-                    Subject = "%Store.Name%. Email validation",
+                    Subject = "%Store.Name% Email validation",
                     Body = $"<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}To activate your account <a href=\"%Customer.AccountActivationURL%\">click here</a>.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%Store.Name%{Environment.NewLine}",
                     IsActive = true,
                     EmailAccountId = eaGeneral.Id
                 },
-                new MessageTemplate
-                {
-                    Name = MessageTemplateSystemNames.CustomerEmailRevalidationMessage,
-                    Subject = "%Store.Name%. Email validation",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Hello %Customer.FullName%!{Environment.NewLine}<br />{Environment.NewLine}To validate your new email address <a href=\"%Customer.EmailRevalidationURL%\">click here</a>.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%Store.Name%{Environment.NewLine}</p>{Environment.NewLine}",
-                    IsActive = true,
-                    EmailAccountId = eaGeneral.Id
-                },
+                //new MessageTemplate
+                //{
+                //    Name = MessageTemplateSystemNames.CustomerEmailRevalidationMessage,
+                //    Subject = "%Store.Name% Email validation",
+                //    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Hello %Customer.DisplayName%!{Environment.NewLine}<br />{Environment.NewLine}To validate your new email address <a href=\"%Customer.EmailRevalidationURL%\">click here</a>.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%Store.Name%{Environment.NewLine}</p>{Environment.NewLine}",
+                //    IsActive = true,
+                //    EmailAccountId = eaGeneral.Id
+                //},
                 new MessageTemplate
                 {
                     Name = MessageTemplateSystemNames.PrivateMessageNotification,
                     Subject = "%Store.Name%. You have received a new private message",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}You have received a new private message.{Environment.NewLine}</p>{Environment.NewLine}",
+                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}You have received a new private message. Click <a href=\"https://localhost:4200/messages\">here</a> to read it.{Environment.NewLine}</p>{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}<br />{Environment.NewLine}{coz}{footer}",
                     IsActive = true,
                     EmailAccountId = eaGeneral.Id
                 },
@@ -746,8 +733,8 @@ namespace Chessbook.Services.Installation
                 new MessageTemplate
                 {
                     Name = MessageTemplateSystemNames.CustomerWelcomeMessage,
-                    Subject = "Welcome to %Store.Name%",
-                    Body = $"We welcome you to <a href=\"%Store.URL%\"> %Store.Name%</a>.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}You can now take part in the various services we have to offer you. Some of these services include:{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Permanent Cart - Any products added to your online cart remain there until you remove them, or check them out.{Environment.NewLine}<br />{Environment.NewLine}Address Book - We can now deliver your products to another address other than yours! This is perfect to send birthday gifts direct to the birthday-person themselves.{Environment.NewLine}<br />{Environment.NewLine}Order History - View your history of purchases that you have made with us.{Environment.NewLine}<br />{Environment.NewLine}Products Reviews - Share your opinions on products with our other customers.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}For help with any of our online services, please email the store-owner: <a href=\"mailto:%Store.Email%\">%Store.Email%</a>.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Note: This email address was provided on our registration page. If you own the email and did not register on our site, please send an email to <a href=\"mailto:%Store.Email%\">%Store.Email%</a>.{Environment.NewLine}",
+                    Subject = "Hello %Customer.DisplayName%, welcome to %Store.Name%",
+                    Body = $"Dear %Customer.DisplayName%, {Environment.NewLine}<br /> Thank you for joining <a href=\"%Store.URL%\"> %Store.Name%</a>!{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}You can now take part in the various services we have to offer you. Some of these services include:{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Account - Personalize your account and follow other users to interact.{Environment.NewLine}<br />{Environment.NewLine}Post - You can share your thoughts with just a text, pictures or share some cool Youtube, Twitch or Twitter video. You can also poll your friends.{Environment.NewLine}<br />{Environment.NewLine}Streamers - Save your twitch username and everytime you go live, your stream will show in Streamers page.{Environment.NewLine}<br />{Environment.NewLine}Explore - See all the chess related news in Explore page.{Environment.NewLine}<br />More - And much much more services are to be seen :).{Environment.NewLine}{Environment.NewLine}<br />{Environment.NewLine}<br />For help with any of our online services, please email us: <a href=\"mailto:%Store.Email%\">%Store.Email%</a>.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}As Anatoly Karpov once said: Chess is everything: art, science and sport. Allow Chess to connect you with people all over the world and walk the walk together :).{Environment.NewLine}{Environment.NewLine}<br />{Environment.NewLine}<br /> Kind Regards,{Environment.NewLine}<br />The Chessbook Team{Environment.NewLine}{Environment.NewLine}<br />{Environment.NewLine}{footer}",
                     IsActive = true,
                     EmailAccountId = eaGeneral.Id
                 },
@@ -769,33 +756,9 @@ namespace Chessbook.Services.Installation
                 },
                 new MessageTemplate
                 {
-                    Name = MessageTemplateSystemNames.GiftCardNotification,
-                    Subject = "%GiftCard.SenderName% has sent you a gift card for %Store.Name%",
-                    Body = $"<p>{Environment.NewLine}You have received a gift card for %Store.Name%{Environment.NewLine}</p>{Environment.NewLine}<p>{Environment.NewLine}Dear %GiftCard.RecipientName%,{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%GiftCard.SenderName% (%GiftCard.SenderEmail%) has sent you a %GiftCard.Amount% gift card for <a href=\"%Store.URL%\"> %Store.Name%</a>{Environment.NewLine}</p>{Environment.NewLine}<p>{Environment.NewLine}Your gift card code is %GiftCard.CouponCode%{Environment.NewLine}</p>{Environment.NewLine}<p>{Environment.NewLine}%GiftCard.Message%{Environment.NewLine}</p>{Environment.NewLine}",
-                    IsActive = true,
-                    EmailAccountId = eaGeneral.Id
-                },
-                new MessageTemplate
-                {
                     Name = MessageTemplateSystemNames.CustomerRegisteredNotification,
                     Subject = "%Store.Name%. New customer registration",
                     Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}A new customer registered with your store. Below are the customer's details:{Environment.NewLine}<br />{Environment.NewLine}Full name: %Customer.FullName%{Environment.NewLine}<br />{Environment.NewLine}Email: %Customer.Email%{Environment.NewLine}</p>{Environment.NewLine}",
-                    IsActive = true,
-                    EmailAccountId = eaGeneral.Id
-                },
-                new MessageTemplate
-                {
-                    Name = MessageTemplateSystemNames.NewReturnRequestStoreOwnerNotification,
-                    Subject = "%Store.Name%. New return request.",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%Customer.FullName% has just submitted a new return request. Details are below:{Environment.NewLine}<br />{Environment.NewLine}Request ID: %ReturnRequest.CustomNumber%{Environment.NewLine}<br />{Environment.NewLine}Product: %ReturnRequest.Product.Quantity% x Product: %ReturnRequest.Product.Name%{Environment.NewLine}<br />{Environment.NewLine}Reason for return: %ReturnRequest.Reason%{Environment.NewLine}<br />{Environment.NewLine}Requested action: %ReturnRequest.RequestedAction%{Environment.NewLine}<br />{Environment.NewLine}Customer comments:{Environment.NewLine}<br />{Environment.NewLine}%ReturnRequest.CustomerComment%{Environment.NewLine}</p>{Environment.NewLine}",
-                    IsActive = true,
-                    EmailAccountId = eaGeneral.Id
-                },
-                new MessageTemplate
-                {
-                    Name = MessageTemplateSystemNames.NewReturnRequestCustomerNotification,
-                    Subject = "%Store.Name%. New return request.",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Hello %Customer.FullName%!{Environment.NewLine}<br />{Environment.NewLine}You have just submitted a new return request. Details are below:{Environment.NewLine}<br />{Environment.NewLine}Request ID: %ReturnRequest.CustomNumber%{Environment.NewLine}<br />{Environment.NewLine}Product: %ReturnRequest.Product.Quantity% x Product: %ReturnRequest.Product.Name%{Environment.NewLine}<br />{Environment.NewLine}Reason for return: %ReturnRequest.Reason%{Environment.NewLine}<br />{Environment.NewLine}Requested action: %ReturnRequest.RequestedAction%{Environment.NewLine}<br />{Environment.NewLine}Customer comments:{Environment.NewLine}<br />{Environment.NewLine}%ReturnRequest.CustomerComment%{Environment.NewLine}</p>{Environment.NewLine}",
                     IsActive = true,
                     EmailAccountId = eaGeneral.Id
                 },
@@ -965,78 +928,6 @@ namespace Chessbook.Services.Installation
                     Subject = "%Store.Name%. Last recurring payment failed",
                     Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Hello %Customer.FullName%,{Environment.NewLine}<br />{Environment.NewLine}It appears your credit card didn't go through for this recurring payment (<a href=\"%Order.OrderURLForCustomer%\" target=\"_blank\">%Order.OrderURLForCustomer%</a>){Environment.NewLine}<br /> %if (%RecurringPayment.RecurringPaymentType% == \"Manual\") {Environment.NewLine}You can recharge balance and manually retry payment or cancel it on the order history page. endif% %if (%RecurringPayment.RecurringPaymentType% == \"Automatic\") {Environment.NewLine}You can recharge balance and wait, we will try to make the payment again, or you can cancel it on the order history page. endif%{Environment.NewLine}</p>{Environment.NewLine}",
                     IsActive = true,
-                    EmailAccountId = eaGeneral.Id
-                },
-                new MessageTemplate
-                {
-                    Name = MessageTemplateSystemNames.OrderPlacedVendorNotification,
-                    Subject = "%Store.Name%. Order placed",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%Customer.FullName% (%Customer.Email%) has just placed an order.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Order Number: %Order.OrderNumber%{Environment.NewLine}<br />{Environment.NewLine}Date Ordered: %Order.CreatedOn%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%Order.Product(s)%{Environment.NewLine}</p>{Environment.NewLine}",
-                    //this template is disabled by default
-                    IsActive = false,
-                    EmailAccountId = eaGeneral.Id
-                },
-                new MessageTemplate
-                {
-                    Name = MessageTemplateSystemNames.OrderPlacedAffiliateNotification,
-                    Subject = "%Store.Name%. Order placed",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%Customer.FullName% (%Customer.Email%) has just placed an order.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Order Number: %Order.OrderNumber%{Environment.NewLine}<br />{Environment.NewLine}Date Ordered: %Order.CreatedOn%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%Order.Product(s)%{Environment.NewLine}</p>{Environment.NewLine}",
-                    //this template is disabled by default
-                    IsActive = false,
-                    EmailAccountId = eaGeneral.Id
-                },
-                new MessageTemplate
-                {
-                    Name = MessageTemplateSystemNames.OrderRefundedCustomerNotification,
-                    Subject = "%Store.Name%. Order #%Order.OrderNumber% refunded",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Hello %Order.CustomerFullName%,{Environment.NewLine}<br />{Environment.NewLine}Thanks for buying from <a href=\"%Store.URL%\">%Store.Name%</a>. Order #%Order.OrderNumber% has been has been refunded. Please allow 7-14 days for the refund to be reflected in your account.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Amount refunded: %Order.AmountRefunded%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Below is the summary of the order.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Order Number: %Order.OrderNumber%{Environment.NewLine}<br />{Environment.NewLine}Order Details: <a href=\"%Order.OrderURLForCustomer%\" target=\"_blank\">%Order.OrderURLForCustomer%</a>{Environment.NewLine}<br />{Environment.NewLine}Date Ordered: %Order.CreatedOn%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Billing Address{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingFirstName% %Order.BillingLastName%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingAddress1%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingAddress2%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingCity% %Order.BillingZipPostalCode%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingStateProvince% %Order.BillingCountry%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%if (%Order.Shippable%) Shipping Address{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingFirstName% %Order.ShippingLastName%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingAddress1%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingAddress2%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingCity% %Order.ShippingZipPostalCode%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingStateProvince% %Order.ShippingCountry%{Environment.NewLine}<br />{Environment.NewLine}<br /{Environment.NewLine}>Shipping Method: %Order.ShippingMethod%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine} endif% %Order.Product(s)%{Environment.NewLine}</p>{Environment.NewLine}",
-                    //this template is disabled by default
-                    IsActive = false,
-                    EmailAccountId = eaGeneral.Id
-                },
-                new MessageTemplate
-                {
-                    Name = MessageTemplateSystemNames.OrderRefundedStoreOwnerNotification,
-                    Subject = "%Store.Name%. Order #%Order.OrderNumber% refunded",
-                    Body = $"%Store.Name%. Order #%Order.OrderNumber% refunded', N'{Environment.NewLine}<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Order #%Order.OrderNumber% has been just refunded{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Amount refunded: %Order.AmountRefunded%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Date Ordered: %Order.CreatedOn%{Environment.NewLine}</p>{Environment.NewLine}",
-                    //this template is disabled by default
-                    IsActive = false,
-                    EmailAccountId = eaGeneral.Id
-                },
-                new MessageTemplate
-                {
-                    Name = MessageTemplateSystemNames.OrderPaidStoreOwnerNotification,
-                    Subject = "%Store.Name%. Order #%Order.OrderNumber% paid",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Order #%Order.OrderNumber% has been just paid{Environment.NewLine}<br />{Environment.NewLine}Date Ordered: %Order.CreatedOn%{Environment.NewLine}</p>{Environment.NewLine}",
-                    //this template is disabled by default
-                    IsActive = false,
-                    EmailAccountId = eaGeneral.Id
-                },
-                new MessageTemplate
-                {
-                    Name = MessageTemplateSystemNames.OrderPaidCustomerNotification,
-                    Subject = "%Store.Name%. Order #%Order.OrderNumber% paid",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Hello %Order.CustomerFullName%,{Environment.NewLine}<br />{Environment.NewLine}Thanks for buying from <a href=\"%Store.URL%\">%Store.Name%</a>. Order #%Order.OrderNumber% has been just paid. Below is the summary of the order.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Order Number: %Order.OrderNumber%{Environment.NewLine}<br />{Environment.NewLine}Order Details: <a href=\"%Order.OrderURLForCustomer%\" target=\"_blank\">%Order.OrderURLForCustomer%</a>{Environment.NewLine}<br />{Environment.NewLine}Date Ordered: %Order.CreatedOn%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Billing Address{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingFirstName% %Order.BillingLastName%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingAddress1%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingAddress2%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingCity% %Order.BillingZipPostalCode%{Environment.NewLine}<br />{Environment.NewLine}%Order.BillingStateProvince% %Order.BillingCountry%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%if (%Order.Shippable%) Shipping Address{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingFirstName% %Order.ShippingLastName%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingAddress1%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingAddress2%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingCity% %Order.ShippingZipPostalCode%{Environment.NewLine}<br />{Environment.NewLine}%Order.ShippingStateProvince% %Order.ShippingCountry%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Shipping Method: %Order.ShippingMethod%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine} endif% %Order.Product(s)%{Environment.NewLine}</p>{Environment.NewLine}",
-                    //this template is disabled by default
-                    IsActive = false,
-                    EmailAccountId = eaGeneral.Id
-                },
-                new MessageTemplate
-                {
-                    Name = MessageTemplateSystemNames.OrderPaidVendorNotification,
-                    Subject = "%Store.Name%. Order #%Order.OrderNumber% paid",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Order #%Order.OrderNumber% has been just paid.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Order Number: %Order.OrderNumber%{Environment.NewLine}<br />{Environment.NewLine}Date Ordered: %Order.CreatedOn%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%Order.Product(s)%{Environment.NewLine}</p>{Environment.NewLine}",
-                    //this template is disabled by default
-                    IsActive = false,
-                    EmailAccountId = eaGeneral.Id
-                },
-                new MessageTemplate
-                {
-                    Name = MessageTemplateSystemNames.OrderPaidAffiliateNotification,
-                    Subject = "%Store.Name%. Order #%Order.OrderNumber% paid",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Order #%Order.OrderNumber% has been just paid.{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}Order Number: %Order.OrderNumber%{Environment.NewLine}<br />{Environment.NewLine}Date Ordered: %Order.CreatedOn%{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}%Order.Product(s)%{Environment.NewLine}</p>{Environment.NewLine}",
-                    //this template is disabled by default
-                    IsActive = false,
                     EmailAccountId = eaGeneral.Id
                 },
                 new MessageTemplate

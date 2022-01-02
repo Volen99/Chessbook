@@ -12,7 +12,7 @@
                                     <div class="sharebook-container open-space-container-flex-expand flex-grow-expand r-ttdzmv"></div>
                                 </div>
                             </div>
-                            <div class="sharebook-container flex-direction-row r-15zivkp" data-testid="tweet">
+                            <div class="sharebook-container flex-direction-row r-15zivkp">
                                 <div class="sharebook-container align-items-center r-1hwvwag container-left-side-flex-expand r-1b7u577">
                                     <div class="sharebook-container container-left-side-flex-expand flex-shrink width-100-per">
                                         <div class="sharebook-container flex-shrink max-width-100-per">
@@ -71,7 +71,6 @@
                                                     <div aria-expanded="false" aria-haspopup="true" aria-label="More"
                                                          role="button" data-focusable="true" tabindex="0"
                                                          class="sharebook-cursor-pointer sharebook-container justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none"
-                                                         data-testid="caret"
                                                          [nbPopover]="this.popoverMoreComponent"
                                                          [nbPopoverContext]="{items: this.meatballsMenu, post: this.post}"
                                                          > <!--[nbContextMenu]="this.meatballsMenu"-->
@@ -192,7 +191,6 @@
                                         <div aria-label="Reply"
                                              role="button" tabindex="0"
                                              class="css-18t94o4 sharebook-container justify-content-center r-bt1l66 outline-style-none overflow-visible r-lrvibr"
-                                             data-testid="reply"
                                              (click)="this.handleReplyButton(this.post)">
                                             <div dir="ltr"
                                                  class="css-901oao align-items-center display-flex font-family r-a023e6 font-weight-400 justify-content-flex-start r-rjixqe min-width-0px transition-duration svg-transition-property r-3s2u2q text-overflow-wrap">
@@ -209,11 +207,10 @@
                                          [ngbTooltip]="this.tooltipRepost"
                                          placement="auto" [openDelay]="700">
                                         <div aria-expanded="false"
-                                             aria-haspopup="menu"
+                                             aria-haspopup="false"
                                              aria-label="Repost"
                                              role="button" tabindex="0"
-                                             class="css-18t94o4 sharebook-container justify-content-center r-bt1l66 outline-style-none overflow-visible r-lrvibr"
-                                             data-testid="repost">
+                                             class="css-18t94o4 sharebook-container justify-content-center r-bt1l66 outline-style-none overflow-visible r-lrvibr">
                                             <div dir="ltr"
                                                  class="css-901oao align-items-center display-flex font-family r-a023e6 font-weight-400 justify-content-flex-start r-rjixqe min-width-0px transition-duration svg-transition-property r-3s2u2q text-overflow-wrap">
                                                 <div class="sharebook-container display-inline-flex">
@@ -231,8 +228,7 @@
                                         <div [attr.aria-label]="(this.post.favoriteCount ? this.post.favoriteCount : 0) + ' Likes. Like'"
                                              role="button" data-focusable="true"
                                              tabindex="0"
-                                             class="sharebook-cursor-pointer sharebook-container justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none"
-                                             data-testid="like">
+                                             class="sharebook-cursor-pointer sharebook-container justify-content-center r-11cpok1 outline-style-none overflow-visible users-select-none">
                                             <div dir="ltr"
                                                  class="css-901oao r-9ilb82 align-items-center r-9ilb82 display-flex font-family font-size-15px font-weight-400 justify-content-flex-start inside-element-container-line-height min-width-0px transition-duration svg-transition-property white-space-nowrap text-overflow-wrap">
                                                 <div class="sharebook-container display-inline-flex">
@@ -251,8 +247,8 @@
                                          [attr.aria-label]="this.tooltipShare" [ngbTooltip]="this.tooltipShare"
                                          placement="auto" [openDelay]="700">
                                         <div aria-expanded="false"
-                                             aria-haspopup="menu"
-                                             aria-label="Share Tweet"
+                                             aria-haspopup="dialog"
+                                             aria-label="Share Post"
                                              role="button" tabindex="0"
                                              class="css-18t94o4 sharebook-container justify-content-center r-bt1l66 outline-style-none overflow-visible r-lrvibr">
                                             <div dir="ltr"

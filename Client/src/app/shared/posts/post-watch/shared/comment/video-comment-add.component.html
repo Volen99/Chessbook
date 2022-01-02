@@ -56,33 +56,6 @@
   </div>
 </form>
 
-<ng-template #visitorModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">You are one step away from commenting</h4>
-    <fa-icon [icon]="this.faTimes" aria-label="Close" role="button" (click)="hideModals()"></fa-icon>
-  </div>
-
-  <div class="modal-body">
-    <span>
-      You can comment using an account on any ActivityPub-compatible instance (PeerTube/Mastodon/Pleroma account for example).
-    </span>
-
-    <my-remote-subscribe [interact]="true" [uri]="getUri()"></my-remote-subscribe>
-  </div>
-
-  <div class="modal-footer inputs">
-    <input
-      type="button" role="button" value="Cancel" class="peertube-button grey-button"
-      (click)="hideModals()" (key.enter)="hideModals()"
-    >
-
-    <input
-      type="submit" value="Login to comment" class="peertube-button orange-button"
-      (click)="gotoLogin()"
-    >
-  </div>
-</ng-template>
-
 <ng-template #emojiModal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Markdown Emoji List</h4>

@@ -12,7 +12,7 @@
                 placement="auto" [openDelay]="700"
                 [ngStyle]="{'visibility': !this.isManageable() ? 'hidden' : 'visible'}"
                 (click)="this.openVideosCrudModal()">
-            <fa-icon [icon]="this.faVideoPlus" size="lg"></fa-icon>
+            <fa-icon [icon]="!this.isVideoSolid ? this.faVideoPlus : this.faVideoPlusSolid" size="lg"></fa-icon>
         </button>
         <button
                 nbButton

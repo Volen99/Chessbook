@@ -1,9 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {MyAccountAbusesListComponent} from './my-account-abuses/my-account-abuses-list.component';
 import {MyAccountBlocklistComponent} from './my-account-blocklist/my-account-blocklist.component';
-import {MyAccountNotificationsComponent} from './my-account-notifications/my-account-notifications.component';
 import {MyAccountSettingsComponent} from './my-account-settings/my-account-settings.component';
 import {MyAccountComponent} from './my-account.component';
 import {AuthGuard} from "../../auth/auth.guard";
@@ -44,24 +42,6 @@ const myAccountRoutes: Routes = [
         data: {
           meta: {
             title: `Blocked accounts`
-          }
-        }
-      },
-      {
-        path: 'notifications',
-        component: MyAccountNotificationsComponent,
-        data: {
-          meta: {
-            title: `Notifications`
-          }
-        }
-      },
-      {
-        path: 'abuses',
-        component: MyAccountAbusesListComponent,
-        data: {
-          meta: {
-            title: `My abuse reports`
           }
         }
       },

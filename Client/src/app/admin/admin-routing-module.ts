@@ -6,6 +6,7 @@ import {UsersRoutes} from "./users";
 import {ModerationRoutes} from "./moderation";
 import {SurveyRoutes} from "./survey/survey.routes";
 import {TournamentsRoutes} from "./tournaments/tournaments-routes";
+import {DonatorsRoutes} from "./donations/donators-routes";
 
 const adminRoutes: Routes = [
     {
@@ -17,14 +18,11 @@ const adminRoutes: Routes = [
                 redirectTo: 'users',
                 pathMatch: 'full'
             },
-            // ...FollowsRoutes,
                ...UsersRoutes,
                ...ModerationRoutes,
-            // ...SystemRoutes,
-            // ...ConfigRoutes,
-            // ...PluginsRoutes
                ...SurveyRoutes,
                ...TournamentsRoutes,
+               ...DonatorsRoutes
         ]
     }
 ];

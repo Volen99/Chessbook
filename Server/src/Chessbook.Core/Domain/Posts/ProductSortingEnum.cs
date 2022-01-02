@@ -6,33 +6,18 @@
     public enum ProductSortingEnum
     {
         /// <summary>
-        /// Position (display order)
+        /// Match
         /// </summary>
-        Position = 0,
+        Match = 0,
 
         /// <summary>
-        /// Name: A to Z
+        /// Post creation date
         /// </summary>
-        NameAsc = 5,
+        CreatedOn = 5,
 
         /// <summary>
-        /// Name: Z to A
+        /// Post Likes
         /// </summary>
-        NameDesc = 6,
-
-        /// <summary>
-        /// Price: Low to High
-        /// </summary>
-        PriceAsc = 10,
-
-        /// <summary>
-        /// Price: High to Low
-        /// </summary>
-        PriceDesc = 11,
-
-        /// <summary>
-        /// Product creation date
-        /// </summary>
-        CreatedOn = 15,
+        Likes = 6,
     }
 }

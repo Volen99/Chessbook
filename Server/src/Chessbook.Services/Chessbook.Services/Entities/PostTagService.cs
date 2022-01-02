@@ -99,7 +99,7 @@ namespace Chessbook.Services.Entities
         /// A task that represents the asynchronous operation
         /// The task result contains the product tag
         /// </returns>
-        public virtual async Task<Tag> GetPostTagByNameAsync(string name) // was protected
+        public async Task<Tag> GetPostTagByNameAsync(string name) // was protected
         {
             var query = from pt in _productTagRepository.Table
                         where pt.Name == name
@@ -179,18 +179,26 @@ namespace Chessbook.Services.Entities
         /// </returns>
         public virtual async Task<IList<Tag>> GetAllPostTagsByPostIdAsync(int productId)
         {
-            var key = _staticCacheManager.PrepareKeyForDefaultCache(NopCatalogDefaults.ProductTagsByProductCacheKey, productId);
+            //var key = _staticCacheManager.PrepareKeyForDefaultCache(NopCatalogDefaults.ProductTagsByProductCacheKey, productId);
 
-            return await _staticCacheManager.GetAsync(key, async () =>
-            {
-                var tagMapping = from ptm in _productProductTagMappingRepository.Table
-                                 join pt in _productTagRepository.Table on ptm.TagId equals pt.Id
-                                 where ptm.PostId == productId
-                                 orderby pt.Id
-                                 select pt;
+            //return await _staticCacheManager.GetAsync(key, async () =>
+            //{
+            //    var tagMapping = from ptm in _productProductTagMappingRepository.Table
+            //                     join pt in _productTagRepository.Table on ptm.TagId equals pt.Id
+            //                     where ptm.PostId == productId
+            //                     orderby pt.Id
+            //                     select pt;
 
-                return await tagMapping.ToListAsync();
-            });
+            //    return await tagMapping.ToListAsync();
+            //});
+
+            var tagMapping = from ptm in _productProductTagMappingRepository.Table
+                             join pt in _productTagRepository.Table on ptm.TagId equals pt.Id
+                             where ptm.PostId == productId
+                             orderby pt.Id
+                             select pt;
+
+            return await tagMapping.ToListAsync();
         }
 
         /// <summary>

@@ -5,7 +5,6 @@ import {
   faFrown,
 } from '@fortawesome/pro-solid-svg-icons';
 
-
 import {
   NbMediaBreakpoint,
   NbMediaBreakpointsService
@@ -1381,6 +1380,69 @@ export class ChessStuffComponent implements OnInit, OnDestroy {
         two: 'status-danger',
         three: 'danger',
       },
+      {
+        name: 'Ian Nepomniachtchi',
+        text: 'In general, I think that once you sit at the board you have no friends.',
+        one: 'heading',
+        two: 'heading',
+        three: 'text',
+      },
+      {
+        name: 'Magnus Carlsen',
+        text: 'I think he (Ian Nepomniachtchi) has a keener understanding of the concepts of king safety than previous opponents.',
+        one: 'basic',
+        two: 'body',
+        three: 'basic',
+      },
+      {
+        name: 'Fabiano Caruana',
+        text: 'I think that as an overall opening player, Magnus is probably the best prepared in the world and has been for many years now.',
+        one: 'hint',
+        two: 'hint',
+        three: 'hint',
+      },
+      {
+        name: 'Ian Nepomniachtchi',
+        text: '... In modern chess you\'ve got to be a very universal player if you want to be successful, and you can\'t rely on intuition alone.',
+        one: 'link',
+        two: 'link',
+        three: 'link',
+      },
+      {
+        name: 'Cecil Purdy',
+        text: 'Pawn Endings Are To Chess What Putting Is To Golf.',
+        one: 'primary',
+        two: 'status-primary',
+        three: 'primary',
+      },
+      {
+        name: 'Eugene Znosko-Borovsky',
+        text: 'It is not a move, even the best move, that you must seek, but a realizable plan.',
+        one: 'success',
+        two: 'status-success',
+        three: 'success',
+      },
+      {
+        name: 'Graham Burgess',
+        text: 'Knowing which pieces you want exchanged is a great help in finding the right moves.',
+        one: 'info',
+        two: 'status-info',
+        three: 'info',
+      },
+      {
+        name: 'John Nunn',
+        text: 'Stay flexible. Be ready to transform advantages from one type to another.',
+        one: 'warning',
+        two: 'status-warning',
+        three: 'warning',
+      },
+      {
+        name: 'Paul Keres',
+        text: 'It was impossible to win against Capablanca; against [Alexander] Alekhine it was impossible to play.',
+        one: 'danger',
+        two: 'status-danger',
+        three: 'danger',
+      },
       // {
       //   name: 'Magnus Carlsen',
       //   text: 'Some people think that if their opponent plays a beautiful game, it’s OK to lose. I don’t. You have to be merciless.',
@@ -1444,6 +1506,7 @@ export class ChessStuffComponent implements OnInit, OnDestroy {
       //   two: 'status-danger',
       //   three: 'danger',
       // },
+
     ];
 
     this.quotes = this.quotes.sort(() => Math.random() - 0.5);

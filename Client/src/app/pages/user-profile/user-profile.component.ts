@@ -99,7 +99,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    debugger
     if (this.accountSub) {
       this.accountSub.unsubscribe();
     }
@@ -107,6 +106,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (this.routeSub) {
       this.routeSub.unsubscribe();
     }
+
+    this.isSearch = false;
   }
 
   accountDescriptionHTML = '';
@@ -207,6 +208,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private async onAccount(user: User) {
+    // coz of return this.NoContent();
+    if (!user.screenName) {
+      this.profileCurrent = null;
+      return;
+    }
+
     let title = `${user.displayName} / Chessbook`;
 
     this.titleService.setTitle(title);
@@ -344,7 +351,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.blocklistService.blockAccountByUser(this.profileCurrent)
       .subscribe(
         () => {
-          this.notifier.success('Successfully blocked.', 'Success');
+          this.notifier.success('', 'Successfully blocked');
 
           this.profileCurrent.blocking = true;
           this.getModerationActions();
@@ -363,7 +370,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.blocklistService.unblockAccountByUser(this.profileCurrent)
       .subscribe(
         () => {
-          this.notifier.success('Successfully unblocked.', 'Success');
+          this.notifier.success('', 'Successfully unblocked');
 
           this.profileCurrent.blocking = false;
           this.getModerationActions();
@@ -413,11 +420,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     });
   }
 
+  isSearch = false;
   searchUser() {
     let inputElement = document.getElementById('search-video') as HTMLInputElement;
     if (!inputElement) {
       return;
     }
+
+    this.isSearch = true;
 
     inputElement.focus();
     inputElement.value = '@';

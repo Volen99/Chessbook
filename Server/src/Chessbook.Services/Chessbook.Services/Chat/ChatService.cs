@@ -7,6 +7,9 @@ using Chessbook.Data;
 using Chessbook.Core.Domain.Chat;
 using Chessbook.Services.Common;
 using Chessbook.Core.Html;
+using Chessbook.Services.Messages;
+using Chessbook.Services.Notifications.Settings;
+using Chessbook.Core.Domain.Notifications;
 
 namespace Chessbook.Services.Chat
 {
@@ -17,13 +20,18 @@ namespace Chessbook.Services.Chat
         private readonly IWorkContext workContext;
         private readonly IUserService userService;
         private readonly IGenericAttributeService genericAttributeService;
+        private readonly IWorkflowMessageService workflowMessageService;
+        private readonly INotificationsSettingsService notificationsSettingsService;
 
-        public ChatService(IRepository<PrivateMessage> privateMessageRepository, IWorkContext workContext, IUserService userService, IGenericAttributeService genericAttributeService)
+        public ChatService(IRepository<PrivateMessage> privateMessageRepository, IWorkContext workContext, IUserService userService,
+            IGenericAttributeService genericAttributeService, IWorkflowMessageService workflowMessageService, INotificationsSettingsService notificationsSettingsService)
         {
             this.privateMessageRepository = privateMessageRepository;
             this.workContext = workContext;
             this.userService = userService;
             this.genericAttributeService = genericAttributeService;
+            this.notificationsSettingsService = notificationsSettingsService;
+            this.workflowMessageService = workflowMessageService;
         }
 
         /// <summary>
@@ -112,14 +120,25 @@ namespace Chessbook.Services.Chat
 
             var customerTo = await this.userService.GetCustomerByIdAsync(privateMessage.ToCustomerId);
             if (customerTo == null)
+            {
                 throw new NopException("Recipient could not be loaded");
+            }
 
-            // UI notification
-            await this.genericAttributeService.SaveAttributeAsync(customerTo, NopCustomerDefaults.NotifiedAboutNewPrivateMessagesAttribute, false, 1);
+            var notifications = await this.notificationsSettingsService.GetByUserId(privateMessage.ToCustomerId);
 
-            ////Email notification
-            //if (_forumSettings.NotifyAboutPrivateMessages)
-            //    await _workflowMessageService.SendPrivateMessageNotificationAsync(privateMessage, (await this.workContext.GetWorkingLanguageAsync()).Id);
+            if (this.IsNotificationBoth(notifications.AbuseAsModerator))
+            {
+                await this.genericAttributeService.SaveAttributeAsync(customerTo, NopCustomerDefaults.NotifiedAboutNewPrivateMessagesAttribute, false, 1);
+                await this.workflowMessageService.SendPrivateMessageNotificationAsync(privateMessage, 1);
+            }
+            else if (this.IsWebNotificationEnabled(notifications.AbuseAsModerator))
+            {
+                await this.genericAttributeService.SaveAttributeAsync(customerTo, NopCustomerDefaults.NotifiedAboutNewPrivateMessagesAttribute, false, 1);
+            }
+            else if (this.IsEmailEnabled(notifications.AbuseAsModerator))
+            {
+                await this.workflowMessageService.SendPrivateMessageNotificationAsync(privateMessage, 1);
+            }
         }
 
         /// <summary>
@@ -169,6 +188,21 @@ namespace Chessbook.Services.Chat
             text = HtmlHelper.FormatText(text, false, true, false, true, false, false);
 
             return text;
+        }
+
+        private bool IsWebNotificationEnabled(UserNotificationSettingValue value)
+        {
+            return value == UserNotificationSettingValue.WEB;
+        }
+
+        private bool IsEmailEnabled(UserNotificationSettingValue value)
+        {
+            return value == UserNotificationSettingValue.EMAIL;
+        }
+
+        private bool IsNotificationBoth(UserNotificationSettingValue value)
+        {
+            return value == UserNotificationSettingValue.BOTH;
         }
     }
 }

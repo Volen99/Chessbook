@@ -168,6 +168,5 @@ namespace Chessbook.Services.Abuses
             return count;
         }
 
-       
     }
 }

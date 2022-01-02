@@ -5,13 +5,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using Chessbook.Core;
-using Chessbook.Services.Stores;
 using Chessbook.Web.Factories;
 using Chessbook.Core.Domain.Polls;
 using Chessbook.Services;
 using Chessbook.Services.Data.Services.Entities;
 using Chessbook.Services.Localization;
-using Chessbook.Web.Api.Identity;
 
 namespace Chessbook.Web.Api.Controllers
 {
@@ -23,21 +21,15 @@ namespace Chessbook.Web.Api.Controllers
         private readonly ILocaleStringResourceService localeStringResourceService;
         private readonly IPollModelFactory _pollModelFactory;
         private readonly IPollService pollService;
-        private readonly IStoreMappingService _storeMappingService;
         private readonly IWorkContext _workContext;
 
-        public PollController(IUserService customerService,
-            ILocaleStringResourceService localeStringResourceService,
-             IPollModelFactory pollModelFactory,
-             IPollService pollService,
-             IStoreMappingService storeMappingService,
-             IWorkContext workContext)
+        public PollController(IUserService customerService, ILocaleStringResourceService localeStringResourceService,
+             IPollModelFactory pollModelFactory, IPollService pollService, IWorkContext workContext)
         {
             _customerService = customerService;
              this.localeStringResourceService = localeStringResourceService;
             _pollModelFactory = pollModelFactory;
              this.pollService = pollService;
-            _storeMappingService = storeMappingService;
             _workContext = workContext;
         }
 

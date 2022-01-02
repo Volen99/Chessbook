@@ -48,6 +48,7 @@
 
 a {
   text-decoration: none;
+  cursor: pointer !important;
 }
 
 .about-chessbook-title {
@@ -144,19 +145,6 @@ app-about-chessbook-contributors {
 .google-pay {
   background-color: #ca4a43;
 }
-
-.bitcoin-btc {
-  background-color: #994f0f;
-}
-
-.bitcoin-cash {
-  background-color: #087a5b;
-}
-
-.dogecoin {
-  background-color: #a88730;
-}
-
 
 .about-instance-title {
   display: flex;
@@ -1385,4 +1373,10 @@ span {
   .paypal-button-container.paypal-button-layout-horizontal.paypal-button-number-multiple .paypal-button-tagline {
     display: block;
   }
+}
+
+.small-team {
+  text-align: center;
+  font-style: italic;
+  font-size: 1.3em;
 }

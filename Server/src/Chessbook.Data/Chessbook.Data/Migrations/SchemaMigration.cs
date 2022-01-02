@@ -25,6 +25,7 @@ using Chessbook.Core.Domain.Chat;
 using Chessbook.Core.Domain.Messages;
 using Chessbook.Core.Domain.Gdpr;
 using Chessbook.Core.Domain.Videos;
+using Chessbook.Core.Domain.Donations;
 
 namespace Chessbook.Data.Migrations
 {
@@ -134,6 +135,8 @@ namespace Chessbook.Data.Migrations
 
             _migrationManager.BuildTable<PrivateMessage>(Create);
             _migrationManager.BuildTable<YoutubeVideo>(Create);
+
+            _migrationManager.BuildTable<Donator>(Create);
 
         }
     }

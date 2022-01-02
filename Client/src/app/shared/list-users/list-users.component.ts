@@ -1,12 +1,11 @@
 import {Router} from "@angular/router";
-import {Component, Input, OnInit} from '@angular/core';
-
-import {User} from "../shared-main/user/user.model";
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 
 import {
   faUsers,
 } from '@fortawesome/pro-light-svg-icons';
 
+import {User} from "../shared-main/user/user.model";
 import {IUser} from "../../core/interfaces/common/users";
 import {ComponentPaginationLight} from "../../core/rest/component-pagination.model";
 import {UsersService} from "../../core/backend/common/services/users.service";
@@ -38,13 +37,15 @@ export class ListUsersComponent implements OnInit {
 
       this.loadMoreUsers(true);
     }
+
+    this.isSearch = false;
   }
 
   faUsers = faUsers;
 
   pagination: ComponentPaginationLight = {
     currentPage: 1,
-    itemsPerPage: 3,
+    itemsPerPage: 25,
   };
 
   hasDoneFirstQuery = false;
@@ -74,11 +75,14 @@ export class ListUsersComponent implements OnInit {
   }
 
   calcMinHeight(usersCount?: number): number {
-    if (!usersCount) {
-      return 670;
+    let res = 670;
+    if (usersCount) {
+      res = usersCount * 170;
+    } else {
+      res = 670;
     }
 
-    return usersCount * 270;
+    return res;
   }
 
   setTransform(i: number): number {
@@ -122,11 +126,14 @@ export class ListUsersComponent implements OnInit {
     return user?.id === this.userStore.getUser().id;
   }
 
+  isSearch = false;
   searchUser() {
     let inputElement = document.getElementById('search-video') as HTMLInputElement;
     if (!inputElement) {
       return;
     }
+
+    this.isSearch = true;
 
     inputElement.focus();
     inputElement.value = '@';

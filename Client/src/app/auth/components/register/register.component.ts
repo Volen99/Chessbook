@@ -6,7 +6,6 @@ import { EMAIL_PATTERN } from '../constants';
 import {NB_AUTH_OPTIONS, NbAuthSocialLink} from "../../../sharebook-nebular/auth/auth.options";
 import {NbAuthService} from "../../../sharebook-nebular/auth/services/auth.service";
 import {NbAuthResult} from "../../../sharebook-nebular/auth/services/auth-result";
-import {PeerTubeSocket} from "../../../core/notification/sharebook-socket.service";
 
 @Component({
   selector: 'ngx-register',
@@ -65,7 +64,8 @@ export class NgxRegisterComponent implements OnInit {
     this.isUsernameRequired && usernameValidators.push(Validators.required);
 
     const emailValidators = [
-      Validators.pattern(EMAIL_PATTERN),
+      // Validators.pattern(EMAIL_PATTERN),
+      Validators.email
     ];
     this.isEmailRequired && emailValidators.push(Validators.required);
 

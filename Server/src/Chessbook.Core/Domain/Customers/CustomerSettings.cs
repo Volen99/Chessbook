@@ -108,6 +108,11 @@ namespace Chessbook.Core.Domain.Customers
         public int AvatarMaximumSizeBytes { get; set; }
 
         /// <summary>
+        /// User registration type
+        /// </summary>
+        public UserRegistrationType UserRegistrationType { get; set; } = UserRegistrationType.EmailValidation;
+
+        /// <summary>
         /// Gets or sets a value indicating whether to display default user avatar.
         /// </summary>
         public bool DefaultAvatarEnabled { get; set; }
@@ -335,5 +340,31 @@ namespace Chessbook.Core.Domain.Customers
         public bool AcceptPrivacyPolicyEnabled { get; set; }
         
         #endregion
+    }
+
+    /// <summary>
+    /// Represents the customer registration type formatting enumeration
+    /// </summary>
+    public enum UserRegistrationType
+    {
+        /// <summary>
+        /// Standard account creation
+        /// </summary>
+        Standard = 1,
+
+        /// <summary>
+        /// Email validation is required after registration
+        /// </summary>
+        EmailValidation = 2,
+
+        /// <summary>
+        /// A customer should be approved by administrator
+        /// </summary>
+        AdminApproval = 3,
+
+        /// <summary>
+        /// Registration is disabled
+        /// </summary>
+        Disabled = 4
     }
 }

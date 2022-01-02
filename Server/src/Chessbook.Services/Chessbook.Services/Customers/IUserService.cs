@@ -66,6 +66,16 @@
         Task<IList<Customer>> GetCustomersByIdsAsync(int[] customerIds);
 
         /// <summary>
+        /// Gets a customer by GUID
+        /// </summary>
+        /// <param name="customerGuid">Customer GUID</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains a customer
+        /// </returns>
+        Task<Customer> GetCustomerByGuidAsync(Guid customerGuid);
+
+        /// <summary>
         /// Get customer by username
         /// </summary>
         /// <param name="username">Username</param>
@@ -277,6 +287,18 @@
         /// <param name="customer">Customer</param>
         /// <returns>A task that represents the asynchronous operation</returns>
         Task DeleteCustomerAsync(Customer customer);
+
+        /// <summary>
+        /// Delete guest customer records
+        /// </summary>
+        /// <param name="createdFromUtc">Created date from (UTC); null to load all records</param>
+        /// <param name="createdToUtc">Created date to (UTC); null to load all records</param>
+        /// <param name="onlyWithoutShoppingCart">A value indicating whether to delete customers only without shopping cart</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the number of deleted customers
+        /// </returns>
+        Task<int> DeleteGuestCustomersAsync(DateTime? createdFromUtc, DateTime? createdToUtc, bool onlyWithoutShoppingCart);
 
         /// <summary>
         /// Formats the customer name

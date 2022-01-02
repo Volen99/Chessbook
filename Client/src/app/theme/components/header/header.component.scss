@@ -14,6 +14,10 @@
     display: flex;
     align-items: center;
     width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
+
+    @media screen and (max-width: $mobile-view) {
+      width: inherit;
+    }
   }
 
   nb-action {
@@ -105,6 +109,30 @@
       display: inline-block;
       width: 23px;
       height: 24px;
+    }
+
+  }
+
+  .shareBtn {
+    display: none;
+    border-left: none;
+  }
+
+  // if you add more actions, update this guy
+  .survey {
+    border-left: hidden;
+  }
+
+  @include media-breakpoint-down(md) {
+    .shareBtn {
+      display: block;
+    }
+
+  }
+
+  @include media-breakpoint-down(lg) {
+    .shareBtn {
+      display: block;
     }
 
   }

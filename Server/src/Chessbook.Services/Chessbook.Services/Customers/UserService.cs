@@ -24,6 +24,7 @@
         private readonly IGenericAttributeService genericAttributeService;
         private readonly IRepository<GenericAttribute> gaRepository;
         private readonly IRepository<Customer> customerRepository;
+        private readonly INopDataProvider dataProvider;
         private readonly IStaticCacheManager staticCacheManager;
         private readonly IRepository<CustomerCustomerRoleMapping> customerCustomerRoleMappingRepository;
         private readonly IRepository<CustomerPassword> customerPasswordRepository;
@@ -37,12 +38,14 @@
              IStaticCacheManager staticCacheManager,
              IRepository<CustomerCustomerRoleMapping> customerCustomerRoleMappingRepository,
              IRepository<GenericAttribute> gaRepository,
-             IRepository<CustomerPassword> customerPasswordRepository)
+             IRepository<CustomerPassword> customerPasswordRepository,
+             INopDataProvider dataProvider)
         {
             this.relationshipRepository = relationshipRepository;
             this.genericAttributeService = genericAttributeService;
             this.customerRepository = customerRepository;
             this.customerRoleRepository = customerRoleRepository;
+            this.dataProvider = dataProvider;
             this.staticCacheManager = staticCacheManager;
             this.customerCustomerRoleMappingRepository = customerCustomerRoleMappingRepository;
             this.gaRepository = gaRepository;
@@ -174,19 +177,6 @@
                         .Select(z => z.Customer);
                 }
 
-                //search by company
-                if (!string.IsNullOrWhiteSpace(company))
-                {
-                    query = query
-                        .Join(this.gaRepository.Table, x => x.Id, y => y.EntityId,
-                            (x, y) => new { Customer = x, Attribute = y })
-                        .Where(z => z.Attribute.KeyGroup == nameof(Customer) &&
-                                    z.Attribute.Key == NopCustomerDefaults.CompanyAttribute &&
-                                    z.Attribute.Value.Contains(company))
-                        .Select(z => z.Customer);
-                }
-
-                //search by phone
                 if (!string.IsNullOrWhiteSpace(phone))
                 {
                     query = query
@@ -198,19 +188,7 @@
                         .Select(z => z.Customer);
                 }
 
-                //search by zip
-                if (!string.IsNullOrWhiteSpace(zipPostalCode))
-                {
-                    query = query
-                        .Join(this.gaRepository.Table, x => x.Id, y => y.EntityId,
-                            (x, y) => new { Customer = x, Attribute = y })
-                        .Where(z => z.Attribute.KeyGroup == nameof(Customer) &&
-                                    z.Attribute.Key == NopCustomerDefaults.ZipPostalCodeAttribute &&
-                                    z.Attribute.Value.Contains(zipPostalCode))
-                        .Select(z => z.Customer);
-                }
-
-                //search by IpAddress
+                // search by IpAddress
                 if (!string.IsNullOrWhiteSpace(ipAddress) && CommonHelper.IsValidIpAddress(ipAddress))
                 {
                     query = query.Where(w => w.LastIpAddress == ipAddress);
@@ -249,6 +227,29 @@
         public virtual async Task<IList<Customer>> GetCustomersByIdsAsync(int[] customerIds)
         {
             return await this.customerRepository.GetByIdsAsync(customerIds, includeDeleted: false);
+        }
+
+        /// <summary>
+        /// Gets a customer by GUID
+        /// </summary>
+        /// <param name="customerGuid">Customer GUID</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains a customer
+        /// </returns>
+        public virtual async Task<Customer> GetCustomerByGuidAsync(Guid customerGuid)
+        {
+            if (customerGuid == Guid.Empty)
+                return null;
+
+            var query = from c in this.customerRepository.Table
+                        where c.CustomerGuid == customerGuid
+                        orderby c.Id
+                        select c;
+
+            var key = this.staticCacheManager.PrepareKeyForShortTermCache(NopCustomerServicesDefaults.CustomerByGuidCacheKey, customerGuid);
+
+            return await this.staticCacheManager.GetAsync(key, async () => await query.FirstOrDefaultAsyncExt());
         }
 
         /// <summary>
@@ -905,6 +906,40 @@
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Delete guest customer records
+        /// </summary>
+        /// <param name="createdFromUtc">Created date from (UTC); null to load all records</param>
+        /// <param name="createdToUtc">Created date to (UTC); null to load all records</param>
+        /// <param name="onlyWithoutShoppingCart">A value indicating whether to delete customers only without shopping cart</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the number of deleted customers
+        /// </returns>
+        public async Task<int> DeleteGuestCustomersAsync(DateTime? createdFromUtc, DateTime? createdToUtc, bool onlyWithoutShoppingCart)
+        {
+            var guestRole = await GetCustomerRoleBySystemNameAsync(NopCustomerDefaults.GuestsRoleName);
+
+            var allGuestCustomers = from guest in this.customerRepository.Table
+                                    join ccm in this.customerCustomerRoleMappingRepository.Table on guest.Id equals ccm.CustomerId
+                                    where ccm.CustomerRoleId == guestRole.Id
+                                    select guest;
+
+            var guestsToDelete = from guest in this.customerRepository.Table
+                                 join g in allGuestCustomers on guest.Id equals g.Id
+                                 select new { CustomerId = guest.Id };
+
+            await using var tmpGuests = await this.dataProvider.CreateTempDataStorageAsync("tmp_guestsToDelete", guestsToDelete);
+
+            // delete guests
+            var totalRecordsDeleted = await this.customerRepository.DeleteAsync(c => tmpGuests.Any(tmp => tmp.CustomerId == c.Id));
+
+            // delete attributes     TODO: Check before production if guests have any generic attributes kk
+            await this.gaRepository.DeleteAsync(ga => tmpGuests.Any(c => c.CustomerId == ga.EntityId) && ga.KeyGroup == nameof(Customer));
+
+            return totalRecordsDeleted;
         }
     }
 }

@@ -37,19 +37,19 @@ export class MyAccountNotificationPreferencesComponent implements OnInit, OnDest
   constructor(private userNotificationService: UserNotificationService, private serverService: ServerService,
               private userStore: UserStore, private notifier: NbToastrService) {
     this.labelNotifications = {
-      newVideoFromSubscription: `New post from your subscriptions`,
+      newVideoFromSubscription: `New post from your followings`,
       newCommentOnMyVideo: `New comment on your post`,
-      abuseAsModerator: `New abuse`,
-      blacklistOnMyVideo: `One of your post is blocked/unblocked`,
+      abuseAsModerator: `New private message`,
+      // blacklistOnMyVideo: `One of your post is blocked/unblocked`,
       newFollow: `You has a new follower`,
       commentMention: `Someone mentioned you in post comments`,
-      abuseNewMessage: `An abuse report received a new message`,
-      abuseStateChange: `One of your abuse reports has been accepted or rejected by moderators`
+      // abuseNewMessage: `An abuse report received a new message`,
+      // abuseStateChange: `One of your abuse reports has been accepted or rejected by moderators`
     };
     this.notificationSettingKeys = Object.keys(this.labelNotifications) as (keyof UserNotificationSetting)[];
 
     this.rightNotifications = {
-      abuseAsModerator: UserRight.MANAGE_ABUSES,
+      // abuseAsModerator: UserRight.MANAGE_ABUSES,
       // ..
     };
   }
