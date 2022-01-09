@@ -23,7 +23,6 @@ using Chessbook.Services.Directory;
 using Chessbook.Services.ExportImport.Help;
 using Chessbook.Services.Gdpr;
 using Chessbook.Services.Helpers;
-using Chessbook.Services.Stores;
 
 namespace Chessbook.Services.ExportImport
 {
@@ -43,10 +42,6 @@ namespace Chessbook.Services.ExportImport
         private readonly IGdprService _gdprService;
         private readonly IGenericAttributeService _genericAttributeService;
         private readonly IPictureService _pictureService;
-        private readonly IStateProvinceService _stateProvinceService;
-        private readonly IStoreMappingService _storeMappingService;
-        private readonly IStoreService _storeService;
-        private readonly IWorkContext _workContext;
         private readonly IChatService chatService;
 
         #endregion
@@ -63,9 +58,6 @@ namespace Chessbook.Services.ExportImport
             IGdprService gdprService,
             IGenericAttributeService genericAttributeService,
             IPictureService pictureService,
-            IStateProvinceService stateProvinceService,
-            IStoreMappingService storeMappingService,
-            IWorkContext workContext,
             IChatService chatService)
         {
             _customerSettings = customerSettings;
@@ -77,9 +69,6 @@ namespace Chessbook.Services.ExportImport
             _gdprService = gdprService;
             _genericAttributeService = genericAttributeService;
             _pictureService = pictureService;
-            _stateProvinceService = stateProvinceService;
-            _storeMappingService = storeMappingService;
-            _workContext = workContext;
             this.chatService = chatService;
         }
 
@@ -352,7 +341,6 @@ namespace Chessbook.Services.ExportImport
                 new PropertyByName<Customer>("Date of birth", async p => await _genericAttributeService.GetAttributeAsync<string>(p, NopCustomerDefaults.DateOfBirthAttribute)),
                 new PropertyByName<Customer>("County", async p => await _genericAttributeService.GetAttributeAsync<string>(p, NopCustomerDefaults.CountyAttribute)),
                 new PropertyByName<Customer>("Country", async p => (await _countryService.GetCountryByIdAsync(await _genericAttributeService.GetAttributeAsync<int>(p, NopCustomerDefaults.CountryIdAttribute)))?.Name ?? string.Empty),
-                new PropertyByName<Customer>("Phone", async p => await _genericAttributeService.GetAttributeAsync<string>(p, NopCustomerDefaults.PhoneAttribute)),
                 new PropertyByName<Customer>("User attributes",  GetCustomCustomerAttributesAsync)
             });
 

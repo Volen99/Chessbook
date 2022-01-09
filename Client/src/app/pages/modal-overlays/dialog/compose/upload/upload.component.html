@@ -85,7 +85,8 @@
                                                                  [ngClass]="{'r-42olwf r-1phboty': !this.hasAnotherDropZoneOver, 'r-p1n3y5 another-file-over-class': this.hasAnotherDropZoneOver}"
                                                                  (fileOver)="fileOverAnother($event)"
                                                                  (onFileDrop)="fileDrop($event)"
-                                                                 [uploader]="this.uploader">
+                                                                 [uploader]="this.uploader"
+                                                                 [isPoll]="this.isPoll">
                                                                 <div class="sharebook-container flex-grow-expand">
                                                                     <div
                                                                             class="sharebook-container display-flex flex-direction-column flex-grow-expand flex-shrink upload-input-form-position z-index-1">
@@ -266,7 +267,8 @@
                                                                                  role="button"
                                                                                  data-focusable="true"
                                                                                  tabindex="0"
-                                                                                 class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty  border-height-0px add-photos-or-video-margin upload-svg-margin-left-right add-photos-or-video-margin-left element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"> <!--border-width-1px-->
+                                                                                 class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty  border-height-0px add-photos-or-video-margin upload-svg-margin-left-right add-photos-or-video-margin-left element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
+                                                                                 [ngClass]="{'disabled-element': this.isPoll}"> <!--border-width-1px-->
                                                                                 <div dir="auto" class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
                                                                                      ngbTooltip="Media"
                                                                                      placement="auto" [openDelay]="700">
@@ -284,13 +286,15 @@
                                                                                     class="add-photos-or-video-default-input-height opacity-0 overflow-hidden position-absolute add-photos-or-video-default-input-width z-index-minus-1"
                                                                                     appFileSelect
                                                                                     [uploader]="this.uploader"
-                                                                                    [multiple]="true">
+                                                                                    [multiple]="true"
+                                                                                    [disabled]="this.isPoll">
                                                                             <div aria-label="Add poll"
                                                                                  role="button"
                                                                                  data-focusable="true"
                                                                                  tabindex="0"
                                                                                  class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba r-42olwf border-radius-9999px r-1phboty border-height-0px upload-svg-margin-left-right element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
-                                                                                 (click)="this.pollButtonHandler()">
+                                                                                 (click)="this.pollButtonHandler()"
+                                                                                 [ngClass]="{'disabled-element': this.uploader.queue.length > 0}">
                                                                                 <div dir="auto"
                                                                                      class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap"
                                                                                      ngbTooltip="Poll"

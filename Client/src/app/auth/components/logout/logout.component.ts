@@ -31,7 +31,7 @@ export class NgxLogoutComponent implements OnInit {
       const redirect = result.getRedirect();
       if (redirect) {
         setTimeout(() => {
-          window.location.href = 'http://localhost:4200/auth/login';
+          window.location.href = 'https://chessbook.me/auth/login';
           // return this.router.navigateByUrl('auth/login');
         }, this.redirectDelay);
       }

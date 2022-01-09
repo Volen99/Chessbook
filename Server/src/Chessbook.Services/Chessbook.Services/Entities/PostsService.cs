@@ -110,12 +110,6 @@
                 PollId = pollId,
             };
 
-            if (query.InReplyToStatusId.HasValue)
-            {
-                postNew.InReplyToStatusId = query.InReplyToStatusId.Value;
-                postNew.InReplyToScreenName = query.InReplyToScreenName;
-            }
-
             await this.postsRepository.InsertAsync(postNew);
 
             if (postNew.Status != null)

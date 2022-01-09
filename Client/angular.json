@@ -11,11 +11,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
-            "preserveSymlinks": true,
-            "outputPath": "dist",
+            "outputPath": "dist/chessbook",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "aot": true,
+            "preserveSymlinks": true,
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "stylePreprocessorOptions": {
@@ -95,31 +95,50 @@
           },
           "configurations": {
             "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "100kb"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": {
+                "scripts": true,
+                "styles": true,
+                "fonts": false
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractLicenses": true,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5.8mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "vendorChunk": false
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "namedChunks": true,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "azure": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.azure.ts"
                 }
               ]
             }
@@ -127,14 +146,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "Chessbook:build"
-          },
           "configurations": {
             "production": {
               "browserTarget": "Chessbook:build:production"
+            },
+            "development": {
+              "browserTarget": "Chessbook:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -213,6 +233,9 @@
     }
   },
   "defaultProject": "Chessbook",
+  "cli": {
+    "analytics": false
+  },
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

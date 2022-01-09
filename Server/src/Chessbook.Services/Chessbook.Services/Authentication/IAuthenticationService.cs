@@ -5,6 +5,7 @@
     using Chessbook.Data.Models;
     using Chessbook.Web.Api.Identity;
     using Chessbook.Web.Models.AuthDTO;
+
     public interface IAuthenticationService
     {
         /// <summary>

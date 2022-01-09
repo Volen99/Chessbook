@@ -51,7 +51,7 @@ export class ExploreComponent implements OnInit {
       return url;
     }
 
-    return `assets/images/default-news-avatar.png`;
+    return `/assets/images/default-news-avatar.png`;
   }
 
   loading = false;

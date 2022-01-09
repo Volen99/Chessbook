@@ -1,12 +1,10 @@
 import {Directive, EventEmitter, ElementRef, HostListener, Input, Output} from '@angular/core';
-
 import {FileUploader, FileUploaderOptions} from './file-uploader.class';
-import {UploadService} from "./upload.service";
-import {ChessbookConsts} from "../../../../../helpers/chessbook-consts";
 
 @Directive({selector: '[appFileDrop]'})
 export class FileDropDirective {
   @Input() public uploader: FileUploader;
+  @Input() public isPoll = false;
   @Output() public fileOver: EventEmitter<any> = new EventEmitter();
   @Output() public onFileDrop: EventEmitter<File[]> = new EventEmitter<File[]>();
   @Output() public blobUrl: EventEmitter<any> = new EventEmitter<any>();
@@ -35,7 +33,7 @@ export class FileDropDirective {
     let options = this.getOptions();
     let filters = this.getFilters();
     this._preventAndStop(event);
-    this.uploader.addToQueue(transfer.files, options, filters);
+    this.uploader.addToQueue(transfer.files, options, filters, this.isPoll);
 
     this.onFileDrop.emit(transfer.files);
     this.fileOver.emit(false);

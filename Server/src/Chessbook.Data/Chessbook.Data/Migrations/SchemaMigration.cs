@@ -15,9 +15,7 @@ using Chessbook.Core.Domain.Posts;
 using Chessbook.Core.Domain.Relationships;
 using Chessbook.Data.Models;
 using Chessbook.Data.Models.Comments;
-using Chessbook.Data.Models.Contact;
 using Chessbook.Data.Models.Media;
-using Chessbook.Data.Models.Phone;
 using Chessbook.Core.Domain.Tournaments;
 using Chessbook.Core.Domain.Cards;
 using Chessbook.Core.Domain.Polls;
@@ -73,7 +71,6 @@ namespace Chessbook.Data.Migrations
 
             _migrationManager.BuildTable<Language>(Create);
             _migrationManager.BuildTable<LocaleStringResource>(Create);
-            // _migrationManager.BuildTable<LocalizedProperty>(Create);
 
             // _migrationManager.BuildTable<Download>(Create);
             _migrationManager.BuildTable<Picture>(Create);
@@ -106,16 +103,10 @@ namespace Chessbook.Data.Migrations
             _migrationManager.BuildTable<ScheduleTask>(Create);
 
 
-
-
             _migrationManager.BuildTable<Relationship>(Create);
             _migrationManager.BuildTable<UserFollow>(Create);
-            //_migrationManager.BuildTable<MediaEntity>(Create);
             _migrationManager.BuildTable<PostVote>(Create);
             _migrationManager.BuildTable<Comment>(Create);
-            _migrationManager.BuildTable<Contact>(Create);
-            _migrationManager.BuildTable<PhoneCall>(Create);
-            _migrationManager.BuildTable<ContactPhoto>(Create);
             _migrationManager.BuildTable<TwitchLoginName>(Create);
             _migrationManager.BuildTable<PostComment>(Create);
             _migrationManager.BuildTable<Settings>(Create);

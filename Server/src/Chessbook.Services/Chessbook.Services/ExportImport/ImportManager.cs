@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 
 using Chessbook.Core;
-using Chessbook.Core.Domain.Directory;
 using Chessbook.Services.Directory;
 using Chessbook.Services.Logging;
 
@@ -28,20 +25,15 @@ namespace Chessbook.Services.ExportImport
 
         private readonly ICountryService _countryService;
         private readonly ICustomerActivityService _customerActivityService;
-        private readonly IStateProvinceService _stateProvinceService;
 
         #endregion
 
         #region Ctor
 
-        public ImportManager(
-            ICountryService countryService,
-            ICustomerActivityService customerActivityService,
-            IStateProvinceService stateProvinceService)
+        public ImportManager(ICountryService countryService, ICustomerActivityService customerActivityService)
         {
             _countryService = countryService;
             _customerActivityService = customerActivityService;
-            _stateProvinceService = stateProvinceService;
         }
 
         #endregion
@@ -89,29 +81,6 @@ namespace Chessbook.Services.ExportImport
                     }
 
                     // import
-                    var states = await _stateProvinceService.GetStateProvincesByCountryIdAsync(country.Id, showHidden: true);
-                    var state = states.FirstOrDefault(x => x.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
-
-                    if (state != null)
-                    {
-                        state.Abbreviation = abbreviation;
-                        state.Published = published;
-                        state.DisplayOrder = displayOrder;
-                        await _stateProvinceService.UpdateStateProvinceAsync(state);
-                    }
-                    else
-                    {
-                        state = new StateProvince
-                        {
-                            CountryId = country.Id,
-                            Name = name,
-                            Abbreviation = abbreviation,
-                            Published = published,
-                            DisplayOrder = displayOrder
-                        };
-                        await _stateProvinceService.InsertStateProvinceAsync(state);
-                    }
-
                     count++;
                 }
             }

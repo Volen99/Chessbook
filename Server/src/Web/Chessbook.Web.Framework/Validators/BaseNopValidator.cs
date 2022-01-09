@@ -6,8 +6,6 @@ using LinqToDB.Mapping;
 using FluentValidation;
 
 using Chessbook.Data.Models;
-using Chessbook.Services.Localization;
-using Chessbook.Core.Infrastructure;
 using Chessbook.Data;
 
 namespace Chessbook.Web.Framework.Validators
@@ -117,8 +115,7 @@ namespace Chessbook.Web.Framework.Validators
                 Expression = DynamicExpressionParser.ParseLambda<TModel, decimal>(null, false, column.ColumnName)
             }).ToList();
 
-            //define decimal validation rules
-            var localizationService = EngineContext.Current.Resolve<ILocaleStringResourceService>();
+            // define decimal validation rules
             foreach (var expression in maxValueExpressions)
             {
                 // RuleFor(expression.Expression).IsDecimal(expression.MaxValue);

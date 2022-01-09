@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 
@@ -45,7 +43,6 @@ namespace Chessbook.Services.Messages
         private readonly IGenericAttributeService _genericAttributeService;
         private readonly ILanguageService _languageService;
         private readonly IPostsService postService;
-        private readonly IStateProvinceService _stateProvinceService;
         private readonly IStoreContext _storeContext;
         private readonly IStoreService _storeService;
         private readonly IUrlHelperFactory _urlHelperFactory;
@@ -69,7 +66,6 @@ namespace Chessbook.Services.Messages
             IEventPublisher eventPublisher,
             IGenericAttributeService genericAttributeService,
             ILanguageService languageService,
-            IStateProvinceService stateProvinceService,
             IStoreContext storeContext,
             IStoreService storeService,
             IUrlHelperFactory urlHelperFactory,
@@ -87,7 +83,6 @@ namespace Chessbook.Services.Messages
             _eventPublisher = eventPublisher;
             _genericAttributeService = genericAttributeService;
             _languageService = languageService;
-            _stateProvinceService = stateProvinceService;
             _storeContext = storeContext;
             _storeService = storeService;
             _urlHelperFactory = urlHelperFactory;

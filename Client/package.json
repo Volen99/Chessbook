@@ -1,9 +1,9 @@
 {
   "name": "chessbook",
   "description": "Chessbook - a social media made for chess users.",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "private": true,
-  "license": "AGPL-3.0",
+  "license": "MIT",
   "engines": {
     "node": ">=12.x",
     "yarn": ">=1.x"
@@ -23,9 +23,9 @@
   "scripts": {
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",
-    "start": "ng serve",
-    "build": "ng build",
-    "build:prod": "npm run build -- --prod",
+    "start": "ng serve -o",
+    "build": "ng build --configuration=production",
+    "build:azure": "ng build --configuration=production,azure",
     "test": "ng test",
     "test:coverage": "rimraf coverage && npm run test -- --code-coverage",
     "lint": "ng lint",
@@ -41,7 +41,8 @@
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "plugin:install": "node ./dist/scripts/plugin/install.js",
     "plugin:uninstall": "node ./dist/scripts/plugin/uninstall.js",
-    "client-report": "bash ./scripts/client-report.sh"
+    "client-report": "bash ./scripts/client-report.sh",
+    "server": "ng build --configuration=production && cd dist/chessbook && npx http-server --port 4200"
   },
   "dependencies": {
     "@angular/animations": "^12.0.5",

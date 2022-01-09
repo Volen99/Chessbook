@@ -16,7 +16,7 @@ namespace Chessbook.Web.Api.Factories
         /// A task that represents the asynchronous operation
         /// The task result contains the customer list model
         /// </returns>
-        Task<CustomerListModel> PrepareCustomerListModelAsync(CustomerSearchModel searchModel);
+        Task<CustomerListModel> PrepareCustomerListModelAsync(CustomerSearchModel searchModel, bool forAdmin = false);
 
         /// <summary>
         /// Prepare customer model

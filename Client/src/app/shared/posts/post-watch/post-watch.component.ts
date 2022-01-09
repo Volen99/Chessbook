@@ -125,7 +125,7 @@ export class PostWatchComponent implements OnInit, OnDestroy {
 
     const post = this.postService.getPost(videoId);
 
-    // Video did change
+    // Post did change
     forkJoin([
       post,
     ])
@@ -146,11 +146,6 @@ export class PostWatchComponent implements OnInit, OnDestroy {
   }
 
   handleTimestampClicked(timestamp: number) {
-    // if (!this.player || this.video.isLive) {
-    //   return;
-    // }
-    //
-    // this.player.currentTime(timestamp);
     scrollToTop();
   }
 
@@ -163,11 +158,6 @@ export class PostWatchComponent implements OnInit, OnDestroy {
 
     this.checkUserRating();
     this.setOpenGraphTags();
-  }
-
-  private async setVideoDescriptionHTML() {
-    const html = await this.markdownService.textMarkdownToHTML(this.post.status);
-    // this.videoHTMLDescription = await this.markdownService.processVideoTimestamps(html);
   }
 
   private checkUserRating() {

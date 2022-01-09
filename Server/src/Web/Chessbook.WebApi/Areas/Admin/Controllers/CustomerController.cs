@@ -46,7 +46,7 @@ namespace Chessbook.Web.Api.Areas.Admin.Controllers
             }
 
             // prepare model
-            var model = await this.userModelFactory.PrepareCustomerListModelAsync(searchModel);
+            var model = await this.userModelFactory.PrepareCustomerListModelAsync(searchModel, true);
 
             return this.Ok(new
             {
@@ -72,7 +72,7 @@ namespace Chessbook.Web.Api.Areas.Admin.Controllers
             }
 
             // prepare model
-            var model = await this.userModelFactory.PrepareCustomerModelAsync(null, customer);
+            var model = await this.userModelFactory.PrepareCustomerModelAsync(null, customer, true);
 
             return this.Ok(model);
         }

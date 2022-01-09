@@ -22,7 +22,7 @@
                 <div class="input_wrapper"><label for="fromEmail" class="label"
                                                   style="display: initial;">Your contact email address
                     <div class="required">*</div>
-                </label><input id="fromEmail" class="input" formControlName="fromEmail">
+                </label><input id="fromEmail" class="input" formControlName="fromEmail" [readOnly]="this.isLoggedIn">
                     <ngx-validation-message label="Email address"
                                             [showPattern]="this.fromEmail?.hasError('pattern') && this.fromEmail.touched"
                                             [showRequired]="this.fromEmail?.errors?.required && this.fromEmail.touched"></ngx-validation-message>
@@ -30,7 +30,7 @@
                 <div class="input_wrapper"><label for="fromName" class="label"
                                                   style="display: initial;">Your username</label>
                     <input id="fromName"
-                           class="input" formControlName="fromName" autocomplete="off">
+                           class="input" formControlName="fromName" autocomplete="off" [readOnly]="this.isLoggedIn">
                     <ngx-validation-message label="username"
                                             [showMinLength]="this.fromName?.hasError('minlength')"
                                             [showMaxLength]="this.fromName?.hasError('maxlength')"

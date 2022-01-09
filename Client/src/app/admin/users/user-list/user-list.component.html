@@ -62,10 +62,9 @@
       </th>
       <th *ngIf="isSelected('username')" pResizableColumn  pSortableColumn="username">{{ getColumn('username').label }} <p-sortIcon field="username"></p-sortIcon></th>
       <th *ngIf="isSelected('email')">{{ getColumn('email').label }}</th>
-<!--      <th *ngIf="isSelected('quota')" style="width: 160px;"  pSortableColumn="videoQuotaUsed">{{ getColumn('quota').label }} <p-sortIcon field="videoQuotaUsed"></p-sortIcon></th>-->
-<!--      <th *ngIf="isSelected('quotaDaily')" style="width: 160px;">{{ getColumn('quotaDaily').label }}</th>-->
       <th *ngIf="isSelected('role')" style="width: 120px;"  pSortableColumn="role">{{ getColumn('role').label }} <p-sortIcon field="role"></p-sortIcon></th>
-      <th *ngIf="isSelected('pluginAuth')" style="width: 140px;" pResizableColumn >{{ getColumn('pluginAuth').label }}</th>
+      <th *ngIf="isSelected('active')" style="width: 90px;" pResizableColumn >{{ getColumn('active').label }}</th>
+      <th *ngIf="isSelected('ip')" style="width: 140px;" pResizableColumn >{{ getColumn('ip').label }}</th>
       <th *ngIf="isSelected('createdAt')" style="width: 150px;"  pSortableColumn="createdAt">{{ getColumn('createdAt').label }} <p-sortIcon field="createdAt"></p-sortIcon></th>
       <th *ngIf="isSelected('lastLoginDate')" style="width: 150px;"  pSortableColumn="lastLoginDate">{{ getColumn('lastLoginDate').label }} <p-sortIcon field="lastLoginDate"></p-sortIcon></th>
     </tr>
@@ -122,6 +121,14 @@
       <td *ngIf="isSelected('role')">
         <span *ngIf="user.blocked" class="badge badge-banned" title="The user was banned">{{ user.roleLabel }}</span>
         <span *ngIf="!user.blocked" class="badge" [ngClass]="getRoleClass(user.roles[0])">{{ user.roleLabel }}</span>
+      </td>
+
+      <td *ngIf="isSelected('active')">
+        <ng-container *ngIf="user.active != null"><fa-icon [icon]="user.active ? this.faCheck : this.faTimes"></fa-icon></ng-container>
+      </td>
+
+      <td *ngIf="isSelected('ip')">
+        <ng-container *ngIf="user.lastIpAddress">{{user.lastIpAddress}}</ng-container>
       </td>
 
       <td *ngIf="isSelected('createdAt')" [title]="user.createdOn">{{ user.createdOn | date: 'short' }}</td>

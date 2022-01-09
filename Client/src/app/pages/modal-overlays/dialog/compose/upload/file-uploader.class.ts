@@ -105,8 +105,13 @@ export class FileUploader {
     }
   }
 
-  public async addToQueue(filesList: File[], options?: FileUploaderOptions, filters?: FilterFunction[] | string): Promise<void> {
+  public async addToQueue(filesList: File[], options?: FileUploaderOptions, filters?: FilterFunction[] | string, isPoll = false): Promise<void> {
     let notifier = AppInjector.get(NbToastrService);
+
+    if (isPoll) {
+      notifier.warning('', 'Sorry, you can\'t upload files with poll');
+      return;
+    }
 
     if (this.queue.length >= 4) {
       notifier.warning('', 'Sorry, you cannot upload more than 4 photos or gifs.',

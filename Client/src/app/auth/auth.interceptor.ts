@@ -1,5 +1,5 @@
-import {Injectable, Injector} from '@angular/core';
 import {Router} from '@angular/router';
+import {Injectable, Injector} from '@angular/core';
 import {
   HttpEvent,
   HttpHandler,
@@ -10,6 +10,7 @@ import {
 } from '@angular/common/http';
 import {Observable, of, throwError as observableThrowError} from 'rxjs';
 import {catchError, switchMap} from 'rxjs/operators';
+
 import {HttpStatusCode} from "../shared/core-utils/miscs";
 import {NbAuthService} from "../sharebook-nebular/auth/services/auth.service";
 
@@ -59,7 +60,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private cloneRequestWithAuth(req: HttpRequest<any>) {
-    // it goes here billion of times pffff
+    // FIXME: it goes here billion of times pffff
     const authHeaderValue = this.authService.getRequestHeaderValue();
 
     if (authHeaderValue === null) {
@@ -80,17 +81,4 @@ export const AUTH_INTERCEPTOR_PROVIDER = {
   provide: HTTP_INTERCEPTORS,
   useClass: AuthInterceptor,
   multi: true
-}
-
-
-// intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-//   return next.handle(req)
-//     .pipe(catchError((error: HttpErrorResponse) => {
-//       debugger
-//       if (error.status === 401) {
-//         this.router.navigate(['auth/login']);
-//       }
-//       // TODO: handle 403 error ?
-//       return throwError(error);
-//     }));
-
+};

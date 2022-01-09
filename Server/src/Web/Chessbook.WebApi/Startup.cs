@@ -19,6 +19,7 @@
     using Chessbook.Web.Api.Setup;
     using Chessbook.Web.Framework.Infrastructure.Extensions;
     using Chessbook.Common.Feedback;
+    using Microsoft.AspNetCore.Http;
 
     public class Startup
     {
@@ -173,6 +174,26 @@
                 endpoints.MapHub<NotificationsHub>("/notificationhub");
                 endpoints.MapControllers();
             });
+
+              //// Catch - all middleware for Single Page App
+              //app.Use(async (context, next) =>
+              //{
+              //  // Yield to attempt a search in the static files
+              //  await next();
+
+              //  // If it didn't find a hit serve the SPA index file (except for /api routes)
+              //  if (!context.Response.HasStarted && context.Response.StatusCode == 404 && !context.Request.Path.StartsWithSegments("/api", StringComparison.OrdinalIgnoreCase))
+              //    {
+              //        var frontendConfigService = app.ApplicationServices.GetService<IFrontendConfigService>();
+              //        string indexContent = frontendConfigService.GetConfiguredIndexContent(env.WebRootPath);
+              //        if (!string.IsNullOrEmpty(indexContent))
+              //        {
+              //            context.Response.StatusCode = 200;
+              //            context.Response.ContentType = "text/html";
+              //            await context.Response.WriteAsync(indexContent);
+              //        }
+              //    }
+              //});
         }
     }
 }

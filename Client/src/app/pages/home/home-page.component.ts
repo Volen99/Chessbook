@@ -129,7 +129,7 @@ export class HomePageComponent extends AbstractPostList implements OnInit, OnDes
 
     // TODO: if postsCount === 1, multiply accordingly with testing kk :)
 
-    return postsCount * 470;
+    return postsCount * 540; // 470
   }
 
   postTransformBuffer: number = 0;

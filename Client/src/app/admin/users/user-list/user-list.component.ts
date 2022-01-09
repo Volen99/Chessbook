@@ -21,6 +21,8 @@ import {
   faChevronRight,
   faChevronDown,
   faDownload,
+  faCheck,
+  faTimes,
 } from '@fortawesome/pro-light-svg-icons';
 
 
@@ -135,18 +137,23 @@ export class UserListComponent extends RestTable implements OnInit {
       {id: 'username', label: 'Username'},
       {id: 'email', label: 'Email'},
       {id: 'role', label: 'Role'},
-      {id: 'createdAt', label: 'Created'}
+      {id: 'createdAt', label: 'Created'},
+      {id: 'lastLoginDate', label: 'Last login'},
+      {id: 'active', label: `Active`}
+
     ];
 
     this.selectedColumns = this.columns.map(c => c.id);
 
-    this.columns.push({id: 'lastLoginDate', label: 'Last login'});
+    this.columns.push({id: 'ip', label: 'Last ip address'});
   }
 
   // light
   faChevronDown = faChevronDown;
   faChevronRight = faChevronRight;
   faDownload = faDownload;
+  faCheck = faCheck;
+  faTimes = faTimes;
 
   // solid
   faColumns = faColumns;

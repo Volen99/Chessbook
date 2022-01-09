@@ -5,7 +5,6 @@
 
     using Chessbook.Core.Domain.Common;
     using Chessbook.Core.Domain.Customers;
-    using global::System.Security.Claims;
 
     // TODO: change "Customer" to "User" kk
     public class Customer : DeletableEntity, ISoftDeletedEntity
@@ -43,13 +42,9 @@
 
         public string Location { get; set; } // The user-defined location for this account’s profile. Not necessarily a location, nor machine-parseable
 
-        public string ProfileLocation { get; set; }
-
         public string Description { get; set; }
 
-        public string Url { get; set; }                         // A URL provided by the user in association with their profile: "https://developer.twitter.com"
-
-        public bool Protected { get; set; }                     // When true, indicates that this user has chosen to protect their Tweets
+        public bool Protected { get; set; }                     // When true, indicates that this user has chosen to protect their Posts
 
         public int FollowersCount { get; set; }                 // The number of followers this account currently has
 
@@ -71,17 +66,9 @@
 
         public string Lang { get; set; }
 
-        public string ProfileBannerUrl { get; set; }
-
-        public bool DefaultProfile { get; set; }    // When true, indicates that the user has not altered the theme or background of their user profile
-
-        public bool DefaultProfileImage { get; set; }
-
         public int FavoritesCount { get; set; }
 
         public string PinnedTweetIds { get; set; }              // [int]
-
-        public bool HasCustomTimelines { get; set; }        // https://blog.twitter.com/developer/en_us/a/2013/introducing-custom-timelines.html
 
         public bool FollowedBy { get; set; }
 

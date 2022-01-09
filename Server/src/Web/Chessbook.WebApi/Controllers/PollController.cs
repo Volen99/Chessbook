@@ -9,7 +9,6 @@ using Chessbook.Web.Factories;
 using Chessbook.Core.Domain.Polls;
 using Chessbook.Services;
 using Chessbook.Services.Data.Services.Entities;
-using Chessbook.Services.Localization;
 
 namespace Chessbook.Web.Api.Controllers
 {
@@ -18,16 +17,14 @@ namespace Chessbook.Web.Api.Controllers
     public class PollController : BaseApiController
     {
         private readonly IUserService _customerService;
-        private readonly ILocaleStringResourceService localeStringResourceService;
         private readonly IPollModelFactory _pollModelFactory;
         private readonly IPollService pollService;
         private readonly IWorkContext _workContext;
 
-        public PollController(IUserService customerService, ILocaleStringResourceService localeStringResourceService,
-             IPollModelFactory pollModelFactory, IPollService pollService, IWorkContext workContext)
+        public PollController(IUserService customerService, IPollModelFactory pollModelFactory,
+            IPollService pollService, IWorkContext workContext)
         {
             _customerService = customerService;
-             this.localeStringResourceService = localeStringResourceService;
             _pollModelFactory = pollModelFactory;
              this.pollService = pollService;
             _workContext = workContext;
@@ -53,7 +50,7 @@ namespace Chessbook.Web.Api.Controllers
 
             if (await _customerService.IsGuestAsync(await _workContext.GetCurrentCustomerAsync()) && !poll.AllowGuestsToVote)
             {
-                return this.BadRequest(new { error = await this.localeStringResourceService.GetResourceAsync("Polls.OnlyRegisteredUsersVote") });
+                return this.BadRequest(new { error = "Only registered users can vote. :|" });
             }
 
             var alreadyVoted = await this.pollService.AlreadyVotedAsync(poll.Id, (await _workContext.GetCurrentCustomerAsync()).Id);

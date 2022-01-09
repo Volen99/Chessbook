@@ -29,8 +29,8 @@ export class StreamWatchComponent implements OnInit, OnDestroy {
         this.streamersService.getLiveStreamByUserLogin(loginName)
           .subscribe((data: IStreams) => {
             this.stream = data.data[0];
-            this.streamUrl = `https://player.twitch.tv/?channel=${this.stream.user_login}&parent=localhost&autoplay=true`;
-            this.chatUrl = `https://www.twitch.tv/embed/${this.stream.user_login}/chat?parent=localhost`;
+            this.streamUrl = `https://player.twitch.tv/?channel=${this.stream.user_login}&parent=chessbook&autoplay=true`;
+            this.chatUrl = `https://www.twitch.tv/embed/${this.stream.user_login}/chat?parent=chessbook`;
           });
       }
     });

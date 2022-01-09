@@ -17,7 +17,6 @@
     using Chessbook.Web.Api.Factories;
     using Chessbook.Web.Api.Areas.Admin.Models.Post;
     using Chessbook.Services.Logging;
-    using Chessbook.Services.Localization;
     using Chessbook.Web.Areas.Admin.Models.Customers;
     using Chessbook.Web.Api.Lib;
     using Chessbook.Services.Entities;
@@ -38,17 +37,15 @@
         private readonly IUserModelFactory userModelFactory;
         private readonly IPostModelFactory postModelFactory;
         private readonly ICustomerActivityService customerActivityService;
-        private readonly ILocaleStringResourceService localeStringResourceService;
         private readonly IPostCommentService postCommentService;
         private readonly IPostTagService postTagService;
         private readonly IPermissionService permissionService;
         private readonly IWorkContext workContext;
 
         public PostsController(IPostsService postService, IPollService pollService, IUserService userService,
-            IPictureService pictureService, IUserModelFactory userModelFactory, IPostModelFactory productModelFactory,
-            ICustomerActivityService customerActivityService, ILocaleStringResourceService localeStringResourceService,
-            IPostCommentService postCommentService, IPostTagService postTagService, IPermissionService permissionService,
-            IWorkContext workContext)
+            IUserModelFactory userModelFactory, IPostModelFactory productModelFactory,
+            ICustomerActivityService customerActivityService, IPostCommentService postCommentService,
+            IPostTagService postTagService, IPermissionService permissionService, IWorkContext workContext)
         {
             this.postService = postService;
             this.userService = userService;
@@ -56,7 +53,6 @@
             this.userModelFactory = userModelFactory;
             this.postModelFactory = productModelFactory;
             this.customerActivityService = customerActivityService;
-            this.localeStringResourceService = localeStringResourceService;
             this.postCommentService = postCommentService;
             this.postTagService = postTagService;
             this.permissionService = permissionService;

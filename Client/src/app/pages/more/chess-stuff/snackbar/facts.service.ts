@@ -2,6 +2,12 @@ import {Injectable} from "@angular/core";
 
 @Injectable()
 export class FactsService {
+  private readonly mars = '/assets/images/icons/dope/mars.png';
+  private readonly android = '/assets/images/icons/dope/android.png';
+  private readonly anime = '/assets/images/icons/dope/anime.png';
+  private readonly earth = '/assets/images/icons/dope/earth.png';
+  private readonly space = '/assets/images/icons/dope/space.png';
+
   private facts: string[] = [
     'Ra6!! bxa6 b7#',
     'Nf7+ Kg8 Nh6+ Kh8 Qg8+!! Rxg8 Nf7#',
@@ -62,7 +68,7 @@ export class FactsService {
     'The Moon is drifting away from the Earth 🌚',
     'There is water on the Moon! 🧊',
     'Jupiter\'s moon Io has towering volcanic eruptions 🌋',
-    'Mars has the longest valley in the Solar System - Valles Marineris <img src="/assets/images/icons/dope/mars.png" width="28" height="28">',
+    `Mars has the longest valley in the Solar System - Valles Marineris <img src="${this.mars}" width="28" height="28">`,
     'Pluto has a bizarre atmosphere - scientists saw the haze extending as high as 1,000 miles (1,600 km), rising higher above the surface than the atmosphere on Earth',
     'A grizzly bear\'s bite is strong enough to crush a bowling ball 🐻',
     'The human brain takes in 11 million bits of information every second but is aware of only 40 🧠',
@@ -152,19 +158,37 @@ export class FactsService {
     'The global gaming industry is worth well over $150 billion. Even more impressively, the estimated number of gamers worldwide tops 2.7 billion',
     'The number of distinct 40-move games in chess is far greater than the number of electrons in the observable universe',
     'Kirk and Spock have played chess three times on the show Star Trek. Kirk won all three games 🖖🏼',
-    /*'XXXXXXXXXXXXXXXXXXXXXXxx',*/
-    'The longest-running anime has over 7,500 episodes <img src="/assets/images/icons/dope/anime.png" width="28" height="28">',
-    'Spirited Away was the first anime film to be nominated for and win an academy award <img src="/assets/images/icons/dope/anime.png" width="28" height="28">',
+    'The aptly named Furnace Creek currently holds the record for hottest air temperature ever recorded. The desert valley reached highs of 56.7C in the summer of 1913 🌞',
+    `Asteroids are rich in precious metals and other metals, as well as water`,
+    `Some asteroids have moons of their own! 🌠`,
+    `Millions of meteoroids travel through Earth’s atmosphere each day 🌠`,
+    `When a meteor encounters our atmosphere and is vaporized, it leaves behind a trail. That “burning” meteoroid is called a meteor 🌠`,
+    `The appearance of a number of meteors occurring in the same part of the sky over a period of time is called "meteor shower" 🌠`,
+    `Titan is a moon with complex and dense nitrogen-rich atmosphere 🌕`,
+    `As with Europa at Jupiter, scientists suspect that Enceladus could be a habitable world to some forms of life. There is no proof of life there, but future missions could test for life sign 🦠`,
+    `Io has more than 400 active volcanoes on its surface. They make this little moon the most actively volcanic world in the solar system 🌋`,
+    `Neptune was not known to the ancients`,
+    `The longest a total solar eclipse can last is 7.5 minutes`,
+    `If any planets are in the sky at the time of a total solar eclipse, they can be seen as points of light`,
+    `The Milky Way’s central core contains a supermassive black hole. It is commonly referred to as Sagittarius A* 🌌`,
+    `Earth is Mostly Iron, Oxygen and Silicon <img src="${this.earth}" width="28" height="28">`,
+    `Several probes have imaged Titan, but only one has visited the surface — the Huygens lander. It arrived on January 14, 2005, and sent data for about an hour and a half, making it the most distant landing of any mission in the solar system <img src="${this.earth}" width="28" height="28">`,
+    `Saturn is the flattest planet <img src="${this.space}" width="28" height="28">`,
+    `Saturn was known to the ancients, including the Babylonians and Far Eastern observers <img src="${this.space}" width="28" height="28">`,
+    `Earth is the only planet not named after a god <img src="${this.earth}" width="28" height="28">`,
+    `Earth's atmosphere extends far beyond the Moon <img src="${this.earth}" width="28" height="28">`,
+    `The longest-running anime has over 7,500 episodes <img src="${this.anime}" width="28" height="28">`,
+    `Spirited Away was the first anime film to be nominated for and win an academy award <img src="${this.anime}" width="28" height="28">`,
     'Pi has 6.4 billion known digits – it would take a person approximately 133 years to recite all of them without stopping <img src="/assets/images/icons/dope/math.png" width="28" height="28">',
     'There are almost 100,000 Bitcoin millionaires <img src="/assets/images/icons/dope/bitcoin.png" width="28" height="28">',
     'There are more than 1.86 billion websites online <img src="/assets/images/icons/dope/internet.png" width="28" height="28">',
     '"I have a bad feeling about this" became a running gag for the franchise <img src="/assets/images/icons/dope/starwars.png" width="28" height="28">',
-    'A day on Mars lasts 24 hours and 37 minutes <img src="/assets/images/icons/dope/mars.png" width="28" height="28">',
-    'The biggest crater on Mars is Borealis Basin. It is 5300 miles from end to end and covers 40% of planet’s surface <img src="/assets/images/icons/dope/mars.png" width="28" height="28">',
+    `A day on Mars lasts 24 hours and 37 minutes <img src="${this.mars}" width="28" height="28">`,
+    `The biggest crater on Mars is Borealis Basin. It is 5300 miles from end to end and covers 40% of planet’s surface <img src="${this.mars}" width="28" height="28">`,
     'The Roswell Incident featured accounts of debris described by Marcel as "nothing made on this earth" <img src="/assets/images/icons/dope/ufo.png" width="28" height="28">',
-    'Saturn is the most distant planet that can be seen with the naked eye" <img src="/assets/images/icons/dope/space.png" width="28" height="28">',
-    'Many critics thought Android would fail miserably <img src="/assets/images/icons/dope/android.png" width="28" height="28">',
-    'The first smartphone running Android was released in 2008, and it had a sliding keyboard <img src="/assets/images/icons/dope/android.png" width="28" height="28">',
+    `Saturn is the most distant planet that can be seen with the naked eye" <img src="${this.space}" width="28" height="28">`,
+    `Many critics thought Android would fail miserably <img src="${this.android}" width="28" height="28">`,
+    `The first smartphone running Android was released in 2008, and it had a sliding keyboard <img src="${this.android}" width="28" height="28">`,
     'Google Chrome has a worldwide browser market share of 67.56% <img src="/assets/images/icons/dope/chrome.png" width="28" height="28">',
     'There are more than 5000 new computer viruses released every month <img src="/assets/images/icons/dope/cloud.png" width="28" height="28">',
     'The original name of windows was Interface Manager <img src="/assets/images/icons/dope/windows.webp" width="28" height="28">',

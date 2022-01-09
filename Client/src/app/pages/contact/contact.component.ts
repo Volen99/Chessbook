@@ -74,7 +74,10 @@ export class ContactComponent implements OnInit, OnDestroy {
             body: this.fb.control('', [Validators.required, Validators.minLength(3), Validators.maxLength(5000)]),
         });
 
+        this.isLoggedIn = this.userStore.isLoggedIn();
+
         this.prefillForm();
+
 
         const {xl} = this.breakpointService.getBreakpointsMap();
         this.themeService.onMediaQueryChange()
@@ -93,6 +96,8 @@ export class ContactComponent implements OnInit, OnDestroy {
     }
 
     faTimes = faTimes;
+
+    isLoggedIn = false;
 
     svgStyles = {
         'display': 'inline-block',

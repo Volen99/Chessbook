@@ -1,38 +1,21 @@
 ﻿namespace Chessbook.Web.Api.Controllers
 {
-    using System;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
 
-    using Chessbook.Data.Models.Post;
-    using Chessbook.Data.Models.Post.Enums;
     using Chessbook.Services.Data.Services.Entities;
     using Chessbook.Web.Api.Identity;
     using Chessbook.Web.Models.Inputs;
-    using Chessbook.Web.Api.Areas.Admin.Models.Post;
-    using Chessbook.Web.Api.Factories;
-    using Chessbook.Services;
-    using Chessbook.Core;
-    using Chessbook.Services.Localization;
     using Chessbook.Web.Api.Lib;
 
     [Route("vote")]
     public class VotesController : BaseApiController
     {
         private readonly IPostsService postServce;
-        private readonly IPostModelFactory postModelFactory;
-        private readonly IUserService userService;
-        private readonly IWorkContext _workContext;
-        private readonly ILocaleStringResourceService localeStringResourceService;
 
-        public VotesController(IPostsService postServce, IPostModelFactory postModelFactory, IUserService userService, IWorkContext workContext,
-            ILocaleStringResourceService localeStringResourceService)
+        public VotesController(IPostsService postServce)
         {
             this.postServce = postServce;
-            this.postModelFactory = postModelFactory;
-            this.userService = userService;
-            this._workContext = workContext;
-            this.localeStringResourceService = localeStringResourceService;
         }
 
         [HttpPut]

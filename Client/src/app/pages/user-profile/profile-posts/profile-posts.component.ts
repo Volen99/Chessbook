@@ -125,7 +125,7 @@ export class ProfilePostsComponent extends AbstractPostList implements OnInit, O
       return 670;
     }
 
-    return postsCount * 470;
+    return postsCount * 540; // 470
   }
 
 }

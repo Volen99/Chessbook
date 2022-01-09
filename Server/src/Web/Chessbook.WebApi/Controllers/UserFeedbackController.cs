@@ -24,11 +24,10 @@ namespace Chessbook.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Processes the customer feedback form submission.
+        /// Processes the user feedback form submission.
         /// </summary>
-        /// <param name="feedback">The customer feedback.</param>
+        /// <param name="feedback">The user feedback.</param>
         /// <returns>The result of the operation.</returns>
-        // POST: api/IabCustomerFeedback/SendFeedback
         [HttpPost]
         [Route("Send")]
         public async Task<ActionResult> SendFeedback(UserFeedback feedback)

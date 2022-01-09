@@ -51,72 +51,41 @@ import {IPoll} from '../../../../../shared/posts/models/poll/poll';
 
 // For more information visit : https://dev.twitter.com/en/docs/tweets/post-and-engage/api-reference/get-statuses-show-id
 export interface IPublishTweetParameters {
-  // Message to publish as a tweet
   text: string;
 
-  // The ID of an existing status that the update is in reply to.
   inReplyToTweetId?: number;
 
-  // Quote a specific tweet
   quotedTweet: IPost;
 
-  // An existing status that the update is in reply to.
   inReplyToTweet: ITweetIdentifier;
 
-  /// <summary>
-  /// In order for a URL to not be counted in the status body of an extended Tweet, provide a URL as a Tweet attachment.
-  /// This URL must be a Tweet permalink, or Direct Message deep link.
-  /// Arbitrary, non-Twitter URLs must remain in the status text.
-  /// URLs passed to the attachment_url parameter not matching either a Tweet permalink or
-  /// Direct Message deep link will fail at Tweet creation and cause an exception.
-  /// </summary>
   quotedTweetUrl: string;
 
-  // A <a href="https://dev.twitter.com/overview/api/places">place</a> in the world.
   placeId: string;
 
-  // Whether or not to put a pin on the exact coordinates a tweet has been sent from.
   displayExactCoordinates?: boolean;
 
-  // A list of media_ids to associate with the Tweet. You may include up to 4 photos or 1 animated GIF or 1 video in a Tweet.
   mediaIds: Array<number>;
 
-  // A list of media (uploaded or not) that need to be displayed within the tweet.
   medias: Array<IMedia>;
 
-
-  // Whether this Tweet will be published with any media attached
   hasMedia: boolean;
 
   hasPoll: boolean;
   poll: IPoll;
 
-  // If you upload Tweet media that might be considered sensitive content such as
-  // nudity, violence, or medical procedures, you should set this value to true.
   possiblySensitive?: boolean;
 
-  // If set to true, the creator property (IUser) will only contain the id.
   trimUser?: boolean;
 
-  /// Twitter will auto-populate the @mentions in the extended tweet prefix from the Tweet
-  /// being replied to, plus a mention of the screen name that posted the Tweet being replied to.
-  /// i.e. This auto-populates a "reply all".
-  /// Must be used with InReplyToTweetId or InReplyToTweet.
-  /// Use ExcludeReplyUserIds to specify accounts to not mention in the prefix.
-  /// Also note that there can be a maximum of 50 mentions in the prefix, any more will error.
   autoPopulateReplyMetadata?: boolean;
 
-  /// Twitter User IDs to not include in the auto-populated extended Tweet prefix.
-  /// Cannot exclude the User who is directly being replied to, only the additional mentions.
-  /// Must be used with AutoPopulateReplyMetadata.
   excludeReplyUserIds: Array<number>;
 
-  // Associate an ads card with the Tweet using the card_uri value from any ads card response.
   cardUri: string;
 }
 
 export class PublishTweetParameters implements IPublishTweetParameters {
-  // @ts-ignore
   constructor(textOrSource?: string | IPublishTweetParameters) {
     if (!textOrSource) {
     } else if (typeof textOrSource === 'string') {
@@ -139,7 +108,6 @@ export class PublishTweetParameters implements IPublishTweetParameters {
       this.trimUser = textOrSource.trimUser;
       this.autoPopulateReplyMetadata = textOrSource.autoPopulateReplyMetadata;
       this.excludeReplyUserIds = textOrSource.excludeReplyUserIds;
-      // this.tweetMode = textOrSource.tweetMode;
     }
 
     this.mediaIds = new Array<number>();
@@ -349,6 +317,7 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
   }
 
   public async fileDrop(files: File[]) {
+
   }
 
   canSubmit() {
@@ -446,14 +415,13 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
   }
 
   pollButtonHandler() {
+    if (this.uploader.queue.length > 0) {
+      return;
+    }
+
     this.isPoll = !this.isPoll;
 
     this.textPlaceholder = !this.isPoll ? `What's happening?` : 'Ask a question...';
-  }
-
-  emojiButtonHandler() {
-    this.notifier.warning('', 'Coming out soon');
-    return;
   }
 
   scheduleButtonHandler() {

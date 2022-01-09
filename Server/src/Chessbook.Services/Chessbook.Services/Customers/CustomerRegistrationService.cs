@@ -36,7 +36,6 @@ namespace Chessbook.Services.Authentication
         private readonly IStoreContext _storeContext;
         private readonly IStoreService _storeService;
         private readonly IWorkContext _workContext;
-        private readonly ILocaleStringResourceService localeStringResourceService;
         private readonly IWorkflowMessageService workflowMessageService;
 
 
@@ -54,7 +53,6 @@ namespace Chessbook.Services.Authentication
             IStoreContext storeContext,
             IStoreService storeService,
             IWorkContext workContext,
-            ILocaleStringResourceService localeStringResourceService,
             IWorkflowMessageService workflowMessageService)
         {
             _customerSettings = customerSettings;
@@ -67,7 +65,6 @@ namespace Chessbook.Services.Authentication
             _storeContext = storeContext;
             _storeService = storeService;
             _workContext = workContext;
-            this.localeStringResourceService = localeStringResourceService;
             this.workflowMessageService = workflowMessageService;
         }
 
@@ -225,38 +222,38 @@ namespace Chessbook.Services.Authentication
 
             if (string.IsNullOrEmpty(request.Email))
             {
-                result.AddError(await this.localeStringResourceService.GetResourceAsync("Account.Register.Errors.EmailIsNotProvided"));
+                result.AddError("Email is required.");
                 return result;
             }
 
             if (!CommonHelper.IsValidEmail(request.Email))
             {
-                result.AddError(await this.localeStringResourceService.GetResourceAsync("Common.WrongEmail"));
+                result.AddError("Wrong email");
                 return result;
             }
 
             if (string.IsNullOrWhiteSpace(request.Password))
             {
-                result.AddError(await this.localeStringResourceService.GetResourceAsync("Account.Register.Errors.PasswordIsNotProvided"));
+                result.AddError("Password is not provided");
                 return result;
             }
 
             if (_customerSettings.UsernamesEnabled && string.IsNullOrEmpty(request.Username))
             {
-                result.AddError(await this.localeStringResourceService.GetResourceAsync("Account.Register.Errors.UsernameIsNotProvided"));
+                result.AddError("Username is required.");
                 return result;
             }
 
-            //validate unique user
+            // validate unique user
             if (await _customerService.GetCustomerByEmailAsync(request.Email) != null)
             {
-                result.AddError(await this.localeStringResourceService.GetResourceAsync("Account.Register.Errors.EmailAlreadyExists"));
+                result.AddError("The specified email already exists");
                 return result;
             }
 
             if (_customerSettings.UsernamesEnabled && await _customerService.GetCustomerByUsernameAsync(request.Username) != null)
             {
-                result.AddError(await this.localeStringResourceService.GetResourceAsync("Account.Register.Errors.UsernameAlreadyExists"));
+                result.AddError("The specified username already exists");
                 return result;
             }
 
@@ -335,27 +332,27 @@ namespace Chessbook.Services.Authentication
             var result = new ChangePasswordResult();
             if (string.IsNullOrWhiteSpace(request.Email))
             {
-                result.AddError(await this.localeStringResourceService.GetResourceAsync("Account.ChangePassword.Errors.EmailIsNotProvided"));
+                result.AddError("Email is not entered");
                 return result;
             }
 
             if (string.IsNullOrWhiteSpace(request.NewPassword))
             {
-                result.AddError(await this.localeStringResourceService.GetResourceAsync("Account.ChangePassword.Errors.PasswordIsNotProvided"));
+                result.AddError("Password is not entered");
                 return result;
             }
 
             var customer = await _customerService.GetCustomerByEmailAsync(request.Email);
             if (customer == null)
             {
-                result.AddError(await this.localeStringResourceService.GetResourceAsync("Account.ChangePassword.Errors.EmailNotFound"));
+                result.AddError("The specified email could not be found");
                 return result;
             }
 
             //request isn't valid
             if (request.ValidateRequest && !PasswordsMatch(await _customerService.GetCurrentPasswordAsync(customer.Id), request.OldPassword))
             {
-                result.AddError(await this.localeStringResourceService.GetResourceAsync("Account.ChangePassword.Errors.OldPasswordDoesntMatch"));
+                result.AddError("Old password doesn't match");
                 return result;
             }
 
@@ -368,7 +365,7 @@ namespace Chessbook.Services.Authentication
                 var newPasswordMatchesWithPrevious = previousPasswords.Any(password => PasswordsMatch(password, request.NewPassword));
                 if (newPasswordMatchesWithPrevious)
                 {
-                    result.AddError(await this.localeStringResourceService.GetResourceAsync("Account.ChangePassword.Errors.PasswordMatchesWithPrevious"));
+                    result.AddError("You entered the password that is the same as one of the last passwords you used. Please create a new password.");
                     return result;
                 }
             }
@@ -432,7 +429,7 @@ namespace Chessbook.Services.Authentication
 
             // activity log
             await _customerActivityService.InsertActivityAsync(customer, "PublicStore.Login",
-                await this.localeStringResourceService.GetResourceAsync("ActivityLog.PublicStore.Login"), customer);
+                "Login", customer);
 
             return result;
         }
@@ -461,12 +458,12 @@ namespace Chessbook.Services.Authentication
 
             if (!CommonHelper.IsValidEmail(newEmail))
             {
-                throw new NopException(await this.localeStringResourceService.GetResourceAsync("Account.EmailUsernameErrors.NewEmailIsNotValid"));
+                throw new NopException("New email is not valid");
             }
 
             if (newEmail.Length > 100)
             {
-                throw new NopException(await this.localeStringResourceService.GetResourceAsync("Account.EmailUsernameErrors.EmailTooLong"));
+                throw new NopException("E-mail address is too long");
             }
 
             var customer2 = await _customerService.GetCustomerByEmailAsync(newEmail);
@@ -531,13 +528,13 @@ namespace Chessbook.Services.Authentication
 
             if (newUsername.Length > NopCustomerServicesDefaults.CustomerUsernameLength)
             {
-                throw new NopException(await this.localeStringResourceService.GetResourceAsync("Account.EmailUsernameErrors.UsernameTooLong"));
+                throw new NopException("Username is too long");
             }
 
             var user2 = await _customerService.GetCustomerByUsernameAsync(newUsername);
             if (user2 != null && customer.Id != user2.Id)
             {
-                throw new NopException(await this.localeStringResourceService.GetResourceAsync("Account.EmailUsernameErrors.UsernameAlreadyExists"));
+                throw new NopException("The username is already in use");
             }
 
             customer.ScreenName = newUsername;

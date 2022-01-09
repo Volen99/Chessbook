@@ -53,7 +53,7 @@ namespace Chessbook.Web.Api.Factories
             this.workContext = workContext;
         }
 
-         /// <summary>
+        /// <summary>
         /// Prepare paged customer list model
         /// </summary>
         /// <param name="searchModel">Customer search model</param>
@@ -61,7 +61,7 @@ namespace Chessbook.Web.Api.Factories
         /// A task that represents the asynchronous operation
         /// The task result contains the customer list model
         /// </returns>
-        public virtual async Task<CustomerListModel> PrepareCustomerListModelAsync(CustomerSearchModel searchModel)
+        public virtual async Task<CustomerListModel> PrepareCustomerListModelAsync(CustomerSearchModel searchModel, bool forAdmin = false)
         {
             if (searchModel == null)
             {
@@ -87,8 +87,8 @@ namespace Chessbook.Web.Api.Factories
             {
                 return customers.SelectAwait(async customer =>
                 {
-                    var customerModel = await this.PrepareCustomerModelAsync(new CustomerModel(), customer);
-                   
+                    var customerModel = await this.PrepareCustomerModelAsync(new CustomerModel(), customer, forAdmin);
+
                     return customerModel;
                 });
             });
@@ -109,34 +109,36 @@ namespace Chessbook.Web.Api.Factories
 
                 model.Id = customer.Id;
 
-                // whether to fill in some of properties
-                if (!excludeProperties)
+                if (excludeProperties)
                 {
                     model.Email = customer.Email;
-                    model.DisplayName = customer.DisplayName;
-                    model.ScreenName = customer.ScreenName;
-                    model.Active = customer.Active;
-                    model.FollowedBy = customer.FollowedBy;
-                    model.BlockedBy = relationship.BlockedBy;
-                    model.Blocking = relationship.Blocking;
-                    model.FollowersCount = customer.FollowersCount;
-                    model.FollowingCount = customer.FollowingCount;
-                    model.County = await this.genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.CountyAttribute);
-                    model.Description = customer.Description;
-                    // model.CountryId = await this.genericAttributeService.GetAttributeAsync<int>(customer, NopCustomerDefaults.CountryIdAttribute);
-                    model.CreatedOn = await dateTimeHelper.ConvertToUserTimeAsync(customer.CreatedOn, DateTimeKind.Utc);
-                    model.LastActivityDate = await this.dateTimeHelper.ConvertToUserTimeAsync(customer.LastActivityDateUtc, DateTimeKind.Utc);
                     model.LastIpAddress = customer.LastIpAddress;
-                    if (customer.LastLoginDateUtc.HasValue)
-                    {
-                        model.LastLoginDate = await this.dateTimeHelper.ConvertToUserTimeAsync(customer.LastLoginDateUtc.Value, DateTimeKind.Utc);
-                    }
-                    model.WebsiteLink = customer.WebsiteLink;
-                    model.TwitterLink = customer.TwitterLink;
-                    model.TwitchLink = customer.TwitchLink;
-                    model.YoutubeLink = customer.YoutubeLink;
-                    model.FacebookLink = customer.FacebookLink;
                 }
+
+                // whether to fill in some of properties
+                // if (!excludeProperties)
+                model.DisplayName = customer.DisplayName;
+                model.ScreenName = customer.ScreenName;
+                model.Active = customer.Active;
+                model.FollowedBy = customer.FollowedBy;
+                model.BlockedBy = relationship.BlockedBy;
+                model.Blocking = relationship.Blocking;
+                model.FollowersCount = customer.FollowersCount;
+                model.FollowingCount = customer.FollowingCount;
+                model.County = await this.genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.CountyAttribute);
+                model.Description = customer.Description;
+                // model.CountryId = await this.genericAttributeService.GetAttributeAsync<int>(customer, NopCustomerDefaults.CountryIdAttribute);
+                model.CreatedOn = await dateTimeHelper.ConvertToUserTimeAsync(customer.CreatedOn, DateTimeKind.Utc);
+                model.LastActivityDate = await this.dateTimeHelper.ConvertToUserTimeAsync(customer.LastActivityDateUtc, DateTimeKind.Utc);
+                if (customer.LastLoginDateUtc.HasValue)
+                {
+                    model.LastLoginDate = await this.dateTimeHelper.ConvertToUserTimeAsync(customer.LastLoginDateUtc.Value, DateTimeKind.Utc);
+                }
+                model.WebsiteLink = customer.WebsiteLink;
+                model.TwitterLink = customer.TwitterLink;
+                model.TwitchLink = customer.TwitchLink;
+                model.YoutubeLink = customer.YoutubeLink;
+                model.FacebookLink = customer.FacebookLink;
             }
             else
             {

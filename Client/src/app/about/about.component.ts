@@ -107,7 +107,7 @@ export class AboutComponent implements OnInit, AfterViewChecked {
           However, we need to balance this with our our legal and moral obligations. 
           Below is a summary of rules you need to follow:`,
         administrator: 'My name is Volen but friends call me Volencho. I am a developer from Bulgaria, ' +
-          'with love for the game of chess. I made this website all by myself. Apart from spending time with family, ' +
+          'with love for the game of chess. I made this website all by myself. Apart from spending time with friends and family, ' +
           'I love Music, Reading, Astronomy, Science, Artificial Intelligence, Physics, Traveling, Video Games, Movies and the list goes on :D. I am also a stargaze lover 🌟🌠',
         creationReason: '',
         maintenanceLifetime: '',

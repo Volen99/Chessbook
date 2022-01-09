@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 using Chessbook.Core;
 using Chessbook.Services.Logging;
-using Chessbook.Web.Framework.Controllers;
 using Chessbook.Services;
 using Chessbook.Web.Api.Factories;
 using Chessbook.Services.Chat;
@@ -70,7 +69,7 @@ namespace Chessbook.Web.Api.Controllers
 
 
 
-        [HttpPost, FormValueRequired("mark-unread"), ActionName("InboxUpdate")]
+        [HttpPost, ActionName("InboxUpdate")]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> MarkUnread(IFormCollection formCollection)
         {

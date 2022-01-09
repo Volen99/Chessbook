@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 
 using Chessbook.Core.Domain.Customers;
 using Chessbook.Data.Models;
-using Chessbook.Services;
 using Chessbook.Web.Models.AuthDTO;
 using Chessbook.Web.Api;
 using Chessbook.Web.Api.Identity;
@@ -22,7 +21,6 @@ namespace Chessbook.Services.Authentication
         #region Fields
 
         private readonly JwtManager jwtManager;
-        private readonly CustomerSettings _customerSettings;
         private readonly IUserService _customerService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -32,10 +30,9 @@ namespace Chessbook.Services.Authentication
 
         #region Ctor
 
-        public AuthenticationService(JwtManager jwtManager, CustomerSettings customerSettings, IUserService customerService, IHttpContextAccessor httpContextAccessor)
+        public AuthenticationService(JwtManager jwtManager, IUserService customerService, IHttpContextAccessor httpContextAccessor)
         {
             this.jwtManager = jwtManager;
-            _customerSettings = customerSettings;
             _customerService = customerService;
             _httpContextAccessor = httpContextAccessor;
         }

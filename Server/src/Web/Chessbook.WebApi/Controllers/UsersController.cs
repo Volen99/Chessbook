@@ -43,7 +43,6 @@
     using Chessbook.Services.Directory;
     using Chessbook.Web.Api.Models.Utc;
     using Chessbook.Services.Helpers;
-    using Chessbook.Services.Localization;
     using Chessbook.Core.Domain.Gdpr;
     using Chessbook.Services.Gdpr;
     using Chessbook.Services.ExportImport;
@@ -78,7 +77,6 @@
         private readonly IWorkContext workContext;
         private readonly ICountryService countryService;
         private readonly IDateTimeHelper dateTimeHelper;
-        private readonly ILocaleStringResourceService localeStringResourceService;
         private readonly IGdprService gdprService;
         private readonly IExportManager exportManager;
         private readonly IChatService chatService;
@@ -92,7 +90,7 @@
             ICustomerActivityService customerActivityService, IUserNotificationService notificationsService, INotificationsSettingsService notificationsSettingsService,
             IUserNotificationModelFactory userNotificationModelFactory, ICustomerRegistrationService customerRegistrationService, IAbuseService abuseService,
             IAbuseModelFactory abuseModelFactory, IFollowService followService, IBlocklistService blocklistService, IUserBlocklistFactory userBlocklistFactory,
-            IWorkContext workContext, ICountryService countryService, IDateTimeHelper dateTimeHelper, ILocaleStringResourceService localeStringResourceService,
+            IWorkContext workContext, ICountryService countryService, IDateTimeHelper dateTimeHelper,
             IGdprService gdprService, IExportManager exportManager, IChatService chatService, IPermissionService permissionService,
             IWorkflowMessageService workflowMessageService, IEventPublisher eventPublisher, INopFileProvider fileProvider)
         {
@@ -116,7 +114,6 @@
             this.workContext = workContext;
             this.countryService = countryService;
             this.dateTimeHelper = dateTimeHelper;
-            this.localeStringResourceService = localeStringResourceService;
             this.gdprService = gdprService;
             this.exportManager = exportManager;
             this.chatService = chatService;
@@ -197,7 +194,7 @@
             {
                 var user = await userService.GetCustomerByIdAsync(currentUserId);
 
-                var model = await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), user);
+                var model = await this.userModelFactory.PrepareCustomerModelAsync(new CustomerModel(), user, true);
 
                 if (model == null)
                 {
@@ -404,12 +401,6 @@
         [Route("banner")]
         public async Task<IActionResult> UploadBanner()
         {
-            //var user = jwtManager.GetPrincipal(token);
-            //if (user == null || !user.Identity.IsAuthenticated)
-            //{
-            //    return Unauthorized();
-            //}
-
             var currentUserId = User.GetUserId();
             var customer = await userService.GetCustomerByIdAsync(currentUserId);
 
@@ -966,19 +957,15 @@
                 return RedirectToRoute("Homepage");
             }
 
-            var model = new AccountActivationModel { ReturnUrl = Url.RouteUrl("Homepage") };
             var cToken = await this.genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.AccountActivationTokenAttribute);
             if (string.IsNullOrEmpty(cToken))
             {
-                //model.Result = "Your account already has been activated :)";
-                //return this.Ok(model);
-
                 return this.Content("<div> <div style=\"text-align: center;\"> <h3 style=\"color: #6200ee\"> Your account already has been activated :) </h3> <div> <a href=\"https://www.chessbook.me/\">Continue to chessbook.me</a> </div> </div> </div>", "text/html");
             }
 
             if (!cToken.Equals(token, StringComparison.InvariantCultureIgnoreCase))
             {
-                return RedirectToRoute("Homepage");
+                return RedirectToRoute("Home");
             }
 
             // activate user account
@@ -1020,7 +1007,7 @@
             }
 
             // prepare item text
-            defaultItemText ??= await this.localeStringResourceService.GetResourceAsync("Admin.Common.All");
+            defaultItemText ??= "All";
 
             // insert this default item at first
             items.Insert(0, new CountryUtcModel { Text = defaultItemText, Value = defaultItemValue });
@@ -1039,7 +1026,7 @@
             }
 
             // prepare item text
-            defaultItemText ??= await this.localeStringResourceService.GetResourceAsync("Admin.Common.All");
+            defaultItemText ??= "All";
 
             // insert this default item at first
             items.Insert(0, new TimeZoneUtcModel { Text = defaultItemText, Value = defaultItemValue });
@@ -1076,11 +1063,5 @@
             return result;
         }
     }
-
-
-    public class GetProfileInputQueryModel
-    {
-        [BindProperty(Name = "screen_name")]
-        public string ScreenName { get; set; }
-    }
+   
 }

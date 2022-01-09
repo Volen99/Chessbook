@@ -42,7 +42,6 @@ namespace Chessbook.Web.Api.Factories
         private readonly IWorkContext workContext;
         private readonly IStoreContext storeContext;
         private readonly IPictureService pictureService;
-        private readonly ILocaleStringResourceService localeStringResourceService;
         private readonly IUserModelFactory userModelFactory;
         private readonly IUserService userService;
         private readonly IGenericAttributeService genericAttributeService;
@@ -62,7 +61,7 @@ namespace Chessbook.Web.Api.Factories
         #region Ctor
 
         public PostModelFactory(MediaSettings mediaSettings, IStaticCacheManager staticCacheManager, IWebHelper webHelper, IWorkContext workContext,
-            IStoreContext storeContext, IPictureService pictureService, ILocaleStringResourceService localeStringResourceService, IUserModelFactory userModelFactory,
+            IStoreContext storeContext, IPictureService pictureService, IUserModelFactory userModelFactory,
             IUserService userService, IGenericAttributeService genericAttributeService, IPostCommentService postCommentService, IPostsService postService,
             IPostTagService postTagService, IPollService pollService, IPollModelFactory pollModelFactory, IDateTimeHelper dateTimeHelper,
             IPreviewCardFactory previewCardFactory, IPreviewCardService previewCardService, ITwitchService twitchService, INopFileProvider fileProvider)
@@ -73,7 +72,6 @@ namespace Chessbook.Web.Api.Factories
             this.workContext = workContext;
             this.storeContext = storeContext;
             this.pictureService = pictureService;
-            this.localeStringResourceService = localeStringResourceService;
             this.userModelFactory = userModelFactory;
             this.userService = userService;
             this.genericAttributeService = genericAttributeService;
@@ -162,11 +160,11 @@ namespace Chessbook.Web.Api.Factories
                 // "title" attribute
                 defaultPictureModel.Title = (defaultPicture != null && !string.IsNullOrEmpty(defaultPicture.TitleAttribute)) ?
                     defaultPicture.TitleAttribute :
-                    string.Format(await this.localeStringResourceService.GetResourceAsync("Media.Product.ImageLinkTitleFormat.Details"), productName);
+                    string.Format("Picture of {0}", productName);
                 // "alt" attribute
                 defaultPictureModel.AlternateText = (defaultPicture != null && !string.IsNullOrEmpty(defaultPicture.AltAttribute)) ?
                     defaultPicture.AltAttribute :
-                    string.Format(await this.localeStringResourceService.GetResourceAsync("Media.Product.ImageAlternateTextFormat.Details"), productName);
+                    string.Format("Picture of {0}", productName);
 
                 // all pictures
                 var pictureModels = new List<PictureModel>();
@@ -183,8 +181,8 @@ namespace Chessbook.Web.Api.Factories
                         ImageUrl = ChessbookConstants.SiteHttps + imageUrl,
                         ThumbImageUrl = ChessbookConstants.SiteHttps + thumbImageUrl,
                         FullSizeImageUrl = ChessbookConstants.SiteHttps + fullSizeImageUrl,
-                        Title = string.Format(await this.localeStringResourceService.GetResourceAsync("Media.Product.ImageLinkTitleFormat.Details"), productName),
-                        AlternateText = string.Format(await this.localeStringResourceService.GetResourceAsync("Media.Product.ImageAlternateTextFormat.Details"), productName),
+                        Title = string.Format("Picture of {0}", productName),
+                        AlternateText = string.Format("Picture of {0}", productName),
                         Blurhash = picture.Blurhash,
                         Meta = new Dictionary<string, MediaEntitySizeModel>
                         {
@@ -210,11 +208,11 @@ namespace Chessbook.Web.Api.Factories
                     // "title" attribute
                     pictureModel.Title = !string.IsNullOrEmpty(picture.TitleAttribute) ?
                         picture.TitleAttribute :
-                        string.Format(await this.localeStringResourceService.GetResourceAsync("Media.Product.ImageLinkTitleFormat.Details"), productName);
+                        string.Format("Picture of {0}", productName);
                     // "alt" attribute
                     pictureModel.AlternateText = !string.IsNullOrEmpty(picture.AltAttribute) ?
                         picture.AltAttribute :
-                        string.Format(await this.localeStringResourceService.GetResourceAsync("Media.Product.ImageAlternateTextFormat.Details"), productName);
+                        string.Format("Picture of {0}", productName);
 
                     pictureModels.Add(pictureModel);
                 }
@@ -739,7 +737,7 @@ namespace Chessbook.Web.Api.Factories
 
             if (products.Count == 0 && isFiltering)
             {
-                model.NoResultMessage = await this.localeStringResourceService.GetResourceAsync("Catalog.Products.NoResult");
+                model.NoResultMessage = "No posts were found that matched your criteria.";
             }
             else
             {

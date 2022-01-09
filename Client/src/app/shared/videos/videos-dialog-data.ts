@@ -6,7 +6,7 @@ export const VIDEOS_DIALOG_DATA: IVideoItem[] = [
         id: 0,
         videoId: 'jJ-Q9CruGQI',
         title: 'What is Chessbook?',
-        description: 'Chessbook is a complete design to code solution that enables you to design and build web-apps directly in cloud, using a visual builder with real UI components, and then generate, production-ready Angular code. In this video, we provide a brief overview of Indigo.Design App Builder and how you can get started building real apps fast.\n\nTopics covered include:\n\n• What is Indigo.Design App Builder?\n\n• Tour of the Indigo.Design App Builder interface and features:\n\n• Sample Applications\n• Designing Your Application: Adding Layouts, Themes and UI Components\n• Previewing Your App and Code\n• Generating Your App to Edit in Visual Studio code or any IDE',
+        description: 'Chessbook is a social media for chess players that allows you to follow, share posts and interact with users all over the world. \n\nServices include:\n\n• Account - Personalize your account and follow other users to interact\n\n• Post - You can share your thoughts with just a text, pictures or share some cool Youtube, Twitch or Twitter video. You can also poll your friends\n\n• Streamers - Save your twitch username and everytime you go live, your stream will show in Streamers page\n\n• Explore - See all the chess related news in Explore page\n\n• More - And much much more services are to be seen :)\n',
         thumbUrl: '/assets/images/videos/thumbs/thumb-01.jpg'
     },
 ];

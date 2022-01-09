@@ -15,7 +15,6 @@
     using Chessbook.Core.Domain.Customers;
     using Chessbook.Core;
     using Chessbook.Services;
-    using Chessbook.Services.Localization;
     using Chessbook.Data.Models;
     using Chessbook.Services.Authentication;
     using Chessbook.Core.Events;
@@ -29,7 +28,6 @@
         private readonly CustomerSettings customerSettings;
         private readonly ICustomerRegistrationService customerRegistrationService;
         private readonly IUserService userService;
-        private readonly ILocaleStringResourceService localeStringResourceService;
         private readonly ICustomerActivityService customerActivityService;
         private readonly INotificationsSettingsService notificationsSettingsService;
         private readonly IWorkContext workContext;
@@ -39,7 +37,7 @@
         private readonly IGenericAttributeService genericAttributeService;
 
         public AuthController(JwtManager jwtManager, ICustomerRegistrationService customerRegistrationService, IUserService customerService,
-            ILocaleStringResourceService localeStringResourceService, ICustomerActivityService customerActivityService,
+            ICustomerActivityService customerActivityService,
             CustomerSettings customerSettings, INotificationsSettingsService notificationsSettingsService,
             IWorkContext workContext, IAuthenticationService authenticationService, IEventPublisher eventPublisher,
             IWorkflowMessageService workflowMessageService, IGenericAttributeService genericAttributeService)
@@ -48,7 +46,6 @@
             this.customerSettings = customerSettings;
             this.customerRegistrationService = customerRegistrationService;
             this.userService = customerService;
-            this.localeStringResourceService = localeStringResourceService;
             this.customerActivityService = customerActivityService;
             this.notificationsSettingsService = notificationsSettingsService;
             this.workContext = workContext;
@@ -66,7 +63,7 @@
             var customerEmail = loginDto.Email?.Trim();
 
             var loginResult = await this.customerRegistrationService.ValidateCustomerAsync(customerEmail, loginDto.Password); // checks for IsActive too kk
-            var err = string.Empty;
+            string err;
             switch (loginResult)
             {
                 case CustomerLoginResults.Successful:
@@ -78,23 +75,23 @@
                         return Ok(new { token = token.Data });
                     }
                 case CustomerLoginResults.CustomerNotExist:
-                    ModelState.AddModelError("", await this.localeStringResourceService.GetResourceAsync("Account.Login.WrongCredentials.CustomerNotExist"));
+                    err = "No user account found";
                     break;
                 case CustomerLoginResults.Deleted:
-                    ModelState.AddModelError("", await this.localeStringResourceService.GetResourceAsync("Account.Login.WrongCredentials.Deleted"));
+                    err = "User is delete";
                     break;
                 case CustomerLoginResults.NotActive:
                     err = "Account email has not been activated";
                     break;
                 case CustomerLoginResults.NotRegistered:
-                    ModelState.AddModelError("", await this.localeStringResourceService.GetResourceAsync("Account.Login.WrongCredentials.NotRegistered"));
+                    err = "Account is not registered";
                     break;
                 case CustomerLoginResults.LockedOut:
-                    ModelState.AddModelError("", await this.localeStringResourceService.GetResourceAsync("Account.Login.WrongCredentials.LockedOut"));
+                    err = "User is locked out";
                     break;
                 case CustomerLoginResults.WrongPassword:
                 default:
-                    ModelState.AddModelError("", await this.localeStringResourceService.GetResourceAsync("Account.Login.WrongCredentials"));
+                    err = "The credentials provided are incorrect";
                     break;
             }
 
@@ -182,21 +179,9 @@
 
             await this.notificationsSettingsService.CreateAsync(settings);
 
-            //// form fields
+            // form fields
             //if (_dateTimeSettings.AllowCustomersToSetTimeZone)
             //    await _genericAttributeService.SaveAttributeAsync(newUser, NopCustomerDefaults.TimeZoneIdAttribute, signUpDto.TimeZoneId);
-            //if (true)
-            //    await _genericAttributeService.SaveAttributeAsync(newUser, NopCustomerDefaults.GenderAttribute, signUpDto.Gender);
-            //if (true)
-            //    await _genericAttributeService.SaveAttributeAsync(newUser, NopCustomerDefaults.DateOfBirthAttribute, signUpDto.DateOfBirth);
-            //if (true)
-            //    await _genericAttributeService.SaveAttributeAsync(newUser, NopCustomerDefaults.CityAttribute, signUpDto.City);
-            //if (true)
-            //    await _genericAttributeService.SaveAttributeAsync(newUser, NopCustomerDefaults.CountyAttribute, signUpDto.County);
-            //if (true)
-            //    await _genericAttributeService.SaveAttributeAsync(newUser, NopCustomerDefaults.CountryIdAttribute, signUpDto.CountryId);
-            //if (true && true)
-            //    await _genericAttributeService.SaveAttributeAsync(newUser, NopCustomerDefaults.StateProvinceIdAttribute, signUpDto.StateProvinceId);
 
             //validate customer roles
             var allCustomerRoles = await this.userService.GetAllCustomerRolesAsync(true);
@@ -252,9 +237,7 @@
             await this.userService.UpdateCustomerAsync(newUser);
 
             // activity log
-            await this.customerActivityService.InsertActivityAsync("AddNewCustomer", string.Format(await this.localeStringResourceService.GetResourceAsync("ActivityLog.AddNewCustomer"), newUser.Id), newUser);
-            // _notificationService.SuccessNotification(await this.localeStringResourceService.GetResourceAsync("Admin.Customers.Customers.Added"));
-
+            await this.customerActivityService.InsertActivityAsync("AddNewCustomer", string.Format("Added a new user (ID = {0})", newUser.Id), newUser);
 
             switch (this.customerSettings.UserRegistrationType)
             {
@@ -367,11 +350,11 @@
             var isInRegisteredRole = customerRoles.FirstOrDefault(cr => cr.SystemName == NopCustomerDefaults.RegisteredRoleName) != null;
             if (isInGuestsRole && isInRegisteredRole)
             {
-                return await this.localeStringResourceService.GetResourceAsync("Admin.Customers.Customers.GuestsAndRegisteredRolesError");
+                return "The user cannot be in both 'Guests' and 'Registered' user roles";
             }
             if (!isInGuestsRole && !isInRegisteredRole)
             {
-                return await this.localeStringResourceService.GetResourceAsync("Admin.Customers.Customers.AddCustomerToGuestsOrRegisteredRoleError");
+                return "Add the user to 'Guests' or 'Registered' customer role";
             }
 
             // no errors

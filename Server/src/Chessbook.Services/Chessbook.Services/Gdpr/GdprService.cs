@@ -15,7 +15,6 @@ using Chessbook.Services.Common;
 using Chessbook.Services.Data;
 using Chessbook.Services.Data.Services.Entities;
 using Chessbook.Services.Entities;
-using Chessbook.Services.Stores;
 
 namespace Chessbook.Services.Gdpr
 {
@@ -33,7 +32,6 @@ namespace Chessbook.Services.Gdpr
         private readonly IRepostService repostService;
         private readonly IRepository<GdprConsent> _gdprConsentRepository;
         private readonly IRepository<GdprLog> _gdprLogRepository;
-        private readonly IStoreService _storeService;
         private readonly IPostCommentService postCommentService;
         private readonly IChatService chatService;
         private readonly IYoutubeService youtubeService;
@@ -49,7 +47,6 @@ namespace Chessbook.Services.Gdpr
             IGenericAttributeService genericAttributeService,
             IRepository<GdprConsent> gdprConsentRepository,
             IRepository<GdprLog> gdprLogRepository,
-            IStoreService storeService,
             IPostsService postService,
             IPostCommentService postCommentService,
             IChatService chatService,
@@ -62,7 +59,6 @@ namespace Chessbook.Services.Gdpr
             _genericAttributeService = genericAttributeService;
             _gdprConsentRepository = gdprConsentRepository;
             _gdprLogRepository = gdprLogRepository;
-            _storeService = storeService;
             this.postService = postService;
             this.postCommentService = postCommentService;
             this.chatService = chatService;

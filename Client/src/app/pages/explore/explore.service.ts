@@ -26,20 +26,15 @@ export interface Pagination {
   total: number;
 }
 
-
-const TOTAL_PAGES = 7;
-
 @Injectable()
 export class ExploreService {
-  private readonly ACCESS_KEY = 'da15f48b7a3df86235e7cb85e0379467';
+  private readonly ACCESS_KEY = 'da15f48b7a3df86235e7cb85e0379467'; // plz don't hack
 
   constructor(private http: HttpClient, private restService: RestService, private restExtractor: RestExtractor) {
 
   }
 
   load(limit: number, offset: number): Observable<any> {
-    // const startIndex = ((page - 1) % TOTAL_PAGES) * pageSize;
-
     let params = new HttpParams();
 
     params = this.restService.addParameterToQuery(params, 'access_key', this.ACCESS_KEY);
@@ -51,10 +46,6 @@ export class ExploreService {
     // Access Restricted - Your current Subscription Plan does not support HTTPS Encryption.
     return this.http
       .get<any>(`http://api.mediastack.com/v1/news?${params}`)
-      .pipe(catchError(err => this.restExtractor.handleError(err))); //
-      // .pipe(
-      //   map(news => news.splice(startIndex, pageSize)),
-      //   delay(1500),
-      // );
+      .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 }

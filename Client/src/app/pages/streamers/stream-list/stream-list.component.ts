@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {HttpParams} from "@angular/common/http";
 import {Subject} from "rxjs";
 
-import {faUserPlus, faUserCheck, faUsers} from '@fortawesome/pro-light-svg-icons';
+import {faUserPlus, faUsers} from '@fortawesome/pro-light-svg-icons';
 import {faFire as faFireSolid} from '@fortawesome/pro-solid-svg-icons';
 
 import {IStreams} from "../models/streams-model";
@@ -48,11 +48,11 @@ export class StreamListComponent implements OnInit, OnDestroy {
   faFireSolid = faFireSolid;
   faUsers = faUsers;
   faUserPlus = faUserPlus;
-  faUserCheck = faUserCheck;
 
   getLiveStreams() {
     this.streamersService.getLiveStreams(null)
         .subscribe((data: IStreams) => {
+          data.data = data.data.filter(s => s.user_login !== 'volencho');
           this.streams = data;
         }, err => console.log(err.message));
   }
@@ -73,7 +73,7 @@ export class StreamListComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.streamersService.getLiveStreams(params)
         .subscribe((data: IStreams) => {
-          this.streams.data.push(...data.data);
+          this.streams.data.push(...data.data.filter(s => s.user_login !== 'volencho'));
 
           this.loading = false;
         }, err => console.log(err.message));

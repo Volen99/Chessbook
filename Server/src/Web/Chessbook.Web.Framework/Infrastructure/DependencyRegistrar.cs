@@ -110,7 +110,6 @@ namespace Chessbook.Web.Framework.Infrastructure
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IAclService, AclService>();
             services.AddScoped<ICountryService, CountryService>();
-            services.AddScoped<IStateProvinceService, StateProvinceService>();
             services.AddScoped<IStoreService, StoreService>();
             services.AddScoped<IStoreMappingService, StoreMappingService>();
             services.AddScoped<ILanguageService, LanguageService>();
@@ -147,7 +146,6 @@ namespace Chessbook.Web.Framework.Infrastructure
             services.AddScoped<IJsonObjectConverter, JsonObjectConverter>();
             services.AddScoped<IJsonConvertWrapper, JsonConvertWrapper>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
-            services.AddScoped<ILocaleStringResourceService, LocaleStringResourceService>();
             services.AddScoped<IBlocklistService, BlocklistService>();
             services.AddScoped<IPreviewCardService, PreviewCardService>();
             services.AddScoped<IRepostService, RepostService>();

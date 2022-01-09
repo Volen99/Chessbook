@@ -191,7 +191,7 @@ function genericUploadErrorHandler(parameters: {
 
   if (err instanceof ErrorEvent) { // network error
     message = `The connection was interrupted`;
-    notifier.danger(message, title, null ); // sticky
+    notifier.danger(message, title, null); // sticky
   } else if (err.status === HttpStatusCode.INTERNAL_SERVER_ERROR_500) {
     message = `The server encountered an error`;
     notifier.danger(message, title, null);
