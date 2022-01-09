@@ -117,7 +117,7 @@ namespace Chessbook.Services.Installation
         /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task InstallStoresAsync()
         {
-            var storeUrl = "https://localhost:5001/";               // _webHelper.GetStoreLocation();
+            var storeUrl = "https://chessbook.me/";               // _webHelper.GetStoreLocation();
             var stores = new List<Store>
             {
                 new Store
@@ -694,7 +694,7 @@ namespace Chessbook.Services.Installation
                 {
                     Name = MessageTemplateSystemNames.BlogCommentNotification,
                     Subject = "%Store.Name%. New Comment on your Post.",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}A new comment has been created for your post. Click <a href=\"http://localhost:4200/%Customer.ScreenName%/post/%PostComment.PostId%;threadId=%PostComment.OriginCommentId%\">here</a> to read it.{Environment.NewLine}</p>{Environment.NewLine}{Environment.NewLine}<br />{Environment.NewLine}{coz}{footer}",
+                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}A new comment has been created for your post. Click <a href=\"https://chessbook.me/%Customer.ScreenName%/post/%PostComment.PostId%;threadId=%PostComment.OriginCommentId%\">here</a> to read it.{Environment.NewLine}</p>{Environment.NewLine}{Environment.NewLine}<br />{Environment.NewLine}{coz}{footer}",
                     IsActive = true,
                     EmailAccountId = eaGeneral.Id
                 },
@@ -718,7 +718,7 @@ namespace Chessbook.Services.Installation
                 {
                     Name = MessageTemplateSystemNames.PrivateMessageNotification,
                     Subject = "%Store.Name%. You have received a new private message",
-                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}You have received a new private message. Click <a href=\"https://localhost:4200/messages\">here</a> to read it.{Environment.NewLine}</p>{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}<br />{Environment.NewLine}{coz}{footer}",
+                    Body = $"<p>{Environment.NewLine}<a href=\"%Store.URL%\">%Store.Name%</a>{Environment.NewLine}<br />{Environment.NewLine}<br />{Environment.NewLine}You have received a new private message. Click <a href=\"https://chessbook.me/messages\">here</a> to read it.{Environment.NewLine}</p>{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}<br />{Environment.NewLine}{coz}{footer}",
                     IsActive = true,
                     EmailAccountId = eaGeneral.Id
                 },

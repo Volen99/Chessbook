@@ -50,7 +50,7 @@ export class AboutComponent implements OnInit, AfterViewChecked {
   initialized = false;
 
   today: Date;
-  chessbookFounded: Date = new Date('11/1/2021');
+  chessbookFounded: Date = new Date('1/9/2021');
   differenceInDays: number;
 
   private lastScrollHash: string;
