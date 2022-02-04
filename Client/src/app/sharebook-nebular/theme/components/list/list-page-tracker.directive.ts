@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import 'intersection-observer';
+// import 'intersection-observer'; TODO: it worked before updating to .13
 import { NbListItemComponent } from './list.component';
 
 /**

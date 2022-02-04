@@ -90,7 +90,7 @@
 
 // by mi
 @import '../../../theme/styles/themes';
-@import '../../../../../../node_modules/@nebular/theme/styles/global/breakpoints';
+@import '../../../../sharebook-nebular/theme/styles/global/breakpoints';
 
 @include nb-install-component() {
   .show-grid {

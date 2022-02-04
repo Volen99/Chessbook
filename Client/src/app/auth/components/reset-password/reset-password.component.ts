@@ -1,10 +1,11 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { getDeepFromObject } from '../../helpers';
 import {NbAuthService} from "../../../sharebook-nebular/auth/services/auth.service";
 import {NB_AUTH_OPTIONS} from "../../../sharebook-nebular/auth/auth.options";
 import {NbAuthResult} from "../../../sharebook-nebular/auth/services/auth-result";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'ngx-reset-password-page',
@@ -12,8 +13,10 @@ import {NbAuthResult} from "../../../sharebook-nebular/auth/services/auth-result
   templateUrl: './reset-password.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgxResetPasswordComponent implements OnInit {
+export class NgxResetPasswordComponent implements OnInit, OnDestroy {
   @Input() hide: boolean;
+
+  private routeSub: Subscription;
 
   minLength: number = this.getConfigValue('forms.validation.password.minLength');
   maxLength: number = this.getConfigValue('forms.validation.password.maxLength');
@@ -32,9 +35,15 @@ export class NgxResetPasswordComponent implements OnInit {
     @Inject(NB_AUTH_OPTIONS) protected options = {},
     protected cd: ChangeDetectorRef,
     protected fb: FormBuilder,
-    protected router: Router) { }
+    protected router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.routeSub = this.route.queryParams.subscribe(queryParams => {
+      this.token = queryParams['token'];
+      this.email = queryParams['email'];
+    });
+
     const passwordValidators = [
       Validators.minLength(this.minLength),
       Validators.maxLength(this.maxLength),
@@ -47,14 +56,23 @@ export class NgxResetPasswordComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.routeSub.unsubscribe();
+  }
+
+  token: string;
+  email: string;
+
   get password() { return this.resetPasswordForm.get('password'); }
   get confirmPassword() { return this.resetPasswordForm.get('confirmPassword'); }
 
   resetPass(): void {
-    debugger
     this.errors = this.messages = [];
     this.submitted = true;
     this.user = this.resetPasswordForm.value;
+
+    this.user.token = this.token;
+    this.user.email = this.email;
 
     this.service.resetPassword(this.strategy, this.user).subscribe((result: NbAuthResult) => {
       this.submitted = false;
@@ -77,4 +95,5 @@ export class NgxResetPasswordComponent implements OnInit {
   getConfigValue(key: string): any {
     return getDeepFromObject(this.options, key, null);
   }
+
 }

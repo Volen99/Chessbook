@@ -39,7 +39,6 @@ export class NbResetPasswordComponent {
   }
 
   resetPass(): void {
-    debugger
     this.errors = this.messages = [];
     this.submitted = true;
 

@@ -15,13 +15,13 @@ export class WhoToFollowComponent implements OnInit {
 
   pagination: ComponentPaginationLight = {
     currentPage: 1,
-    itemsPerPage: 2,
+    itemsPerPage: 7,
   };
 
   ngOnInit(): void {
     this.userService.getUsers({pagination: this.pagination})
         .subscribe((data) => {
-          this.users = data.data;
+          this.users = data.data.slice(0, 2);
         });
   }
 

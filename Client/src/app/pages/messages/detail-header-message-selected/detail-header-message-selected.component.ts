@@ -23,7 +23,7 @@ import {IUser} from "../../../core/interfaces/common/users";
   styleUrls: [ '../messages.component.scss', './detail-header-message-selected.component.scss' ]
 })
 export class DetailHeaderMessageSelectedComponent implements OnInit {
-  private routeSub: Subscription;
+  private routeSub: Subscription; // TODO: unsub?
   private messageId: number;
 
   constructor(private chatService: ChatService, private route: ActivatedRoute,

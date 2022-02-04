@@ -33,12 +33,12 @@ export class IsVideoPipe implements PipeTransform {
 
   public static getTwitchEmbedLink(url: string): string {
     const parts = this._twitchRegEx.exec(url);
-    return `https://player.twitch.tv/?autoplay=false&parent=chessbook&video=v${parts[3]?.split(' ')[0]}`;
+    return `https://player.twitch.tv/?autoplay=false&parent=chessbook.me&video=v${parts[3]?.split(' ')[0]}`;
   }
 
   public static getTwitchClipEmbedLink(url: string): string {
     const parts = this._twitchClipRegEx.exec(url);
-    return `https://clips.twitch.tv/embed?clip=${parts[2]?.split('clip/')[1].split(' ')[0]}&parent=chessbook`;
+    return `https://clips.twitch.tv/embed?clip=${parts[2]?.split('clip/')[1].split(' ')[0]}&parent=chessbook.me`;
   }
 
   public transform(url: string): any {

@@ -53,6 +53,8 @@
     using Chessbook.Services.Messages;
     using Chessbook.Core.Events;
     using Chessbook.Core.Infrastructure;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
 
     [Route("users")]
     public class UsersController : BaseApiController
@@ -84,6 +86,8 @@
         private readonly IWorkflowMessageService workflowMessageService;
         private readonly IEventPublisher eventPublisher;
         private readonly INopFileProvider fileProvider;
+        private readonly IWebHostEnvironment env;
+        private readonly string SiteHttps;
 
         public UsersController(IUserService userService, JwtManager jwtManager, IAuthenticationService authService, IPostsService postsService,
             IPictureService pictureService, IGenericAttributeService genericAttributeService, IUserModelFactory userModelFactory,
@@ -92,7 +96,8 @@
             IAbuseModelFactory abuseModelFactory, IFollowService followService, IBlocklistService blocklistService, IUserBlocklistFactory userBlocklistFactory,
             IWorkContext workContext, ICountryService countryService, IDateTimeHelper dateTimeHelper,
             IGdprService gdprService, IExportManager exportManager, IChatService chatService, IPermissionService permissionService,
-            IWorkflowMessageService workflowMessageService, IEventPublisher eventPublisher, INopFileProvider fileProvider)
+            IWorkflowMessageService workflowMessageService, IEventPublisher eventPublisher, INopFileProvider fileProvider,
+            IWebHostEnvironment env)
         {
             this.userService = userService;
             this.jwtManager = jwtManager;
@@ -121,6 +126,9 @@
             this.workflowMessageService = workflowMessageService;
             this.eventPublisher = eventPublisher;
             this.fileProvider = fileProvider;
+            this.env = env;
+
+            this.SiteHttps = this.env.IsDevelopment() ? "https://localhost:5001" : "https://chessbook.me";
         }
 
         [HttpGet]
@@ -381,7 +389,7 @@
 
                         var avatarUrl = await this.pictureService.GetPictureUrlAsync(customerAvatar.Id, 400, false);
 
-                        return this.Ok(new { url = ChessbookConstants.SiteHttps + avatarUrl });
+                        return this.Ok(new { url = this.SiteHttps + avatarUrl });
 
                     }
 
@@ -437,7 +445,7 @@
 
                         var profileBannerUrl = await this.pictureService.GetPictureUrlAsync(customerBanner.Id, 1500, true, defaultPictureType: PictureType.Banner);
 
-                        return this.Ok(new { url = ChessbookConstants.SiteHttps + profileBannerUrl });
+                        return this.Ok(new { url = this.SiteHttps + profileBannerUrl });
 
                     }
                 }
@@ -807,8 +815,8 @@
 
             var defaultPictureModel = new PictureModel
             {
-                ImageUrl = ChessbookConstants.SiteHttps + imageUrl,
-                FullSizeImageUrl = ChessbookConstants.SiteHttps + imageUrl,
+                ImageUrl = this.SiteHttps + imageUrl,
+                FullSizeImageUrl = this.SiteHttps + imageUrl,
                 Blurhash = defaultPicture.Blurhash,
                 Meta = new Dictionary<string, MediaEntitySizeModel>
                         {
@@ -960,7 +968,7 @@
             var cToken = await this.genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.AccountActivationTokenAttribute);
             if (string.IsNullOrEmpty(cToken))
             {
-                return this.Content("<div> <div style=\"text-align: center;\"> <h3 style=\"color: #6200ee\"> Your account already has been activated :) </h3> <div> <a href=\"https://www.chessbook.me/\">Continue to chessbook.me</a> </div> </div> </div>", "text/html");
+                return this.Content("<div> <div style=\"text-align: center;\"> <h3 style=\"color: #6200ee\"> Your account already has been activated :) </h3> <div> <a href=\"https://chessbook.me/\">Continue to chessbook.me</a> </div> </div> </div>", "text/html");
             }
 
             if (!cToken.Equals(token, StringComparison.InvariantCultureIgnoreCase))
@@ -982,7 +990,7 @@
             // authenticate customer after activation
             await this.customerRegistrationService.SignInCustomerAsync(customer, null, true);
 
-            return this.Content("<div> <div style=\"text-align: center;\"> <h3 style=\"color: #6200ee\"> Checkmate! Your account has been activated </h3> <div> <a href=\"https://www.chessbook.me/\">Continue to chessbook.me</a> </div> </div> </div>", "text/html");
+            return this.Content("<div> <div style=\"text-align: center;\"> <h3 style=\"color: #6200ee\"> Checkmate! Your account has been activated </h3> <div> <a href=\"https://chessbook.me/\">Continue to chessbook.me</a> </div> </div> </div>", "text/html");
         }
 
         /// <summary>

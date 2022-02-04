@@ -14,30 +14,27 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 
 @NgModule({
-  imports: [
-    NbSharedModule,
-    NbOverlayModule,
-    NbIconModule,
-    NbButtonModule,
-    NbActionsModule,
-    NbCardModule,
-    ComponentsModule,
-    FontAwesomeModule,
-  ],
-  declarations: [
-    NbSearchComponent,
-    NbSearchFieldComponent,
-  ],
-  exports: [
-    NbSearchComponent,
-    NbSearchFieldComponent,
-  ],
-  providers: [
-    NbSearchService,
-  ],
-  entryComponents: [
-    NbSearchFieldComponent,
-  ],
+    imports: [
+        NbSharedModule,
+        NbOverlayModule,
+        NbIconModule,
+        NbButtonModule,
+        NbActionsModule,
+        NbCardModule,
+        ComponentsModule,
+        FontAwesomeModule,
+    ],
+    declarations: [
+        NbSearchComponent,
+        NbSearchFieldComponent,
+    ],
+    exports: [
+        NbSearchComponent,
+        NbSearchFieldComponent,
+    ],
+    providers: [
+        NbSearchService,
+    ]
 })
 export class NbSearchModule {
 }

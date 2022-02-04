@@ -1,4 +1,5 @@
 import {Post} from "./post.model";
+import {IUser} from "../../../core/interfaces/common/users";
 
 export interface IPostTag {
   name: string;
@@ -8,7 +9,7 @@ export interface IPostTag {
 
 export class PostDetails extends Post {
   support: string;
-  account: Account;
+  account: IUser;
   commentsEnabled: boolean = true;
 
   waitTranscoding: boolean;

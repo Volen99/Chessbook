@@ -46,7 +46,7 @@ export class MyAccountSettingsComponent implements OnInit, AfterViewChecked {
     this.userService.changeAvatar(formData)
       .subscribe(
         data => {
-          this.toastrService.success(`Avatar changed.`);
+          this.toastrService.success(`Avatar changed`, 'Success');
 
           this.user.profileImageUrlHttps = data.url;
         },

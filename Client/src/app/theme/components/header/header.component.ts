@@ -58,7 +58,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.authService.loginChangedSource.subscribe(
       status => {
-        debugger
         if (status === AuthStatus.LoggedIn) {
           this.isLoggedIn = true;
         } else if (status === AuthStatus.LoggedOut) {

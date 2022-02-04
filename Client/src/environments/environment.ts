@@ -11,7 +11,7 @@ import 'core-js/features/reflect';
 
 export const environment = {
   production: false,
-  apiUrl: 'https://chessbook.me/api',
+  apiUrl: 'https://localhost:5001/api',
   testUser: {
     // tslint:disable
     token: {

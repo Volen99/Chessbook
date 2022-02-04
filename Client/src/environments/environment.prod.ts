@@ -5,4 +5,14 @@ export const environment = {
     token: {},
     email: '',
   },
+
+  baseUrl: '/',
+  gtmId: 'GTM-NH9FPX2',
+  skipAuth: false,
+  availableLanguages: ['en'],
+  isEmbedded: false,
+  idleTimeout: 1000 * 60 * 5, // 5 minute
+  cloudHomeUrl: 'https://chessbook.me',
+  favicon: '/favicon.png',
+  skipOTPForDevTools: false,
 };

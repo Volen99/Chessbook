@@ -22,7 +22,7 @@ namespace Chessbook.Core.Configuration
         /// <summary>
         /// Gets or sets connection string. Used when distributed cache is enabled
         /// </summary>
-        public string ConnectionString { get; set; } = "Server=.\\SQLEXPRESS;Database=Chessbook;Integrated Security=true;MultipleActiveResultSets=true"; // "127.0.0.1:6379,ssl=False";
+        public string ConnectionString { get; set; } = "Data Source=tcp:chessbook.database.windows.net,1433;Initial Catalog=chessbook;User Id=chessbook@chessbook;Password=Lovechess40"; // "Server=.\\SQLEXPRESS;Database=Chessbook;Integrated Security=true;MultipleActiveResultSets=true"; // ;; // "127.0.0.1:6379,ssl=False";
 
         /// <summary>
         /// Gets or sets schema name. Used when distributed cache is enabled and DistributedCacheType property is set as SqlServer

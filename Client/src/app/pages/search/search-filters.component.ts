@@ -208,7 +208,6 @@ export class SearchFiltersComponent implements OnInit {
 
   isSearch = true;
   handleImgClick(tooltipEl?: NgbTooltip) {
-    debugger
     this.isSearch = !this.isSearch;
     this.tooltip = this.tooltips[Math.floor(Math.random() * this.tooltips.length)];
     if (tooltipEl) tooltipEl.toggle();

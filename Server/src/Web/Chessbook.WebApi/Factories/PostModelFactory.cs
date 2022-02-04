@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using SkiaSharp;
 
-using Chessbook.Common;
 using Chessbook.Core;
 using Chessbook.Core.Domain.Posts;
 using Chessbook.Data.Models;
@@ -15,7 +14,6 @@ using Chessbook.Services;
 using Chessbook.Services.Data.Services.Entities;
 using Chessbook.Services.Data.Services.Media;
 using Chessbook.Services.Entities;
-using Chessbook.Services.Localization;
 using Chessbook.Web.Api.Areas.Admin.Models.Post;
 using Chessbook.Web.Api.Models.Posts;
 using Chessbook.Core.Caching;
@@ -29,6 +27,8 @@ using Chessbook.Web.Models.Catalog;
 using Chessbook.Web.Models.Media;
 using Chessbook.Services.APIs;
 using Chessbook.Core.Infrastructure;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace Chessbook.Web.Api.Factories
 {
@@ -55,6 +55,9 @@ namespace Chessbook.Web.Api.Factories
         private readonly IPreviewCardService previewCardService;
         private readonly ITwitchService twitchService;
         private readonly INopFileProvider fileProvider;
+        private readonly IWebHostEnvironment env;
+
+        private readonly string SiteHttps;
 
         #endregion
 
@@ -64,7 +67,8 @@ namespace Chessbook.Web.Api.Factories
             IStoreContext storeContext, IPictureService pictureService, IUserModelFactory userModelFactory,
             IUserService userService, IGenericAttributeService genericAttributeService, IPostCommentService postCommentService, IPostsService postService,
             IPostTagService postTagService, IPollService pollService, IPollModelFactory pollModelFactory, IDateTimeHelper dateTimeHelper,
-            IPreviewCardFactory previewCardFactory, IPreviewCardService previewCardService, ITwitchService twitchService, INopFileProvider fileProvider)
+            IPreviewCardFactory previewCardFactory, IPreviewCardService previewCardService, ITwitchService twitchService, INopFileProvider fileProvider,
+            IWebHostEnvironment env)
         {
             this.mediaSettings = mediaSettings;
             this.staticCacheManager = staticCacheManager;
@@ -85,6 +89,9 @@ namespace Chessbook.Web.Api.Factories
             this.previewCardService = previewCardService;
             this.twitchService = twitchService;
             this.fileProvider = fileProvider;
+            this.env = env;
+
+            this.SiteHttps = this.env.IsDevelopment() ? "https://localhost:5001" : "https://chessbook.me";
         }
 
         #endregion
@@ -133,8 +140,8 @@ namespace Chessbook.Web.Api.Factories
 
                 var defaultPictureModel = new PictureModel
                 {
-                    ImageUrl = ChessbookConstants.SiteHttps + imageUrl,
-                    FullSizeImageUrl = ChessbookConstants.SiteHttps + fullSizeImageUrl,
+                    ImageUrl = this.SiteHttps + imageUrl,
+                    FullSizeImageUrl = this.SiteHttps + fullSizeImageUrl,
                     Blurhash = defaultPicture.Blurhash,
                     Meta = new Dictionary<string, MediaEntitySizeModel>
                         {
@@ -178,9 +185,9 @@ namespace Chessbook.Web.Api.Factories
 
                     var pictureModel = new PictureModel
                     {
-                        ImageUrl = ChessbookConstants.SiteHttps + imageUrl,
-                        ThumbImageUrl = ChessbookConstants.SiteHttps + thumbImageUrl,
-                        FullSizeImageUrl = ChessbookConstants.SiteHttps + fullSizeImageUrl,
+                        ImageUrl = this.SiteHttps + imageUrl,
+                        ThumbImageUrl = this.SiteHttps + thumbImageUrl,
+                        FullSizeImageUrl = this.SiteHttps + fullSizeImageUrl,
                         Title = string.Format("Picture of {0}", productName),
                         AlternateText = string.Format("Picture of {0}", productName),
                         Blurhash = picture.Blurhash,
@@ -353,7 +360,7 @@ namespace Chessbook.Web.Api.Factories
             };
 
             // avatar
-            model.Account.ProfileImageUrlHttps = ChessbookConstants.SiteHttps + await this.pictureService.GetPictureUrlAsync(
+            model.Account.ProfileImageUrlHttps = this.SiteHttps + await this.pictureService.GetPictureUrlAsync(
                 await this.genericAttributeService.GetAttributeAsync<int>(customer, NopCustomerDefaults.AvatarPictureIdAttribute),
                 48, true, defaultPictureType: PictureType.Avatar);
 

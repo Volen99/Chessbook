@@ -157,6 +157,10 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
       return;
     }
 
+    if ((this.pagination.currentPage + 1) - 1 === 0) {
+      return;
+    }
+
     console.log('near of bottom');
     this.pagination.currentPage += 1;
 
@@ -192,7 +196,7 @@ export abstract class AbstractPostList implements OnInit, OnDestroy {
         const message = `Cannot load more posts. 😞 Try again later.`;
 
         console.error(message, {error});
-        this.notifier.danger(message, 'Error');
+        // this.notifier.danger(message, 'Error');
       }
     );
   }

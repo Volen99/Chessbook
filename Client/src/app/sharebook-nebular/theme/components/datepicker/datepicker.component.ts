@@ -104,6 +104,7 @@ export abstract class NbBasePicker<D, T, P> extends NbDatepicker<T> {
    * Size of the calendar and entire components.
    * Can be 'medium' which is default or 'large'.
    * */
+      // @ts-ignore
   abstract size: NbCalendarSize = NbCalendarSize.MEDIUM;
 
   /**

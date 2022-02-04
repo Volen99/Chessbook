@@ -86,7 +86,6 @@ export class DonatorComponent implements OnInit {
   }
 
   onEditConfirm(event) {
-    debugger
     this.donationsService.edit(event.data.id, event.newData)
       .subscribe((data) => {
           event.confirm.resolve();

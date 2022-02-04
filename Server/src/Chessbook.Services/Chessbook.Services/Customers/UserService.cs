@@ -941,5 +941,59 @@
 
             return totalRecordsDeleted;
         }
+
+        /// <summary>
+        /// Check whether password recovery token is valid
+        /// </summary>
+        /// <param name="customer">Customer</param>
+        /// <param name="token">Token to validate</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the result
+        /// </returns>
+        public async Task<bool> IsPasswordRecoveryTokenValidAsync(Customer customer, string token)
+        {
+            if (customer == null)
+                throw new ArgumentNullException(nameof(customer));
+
+            var cPrt = await this.genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.PasswordRecoveryTokenAttribute);
+            if (string.IsNullOrEmpty(cPrt))
+                return false;
+
+            if (!cPrt.Equals(token, StringComparison.InvariantCultureIgnoreCase))
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Check whether password recovery link is expired
+        /// </summary>
+        /// <param name="customer">Customer</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the result
+        /// </returns>
+        public async Task<bool> IsPasswordRecoveryLinkExpiredAsync(Customer customer)
+        {
+            if (customer == null)
+            {
+                throw new ArgumentNullException(nameof(customer));
+            }
+
+            var generatedDate = await this.genericAttributeService.GetAttributeAsync<DateTime?>(customer, NopCustomerDefaults.PasswordRecoveryTokenDateGeneratedAttribute);
+            if (!generatedDate.HasValue)
+            {
+                return false;
+            }
+
+            var daysPassed = (DateTime.UtcNow - generatedDate.Value).TotalDays;
+            if (daysPassed > 7)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

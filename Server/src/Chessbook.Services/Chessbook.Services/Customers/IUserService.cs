@@ -311,5 +311,27 @@
         /// The task result contains the formatted text
         /// </returns>
         Task<string> FormatUsernameAsync(Customer customer, bool stripTooLong = false, int maxLength = 0);
+
+        /// <summary>
+        /// Check whether password recovery token is valid
+        /// </summary>
+        /// <param name="customer">Customer</param>
+        /// <param name="token">Token to validate</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the result
+        /// </returns>
+        Task<bool> IsPasswordRecoveryTokenValidAsync(Customer customer, string token);
+
+        /// <summary>
+        /// Check whether password recovery link is expired
+        /// </summary>
+        /// <param name="customer">Customer</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the result
+        /// </returns>
+        Task<bool> IsPasswordRecoveryLinkExpiredAsync(Customer customer);
+
     }
 }

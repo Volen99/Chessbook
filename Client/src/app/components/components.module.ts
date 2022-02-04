@@ -36,23 +36,20 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [
-    ReactiveFormsModule,
-    FormsModule,
-    CommonModule,
-    NbIconModule,
-    NbInputModule,
-    NbRadioModule,
-    NbButtonModule,
-    NbCardModule,
-    NbProgressBarModule,
-    FontAwesomeModule,
-  ],
-  exports: [...COMPONENTS ],
-  declarations: [...COMPONENTS, RenderOptionComponent, ItemComponent, RelativeTimestampComponent],
-  entryComponents: [
-    NgxFilterByNumberComponent,
-  ],
+    imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        CommonModule,
+        NbIconModule,
+        NbInputModule,
+        NbRadioModule,
+        NbButtonModule,
+        NbCardModule,
+        NbProgressBarModule,
+        FontAwesomeModule,
+    ],
+    exports: [...COMPONENTS],
+    declarations: [...COMPONENTS, RenderOptionComponent, ItemComponent, RelativeTimestampComponent]
 })
 export class ComponentsModule {
 }

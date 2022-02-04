@@ -9,7 +9,7 @@ const routes: Routes = [
     component: ThankYouComponent,
     data: {
       meta: {
-        title: `Trends`
+        title: `Thank you`
       }
     },
   },

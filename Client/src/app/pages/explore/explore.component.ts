@@ -25,11 +25,12 @@ export class ExploreComponent implements OnInit {
     this.exploreService.load(25, 0)
       .subscribe((posts) => {
         this.newsPost = posts.data;
+
         this.pagination = posts.pagination;
 
-        this.topNew = this.newsPost.filter(n => n.title.includes('Magnus Carlsen'))[0];
+        this.topNew = this.newsPost.filter(n => n.image != null && n.title.includes('Magnus Carlsen'))[0];
         if (!this.topNew) {
-          this.topNew = this.newsPost[3];
+          this.topNew = this.newsPost.filter(n => n.image != null)[0];
         }
 
         this.newsPost = this.newsPost.filter(n => n.title !== this.topNew.title);

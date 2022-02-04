@@ -78,7 +78,7 @@ namespace Chessbook.Services.Notifications
                 //    ? query.OrderBy(fp => fp.CreatedAt).ThenBy(fp => fp.Id)
                 //    : query.OrderByDescending(fp => fp.CreatedAt).ThenBy(fp => fp.Id);
 
-                query.OrderBy(fp => fp.CreatedAt).ThenBy(fp => fp.Id);
+                query = query.OrderByDescending(n => n.CreatedAt);
 
                 return query;
 

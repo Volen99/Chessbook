@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using Chessbook.Common;
 using Chessbook.Core.Domain.Cards;
 using Chessbook.Services.Data.Services.Media;
 using Chessbook.Web.Api.Models.Cards;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace Chessbook.Web.Api.Factories
 {
     public class PreviewCardFactory : IPreviewCardFactory
     {
         private readonly IPictureService pictureService;
+        private readonly IWebHostEnvironment env;
 
-        public PreviewCardFactory(IPictureService pictureService)
+        public PreviewCardFactory(IPictureService pictureService, IWebHostEnvironment env)
         {
             this.pictureService = pictureService;
+            this.env = env;
         }
 
         public async Task<PreviewCardModel> PreparePreviewCardModel(PreviewCard previewCard)
@@ -24,6 +27,7 @@ namespace Chessbook.Web.Api.Factories
                 throw new ArgumentNullException(nameof(previewCard));
             }
 
+            var siteUrl = this.env.IsDevelopment() ? "https://localhost:5001" : "https://chessbook.me";
             var model = new PreviewCardModel
             {
                 Url = previewCard.Url,
@@ -37,7 +41,7 @@ namespace Chessbook.Web.Api.Factories
                 Html = previewCard.Html,
                 Width = previewCard.Width,
                 Height = previewCard.Height,
-                Image = previewCard.PictureId.HasValue ? ChessbookConstants.SiteHttps + await this.pictureService.GetPictureUrlAsync(previewCard.PictureId.Value, 400, true) : null,
+                Image = previewCard.PictureId.HasValue ? siteUrl + await this.pictureService.GetPictureUrlAsync(previewCard.PictureId.Value, 400, true) : null,
                 Blurhash = previewCard.Blurhash,
             };
 

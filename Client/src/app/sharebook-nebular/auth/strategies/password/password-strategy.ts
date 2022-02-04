@@ -240,7 +240,8 @@ export class NbPasswordAuthStrategy extends NbAuthStrategy {
 
     const module = 'resetPass';
     const method = this.getOption(`${module}.method`);
-    const url = this.getActionEndpoint(module);
+    let url = this.getActionEndpoint(module);
+    url = url.replace('users', 'auth');
     const tokenKey = this.getOption(`${module}.resetPasswordTokenKey`);
     data[tokenKey] = this.route.snapshot.queryParams[tokenKey];
     return this.http.request(method, url, {body: data, observe: 'response'})

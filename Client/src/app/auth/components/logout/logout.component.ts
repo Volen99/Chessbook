@@ -5,9 +5,7 @@ import { getDeepFromObject } from '../../helpers';
 import {NB_AUTH_OPTIONS} from "../../../sharebook-nebular/auth/auth.options";
 import {NbAuthService} from "../../../sharebook-nebular/auth/services/auth.service";
 import {NbAuthResult} from "../../../sharebook-nebular/auth/services/auth-result";
-import {Observable} from "rxjs";
-import {AuthStatus} from "../../../core/auth/auth-status.model";
-import {Subject} from "rxjs/Subject";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'ngx-logout',
@@ -31,7 +29,7 @@ export class NgxLogoutComponent implements OnInit {
       const redirect = result.getRedirect();
       if (redirect) {
         setTimeout(() => {
-          window.location.href = 'https://chessbook.me/auth/login';
+          window.location.href = `${!environment.production ? 'http://localhost:4200' : 'https://chessbook.me/'}/auth/login`;
           // return this.router.navigateByUrl('auth/login');
         }, this.redirectDelay);
       }

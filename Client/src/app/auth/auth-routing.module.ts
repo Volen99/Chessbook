@@ -10,7 +10,7 @@ import {
 } from './components';
 
 const routes: Routes = [{
-  path: '',
+  path: 'auth',
   component: NgxAuthComponent,
   children: [
     {

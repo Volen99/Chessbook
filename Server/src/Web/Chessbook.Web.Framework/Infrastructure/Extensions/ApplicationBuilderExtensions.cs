@@ -110,13 +110,13 @@ namespace Chessbook.Web.Framework.Infrastructure.Extensions
                 {
                     AdminEmail = "volen1999@gmail.com",
                     AdminPassword = "111111",
-                    InstallSampleData = false,
+                    InstallSampleData = false, // TODO: was false!
                     // InstallRegionalResources = _appSettings.InstallationConfig.InstallRegionalResources,
                     // DisableSampleDataOption = _appSettings.InstallationConfig.DisableSampleData,
                     CreateDatabaseIfNotExists = true,
                     ServerName = "Chessbook",
                     ConnectionStringRaw = true,
-                    ConnectionString = "Server=.\\SQLEXPRESS;Database=Chessbook;Integrated Security=true;MultipleActiveResultSets=true",
+                    ConnectionString = /*"Data Source=tcp:chessbook.database.windows.net,1433;Initial Catalog=chessbook;User Id=chessbook@chessbook;Password=Lovechess40"*/ "Server=.\\SQLEXPRESS;Database=Chessbook;Integrated Security=true;MultipleActiveResultSets=true",
                     Country = "United States of America",
                     DataProvider = DataProviderType.SqlServer,
                 };
@@ -268,11 +268,10 @@ namespace Chessbook.Web.Framework.Infrastructure.Extensions
         {
             var appSettings = EngineContext.Current.Resolve<AppSettings>();
             var webHostEnvironment = EngineContext.Current.Resolve<IWebHostEnvironment>();
-            var useDetailedExceptionPage = appSettings.CommonConfig.DisplayFullErrorStack || webHostEnvironment.IsDevelopment();
-            if (useDetailedExceptionPage)
+            if (webHostEnvironment.IsDevelopment())
             {
-                //get detailed exceptions for developing and testing purposes
-                application.UseDeveloperExceptionPage();
+                // get detailed exceptions for developing and testing purposes
+                // application.UseDeveloperExceptionPage();
             }
             else
             {

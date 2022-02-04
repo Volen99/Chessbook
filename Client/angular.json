@@ -46,7 +46,6 @@
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "node_modules/ionicons/scss/ionicons.scss",
               "node_modules/socicon/css/socicon.css",
-              "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
               "node_modules/leaflet/dist/leaflet.css",
               "src/app/theme/styles/styles.scss",
@@ -113,15 +112,14 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5.8mb"
+                  "maximumWarning": "7mb",
+                  "maximumError": "44.8mb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb"
                 }
               ],
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "vendorChunk": false
@@ -174,7 +172,6 @@
               "node_modules/ionicons/scss/ionicons.scss",
               "node_modules/font-awesome/scss/font-awesome.scss",
               "node_modules/socicon/css/socicon.css",
-              "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
               "src/app/theme/styles/styles.scss",
               "src/sass/application.scss"
@@ -190,19 +187,6 @@
               }
             ]
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "typeCheck": true,
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -216,17 +200,6 @@
           "options": {
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "Chessbook:serve"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }

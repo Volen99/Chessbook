@@ -1,14 +1,10 @@
 ﻿namespace Chessbook.Web.Models
 {
-    using Newtonsoft.Json;
-    using Chessbook.Data.Models;
-    using Chessbook.Services.Mapping;
-    using Chessbook.Web.Models.Users;
     using System;
-    using System.Collections.Generic;
-    using AutoMapper;
+    using Chessbook.Web.Models.Users;
 
-    public class UserDTO : UserIdentifierDTO, IMapFrom<Customer>
+    // TODO: delete
+    public class UserDTO : UserIdentifierDTO
     {
         public string DisplayName { get; set; }
 

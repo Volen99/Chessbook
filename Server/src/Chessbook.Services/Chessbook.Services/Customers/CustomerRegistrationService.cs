@@ -356,19 +356,19 @@ namespace Chessbook.Services.Authentication
                 return result;
             }
 
-            //check for duplicates
-            if (_customerSettings.UnduplicatedPasswordsNumber > 0)
-            {
-                //get some of previous passwords
-                var previousPasswords = await _customerService.GetCustomerPasswordsAsync(customer.Id, passwordsToReturn: _customerSettings.UnduplicatedPasswordsNumber);
+            ////check for duplicates
+            //if (_customerSettings.UnduplicatedPasswordsNumber > 0)
+            //{
+            //    //get some of previous passwords
+            //    var previousPasswords = await _customerService.GetCustomerPasswordsAsync(customer.Id, passwordsToReturn: _customerSettings.UnduplicatedPasswordsNumber);
 
-                var newPasswordMatchesWithPrevious = previousPasswords.Any(password => PasswordsMatch(password, request.NewPassword));
-                if (newPasswordMatchesWithPrevious)
-                {
-                    result.AddError("You entered the password that is the same as one of the last passwords you used. Please create a new password.");
-                    return result;
-                }
-            }
+            //    var newPasswordMatchesWithPrevious = previousPasswords.Any(password => PasswordsMatch(password, request.NewPassword));
+            //    if (newPasswordMatchesWithPrevious)
+            //    {
+            //        result.AddError("You entered the password that is the same as one of the last passwords you used. Please create a new password.");
+            //        return result;
+            //    }
+            //}
 
             //at this point request is valid
             var customerPassword = new CustomerPassword

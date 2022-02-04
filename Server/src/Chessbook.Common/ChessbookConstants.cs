@@ -6,7 +6,7 @@
 
         public const string AdministratorRoleName = "Administrator";
 
-        public const string SiteHttps = "https://chessbook.me";
+        // public const string SiteHttps = "https://chessbook.me";
 
         /// <summary>
         /// Gets a multiple thumb directories length

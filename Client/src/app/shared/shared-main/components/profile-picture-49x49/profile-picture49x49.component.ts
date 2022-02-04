@@ -6,8 +6,8 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./profile-picture49x49.component.scss']
 })
 export class ProfilePicture49x49Component implements OnInit {
-
   @Input() profileImageUrlHttps: string;
+  @Input() screenName: string;
 
   constructor() { }
 

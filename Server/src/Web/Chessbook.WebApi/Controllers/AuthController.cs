@@ -274,18 +274,84 @@
             return Ok(new { token });
         }
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[Route("request-pass")]
-        //public async Task<IActionResult> RequestPassword(RequestPasswordDTO requestPasswordDto)
-        //{
-        //    var result = await authService.RequestPassword(requestPasswordDto);
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("request-pass")]
+        public async Task<IActionResult> PasswordRecoverySend(RequestPasswordDTO requestPasswordDto)
+        {
+            if (requestPasswordDto == null || string.IsNullOrEmpty(requestPasswordDto.Email))
+            {
+                return this.BadRequest();
+            }
 
-        //    if (result.Succeeded)
-        //        return Ok(new { result.Data, Description = "Reset Token should be sent via Email. Token in response - just for testing purpose." });
+            var customer = await this.userService.GetCustomerByEmailAsync(requestPasswordDto.Email);
 
-        //    return BadRequest();
-        //}
+            if (customer != null && customer.Active && !customer.Deleted)
+            {
+                // save token and current date
+                var passwordRecoveryToken = Guid.NewGuid();
+                await this.genericAttributeService.SaveAttributeAsync(customer, NopCustomerDefaults.PasswordRecoveryTokenAttribute, passwordRecoveryToken.ToString());
+                DateTime? generatedDateTime = DateTime.UtcNow;
+                await this.genericAttributeService.SaveAttributeAsync(customer, NopCustomerDefaults.PasswordRecoveryTokenDateGeneratedAttribute, generatedDateTime);
+
+                // send email
+                await this.workflowMessageService.SendCustomerPasswordRecoveryMessageAsync(customer, 1);
+
+                return Ok(new { Data = "result.Data", Description = "Reset Token should be sent via Email. Token in response - just for testing purpose." });
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("reset-pass")]
+        public virtual async Task<IActionResult> PasswordRecoveryConfirmPOST(RestorePasswordDTO restorePasswordDto /*PasswordRecoveryConfirmModel model*/)
+        {
+            var customer = await this.userService.GetCustomerByEmailAsync(restorePasswordDto.Email);
+
+            if (customer == null)
+            {
+                return this.BadRequest();
+            }
+
+            // validate token
+            if (!await this.userService.IsPasswordRecoveryTokenValidAsync(customer, restorePasswordDto.Token))
+            {
+                return this.BadRequest(new
+                {
+                    Data = new { success = false },
+                    Description = "Your password recovery link is expired"
+                });
+            }
+
+            // validate token expiration date
+            if (await this.userService.IsPasswordRecoveryLinkExpiredAsync(customer))
+            {
+                return this.BadRequest(new
+                {
+                    Data = new { success = false },
+                    Description = "Wrong password recovery token"
+                });
+            }
+
+            var response = await this.customerRegistrationService.ChangePasswordAsync(new ChangePasswordRequest(customer.Email, false, PasswordFormat.Hashed, restorePasswordDto.Password));
+            if (!response.Success)
+            {
+                return this.BadRequest(string.Join(';', response.Errors));
+            }
+
+            await this.genericAttributeService.SaveAttributeAsync(customer, NopCustomerDefaults.PasswordRecoveryTokenAttribute, "");
+
+            // authenticate customer after changing password
+            await this.customerRegistrationService.SignInCustomerAsync(customer, null, true);
+
+            return this.Ok(new
+            {
+                Data = new { success = true },
+                Description = "Your password has been changed"
+            });
+        }
 
         //[HttpPost]
         //[AllowAnonymous]

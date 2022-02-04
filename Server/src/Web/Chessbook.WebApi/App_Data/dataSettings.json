@@ -1,5 +1,5 @@
 ﻿{
-  "DataConnectionString": "Server=.\\SQLEXPRESS;Database=Chessbook;Integrated Security=true;MultipleActiveResultSets=true",
+  "DataConnectionString": "Data Source=tcp:chessbook.database.windows.net,1433;Initial Catalog=chessbook;User Id=chessbook@chessbook;Password=Lovechess40",
   "DataProvider": "sqlserver",
   "SQLCommandTimeout": null,
   "RawDataSettings": {}

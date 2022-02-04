@@ -44,7 +44,6 @@ export class NbLoginComponent {
     this.service.authenticate(this.strategy, this.user).subscribe((result: NbAuthResult) => {
       this.submitted = false;
 
-      debugger
       if (result.isSuccess()) {
         this.messages = result.getMessages();
       } else {

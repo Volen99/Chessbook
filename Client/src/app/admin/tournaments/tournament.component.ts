@@ -2,7 +2,12 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {Component, OnInit} from '@angular/core';
 
 import {
-  faTrophy
+  faTrophy,
+  faCheck,
+  faTimes,
+    faPen,
+    faTrash,
+    faPlus
 } from '@fortawesome/pro-light-svg-icons';
 
 import {LocalDataSource} from "ng2-smart-table";
@@ -40,18 +45,18 @@ export class TournamentComponent implements OnInit {
     },
     add: {
       confirmCreate: true,
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
+      addButtonContent: `<fa-icon [icon]="${faPlus}"></fa-icon>`,
+      createButtonContent: `<fa-icon [icon]="${faCheck}"></fa-icon>`,
+      cancelButtonContent: `<fa-icon [icon]="${faTimes}"></fa-icon>`,
     },
     edit: {
       confirmSave: true,
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
+      editButtonContent: `<fa-icon [icon]="${faPen}"></fa-icon>`,
+      saveButtonContent: `<fa-icon [icon]="${faCheck}"></fa-icon>`,
+      cancelButtonContent: `<fa-icon [icon]="${faTimes}"></fa-icon>`,
     },
     delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
+      deleteButtonContent: `<fa-icon [icon]="${faTrash}"></fa-icon>`,
       confirmDelete: true,
     },
     columns: {

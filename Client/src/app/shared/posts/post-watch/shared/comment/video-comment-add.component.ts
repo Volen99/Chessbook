@@ -169,7 +169,6 @@ export class VideoCommentAddComponent extends FormReactive implements OnChanges,
 
     obs.subscribe(
       comment => {
-        debugger
         this.addingComment = false;
         this.commentCreated.emit(comment);
         this.form.reset();

@@ -14,19 +14,14 @@ import { NbBaseCalendarModule } from './base-calendar.module';
 
 
 @NgModule({
-  imports: [NbBaseCalendarModule],
-  exports: [NbCalendarRangeComponent],
-  declarations: [
-    NbCalendarRangeComponent,
-    NbCalendarRangeDayCellComponent,
-    NbCalendarRangeYearCellComponent,
-    NbCalendarRangeMonthCellComponent,
-  ],
-  entryComponents: [
-    NbCalendarRangeDayCellComponent,
-    NbCalendarRangeMonthCellComponent,
-    NbCalendarRangeYearCellComponent,
-  ],
+    imports: [NbBaseCalendarModule],
+    exports: [NbCalendarRangeComponent],
+    declarations: [
+        NbCalendarRangeComponent,
+        NbCalendarRangeDayCellComponent,
+        NbCalendarRangeYearCellComponent,
+        NbCalendarRangeMonthCellComponent,
+    ]
 })
 export class NbCalendarRangeModule {
 }

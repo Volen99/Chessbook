@@ -45,7 +45,7 @@ export class ExploreService {
 
     // Access Restricted - Your current Subscription Plan does not support HTTPS Encryption.
     return this.http
-      .get<any>(`http://api.mediastack.com/v1/news?${params}`)
+      .get<any>(`https://api.mediastack.com/v1/news?${params}`)
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 }

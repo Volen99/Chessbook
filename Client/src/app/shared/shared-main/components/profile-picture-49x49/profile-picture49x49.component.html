@@ -2,7 +2,7 @@
     <div class="sharebook-container border-radius-9999px display-block overflow-hidden">
         <div class="display-block width-100-per" style="padding-bottom: 100%;"></div>
         <div class="bottom-0px height-100-per left-0px position-absolute top-0px width-100-per">
-            <a routerLink="/profile" role="link"
+            <a [routerLink]="'/' + this.screenName?.substring(1)" role="link"
                data-focusable="true"
                class="sharebook-link sharebook-cursor-pointer sharebook-container cursor-pointer outline-style-none">
                 <div class="sharebook-container r-16l9doz overflow-hidden width-100-per">

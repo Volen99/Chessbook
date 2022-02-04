@@ -60,7 +60,6 @@ export class MyAccountChangeEmailComponent extends FormReactive implements OnIni
           this.success = `Checkmate! Email updated.`;
         },
         err => {
-          debugger
           if (err.status === 401) {
             this.error = `You current password is invalid.`;
             return;

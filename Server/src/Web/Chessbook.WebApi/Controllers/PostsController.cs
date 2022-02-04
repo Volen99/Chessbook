@@ -63,11 +63,7 @@
         [Route("home_timeline")]
         public async Task<IActionResult> GetHomeTimeline([FromQuery] QueryPostsTimeline query)
         {
-            var skip = 0;
-            if (query.SkipCount)
-            {
-                skip = query.Start;
-            }
+            query.Start = query.Start - 1; // coz if it is 1, it does not work :\
 
             var posts = await this.postService.GetHomeTimeline(true, query.Start, query.Count);
             var models = new List<PostModel>();

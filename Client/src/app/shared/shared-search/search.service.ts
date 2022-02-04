@@ -51,7 +51,6 @@ export class SearchService {
     if (search) params = params.append('search', search);
     if (uuids) params = this.restService.addArrayParams(params, 'uuids', uuids);
 
-    debugger
     if (advancedSearch) {
       const advancedSearchObject = advancedSearch.toVideosAPIObject();
       params = this.restService.addObjectParams(params, advancedSearchObject);

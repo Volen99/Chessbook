@@ -8,10 +8,9 @@ import { NbMenuModule } from '../menu/menu.module';
 
 
 @NgModule({
-  imports: [CommonModule, NbOverlayModule, NbMenuModule],
-  exports: [NbContextMenuDirective],
-  declarations: [NbContextMenuDirective, NbContextMenuComponent],
-  entryComponents: [NbContextMenuComponent],
+    imports: [CommonModule, NbOverlayModule, NbMenuModule],
+    exports: [NbContextMenuDirective],
+    declarations: [NbContextMenuDirective, NbContextMenuComponent]
 })
 export class NbContextMenuModule {
 }

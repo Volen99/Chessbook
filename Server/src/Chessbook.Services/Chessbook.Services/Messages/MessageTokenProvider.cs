@@ -475,8 +475,10 @@ namespace Chessbook.Services.Messages
             var customAttributesXml = await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.CustomCustomerAttributes);
             tokens.Add(new Token("Customer.CustomAttributes", await _customerAttributeFormatter.FormatAttributesAsync(customAttributesXml), true));
 
+            var store = await _storeService.GetStoreByIdAsync(1);
+
             // note: we do not use SEO friendly URLS for these links because we can get errors caused by having .(dot) in the URL (from the email address)
-            var passwordRecoveryUrl  = await RouteUrlAsync(routeName: "PasswordRecoveryConfirm", routeValues: new { token = await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.PasswordRecoveryTokenAttribute), guid = customer.CustomerGuid, }, email: customer.Email);
+            var passwordRecoveryUrl = Uri.EscapeUriString(WebUtility.UrlDecode($"{store.Url}/auth/reset-password?token={await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.PasswordRecoveryTokenAttribute)}&email={customer.Email}")); // await RouteUrlAsync(routeName: "PasswordRecoveryConfirm", routeValues: new { token = await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.PasswordRecoveryTokenAttribute), guid = customer.CustomerGuid, }, email: customer.Email);
             var accountActivationUrl  = await RouteUrlAsync(routeName: "AccountActivation", routeValues: new { token = await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.AccountActivationTokenAttribute), guid = customer.CustomerGuid }, email: customer.Email);
             var emailRevalidationUrl  = await RouteUrlAsync(routeName: "EmailRevalidation", routeValues: new { token = await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.EmailRevalidationTokenAttribute), guid = customer.CustomerGuid }, email: customer.Email);
             tokens.Add(new Token("Customer.PasswordRecoveryURL", passwordRecoveryUrl, true));

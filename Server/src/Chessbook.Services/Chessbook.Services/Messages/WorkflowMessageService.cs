@@ -362,7 +362,7 @@ namespace Chessbook.Services.Messages
             }
 
             var store = await _storeContext.GetCurrentStoreAsync();
-            languageId = await EnsureLanguageIsActiveAsync(languageId, store.Id);
+            // languageId = await EnsureLanguageIsActiveAsync(languageId, store.Id);
 
             var messageTemplates = await GetActiveMessageTemplatesAsync(MessageTemplateSystemNames.CustomerPasswordRecoveryMessage, store.Id);
             if (!messageTemplates.Any())

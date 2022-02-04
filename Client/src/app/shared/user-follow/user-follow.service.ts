@@ -1,5 +1,5 @@
 import {Injectable, NgZone} from "@angular/core";
-import {asyncScheduler, merge, Observable, of, ReplaySubject, Subject} from 'rxjs';
+import {asyncScheduler, merge, Observable, of as observableOf, of, ReplaySubject, Subject} from 'rxjs';
 import {bufferTime, catchError, filter, map, observeOn, share, switchMap, tap} from 'rxjs/operators';
 import {enterZone, leaveZone} from "../../helpers/zone";
 import {uniq} from 'lodash-es';
@@ -15,6 +15,7 @@ import {PostSortField} from "../posts/models/post-sort-field.type";
 import {IUser} from "../../core/interfaces/common/users";
 import {UsersService} from "../../core/backend/common/services/users.service";
 import {User} from "../shared-main/user/user.model";
+import {TimelineApi} from "../timeline/backend/timeline.api";
 
 const logger = debug('chessbook:subscriptions:UserFollowService');
 
@@ -34,7 +35,8 @@ export class UserFollowService {
   private myAccountSubscriptionCacheSubject = new Subject<SubscriptionExistResult>();
 
   constructor(private ngZone: NgZone, private restService: RestService,
-              private http: HttpService, private restExtractor: RestExtractor) {
+              private http: HttpService, private restExtractor: RestExtractor,
+              private timelineApi: TimelineApi) {
     this.existsObservable = merge(
       this.existsSubject.pipe(
         // We leave Angular zone so Protractor does not get stuck
@@ -65,13 +67,31 @@ export class UserFollowService {
       params = params.set('skipCount', skipCount + '');
     }
 
-    return this.http
-      .get<ResultList<Post>>('posts/home_timeline', {params})
-      .pipe(
-        // @ts-ignore
-        // switchMap(res => this.postService.extractVideos(res)),
-        // catchError(err => this.restExtractor.handleError(err))
-      );
+    return this.timelineApi.getHomeTimelineAsync(params)
+        .pipe(
+            switchMap(res => this.extractVideos(res)),
+            catchError(err => this.restExtractor.handleError(err))
+        );
+
+    // return this.http
+    //   .get<ResultList<Post>>('posts/home_timeline', {params})
+    //   .pipe(
+    //     // @ts-ignore
+    //     // switchMap(res => this.postService.extractVideos(res)),
+    //     // catchError(err => this.restExtractor.handleError(err))
+    //   );
+  }
+
+  extractVideos(result: ResultList<Post>) {
+    const postsJson = result.data;
+    const totalPosts = result.total;
+    const posts: Post[] = [];
+
+    for (const postJson of postsJson) {
+      posts.push(new Post(postJson));
+    }
+
+    return observableOf({total: totalPosts, data: posts});
   }
 
   /**

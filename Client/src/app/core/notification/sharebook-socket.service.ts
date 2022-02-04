@@ -36,7 +36,7 @@ export class PeerTubeSocket {
       )
       .subscribe((user: IUser) => {
         if (user) {
-          this.SignalrHubUrl = 'https://chessbook.me';
+          this.SignalrHubUrl = 'https://chessbook.me/';
           this.init();
         }
 

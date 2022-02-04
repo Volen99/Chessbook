@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { getDeepFromObject } from '../../helpers';
-import { EMAIL_PATTERN } from '../constants';
 import { InitUserService } from '../../../theme/services/init-user.service';
 import {NB_AUTH_OPTIONS, NbAuthSocialLink} from "../../../sharebook-nebular/auth/auth.options";
 import {NbAuthService} from "../../../sharebook-nebular/auth/services/auth.service";
@@ -76,7 +75,6 @@ export class NgxLoginComponent implements OnInit {
     this.service.authenticate(this.strategy, this.user).subscribe((result: NbAuthResult) => {
       this.submitted = false;
 
-      debugger
       if (result.isSuccess()) {
         this.messages = result.getMessages();
         this.initUserService.initCurrentUser().subscribe();
@@ -87,7 +85,7 @@ export class NgxLoginComponent implements OnInit {
       const redirect = result.getRedirect();
       if (redirect) {
         setTimeout(() => {
-          if (!this.userStore.getUser().active) {
+          if (this.userStore.getUser()?.active === false) {
             alert('You need to activate your account from your gmail to use Chessbook fully');
           }
           return this.router.navigateByUrl('home');

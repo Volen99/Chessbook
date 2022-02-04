@@ -34,7 +34,8 @@ namespace Chessbook.Services.Tasks
 
         static TaskThread()
         {
-            _scheduleTaskUrl = $"{EngineContext.Current.Resolve<IStoreContext>().GetCurrentStoreAsync().Result.Url.TrimEnd('/')}/{NopTaskDefaults.ScheduleTaskPath}";
+            var a = EngineContext.Current.Resolve<IStoreContext>();
+            _scheduleTaskUrl = $"{a.GetCurrentStoreAsync().Result.Url.TrimEnd('/')}/{NopTaskDefaults.ScheduleTaskPath}";
             _timeout = EngineContext.Current.Resolve<AppSettings>().CommonConfig.ScheduleTaskRunTimeout;
         }
 
