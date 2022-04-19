@@ -1,0 +1,123 @@
+$main-color-1: darkgray;
+$main-color-2: lightgray;
+$main-color-3: white;
+$main-color-4: gray;
+$main-color-5: transparent;
+$main-color-6: whitesmoke;
+$main-color-7: black;
+$main-color-8: lightblue;
+$shadow-color-1: rgba(0, 0, 0, 0.12);
+$shadow-color-2: rgb(148, 148, 148);
+$shadow-color-3: rgba(0, 0, 0, 0.26);
+$shadow-color-4: rgba(0, 0, 0, 0.08);
+$designer-color-4: rgba(92, 110, 219, 0.1);
+$designer-color-5: rgb(191, 199, 251);
+
+/* Color Palette - Indigo.Design */
+
+$ID_Gray100: rgb(248, 248, 250); /* ID_LightestGray / #F8F8FA */
+$ID_Gray100-60: rgba($ID_Gray100, 60%);
+
+$ID_Gray200: rgb(235, 237, 242); /* ID_AthensGray / #EBEDF2 */
+
+$ID_Gray300: rgb(214, 216, 220); /* ID_Gray300 / #D6D8DC */
+$ID_Gray300-10: rgba($ID_Gray300, 10%);
+$ID_Gray300-80: rgba($ID_Gray300, 80%);
+
+$ID_Gray400: rgb(195, 196, 199); /* ID_ExtraLightGray / #C3C4C7 */
+$ID_Gray400-50: rgba($ID_Gray400, 50%);
+
+$ID_Gray500: rgb(154, 157, 162); /* ID_LightGray / #9A9DA2 */
+
+$ID_Gray600: rgb(123, 126, 135); /* ID_Gray / #7b7e87 */
+$ID_Gray600-15: rgba($ID_Gray600, 15%);
+$ID_Gray600-30: rgba($ID_Gray600, 30%);
+$ID_Gray600-45: rgba($ID_Gray600, 45%);
+$ID_Gray600-60: rgba($ID_Gray600, 60%);
+
+$ID_Gray700: rgb(84, 87, 98); /* ID_MidDarkGray / #545762 */
+$ID_Gray700-20: rgba($ID_Gray700, 20%);
+$ID_Gray700-45: rgba($ID_Gray700, 45%);
+$ID_Gray700-50: rgba($ID_Gray700, 50%);
+$ID_Gray700-60: rgba($ID_Gray700, 60%);
+$ID_Gray700-70: rgba($ID_Gray700, 70%);
+$ID_Gray700-80: rgba($ID_Gray700, 80%);
+
+$ID_Gray800: rgb(59, 61, 71); /* ID_DarkGray / #3B3D47 */
+$ID_Gray800-20: rgba($ID_Gray800, 20%);
+$ID_Gray800-30: rgba($ID_Gray800, 30%);
+$ID_Gray800-45: rgba($ID_Gray800, 45%);
+$ID_Gray800-50: rgba($ID_Gray800, 50%);
+$ID_Gray800-65: rgba($ID_Gray800, 65%);
+$ID_Gray800-80: rgba($ID_Gray800, 80%);
+
+$ID_Gray900: rgb(36, 37, 44); /* ID_ExtraDarkGray / #24252C */
+$ID_Gray900-05: rgba($ID_Gray900, 5%);
+$ID_Gray900-10: rgba($ID_Gray900, 10%);
+$ID_Gray900-15: rgba($ID_Gray900, 15%);
+$ID_Gray900-20: rgba($ID_Gray900, 20%);
+$ID_Gray900-30: rgba($ID_Gray900, 30%);
+$ID_Gray900-40: rgba($ID_Gray900, 40%);
+$ID_Gray900-60: rgba($ID_Gray900, 60%);
+$ID_Gray900-90: rgba($ID_Gray900, 90%);
+
+$ID_Indigo500: rgb(63, 81, 181); /* ID_Indigo / #3f51b5 */
+$ID_Indigo500-15: rgba($ID_Indigo500, 15%);
+$ID_Indigo500-30: rgba($ID_Indigo500, 30%);
+$ID_Indigo500-50: rgba($ID_Indigo500, 50%);
+$ID_Indigo500-70: rgba($ID_Indigo500, 70%);
+
+$ID_Indigo400: rgb(92, 110, 219); /* ID_LightIndigo / #5C6EDB */
+$ID_Indigo400-15: rgba($ID_Indigo400, 15%);
+$ID_Indigo400-20: rgba($ID_Indigo400, 20%);
+$ID_Indigo400-30: rgba($ID_Indigo400, 30%);
+$ID_Indigo400-45: rgba($ID_Indigo400, 45%);
+$ID_Indigo400-50: rgba($ID_Indigo400, 50%);
+$ID_Indigo400-70: rgba($ID_Indigo400, 70%);
+
+$ID_Indigo850: rgb(40, 37, 96); /* #282560 */
+
+$ID_Indigo900: rgb(38, 40, 81); /* ID_DarkIndigo1 / #262851 */
+$ID_Indigo900-20: rgba($ID_Indigo900, 20%);
+$ID_Indigo900-45: rgba($ID_Indigo900, 45%);
+$ID_Indigo900-50: rgba($ID_Indigo900, 50%);
+
+$ID_White: rgb(255, 255, 255); /* ID_White / #FFFFFF */
+$ID_White-10: rgba($ID_White, 10%);
+$ID_White-15: rgba($ID_White, 15%);
+$ID_White-20: rgba($ID_White, 20%);
+$ID_White-30: rgba($ID_White, 30%);
+$ID_White-40: rgba($ID_White, 40%);
+$ID_White-50: rgba($ID_White, 50%);
+$ID_White-60: rgba($ID_White, 60%);
+$ID_White-70: rgba($ID_White, 70%);
+$ID_White-80: rgba($ID_White, 80%);
+$ID_White-90: rgba($ID_White, 90%);
+$ID_White-95: rgba($ID_White, 95%);
+$ID_Transparent: rgba($ID_White, 0%);
+
+$ID_Black: rgb(0, 0, 0); /* ID_Black / #000000 */
+$ID_Black-40: rgba($ID_Black, 40%);
+
+$ID_Red300: rgb(252, 106, 119); /* ID_LightRed / #FC6A77 */
+$ID_Red400: rgb(238, 73, 87); /* ID_Red / #EE4957 */
+$ID_Red500: rgb(207, 26, 43); /* ID_DarkRed / #CF1A2B */
+
+$ID_Teal300: rgb(67, 190, 151); /* ID_LightTeal / #43BE97 */
+$ID_Teal400: rgb(25, 173, 135); /* ID_Teal /  #19ad87 */
+$ID_Teal400-30: rgb($ID_Teal400, 30%);
+
+$ID_Green700: rgb(104, 159, 56); /* ID_Green / #689F38 */
+$ID_Green700-40: rgb($ID_Green700, 40%);
+
+$ID_Orange300: rgb(255, 143, 47); /* ID_LightYellow / #FF8F2F */
+$ID_Orange500: rgb(250, 123, 14); /* ID_Yellow / #FA7B0E */
+$ID_Orange500-50: rgba($ID_Orange500, 50%);
+$ID_Orange500-80: rgba($ID_Orange500, 80%);
+$ID_Orange700: rgba(240, 90, 43); /* #F05A2B */
+$ID_Orange700-40: rgba($ID_Orange700, 40%); /* #F05A2B */
+
+$ID_Purple300: rgb(218, 100, 255); /* ID_Violet / #DA64FF */
+$ID_Purple500: rgb(156, 39, 176); /* ID_LightViolet / #9C27B0 */
+$ID_Purple500-40: rgba($ID_Purple500, 40%);
+$ID_Purple500-30: rgba($ID_Purple500, 30%);

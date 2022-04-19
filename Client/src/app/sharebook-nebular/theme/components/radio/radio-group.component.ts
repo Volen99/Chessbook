@@ -41,7 +41,7 @@ import { NbRadioComponent } from './radio.component';
  * </nb-radio-group>
  * ```
  *
- * Also, you can use `value` and `valueChange` for binding without shared-forms.
+ * Also, you can use `value` and `valueChange` for binding without forms.
  *
  * ```html
  * <nb-radio-group [(value)]="selectedOption">
@@ -64,6 +64,9 @@ import { NbRadioComponent } from './radio.component';
  *
  * Also, you can disable the whole group using `disabled` attribute.
  * @stacked-example(Disabled group, radio/radio-disabled-group.component)
+ *
+ * Radio group supports `ngModel` and reactive forms:
+ * @stacked-example(Radio Group with forms, radio/radio-form.component)
  *
  * */
 @Component({
@@ -178,6 +181,10 @@ export class NbRadioGroupComponent implements AfterContentInit, OnDestroy, Contr
 
   writeValue(value: any): void {
     this.value = value;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 
   protected updateAndSubscribeToRadios() {

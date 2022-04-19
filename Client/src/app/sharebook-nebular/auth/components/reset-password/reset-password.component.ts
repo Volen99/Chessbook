@@ -33,9 +33,9 @@ export class NbResetPasswordComponent {
               protected cd: ChangeDetectorRef,
               protected router: Router) {
 
-    this.redirectDelay = this.getConfigValue('shared-forms.resetPassword.redirectDelay');
-    this.showMessages = this.getConfigValue('shared-forms.resetPassword.showMessages');
-    this.strategy = this.getConfigValue('shared-forms.resetPassword.strategy');
+    this.redirectDelay = this.getConfigValue('forms.resetPassword.redirectDelay');
+    this.showMessages = this.getConfigValue('forms.resetPassword.showMessages');
+    this.strategy = this.getConfigValue('forms.resetPassword.strategy');
   }
 
   resetPass(): void {

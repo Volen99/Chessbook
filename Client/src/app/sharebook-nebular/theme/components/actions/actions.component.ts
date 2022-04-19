@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import { Component, HostBinding, Input } from '@angular/core';
 
 import { convertToBoolProperty, NbBooleanInput } from '../helpers';
@@ -36,7 +42,6 @@ import { NbIconConfig } from '../icon/icon.component';
         <nb-icon [config]="icon"></nb-icon>
         <ng-container [ngTemplateOutlet]="badgeTemplate"></ng-container>
       </a>
-        {{this.anchorText}}
     </ng-container>
 
     <ng-template #projectedContent>
@@ -129,9 +134,6 @@ export class NbActionComponent {
    * @type string
    */
   @Input() badgePosition: NbBadgePosition;
-
-  // by mi
-  @Input() anchorText: string;
 }
 
 /**

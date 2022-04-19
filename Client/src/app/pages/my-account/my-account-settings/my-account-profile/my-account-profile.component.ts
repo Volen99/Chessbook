@@ -88,6 +88,10 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
     return this.userForm.get('facebookLink');
   }
 
+  get instagramLink() {
+    return this.userForm.get('instagramLink');
+  }
+
   get canEdit(): boolean {
     return this.mode !== UserFormMode.VIEW;
   }
@@ -160,6 +164,7 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
       twitchLink: this.fb.control('', [Validators.pattern(/^(?:http(s)?:\/\/)[\w.-]+(twitch\.tv\/)([^\?&"'>]+)/)]),
       youtubeLink: this.fb.control('', [Validators.pattern(/^(?:http(s)?:\/\/)[\w.-]+(youtu\.be\/|youtube\.com\/)([^\?&"'>]+)/)]),
       facebookLink: this.fb.control('', [Validators.pattern(/^(?:http(s)?:\/\/)[\w.-]+?(?:www.)?facebook.com\/([^\?&"'>]+)/)]),
+      instagramLink: this.fb.control('', [Validators.pattern(/^(?:http(s)?:\/\/)[\w.-]+?(?:www.)?instagram.com\/([^\?&"'>]+)/)]),
     });
 
     this.user = this.userStore.getUser();
@@ -173,6 +178,7 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
       twitchLink: this.user.twitchLink ?? '',
       youtubeLink: this.user.youtubeLink ?? '',
       facebookLink: this.user.facebookLink ?? '',
+      instagramLink: this.user.instagramLink ?? ''
     });
   }
 
@@ -230,6 +236,7 @@ export class MyAccountProfileComponent implements OnInit, OnDestroy {
       twitchLink: this.userForm.get('twitchLink').value,
       youtubeLink: this.userForm.get('youtubeLink').value,
       facebookLink: this.userForm.get('facebookLink').value,
+      instagramLink: this.userForm.get('instagramLink').value,
 
       gender: this.genderSelected,
 

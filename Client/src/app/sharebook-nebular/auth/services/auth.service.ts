@@ -1,3 +1,8 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
 import { Inject, Injectable } from '@angular/core';
 
 import {Observable, of as observableOf, ReplaySubject} from 'rxjs';
@@ -18,18 +23,14 @@ import {AuthStatus} from "../../../core/auth/auth-status.model";
 @Injectable()
 export class NbAuthService {
 
-  private loginChanged: Subject<AuthStatus>;
-  loginChangedSource: Observable<AuthStatus>;
-  userInformationLoaded = new ReplaySubject<boolean>(1);
+    private loginChanged: Subject<AuthStatus>;
+    loginChangedSource: Observable<AuthStatus>;
+    userInformationLoaded = new ReplaySubject<boolean>(1);
 
   constructor(protected tokenService: NbTokenService,
               @Inject(NB_AUTH_STRATEGIES) protected strategies) {
-    this.loginChanged = new Subject<AuthStatus>();
-    this.loginChangedSource = this.loginChanged.asObservable();
-  }
-
-  private setStatus (status: AuthStatus) {
-    this.loginChanged.next(status);
+      this.loginChanged = new Subject<AuthStatus>();
+      this.loginChangedSource = this.loginChanged.asObservable();
   }
 
   /**
@@ -149,7 +150,6 @@ export class NbAuthService {
           if (result.isSuccess()) {
             this.tokenService.clear()
               .pipe(map(() => result));
-            this.setStatus(AuthStatus.LoggedOut);
           }
           return observableOf(result);
         }),
@@ -236,22 +236,22 @@ export class NbAuthService {
     return observableOf(result);
   }
 
-  // by mi
+    // by mi
 
-  getRequestHeaderValue () {
-    let accessToken: NbAuthToken;
+    getRequestHeaderValue () {
+        let accessToken: NbAuthToken;
 
-    this.getToken()
-      .pipe(map((token: NbAuthToken) => {
-        if (token.isValid()) {
-          accessToken = token;
+        this.getToken()
+            .pipe(map((token: NbAuthToken) => {
+                if (token.isValid()) {
+                    accessToken = token;
+                }
+            }));
+
+        if (!accessToken) {
+            return null;
         }
-      }));
 
-    if (!accessToken) {
-      return null;
+        return `Bearer ${accessToken.getValue()}`;
     }
-
-    return `Bearer ${accessToken.getValue()}`;
-  }
 }

@@ -1,3 +1,8 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
 import { Inject, Injectable, Optional } from '@angular/core';
 import { NB_SECURITY_OPTIONS_TOKEN, NbAclOptions, NbAclRole, NbAccessControl } from '../security.options';
 

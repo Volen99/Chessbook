@@ -9,6 +9,7 @@ import { NbToastrConfig } from './toastr-config';
 export class NbToast {
   title: string;
   message: string;
+  url: string;
   config: NbToastrConfig;
 }
 

@@ -39,8 +39,9 @@ import {NB_AUTH_TOKEN_INTERCEPTOR_FILTER} from "../sharebook-nebular/auth/auth.o
 import {NbAuthJWTInterceptor} from "../sharebook-nebular/auth/services/interceptors/jwt-interceptor";
 import {ModeratorGuard} from "./moderator.guard";
 import {CameraButtonModule} from '../shared/camera-button/camera-button.module';
+import {UnloggedGuard} from "../core/routing/unlogged-guard.service";
 
-const GUARDS = [AuthGuard, AdminGuard, ModeratorGuard];
+const GUARDS = [AuthGuard, AdminGuard, ModeratorGuard, UnloggedGuard];
 const PIPES = [AuthPipe];
 const COMPONENTS = [
   NgxLoginComponent,

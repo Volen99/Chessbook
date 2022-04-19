@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import { Inject, Injectable } from '@angular/core';
 import { NB_MEDIA_BREAKPOINTS } from '../theme.options';
 

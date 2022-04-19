@@ -100,6 +100,8 @@ namespace Chessbook.Web.Areas.Admin.Models.Customers
 
         public string FacebookLink { get; set; }
 
+        public string InstagramLink { get; set; }
+
         public DateTime LastActivityDate { get; set; }
 
         public string LastIpAddress { get; set; }

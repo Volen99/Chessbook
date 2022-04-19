@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import { NgModule, ModuleWithProviders, PLATFORM_ID } from '@angular/core';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 
@@ -25,7 +31,7 @@ import { NbLayoutRulerService } from './services/ruler.service';
 import { NbOverlayModule } from './components/cdk/overlay/overlay.module';
 import { NbStatusService } from './services/status.service';
 
-export function windowFactory(platformId: object): Window | undefined {
+export function windowFactory(platformId: Object): Window | undefined {
   if (isPlatformBrowser(platformId)) {
     return window;
   }

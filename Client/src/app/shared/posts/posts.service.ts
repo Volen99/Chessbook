@@ -27,6 +27,7 @@ import {
 import {IPost} from './models/post.model';
 import {objectToFormData} from '../../helpers/utils';
 import {NbToastrService} from '../../sharebook-nebular/theme/components/toastr/toastr.service';
+import {NbGlobalPhysicalPosition} from "../../sharebook-nebular/theme/components/cdk/overlay/position-helper";
 
 @Injectable()
 export class PostsService {
@@ -49,8 +50,13 @@ export class PostsService {
     const data = objectToFormData(body);
 
     return this.postsApi.publishTweetAsync(params, data)
-      .subscribe((post) => {
-        this.notifier.success('Your post has been uploaded.', 'Success');
+      .subscribe((post: Post) => {
+        let url = Post.buildWatchUrl(post);
+        this.notifier.success('View', 'Your post has been uploaded.',
+            {
+              position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
+              duration: 6000,
+            }, url);
       }, err => this.notifier.danger(err.error, 'Error', {duration: 5000}));
   }
 
@@ -319,10 +325,10 @@ export class PostsService {
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 
-  deletePost(postId: number) {
+  deletePost(postId: number, isAdmin = false) {
     let url = `delete/${postId}`;
 
-    return this.postsApi.deletePost(url)
+    return this.postsApi.deletePost(url, isAdmin)
       .pipe(catchError(err => this.restExtractor.handleError(err)));
   }
 

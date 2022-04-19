@@ -86,7 +86,7 @@ export class NgxLoginComponent implements OnInit {
       if (redirect) {
         setTimeout(() => {
           if (this.userStore.getUser()?.active === false) {
-            alert('You need to activate your account from your gmail to use Chessbook fully');
+            alert('You need to activate your account from your email to use Chessbook fully');
           }
           return this.router.navigateByUrl('home');
           // return this.router.navigateByUrl(redirect);

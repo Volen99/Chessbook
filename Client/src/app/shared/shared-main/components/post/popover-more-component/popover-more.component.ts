@@ -127,8 +127,21 @@ export class PopoverMoreComponent implements OnInit {
         }
       }
 
+      debugger
       if (i === 4) {
         this.invokeReportModal();
+      } else if (i === 5) {
+        if (window.confirm("Do you really wish to delete this post?")) {
+          this.postService.deletePost(this.post.id, true)
+              .subscribe((data) => {
+                this.notifier.success('This post was deleted', 'Success');
+                if (this.router.url.includes('post')) {
+                  this.redirectService.redirectToHomepage();
+                } else {
+                  // emit delete event or call parent func kk
+                }
+              }, err => this.notifier.danger(err.message, 'Error'));
+        }
       }
     }
   }

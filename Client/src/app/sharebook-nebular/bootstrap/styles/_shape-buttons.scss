@@ -1,0 +1,25 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+@use '../../theme/styles/theming' as *;
+
+@mixin b-btn-shape($shape) {
+  border-radius: nb-theme(button-#{$shape}-border-radius);
+}
+
+@mixin b-btn-shapes() {
+  .btn.btn-rectangle {
+    @include b-btn-shape(rectangle);
+  }
+
+  .btn.btn-semi-round {
+    @include b-btn-shape(semi-round);
+  }
+
+  .btn.btn-round {
+    @include b-btn-shape(round);
+  }
+}

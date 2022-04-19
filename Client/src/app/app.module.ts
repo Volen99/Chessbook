@@ -29,6 +29,7 @@ import {MediaContainerComponent} from './features/media-container/media-containe
 import {NbCardModule} from "./sharebook-nebular/theme/components/card/card.module";
 import {NbButtonModule} from "./sharebook-nebular/theme/components/button/button.module";
 import {ComposeModule} from './pages/modal-overlays/dialog/compose/compose.module';
+import {CustomLoadingIndicatorModule} from "./components/custom-loading-indicator/custom-loading-indicator.module";
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = { // TODO: lazy load them!!! aaaaaaaaaaaaaaaa
   direction: 'horizontal',
@@ -76,6 +77,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = { // TODO: lazy load them!!
     SwiperModule,
     NbCardModule,
     NbButtonModule,
+
+    CustomLoadingIndicatorModule,
 
     AppRoutingModule, // Put it after all the module because it has the 4õ4 route
   ],

@@ -492,7 +492,7 @@
         }
 
         [HttpGet]
-        [Route("profile/{screenName:length(3,32)}")] // WTF...
+        [Route("profile/{screenName}")] // WTF...
         public async Task<IActionResult> GetProfile(string screenName)
         {
             if (!screenName.StartsWith('@'))
@@ -534,6 +534,7 @@
             customer.TwitchLink = input.TwitchLink;
             customer.YoutubeLink = input.YoutubeLink;
             customer.FacebookLink = input.FacebookLink;
+            customer.InstagramLink = input.InstagramLink;
 
             await this.userService.UpdateCustomerAsync(customer);
 

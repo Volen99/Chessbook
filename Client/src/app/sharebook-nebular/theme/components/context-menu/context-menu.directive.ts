@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import {
   AfterViewInit,
   ComponentRef,
@@ -8,18 +14,17 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges,
 } from '@angular/core';
-import {filter, takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
-import {NbDynamicOverlay, NbDynamicOverlayController} from '../cdk/overlay/dynamic/dynamic-overlay';
-import {NbDynamicOverlayHandler} from '../cdk/overlay/dynamic/dynamic-overlay-handler';
-import {NbOverlayConfig, NbOverlayRef} from '../cdk/overlay/mapping';
-import {NbAdjustableConnectedPositionStrategy, NbAdjustment, NbPosition} from '../cdk/overlay/overlay-position';
-import {NbTrigger, NbTriggerValues} from '../cdk/overlay/overlay-trigger';
-import {NbContextMenuComponent} from './context-menu.component';
-import {NbMenuItem, NbMenuService} from '../menu/menu.service';
+import { NbDynamicOverlay, NbDynamicOverlayController } from '../cdk/overlay/dynamic/dynamic-overlay';
+import { NbDynamicOverlayHandler } from '../cdk/overlay/dynamic/dynamic-overlay-handler';
+import { NbOverlayConfig, NbOverlayRef } from '../cdk/overlay/mapping';
+import { NbAdjustableConnectedPositionStrategy, NbAdjustment, NbPosition } from '../cdk/overlay/overlay-position';
+import { NbTrigger, NbTriggerValues } from '../cdk/overlay/overlay-trigger';
+import { NbContextMenuComponent } from './context-menu.component';
+import { NbMenuItem, NbMenuService } from '../menu/menu.service';
 
 export interface NbContextMenuContext {
   items: NbMenuItem[];
@@ -130,14 +135,12 @@ export class NbContextMenuDirective implements NbDynamicOverlayController, OnCha
   get position(): NbPosition {
     return this._position;
   }
-
   set position(value: NbPosition) {
     if (value !== this.position) {
       this._position = value;
       this.updateOverlayContext();
     }
   }
-
   _position: NbPosition = NbPosition.BOTTOM;
 
   /**
@@ -155,14 +158,12 @@ export class NbContextMenuDirective implements NbDynamicOverlayController, OnCha
   get tag(): string {
     return this._tag;
   }
-
   set tag(value: string) {
     if (value !== this.tag) {
       this._tag = value;
       this.updateOverlayContext();
     }
   }
-
   _tag: string;
 
   /**
@@ -172,7 +173,6 @@ export class NbContextMenuDirective implements NbDynamicOverlayController, OnCha
   get items(): NbMenuItem[] {
     return this._items;
   }
-
   set items(items: NbMenuItem[]) {
     this.validateItems(items);
     this._items = items;
@@ -191,21 +191,19 @@ export class NbContextMenuDirective implements NbDynamicOverlayController, OnCha
   get contextMenuClass(): string {
     return this._contextMenuClass;
   }
-
   set contextMenuClass(value: string) {
     if (value !== this.contextMenuClass) {
       this._contextMenuClass = value;
-      this.overlayConfig = {panelClass: this.contextMenuClass};
+      this.overlayConfig = { panelClass: this.contextMenuClass };
     }
   }
-
   _contextMenuClass: string = '';
 
   protected ref: NbOverlayRef;
   protected container: ComponentRef<any>;
   protected positionStrategy: NbAdjustableConnectedPositionStrategy;
-  protected overlayConfig: NbOverlayConfig = {panelClass: this.contextMenuClass};
-  protected overlayContext: NbContextMenuContext = {items: this.items, tag: this.tag, position: this.position};
+  protected overlayConfig: NbOverlayConfig = { panelClass: this.contextMenuClass } ;
+  protected overlayContext: NbContextMenuContext = { items: this.items, tag: this.tag, position: this.position };
   protected destroy$ = new Subject<void>();
   private _items: NbMenuItem[] = [];
 
@@ -251,6 +249,8 @@ export class NbContextMenuDirective implements NbDynamicOverlayController, OnCha
 
   ngOnDestroy() {
     this.dynamicOverlayHandler.destroy();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   protected configureDynamicOverlay() {
@@ -268,20 +268,20 @@ export class NbContextMenuDirective implements NbDynamicOverlayController, OnCha
    * */
   private validateItems(items: NbMenuItem[]) {
     if (!items || !items.length) {
-      throw Error(`List of menu items expected, but given: ${items}`);
+      throw Error(`List of menu items expected, but given: ${items}`)
     }
   }
 
   private subscribeOnItemClick() {
     this.menuService.onItemClick()
       .pipe(
-        filter(({tag}) => tag === this.tag),
+        filter(({ tag }) => tag === this.tag && this.trigger !== NbTrigger.NOOP),
         takeUntil(this.destroy$),
       )
       .subscribe(() => this.hide());
   }
 
   protected updateOverlayContext() {
-    this.overlayContext = {items: this.items, position: this.position, tag: this.tag};
+    this.overlayContext = { items: this.items, position: this.position, tag: this.tag };
   }
 }

@@ -11,7 +11,7 @@ namespace Chessbook.Web.Api.Setup
         public byte[] AccessSecret { get; set; }
         public byte[] RefreshSecret { get; set; }
         public DateTime IssuedAt => DateTime.UtcNow;
-        public TimeSpan AccessValidFor { get; set; } = TimeSpan.FromMinutes(60);
+        public TimeSpan AccessValidFor { get; set; } = TimeSpan.FromMinutes(1440); // was 60
         public TimeSpan RefreshValidFor { get; set; } = TimeSpan.FromMinutes(43200);
         public DateTime NotBefore => DateTime.UtcNow;
         public DateTime AccessExpiration => IssuedAt.Add(AccessValidFor);

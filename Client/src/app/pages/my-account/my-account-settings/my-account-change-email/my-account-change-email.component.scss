@@ -8,14 +8,10 @@ label {
   font-size: 100%;
 }
 
-//my-input-toggle-hidden {
-//  width: 340px;
-//  display: block;
-//}
-
 input[type=email] {
-  @include peertube-input-text(340px);
-
+ // @include peertube-input-text(340px);
+  height: 30px;
+  width: 340px;
   display: block;
 }
 

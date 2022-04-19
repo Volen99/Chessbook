@@ -1,7 +1,6 @@
-@import '../../styles/core/mixins';
+@use '../../styles/theming' as *;
 
 :host {
-
   @include nb-ltr(text-align, left);
   @include nb-rtl(text-align, right);
 

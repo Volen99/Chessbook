@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import { ComponentFactoryResolver, Inject, Injectable, Injector, TemplateRef, Type } from '@angular/core';
 import { fromEvent as observableFromEvent } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -236,7 +242,7 @@ export class NbDialogService {
     }
 
     if (config.closeOnEsc) {
-      observableFromEvent(this.document, 'keyup')
+      observableFromEvent<KeyboardEvent>(this.document, 'keyup')
         .pipe(
           filter((event: KeyboardEvent) => event.keyCode === 27),
           takeUntil(dialogRef.onClose),

@@ -4,6 +4,8 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 
+@use '../../styles/theming' as *;
+
 @mixin nb-buttons-group-theme() {
   nb-button-group {
     display: inline-flex;
@@ -59,7 +61,7 @@
         }
       }
 
-      // See the reply-comment on the selector above
+      // See the comment on the selector above
       &.appearance-ghost:not(:first-child):not(:hover):not(:focus):not(:active):not([disabled]) {
         @include nb-ltr(border-left-color, nb-theme(button-group-ghost-divider-color));
         @include nb-rtl(border-right-color, nb-theme(button-group-ghost-divider-color));

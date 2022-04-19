@@ -1,5 +1,12 @@
+/*
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import { NgModule } from '@angular/core';
 import { icons } from 'eva-icons';
+// import { NbIconLibraries, NbSvgIcon, NbIcons } from '@nebular/theme';
 import {NbSvgIcon} from "../theme/components/icon/icon";
 import {NbIconLibraries} from "../theme/components/icon/icon-libraries";
 import {NbIcons} from "../theme/components/icon/icon-pack";

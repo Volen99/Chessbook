@@ -1,6 +1,6 @@
 <span *ngIf="menuItem.group">
   <nb-icon class="menu-icon" [config]="menuItem.icon" *ngIf="menuItem.icon"></nb-icon>
-    {{ menuItem.title }}
+  {{ menuItem.title }}
 </span>
 <a *ngIf="menuItem.link && !menuItem.url && !menuItem.children && !menuItem.group"
    [routerLink]="menuItem.link"
@@ -15,18 +15,18 @@
    (mouseenter)="onHoverItem(menuItem)"
    (click)="onItemClick(menuItem);">
 
-    <app-notification *ngIf="menuItem.title === 'Notifications'">
+  <app-notification *ngIf="menuItem.title === 'Notifications'">
 
-    </app-notification>
+  </app-notification>
 
-    <!--<nb-icon class="menu-icon" [config]="menuItem.icon" *ngIf="menuItem.icon"></nb-icon>-->
-    <fa-icon *ngIf="menuItem.icon" class="menu-icon" [icon]="menuItem.icon"></fa-icon>
-    <span class="menu-title main-menu-title">{{ menuItem.title }}</span>
-    <ng-container *ngIf="badge && menuItem.title !== 'Messages'" [ngTemplateOutlet]="badgeTemplate"></ng-container>
-    <ng-container *ngIf="menuItem.title === 'Messages' && badge?.text !== '0'">
-        <nb-badge [text]="badge.text" status="primary" position="top right">
-        </nb-badge>
-    </ng-container>
+  <!--<nb-icon class="menu-icon" [config]="menuItem.icon" *ngIf="menuItem.icon"></nb-icon>-->
+  <fa-icon *ngIf="menuItem.icon" class="menu-icon" [icon]="menuItem.icon"></fa-icon>
+  <span class="menu-title main-menu-title">{{ menuItem.title }}</span>
+  <ng-container *ngIf="badge && menuItem.title !== 'Messages'" [ngTemplateOutlet]="badgeTemplate"></ng-container>
+  <ng-container *ngIf="menuItem.title === 'Messages' && badge?.text !== '0'">
+    <nb-badge [text]="badge.text" status="primary" position="top right">
+    </nb-badge>
+  </ng-container>
 </a>
 <a *ngIf="menuItem.url && !menuItem.children && !menuItem.link && !menuItem.group"
    [attr.href]="menuItem.url"
@@ -35,9 +35,9 @@
    [class.active]="menuItem.selected"
    (mouseenter)="onHoverItem(menuItem)"
    (click)="onSelectItem(menuItem)">
-    <fa-icon *ngIf="menuItem.icon" class="menu-icon" [icon]="menuItem.icon"></fa-icon>
-    <span class="menu-title">{{ menuItem.title }}</span>
-    <ng-container *ngIf="badge" [ngTemplateOutlet]="badgeTemplate"></ng-container>
+  <fa-icon *ngIf="menuItem.icon" class="menu-icon" [icon]="menuItem.icon"></fa-icon>
+  <span class="menu-title">{{ menuItem.title }}</span>
+  <ng-container *ngIf="badge" [ngTemplateOutlet]="badgeTemplate"></ng-container>
 </a>
 <a *ngIf="!menuItem.children && !menuItem.link && !menuItem.url && !menuItem.group"
    [attr.target]="menuItem.target"
@@ -45,14 +45,14 @@
    [class.active]="menuItem.selected"
    (mouseenter)="onHoverItem(menuItem)"
    (click)="$event.preventDefault(); onItemClick(menuItem);">
-    <fa-icon *ngIf="menuItem.icon" class="menu-icon" [icon]="menuItem.icon"></fa-icon>
-    <span class="menu-title">{{ menuItem.title }}</span>
-    <ng-container *ngIf="badge" [ngTemplateOutlet]="badgeTemplate"></ng-container>
+  <fa-icon *ngIf="menuItem.icon" class="menu-icon" [icon]="menuItem.icon"></fa-icon>
+  <span class="menu-title">{{ menuItem.title }}</span>
+  <ng-container *ngIf="badge" [ngTemplateOutlet]="badgeTemplate"></ng-container>
 </a>
 <style>
-    fa-stack {
-        height: 26.08px;
-    }
+  fa-stack {
+    height: 26.08px;
+  }
 </style>
 <a *ngIf="menuItem.children"
    (click)="$event.preventDefault(); onToggleSubMenu(menuItem);"
@@ -61,16 +61,16 @@
    [class.active]="menuItem.selected"
    (mouseenter)="onHoverItem(menuItem)"
    href="#">
-    <fa-icon *ngIf="menuItem.icon && !(this.menuItem.title === 'More')" [icon]="menuItem.icon" class="menu-icon"></fa-icon>
-    <fa-stack *ngIf="this.menuItem.icon && this.menuItem.title === 'More'" size="sm" class="menu-icon">
-        <fa-icon [icon]="menuItem.icon" stackItemSize="1x"></fa-icon>
-        <fa-icon [icon]="this.faEllipsisH" [inverse]="true" [styles]="{color: '#8f9bb3'}" stackItemSize="1x"></fa-icon>
-    </fa-stack>
-    <span class="menu-title">{{ menuItem.title }}</span>
-    <ng-container *ngIf="badge" [ngTemplateOutlet]="badgeTemplate"></ng-container>
-    <ng-container *ngIf="(this.menuItem.title !== 'More') && !this.menuItem.title.includes('shortcuts')">
-        <fa-icon class="expand-state" [icon]="getExpandStateIcon()"></fa-icon>
-    </ng-container>
+  <fa-icon *ngIf="menuItem.icon && !(this.menuItem.title === 'More')" [icon]="menuItem.icon" class="menu-icon"></fa-icon>
+  <fa-stack *ngIf="this.menuItem.icon && this.menuItem.title === 'More'" size="sm" class="menu-icon">
+    <fa-icon [icon]="menuItem.icon" stackItemSize="1x"></fa-icon>
+    <fa-icon [icon]="this.faEllipsisH" [inverse]="true" [styles]="{color: '#8f9bb3'}" stackItemSize="1x"></fa-icon>
+  </fa-stack>
+  <span class="menu-title">{{ menuItem.title }}</span>
+  <ng-container *ngIf="badge" [ngTemplateOutlet]="badgeTemplate"></ng-container>
+  <ng-container *ngIf="(this.menuItem.title !== 'More') && !this.menuItem.title.includes('shortcuts')">
+    <fa-icon class="expand-state" [icon]="getExpandStateIcon()"></fa-icon>
+  </ng-container>
 
 
 </a>
@@ -79,21 +79,21 @@
     [class.expanded]="menuItem.expanded"
     [@toggle]="toggleState"
     class="menu-items">
-    <ng-container *ngFor="let item of menuItem.children">
-        <li nbMenuItem *ngIf="!item.hidden"
-            [menuItem]="item"
-            [badge]="item.badge"
-            [class.menu-group]="item.group"
-            (hoverItem)="onHoverItem($event)"
-            (toggleSubMenu)="onToggleSubMenu($event)"
-            (selectItem)="onSelectItem($event)"
-            (itemClick)="onItemClick($event)"
-            class="menu-item">
-        </li>
-    </ng-container>
+  <ng-container *ngFor="let item of menuItem.children">
+    <li nbMenuItem *ngIf="!item.hidden"
+        [menuItem]="item"
+        [badge]="item.badge"
+        [class.menu-group]="item.group"
+        (hoverItem)="onHoverItem($event)"
+        (toggleSubMenu)="onToggleSubMenu($event)"
+        (selectItem)="onSelectItem($event)"
+        (itemClick)="onItemClick($event)"
+        class="menu-item">
+    </li>
+  </ng-container>
 </ul>
 
 <ng-template #badgeTemplate>
-    <nb-badge [text]="badge.text" [dotMode]="badge.dotMode" [status]="badge.status" [position]="badge.position">
-    </nb-badge>
+  <nb-badge [text]="badge.text" [dotMode]="badge.dotMode" [status]="badge.status" [position]="badge.position">
+  </nb-badge>
 </ng-template>

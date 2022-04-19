@@ -77,8 +77,13 @@ export class PostsApi {
         return this.api.get(`${this.apiController}/${url}`);
     }
 
-    deletePost(url: string) {
-        return this.api.post(`${this.apiController}/${url}`, {});
+    deletePost(url: string, isAdmin: boolean = false) {
+        let fullUrl = `${this.apiController}/${url}`;
+        if (isAdmin) {
+            fullUrl = `admin/post/${url}`;
+        }
+
+        return this.api.post(fullUrl, {});
     }
 
 }

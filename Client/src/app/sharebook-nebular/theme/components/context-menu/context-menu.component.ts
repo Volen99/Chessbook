@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import { Component, Input } from '@angular/core';
 
 import { NbMenuItem } from '../../components/menu/menu.service';
@@ -21,7 +27,7 @@ import { NbPositionedContainerComponent, NbRenderableContainer } from '../cdk/ov
 @Component({
   selector: 'nb-context-menu',
   template: `
-      <nb-menu class="context-menu" [items]="context.items" [tag]="context.tag"></nb-menu>
+    <nb-menu class="context-menu" [items]="context.items" [tag]="context.tag"></nb-menu>
   `,
 })
 export class NbContextMenuComponent extends NbPositionedContainerComponent implements NbRenderableContainer {

@@ -30,7 +30,7 @@
            fieldSize="large"
            autofocus
            [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : 'basic'"
-           [required]="getConfigValue('shared-forms.validation.email.required')"
+           [required]="getConfigValue('forms.validation.email.required')"
            [attr.aria-invalid]="email.invalid && email.touched ? true : null">
     <ng-container *ngIf="email.invalid && email.touched">
       <p class="caption status-danger" *ngIf="email.errors?.required">
@@ -57,9 +57,9 @@
            placeholder="Password"
            fieldSize="large"
            [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : 'basic'"
-           [required]="getConfigValue('shared-forms.validation.password.required')"
-           [minlength]="getConfigValue('shared-forms.validation.password.minLength')"
-           [maxlength]="getConfigValue('shared-forms.validation.password.maxLength')"
+           [required]="getConfigValue('forms.validation.password.required')"
+           [minlength]="getConfigValue('forms.validation.password.minLength')"
+           [maxlength]="getConfigValue('forms.validation.password.maxLength')"
            [attr.aria-invalid]="password.invalid && password.touched ? true : null">
     <ng-container *ngIf="password.invalid && password.touched ">
       <p class="caption status-danger" *ngIf="password.errors?.required">
@@ -67,8 +67,8 @@
       </p>
       <p class="caption status-danger" *ngIf="password.errors?.minlength || password.errors?.maxlength">
         Password should contain
-        from {{ getConfigValue('shared-forms.validation.password.minLength') }}
-        to {{ getConfigValue('shared-forms.validation.password.maxLength') }}
+        from {{ getConfigValue('forms.validation.password.minLength') }}
+        to {{ getConfigValue('forms.validation.password.maxLength') }}
         characters
       </p>
     </ng-container>
@@ -88,7 +88,7 @@
   </button>
 </form>
 
-<!--<section *ngIf="socialLinks && socialLinks.length > 0" class="links" aria-label="Social sign in">
+<section *ngIf="socialLinks && socialLinks.length > 0" class="links" aria-label="Social sign in">
   or enter with:
   <div class="socials">
     <ng-container *ngFor="let socialLink of socialLinks">
@@ -110,7 +110,7 @@
       </a>
     </ng-container>
   </div>
-</section>-->
+</section>
 
 <section class="another-action" aria-label="Register">
   Don't have an account? <a class="text-link" routerLink="../register">Register</a>

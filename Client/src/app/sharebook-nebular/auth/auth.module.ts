@@ -14,6 +14,14 @@ import { HttpRequest } from '@angular/common/http';
 //   NbLayoutModule,
 // } from '@nebular/theme';
 
+import {NbLayoutModule} from "../theme/components/layout/layout.module";
+import {NbCardModule} from "../theme/components/card/card.module";
+import {NbCheckboxModule} from "../theme/components/checkbox/checkbox.module";
+import {NbAlertModule} from "../theme/components/alert/alert.module";
+import {NbInputModule} from "../theme/components/input/input.module";
+import {NbButtonModule} from "../theme/components/button/button.module";
+import {NbIconModule} from "../theme/components/icon/icon.module";
+
 import { NbAuthService } from './services/auth.service';
 import { NbAuthSimpleToken, NbAuthTokenClass } from './services/token/token';
 import { NbTokenLocalStorage, NbTokenStorage } from './services/token/token-storage';
@@ -47,13 +55,6 @@ import { NbRequestPasswordComponent } from './components/request-password/reques
 import { NbResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 import { deepExtend } from './helpers';
-import {NbLayoutModule} from "../theme/components/layout/layout.module";
-import {NbCardModule} from "../theme/components/card/card.module";
-import {NbCheckboxModule} from "../theme/components/checkbox/checkbox.module";
-import {NbAlertModule} from "../theme/components/alert/alert.module";
-import {NbInputModule} from "../theme/components/input/input.module";
-import {NbButtonModule} from "../theme/components/button/button.module";
-import {NbIconModule} from "../theme/components/icon/icon.module";
 
 export function nbStrategiesFactory(options: NbAuthOptions, injector: Injector): NbAuthStrategy[] {
   const strategies = [];

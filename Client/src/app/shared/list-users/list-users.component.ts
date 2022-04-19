@@ -32,7 +32,7 @@ export class ListUsersComponent implements OnInit {
     if (this.more) {
       this.pagination = {
         currentPage: 1,
-        itemsPerPage: 25,
+        itemsPerPage: 100,
       };
 
       this.loadMoreUsers(true);
@@ -45,7 +45,7 @@ export class ListUsersComponent implements OnInit {
 
   pagination: ComponentPaginationLight = {
     currentPage: 1,
-    itemsPerPage: 25,
+    itemsPerPage: 100,
   };
 
   hasDoneFirstQuery = false;
@@ -91,6 +91,10 @@ export class ListUsersComponent implements OnInit {
 
   loading = false;
   onNearOfBottom() {
+    if (!this.pagination) {
+      return;
+    }
+
     if (this.disabled) {
       return;
     }

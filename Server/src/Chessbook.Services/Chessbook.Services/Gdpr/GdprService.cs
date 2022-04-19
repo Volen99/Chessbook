@@ -344,6 +344,7 @@ namespace Chessbook.Services.Gdpr
             customer.TwitchLink = string.Empty;
             customer.YoutubeLink = string.Empty;
             customer.FacebookLink = string.Empty;
+            customer.InstagramLink = string.Empty;
             
             await _customerService.UpdateCustomerAsync(customer);
 

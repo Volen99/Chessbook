@@ -1,5 +1,11 @@
-@import 'global/components';
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+@use 'global/components';
 
 @mixin nb-auth-global() {
-  @include nb-auth-components();
+  @include components.nb-auth-components();
 }

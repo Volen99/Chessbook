@@ -23,7 +23,6 @@ import {IUser} from "../../core/interfaces/common/users";
 import {UserStore} from "../../core/stores/user.store";
 import {UserProfileService} from "./user-profile.service";
 import {User} from "../../shared/shared-main/user/user.model";
-import {HttpStatusCode} from "../../shared/core-utils/miscs";
 import {RestExtractor} from "../../core/rest/rest-extractor";
 import {PostsService} from "../../shared/posts/posts.service";
 import {UsersService} from "../../core/backend/common/services/users.service";
@@ -77,25 +76,25 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   private accountSub: Subscription;
 
   ngOnInit() {
-    this.routeSub = this.route.params
-      .pipe(
-        map(params => params['screenName']),
-        distinctUntilChanged(),
-        switchMap(screenName => this.userProfileService.getProfile(screenName)),
-        tap(profile => this.onAccount(profile)),
-        // catchError(err => this.restExtractor.redirectTo404IfNotFound(err, 'other', [
-        //   HttpStatusCode.BAD_REQUEST_400,
-        //   HttpStatusCode.NOT_FOUND_404
-        // ]))
-      )
-      .subscribe((data) => {
-          // videoChannels => this.videoChannels = videoChannels.data,
-          //
-          // err => this.notifier.error(err.message)
-        }
-      );
+      this.routeSub = this.route.params
+          .pipe(
+              map(params => params['screenName']),
+              distinctUntilChanged(),
+              switchMap(screenName => this.userProfileService.getProfile(screenName)),
+              tap(profile => this.onAccount(profile)),
+              // catchError(err => this.restExtractor.redirectTo404IfNotFound(err, 'other', [
+              //   HttpStatusCode.BAD_REQUEST_400,
+              //   HttpStatusCode.NOT_FOUND_404
+              // ]))
+          )
+          .subscribe((data) => {
+                // videoChannels => this.videoChannels = videoChannels.data,
+                //
+                // err => this.notifier.error(err.message)
+              }
+          );
 
-    this.tabs = this.getTabs();
+      this.tabs = this.getTabs();
   }
 
   ngOnDestroy() {
@@ -207,10 +206,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
+  noProf: boolean = false;
   private async onAccount(user: User) {
     // coz of return this.NoContent();
     if (!user.screenName) {
       this.profileCurrent = null;
+      this.noProf = true;
       return;
     }
 
@@ -293,12 +294,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   hasSocialLink() {
     return !!(this.profileCurrent.websiteLink || this.profileCurrent.twitterLink || this.profileCurrent.twitchLink
-      || this.profileCurrent.youtubeLink || this.profileCurrent.facebookLink);
+      || this.profileCurrent.youtubeLink || this.profileCurrent.facebookLink || this.profileCurrent.instagramLink);
   }
 
   shouldISpaceAround() {
     let arr = [this.profileCurrent.websiteLink, this.profileCurrent.twitterLink, this.profileCurrent.twitchLink,
-      this.profileCurrent.youtubeLink, this.profileCurrent.facebookLink];
+      this.profileCurrent.youtubeLink, this.profileCurrent.facebookLink, this.profileCurrent.instagramLink];
 
     if (arr.filter(s => s).length === 2) {
       return 'space-evenly';
@@ -450,9 +451,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         route: './media',
         disabled: true,
         responsive: true,
-        // icon: 'flash-outline',
-        // responsive: true,
-        // disabled: true,
       },
       {
         title: 'Likes',

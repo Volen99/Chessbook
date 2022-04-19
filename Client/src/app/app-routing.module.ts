@@ -13,8 +13,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
+        loadChildren: () => import('./pages/logged-out-home/logged-out-home.module').then(m => m.LoggedOutHomeModule),
+        canActivateChild: [ MetaGuard ]
       },
       {
         path: 'home',

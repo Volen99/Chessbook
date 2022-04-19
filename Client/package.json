@@ -153,8 +153,6 @@
     "npm-run-all": "4.0.2",
     "postcss": "^8.3.11",
     "postcss-cli": "^8.3.1",
-    "protractor": "~7.0.0",
-    "protractor-console-plugin": "^0.1.1",
     "rimraf": "2.6.1",
     "stringz": "^2.1.0",
     "stylelint": "^14.2.0",

@@ -1,0 +1,81 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+@use '../../theme/styles/theming' as *;
+
+@mixin form-control-default() {
+  .form-control-success {
+    @include form-control-success();
+  }
+
+  .form-control-info {
+    @include form-control-info();
+  }
+
+  .form-control-danger {
+    @include form-control-danger();
+  }
+
+  .form-control-warning {
+    @include form-control-warning();
+  }
+}
+
+@mixin form-control-success() {
+  & {
+    border-color: nb-theme(input-success-border-color);
+  }
+
+  &:focus {
+    border-color: nb-theme(input-success-focus-border-color);
+  }
+
+  &:hover {
+    border-color: nb-theme(input-success-hover-border-color);
+  }
+}
+
+@mixin form-control-info() {
+  & {
+    border-color: nb-theme(input-info-border-color);
+  }
+
+  &:focus {
+    border-color: nb-theme(input-info-focus-border-color);
+  }
+
+  &:hover {
+    border-color: nb-theme(input-info-hover-border-color);
+  }
+}
+
+@mixin form-control-danger() {
+  & {
+    border-color: nb-theme(input-danger-border-color);
+  }
+
+  &:focus {
+    border-color: nb-theme(input-danger-focus-border-color);
+  }
+
+  &:hover {
+    border-color: nb-theme(input-danger-hover-border-color);
+  }
+}
+
+@mixin form-control-warning() {
+  & {
+    border-color: nb-theme(input-warning-border-color);
+  }
+
+  &:focus {
+    border-color: nb-theme(input-warning-focus-border-color);
+  }
+
+  &:hover {
+    border-color: nb-theme(input-warning-hover-border-color);
+  }
+}

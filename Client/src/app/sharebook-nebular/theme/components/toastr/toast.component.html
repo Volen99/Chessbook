@@ -3,5 +3,8 @@
 </div>
 <div class="content-container">
   <span class="title subtitle">{{ toast.title }}</span>
-  <div class="message">{{ toast.message }}</div>
+  <div *ngIf="!this.toast.url" class="message">{{ toast.message }}</div>
+  <div *ngIf="this.toast.url" class="message">
+    <a class="subtitle" style="cursor: pointer" [routerLink]="this.toast.url">{{ this.toast.message }}</a>
+  </div>
 </div>

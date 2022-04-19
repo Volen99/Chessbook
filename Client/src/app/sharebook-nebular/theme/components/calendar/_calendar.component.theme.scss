@@ -1,5 +1,12 @@
-@mixin nb-calendar-theme() {
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
 
+@use '../../styles/theming' as *;
+
+@mixin nb-calendar-theme() {
   nb-base-calendar {
     nb-card {
       background-color: nb-theme(calendar-background-color);

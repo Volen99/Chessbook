@@ -158,6 +158,8 @@
 
         public string FacebookLink { get; set; }
 
+        public string InstagramLink { get; set; }
+
         public virtual Settings Settings { get; set; }
 
         public virtual ICollection<CustomerRole> UserRoles { get; set; }

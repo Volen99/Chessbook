@@ -148,6 +148,7 @@ namespace Chessbook.Web.Api.Factories
                 model.TwitchLink = customer.TwitchLink;
                 model.YoutubeLink = customer.YoutubeLink;
                 model.FacebookLink = customer.FacebookLink;
+                model.InstagramLink = customer.InstagramLink;
             }
             else
             {

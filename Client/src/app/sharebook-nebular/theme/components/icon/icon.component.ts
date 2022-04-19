@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import {
   ChangeDetectionStrategy,
   Component,
@@ -234,7 +240,7 @@ export class NbIconComponent implements NbIconConfig, OnChanges, OnInit {
     const iconDefinition = this.iconLibrary.getIcon(name, pack);
 
     if (!iconDefinition) {
-      return;
+      return undefined;
     }
 
     const content = iconDefinition.icon.getContent(options);

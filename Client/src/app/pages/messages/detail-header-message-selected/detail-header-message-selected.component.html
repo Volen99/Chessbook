@@ -26,7 +26,7 @@
                                                             <div aria-label=""
                                                                  class="sharebook-container border-radius-9999px bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">
                                                                 <div
-                                                                        class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
+                                                                        class="sharebook-container image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
                                                                         [style.background-image]="'url(' + (!this.isSent ? this.message?.fromUser.profileImageUrlHttps : this.message.toUser.profileImageUrlHttps) +')'"></div>
                                                                 <img alt="" draggable="true"
                                                                      [src]="!this.isSent ? this.message?.fromUser.profileImageUrlHttps : this.message.toUser.profileImageUrlHttps"
@@ -68,7 +68,7 @@
                             <div class="sharebook-container flex-direction-row"><a href="javascript:void(0)"
                                                                                    aria-label="Conversation info" role="button"
                                                                                    data-focusable="true"
-                                                                                   class="sharebook-link sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px cursor-pointer border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
+                                                                                   class="sharebook-link sharebook-cursor-pointer sharebook-container element-border-color-rgba border-radius-9999px border-style-solid border-width-1px cursor-pointer border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
                                                                                    style="margin-right: calc(5px + (-1 * (41px - 1.5em)) / 2);">
                                 <div dir="auto"
                                      class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
@@ -180,7 +180,7 @@
                                                                         <div class="bottom-0px height-100-per left-0px position-absolute top-0px width-100-per">
                                                                             <div [attr.aria-label]="this.message?.fromUser.displayName"
                                                                                  class="sharebook-container border-radius-9999px bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">
-                                                                                <div class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
+                                                                                <div class="sharebook-container image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
                                                                                         [style.background-image]="'url(' + this.message?.fromUser.profileImageUrlHttps +')'"></div>
                                                                                 <img alt="{{this.message?.fromUser.displayName}}" draggable="true"
                                                                                      [src]="this.message?.fromUser.profileImageUrlHttps"
@@ -231,7 +231,7 @@
                                 <div class="sharebook-container flex-direction-row miniature-element-margin-right">
                                     <div *ngIf="!(this.message?.fromUser.id === this.userCurrent?.id)" aria-label="Reply" role="button" data-focusable="true"
                                          tabindex="0"
-                                         class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px r-1phboty border-width-1px border-height-0px input-form-margin element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
+                                         class="icon-hover sharebook-cursor-pointer sharebook-container element-border-color-rgba border-radius-9999px r-1phboty border-width-1px border-height-0px input-form-margin element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
                                          ngbTooltip="Reply"
                                          placement="auto" [openDelay]="700"
                                     (click)="this.handleReply()">
@@ -245,7 +245,7 @@
                                            tabindex="-1" type="file" data-focusable="true"
                                            class="add-photos-or-video-default-input-height opacity-0 overflow-hidden position-absolute add-photos-or-video-default-input-width z-index-minus-1">
                                     <div aria-label="Delete" role="button" data-focusable="true" tabindex="0"
-                                         class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba r-42olwf border-radius-9999px r-1phboty border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
+                                         class="icon-hover sharebook-cursor-pointer sharebook-container element-border-color-rgba r-42olwf border-radius-9999px r-1phboty border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
                                          ngbTooltip="Delete"
                                          placement="auto" [openDelay]="700"
                                          (click)="this.handleDelete()">

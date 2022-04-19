@@ -4,7 +4,7 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 
-@import '../../styles/core/mixins';
+@use '../../styles/theming' as *;
 
 :host {
   display: inline-block;
@@ -41,6 +41,11 @@
   text-overflow: ellipsis;
   text-transform: none;
   white-space: nowrap;
+}
+
+// by mi
+.select-button:first-child {
+  color: nb-theme(header-text-color) !important;
 }
 
 nb-icon {

@@ -82,7 +82,7 @@
                                 <div dir="auto"
                                      class="css-901oao third-wheel-color font-family r-n6v787 font-weight-400 r-1cwl3u0 min-width-0px r-1pn2ns4 r-tskmnb r-633pao position-absolute text-overflow-wrap">
                                     <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Month</span></div>
-                                    <nb-select [selected]="this.monthSelected" (selectedChange)="this.changeMonth($event)" class="r-30o5oe element-background-color-rgba input-form-border-radius-0px input-form-border-width r-1fmj7o5 sharebook-cursor-pointer font-family r-1inkyih r-rjixqe r-crgep1 r-1wzrnnt outline-style-none r-t60dpp r-xd6kpl r-1pn2ns4 r-ttdzmv" >
+                                    <nb-select [selected]="this.monthSelected" (selectedChange)="this.changeMonth($event)" class="r-30o5oe input-form-border-radius-0px input-form-border-width r-1fmj7o5 sharebook-cursor-pointer font-family r-1inkyih r-rjixqe r-crgep1 r-1wzrnnt outline-style-none r-t60dpp r-xd6kpl r-1pn2ns4 r-ttdzmv" >
                                         <nb-option *ngFor="let month of this.months | enumToArray" [value]="month.index"> {{ month.name }}</nb-option>
                                     </nb-select>
                             </div>
@@ -90,7 +90,7 @@
                                 <div dir="auto"
                                      class="css-901oao third-wheel-color font-family r-n6v787 font-weight-400 r-1cwl3u0 min-width-0px r-1pn2ns4 r-tskmnb r-633pao position-absolute text-overflow-wrap">
                                     <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Day</span></div>
-                                <nb-select [selected]="this.daySelected" (selectedChange)="this.changeDay($event)" class="r-30o5oe element-background-color-rgba input-form-border-radius-0px input-form-border-width r-1fmj7o5 sharebook-cursor-pointer font-family r-1inkyih r-rjixqe r-crgep1 r-1wzrnnt outline-style-none r-t60dpp r-xd6kpl r-1pn2ns4 r-ttdzmv" >
+                                <nb-select [selected]="this.daySelected" (selectedChange)="this.changeDay($event)" class="r-30o5oe input-form-border-radius-0px input-form-border-width r-1fmj7o5 sharebook-cursor-pointer font-family r-1inkyih r-rjixqe r-crgep1 r-1wzrnnt outline-style-none r-t60dpp r-xd6kpl r-1pn2ns4 r-ttdzmv" >
                                     <nb-option *ngFor="let day of this.days" value="{{day}}"> {{ day }}</nb-option>
                                 </nb-select>
                             </div>
@@ -98,7 +98,7 @@
                                 <div dir="auto"
                                      class="css-901oao third-wheel-color font-family r-n6v787 font-weight-400 r-1cwl3u0 min-width-0px r-1pn2ns4 r-tskmnb r-633pao position-absolute text-overflow-wrap">
                                     <span class="css-901oao sharebook-text-inherit text-font-family min-width-0px text-overflow-wrap">Year</span></div>
-                                <nb-select [selected]="this.yearSelected" (selectedChange)="this.changeYear($event)" class="r-30o5oe element-background-color-rgba input-form-border-radius-0px input-form-border-width r-1fmj7o5 sharebook-cursor-pointer font-family r-1inkyih r-rjixqe r-crgep1 r-1wzrnnt outline-style-none r-t60dpp r-xd6kpl r-1pn2ns4 r-ttdzmv" >
+                                <nb-select [selected]="this.yearSelected" (selectedChange)="this.changeYear($event)" class="r-30o5oe input-form-border-radius-0px input-form-border-width r-1fmj7o5 sharebook-cursor-pointer font-family r-1inkyih r-rjixqe r-crgep1 r-1wzrnnt outline-style-none r-t60dpp r-xd6kpl r-1pn2ns4 r-ttdzmv" >
                                     <nb-option *ngFor="let year of this.years" value="{{year}}"> {{ year }}</nb-option>
                                 </nb-select>
                             </div>
@@ -156,6 +156,16 @@
                 <ngx-validation-message label="facebook link"
                                         [showPattern]="facebookLink?.hasError('pattern')"
                                         [showRequired]="facebookLink?.errors?.required && facebookLink.touched">
+                </ngx-validation-message>
+
+                <label for="inputInstagramLink">Instagram</label>
+                <input nbInput fullWidth id="inputInstagramLink" formControlName="instagramLink"
+                       [status]="(instagramLink?.errors?.required || instagramLink?.hasError('pattern')) && instagramLink.touched ? 'danger' : 'primary'"
+                       class="form-control" placeholder="Instagram link"
+                       type="url">
+                <ngx-validation-message label="facebook link"
+                                        [showPattern]="instagramLink?.hasError('pattern')"
+                                        [showRequired]="instagramLink?.errors?.required && instagramLink.touched">
                 </ngx-validation-message>
             </div>
         </div>

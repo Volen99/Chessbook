@@ -1,0 +1,51 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+@use '../../theme/styles/theming' as *;
+@use 'outline-buttons';
+
+@mixin nb-b-dropdowns-theme() {
+  .dropdown-menu {
+    box-shadow: nb-theme(option-list-shadow);
+    max-height: nb-theme(option-list-max-height);
+    overflow: auto;
+    border: none;
+  }
+
+  .dropdown-item {
+    user-select: none;
+    background-color: nb-theme(option-background-color);
+    color: nb-theme(option-text-color);
+    font-family: nb-theme(option-text-font-family);
+    font-weight: nb-theme(option-medium-text-font-weight);
+    font-size: nb-theme(option-medium-text-font-size);
+    line-height: nb-theme(option-medium-text-line-height);
+
+    &[disabled] {
+      background-color: nb-theme(option-disabled-background-color);
+      color: nb-theme(option-disabled-text-color);
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &.selected {
+      background-color: nb-theme(option-selected-background-color);
+      color: nb-theme(option-selected-text-color);
+    }
+
+    &:focus {
+      background-color: nb-theme(option-focus-background-color);
+      color: nb-theme(option-focus-text-color);
+    }
+
+    &:hover {
+      background-color: nb-theme(option-hover-background-color);
+      color: nb-theme(option-hover-text-color);
+    }
+  }
+}

@@ -46,6 +46,7 @@ import {SurveyService} from "../../../services/survey.service";
 import {IsVideoPipe} from "../../angular/pipes/is-video.pipe";
 import {slideInTop} from "../../animations/slide";
 import {IPoll} from '../../../posts/models/poll/poll';
+import {UserRight} from "../../../models/users/user-right.enum";
 
 export interface ISocialContextProps {
   screenName: string;
@@ -218,11 +219,12 @@ export class PostComponent implements OnInit {
     }
 
     let expandPost: any = {icon: this.faExpand, title: `Expand this post`, link: '#'};
+    let deletePost: any = {icon: this.faTrashAlt, title: `Delete`, link: '#'};
 
     if (this.post?.user?.id === userCurrent.id) {
       let pinOrUnpinText = !this.post.pinned ? 'Pin to your profile' : 'Unpin from profile';
       return [
-        {icon: this.faTrashAlt, title: `Delete`, link: '#'},
+        deletePost,
         {icon: faThumbtack, title: pinOrUnpinText, link: '#'},
         expandPost,
       ];
@@ -239,13 +241,19 @@ export class PostComponent implements OnInit {
       blockOrUnblock = {icon: this.faBan, title: `Block ${screenName}`, link: '#'};
     }
 
-    return [
+    let resArr = [
       {icon: this.faUserPlus, title: `Follow ${screenName}`, link: userLink, queryParams: {profile: true}},
       blockOrUnblock,
       expandPost,
       {icon: this.faCode, title: `Embed Post`, link: '#'},
       {icon: this.faFlag, title: `Report Post`, link: '#'},
     ];
+
+    if (userCurrent && userCurrent.hasRight(UserRight.ALL) || userCurrent.hasRight(UserRight.MANAGE_USERS)) {
+      resArr.push(deletePost);
+    }
+
+    return resArr;
   }
 
   getSaveStyle(value: string) {
@@ -363,7 +371,7 @@ export class PostComponent implements OnInit {
   }
 
   handleExpandClick(withScroll: boolean = false) {
-    this.router.navigate([`/${this.post.user.screenName}/post`, this.post.id], {queryParams: {withScroll}});
+    this.router.navigate([`/${this.post.user.screenName.substring(1)}/post`, this.post.id], {queryParams: {withScroll}});
   }
 
   showShareModal() {

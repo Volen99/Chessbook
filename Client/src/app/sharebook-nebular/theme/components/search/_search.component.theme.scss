@@ -1,5 +1,12 @@
-@mixin nb-search-theme() {
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
 
+@use '../../styles/theming' as *;
+
+@mixin nb-search-theme() {
   nb-search-field {
     .close-button {
       z-index: 1;
@@ -44,7 +51,6 @@
       .search::after {
         border: 1.5rem solid nb-theme(search-extra-background-color);
       }
-
     }
 
     &.modal-half {
@@ -87,48 +93,3 @@
     }
   }
 }
-
-// by mi
-@import '../../../theme/styles/themes';
-@import '../../../../sharebook-nebular/theme/styles/global/breakpoints';
-
-@include nb-install-component() {
-  .show-grid {
-    .row {
-      margin: -0.5rem;
-    }
-
-    div[class^=col-] {
-      padding: 0.5rem;
-      box-sizing: border-box;
-
-      div {
-        text-align: center;
-        background-color: nb-theme(background-basic-color-2);
-        padding: 0.75rem 0.25rem;
-        border-radius: 0.25rem;
-      }
-    }
-  }
-
-  .grid-h {
-    margin-top: 1.5rem;
-
-    &:first-child {
-      margin-top: 0;
-    }
-  }
-
-  .table-responsive {
-    margin-top: 1rem;
-  }
-}
-
-//@include media-breakpoint-down(xxxl) {
-//  nb-card-body {
-//    margin-left: 109px;
-//  }
-//}
-
-
-

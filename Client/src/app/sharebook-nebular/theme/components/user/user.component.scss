@@ -1,4 +1,10 @@
-@import '../../styles/core/mixins';
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+@use '../../styles/theming' as *;
 
 :host {
   display: flex;
@@ -28,6 +34,7 @@
   .user-name,
   .user-title {
     @include nb-rtl(text-align, right);
+    color: nb-theme(header-text-color);
   }
 
   .info-container {

@@ -15,9 +15,10 @@ import { NbTooltipDirective } from './tooltip.directive';
 
 
 @NgModule({
-    imports: [NbSharedModule, NbOverlayModule, NbIconModule],
-    declarations: [NbTooltipComponent, NbTooltipDirective],
-    exports: [NbTooltipDirective]
+  imports: [NbSharedModule, NbOverlayModule, NbIconModule],
+  declarations: [NbTooltipComponent, NbTooltipDirective],
+  exports: [NbTooltipDirective],
+  entryComponents: [NbTooltipComponent],
 })
 export class NbTooltipModule {
 }

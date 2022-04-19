@@ -20,6 +20,7 @@ import {SharedModerationModule} from "../../shared/shared-moderation/shared-mode
 import { ProfilePostsComponent } from './profile-posts/profile-posts.component';
 import {UserFollowModule} from "../../shared/user-follow/user-follow.module";
 import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.module";
+import {CustomLoadingIndicatorModule} from "../../components/custom-loading-indicator/custom-loading-indicator.module";
 
 @NgModule({
     imports: [
@@ -40,6 +41,7 @@ import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.m
         SharedModerationModule,
         UserFollowModule,
         NbListModule,
+        CustomLoadingIndicatorModule,
     ],
 
   declarations: [

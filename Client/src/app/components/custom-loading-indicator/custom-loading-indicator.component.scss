@@ -1,0 +1,56 @@
+@import '../../sass/utils';
+@import '../../sass/colors';
+
+:host {
+    user-select: none;
+    width: rem(48px);
+    height: rem(12px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &.theme-indigo {
+        .custom-loading-indicator_ball {
+            background-color: $ID_White;
+        }
+    }
+
+    &.size-small {
+        width: rem(36px);
+        height: rem(8px);
+
+        .custom-loading-indicator_ball {
+            width: rem(8px);
+            height: rem(8px);
+            margin: 0;
+        }
+    }
+}
+
+.custom-loading-indicator_ball {
+    flex: 0 0 auto;
+    border-radius: 50%;
+    animation: blink 0.5s infinite alternate ease-in-out;
+    width: rem(10px);
+    height: rem(10px);
+    margin: rem(1px);
+    background-color: $ID_Indigo500;
+}
+.custom-loading-indicator_dark {
+    background: $ID_White;
+}
+
+.custom-loading-indicator_ball:nth-child(2) {
+    animation-delay: .3s;
+}
+.custom-loading-indicator_ball:nth-child(3) {
+    animation-delay: .15s;
+}
+.custom-loading-indicator_ball:nth-child(4) {
+    animation-delay: .45s;
+}
+
+@keyframes blink {
+    0% { transform: scale(0.4, 0.4); }
+    100% { transform: scale(1, 1); }
+}

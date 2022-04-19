@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -10,18 +16,13 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { combineLatest, Subject } from 'rxjs';
+import { combineLatest, Observable, Subject } from 'rxjs';
 import { takeUntil, filter, map, startWith } from 'rxjs/operators';
 
 import { convertToBoolProperty, NbBooleanInput } from '../helpers';
 import { NbThemeService } from '../../services/theme.service';
-import {NbMediaBreakpoint, NbMediaBreakpointsService} from '../../services/breakpoints.service';
+import { NbMediaBreakpoint } from '../../services/breakpoints.service';
 import { NbSidebarService, getSidebarState$, getSidebarResponsiveState$ } from './sidebar.service';
-import {IUser} from "../../../../core/interfaces/common/users";
-import {NbMenuService} from "../menu/menu.service";
-import {UserStore} from "../../../../core/stores/user.store";
-import {SettingsData} from "../../../../core/interfaces/common/settings";
-import {LayoutService} from "../../../../core/utils";
 
 export type NbSidebarState = 'expanded' | 'collapsed' | 'compacted';
 export type NbSidebarResponsiveState = 'mobile' | 'tablet' | 'pc';
@@ -34,12 +35,9 @@ export type NbSidebarResponsiveState = 'mobile' | 'tablet' | 'pc';
  */
 @Component({
   selector: 'nb-sidebar-header',
-  template: `
-    <ng-content></ng-content>
-  `,
+  template: ` <ng-content></ng-content> `,
 })
-export class NbSidebarHeaderComponent {
-}
+export class NbSidebarHeaderComponent {}
 
 /**
  * Sidebar footer container.
@@ -49,12 +47,9 @@ export class NbSidebarHeaderComponent {
  */
 @Component({
   selector: 'nb-sidebar-footer',
-  template: `
-    <ng-content></ng-content>
-  `,
+  template: ` <ng-content></ng-content> `,
 })
-export class NbSidebarFooterComponent {
-}
+export class NbSidebarFooterComponent {}
 
 /**
  * Layout sidebar component.
@@ -136,51 +131,17 @@ export class NbSidebarFooterComponent {
       <ng-content select="nb-sidebar-header"></ng-content>
       <div class="scrollable" (click)="onClick($event)">
         <ng-content></ng-content>
-          <!--<app-share-button></app-share-button>-->
       </div>
-        <ng-content select="nb-sidebar-footer"></ng-content>
-<!--        <nb-actions size="small" class="account-menu">-->
-<!--            <nb-action class="user-action"  > &lt;!&ndash;*nbIsGranted="['view', 'current-users']"&ndash;&gt;-->
-<!--                <nb-user [nbContextMenu]="userMenu"-->
-<!--                         [onlyPicture]="userPictureOnly"-->
-<!--                         [name]="user?.name"-->
-<!--                         [picture]="user?.picture | ngxAuthToken | async">-->
-<!--                </nb-user>-->
-<!--            </nb-action>-->
-<!--        </nb-actions>-->
+      <ng-content select="nb-sidebar-footer"></ng-content>
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NbSidebarComponent implements OnInit, OnDestroy {
-
   protected readonly responsiveValueChange$: Subject<boolean> = new Subject<boolean>();
   protected responsiveState: NbSidebarResponsiveState = 'pc';
 
   protected destroy$ = new Subject<void>();
-
-
-  // user component
-
-  // private destroy$: Subject<void> = new Subject<void>();
-  userPictureOnly: boolean = false;
-  user: IUser;
-
-  userMenu = this.getMenuItems();
-
-  getMenuItems() {
-    const userLink = this.user ?  '/admin/users/current/' : '';
-    return [
-      { title: 'Profile', link: userLink, queryParams: { profile: true } },
-      { title: 'Log out', link: '/auth/logout' },
-    ];
-  }
-
-    // end
-
-
-
-
 
   containerFixedValue: boolean = true;
 
@@ -347,59 +308,35 @@ export class NbSidebarComponent implements OnInit, OnDestroy {
     private themeService: NbThemeService,
     private element: ElementRef,
     private cd: ChangeDetectorRef,
-
-    // user
-    private menuService: NbMenuService,
-    private userStore: UserStore,
-    private settingsService: SettingsData,
-    private layoutService: LayoutService,
-    private breakpointService: NbMediaBreakpointsService,
   ) {}
 
   ngOnInit() {
-    // user
-    this.userStore.onUserStateChange()
-      .pipe(
-        takeUntil(this.destroy$),
-      )
-      .subscribe((user: IUser) => {
-        this.user = user;
-        this.userMenu = this.getMenuItems();
-      });
-
-    const { xl } = this.breakpointService.getBreakpointsMap();
-    this.themeService.onMediaQueryChange()
-      .pipe(
-        map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
-        takeUntil(this.destroy$),
-      )
-      .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
-
-    // end
-
-
-    this.sidebarService.onToggle()
+    this.sidebarService
+      .onToggle()
       .pipe(
         filter(({ tag }) => !this.tag || this.tag === tag),
         takeUntil(this.destroy$),
       )
       .subscribe(({ compact }) => this.toggle(compact));
 
-    this.sidebarService.onExpand()
+    this.sidebarService
+      .onExpand()
       .pipe(
         filter(({ tag }) => !this.tag || this.tag === tag),
         takeUntil(this.destroy$),
       )
       .subscribe(() => this.expand());
 
-    this.sidebarService.onCollapse()
+    this.sidebarService
+      .onCollapse()
       .pipe(
         filter(({ tag }) => !this.tag || this.tag === tag),
         takeUntil(this.destroy$),
       )
       .subscribe(() => this.collapse());
 
-    this.sidebarService.onCompact()
+    this.sidebarService
+      .onCompact()
       .pipe(
         filter(({ tag }) => !this.tag || this.tag === tag),
         takeUntil(this.destroy$),
@@ -497,7 +434,7 @@ export class NbSidebarComponent implements OnInit, OnDestroy {
   protected subscribeToMediaQueryChange() {
     combineLatest([
       this.responsiveValueChange$.pipe(startWith(this.responsive)),
-      this.themeService.onMediaQueryChange(),
+      this.themeService.onMediaQueryChange() as Observable<[NbMediaBreakpoint, NbMediaBreakpoint]>,
     ])
       .pipe(
         filter(([responsive]) => responsive),
@@ -505,7 +442,6 @@ export class NbSidebarComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(([prev, current]: [NbMediaBreakpoint, NbMediaBreakpoint]) => {
-
         const isCollapsed = this.collapsedBreakpoints.includes(current.name);
         const isCompacted = this.compactedBreakpoints.includes(current.name);
 
@@ -537,7 +473,7 @@ export class NbSidebarComponent implements OnInit, OnDestroy {
 
   protected getMenuLink(element: HTMLElement): HTMLElement | undefined {
     if (!element || element.tagName.toLowerCase() === 'nb-menu') {
-      return;
+      return undefined;
     }
 
     if (element.tagName.toLowerCase() === 'a') {
@@ -554,43 +490,4 @@ export class NbSidebarComponent implements OnInit, OnDestroy {
       this.cd.markForCheck();
     }
   }
-
-  /**
-   * @deprecated Use `responsive` property instead
-   * @breaking-change Remove @8.0.0
-   */
-  toggleResponsive(enabled: boolean) {
-    this.responsive = enabled;
-  }
-  /**
-   * @deprecated Use NbSidebarState type instead
-   * @breaking-change Remove @8.0.0
-   */
-  static readonly STATE_EXPANDED: string = 'expanded';
-  /**
-   * @deprecated Use NbSidebarState type instead
-   * @breaking-change Remove @8.0.0
-   */
-  static readonly STATE_COLLAPSED: string = 'collapsed';
-  /**
-   * @deprecated Use NbSidebarState type instead
-   * @breaking-change Remove @8.0.0
-   */
-  static readonly STATE_COMPACTED: string = 'compacted';
-
-  /**
-   * @deprecated Use NbSidebarResponsiveState type instead
-   * @breaking-change Remove @8.0.0
-   */
-  static readonly RESPONSIVE_STATE_MOBILE: string = 'mobile';
-  /**
-   * @deprecated Use NbSidebarResponsiveState type instead
-   * @breaking-change Remove @8.0.0
-   */
-  static readonly RESPONSIVE_STATE_TABLET: string = 'tablet';
-  /**
-   * @deprecated Use NbSidebarResponsiveState type instead
-   * @breaking-change Remove @8.0.0
-   */
-  static readonly RESPONSIVE_STATE_PC: string = 'pc';
 }

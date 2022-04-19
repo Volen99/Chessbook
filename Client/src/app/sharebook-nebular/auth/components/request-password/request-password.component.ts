@@ -33,9 +33,9 @@ export class NbRequestPasswordComponent {
               protected cd: ChangeDetectorRef,
               protected router: Router) {
 
-    this.redirectDelay = this.getConfigValue('shared-forms.requestPassword.redirectDelay');
-    this.showMessages = this.getConfigValue('shared-forms.requestPassword.showMessages');
-    this.strategy = this.getConfigValue('shared-forms.requestPassword.strategy');
+    this.redirectDelay = this.getConfigValue('forms.requestPassword.redirectDelay');
+    this.showMessages = this.getConfigValue('forms.requestPassword.showMessages');
+    this.strategy = this.getConfigValue('forms.requestPassword.strategy');
   }
 
   requestPass(): void {

@@ -11,10 +11,11 @@ import { NbSpinnerDirective } from './spinner.directive';
 
 
 @NgModule({
-    imports: [
-        NbSharedModule,
-    ],
-    exports: [NbSpinnerComponent, NbSpinnerDirective],
-    declarations: [NbSpinnerComponent, NbSpinnerDirective]
+  imports: [
+    NbSharedModule,
+  ],
+  exports: [NbSpinnerComponent, NbSpinnerDirective],
+  declarations: [NbSpinnerComponent, NbSpinnerDirective],
+  entryComponents: [NbSpinnerComponent],
 })
 export class NbSpinnerModule {}

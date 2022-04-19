@@ -1,7 +1,7 @@
-@import '../../styles/core/mixins';
+@use '../../styles/theming' as *;
 
-@import '../../../../../../node_modules/bootstrap/scss/mixins/breakpoints';
-@import '../../../../sharebook-nebular/theme/styles/global/breakpoints';
+@import '../../../../../../node_modules/bootstrap/scss/mixins/breakpoints'; // TODO: replace with use kk
+@import '../../../../sharebook-nebular/theme/styles/global/breakpoints'; // TODO: replace with use kk
 
 :host {
   display: flex;
@@ -42,11 +42,11 @@
     @include nb-ltr() {
       margin-right: 0;
       margin-left: auto;
-    };
+    }
     @include nb-rtl() {
       margin-left: 0;
       margin-right: auto;
-    };
+    }
   }
 
   // TODO: in this case this will won't work when header is not fixed and sidebar is
@@ -86,7 +86,6 @@
     margin-top: 30px;
   }
 }
-
 
 // by mi
 

@@ -10,22 +10,24 @@ import {NbCardModule} from "../../sharebook-nebular/theme/components/card/card.m
 import {ExploreService} from "./explore.service";
 import {SharedMainModule} from "../../shared/shared-main/shared-main.module";
 import {NbListModule} from "../../sharebook-nebular/theme/components/list/list.module";
+import {CustomLoadingIndicatorModule} from "../../components/custom-loading-indicator/custom-loading-indicator.module";
 
 @NgModule({
   declarations: [
     ExploreComponent,
   ],
 
-  imports: [
-    ExploreRoutingModule,
-    CommonModule,
-    SidebarColumnModule,
-    NbCardModule,
-    SharedMainModule,
-    NbListModule,
-    FontAwesomeModule,
-    MatRippleModule,
-  ],
+    imports: [
+        ExploreRoutingModule,
+        CommonModule,
+        SidebarColumnModule,
+        NbCardModule,
+        SharedMainModule,
+        NbListModule,
+        FontAwesomeModule,
+        MatRippleModule,
+        CustomLoadingIndicatorModule,
+    ],
 
   providers: [
     ExploreService,

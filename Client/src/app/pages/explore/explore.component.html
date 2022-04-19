@@ -4,7 +4,7 @@
          style="padding-left: 0px">
         <nb-card style="width: 102.6%">
             <div class="sharebook-container backface-visibility-hidden flex-grow-expand">
-                <div class="sharebook-container align-items-stretch element-background-color-rgba flex-direction-row flex-grow-expand justify-content-space-between r-2llsf width-100-per">
+                <div class="sharebook-container align-items-stretch flex-direction-row flex-grow-expand justify-content-space-between r-2llsf width-100-per">
                     <div class="sharebook-container background-color-lights-out main-left-right-vertical-border-color main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1">
                         <div class="sharebook-container">
                             <div class="sharebook-container backface-visibility-hidden background-color-lights-out border-bottom-color border-bottom-style-solid border-bottom-width-1px position-sticky top-0px header-z-index">
@@ -17,7 +17,7 @@
                                                     <div class="sharebook-container align-items-flex-end align-self-stretch justify-content-center margin-left-20px min-height-30px edge-element-min-width">
                                                         <a href="javascript:void(0)" aria-label="Settings" role="button"  ngbTooltip="Your news bringer :)" [openDelay]="1700" placement="bottom"
                                                            data-focusable="true"
-                                                           class="sharebook-link sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px cursor-pointer border-height-0px r-5pqaiu element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
+                                                           class="sharebook-link sharebook-cursor-pointer sharebook-container element-border-color-rgba border-radius-9999px border-style-solid border-width-1px cursor-pointer border-height-0px r-5pqaiu element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
                                                            style="margin-right: calc(0px + (-1 * (41px - 1.5em)) / 2);">
                                                             <div dir="auto"
                                                                  class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center inside-element-container-line-height max-width-100-per min-width-0px text-align-center text-overflow-wrap">
@@ -62,7 +62,7 @@
                                                                                         <div aria-label=""
                                                                                              class="sharebook-container bottom-0px image-flex-expand left-0px image-margin-left image-margin-right overflow-hidden position-absolute right-0px top-0px image-z-index"
                                                                                              style="margin-bottom: 0px; margin-top: 0px;">
-                                                                                            <div class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
+                                                                                            <div class="sharebook-container image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
                                                                                                  [style.background-image]="'url(' + this.getImageUrl(this.topNew?.image) +')'"></div>
                                                                                             <img alt="" draggable="true"
                                                                                                  [src]="this.getImageUrl(this.topNew?.image)"
@@ -126,6 +126,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div *ngIf="!this.newsPost" style="width: 100%; transform: translateY({{this.setTransform(1)}}px); transition: opacity 0.3s ease-out 0s;">
+                                                        <app-custom-loading-indicator style="margin-left: 46%;" size="big"></app-custom-loading-indicator>
+                                                    </div>
                                                     <div *ngFor="let post of this.newsPost; let i = index" style="position: absolute; cursor: pointer; width: 100%; transform: translateY({{this.setTransform(i + 1)}}px); transition: opacity 0.3s ease-out 0s;">
                                                         <div class="sharebook-container border-bottom-color border-bottom-width-1px display-block outline-style-none">
                                                             <a data-focusable="true" tabindex="0" mat-ripple
@@ -148,7 +151,7 @@
                                                                                                     <div class="bottom-0px height-100-per left-0px position-absolute top-0px width-100-per">
                                                                                                         <div aria-label=""
                                                                                                              class="sharebook-container border-radius-9999px bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">
-                                                                                                            <div class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
+                                                                                                            <div class="sharebook-container image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
                                                                                                                  style="background-image: url('assets/images/news-image.png');"></div>
                                                                                                             <img alt=""
                                                                                                                  draggable="true"
@@ -198,7 +201,7 @@
                                                                                 <div aria-label=""
                                                                                      class="sharebook-container bottom-0px image-flex-expand left-0px image-margin-left image-margin-right overflow-hidden position-absolute right-0px top-0px image-z-index"
                                                                                      style="margin-bottom: 0px; margin-top: 0px;">
-                                                                                    <div class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
+                                                                                    <div class="sharebook-container image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
                                                                                          [style.background-image]="'url(' + this.getImageUrl(post.image) +')'"></div>
                                                                                     <img alt="" draggable="true"
                                                                                          [src]="this.getImageUrl(post.image)"
@@ -211,7 +214,6 @@
                                                             </a>
                                                         </div>
                                                     </div>
-
                                                     <div style="position: absolute; width: 100%; transform: translateY(1468px); transition: opacity 0.3s ease-out 0s;">
                                                         <div class="sharebook-container r-1bxhq7s">
                                                             <div class="sharebook-container r-1omma8c"></div>

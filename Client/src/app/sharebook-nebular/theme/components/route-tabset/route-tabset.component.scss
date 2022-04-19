@@ -4,7 +4,7 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 
-@import '../../styles/core/mixins';
+@use '../../styles/theming' as *;
 
 .route-tabset {
   display: flex;
@@ -36,7 +36,7 @@
         left: 0;
       }
 
-      nb-icon { // TODO: make them fa-icon!!
+      nb-icon {
         vertical-align: middle;
       }
     }

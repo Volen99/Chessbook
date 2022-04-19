@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -8,9 +14,10 @@ import { NbMenuModule } from '../menu/menu.module';
 
 
 @NgModule({
-    imports: [CommonModule, NbOverlayModule, NbMenuModule],
-    exports: [NbContextMenuDirective],
-    declarations: [NbContextMenuDirective, NbContextMenuComponent]
+  imports: [CommonModule, NbOverlayModule, NbMenuModule],
+  exports: [NbContextMenuDirective],
+  declarations: [NbContextMenuDirective, NbContextMenuComponent],
+  entryComponents: [NbContextMenuComponent],
 })
 export class NbContextMenuModule {
 }

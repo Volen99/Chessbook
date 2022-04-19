@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import { map, delay, filter } from 'rxjs/operators';
 import {
   Component,
@@ -9,6 +15,7 @@ import {
   AfterContentInit,
   HostBinding,
   ChangeDetectorRef,
+  ContentChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -16,6 +23,8 @@ import { convertToBoolProperty, NbBooleanInput } from '../helpers';
 import { NbComponentOrCustomStatus } from '../component-status';
 import { NbBadgePosition } from '../badge/badge.component';
 import { NbIconConfig } from '../icon/icon.component';
+import { NbTabContentDirective } from './tab-content.directive';
+import { NbTabTitleDirective } from './tab-title.directive';
 
 /**
  * Specific tab container.
@@ -26,17 +35,24 @@ import { NbIconConfig } from '../icon/icon.component';
  *   badgeStatus="danger">
  *   <p>List of <strong>users</strong>.</p>
  * </nb-tab>
- ```
+ * ```
  */
 @Component({
   selector: 'nb-tab',
   template: `
-    <ng-container *ngIf="init">
+    <ng-container
+      *ngIf="tabContentDirective; else projectedContent"
+      [ngTemplateOutlet]="tabContentDirective.templateRef"
+    ></ng-container>
+
+    <ng-template #projectedContent>
       <ng-content></ng-content>
-    </ng-container>
+    </ng-template>
   `,
 })
 export class NbTabComponent {
+  @ContentChild(NbTabContentDirective) tabContentDirective: NbTabContentDirective;
+  @ContentChild(NbTabTitleDirective) tabTitleDirective: NbTabTitleDirective;
 
   /**
    * Tab title
@@ -97,6 +113,10 @@ export class NbTabComponent {
   }
   static ngAcceptInputType_responsive: NbBooleanInput;
 
+  /**
+   * Makes this tab a link that initiates navigation to a route
+   * @type string
+   */
   @Input() route: string;
 
   @HostBinding('class.content-active')
@@ -123,8 +143,9 @@ export class NbTabComponent {
 
   /**
    * Lazy load content before tab selection
-   * TODO: rename, as lazy is by default, and this is more `instant load`
-   * @param {boolean} val
+   * @docs-private
+   * @deprecated This setting never worked. Wrap content into a `nbTabContent` to make it lazy.
+   * @breaking-change Remove 10.0.0
    */
   @Input()
   set lazyLoad(val: boolean) {
@@ -154,6 +175,11 @@ export class NbTabComponent {
    */
   @Input() badgePosition: NbBadgePosition;
 
+  /**
+   * @deprecated
+   * @breaking-change Remove 10.0.0
+   * @docs-private
+   */
   init: boolean = false;
 }
 
@@ -201,13 +227,31 @@ export class NbTabComponent {
  *
  * `tabIcon` should be used to add an icon to the tab. Icon can also be combined with title.
  * `responsive` tab property if set allows you to hide the title on smaller screens
- * (`tabs-icon-only-max-width` property) for better responsive behaviour. You can open the following example and make
+ * (`$tabset-tab-text-hide-breakpoint` variable) for better responsive behaviour.
+ * You can open the following example and make
  * your screen smaller - titles will be hidden in the last tabset in the list:
- *
  * @stacked-example(Icon, tabset/tabset-icon.component)
  *
  * It is also possible to disable a tab using `disabled` property:
  * @stacked-example(Disabled Tab, tabset/tabset-disabled.component)
+ *
+ * By default, the tab contents instantiated straightaway. To make tab contents load lazy,
+ * declare the body of a tab in a template with `nbTabContent` directive.
+ * ```html
+ * <nb-tabset>
+ *   <nb-tab>
+ *     <some-component *nbTabContent>Lazy content</some-component>
+ *   </nb-tab>
+ *   <nb-tab>
+ *     <ng-template nbTabContent>
+ *       Lazy content with template syntax
+ *     </ng-template>
+ *   </nb-tab>
+ * </nb-tabset>
+ * ```
+ *
+ * You can provide a template as a tab title via `<ng-template nbTabTitle>`:
+ * @stacked-example(Tab title template, tabset/tabset-template-title.component)
  *
  * @styles
  *
@@ -249,31 +293,41 @@ export class NbTabComponent {
  * tabset-scrollbar-color:
  * tabset-scrollbar-background-color:
  * tabset-scrollbar-width:
- * tabset-tab-text-hide-breakpoint:
  */
 @Component({
   selector: 'nb-tabset',
   styleUrls: ['./tabset.component.scss'],
   template: `
     <ul class="tabset">
-      <li *ngFor="let tab of tabs"
-          (click)="selectTab(tab)"
-          (keyup.space)="selectTab(tab)"
-          (keyup.enter)="selectTab(tab)"
-          [class.responsive]="tab.responsive"
-          [class.active]="tab.active"
-          [class.disabled]="tab.disabled"
-          [attr.tabindex]="tab.disabled ? -1 : 0"
-          class="tab">
+      <li
+        *ngFor="let tab of tabs"
+        (click)="selectTab(tab)"
+        (keyup.space)="selectTab(tab)"
+        (keyup.enter)="selectTab(tab)"
+        [class.responsive]="tab.responsive"
+        [class.active]="tab.active"
+        [class.disabled]="tab.disabled"
+        [attr.tabindex]="tab.disabled ? -1 : 0"
+        [attr.data-tab-id]="tab.tabId"
+        class="tab"
+      >
         <a href (click)="$event.preventDefault()" tabindex="-1" class="tab-link">
           <nb-icon *ngIf="tab.tabIcon" [config]="tab.tabIcon"></nb-icon>
-          <span *ngIf="tab.tabTitle" class="tab-text">{{ tab.tabTitle }}</span>
+          <ng-container
+            *ngIf="tab.tabTitleDirective; else textTitleTemplate"
+            [ngTemplateOutlet]="tab.tabTitleDirective.templateRef"
+          ></ng-container>
+          <ng-template #textTitleTemplate>
+            <span class="tab-text">{{ tab.tabTitle }}</span>
+          </ng-template>
         </a>
-        <nb-badge *ngIf="tab.badgeText || tab.badgeDot"
+        <nb-badge
+          *ngIf="tab.badgeText || tab.badgeDot"
           [text]="tab.badgeText"
           [dotMode]="tab.badgeDot"
           [status]="tab.badgeStatus"
-          [position]="tab.badgePosition">
+          [position]="tab.badgePosition"
+        >
         </nb-badge>
       </li>
     </ul>
@@ -281,7 +335,6 @@ export class NbTabComponent {
   `,
 })
 export class NbTabsetComponent implements AfterContentInit {
-
   @ContentChildren(NbTabComponent) tabs: QueryList<NbTabComponent>;
 
   @HostBinding('class.full-width')
@@ -309,17 +362,14 @@ export class NbTabsetComponent implements AfterContentInit {
    */
   @Output() changeTab = new EventEmitter<any>();
 
-  constructor(private route: ActivatedRoute,
-              private changeDetectorRef: ChangeDetectorRef) {
-  }
+  constructor(private route: ActivatedRoute, private changeDetectorRef: ChangeDetectorRef) {}
 
   // TODO: refactoring this component, avoid change detection loop
   ngAfterContentInit() {
     this.route.params
       .pipe(
-        map(
-          (params: any) =>
-            this.tabs.find((tab) => this.routeParam ? tab.route === params[this.routeParam] : tab.active),
+        map((params: any) =>
+          this.tabs.find((tab) => (this.routeParam ? tab.route === params[this.routeParam] : tab.active)),
         ),
         delay(0),
         map((tab: NbTabComponent) => tab || this.tabs.first),
@@ -334,7 +384,7 @@ export class NbTabsetComponent implements AfterContentInit {
   // TODO: navigate to routeParam
   selectTab(selectedTab: NbTabComponent) {
     if (!selectedTab.disabled) {
-      this.tabs.forEach(tab => tab.active = tab === selectedTab);
+      this.tabs.forEach((tab) => (tab.active = tab === selectedTab));
       this.changeTab.emit(selectedTab);
     }
   }

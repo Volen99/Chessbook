@@ -36,7 +36,7 @@
 </ng-container>
 
 <div *ngIf="mode === 'sending'" class="feedback-form_sending">
-    <span [nbSpinner]="true" nbSpinnerStatus="primary" class="feedback-form_sending-indicator"></span>
+    <app-custom-loading-indicator class="feedback-form_sending-indicator"></app-custom-loading-indicator>
     <span class="feedback-form_sending-message">Offering draw..</span>
 </div>
 

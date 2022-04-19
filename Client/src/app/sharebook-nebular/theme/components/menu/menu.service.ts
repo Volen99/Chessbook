@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { Params, QueryParamsHandling } from '@angular/router';
@@ -6,7 +12,7 @@ import { share } from 'rxjs/operators';
 import { isFragmentContain, isFragmentEqual, isUrlPathContain, isUrlPathEqual } from './url-matching-helpers';
 import { NbIconConfig } from '../icon/icon.component';
 import { NbBadge } from '../badge/badge.component';
-import {IconDefinition} from "@fortawesome/fontawesome-common-types";
+import {IconDefinition} from "@fortawesome/pro-light-svg-icons";
 
 export interface NbMenuBag { tag: string; item: NbMenuItem }
 

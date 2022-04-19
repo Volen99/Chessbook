@@ -101,7 +101,7 @@ export class NgxRegisterComponent implements OnInit {
       const redirect = result.getRedirect();
       if (redirect) {
         setTimeout(() => {
-          alert('You need to activate your account from your gmail to use Chessbook fully');
+          alert('You need to activate your account from your email to use Chessbook fully');
           return this.router.navigateByUrl(redirect);
         }, this.redirectDelay);
       }

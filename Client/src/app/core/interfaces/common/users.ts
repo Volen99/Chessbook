@@ -130,6 +130,8 @@ export interface IUser extends IUserIdentifier {
 
   facebookLink: string;
 
+  instagramLink: string;
+
   unreadPrivateMessages: number;
 
   active: boolean;

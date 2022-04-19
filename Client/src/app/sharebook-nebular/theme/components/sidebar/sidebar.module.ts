@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { NbSharedModule } from '../shared/shared.module';
@@ -9,12 +15,6 @@ import {
 } from './sidebar.component';
 
 import { NbSidebarService } from './sidebar.service';
-import {NbButtonModule} from "../button/button.module";
-import {NbActionsModule} from "../actions/actions.module";
-import {NbUserModule} from "../user/user.module";
-import {NbContextMenuModule} from "../context-menu/context-menu.module";
-import {SharedModule} from "../../../../shared/shared.module";
-import {AuthModule} from "../../../../auth/auth.module";
 
 const NB_SIDEBAR_COMPONENTS = [
   NbSidebarComponent,
@@ -29,15 +29,6 @@ const NB_SIDEBAR_PROVIDERS = [
 @NgModule({
   imports: [
     NbSharedModule,
-    NbButtonModule,
-    NbActionsModule,
-    NbUserModule,
-    AuthModule,
-    NbContextMenuModule,
-
-
-
-    SharedModule,
   ],
   declarations: [
     ...NB_SIDEBAR_COMPONENTS,

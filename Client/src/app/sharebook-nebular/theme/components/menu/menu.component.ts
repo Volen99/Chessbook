@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import {
   Component,
   Input,
@@ -10,15 +16,16 @@ import {
   DoCheck,
   PLATFORM_ID,
 } from '@angular/core';
-import {isPlatformBrowser} from '@angular/common';
-import {Router, NavigationEnd, NavigationExtras} from '@angular/router';
-import {BehaviorSubject, Subject} from 'rxjs';
-import {takeUntil, filter, map} from 'rxjs/operators';
-import {NbMenuInternalService, NbMenuItem, NbMenuBag, NbMenuService, NbMenuBadgeConfig} from './menu.service';
-import {convertToBoolProperty, NbBooleanInput} from '../helpers';
-import {NB_WINDOW} from '../../theme.options';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {NbLayoutDirectionService} from '../../services/direction.service';
+import { isPlatformBrowser } from '@angular/common';
+import { Router, NavigationEnd, NavigationExtras } from '@angular/router';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { takeUntil, filter, map } from 'rxjs/operators';
+import { NbMenuInternalService, NbMenuItem, NbMenuBag, NbMenuService, NbMenuBadgeConfig } from './menu.service';
+import { convertToBoolProperty, NbBooleanInput } from '../helpers';
+import { NB_WINDOW } from '../../theme.options';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { NbLayoutDirectionService } from '../../services/direction.service';
+
 import {
   faHouse,
   faHashtag,
@@ -46,9 +53,6 @@ import {
   faTrophy as faTrophySolid,
 } from '@fortawesome/pro-solid-svg-icons';
 import {IconDefinition} from "@fortawesome/fontawesome-common-types";
-import {IUser} from "../../../../core/interfaces/common/users";
-import {NbDialogService} from "../dialog/dialog.service";
-import {KeyboardShortcutsComponent} from "../layout/hotkeys/keyboard-shortcuts.component";
 import {HotkeysService} from "angular2-hotkeys";
 
 export enum NbToggleStates {
@@ -61,8 +65,8 @@ export enum NbToggleStates {
   templateUrl: './menu-item.component.html',
   animations: [
     trigger('toggle', [
-      state(NbToggleStates.Collapsed, style({height: '0', margin: '0'})),
-      state(NbToggleStates.Expanded, style({height: '*'})),
+      state(NbToggleStates.Collapsed, style({ height: '0', margin: '0' })),
+      state(NbToggleStates.Expanded, style({ height: '*' })),
       transition(`${NbToggleStates.Collapsed} <=> ${NbToggleStates.Expanded}`, animate(300)),
     ]),
   ],
@@ -80,8 +84,7 @@ export class NbMenuItemComponent implements DoCheck, AfterViewInit, OnDestroy {
   toggleState: NbToggleStates;
 
   constructor(protected menuService: NbMenuService,
-              protected directionService: NbLayoutDirectionService) {
-  }
+              protected directionService: NbLayoutDirectionService) {}
 
   ngDoCheck() {
     this.toggleState = this.menuItem.expanded ? NbToggleStates.Expanded : NbToggleStates.Collapsed;
@@ -90,8 +93,8 @@ export class NbMenuItemComponent implements DoCheck, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.menuService.onSubmenuToggle()
       .pipe(
-        filter(({item}) => item === this.menuItem),
-        map(({item}: NbMenuBag) => item.expanded),
+        filter(({ item }) => item === this.menuItem),
+        map(({ item }: NbMenuBag) => item.expanded),
         takeUntil(this.destroy$),
       )
       .subscribe(isExpanded => this.toggleState = isExpanded ? NbToggleStates.Expanded : NbToggleStates.Collapsed);
@@ -102,6 +105,7 @@ export class NbMenuItemComponent implements DoCheck, AfterViewInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  // TODO: plz check when u use it kk
   moreMenu = this.getMenuItems();
 
   faEllipsisH = faEllipsisH;
@@ -125,7 +129,7 @@ export class NbMenuItemComponent implements DoCheck, AfterViewInit, OnDestroy {
     this.selectItem.emit(item);
   }
 
-  onItemClick(item: NbMenuItem | any) {
+  onItemClick(item: NbMenuItem) {
     if (item.title === 'Messages') {
       this.badge.text = '0';
     }
@@ -139,8 +143,8 @@ export class NbMenuItemComponent implements DoCheck, AfterViewInit, OnDestroy {
     }
 
     return this.directionService.isLtr()
-      ? faChevronLeft
-      : faChevronRight;
+        ? faChevronLeft
+        : faChevronRight;
   }
 }
 
@@ -251,20 +255,20 @@ export class NbMenuItemComponent implements DoCheck, AfterViewInit, OnDestroy {
   selector: 'nb-menu',
   styleUrls: ['./menu.component.scss'],
   template: `
-      <ul class="menu-items">
-          <ng-container *ngFor="let item of items">
-              <li nbMenuItem *ngIf="!item.hidden"
-                  [menuItem]="item"
-                  [badge]="item.badge"
-                  [class.menu-group]="item.group"
-                  (hoverItem)="onHoverItem($event)"
-                  (toggleSubMenu)="onToggleSubMenu($event)"
-                  (selectItem)="onSelectItem($event)"
-                  (itemClick)="onItemClick($event)"
-                  class="menu-item">
-              </li>
-          </ng-container>
-      </ul>
+    <ul class="menu-items">
+      <ng-container *ngFor="let item of items">
+        <li nbMenuItem *ngIf="!item.hidden"
+            [menuItem]="item"
+            [badge]="item.badge"
+            [class.menu-group]="item.group"
+            (hoverItem)="onHoverItem($event)"
+            (toggleSubMenu)="onToggleSubMenu($event)"
+            (selectItem)="onSelectItem($event)"
+            (itemClick)="onItemClick($event)"
+            class="menu-item">
+        </li>
+      </ng-container>
+    </ul>
   `,
 })
 export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -292,11 +296,9 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   get autoCollapse(): boolean {
     return this._autoCollapse;
   }
-
   set autoCollapse(value: boolean) {
     this._autoCollapse = convertToBoolProperty(value);
   }
-
   protected _autoCollapse: boolean = false;
   static ngAcceptInputType_autoCollapse: NbBooleanInput;
 
@@ -306,7 +308,7 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
               @Inject(PLATFORM_ID) protected platformId,
               protected menuInternalService: NbMenuInternalService,
               protected router: Router,
-              private hotkeysService: HotkeysService,) {
+              private hotkeysService: HotkeysService) {
   }
 
   ngOnInit() {
@@ -323,7 +325,7 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     this.menuInternalService
       .onNavigateHome()
       .pipe(
-        filter((data: { tag: string; items: NbMenuItem[] }) => this.compareTag(data.tag)),
+        filter((data: { tag: string }) => this.compareTag(data.tag)),
         takeUntil(this.destroy$),
       )
       .subscribe(() => this.navigateHome());
@@ -335,7 +337,7 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe((data: { tag: string; listener: BehaviorSubject<NbMenuBag> }) => {
-        data.listener.next({tag: this.tag, item: this.getSelectedItem(this.items)});
+        data.listener.next({ tag: this.tag, item: this.getSelectedItem(this.items) });
       });
 
     this.menuInternalService
@@ -356,7 +358,7 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
     this.hotkeysService.cheatSheetToggle
-      .subscribe(isOpen => this.helpVisible = isOpen);
+        .subscribe(isOpen => this.helpVisible = isOpen);
   }
 
   ngAfterViewInit() {
@@ -459,12 +461,6 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     this.menuInternalService.itemClick(item, this.tag);
   }
 
-  // open() {
-  //   this.dialogService.open(KeyboardShortcutsComponent, {
-  //
-  //   });
-  // }
-
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
@@ -505,6 +501,8 @@ export class NbMenuComponent implements OnInit, AfterViewInit, OnDestroy {
         return homeItem;
       }
     }
+
+    return undefined;
   }
 
   protected compareTag(tag: string) {

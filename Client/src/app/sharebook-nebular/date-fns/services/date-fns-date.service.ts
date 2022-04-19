@@ -6,12 +6,13 @@
 
 import { Inject, Injectable, LOCALE_ID, Optional } from '@angular/core';
 
+// import { NB_DATE_SERVICE_OPTIONS, NbNativeDateService } from '@nebular/theme';
+import {NB_DATE_SERVICE_OPTIONS} from "../../theme/components/datepicker/datepicker.directive";
+import {NbNativeDateService} from "../../theme/components/calendar-kit/services/native-date.service";
 
 import { default as parse } from 'date-fns/parse';
 import { default as formatDate } from 'date-fns/format';
 import { default as getWeek } from 'date-fns/getWeek';
-import {NB_DATE_SERVICE_OPTIONS} from "../../theme/components/datepicker/datepicker.directive";
-import {NbNativeDateService} from "../../theme/components/calendar-kit/services/native-date.service";
 
 export interface NbDateFnsOptions {
   format: string;

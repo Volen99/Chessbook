@@ -104,6 +104,7 @@ export class User implements IUser {
     this.twitchLink = hash.twitchLink;
     this.youtubeLink = hash.youtubeLink;
     this.facebookLink = hash.facebookLink;
+    this.instagramLink = hash.instagramLink;
 
     this.unreadPrivateMessages = hash.unreadPrivateMessages;
     this.active = hash.active;
@@ -188,6 +189,8 @@ export class User implements IUser {
   youtubeLink: string;
 
   facebookLink: string;
+
+  instagramLink: string;
 
   unreadPrivateMessages: number;
 

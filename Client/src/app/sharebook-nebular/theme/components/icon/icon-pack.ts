@@ -10,17 +10,17 @@ export enum NbIconPackType  {
 }
 
 export interface NbIconPackParams {
-  packClass?: string;
-  [name: string]: any;
+  packClass?: string,
+  [name: string]: any,
 }
 
 export interface NbFontIconPackParams extends NbIconPackParams {
-  iconClassPrefix?: string;
+  iconClassPrefix?: string,
 }
 
 export interface NbIconPack {
   name: string;
   type: NbIconPackType;
   icons: Map<string, NbIcon | string>;
-  params: NbIconPackParams;
+  params: NbIconPackParams,
 }

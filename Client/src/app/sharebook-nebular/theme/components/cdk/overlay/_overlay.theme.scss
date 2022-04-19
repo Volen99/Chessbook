@@ -1,4 +1,5 @@
-@import '@angular/cdk/overlay-prebuilt';
+@use '@angular/cdk/overlay-prebuilt';
+@use '../../../styles/theming' as *;
 
 @mixin nb-overlay-theme {
   .overlay-backdrop {
@@ -16,7 +17,7 @@
  * so that it won't add additional positioning.
  */
 .nb-global-scrollblock {
-  position: static;
+  position: static !important; // TODO: After upgrading to nebular 9.0 this bugs and it is rather "fixed"
   width: auto;
   overflow: hidden;
 }

@@ -3,7 +3,7 @@
          style="padding-left: 0px">
         <nb-card style="width: 102.6%">
             <div class="sharebook-container backface-visibility-hidden flex-grow-expand">
-                <div class="sharebook-container align-items-stretch element-background-color-rgba flex-direction-row flex-grow-expand justify-content-space-between r-2llsf width-100-per">
+                <div class="sharebook-container align-items-stretch flex-direction-row flex-grow-expand justify-content-space-between r-2llsf width-100-per">
                     <div class="sharebook-container background-color-lights-out main-left-right-vertical-border-color main-left-vertical-border-left-width main-right-vertical-border-right-width border-style-solid margin-left-right-auto image-margin-left image-margin-right main-primary-column-max-width-600px width-100-per z-index-1">
                         <div class="sharebook-container">
                             <nb-card>
@@ -18,7 +18,7 @@
                                                                 <div aria-label="Back" role="button"
                                                                      data-focusable="true"
                                                                      tabindex="0"
-                                                                     class="icon-hover sharebook-cursor-pointer sharebook-container element-background-color-rgba element-border-color-rgba border-radius-9999px border-style-solid border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
+                                                                     class="icon-hover sharebook-cursor-pointer sharebook-container element-border-color-rgba border-radius-9999px border-style-solid border-width-1px border-height-0px element-min-height-39px element-min-width-39px outline-style-none element-left-right-padding-0px transition-duration transition-property users-select-none"
                                                                      style="margin-left: calc(5px + (-1 * (41px - 1.5em)) / 2);"
                                                                      (click)="this.back()">
                                                                     <div dir="auto"
@@ -94,7 +94,7 @@
                                 </nb-card-header>
                             </nb-card>
                             <!--end fixed heading-->
-                            <div *ngIf="this.profileCurrent; else noProfile" class="sharebook-container">
+                            <div *ngIf="this.profileCurrent; else loadingTemplate" class="sharebook-container">
                                 <div class="sharebook-container flex-grow-expand">
                                     <div class="sharebook-container margin-left-right-auto main-primary-column-max-width-600px width-100-per">
                                         <div class="sharebook-container">
@@ -110,7 +110,7 @@
                                                     <div aria-label=""
                                                          class="sharebook-container bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">
                                                         <div
-                                                                class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
+                                                                class="sharebook-container image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
                                                                 [style.background-image]="'url(' + this.profileCurrent?.profileBannerURL +')'"></div>
                                                         <img alt="" draggable="true"
                                                              [src]="this.profileCurrent?.profileBannerURL"
@@ -132,7 +132,7 @@
                                                                 <div aria-label=""
                                                                      class="sharebook-container border-radius-9999px bottom-0px image-flex-expand left-0px overflow-hidden position-absolute right-0px top-0px image-z-index">
                                                                     <div
-                                                                            class="sharebook-container element-background-color-rgba image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
+                                                                            class="sharebook-container image-background-position image-background-repeat image-background-size bottom-0px height-100-per left-0px position-absolute right-0px top-0px width-100-per z-index-minus-1"
                                                                             [style.background-image]="'url(' + this.profileCurrent?.profileImageUrlHttps +')'"></div>
                                                                     <img alt="" class="sharebook-image"
                                                                          [src]="this.profileCurrent?.profileImageUrlHttps"
@@ -188,7 +188,7 @@
                                                            status="primary"
                                                            shape="round" outline
                                                            routerLink="/my-account"
-                                                           class="sharebook-link sharebook-cursor-pointer sharebook-container element-background-color-rgba button-border-color border-radius-9999px r-1phboty border-width-1px cursor-pointer border-height-0px r-15d164r element-min-height-39px share-button-min-width outline-style-none share-button-padding-left-right transition-duration transition-property users-select-none">
+                                                           class="sharebook-link sharebook-cursor-pointer sharebook-container button-border-color border-radius-9999px r-1phboty border-width-1px cursor-pointer border-height-0px r-15d164r element-min-height-39px share-button-min-width outline-style-none share-button-padding-left-right transition-duration transition-property users-select-none">
                                                             <div dir="auto"
                                                                  class="css-901oao align-items-center r-13gxpu9 display-flex flex-direction-row flex-grow-expand font-family font-size-15px font-weight-700 justify-content-center line-height-1 max-width-100-per min-width-0px text-align-center text-overflow-wrap">
                 <span class="css-901oao sharebook-text-inherit sharebook-text font-family inside-element-container-line-height min-width-0px text-overflow-wrap">
@@ -254,6 +254,9 @@
                                                             </a>
                                                             <a *ngIf="this.profileCurrent.facebookLink" [href]="this.profileCurrent.facebookLink" style="margin-right: 1rem;" target="_blank">
                                                                 <i class="link-icon ion-social-facebook"></i>
+                                                            </a>
+                                                            <a *ngIf="this.profileCurrent.instagramLink" [href]="this.profileCurrent.instagramLink" style="margin-right: 1rem;" target="_blank">
+                                                                <i class="link-icon ion-social-instagram"></i>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -352,13 +355,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <ng-template #loadingTemplate>
+                                <ng-container *ngIf="!this.noProf; else noProfile">
+                                    <nb-card class="no-profile">
+                                        <div class="details text-center">
+                                            <div class="preview-area_template-container">
+                                                <app-custom-loading-indicator size="big"></app-custom-loading-indicator>
+                                            </div>
+                                        </div>
+                                    </nb-card>
+                                </ng-container>
+                            </ng-template>
                             <ng-template #noProfile>
                                 <nb-card class="no-profile">
                                     <div class="details text-center">
                                         <h4>This account doesn't exist</h4>
                                         <span class="text-hint text-sm-center">Try <span class="text-primary" style="cursor: pointer" ngbTooltip="g + u" [openDelay]="1700"  (click)="this.searchUser()">searching</span> for another.</span>
                                         <div>
-                                            <img src="/assets/images/crop.png" width="150px;" height="300px" alt="searching"
+                                            <img src="/assets/images/crop.png" width="150px" height="300px" alt="searching"
                                                  [ngStyle]="{'transform': !this.isSearch ? '' : 'scale(-1, 1)'}"/>
                                         </div>
                                     </div>

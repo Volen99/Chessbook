@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -23,10 +29,12 @@ import { NbSearchService } from './search.service';
 import { NbThemeService } from '../../services/theme.service';
 import { NbOverlayService } from '../cdk/overlay/overlay-service';
 import { NbOverlayRef, NbPortalDirective } from '../cdk/overlay/mapping';
+
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../../environments/environment";
 import {IPoll} from "../../../../shared/posts/models/poll/poll";
 import {faPollPeople} from '@fortawesome/pro-solid-svg-icons';
+
 /**
  * search-field-component is used under the hood by nb-search component
  * can't be used itself
@@ -200,7 +208,7 @@ export type NbSearchType = 'modal-zoomin' | 'rotate-layout' | 'modal-move' |
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['styles/search.component.scss'],
   template: `
-    <button #searchButton class="start-search" (click)="emitActivate()">
+    <button #searchButton class="start-search" (click)="emitActivate()" nbButton ghost>
       <fa-icon [icon]="this.faPollPeople" [styles]="{'font-size': '1.35rem', 'color': this.theme !== 'default' ? 'white' : '#3c404b'}"></fa-icon>
     </button>
     <nb-search-field
@@ -264,8 +272,7 @@ export class NbSearchComponent implements OnInit, OnDestroy {
     private router: Router,
     private overlayService: NbOverlayService,
     private changeDetector: ChangeDetectorRef,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.router.events
@@ -280,12 +287,7 @@ export class NbSearchComponent implements OnInit, OnDestroy {
         filter(data => !this.tag || data.tag === this.tag),
         takeUntil(this.destroy$),
       )
-      .subscribe(() => {
-        if (window.location.href.includes('search?')) {
-          return;
-        }
-        this.openSearch();
-      });
+      .subscribe(() => this.openSearch());
 
     this.searchService.onSearchDeactivate()
       .pipe(
@@ -293,9 +295,7 @@ export class NbSearchComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(() => this.hideSearch());
-
   }
-
 
   ngOnDestroy() {
     if (this.overlayRef && this.overlayRef.hasAttached()) {

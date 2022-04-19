@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright Akveo. All Rights Reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
 import {
   Directive,
   Input,
@@ -12,16 +18,16 @@ import {
   Renderer2,
   NgZone,
 } from '@angular/core';
-import {Subject, BehaviorSubject} from 'rxjs';
-import {map, finalize, takeUntil} from 'rxjs/operators';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { map, finalize, takeUntil } from 'rxjs/operators';
 
-import {NbStatusService} from '../../services/status.service';
-import {convertToBoolProperty, NbBooleanInput} from '../helpers';
-import {NbComponentSize} from '../component-size';
-import {NbComponentShape} from '../component-shape';
-import {NbComponentOrCustomStatus} from '../component-status';
-import {NbFormFieldControl} from '../form-field/form-field-control';
-import {NbFocusMonitor} from '../cdk/a11y/a11y.module';
+import { NbStatusService } from '../../services/status.service';
+import { convertToBoolProperty, NbBooleanInput } from '../helpers';
+import { NbComponentSize } from '../component-size';
+import { NbComponentShape } from '../component-shape';
+import { NbComponentOrCustomStatus } from '../component-status';
+import { NbFormFieldControl } from '../form-field/form-field-control';
+import { NbFocusMonitor } from '../cdk/a11y/a11y.module';
 
 /**
  * Basic input directive.
@@ -213,7 +219,7 @@ import {NbFocusMonitor} from '../cdk/a11y/a11y.module';
 @Directive({
   selector: 'input[nbInput],textarea[nbInput]',
   providers: [
-    {provide: NbFormFieldControl, useExisting: NbInputDirective},
+    { provide: NbFormFieldControl, useExisting: NbInputDirective },
   ],
 })
 export class NbInputDirective implements DoCheck, OnChanges, OnInit, AfterViewInit, OnDestroy, NbFormFieldControl {
@@ -246,11 +252,9 @@ export class NbInputDirective implements DoCheck, OnChanges, OnInit, AfterViewIn
   get fullWidth(): boolean {
     return this._fullWidth;
   }
-
   set fullWidth(value: boolean) {
     this._fullWidth = convertToBoolProperty(value);
   }
-
   private _fullWidth = false;
   static ngAcceptInputType_fullWidth: NbBooleanInput;
 
@@ -278,7 +282,7 @@ export class NbInputDirective implements DoCheck, OnChanges, OnInit, AfterViewIn
     }
   }
 
-  ngOnChanges({status, fieldSize, fullWidth}: SimpleChanges) {
+  ngOnChanges({ status, fieldSize, fullWidth }: SimpleChanges) {
     if (status) {
       this.status$.next(this.status);
     }

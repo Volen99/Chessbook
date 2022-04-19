@@ -359,7 +359,7 @@ export class UploadComponent extends PostSend implements OnInit, OnChanges, OnDe
     }
 
     if (!this.user.active) {
-      alert('You need to activate your account from your gmail to use Chessbook fully');
+      alert('You need to activate your account from your email to use Chessbook fully');
       return;
     }
 

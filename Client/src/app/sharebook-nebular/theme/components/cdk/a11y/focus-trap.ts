@@ -1,9 +1,12 @@
-import {Inject, Injectable, NgZone} from '@angular/core';
-import {FocusTrap, FocusTrapFactory, InteractivityChecker} from '@angular/cdk/a11y';
+import { Inject, Injectable, NgZone } from '@angular/core';
+import { FocusTrap, FocusTrapFactory, InteractivityChecker } from '@angular/cdk/a11y';
 
-import {NB_DOCUMENT} from '../../../theme.options';
+import { NB_DOCUMENT } from '../../../theme.options';
 
-// Overrides angular cdk focus trap to keep restore functionality inside trap.
+
+/**
+ * Overrides angular cdk focus trap to keep restore functionality inside trap.
+ * */
 export class NbFocusTrap extends FocusTrap {
   protected previouslyFocusedElement: HTMLElement;
 
