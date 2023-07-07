@@ -155,7 +155,7 @@
     "postcss-cli": "^8.3.1",
     "rimraf": "2.6.1",
     "stringz": "^2.1.0",
-    "stylelint": "^14.2.0",
+    "stylelint": "^15.10.1",
     "stylelint-config-sass-guidelines": "^9.0.1",
     "ts-node": "3.2.2",
     "tslint": "~6.1.0",
