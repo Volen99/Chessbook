@@ -20,7 +20,7 @@
     <PackageReference Include="Humanizer" Version="2.13.14" />
     <PackageReference Include="linq2db" Version="3.6.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="6.0.1" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.15" />
     <PackageReference Include="WebMarkupMin.AspNetCore5" Version="2.11.0" />
     <PackageReference Include="WebMarkupMin.NUglify" Version="2.11.0" />
