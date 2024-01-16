@@ -55,7 +55,7 @@
     <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="6.0.1" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.15.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.15.0" />
     <PackageReference Include="AutoMapper" Version="11.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="6.0.1" />
