@@ -109,7 +109,7 @@
     "roboto-fontface": "0.8.0",
     "rxjs": "6.6.2",
     "rxjs-compat": "6.6.2",
-    "sanitize-html": "^2.3.3",
+    "sanitize-html": "^2.12.1",
     "sass": "^1.34.0",
     "sass-loader": "^12.1.0",
     "socicon": "3.0.5",
