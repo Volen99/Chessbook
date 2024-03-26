@@ -117,7 +117,7 @@
     "substring-trie": "^1.0.2",
     "swiper": "^6.6.2",
     "tiny-queue": "^0.2.1",
-    "tinymce": "^5.7.1",
+    "tinymce": "^7.0.0",
     "tslib": "^2.0.0",
     "twitter-text": "^3.1.0",
     "typeface-exo": "0.0.22",
